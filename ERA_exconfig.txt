@@ -1,0 +1,121 @@
+/*
+	Emuera设置选项、Debug选项、replace选项的
+	【英文名】, 【日文写法】, 【中文翻译】, 【默认值】
+*/
+
+/*
+** 设置选项（emuera.config; CSV\_default.config; CSV\_fixed.config）
+** REF https://osdn.jp/projects/emuera/wiki/config
+** REF https://osdn.jp/projects/emuera/wiki/exconfig
+*/
+IgnoreCase, "大文字小文字の違いを無視する", "忽略大小写", true;
+UseRenameFile, "_Rename.csvを利用する", "启用_Rename.csv", false;
+UseReplaceFile, "_Replace.csvを利用する", "启用_Replace.csv", true;
+UseMouse, "マウスを使用する", "启用鼠标", true;
+UseMenu, "メニューを使用する", "显示菜单栏", true;
+UseDebugCommand, "デバッグコマンドを使用する", "启用调试命令", false;
+AllowMultipleInstances, "多重起動を許可する", "允许多重启动", true;
+AutoSave, "オートセーブを行なう", "自动保存进度", true;
+UseKeyMacro, "キーボードマクロを使用する", "启用键盘宏", true;
+SizableWindow, "ウィンドウの高さを可変にする", "允许调整窗口高度", true;
+TextDrawingMode, "描画インターフェース", "绘图界面", TextDrawingMode.GRAPHICS;
+//UseImageBuffer, "イメージバッファを使用する", true;
+WindowX, "ウィンドウ幅", "窗口宽度", 760;
+WindowY, "ウィンドウ高さ", "窗口高度", 480;
+WindowPosX, "ウィンドウ位置X", "窗口X坐标", 0;
+WindowPosY, "ウィンドウ位置Y", "窗口Y坐标", 0;
+SetWindowPos, "起動時のウィンドウ位置を指定する", "启动时固定窗口位置", false;
+WindowMaximixed, "起動時にウィンドウを最大化する", "启动时将窗口最大化", false;
+MaxLog, "履歴ログの行数", "记录日志的行数", 5000;
+PrintCPerLine, "PRINTCを並べる数", "PRINTC并列数量", 3;
+PrintCLength, "PRINTCの文字数", "PRINTC文字数量", 25;
+FontName, "フォント名", "字体名称", "ＭＳ ゴシック";
+FontSize, "フォントサイズ", "字体大小", 18;
+LineHeight, "一行の高さ", "每行高度", 19;
+ForeColor, "文字色", (192, 192, 192);//LIGHTGRAY
+BackColor, "背景色", (0, 0, 0);//BLACK
+FocusColor, "選択中文字色", (255, 255, 0);//YELLOW
+LogColor, "履歴文字色", (192, 192, 192128, 128, 128;//GRAY
+FPS, "フレーム毎秒", "每秒帧数", 5;
+SkipFrame, "最大スキップフレーム数", "最大SKIP帧数", 3;
+ScrollHeight, "スクロール行数", "滚动行数", 1;
+InfiniteLoopAlertTime, "無限ループ警告までのミリ秒数", "死循环超时警告(毫秒", 5000);
+DisplayWarningLevel, "表示する最低警告レベル", "最低显示警告等级", 1;
+DisplayReport, "ロード時にレポートを表示する", "加载时显示报告", false;
+ReduceArgumentOnLoad, "ロード時に引数を解析する", "加载时解析参数", NO;
+ReduceFormattedStringOnLoad, "ロード時にFORM文字列を解析する", true;
+IgnoreUncalledFunction, "呼び出されなかった関数を無視する", "忽略未被调用过的函数", true;
+FunctionNotFoundWarning, "関数が見つからない警告の扱い", "函数未找到时的警告处理", IGNORE;
+FunctionNotCalledWarning, "関数が呼び出されなかった警告の扱い", "函数未被调用时的警告处理", IGNORE;
+IgnoreWarningFiles, "指定したファイル中の警告を無視する",;
+ChangeMasterNameIfDebug, "デバッグコマンドを使用した時にMASTERの名前を変更する","使用调试指令时改变MASTER的名字", true;
+ButtonWrap, "ボタンの途中で行を折りかえさない","不对按钮行折返换行", false;
+SearchSubdirectory, "サブディレクトリを検索する", "检索子目录", false;
+SortWithFilename, "読み込み順をファイル名順にソートする", "按文件名顺序读取", false;
+LastKey, "最終更新コード","最后更新代码", 0;
+SaveDataNos, "表示するセーブデータ数","使用存档数量", 20;
+WarnBackCompatibility, "eramaker互換性に関する警告を表示する", "显示eramaker兼容性相关警告", true;
+AllowFunctionOverloading, "システム関数の上書きを許可する", "允许重写系统函数", true;
+WarnFunctionOverloading, "システム関数が上書きされたとき警告を表示する", "重写系统函数时显示警告", true;
+TextEditor, "関連づけるテキストエディタ", "关联文本编辑器", "notepad";
+EditorType, "テキストエディタコマンドライン指定", "编辑器运行参数", TextEditorType.USER_SETTING;
+EditorArgument, "エディタに渡す行指定引数", "编辑器运行参数值", "";
+WarnNormalFunctionOverloading, "同名の非イベント関数が複数定義されたとき警告する", "重复定义非事件函数时显示警告", false;
+CompatiErrorLine, "解釈不可能な行があっても実行する", "执行未能解析的行", false;
+CompatiCALLNAME, "CALLNAMEが空文字列の時にNAMEを代入する", "CALLNAME空字符串时代入NAME", false;
+UseSaveFolder, "セーブデータをsavフォルダ内に作成する", "在sav文件夹中创建存档", false;
+CompatiRAND, "擬似変数RANDの仕様をeramakerに合わせる", "伪变量RAND符合eramaker规范", false;
+CompatiDRAWLINE, "DRAWLINEを常に新しい行で行う","DRAWLINE总是在新行进行", false;
+CompatiFunctionNoignoreCase, "関数?属性については大文字小文字を無視しない", "函数、属性大小写敏感", false; ;
+SystemAllowFullSpace, "全角スペースをホワイトスペースに含める", "使用全角空格填充空白区域", true;
+SystemSaveInUTF8, "セーブデータをUTF-8で保存する", "以UTF-8格式保存存档", false;
+CompatiLinefeedAs1739, "ver1739以前の非ボタン折り返しを再現する", "重现ver1739前的非按钮折返", false;
+useLanguage, "内部で使用する東アジア言語", "内部使用东亚语言", UseLanguage.JAPANESE;
+AllowLongInputByMouse, "ONEINPUT系命令でマウスによる2文字以上の入力を許可する", false;
+CompatiCallEvent, "イベント関数のCALLを許可する", "允许CALL调用事件函数", false;
+CompatiSPChara, "SPキャラを使用する", "使用SP角色", false;
+			
+SystemSaveInBinary, "セーブデータをバイナリ形式で保存する", "以二进制形式保存存档", false;
+CompatiFuncArgOptional, "ユーザー関数の全ての引数の省略を許可する", "用户函数允许省略全部参数", false;
+CompatiFuncArgAutoConvert, "ユーザー関数の引数に自動的にTOSTRを補完する", "用户参数自动补充TOSTR", false;
+SystemIgnoreTripleSymbol, "FORM中の三連記号を展開しない", "展开FORM中的三连记号", false;
+TimesNotRigorousCalculation, "TIMESの計算をeramakerにあわせる", "TIMES的计算符合eramaker规范", false;
+//ForbidOneCodeVariable, "一文字変数の使用を禁止する", false;
+SystemNoTarget, "キャラクタ変数の引数を補完しない","禁用角色变量的参数自动补全", false;
+
+SystemWriteInUTF8, "AllFilesSaveInUtf8", "全部以UTF-8编码输出文件", true;
+SystemReadInUTF8, "AllFilesReadInUtf8", "全部以UTF-8编码读入文件", false;
+
+
+/*
+** Debug选项（Debug\debug.config）
+** REF https://osdn.jp/projects/emuera/wiki/debug
+*/
+DebugShowWindow, "起動時にデバッグウインドウを表示する", "启动时显示调试窗口", true;
+DebugWindowTopMost, "デバッグウインドウを最前面に表示する", "启动窗口最前端显示", true;
+DebugWindowWidth, "デバッグウィンドウ幅", "调试窗口宽度", 400;
+DebugWindowHeight, "デバッグウィンドウ高さ", "调试窗口高度", 300;
+DebugSetWindowPos, "デバッグウィンドウ位置を指定する","指定调试窗口位置", false;
+DebugWindowPosX, "デバッグウィンドウ位置X", "调试窗口X坐标", 0;
+DebugWindowPosY, "デバッグウィンドウ位置Y", "调试窗口Y坐标", 0;
+
+/*
+** replace选项（CSV\_replace.csv）
+** REF https://osdn.jp/projects/emuera/wiki/replace
+*/
+MoneyLabel, "お金の単位","金钱单位", "$";
+MoneyFirst, "単位の位置","单位位置", true;
+LoadLabel, "起動時簡略表示","启动时显示文字", "Now Loading...";
+MaxShopItem, "販売アイテム数","出售物品数", 100;
+DrawLineString, "DRAWLINE文字", "-";
+BarChar1, "BAR文字1", '*';
+BarChar2, "BAR文字2", '.';
+TitleMenuString0, "システムメニュー0", "系统菜单0", "新的开始";
+TitleMenuString1, "システムメニュー1", "系统菜单1", "载入存档";
+ComAbleDefault, "COM_ABLE初期値","COM_ABLE初始值", 1;
+StainDefault, "汚れの初期値", "污秽初始值", { 0, 0, 2, 1, 8 };
+TimeupLabel, "時間切れ表示","超时显示", "超时";
+ExpLvDef, "EXPLVの初期値", "EXPLV初始值", { 0, 1, 4, 20, 50, 200 );
+PalamLvDef, "PALAMLVの初期値", "PALAMLV初始值", { 0, 100, 500, 3000, 10000, 30000, 60000, 100000, 150000, 250000 };
+pbandDef, "PBANDの初期値", "PBAND初始值", 4;
+RelationDef, "RELATIONの初期値", "RELATION初始值", 0;
