@@ -1,0 +1,46 @@
+﻿@COM_ABLE1011(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+
+SIF CFLAG:LOCAL:現在位置 != CFLAG:LOCAL:開始位置 || CFLAG:LOCAL:現在地区 != CFLAG:LOCAL:開始地区
+	RETURN 0
+RETURN GLOBAL_COMABLE(1011)
+@COM1011(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+;お弁当を作る
+DOWNBASE:ARG:体力 += 10
+DOWNBASE:ARG:气力 += 50
+
+IF RAND(10) - ABL:ARG:料理技能 * 3 < 1
+	IF RAND(10) - (ABL:ARG:料理技能 - 2) * 2 < 1
+	CFLAG:ARG:待機時間 += 5
+	ELSE
+	CFLAG:ARG:待機時間 += 10
+	ENDIF
+ELSE
+	CFLAG:ARG:待機時間 += 15
+ENDIF
+
+IF RAND(10) - ABL:ARG:料理技能 * 3 < 1
+	IF RAND(10) - (ABL:ARG:料理技能 - 2) * 2 < 1
+		PRINTW 美味的便当が出来ました
+		EQUIP:ARG:美味的便当++
+		EXP:ARG:料理经验 += 3
+	ELSE
+		PRINTW お弁当が出来ました
+		EQUIP:ARG:普通的便当++
+		EXP:ARG:料理经验 += 2
+	ENDIF
+ELSE
+	PRINTW 可怕的便当が出来ました･･････
+	EQUIP:ARG:可怕的便当++
+	EXP:ARG:料理经验 += 1
+ENDIF
+BASE:ARG:評判 += 10
+TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+VARSET ARG
+M:101 = 0
+RETURN 1

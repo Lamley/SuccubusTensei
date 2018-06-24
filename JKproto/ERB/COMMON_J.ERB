@@ -1,0 +1,73 @@
+﻿@GET_SUCCESS_RATE(ARG)
+#FUNCTION
+VARSET LOCAL
+;従順
+LOCAL += ABL:(TCVAR:ARG:行為対象):従順 * 5
+LOCAL += GETPALAMLV(PALAM:(TCVAR:ARG:行為対象):恭顺,5) * 3
+
+;反抗.直率
+LOCAL -= TALENT:(TCVAR:ARG:行為対象):態度 * 5
+;刚强
+SIF TALENT:(TCVAR:ARG:行為対象):度胸 > 0
+	LOCAL -= 5
+
+;高傲
+SIF TALENT:(TCVAR:ARG:行為対象):プライド > 0
+	LOCAL -= 15
+;自卑
+SIF TALENT:(TCVAR:ARG:行為対象):プライド < 0
+	LOCAL += 5
+;喜欢引人注目
+SIF TALENT:(TCVAR:ARG:行為対象):喜欢引人注目
+	LOCAL += 2
+;压抑
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0
+	LOCAL -= 10
+;反抗
+SIF TALENT:(TCVAR:ARG:行為対象):反抗
+	LOCAL -= 10
+;容易高潮
+SIF TALENT:(TCVAR:ARG:行為対象):容易高潮
+	LOCAL += 10
+;性別嗜好
+SIF (TALENT:(TCVAR:ARG:行為対象):性別嗜好 & 1 && !(TALENT:ARG:2 & 1)) || (TALENT:(TCVAR:ARG:行為対象):性別嗜好 & 2 && TALENT:ARG:2 & 1)
+	LOCAL -= 7
+
+;調教者の素質
+;魅惑
+SIF TALENT:ARG:魅惑
+	LOCAL += 6
+;谜之魅力
+SIF TALENT:ARG:谜之魅力
+	LOCAL += 6
+[SKIPSTART]
+;相性チェック
+R = NO:PLAYER
+IF RELATION:R > 0 && RELATION:R < 30
+	LOCAL -= 10
+ELSEIF RELATION:R > 0 && RELATION:R < 70
+	LOCAL -= 6
+ELSEIF RELATION:R > 0 && RELATION:R < 100
+	LOCAL -= 3
+ELSEIF RELATION:R >= 100 && RELATION:R < 130
+	LOCAL += 3
+ELSEIF RELATION:R >= 100 && RELATION:R < 170
+	LOCAL += 6
+ELSEIF RELATION:R >= 100 && RELATION:R >= 170
+	LOCAL += 10
+ENDIF
+[SKIPEND]
+;好感度
+LOCAL += TA:(TCVAR:ARG:行為対象):ARG:3 / 50
+
+;恋慕
+SIF LOVE_CHECK(TCVAR:ARG:行為対象,ARG)
+	LOCAL += 20
+;最愛
+SIF TCVAR:(TCVAR:ARG:行為対象):行為対象 == CFLAG:(TCVAR:ARG:行為対象):最愛
+	LOCAL += 40
+
+SIF LOCAL < 0
+	LOCAL = 0
+RETURNF LOCAL
+

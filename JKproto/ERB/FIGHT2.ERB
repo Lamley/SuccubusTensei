@@ -1,0 +1,227 @@
+﻿@FIGHT2(ARG,ARG:1,ARG:2,ARG:3)
+;ARG	攻撃側のキャラクター登録番号
+;ARG:1	防御側のキャラクター登録番号
+;ARG:2	攻撃側の行動
+;ARG:3	防御側の行動
+
+
+VARSET LOCAL
+;;;戦闘
+;------------------------------------------------------------------------
+;攻撃側の行動
+
+;[00]攻撃
+IF ARG:2 == 0
+	;相手ににまだ援軍が残っている
+	IF F:112 > 0
+		;自分の援軍の攻撃
+		FOR LOCAL,0,F:102
+			;ループの途中で相手の援軍が全滅した場合
+			IF F:112 < 1
+				IF CFLAG:(ARG:1):仕事 == 2 || CFLAG:(ARG:1):仕事 == 3
+					F:211 -= 1
+				ELSEIF TALENT:(ARG:1):受虐狂
+					F:211 -= 5
+					SOURCE:(ARG:1):快Ｃ = 50
+					SOURCE:(ARG:1):液体 = 20
+					TCVAR:(ARG:1):行為対象 = ARG
+					CALL SOURCE_CHECKS(ARG:1)
+				ELSE
+					F:211 -= 10
+				ENDIF
+			;相手の援軍にダメージを与える
+			ELSE
+				F:215 -= 10
+				;「仲間が一人やられたぞ！」
+				IF F:215 < 1
+					F:112 -= 1
+					F:215 = 100
+				ENDIF
+			ENDIF
+		NEXT
+		;相手の援軍が全滅しているならHPが減る
+		IF F:112 < 1
+			F:211 = F:211 - MAX(F:301 - F:312,5)
+		;援軍が居るならMPが減る
+		ELSE
+			F:215 -= MAX(F:301 - 5,5)
+			IF F:215 < 1
+				F:112 -= 1
+				F:215 = 100
+			ENDIF
+		ENDIF
+	;相手の援軍がいない
+	ELSE
+		FOR LOCAL,0,F:102
+			IF CFLAG:(ARG:1):仕事 == 2 || CFLAG:(ARG:1):仕事 == 3
+				F:211 -= 1
+			ELSEIF TALENT:(ARG:1):受虐狂
+				F:211 -= 5
+				SOURCE:(ARG:1):快Ｃ = 50
+				SOURCE:(ARG:1):液体 = 20
+				TCVAR:(ARG:1):行為対象 = ARG
+				CALL SOURCE_CHECKS(ARG:1)
+			ELSE
+				F:211 -= 10
+			ENDIF
+		NEXT
+		F:211 = F:211 - MAX(F:301 - F:312,5)
+	ENDIF
+;[01]まやかし攻撃
+ELSEIF ARG:2 == 1
+	IF F:112 > 0
+		FOR LOCAL,0,F:102
+			IF F:112 < 1
+				IF CFLAG:(ARG:1):仕事 == 2 || CFLAG:(ARG:1):仕事 == 3
+					F:211 -= 5
+				ELSEIF TALENT:(ARG:1):受虐狂
+					F:211 -= 5
+					SOURCE:(ARG:1):快Ｃ = 80
+					SOURCE:(ARG:1):液体 = 40
+					TCVAR:(ARG:1):行為対象 = ARG
+					CALL SOURCE_CHECKS(ARG:1)
+				ELSE
+					F:211 -= 20
+				ENDIF
+			ELSE
+				F:215 -= 20
+				IF F:215 < 1
+					F:112 -= 1
+					F:215 = 100
+				ENDIF
+			ENDIF
+		NEXT
+		IF F:112 < 1
+			F:211 = F:211 - MAX(F:351 - F:362,10)
+		ELSE
+			F:215 -= MAX(F:351 - 5,10)
+			IF F:215 < 1
+				F:112 -= 1
+				F:215 = 100
+			ENDIF
+		ENDIF
+	ELSE
+		FOR LOCAL,0,F:102
+			IF CFLAG:(ARG:1):仕事 == 2 || CFLAG:(ARG:1):仕事 == 3
+				F:211 -= 5
+			ELSEIF TALENT:(ARG:1):受虐狂
+				F:211 -= 5
+				SOURCE:(ARG:1):快Ｃ = 80
+				SOURCE:(ARG:1):液体 = 40
+				TCVAR:(ARG:1):行為対象 = ARG
+				CALL SOURCE_CHECKS(ARG:1)
+			ELSE
+				F:211 -= 20
+			ENDIF
+		NEXT
+		F:211 = F:211 - MAX(F:351 - F:362,5)
+	ENDIF
+ENDIF
+
+;------------------------------------------------------------------------
+;防御側の行動
+
+;[00]攻撃
+IF ARG:3 == 0
+	IF F:102 > 0
+		FOR LOCAL,0,F:112
+			IF F:102 < 1
+				IF CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 3
+					F:201 -= 1
+				ELSEIF TALENT:ARG:受虐狂
+					F:201 -= 5
+					SOURCE:ARG:快Ｃ = 50
+					SOURCE:ARG:液体 = 20
+					TCVAR:ARG:行為対象 = (ARG:1)
+					CALL SOURCE_CHECKS(ARG)
+				ELSE
+					F:201 -= 10
+				ENDIF
+			ELSE
+				F:205 -= 10
+				IF F:205 < 1
+					F:102 -= 1
+					F:205 = 100
+				ENDIF
+			ENDIF
+		NEXT
+		IF F:102 < 1
+			F:201 = F:201 - MAX(F:311 - F:302,5)
+		ELSE
+			F:205 -= MAX(F:311 - 5,5)
+			IF F:205 < 1
+				F:102 -= 1
+				F:205 = 100
+			ENDIF
+		ENDIF
+	ELSE
+		FOR LOCAL,0,F:112
+			IF CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 3
+				F:201 -= 1
+			ELSEIF TALENT:ARG:受虐狂
+				F:201 -= 5
+				SOURCE:ARG:快Ｃ = 50
+				SOURCE:ARG:液体 = 20
+				TCVAR:ARG:行為対象 = (ARG:1)
+				CALL SOURCE_CHECKS(ARG)
+			ELSE
+				F:201 -= 10
+			ENDIF
+		NEXT
+		F:201 = F:201 - MAX(F:311 - F:302,5)
+	ENDIF
+	
+;[01]まやかし攻撃
+ELSEIF ARG:3 == 1
+	IF F:102 > 0
+		FOR LOCAL,0,F:112
+			IF F:102 < 1
+				IF CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 3
+					F:201 -= 5
+				ELSEIF TALENT:ARG:受虐狂
+					F:201 -= 5
+					SOURCE:ARG:快Ｃ = 80
+					SOURCE:ARG:液体 = 40
+					TCVAR:ARG:行為対象 = (ARG:1)
+					CALL SOURCE_CHECKS(ARG)
+				ELSE
+					F:201 -= 20
+				ENDIF
+			ELSE
+				F:205 -= 20
+				IF F:205 < 1
+					F:102 -= 1
+					F:205 = 100
+				ENDIF
+			ENDIF
+		NEXT
+		IF F:102 < 1
+			F:201 = F:201 - MAX(F:361 - F:352,10)
+		ELSE
+			F:205 -= MAX(F:361 - 5,10)
+			IF F:205 < 1
+				F:102 -= 1
+				F:205 = 100
+			ENDIF
+		ENDIF
+	ELSE
+		FOR LOCAL,0,F:112
+			IF CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 3
+				F:201 -= 5
+			ELSEIF TALENT:ARG:受虐狂
+				F:201 -= 5
+				SOURCE:ARG:快Ｃ = 80
+				SOURCE:ARG:液体 = 40
+				TCVAR:ARG:行為対象 = (ARG:1)
+				CALL SOURCE_CHECKS(ARG)
+			ELSE
+				F:201 -= 20
+			ENDIF
+		NEXT
+		F:201 = F:201 - MAX(F:361 - F:352,5)
+	ENDIF
+ENDIF
+
+RETURN 1
+
+

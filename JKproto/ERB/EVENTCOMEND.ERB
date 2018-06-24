@@ -1,0 +1,223 @@
+﻿@EVENTCOMEND
+
+NEXTCOM = -1
+
+;EVENTTRAINからダミーを経過してここにたどり着く
+;その後は一日の終了条件を満たすまでループする
+WHILE 1
+VARSET LOCAL
+;全員の待機時間を減らす
+;減らした待機時間に応じて各BESEなどの変化
+CALL TIME_COUNT(TFLAG:経過時間)
+[SKIPSTART]
+;一日の終了条件を満たすとAFTERTRAINに飛んでループ終了
+IF TIME >= 1440
+	BEGIN AFTERTRAIN
+	RETURN 1
+ENDIF
+[SKIPEND]
+IF SELECTCOM:MASTER == 1004 || TCVAR:MASTER:衰弱
+	SELECTCOM:MASTER = -1
+	BEGIN AFTERTRAIN
+	RETURN 1
+ENDIF
+;睡眠、衰弱からの回復チェック
+
+CALL SLEEP_CHECK
+CALL WAKE_UP_CHECK
+
+;乗り物に乗っているときの処理
+FOR LOCAL,1,CHARANUM
+	;電車待ち状態で電車が来た
+	IF CFLAG:LOCAL:乗車 == 2 && CFLAG:LOCAL:待機時間 == 0
+		;PRINTFORMW %CALLNAME:LOCAL%乗車
+		CFLAG:LOCAL:乗車 = 1
+		;CFLAG:LOCAL:待機時間 = TRAIN_TIME(LOCAL,CFLAG:LOCAL:到着地区,CFLAG:LOCAL:到着位置)
+	;電車に乗っていて電車が到着した
+	ELSEIF CFLAG:LOCAL:乗車 == 1 && CFLAG:LOCAL:到着時間 <= TIME
+		;PRINTFORMW %CALLNAME:LOCAL%降車
+		CFLAG:LOCAL:乗車 = 0
+		CFLAG:LOCAL:現在地区 = CFLAG:LOCAL:到着地区
+		CFLAG:LOCAL:現在位置 = CFLAG:LOCAL:到着位置
+		IF TCVAR:LOCAL:イベント == 1
+			TCVAR:LOCAL:イベント = 0
+			TARGET = 0
+			TCVAR:LOCAL:行為対象 = 0
+			TCVAR:LOCAL:601 = 0
+			TCVAR:LOCAL:挿入 = 0
+			TCVAR:LOCAL:被挿入 = 0
+			SIF TEQUIP:LOCAL:膣 == 1
+				TEQUIP:LOCAL:膣 = 0
+			SIF TEQUIP:LOCAL:アナル == 60 || TEQUIP:LOCAL:アナル == 61 || TEQUIP:LOCAL:アナル == 62
+				TEQUIP:LOCAL:アナル = 0
+			SELECTCOM:LOCAL = 0
+			CFLAG:LOCAL:痴漢発見 = 0
+			SIF LOCAL == MASTER
+				PRINTW 到达车站,赶紧逃走了
+			FLAG:痴漢され中 = 0
+		ELSEIF LOCAL == MASTER
+			PRINTW 目的车站到达了
+		ENDIF
+	ENDIF
+NEXT
+
+IF TCVAR:MASTER:イベント == 2
+	;IF BASE:MASTER:反抗 > 0
+		IF TFLAG:騒ぎ > RAND(200)
+			PRINTFORMW 因为来了人%CALLNAME:(TCVAR:MASTER:行為対象)%逃走了
+			CFLAG:(TCVAR:MASTER:行為対象):現在地区 = 0
+			CFLAG:(TCVAR:MASTER:行為対象):現在位置 = 12
+			CALL EVENT_ESCAPE_ALL
+		ELSEIF BASE:(TCVAR:MASTER:行為対象):体力 < 800
+			PRINTFORMW 眼见敌不过,%CALLNAME:(TCVAR:MASTER:行為対象)%逃走了
+			CFLAG:(TCVAR:MASTER:行為対象):現在地区 = 0
+			CFLAG:(TCVAR:MASTER:行為対象):現在位置 = 12
+			CALL EVENT_ESCAPE_ALL
+		ELSEIF BASE:(TCVAR:MASTER:行為対象):興奮度 < 200
+			PRINTFORMW 萎靡的%CALLNAME:(TCVAR:MASTER:行為対象)%は%CALLNAME:MASTER%离开了
+			CFLAG:(TCVAR:MASTER:行為対象):現在地区 = 0
+			CFLAG:(TCVAR:MASTER:行為対象):現在位置 = 12
+			CALL EVENT_ESCAPE_ALL
+		ELSE
+			TFLAG:騒ぎ++
+		ENDIF
+	;ELSE
+	;	PRINTW 反抗失败･･････
+	;	CALL EVENT_JOIN(TCVAR:MASTER:行為対象,MASTER,4)
+	;ENDIF
+ENDIF
+
+CALL SAME_ROOM_CHECK
+SIF TIME == 720 || TIME == 960
+	J:151 = 0
+IF (TIME == 539 || TIME == 839) && J:151
+;;;	PRINTL 上课中...
+	CALL JYUGYOU1()
+ENDIF
+;待機時間が0以下の人にターンを回す
+FOR LOCAL,1,CHARANUM
+;;;どうもキャラスルーするとバグるみたいです(135行辺りが原因と分かった)
+;;;	SIF NO:LOCAL == 34
+;;;		CONTINUE
+	J:101 = TIME / 60
+	CALLFORM PLACE_NINZU_{CFLAG:LOCAL:現在地区}_{CFLAG:LOCAL:現在位置}(J:101)
+	N:101 = RESULT
+	CALL OYA_OSOU(LOCAL)
+	SIF CFLAG:LOCAL:衰弱 || CFLAG:LOCAL:睡眠
+		CONTINUE
+	IF CFLAG:LOCAL:待機時間 == 0
+		TFLAG:行為者 = LOCAL
+		TCVAR:LOCAL:防御 = 0
+		TCVAR:LOCAL:無反抗 = 0
+		IF LOCAL == MASTER
+			;あなたの行動はここ
+			;電車に乗ってすぐの状態
+			IF CFLAG:LOCAL:乗車 == 1 && !TCVAR:LOCAL:イベント
+				CFLAG:LOCAL:待機時間 = TRAIN_TIME(LOCAL,CFLAG:LOCAL:到着地区,CFLAG:LOCAL:到着位置)
+			;遠距離移動中
+			ELSEIF TCVAR:LOCAL:目的位置
+				SKIPDISP 1
+				CALL COM1000(MASTER)
+				CALL SOURCE_CHECKS(LOCAL)
+				SKIPDISP 0
+			ELSE
+;;;ここは毎時マスターと同室の場合にマスターに対して（マスターの衣装による）情欲を加算している処理
+;;;基本マスターの行動の待機時間は１０分なので５０以上、１０１７（くつろぐ）は３０分なので３０以上、入浴などは６０分なので１回という計算です
+;;;後半イベント中除外、平日の授業中除外、部活中除外です
+				IF ((TIME % 60 >= 50 || (TIME % 60 >= 30 && SELECTCOM:1 == 1017)) && TIME % 60 <= 59 || SELECTCOM:1 == 1002 || SELECTCOM:1 == 1003 || SELECTCOM:1 == 1008) && !TCVAR:1:イベント && !(!D:101 && (TIME >= 510 && TIME <= 749) || (TIME >= 810 && TIME <= 959)) && !(CFLAG:LOCAL:部活 && TIME >= 960 && TIME <= 1129)
+					CALL TEIJI_DOUSHITU(1)
+				ENDIF
+;;;ここまで
+				SIF TARGET
+					TCVAR:MASTER:行為対象 = TARGET
+				CALL PLAYER_USERCOM
+				CALL SOURCE_CHECKS(LOCAL)
+				;PRINTFORML %CALLNAME:LOCAL% {CFLAG:LOCAL:待機時間}
+			ENDIF
+;;;			FOR D,2,CHARANUM
+;;;				CFLAG:D:会话 = 0
+;;;			NEXT
+		ELSE
+			;NPCの行動はここ
+			IF CFLAG:LOCAL:乗車 == 1 && !TCVAR:LOCAL:イベント
+				CALL EVENT_CHECK_1(LOCAL)
+				IF RESULT
+					LOCAL:2 = 1
+				ELSE
+					CFLAG:LOCAL:待機時間 = TRAIN_TIME(LOCAL,CFLAG:LOCAL:到着地区,CFLAG:LOCAL:到着位置)
+				ENDIF
+			;遠距離移動中は他のことをしようとしない（修正必要かも）
+			ELSEIF TCVAR:LOCAL:目的位置
+				CALL NPC_MOVEMENT(LOCAL)
+				;CALL SOURCE_CHECKS(LOCAL)
+
+			ELSE
+				;特に移動先がない場合何をするか決める
+				CALL NPC_ACTION(LOCAL)
+			ENDIF
+			IF LOCAL == (CHARANUM - 1)
+				FOR D,1,CHARANUM
+					CFLAG:D:会话 = 0
+				NEXT
+			ENDIF
+		ENDIF
+	ENDIF
+	IF !LOCAL:1 || TFLAG:経過時間 > CFLAG:LOCAL:待機時間
+;CFLAG:LOCAL:待機時間が0の場合があるため、TFLAG:経過時間=0とLOCAL:1が同時に立たない様条件付け
+		IF CFLAG:LOCAL:待機時間 >> 0
+			TFLAG:経過時間 = CFLAG:LOCAL:待機時間
+			LOCAL:1++
+		ENDIF
+	ENDIF
+NEXT
+
+IF LOCAL:2 == 1
+	CALL EVENT_MESSAGE_1
+ENDIF
+SIF !LOCAL:1
+	TFLAG:経過時間 = 5
+;体力切れなどのチェック
+CALL WEAKNESS_CHECK
+
+;PRINTFORMW {TFLAG:経過時間}
+;次のループで経過時間がいくつになるか計測
+
+WEND
+
+;--------------------------------------------------------------------------
+;反抗成功
+;--------------------------------------------------------------------------
+@RESIST_SUCCESS
+
+PRINTFORML ＜反抗成功＞
+LOCAL = RAND:2
+IF LOCAL == 0
+	PRINTFORM 周围聚集着可怕的视线、
+ELSE
+	PRINTFORM %CALLNAME:MASTER%的反抗比预想的要激烈、
+ENDIF
+PRINTFORMW 色狼勉勉强强退走了。
+PRINTL
+
+RETURN 1
+
+;--------------------------------------------------------------------------
+;反抗失敗
+;--------------------------------------------------------------------------
+@RESIST_FAIL
+
+PRINTFORML ＜反抗失敗＞
+PRINTFORM %CALLNAME:MASTER%の反抗を
+LOCAL = RAND:2
+IF LOCAL == 0
+	PRINTFORM 没有什么力气、
+ELSE
+	PRINTFORM 只好不去理睬、
+ENDIF
+PRINTFORMW 痴汉继续着骚扰行为。
+PRINTL
+
+RETURN 1
+
+
+

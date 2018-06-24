@@ -1,0 +1,577 @@
+﻿;────────────────────────────────────
+;絶頂系の処理など
+;────────────────────────────────────
+;-------------------------------------------------
+;絶頂処理
+;-------------------------------------------------
+@ORGASM_ADD(ARG)
+VARSET LOCAL
+LOCAL = ((CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ) >= PALAMLV:4) + (CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ >= PALAMLV:4) + (CUP:ARG:快Ａ + PALAM:ARG:快Ａ >= PALAMLV:4) + (CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ >= PALAMLV:4)
+SELECTCASE LOCAL
+	CASE 4
+		LOCAL:1 = 7000
+	CASE 3
+		LOCAL:1 = 5000
+	CASE 2
+		LOCAL:1 = 3000
+	CASE 1
+		LOCAL:1 = 2000
+ENDSELECT
+
+;視認性の問題で残しておく
+C = 0
+V = 0
+A = 0
+B = 0
+;絶頂Ｃ
+;うっかり絶頂
+LOCAL:2 = (CUP:ARG:快Ｃ > 0) * LOCAL:1
+IF CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ + LOCAL:2 >= PALAMLV:4 * 2
+	C = 2
+	CDOWN:ARG:快Ｃ = PALAMLV:4 * 2 - LOCAL:2
+ELSEIF CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ + LOCAL:2 >= PALAMLV:4
+	C = 1
+	CDOWN:ARG:快Ｃ = PALAMLV:4 - LOCAL:2
+ENDIF
+;DOWN:0で下げても絶頂以上なら
+;その値-1になるように調整（10000で絶頂なら9999）
+SIF CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ - CDOWN:ARG:快Ｃ >= PALAMLV:4
+	CDOWN:ARG:快Ｃ = CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ - PALAMLV:4 + 1
+
+;絶頂Ｖ
+LOCAL:2 = (CUP:ARG:快Ｖ > 0) * LOCAL:1
+IF CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ + LOCAL:2 >= PALAMLV:4 * 2
+	V = 2
+	CDOWN:ARG:快Ｖ = PALAMLV:4 * 2 - LOCAL:2
+ELSEIF CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ + LOCAL:2 >= PALAMLV:4
+	V = 1
+	CDOWN:ARG:快Ｖ = PALAMLV:4 - LOCAL:2
+ENDIF
+;CDOWN:ARG:1で下げても絶頂以上なら
+;その値-1になるように調整（10000で絶頂なら9999）
+SIF CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ - CDOWN:ARG:快Ｖ >= PALAMLV:4
+	CDOWN:ARG:快Ｖ = CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ - PALAMLV:4 + 1
+
+;絶頂Ａ
+LOCAL:2 = (CUP:ARG:快Ａ > 0) * LOCAL:1
+IF CUP:ARG:快Ａ + PALAM:ARG:快Ａ + LOCAL:2 >= PALAMLV:4 * 2
+	A = 2
+	CDOWN:ARG:快Ａ = PALAMLV:4 * 2 - LOCAL:2
+ELSEIF CUP:ARG:快Ａ + PALAM:ARG:快Ａ + LOCAL:2 >= PALAMLV:4
+	A = 1
+	CDOWN:ARG:快Ａ = PALAMLV:4 - LOCAL:2
+ENDIF
+;CDOWN:ARG:快Ａで下げても絶頂以上なら
+;その値-1になるように調整（10000で絶頂なら9999）
+SIF CUP:ARG:快Ａ + PALAM:ARG:快Ａ - CDOWN:ARG:快Ａ >= PALAMLV:4
+	CDOWN:ARG:快Ａ = CUP:ARG:快Ａ + PALAM:ARG:快Ａ - PALAMLV:4 + 1
+
+;絶頂Ｂ
+LOCAL:2 = (CUP:ARG:快Ｂ > 0) * LOCAL:1
+IF CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ + LOCAL:2 >= PALAMLV:4 * 2
+	B = 2
+	CDOWN:ARG:快Ｂ = (PALAMLV:4 * 2 - 1000) - LOCAL:2
+ELSEIF CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ + LOCAL:2 >= PALAMLV:4
+	B = 1
+	CDOWN:ARG:快Ｂ = (PALAMLV:4 - 1000) - LOCAL:2
+ENDIF
+;CDOWN:ARG:快Ｂで下げても絶頂以上なら
+;その値-1になるように調整（10000で絶頂なら9999）
+SIF CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ - CDOWN:ARG:快Ｂ >= PALAMLV:4
+	CDOWN:ARG:快Ｂ = CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ - PALAMLV:4 + 1
+;-------------------------------------------------
+;絶頂時の追加処理
+;-------------------------------------------------
+
+;快乐刻印の処理
+;絶頂の部位と強度の合計が一定以上で刻印を取得する
+R = C + V * 2 + A * 2 + B
+;Rが4以上で快乐刻印３に相当
+IF R >= 3 && MARK:ARG:1 < 3
+	TCVAR:ARG:快楽強度 = 3
+;Rが3以上で快乐刻印２に相当
+ELSEIF R >= 2 && MARK:ARG:1 < 2
+	TCVAR:ARG:快楽強度 = 2
+;Rが2以上で快乐刻印１に相当
+ELSEIF R >= 1 && MARK:ARG:1 < 1
+	TCVAR:ARG:快楽強度 = 1
+ELSE
+	TCVAR:ARG:快楽強度 = 0
+ENDIF
+IF C && V && A && B
+	C *= 8
+	V *= 8
+	A *= 8
+	B *= 8
+	NOWEX:ARG:6 = 1
+	EX:ARG:四重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+;;;自慰の場合は番号0に対してになる
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 3
+;;;20120721	情欲-200
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 200
+	ENDIF
+	RESETCOLOR
+ELSEIF C && V && A
+	C *= 4
+	V *= 4
+	A *= 4
+	NOWEX:ARG:5 = 1
+	EX:ARG:三重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 2
+;;;20120721	情欲-200
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 200
+	ENDIF
+	RESETCOLOR
+ELSEIF B && V && A
+	B *= 4
+	V *= 4
+	A *= 4
+	NOWEX:ARG:5 = 2
+	EX:ARG:三重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 2
+;;;20120721	情欲-200
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 200
+	ENDIF
+	RESETCOLOR
+ELSEIF C && B && A
+	C *= 4
+	B *= 4
+	A *= 4
+	NOWEX:ARG:5 = 3
+	EX:ARG:三重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 2
+;;;20120721	情欲-200
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 200
+	ENDIF
+	RESETCOLOR
+ELSEIF C && V && B
+	C *= 4
+	V *= 4
+	B *= 4
+	NOWEX:ARG:5 = 4
+	EX:ARG:三重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 2
+;;;20120721	情欲-200
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 200
+	ENDIF
+	RESETCOLOR
+ELSEIF C && V
+	C *= 2
+	V *= 2
+	NOWEX:ARG:4 = 1
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ELSEIF C && A
+	C *= 2
+	A *= 2
+	NOWEX:ARG:4 = 2
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ELSEIF V && A
+	V *= 2
+	A *= 2
+	NOWEX:ARG:4 = 3
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ELSEIF C && B
+	C *= 2
+	B *= 2
+	NOWEX:ARG:4 = 4
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ELSEIF V && B
+	V *= 2
+	B *= 2
+	NOWEX:ARG:4 = 5
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ELSEIF A && B
+	A *= 2
+	B *= 2
+	NOWEX:ARG:4 = 6
+	EX:ARG:二重絶頂++
+	SETCOLOR 0xFF1493
+	PRINTFORML %CALLNAME:ARG%
+;;;服从ボーナスTA:ARG:XXX:2	相手はTCVAR:ARG:行為対象でOKな筈（この関数の中では対象がARG）
+	IF CFLAG:ARG:受能動 == 2
+		TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+;;;20120721	情欲-100
+		TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+	ENDIF
+	RESETCOLOR
+ENDIF
+
+;;;20120721	情欲-100
+SIF CFLAG:ARG:受能動 == 2 && R >= 1 && TA:ARG:(TCVAR:ARG:行為対象):4 > 0
+	TA:ARG:(TCVAR:ARG:行為対象):4 -= 100
+
+IF C
+	SOURCE:ARG:露出 += 500 * C
+	SOURCE:ARG:屈従 += 200 * C
+	SOURCE:ARG:反感 += 150 * C
+	DOWNBASE:ARG:体力 += 20
+	DOWNBASE:ARG:气力 += 10
+ENDIF
+IF V
+	SOURCE:ARG:情欲 += 800 * V
+	SOURCE:ARG:恭顺 += 500 * V
+	SOURCE:ARG:露出 += 700 * V
+	SOURCE:ARG:屈従 += 400 * V
+	SOURCE:ARG:反感 += 300 * V
+	DOWNBASE:ARG:体力 += 40
+	DOWNBASE:ARG:气力 += 20
+ENDIF
+IF A
+	SOURCE:ARG:情欲 += 500 * A
+	SOURCE:ARG:恭顺 += 700 * A
+	SOURCE:ARG:露出 += 900 * A
+	SOURCE:ARG:屈従 += 500 * A
+	SOURCE:ARG:反感 += 400 * A
+	DOWNBASE:ARG:体力 += 60
+	DOWNBASE:ARG:气力 += 30
+ENDIF
+IF B
+	SOURCE:ARG:露出 += 500 * B
+	SOURCE:ARG:屈従 += 200 * B
+	SOURCE:ARG:反感 += 150 * B
+	DOWNBASE:ARG:体力 += 20
+	DOWNBASE:ARG:气力 += 10
+ENDIF
+
+;NOWEXにデータを入れる（絶頂時口上に使う）
+NOWEX:ARG:0 = C
+NOWEX:ARG:1 = V
+NOWEX:ARG:2 = A
+NOWEX:ARG:3 = B
+
+;絶頂回数を増やす
+EX:ARG:Ｃ絶頂 += C
+EX:ARG:Ｖ絶頂 += V
+EX:ARG:Ａ絶頂 += A
+EX:ARG:Ｂ絶頂 += B
+
+;绝顶经验を増やす
+EXP:ARG:绝顶经验 += C + V + A + B
+EXP:ARG:Ｃ绝顶经验 += C
+EXP:ARG:Ｖ绝顶经验 += V
+EXP:ARG:Ａ绝顶经验 += A
+EXP:ARG:Ｂ绝顶经验 += B
+
+;絶頂により服从度が上がる
+SIF TCVAR:ARG:行為対象
+	TCVAR:ARG:服从 += C + V * 2 + A * 2 + B
+;服从度＋１
+SIF TCVAR:ARG:服从
+	TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+
+BASE:ARG:性欲 = MAX(BASE:ARG:性欲 - (C + V + A + B) * 500 * (3 - TALENT:ARG:绝伦 * 2), 0)
+BASE:ARG:興奮度 = MAX(BASE:ARG:興奮度 - (C + V + A + B) * 50 * (3 - TALENT:ARG:绝伦 * 2), 0)
+BASE:ARG:理性 = MIN(BASE:ARG:理性 + (C + V + A + B) * 100,MAXBASE:ARG:理性)
+
+[SKIPSTART]
+
+;ビデオ
+IF TEQUIP:ARG:28
+	IF NOWEX:ARG:6
+		LOCALS = O2/O3/O4/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:5
+		LOCALS = O2/O3/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:4
+		LOCALS = O2/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:0 == 2
+		LOCALS = C/C/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:0 == 1
+		LOCALS = C/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:1 == 2
+		LOCALS = V/V/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:1 == 1
+		LOCALS = V/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:2 == 2
+		LOCALS = A/A/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:2 == 1
+		LOCALS = A/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:3 == 2
+		LOCALS = B/B/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:3 == 1
+		LOCALS = B/
+		TSTR:1 += LOCALS
+	ENDIF
+ENDIF
+[SKIPEND]
+RETURN 1
+
+@MESSAGE_PALAMCNG_B2(ARG)
+IF NOWEX:ARG:6
+	IF !GETBIT(CFLAG:ARG:异常经验,2)
+		EXP:ARG:异常经验 ++
+		SETBIT CFLAG:ARG:异常经验,2
+	ENDIF
+	PRINTL 四 重 絶 頂
+	PRINTL (それぞれ8倍の珠が得られます)
+ELSEIF NOWEX:ARG:5
+	SELECTCASE NOWEX:ARG:5
+		CASE 1
+			PRINTL Ｃ＆Ｖ＆Ａ絶頂
+			PRINTL (それぞれ4倍の珠が得られます)
+		CASE 2
+			PRINTL Ｂ＆Ｖ＆Ａ絶頂
+			PRINTL (それぞれ4倍の珠が得られます)
+		CASE 3
+			PRINTL Ｃ＆Ｂ＆Ａ絶頂
+			PRINTL (それぞれ4倍の珠が得られます)
+		CASE 4
+			PRINTL Ｃ＆Ｖ＆Ｂ絶頂
+			PRINTL (それぞれ4倍の珠が得られます)
+	ENDSELECT
+ELSEIF NOWEX:ARG:4
+	SELECTCASE NOWEX:ARG:4
+		CASE 1
+			PRINTL Ｃ＆Ｖ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+		CASE 2
+			PRINTL Ｃ＆Ａ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+		CASE 3
+			PRINTL Ｖ＆Ａ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+		CASE 4
+			PRINTL Ｃ＆Ｂ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+		CASE 5
+			PRINTL Ｖ＆Ｂ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+		CASE 6
+			PRINTL Ａ＆Ｂ絶頂
+			PRINTL (それぞれ2倍の珠が得られます)
+	ENDSELECT
+ELSEIF NOWEX:ARG:3
+	IF NOWEX:ARG:3 == 2
+		PRINTL 強絶頂Ｂ
+	ELSE
+		PRINTL 絶頂Ｂ
+	ENDIF
+ELSEIF NOWEX:ARG:2
+	IF NOWEX:ARG:2 == 2
+		PRINTL 強絶頂Ａ
+	ELSE
+		PRINTL 絶頂Ａ
+	ENDIF
+ELSEIF NOWEX:ARG:1
+	IF NOWEX:ARG:1 == 2
+		PRINTL 強絶頂Ｖ
+	ELSE
+		PRINTL 絶頂Ｖ
+	ENDIF
+ELSEIF NOWEX:ARG:0
+	IF NOWEX:ARG:0 == 2
+		PRINTL 強絶頂Ｃ
+	ELSE
+		PRINTL 絶頂Ｃ
+	ENDIF
+ENDIF
+
+;絶頂による欲望ＬＶアップ
+LOCAL = 0
+SIF NOWEX:ARG:0 >= 2 || NOWEX:ARG:3 >= 2 || NOWEX:ARG:1 || NOWEX:ARG:2
+	LOCAL = 1
+SIF NOWEX:ARG:1 >= 2 || NOWEX:ARG:2 >= 2
+	LOCAL = 2
+SIF (NOWEX:ARG:0 >= 2 || NOWEX:ARG:3 >= 2) && NOWEX:ARG:4
+	LOCAL = 2
+SIF NOWEX:ARG:5
+	LOCAL = 3
+SIF NOWEX:ARG:6
+	LOCAL = 4
+;自制力があると１下がる
+SIF TALENT:ARG:自制力
+	LOCAL -= 1
+
+IF ABL:ARG:欲望 < LOCAL
+	ABL:ARG:欲望 ++
+	PRINTFORML そして欲望がLV{LOCAL}になった
+	;欲望の上昇による[压抑]の消滅をチェック
+	CALL YOKUBO_UP_CHECK(ARG)
+ENDIF
+;-------------------------------------------------
+;調教対象の噴乳チェック
+;-------------------------------------------------
+@TARGET_MILK_CHECK(ARG)
+SIF !TALENT:ARG:母乳体质
+	RETURN 0
+
+LOCAL = CUP:ARG:快Ｃ / 5 + CUP:ARG:快Ｖ / 5 + CUP:ARG:快Ａ / 5 + CUP:ARG:快Ｂ * 3
+
+;自制力
+SIF TALENT:ARG:自制力
+	LOCAL /= 2
+
+;接受快感
+SIF TALENT:ARG:快感応答 > 0
+	TIMES LOCAL , 1.20
+
+;否定快感（淫乱、娼妇で無効）
+SIF TALENT:ARG:快感応答 < 0 && !TALENT:ARG:淫乱
+	TIMES LOCAL , 0.80
+
+;B敏感
+SIF TALENT:ARG:Ｂ感度 > 0
+	TIMES LOCAL , 1.20
+
+;春药
+SIF TEQUIP:ARG:春药
+	LOCAL *= 2
+
+;利尿剂
+SIF TEQUIP:ARG:利尿剂
+	LOCAL /= 2
+
+IF TCVAR:ARG:行為対象
+	;調教者が幼儿退化
+	SIF TALENT:(TCVAR:ARG:行為対象):幼儿／幼儿退化
+		TIMES LOCAL , 1.20
+
+	;調教者が幼稚
+	SIF TALENT:(TCVAR:ARG:行為対象):幼稚
+		TIMES LOCAL , 1.20
+ENDIF
+;贫乳
+SIF TALENT:ARG:胸围サイズ < 0
+	TIMES LOCAL , 0.50
+
+LOCAL = LOCAL / 2
+BASE:ARG:母乳 += LOCAL
+
+IF  BASE:ARG:母乳 > MAXBASE:ARG:母乳 * 2
+	LOCAL = 2
+ELSEIF BASE:ARG:母乳 > MAXBASE:ARG:母乳
+	LOCAL = 1
+ELSE
+	RETURN 0
+ENDIF
+
+DOWNBASE:ARG:体力 += 20 * LOCAL
+DOWNBASE:ARG:气力 += 100 * (LOCAL - 1)
+IF EXP:ARG:喷乳经验 < EXPLV:1
+	SOURCE:ARG:露出 += 5000 * LOCAL
+	SOURCE:ARG:屈従 += 2500 * LOCAL
+	SOURCE:ARG:不潔 += 1000 * LOCAL
+ELSEIF EXP:ARG:喷乳经验 < EXPLV:2
+	SOURCE:ARG:露出 += 2500 * LOCAL
+	SOURCE:ARG:屈従 += 1500 * LOCAL
+	SOURCE:ARG:不潔 += 750 * LOCAL
+ELSEIF EXP:ARG:喷乳经验 < EXPLV:3
+	SOURCE:ARG:露出 += 1500 * LOCAL
+	SOURCE:ARG:屈従 += 750 * LOCAL
+	SOURCE:ARG:不潔 += 500 * LOCAL
+ELSEIF EXP:ARG:喷乳经验 < EXPLV:4
+	SOURCE:ARG:露出 += 750 * LOCAL
+	SOURCE:ARG:屈従 += 400 * LOCAL
+	SOURCE:ARG:不潔 += 350 * LOCAL
+ELSEIF EXP:ARG:喷乳经验 < EXPLV:5
+	SOURCE:ARG:露出 += 500 * LOCAL
+	SOURCE:ARG:屈従 += 250 * LOCAL
+	SOURCE:ARG:不潔 += 200 * LOCAL
+ELSE
+	SOURCE:ARG:露出 += 250 * LOCAL
+	SOURCE:ARG:屈従 += 150 * LOCAL
+ENDIF
+	PRINTFORML %CALLNAME:ARG%は乳首から\@ LOCAL == 2 ? 大量 # \@の母乳を噴出した
+IF EXP:ARG:喷乳经验 == 0
+	EXP:ARG:异常经验 ++
+ENDIF
+EXP:ARG:喷乳经验 += LOCAL
+;Ｂに母乳汚れ
+STAIN:ARG:5 |= 16
+	BASE:ARG:母乳 -= MAXBASE:ARG:母乳 * LOCAL
+SIF BASE:ARG:母乳 >= MAXBASE:ARG:母乳
+	BASE:ARG:母乳 = MAXBASE:ARG:母乳 - 1
+NOWEX:ARG:10 += LOCAL
+EX:ARG:噴乳 += LOCAL
+
+[SKIPSTART]
+;ビデオ
+IF TEQUIP:ARG:ビデオ撮影
+	IF NOWEX:ARG:10 == 1
+		LOCALS = MILK/
+	ELSEIF NOWEX:ARG:10 == 2
+		LOCALS = MILK/MILK/
+	ENDIF
+	TSTR:1 += LOCALS
+ENDIF
+[SKIPEND]

@@ -1,0 +1,859 @@
+﻿@COM_ABLE810(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+RETURN 1
+@COM_ABLE811(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE812(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE813(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE814(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE815(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TCVAR:(TCVAR:LOCAL:行為対象):601 && TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 && !TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 1
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF !EQUIP:LOCAL:自慰棒
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 19
+	RETURN 0
+;道具反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 17
+	RETURN 0
+;道具のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＶオンリーＰ == 1
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+
+RETURN 1
+
+@COM_ABLE816(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TCVAR:(TCVAR:LOCAL:行為対象):601 && TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 && TEQUIP:(TCVAR:LOCAL:行為対象):アナル != 60 && TEQUIP:(TCVAR:LOCAL:行為対象):アナル != 61 && TEQUIP:(TCVAR:LOCAL:行為対象):アナル != 62
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性+ (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF !EQUIP:LOCAL:肛塞
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 79
+	RETURN 0
+;道具反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 77
+	RETURN 0
+;道具のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＡオンリーＰ == 1
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+
+RETURN 1
+
+
+@COM_ABLE817(ARG)
+;下着をずらす判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+;すでにずらされてる
+SIF TCVAR:(TCVAR:LOCAL:行為対象):601
+	RETURN 0
+;履いてない
+SIF !TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着
+	RETURN 0
+SIF LOCAL == 1
+	RETURN 0
+
+RETURN 1
+
+
+@COM_ABLE818(ARG)
+;挿入判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF !TCVAR:(TCVAR:LOCAL:行為対象):601 && TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着
+	RETURN 0
+
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF TEQUIP:LOCAL:下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 19
+	RETURN 0
+;行為者が男性器で男性器反抗時はスルー
+SIF (GETBIT(TALENT:LOCAL:2,1)) && TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 18
+	RETURN 0
+;行為者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+;行為者が男性器なし且つ捆绑式假阴茎なし
+SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+	RETURN 0
+
+RETURN 1
+
+@COM_ABLE819(ARG)
+;Ａ挿入判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !TALENT:LOCAL:痴漢 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF !TCVAR:(TCVAR:LOCAL:行為対象):601 && TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着
+	RETURN 0
+
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF TEQUIP:LOCAL:下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 79
+	RETURN 0
+;行為者が男性器で男性器反抗時はスルー
+SIF (GETBIT(TALENT:LOCAL:2,1)) && TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 78
+	RETURN 0
+;行為者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+;行為者が男性器なし且つ捆绑式假阴茎なし
+SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+	RETURN 0
+
+RETURN 1
+
+
+@COM810(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 胸を揉む
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 100
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+SOURCE:ARG:性行動 = 20
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+@COM811(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 乳首を摘む
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 15
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 25
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 120
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+SOURCE:ARG:性行動 = 25
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+@COM812(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 乳头跳蛋
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 20
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 30
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 160
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+SOURCE:ARG:性行動 = 30
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 15
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+@COM813(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL お尻を触る
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 15
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+SOURCE:ARG:性行動 = 30
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ += 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+@COM814(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 股間を触る
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 120
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+SOURCE:ARG:性行動 = 30
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ += 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+@COM815(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 自慰棒を弄る
+;男性器のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):膣 == 18
+	CFLAG:(TCVAR:ARG:行為対象):ＶオンリーＴ = 1
+ENDIF
+
+;消費体力、气力
+IF !TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 100
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 250
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 50
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 40
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 40
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 20
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 30
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 40
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 20
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+ENDIF
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 15
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ += 20
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 20
+ENDIF
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+IF !TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	;压抑、反抗持ちには、抑郁ソース追加
+	SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+		SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 40
+ENDIF
+
+;处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 2000
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 3000
+ENDIF
+
+;再生处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 2
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 500
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+ENDIF
+
+;Vへの痛苦は先に処理しておく
+CALL PAIN_CHECK_V(TCVAR:ARG:行為対象)
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;异常经验
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,3)
+	EXP:异常经验 ++
+	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,3
+ENDIF
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+
+IF TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	TEQUIP:(TCVAR:ARG:行為対象):膣 = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):膣 = 1
+ENDIF
+
+TCVAR:(TCVAR:ARG:行為対象):被挿入 = 1
+
+EXP:ARG:道具使用経験 ++
+VARSET ARG
+RETURN 1
+
+
+@COM816(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 肛塞を弄る
+;男性器のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == 78
+	CFLAG:(TCVAR:ARG:行為対象):ＡオンリーＴ = 1
+ENDIF
+;消費体力、气力
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル != 60 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 61 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 62
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 60
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 150
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ = 250
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 250
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 50
+	SOURCE:(TCVAR:ARG:行為対象):屈従 = 50
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 50
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 200
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 40
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ = 40
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 40
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+	SOURCE:(TCVAR:ARG:行為対象):屈従 = 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 50
+ENDIF
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 15
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ += 20
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 20
+ENDIF
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル != 60 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 61 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 62
+	SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+		SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 70
+
+	;Aへの痛苦は先に処理しておく
+	CALL PAIN_CHECK_A(TCVAR:ARG:行為対象)
+ENDIF
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == 60 || TEQUIP:(TCVAR:ARG:行為対象):アナル == 61 || TEQUIP:(TCVAR:ARG:行為対象):アナル == 62
+	TEQUIP:(TCVAR:ARG:行為対象):アナル = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):アナル = 60
+ENDIF
+EXP:ARG:道具使用経験 ++
+VARSET ARG
+RETURN 1
+
+
+@COM817(ARG)
+T:102 = 0
+T:104 = 0
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML (%CALLNAME:ARG%把,%CALLNAME:(TCVAR:ARG:行為対象)%)的内衣拉开了
+IF ARG != 1
+	PRINTFORML %CALLNAME:ARG%尝试着脱下内衣。
+	IF T:101 >= 1
+		PRINTFORML 第一次有被反抗的经验、
+		PRINTFORMW %CALLNAME:ARG%并没有直接开始行动。
+		TA:(TCVAR:ARG:行為対象):ARG:6 += 20
+	ELSE
+		PRINTL 该怎么办呢？
+		PRINTFORML [0] - 放弃
+		PRINTFORML [1] - 反抗
+		PRINTFORML [2] - 摆动臀部
+$INPUT_LOOP1
+		INPUT
+		SIF RESULT != 0 && RESULT != 1 && RESULT != 2
+			GOTO INPUT_LOOP1
+		IF RESULT == 1
+			IF BASE:(TCVAR:ARG:行為対象):气力 < 501
+				PRINTFORML 气力不足（501以上必要です）
+				PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%无法反抗！
+				TA:(TCVAR:ARG:行為対象):ARG:6 += 20
+			ELSE
+				PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+				PRINTFORMW %CALLNAME:ARG%有点不满。
+				TA:ARG:(TCVAR:ARG:行為対象):6 += 10
+				DOWNBASE:(TCVAR:ARG:行為対象):气力 += 300
+				T:101 += 1
+				T:102 = 1
+				RETURN 1
+			ENDIF
+		ELSEIF RESULT == 2
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%在反抗、屁股左右摇晃着反而更诱人了。
+			PRINTFORMW %CALLNAME:ARG%有点享受
+		ENDIF
+	ENDIF
+	T:104 = 1
+ELSE
+	IF T:103 == 1
+		PRINTFORML 第一次有被反抗的经验、
+		PRINTFORMW %CALLNAME:ARG%并没有直接开始行动。
+		TA:(TCVAR:ARG:行為対象):ARG:6 += 20
+	ELSE
+		T:102 = RAND(2)
+		IF T:102
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+			PRINTFORMW %CALLNAME:ARG%有点不满。
+			TA:ARG:(TCVAR:ARG:行為対象):6 += 10
+			T:103 = 1
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+SIF !GETBIT(TALENT:ARG:2,0)
+	TA:(TCVAR:ARG:行為対象):ARG:6 += 10
+
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 2
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 30
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 1
+SOURCE:(TCVAR:ARG:行為対象):露出 = 50
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 50
+SOURCE:(TCVAR:ARG:行為対象):反感 = 40
+SOURCE:ARG:性行動 = 20
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+TCVAR:(TCVAR:ARG:行為対象):601 = 1
+
+VARSET ARG
+RETURN 1
+
+
+@COM818(ARG)
+T:102 = 0
+T:104 = 0
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 挿入(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+IF ARG != 1
+	PRINTFORML %CALLNAME:ARG%想要把阴茎插进来啊。
+	PRINTL 怎么办？
+	PRINTFORML [0] - 放弃
+	PRINTFORML [1] - 反抗
+	PRINTFORML [2] - 接受
+$INPUT_LOOP2
+	INPUT
+	SIF RESULT != 0 && RESULT != 1 && RESULT != 2
+		GOTO INPUT_LOOP2
+	IF RESULT == 1
+		IF BASE:(TCVAR:ARG:行為対象):气力 < (1001 + T:101 * 100)
+			PRINTFORML 气力不足（{1001 + T:101 * 100}以上必要です）
+			PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%的反抗失败了！
+			TA:(TCVAR:ARG:行為対象):ARG:6 += 200
+		ELSE
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+			PRINTFORMW %CALLNAME:ARG%有点不满。
+			TA:ARG:(TCVAR:ARG:行為対象):6 += 50
+			DOWNBASE:(TCVAR:ARG:行為対象):气力 += (1000 + T:101 * 100)
+			T:101 += 1
+			T:102 = 1
+			RETURN 1
+		ENDIF
+	ELSEIF RESULT == 2
+		PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%没有反抗、随着腰部的震动能得到点快感。
+		PRINTFORMW %CALLNAME:ARG%享受着这种强烈的快感。
+		TA:ARG:(TCVAR:ARG:行為対象):0 += 50
+		TA:(TCVAR:ARG:行為対象):ARG:0 += 50
+	ENDIF
+	T:104 = 1
+ELSE
+	IF EXP:(TCVAR:ARG:行為対象):Ｖ性交经验
+		PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%は没有反抗
+		TA:(TCVAR:ARG:行為対象):ARG:6 += 50
+	ELSE
+		T:102 = RAND(2)
+		IF T:102
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+			PRINTFORMW %CALLNAME:ARG%有点不满。
+			TA:ARG:(TCVAR:ARG:行為対象):6 += 50
+			RETURN 1
+		ELSE
+			PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%没有反抗
+			TA:(TCVAR:ARG:行為対象):ARG:6 += 50
+		ENDIF
+	ENDIF
+ENDIF
+SIF !GETBIT(TALENT:ARG:2,0)
+	TA:(TCVAR:ARG:行為対象):ARG:6 += 250
+
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 20
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+DOWNBASE:ARG:体力 += 50
+DOWNBASE:ARG:气力 += 100
+
+SOURCE:ARG:性行動 = 100
+SOURCE:ARG:快Ｃ = 300
+SOURCE:ARG:征服 = 300
+SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 400
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 150
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 500
+SOURCE:(TCVAR:ARG:行為対象):露出 = 50
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,1) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 60
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 300
+
+;贞操重视持ちで恋慕、相亲相爱持ち以外には常に反発のソースを追加する（セックス系のみ）
+SIF TALENT:(TCVAR:ARG:行為対象):貞操 > 0 && !LOVE_CHECK(TCVAR:ARG:行為対象,ARG)
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+
+;处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 2000
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 3000
+ENDIF
+
+;再生处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 2
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 500
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+ENDIF
+
+;Vへの痛苦は先に処理しておく
+CALL PAIN_CHECK_V(TCVAR:ARG:行為対象)
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+EXP:(TCVAR:ARG:行為対象):Ｖ性交经验 ++
+EXP:ARG:Ｃ插入经验 ++
+;同性愛処理
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,4)
+TCVAR:ARG:挿入 = 1
+
+TCVAR:(TCVAR:ARG:行為対象):被挿入 = 1
+SIF TALENT:(TCVAR:ARG:行為対象):处女
+	EXP:(TCVAR:ARG:行為対象):异常经验 += 3
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1
+
+
+@COM819(ARG)
+T:102 = 0
+T:104 = 0
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML アナル挿入(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+IF ARG != 1
+	PRINTFORML %CALLNAME:ARG%想要插入后庭。
+	PRINTL 怎么办？
+	PRINTFORML [0] - 放弃
+	PRINTFORML [1] - 反抗
+	PRINTFORML [2] - 接受
+$INPUT_LOOP3
+	INPUT
+	SIF RESULT != 0 && RESULT != 1 && RESULT != 2
+		GOTO INPUT_LOOP3
+	IF RESULT == 1
+		IF BASE:(TCVAR:ARG:行為対象):气力 < (701 + T:101 * 100)
+			PRINTFORML 气力不足（{701 + T:101 * 100}以上必要です）
+			PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%反抗失败了！
+			TA:(TCVAR:ARG:行為対象):ARG:6 += 100
+		ELSE
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+			PRINTFORMW %CALLNAME:ARG%有点不满。
+			TA:ARG:(TCVAR:ARG:行為対象):6 += 50
+			DOWNBASE:(TCVAR:ARG:行為対象):气力 += (700 + T:101 * 100)
+			T:101 += 1
+			T:102 = 1
+			RETURN 1
+		ENDIF
+	ELSEIF RESULT == 2
+		PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%没有反抗、随着腰部的震动能得到点快感。
+		PRINTFORMW %CALLNAME:ARG%在性交中感受了高度的快感。
+		TA:ARG:(TCVAR:ARG:行為対象):0 += 50
+		TA:(TCVAR:ARG:行為対象):ARG:0 += 50
+	ENDIF
+	T:104 = 1
+ELSE
+	IF EXP:(TCVAR:ARG:行為対象):20
+		PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%没有反抗。
+		TA:(TCVAR:ARG:行為対象):ARG:6 += 50
+	ELSE
+		T:102 = RAND(2)
+		IF T:102
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%反抗了、
+			PRINTFORMW %CALLNAME:ARG%有点不满。
+			TA:ARG:(TCVAR:ARG:行為対象):6 += 50
+			RETURN 1
+		ELSE
+			PRINTFORMW %CALLNAME:(TCVAR:ARG:行為対象)%没有反抗
+			TA:(TCVAR:ARG:行為対象):ARG:6 += 50
+		ENDIF
+	ENDIF
+ENDIF
+SIF !GETBIT(TALENT:ARG:2,0)
+	TA:(TCVAR:ARG:行為対象):ARG:6 += 150
+
+TEQUIP:(TCVAR:ARG:行為対象):アナル = 0
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 40
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+DOWNBASE:ARG:体力 += 80
+DOWNBASE:ARG:气力 += 120
+
+SOURCE:ARG:性行動 = 120
+SOURCE:ARG:快Ｃ = 300
+SOURCE:ARG:征服 = 300
+
+SOURCE:(TCVAR:ARG:行為対象):快Ａ = 400
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 100
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 800
+SOURCE:(TCVAR:ARG:行為対象):露出 = 60
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 200
+SOURCE:(TCVAR:ARG:行為対象):反感 = 500
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,1) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 60
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 500
+
+;Aへの痛苦は先に処理しておく
+CALL PAIN_CHECK_A(TCVAR:ARG:行為対象)
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;射精に関係なく行われる処理はここから
+;奴隷のＡ⇔調教者のＰの汚れが移動
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):4
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):7
+STAIN:(TCVAR:ARG:行為対象):4 |= STAIN:ARG:2
+STAIN:(TCVAR:ARG:行為対象):7 |= STAIN:ARG:2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;;;EXP:(TCVAR:ARG:行為対象):Ａ经验 ++
+EXP:(TCVAR:ARG:行為対象):Ａ性交经验 ++
+EXP:ARG:Ｃ插入经验 ++
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,4)
+TCVAR:ARG:挿入 = 2
+CFLAG:ARG:待機時間 += 2
+
+
+VARSET ARG
+RETURN 1
+
+
+

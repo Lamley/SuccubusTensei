@@ -1,0 +1,680 @@
+﻿@PRINT_STATE(ARG,ARG:1)
+DRAWLINE
+PRINTSL NAME:ARG
+PRINT 体力:
+BAR BASE:ARG:0,MAXBASE:ARG:0,16
+PRINTFORM ({BASE:ARG:0,4}/{MAXBASE:ARG:0,4}) 
+PRINT 气力:
+BAR BASE:ARG:1,MAXBASE:ARG:1,16
+PRINTFORM ({BASE:ARG:1,4}/{MAXBASE:ARG:1,4})
+PRINTL 
+PRINTFORM   所持金:{MONEY:ARG}円 
+PRINTL
+CALL PRINT_STATE_CLOTH(ARG)
+CALL PRINT_STATE_ABL(ARG)
+PRINTL 
+CALL PRINT_STATE_TALENT(ARG)
+WAIT
+PRINTL 
+PRINTL □ 刻印 □---------------------------------------------------------------------
+PRINT_MARK ARG
+CALL PRINT_STATE_EXP(ARG)
+;SIF !ARG:1
+CALL PRINT_STATE_JUEL(ARG)
+;SIF ARG:1
+CALL PRINT_STATE_EX(ARG)
+PRINTL 
+CALL PRINT_CHARA_ITEM(ARG)
+PRINTL 
+CALL PRINT_CHARA_OTHER(ARG)
+PRINTL 
+@PRINT_STATE_CLOTH(ARG)
+PRINTL 
+PRINTL □ 服装 □---------------------------------------------------------------------
+VARSET LOCAL
+FOR LOCAL,200,204
+	IF TEQUIP:ARG:LOCAL
+		PRINTFORML %TEQUIPNAME:LOCAL%:%ITEMNAME:(TEQUIP:ARG:LOCAL)%
+		LOCAL:1++
+	ENDIF
+NEXT
+SIF !LOCAL:1
+	PRINTL 全裸
+FOR LOCAL,204,218
+	IF TEQUIP:ARG:LOCAL
+		LOCALS = %TEQUIPNAME:LOCAL%
+		SIF LOCAL == 115 && GETBIT(TALENT:ARG:2,1)
+			LOCALS == ペニス
+		PRINTFORML %LOCALS%:%ITEMNAME:(TEQUIP:ARG:LOCAL)%
+	ENDIF
+NEXT
+
+@PRINT_STATE_ABL(ARG)
+PRINTL 
+PRINTL □ 能力 □---------------------------------------------------------------------
+LOCAL:1 = 0
+FOR LOCAL,0,50
+	SIF !STRLENS(ABLNAME:LOCAL)
+		CONTINUE
+	SIF LOCAL > 50 && ARG != MASTER
+		CONTINUE
+	;同性愛関係
+	IF !(TALENT:ARG:2 & 1) && (LOCAL == 17 || LOCAL == 32)
+		CONTINUE
+	ELSEIF TALENT:ARG:2 & 1 && (LOCAL == 18 || LOCAL == 33)
+		CONTINUE
+	ENDIF		
+	PRINTFORM %ABLNAME:LOCAL,12%:{ABL:ARG:LOCAL,5,LEFT} 
+	LOCAL:1 ++
+	SIF LOCAL:1 % 4 == 0
+		PRINTL 
+NEXT
+PRINTL 
+PRINTL □ 性技 □---------------------------------------------------------------------
+LOCAL:1 = 0
+FOR LOCAL,50,60
+	SIF !STRLENS(ABLNAME:LOCAL)
+		CONTINUE
+	SIF !(TALENT:ARG:2 & 1) && (LOCAL == 52 || LOCAL == 54)
+		CONTINUE
+	PRINTFORM %ABLNAME:LOCAL,12%:{ABL:ARG:LOCAL,5,LEFT} 
+	LOCAL:1 ++
+	SIF LOCAL:1 % 4 == 0
+		PRINTL 
+NEXT
+
+PRINTL
+PRINTL □ 体型 □---------------------------------------------------------------------
+PRINTFORM %BASENAME:31,6%:
+IF BASE:ARG:身高 > 0
+	LOCAL:1 = BASE:ARG:身高 / 10
+	LOCAL:2 = BASE:ARG:身高 % 10
+	PRINTFORM {LOCAL:1,4}.{LOCAL:2,1}cm  
+ELSE
+	PRINTFORM 不明
+ENDIF
+PRINTFORM %BASENAME:32,6%:
+IF BASE:ARG:体重 > 0
+	LOCAL:1 = BASE:ARG:体重 / 10
+	LOCAL:2 = BASE:ARG:体重 % 10
+	PRINTFORM {LOCAL:1,4}.{LOCAL:2,1}kg  
+ELSE
+	PRINTFORM 不明
+ENDIF
+
+PRINTL
+
+;全体的にちょっと強引
+
+
+LOCALS = B/W/H
+
+;男なら胸围ではなく(Bust)チェスト(Chest)
+SIF GETBIT(TALENT:ARG:性別,0) == 0
+	LOCALS = C/W/H
+
+PRINTFORM %LOCALS,6%:
+
+IF BASE:ARG:胸囲 > 0 && BASE:ARG:胴囲 > 0
+	;CFLAG:36(カップサイズ)は0でないとき既に計算済みであるが、値変化する可能性を考えて現段階では制限をかけない。
+	;MAXBASEとBASEを利用してもいいかもしれないが……
+	;IF CFLAG:ARG:36 = 0
+		;カップサイズ取得
+		CALL GET_CUP_SIZE(ARG)
+		CFLAG:ARG:36 = RESULT
+	;ENDIF
+		
+	FOR LOCAL, 33,36
+		;値が0以下なら不明と出力してすっ飛ばす 
+		IF BASE:ARG:LOCAL <= 0
+			PRINT 不明
+		ELSE
+			LOCAL:1 = BASE:ARG:(LOCAL)
+			LOCAL:2 = BASE:ARG:(LOCAL) % 10
+			PRINTFORM {LOCAL:1,3}.{LOCAL:2,1}cm
+		ENDIF
+		
+		IF CFLAG:ARG:36 > 0 && LOCAL == 33
+			PRINT (
+			IF CFLAG:ARG:36 == 1
+				PRINT ＡＡＡ
+			ELSEIF CFLAG:ARG:36 == 2
+				PRINT ＡＡ
+			ELSEIF CFLAG:ARG:36 == 3
+				PRINT Ａ
+			ELSEIF CFLAG:ARG:36 == 4
+				PRINT Ｂ
+			ELSEIF CFLAG:ARG:36 == 5
+				PRINT Ｃ
+			ELSEIF CFLAG:ARG:36 == 6
+				PRINT Ｄ
+			ELSEIF CFLAG:ARG:36 == 7
+				PRINT Ｅ
+			ELSEIF CFLAG:ARG:36 == 8
+				PRINT Ｆ
+			ELSEIF CFLAG:ARG:36 == 9
+				PRINT Ｇ
+			ELSEIF CFLAG:ARG:36 == 10
+				PRINT Ｈ
+			ELSEIF CFLAG:ARG:36 == 11
+				PRINT Ｉ
+			ELSEIF CFLAG:ARG:36 == 12
+				PRINT Ｊ
+			ELSEIF CFLAG:ARG:36 == 13
+				PRINT Ｋ
+			ELSEIF CFLAG:ARG:36 == 14
+				PRINT Ｌ
+			ELSEIF CFLAG:ARG:36 == 15
+				PRINT Ｍ
+			ELSEIF CFLAG:ARG:36 == 16
+				PRINT Ｎ
+			ELSEIF CFLAG:ARG:36 == 17
+				PRINT Ｏ
+			ELSEIF CFLAG:ARG:36 == 18
+				PRINT Ｐ
+			ELSEIF CFLAG:ARG:36 == 19
+				PRINT Ｑ
+			ELSEIF CFLAG:ARG:36 == 20
+				PRINT Ｒ
+			ELSEIF CFLAG:ARG:36 == 21
+				PRINT Ｓ
+			ELSEIF CFLAG:ARG:36 == 22
+				PRINT Ｔ
+			ELSEIF CFLAG:ARG:36 == 23
+				PRINT ∪
+			ELSEIF CFLAG:ARG:36 == 24
+				PRINT Ｖ
+			ELSEIF CFLAG:ARG:36 == 25
+				PRINT Ｗ
+			ELSEIF CFLAG:ARG:36 == 26
+				PRINT Ｘ
+			ELSEIF CFLAG:ARG:36 == 27
+				PRINT Ｙ
+			ELSEIF CFLAG:ARG:36 == 28
+				PRINT Ｚ
+			ELSE
+				PRINT 測定不能
+			ENDIF
+			PRINT )
+		ENDIF
+		
+		;最後はスラッシュを入れない
+		SIF LOCAL >= 35
+			CONTINUE
+
+		PRINT /
+	NEXT
+ELSE	
+	PRINT 不明
+ENDIF
+
+@PRINT_STATE_TALENT(ARG)
+PRINTL □ 素質 □---------------------------------------------------------------------
+LOCAL:1 = 0
+LOCALS = ""
+;TALENT:200(名無し)は表示させない
+FOR LOCAL,0,200
+	IF STRLENS(GET_TALENTNAME(LOCAL,TALENT:ARG:LOCAL))
+		;童貞
+		SIF LOCAL == 1 && !(TALENT:ARG:2 & 2)
+			CONTINUE
+		LOCALS += GET_TALENTNAME(LOCAL,TALENT:ARG:LOCAL)
+		PRINTFORM [%GET_TALENTNAME(LOCAL,TALENT:ARG:LOCAL)%]
+		IF STRLENS(LOCALS) > 50
+			LOCALS = ""
+			PRINTL 
+		ENDIF
+	ENDIF
+NEXT
+;-------------------------------------------------
+;関数名:GET_TALENTNAME
+;概　要:素質名取得関数
+;引　数:ARG:0…TALENT登録番号
+;　　　:ARG:1…TALENTの中身
+;戻り値:素質名
+;備　考:文中関数
+;素質の名前を返す。
+;-------------------------------------------------
+@GET_TALENTNAME(ARG,ARG:1)
+#FUNCTIONS
+SELECTCASE ARG
+	;处女
+	CASE 0
+		SIF ARG:1
+			RETURNF "处女"
+	;童貞
+	CASE 1
+		SIF !ARG:1
+			RETURNF "童貞"
+	;性別
+	CASE 2
+		IF ARG:1 == 3
+			RETURNF "扶她"
+		ELSEIF ARG:1 == 2
+			RETURNF "男人"
+		ENDIF
+	;度胸
+	CASE 10
+		IF ARG:1 == -1
+			RETURNF "胆怯"
+		ELSEIF ARG:1 == 1
+			RETURNF "刚强"
+		ENDIF
+	;態度
+	CASE 11
+		IF ARG:1 == -1
+			RETURNF "直率"
+		ELSEIF ARG:1 == 1
+			RETURNF "反抗"
+		ENDIF
+	;応答
+	CASE 12
+		IF ARG:1 == -1
+			RETURNF "老实"
+		ELSEIF ARG:1 == 1
+			RETURNF "自大"
+		ENDIF
+	;プライド
+	CASE 13
+		IF ARG:1 == -1
+			RETURNF "自卑"
+		ELSEIF ARG:1 == 1
+			RETURNF "高傲"
+		ENDIF
+	;性的興味
+	CASE 23
+		IF ARG:1 == -1
+			RETURNF "保守"
+		ELSEIF ARG:1 == 1
+			RETURNF "好奇心"
+		ENDIF
+	;陽気／陰気,
+	CASE 24
+		IF ARG:1 == -1
+			RETURNF "陰気"
+		ELSEIF ARG:1 == 1
+			RETURNF "陽気"
+		ENDIF
+	;贞操重视
+	CASE 30
+		IF ARG:1 == -1
+			RETURNF "贞操淡漠"
+		ELSEIF ARG:1 == 1
+			RETURNF "贞操重视"
+		ENDIF
+	;自己愛
+	CASE 31
+		IF ARG:1 == -1
+			RETURNF "压抑"
+		ELSEIF ARG:1 == 1
+			RETURNF "解放"
+		ENDIF
+	;羞恥心
+	CASE 33
+		IF ARG:1 == -1
+			RETURNF "不知羞耻"
+		ELSEIF ARG:1 == 1
+			RETURNF "害羞"
+		ENDIF
+	;痛心灵感知
+	CASE 40
+		IF ARG:1 == -1
+			RETURNF "耐痛"
+		ELSEIF ARG:1 == 1
+			RETURNF "怕痛"
+		ENDIF
+	;濡れやすさ
+	CASE 41
+		IF ARG:1 == -1
+			RETURNF "不易湿"
+		ELSEIF ARG:1 == 1
+			RETURNF "容易湿"
+		ENDIF
+	;学习速度
+	CASE 50
+		IF ARG:1 == -1
+			RETURNF "学习遅い"
+		ELSEIF ARG:1 == 1
+			RETURNF "学习早い"
+		ENDIF
+	;汚臭耐性
+	CASE 61
+		IF ARG:1 == -2
+			RETURNF "潔癖症"
+		ELSEIF ARG:1 == -1
+			RETURNF "汚臭敏感"
+		ELSEIF ARG:1 == 1
+			RETURNF "汚臭钝感"
+		ELSEIF ARG:1 == 2
+			RETURNF "脏污无视"
+		ENDIF
+	;快感応答
+	CASE 70
+		IF ARG:1 == -1
+			RETURNF "否定快感"
+		ELSEIF ARG:1 == 1
+			RETURNF "接受快感"
+		ENDIF
+	;性別嗜好
+	CASE 81
+		IF ARG:1 == -1
+			RETURNF "男女通吃"
+		ELSEIF ARG:1 == 3
+			RETURNF "人間不信"
+		ELSEIF ARG:1 == 1
+			RETURNF "讨厌男人"
+		ELSEIF ARG:1 == 2
+			RETURNF "讨厌女人"
+		ENDIF
+	;体型
+	CASE 100
+		IF ARG:1 == -3
+			RETURNF "小人"
+		ELSEIF ARG:1 == -2
+			RETURNF "幼儿体型"
+		ELSEIF ARG:1 == -1
+			RETURNF "矮小体型"
+		ELSEIF ARG:1 == 1
+			RETURNF "長身"
+		ELSEIF ARG:1 == 2
+			RETURNF "巨躯"
+		ELSEIF ARG:1 == 3
+			RETURNF "巨人"
+		ENDIF
+	;Ｃ感度
+	CASE 101
+		IF ARG:1 == -1
+			RETURNF "Ｃ钝感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｃ敏感"
+		ENDIF
+	;Ｖ感度
+	CASE 102
+		IF ARG:1 == -1
+			RETURNF "Ｖ钝感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｖ敏感"
+		ENDIF
+	;Ａ感度
+	CASE 103
+		IF ARG:1 == -1
+			RETURNF "Ａ钝感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ａ敏感"
+		ENDIF
+	;Ｂ感度
+	CASE 104
+		IF ARG:1 == -1
+			RETURNF "Ｂ钝感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｂ敏感"
+		ENDIF
+	;胸围サイズ
+	CASE 105
+		IF ARG:1 == -2
+			RETURNF "绝壁"
+		ELSEIF ARG:1 == -1
+			RETURNF "贫乳"
+		ELSEIF ARG:1 == 1
+			RETURNF "巨乳"
+		ELSEIF ARG:1 == 2
+			RETURNF "爆乳"
+		ENDIF
+	;回復速度
+	CASE 130
+		IF ARG:1 == -1
+			RETURNF "恢复慢"
+		ELSEIF ARG:1 == 1
+			RETURNF "恢复快"
+		ENDIF
+	;学年
+	CASE 161
+		IF ARG:1 == 1
+			RETURNF "一年生"
+		ELSEIF ARG:1 == 2
+			RETURNF "二年生"
+		ELSEIF ARG:1 == 3
+			RETURNF "三年生"
+		ENDIF
+	CASEELSE
+		SIF ARG:1
+			RETURNF @"%TALENTNAME:ARG%"
+ENDSELECT
+
+@PRINT_STATE_EXP(ARG)
+PRINTL 
+PRINTL □ 経験 □---------------------------------------------------------------------
+LOCAL:1 = 0
+FOR LOCAL,0,100
+	;EXP.CSVに登録されていなければCONTINUE
+	;SIF !STRLENS(EXPNAME:LOCAL)
+	;	CONTINUE
+	;未経験を表示させない
+	SIF !EXP:ARG:LOCAL
+		CONTINUE
+	;同性愛関係
+	IF !(TALENT:ARG:2 & 1) && LOCAL == 51
+		CONTINUE
+	ELSEIF TALENT:ARG:2 & 1 && LOCAL == 52
+		CONTINUE
+	ENDIF		
+	PRINTFORM %EXPNAME:LOCAL,12%:{EXP:ARG:LOCAL,5,LEFT} 
+	LOCAL:1 += 1
+	SIF LOCAL:1 % 4 == 0
+		PRINTL 
+NEXT
+@PRINT_STATE_JUEL(ARG)
+PRINTL 
+PRINTL □ 宝珠 □---------------------------------------------------------------------
+LOCAL:1 = 0
+FOR LOCAL,0,22
+	;PALAM.CSVに名称が登録されていないとCONTINUE
+	SIF !STRLENS(PALAMNAME:LOCAL)
+		CONTINUE
+	;1000,1000000,単位で区切る
+	LOCALS = {JUEL:ARG:LOCAL}
+	SIF JUEL:ARG:LOCAL > 1000000
+		LOCALS = {JUEL:ARG:LOCAL / 1000}k
+	SIF JUEL:ARG:LOCAL > 1000000000
+		LOCALS = {JUEL:ARG:LOCAL / 1000000}m
+	PRINTFORM %PALAMNAME:LOCAL,6%の珠:%LOCALS,7,LEFT%
+	LOCAL:1 += 1
+	;改行or表示位置あけ
+	SIF LOCAL:1 % 4 == 0
+		PRINTL 
+NEXT
+;否定の珠
+LOCALS = {JUEL:ARG:100}
+SIF JUEL:ARG:100 > 1000000
+	LOCALS = {JUEL:ARG:100 / 1000}k
+PRINTFORM %PALAMNAME:100,6%の珠:%LOCALS,7,LEFT%
+
+@PRINT_STATE_EX(ARG)
+SIF EX:ARG:0 + EX:ARG:1 + EX:ARG:2 + EX:ARG:3 + EX:ARG:10 + EX:ARG:11 == 0
+	RETURN 0
+LOCAL:1 = 0
+PRINTL 
+PRINTL □ 絶頂回数 □-----------------------------------------------------------------
+FOR LOCAL,0,20
+	SIF !STRLENS(EXNAME:LOCAL)
+		CONTINUE
+	SIF !EX:ARG:LOCAL
+		CONTINUE
+	PRINTFORM %EXNAME:LOCAL,12%:{EX:ARG:LOCAL,5,LEFT}
+	LOCAL:1 ++
+	SIF LOCAL:1 % 4 == 0
+		PRINTL 
+NEXT
+PRINTL 
+
+@PRINT_CHARA_ITEM(ARG)
+VARSET LOCAL
+PRINTL □ 所持品 □-----------------------------------------------------------------
+FOR LOCAL,150,200
+	IF EQUIP:ARG:LOCAL
+		PRINTFORM %EQUIPNAME:LOCAL,20% - {EQUIP:ARG:LOCAL}個
+		LOCAL:1++
+		SIF LOCAL:1 % 2 == 0 && LOCAL:1 != 0
+			PRINTL 
+	ENDIF
+NEXT
+PRINTL 
+FOR LOCAL,901,1000
+	IF EQUIP:ARG:LOCAL
+		PRINTFORM %EQUIPNAME:LOCAL,20%
+		LOCAL:2++
+		SIF LOCAL:2 % 2 == 0 && LOCAL:2 != 0
+			PRINTL 
+	ENDIF
+NEXT
+PRINTL 
+
+@PRINT_CHARA_OTHER(ARG)
+VARSET LOCAL
+PRINTL □ その他 □-----------------------------------------------------------------
+IF TALENT:ARG:学生 && CFLAG:ARG:部活
+	PRINTFORM 部活:%CLUB_NAME(CFLAG:ARG:部活)%
+	PRINTFORML     活動場所:%PLACE_NAME_1(CLUB_PLACE(CFLAG:ARG:部活))%
+ENDIF
+
+IF CFLAG:ARG:職業
+	IF TALENT:ARG:学生
+		PRINT 打工:
+	ELSE
+		PRINT 勤め先:
+	ENDIF
+	PRINTFORML %JOB_NAME(CFLAG:ARG:職業)%
+ENDIF
+IF CFLAG:ARG:仕事
+	PRINT 職種:
+	SELECTCASE CFLAG:ARG:仕事
+		CASE	1
+			PRINTL 教师
+		CASE	2
+			PRINTL レスラー
+		CASE	3
+			IF TALENT:ARG:学生
+				PRINTL 学生レスラー
+			ELSE
+				PRINTL レスラー
+			ENDIF
+		CASE	4
+			PRINTL サービス業
+		CASEELSE
+			PRINTL
+	ENDSELECT
+ENDIF
+PRINTL 
+
+PRINTL □ 状態 □-----------------------------------------------------------------
+
+	FOR LOCAL,0,100
+		SIF !STRLENS(PALAMNAME:LOCAL)
+			CONTINUE
+		PRINTFORM  %PALAMNAME:LOCAL%Lv{GETPALAMLV(PALAM:ARG:LOCAL,15),2}[
+		IF GETPALAMLV(PALAM:ARG:LOCAL,15) >= 15
+			PRINT ********
+		ELSE
+			;現在のPALAMLV
+			LOCAL:1 = PALAMLV:(GETPALAMLV(PALAM:ARG:LOCAL,15) + 1) - PALAMLV:(GETPALAMLV(PALAM:ARG:LOCAL,15))
+			FOR LOCAL:10,0,8
+				IF PALAM:ARG:LOCAL - PALAMLV:(GETPALAMLV(PALAM:ARG:LOCAL,15)) > LOCAL:1 * LOCAL:10 / 8
+					PRINT *
+				ELSE
+					PRINT .
+				ENDIF
+			NEXT
+		ENDIF
+		PRINT ]
+		LOCAL:1 = PALAM:ARG:LOCAL
+		LOCAL:2 = 0
+		;これだけ特殊
+		IF LOCAL == 9 && LOCAL:1 >= 20000
+			PRINTFORM %"摩擦 0",6% 
+		ELSE
+			;桁合わせ
+			FOR LOCAL:10,0,10
+				IF LOCAL:1 > 999999
+					LOCAL:1 /= 1000
+					LOCAL:2 ++
+				ENDIF
+			NEXT
+			PRINTFORM {LOCAL:1,6}
+			SELECTCASE LOCAL:2
+				CASE 0
+					PRINT  
+				CASE 1
+					PRINT k
+				CASE 2
+					PRINT M
+				CASE 3
+					PRINT G
+				CASE 4
+					PRINT T
+				CASE 5
+					PRINT P
+			ENDSELECT
+		ENDIF
+		LOCAL:3 ++
+		SIF LOCAL:3 % PRINTCPERLINE() == 0
+			PRINTL 
+	NEXT
+PRINTL
+PRINTL 
+WAIT
+PRINTL □ 関係 □-----------------------------------------------------------------
+PRINTFORML %NAME:ARG%→AAA
+FOR D,1,CHARANUM
+	SIF D % 5 == 0
+		PRINTFORML %"-" * 107%
+	PRINTFORMLCK %NAME:D%
+	PRINTFORM 肉欲:
+	PRINTFORM {TA:ARG:D:0,6}
+	PRINTFORM  愛情:
+	PRINTFORM {TA:ARG:D:1,6}
+	PRINTFORM  服从:
+	PRINTFORM {TA:ARG:D:2,6}
+	PRINTFORM  好意:
+	PRINTFORM {TA:ARG:D:3,6}
+	PRINTFORM  情欲:
+	PRINTFORM {TA:ARG:D:4,6}
+	PRINTFORM  敵対:
+	PRINTFORML {TA:ARG:D:6,6}
+NEXT
+PRINTL 
+WAIT
+
+PRINTFORML AAA→%NAME:ARG%
+FOR D,1,CHARANUM
+	SIF D % 5 == 0
+		PRINTFORML %"-" * 107%
+	PRINTFORMLCK %NAME:D%
+	PRINTFORM 肉欲:
+	PRINTFORM {TA:D:ARG:0,6}
+	PRINTFORM  愛情:
+	PRINTFORM {TA:D:ARG:1,6}
+	PRINTFORM  服从:
+	PRINTFORM {TA:D:ARG:2,6}
+	PRINTFORM  好意:
+	PRINTFORM {TA:D:ARG:3,6}
+	PRINTFORM  情欲:
+	PRINTFORM {TA:D:ARG:4,6}
+	PRINTFORM  敵対:
+	PRINTFORML {TA:D:ARG:6,6}
+NEXT
+PRINTL 
+
+PRINTL □ 場所 □-----------------------------------------------------------------
+PRINTFORM 現在の場所:
+IF CFLAG:ARG:乗車 == 1
+	PRINT 電車内(乗車中)
+ELSE
+	PRINTFORM %PLACE_NAME(CFLAG:ARG:現在地区,CFLAG:ARG:現在位置)%
+ENDIF
+PRINTFORM ,現在地区:{CFLAG:ARG:現在地区},現在位置:{CFLAG:ARG:現在位置}
+PRINTL 
+PRINTFORM %PLACE_NAME(TCVAR:ARG:目的地区,TCVAR:ARG:目的位置)%
+PRINTFORM ,目的地区:{TCVAR:ARG:目的地区},目的位置:{TCVAR:ARG:目的位置}
+PRINTL 
+
+

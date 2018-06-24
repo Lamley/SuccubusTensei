@@ -1,0 +1,47 @@
+﻿@COM_ABLE1004(ARG)
+IF (CFLAG:MASTER:現在地区 == 0 && (CFLAG:MASTER:現在位置 == 1 || CFLAG:MASTER:現在位置 == 30)) || (CFLAG:1:現在地区 == 1 && (CFLAG:1:現在位置 == 7 || CFLAG:1:現在位置 == 30)) || (CFLAG:1:現在地区 == 2 && (CFLAG:1:現在位置 == 17 || CFLAG:1:現在位置 == 22 || CFLAG:1:現在位置 == 26))
+ELSE
+	RETURN 0
+ENDIF
+SIF CFLAG:1:現在地区 == 2 && CFLAG:1:現在位置 == 22 && MONEY:1 < 3000
+	RETURN 0
+;SIF BASE:MASTER:眠気 < 600 && !(CFLAG:MASTER:起床時間 <= 540 && (TIME < CFLAG:MASTER:起床時間 || CFLAG:MASTER:起床時間 + 900 <= TIME))
+;	RETURN 0
+IF BASE:MASTER:眠気 >= 600
+
+ELSE
+	SELECTCASE CFLAG:MASTER:起床時間
+		CASE IS <= 540
+			SIF !(TIME < CFLAG:MASTER:起床時間 || CFLAG:MASTER:起床時間 + 900 <= TIME)
+				RETURN 0
+		CASEELSE
+			SIF !(TIME >= CFLAG:MASTER:起床時間 - 540 && TIME < CFLAG:MASTER:起床時間)
+				RETURN 0
+	ENDSELECT
+ENDIF
+RETURN GLOBAL_COMABLE(1004)
+
+
+@COM1004(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+;寝る
+SELECTCASE CFLAG:ARG:起床時間
+	CASE IS <= 540
+		SIF TIME < CFLAG:ARG:起床時間 || CFLAG:ARG:起床時間 + 900 <= TIME
+			CFLAG:ARG:主睡眠 = 1
+	CASEELSE
+		SIF TIME >= CFLAG:ARG:起床時間 - 540 && TIME < CFLAG:ARG:起床時間
+			CFLAG:ARG:主睡眠 = 1
+ENDSELECT
+
+SIF CFLAG:1:現在地区 == 2 && CFLAG:1:現在位置 == 22
+	MONEY:1 -= 3000
+IF !(CFLAG:MASTER:現在地区 == 0)
+	FLAG:就寝地区 = CFLAG:1:現在地区
+	FLAG:就寝位置 = CFLAG:1:現在位置
+ENDIF
+;;;CFLAG:ARG:衰弱 = 1
+CFLAG:ARG:睡眠 = 1
+RETURN 1
+

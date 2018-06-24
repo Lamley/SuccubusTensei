@@ -1,0 +1,69 @@
+﻿@COM_ABLE1007(ARG)
+;安全な場所では必ず実行できる
+;それ以外の場所では自慰成瘾か、よほど情欲の値が大きくないと実行できない
+;どこが「安全な場所」なのかはあとで考えることにする
+;現状は自宅のみ
+IF !(CFLAG:MASTER:現在地区 == 0 && CFLAG:MASTER:現在位置 == 1)
+	SIF ABL:MASTER:自慰成瘾 < 2 || BASE:MASTER:興奮度 < 5
+		RETURN 0
+ENDIF
+RETURN GLOBAL_COMABLE(1007)
+
+
+
+@COM1007(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+;自慰
+
+;時間経過は20分以内とする
+;20分以上自慰しつづけるとかダイナミック自慰過ぎる…
+CFLAG:MASTER:待機時間 = RAND:20 +1
+
+DOWNBASE:MASTER:体力 += 5
+DOWNBASE:MASTER:气力 += 50
+;;;20120717 追加　自慰終了時にMAX体力＋３
+MAXBASE:MASTER:体力 += 3
+
+SOURCE:MASTER:快Ｃ = 80
+SOURCE:MASTER:快Ｂ = 80
+SOURCE:MASTER:性行動 = 100
+
+
+;経験があればＶやＡもいじる
+SIF EXP:MASTER:Ｖ经验
+	SOURCE:MASTER:快Ｖ = 80
+SIF EXP:MASTER:Ａ经验
+	SOURCE:MASTER:快Ａ = 80
+
+;場所が自宅でなければ露出のソースが加わり、逸脱と恐怖も増える
+IF !(CFLAG:MASTER:現在地区 == 0 && CFLAG:MASTER:現在位置 == 1)
+	SOURCE:MASTER:露出 = 500
+	SOURCE:MASTER:逸脱 = 300
+	SOURCE:MASTER:恐怖 = 200
+
+ENDIF
+;自慰がしたくてしょうがなかったなら鬱屈も少し減る
+;ストレス発散だ！
+;どういう状態が自慰したくてしょうがないのかは考えよう
+;現状では取りあえず興奮度が高いとよし。
+;IF BASE:MASTER:興奮度 >= 4
+;	SOURCE:MASTER:鬱屈 = -(RAND:10)
+;	SIF SOURCE:MASTER:鬱屈 < 0
+;		SOURCE:MASTER:鬱屈 = 0
+;ENDIF
+
+;压抑、反抗持ちには、鬱屈ソース追加
+SIF TALENT:MASTER:自己愛 == -1 || TALENT:MASTER:反抗
+	SOURCE:MASTER:鬱屈 = 30
+
+;経験を増やす
+EXP:MASTER:自慰经验 += 3
+M:101 = 0
+
+;;;	支配度に＋２
+TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 5
+SIF CFLAG:MASTER:現在地区 != 0 && CFLAG:MASTER:現在位置 != 1
+	BASE:ARG:評判 -= 10
+
+RETURN 1

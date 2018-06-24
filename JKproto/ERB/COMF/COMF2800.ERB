@@ -1,0 +1,91 @@
+﻿@COM_ABLE2800(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF LOCAL == MASTER
+	RETURN 0
+RETURN 1
+
+@COM2800(ARG)
+;雑談
+VARSET LOCAL
+DOWNBASE:ARG:气力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 10
+
+;相手からの好意3が30以上、愛情1が1以上（又は好意が70以上）、又は服从2が10以上、肉欲0が100以上でなければ相手にされない
+IF ((TA:(TCVAR:ARG:行為対象):ARG:0 >= 100) && (TA:(TCVAR:ARG:行為対象):ARG:2 >= 10)) | ((TA:(TCVAR:ARG:行為対象):ARG:3 >= 30) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 1) | (TA:(TCVAR:ARG:行為対象):ARG:3 >= 70))) | K:103
+ELSE
+;但し、確率でOK
+	A = RAND(900)
+	A = A * TA:ARG:(CFLAG:(TCVAR:ARG:行為対象):タイプ):5 / 100
+	IF !(A >500)
+		TFLAG:成否用変数 = -2
+		CFLAG:ARG:待機時間 += 10
+;;;	支配度に－２、相手は無し
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+		VARSET ARG
+		RETURN 1
+	ENDIF
+ENDIF
+LOCAL = RAND(100)
+LOCAL:1 = 90 + (GET_SUCCESS_RATE(ARG) / 5) - TCVAR:ARG:会话累積値
+SIF LOCAL:1 > 99
+	LOCAL:1 = 99
+SIF LOCAL:1 < 0
+	LOCAL:1 = 0
+
+IF LOCAL >= LOCAL:1
+	;10～1％で失敗
+	TFLAG:成否用変数 = -1
+;;;	支配度に＋１、相手は無し
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 10
+ELSE
+	IF LOCAL <= 9
+		;10％で大成功
+		TFLAG:成否用変数 = 2
+		EXP:ARG:会话经验 += 2
+;;;		支配度に＋４、相手に－２
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	ELSE
+	;残りは成功
+	TFLAG:成否用変数 = 1
+	EXP:ARG:会话经验++
+;;;	支配度に＋２、相手に－２
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	ENDIF
+ENDIF
+;固定で獲得するソース
+SOURCE:(TCVAR:ARG:行為対象):歓楽 = 200
+
+
+IF TFLAG:成否用変数 == -1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.10
+ELSEIF TFLAG:成否用変数 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.00
+ELSE
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 2.00
+ENDIF
+SELECTCASE ABL:ARG:说话技巧技能
+	CASE 0
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.20
+	CASE 1
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.40
+	CASE 2
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.70
+	CASE 3
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.00
+	CASE 4
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.50
+	CASEELSE
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 2.00
+ENDSELECT
+
+;会话累積値
+TCVAR:ARG:会话累積値 += 90 / (3 + ABL:ARG:说话技巧技能)
+
+CFLAG:ARG:待機時間 += 10
+VARSET ARG
+RETURN 1
+

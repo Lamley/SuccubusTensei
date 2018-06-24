@@ -1,0 +1,44 @@
+﻿
+@GET_CUP_SIZE(ARG)
+;引数として指定されたキャラクターのカップサイズを、「1がAAA,2がAA,3がA,4がB…」となるよう返す。
+;男であるか、胸围と腰围のサイズのどちらか又は両方が指定されていない場合は-3を返し、AAA未満なら-1を返す。Z超は特に制限しない。
+;
+;
+;
+;
+;引数ARGはゲーム内のキャラクターの番号を指定
+
+;性別判定
+SIF GETBIT(TALENT:ARG:性別,0) == 0
+	RETURN -2
+
+;胸围と腰围の判定
+SIF BASE:ARG:胸囲 <= 0 && BASE:ARG:胴囲 <= 0
+	RETURN -2
+
+;CFLAG:ARG:36（カップサイズ）の値については特に参照しない。
+LOCAL = 0
+;LOCALはカップサイズ用変数、LOCAL:1は胸围補正値、LOCAL:2は腰围補正値、LOCAL:3は身高補正値
+;カップサイズに対する倍率を1000倍した値で算出される。
+LOCAL:1 = ( (MAXBASE:ARG:33 * 100 - MAXBASE:ARG:31 * 54) * 10 / 25)
+LOCAL:2 = -( (MAXBASE:ARG:34 * 100 - MAXBASE:ARG:31 * 38) * 100 / 342)
+LOCAL:3 = ( (MAXBASE:ARG:31 * 100 - 1588 * 100) / 23)
+LOCAL:4 = 17500 + (LOCAL:1 + LOCAL:2 + LOCAL:3) * 25 / 10
+
+;AAAになるためにはトップ杏ダー差3.75cm以上、そこから2.5cm大きくなるたびに一つずつ増えていく
+WHILE (LOCAL:4 >= 3750)
+	LOCAL += 1
+	LOCAL:4 -= 2500
+WEND
+
+IF LOCAL <= 0
+	RETURN -1
+;ちなみにZ超は26(AtoZ)+2=28以上
+ELSE
+	RETURN LOCAL
+ENDIF
+	
+
+
+
+

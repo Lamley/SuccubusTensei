@@ -1,0 +1,52 @@
+﻿@COM_ABLE1200(ARG)
+
+SIF TCVAR:MASTER:イベント != 3
+	RETURN 0
+SIF TALENT:(TCVAR:1:行為対象):200
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(1200)
+
+@COM1200(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+		PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に３０分調教させてと言った
+
+DRAWLINE
+WAIT
+;相手からの好意が200以上、肉欲が50以上（又は好意が400以上）、服从が5以上、愛情が3以上でなければ相手にされない
+IF (TA:(TCVAR:ARG:行為対象):ARG:2 >= 5) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 3) | (TA:(TCVAR:ARG:行為対象):ARG:3 >= 400)) && (TA:(TCVAR:ARG:行為対象):ARG:0 >= 50) && (TA:(TCVAR:ARG:行為対象):ARG:3 < 200)
+ELSE
+;但し、確率でOK
+	A = RAND(900)
+	A = A * TA:ARG:(CFLAG:(TCVAR:ARG:行為対象):タイプ):5 / 100
+	IF !(A >850)
+		PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%にうまく逃げられた
+;好意度、情欲度に-1
+		TA:(TCVAR:ARG:行為対象):ARG:3 -= 1
+		TA:(TCVAR:ARG:行為対象):ARG:4 -= 1
+
+		CALL EVENT_ESCAPE_ALL
+;;;		支配度に－１０、相手に＋５
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+		CFLAG:ARG:待機時間 += 10
+		RETURN 1
+	ENDIF
+ENDIF
+
+
+PRINTL 調教する
+;調教
+FLAG:タイマー = TIME + 28
+CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,7)
+CFLAG:ARG:待機時間 += 2
+
+;;;		支配度に＋１０、相手に－１５
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 15
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 5
+
+VARSET ARG
+RETURN 1

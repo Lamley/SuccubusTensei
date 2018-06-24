@@ -1,0 +1,14 @@
+﻿@COM_MESSAGE_800
+IF !(TFLAG:成否用変数 == -2)
+	PRINTL <谈话>
+	SELECTCASE TFLAG:成否用変数
+		CASE 2
+			PRINTL 非常热烈的交谈起来……
+		CASE 1
+			PRINTL 时间快乐的过去了……
+		CASE -1
+			PRINTFORML 会话中断，气氛十分尴尬……
+	ENDSELECT
+ENDIF
+
+

@@ -1,0 +1,214 @@
+﻿;===========================================================
+;	調教菜單登録パッチ Emuera対応版
+;===========================================================
+;変数の説明-------------------------------------------------
+;TFLAG:204…主に現在選択している調教指令番号の一時的な保存
+;TFLAG:224…おねだり口上抑制フラグ
+;FLAG:550…菜單の長さ
+;FLAG:551～560…指令番号を保存
+;STR:20…調教菜單の登録の際、行番号揃える為に一時的に使用、他で再使用OK
+
+;関数の説明-------------------------------------------------
+;@COMSEQ_REGISTER          USERCOMから呼び出される調教菜單登録
+;@COMSEQ_SHOW              登録した調教菜單を表示
+;@COMSEQ_TRAIN             USERCOMから調教菜單実行
+;@MULTI_COMABLE            指令が実行可能かどうか調べる
+;@COMSEQSUB_PRINT_COMLIST  登録時の指令リスト表示
+;@COMSEQSUB_TRAIN_DO       調教菜單実行の実体
+
+;-----------------------------------------------------------
+;調教菜單の登録
+;破壊する変数 : TFLAG:204
+;LOCAL:0 … ループ変数
+;LOCAL:1 … 繰り返し時動作に使用
+;-----------------------------------------------------------
+@COMSEQ_REGISTER
+PRINTL 調教菜單登録
+VARSET LOCAL, 0
+FOR LOCAL, 0, 10
+	$INPUT_LOOP
+	CALL COMSEQSUB_PRINT_COMLIST
+	SIF FLAG:550 > 0
+		PRINTLC [998] 重设调教菜单
+	SIF LOCAL:0 > 0
+		PRINTLC [999] 重复以上选择
+	IF LOCAL:0 == 0 && FLAG:550 > 0
+		PRINTLC [1000] 不进行变更返回
+	ELSEIF LOCAL:0 == 0
+		PRINTLC [1000] 不进行变更返回
+	ELSE
+		PRINTLC [1000] 保存并返回
+	ENDIF
+	PRINTL 
+	DRAWLINE
+	CALL COMSEQ_SHOW
+	PRINTFORML 菜單 {LOCAL:0+1} 
+	INPUT
+	IF RESULT == 1000 && LOCAL:0 == 0
+		RETURN 0
+	ELSEIF RESULT < 0 || RESULT > 999
+		BREAK
+	ENDIF
+
+	;リセットの処理
+	IF RESULT == 998 && FLAG:550 > 0
+		TFLAG:204 = 0
+		LOCAL:0 = 0
+		LOCAL:2 = 550
+		$RESET_MENU_LOOP
+		FLAG:(LOCAL:2) = 0
+		LOCAL:2 += 1
+		SIF LOCAL:2 <= 560
+			GOTO RESET_MENU_LOOP
+		GOTO INPUT_LOOP
+	;繰り返しの処理
+	ELSEIF RESULT == 999 && LOCAL:0 > 0
+		;現時点で何回目まで登録してるかをとっておく
+		LOCAL:1 = LOCAL:0
+		;二重REPEATはできない
+		$COMSEQ_REPEAT
+		;総数が10に達したらBREAK
+		SIF LOCAL:0 > 9
+			BREAK
+		LOCAL:2 = 551 + LOCAL:0
+		LOCAL:3 = 551 + (LOCAL:0 % LOCAL:1)
+		FLAG:(LOCAL:2) = FLAG:(LOCAL:3)
+		FLAG:550 += 1
+		LOCAL:0 += 1
+		GOTO COMSEQ_REPEAT
+	ENDIF
+
+	;TFLAG:204に選んだ調教指令を代入
+	TFLAG:204 = RESULT
+	;TFLAG:204に選んだ調教指令が登録できるかをチェック
+	CALL MULTI_COMABLE, TFLAG:204
+	IF RESULT == 0
+		PRINTL 无法登录
+		GOTO INPUT_LOOP
+	ENDIF
+	;登録できる番号が入力されたので登録
+	LOCAL:1 = 551 + LOCAL:0
+	FLAG:(LOCAL:1) = TFLAG:204
+	SIF LOCAL:0 == 0
+		FLAG:550 = 0
+	FLAG:550 += 1
+NEXT
+
+PRINTW 调教菜单登录完了
+SIF RESULT == 999
+	CALL COMSEQ_SHOW
+TFLAG:204 = 0
+RETURN 0
+
+;-----------------------------------------------------------
+;調教菜單の表示
+;-----------------------------------------------------------
+@COMSEQ_SHOW
+VARSET LOCAL, 0
+PRINTL 目前已经登录的调教菜单
+REPEAT FLAG:550
+	LOCAL = 551 + COUNT
+	PRINTFORM %TRAINNAME:(FLAG:LOCAL)%
+	;同指令連続実行を×で表示してみる
+	LOCAL:1 = 1
+	$TIMES_EXP_CHECK
+	IF COUNT < FLAG:550 - 1
+		LOCAL:2 = COUNT + 1
+		LOCAL:3 = 551 + LOCAL:2
+		IF FLAG:(LOCAL:3) == FLAG:LOCAL
+			LOCAL:1 += 1
+			COUNT += 1
+			GOTO TIMES_EXP_CHECK
+		ENDIF
+	ENDIF
+	SIF LOCAL:1 > 1
+		PRINTFORM ×{LOCAL:1}
+	SIF COUNT < FLAG:550 - 1
+		PRINT  → 
+REND
+PRINTL  
+
+;-----------------------------------------------------------
+;実行可能な指令のリストを表示する
+;破壊する変数 : STR:20
+;emueraのPRINTFORMCの仕様上複素数は対応できないため
+;-----------------------------------------------------------
+@COMSEQSUB_PRINT_COMLIST
+VARSET LOCAL
+LOCAL:2 = 0
+FOR LOCAL, 0, 1000
+	CALL MULTI_COMABLE, LOCAL
+	IF RESULT == 1
+		;スペースと指令番号とTALENTNAMEを表示する
+		PRINTFORMLC [{LOCAL, 3}] %TRAINNAME:LOCAL%
+		LOCAL:2 = LOCAL:2 +1
+		IF LOCAL:2%3 ==0
+			PRINTL
+			LOCAL:2 = 0
+		ENDIF
+	ENDIF
+NEXT
+PRINTL 
+RETURN 0
+
+;-----------------------------------------------------------
+;与えられた指令番号の調教指令が実行可能かどうか調べる
+;CSVからTRAINNAMEを取得してその文字列数が2以上(コメントアウトされていない)場合、
+;COM_ABLEを呼び出す
+;引数  ARG  : 指令番号xxx
+;返値  1 指令番号xxxの調教指令が実行可能
+;      0 （封印されているとかそもそもそんな指令ないとかで）不可能
+;内部でCOM_ABLExxxを呼び出すので，色々と変数が破壊されるかもしれない
+;-----------------------------------------------------------
+@MULTI_COMABLE, ARG
+;CSVにない調教指令名なら不可
+IF STRLENS(TRAINNAME:ARG) == 0
+	RETURN 0
+;COM_ABLExxxに分岐
+ELSE
+	;調教菜單実行中を表すTFLAGを設定する
+	TFLAG:224 = 555
+	TRYCALLFORM COM_ABLE{ARG}
+	;調教菜單実行中を表すTFLAGをリセットする
+	TFLAG:224 = 0
+	RETURN RESULT
+ENDIF
+
+;-----------------------------------------------------------
+;調教菜單の実行
+;-----------------------------------------------------------
+@COMSEQ_TRAIN
+PRINTFORML 调教菜单开始实行
+CALL COMSEQ_SHOW
+;調教菜單実行中を表すTFLAGを設定する
+TFLAG:224 = 555
+;菜單の長さ回繰り返す
+LOCAL:1 = 0
+;PREVCOMを待避させておく
+LOCAL = PREVCOM
+REPEAT FLAG:550
+	CALLFORM COM_ABLE{FLAG:(551 + COUNT)}
+	IF RESULT == 0
+		LOCAL:1 = 1
+		BREAK
+	ENDIF
+	SELECTCOM:(COUNT + 1) = FLAG:(551 + COUNT)
+	PREVCOM = FLAG:(551 + COUNT)
+REND
+IF LOCAL:1 == 0
+	CALLTRAIN FLAG:550
+ELSE
+	;調教菜單が実行できないのでTFLAGをリセットする
+	TFLAG:224 = 0
+	PRINTL 所登录的指令目前无法实行
+ENDIF
+PREVCOM = LOCAL
+RETURN 0
+
+;-----------------------------------------------------------
+;調教菜單の終了後に自動実行されるイベント関数
+;破壊する変数 :TFLAG:224　というかこれをリセットする
+;-----------------------------------------------------------
+@CALLTRAINEND
+;調教菜單実行中を表すTFLAGをリセットする
+TFLAG:224 = 0

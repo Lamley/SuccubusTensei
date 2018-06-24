@@ -1,0 +1,183 @@
+﻿@COM_ABLE2070(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:LOCAL:2,1)
+	RETURN 0
+SIF !CAN_COM2070(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+SIF TEQUIP:LOCAL:下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 79
+	RETURN 0
+;男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 78
+	RETURN 0
+;男性器のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＡオンリーＴ == 1
+	RETURN 0
+;行為者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+;;;2012/02/07 従順3以上　または　従順2かつ屈服刻印2以上　以外は無理にした
+SIF !(ABL:(TCVAR:LOCAL:行為対象):従順 >= 3) && !((ABL:(TCVAR:LOCAL:行為対象):従順 == 2) && (MARK:(TCVAR:LOCAL:行為対象):屈服刻印 >= 2))
+	RETURN 0
+;行為者が男性器なし且つ捆绑式假阴茎なし
+SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(2070)
+;-------------------------------------------------
+;背面座位肛交
+;-------------------------------------------------
+@COM2070(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 背面座位肛交(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+
+;男性器のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == 77
+	CFLAG:(TCVAR:ARG:行為対象):ＡオンリーＰ = 1
+ENDIF
+
+TEQUIP:(TCVAR:ARG:行為対象):アナル = 0
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 70
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 150
+DOWNBASE:ARG:体力 += 70
+DOWNBASE:ARG:气力 += 150
+
+SOURCE:ARG:性行動 = 120
+SOURCE:ARG:快Ｃ = 300
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 250
+SOURCE:(TCVAR:ARG:行為対象):快Ａ = 350
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 250
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 350
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 700
+SOURCE:(TCVAR:ARG:行為対象):露出 = 200
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 800
+SOURCE:(TCVAR:ARG:行為対象):反感 = 1200
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,1) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 60
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 900
+
+;Aへの痛苦は先に処理しておく
+CALL PAIN_CHECK_A(TCVAR:ARG:行為対象)
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;射精に関係なく行われる処理はここから
+;奴隷のＡ⇔調教者のＰの汚れが移動
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):4
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):7
+STAIN:(TCVAR:ARG:行為対象):4 |= STAIN:ARG:2
+STAIN:(TCVAR:ARG:行為対象):7 |= STAIN:ARG:2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;;;EXP:(TCVAR:ARG:行為対象):Ａ经验 ++
+EXP:(TCVAR:ARG:行為対象):Ａ性交经验 ++
+EXP:ARG:Ｃ插入经验 ++
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,4)
+TCVAR:ARG:挿入 = 2
+CFLAG:ARG:待機時間 += 2
+
+
+VARSET ARG
+RETURN 1
+
+@CAN_COM2070(ARG,ARG:1)
+#FUNCTION
+;;;VARSET LOCAL
+
+;绳子で縛られている場合は無視（绳子が無い時のみ実行判定を行う）
+SIF TEQUIP:(ARG:1):绳子 == 1
+	RETURNF 1
+
+A = 0
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:(ARG:1):欲望
+	A += ABL:(ARG:1):欲望 * 3
+ENDIF
+;ABL:Ａ感觉
+IF ABL:(ARG:1):Ａ感觉
+	A += ABL:(ARG:1):Ａ感觉 * 2
+ENDIF
+;快乐刻印
+IF MARK:(ARG:1):快乐刻印
+	A += MARK:(ARG:1):快乐刻印 * 3
+ENDIF
+;PALAM:润滑（の不足）
+IF PALAM:(ARG:1):润滑 < PALAMLV:3
+	A -= 5
+ENDIF
+;PALAM:情欲
+IF GETPALAMLV(PALAM:(ARG:1):情欲,5)
+	A += GETPALAMLV(PALAM:(ARG:1):情欲,5) * 3
+ENDIF
+;害羞
+IF TALENT:(ARG:1):羞恥心 > 0
+	A -= 2
+ENDIF
+;否定快感
+IF TALENT:(ARG:1):快感応答 < 0 && !TALENT:(ARG:1):淫乱
+	A -= 5
+ENDIF
+;讨厌男人（恋慕、相亲相爱で無効）
+IF TALENT:(ARG:1):性別嗜好 & 1 && !(TALENT:ARG:2 & 1) && !LOVE_CHECK(ARG:1,ARG)
+	A -= 12
+ENDIF
+;淫乱
+IF TALENT:(ARG:1):淫乱
+	A += 15
+ENDIF
+;A経験
+IF EXP:(ARG:1):Ａ经验 < EXPLV:2
+	A -= 30
+ENDIF
+;調教者が扶她
+IF (TALENT:ARG:2 & 3) == 3
+	A += 4
+ENDIF
+
+;春药
+IF TEQUIP:(ARG:1):春药
+	A += 6
+ENDIF
+
+;汚れあり
+IF STATIN_POINT(ARG,2)
+	A -= STATIN_POINT(ARG,2) * (2 - TALENT:(ARG:1):汚臭耐性) / 2
+ENDIF
+
+
+;実行できない
+SIF A < 52
+	RETURNF 0
+RETURNF 1
+

@@ -1,0 +1,188 @@
+﻿@bite14
+	;夜总会
+	;===============================================================================
+	;打工をする
+	;===============================================================================
+;	LOCAL = RAND:3
+	;--------------------------------------------------------------------------
+	;夜总会
+	;--------------------------------------------------------------------------
+;LOCAL = 0判定用
+;(LOCAL:1) = 0客の名前
+;
+
+;判定に使えそうなもの
+;ABL
+;说话技巧技能
+;教養
+;欲望
+;侍奉精神
+;露出癖
+;BASE
+;評判
+;刺激度
+;容姿
+;TALENT
+;献身
+;魅力
+;魅惑
+;谜之魅力
+;鼓舞
+;あたりで判定して成功すればおこずかい失敗でチェンジ
+;
+;
+	;--------------------------------------------------------------------------
+	;計算部分
+	;--------------------------------------------------------------------------
+VARSET LOCAL
+;说话技巧
+SIF RAND(15) - ABL:MASTER:说话技巧技能 - ABL:MASTER:教養 - TALENT:MASTER:鼓舞 * 3 < 1
+	LOCAL += 1
+;献身
+SIF RAND(15) - ABL:MASTER:侍奉精神 - ABL:MASTER:料理技能 - TALENT:MASTER:献身 * 3 < 1
+	LOCAL += 1
+;色気
+SIF RAND(15) - ABL:MASTER:欲望 - ABL:MASTER:露出癖 - TALENT:MASTER:魅惑 * 3 < 1
+	LOCAL += 1
+;好きな人
+FOR LOCAL:2,2,CHARANUM
+	IF TA:1:(LOCAL:2):1 >= 0
+		LOCAL:3 = TA:1:(LOCAL:2):1
+		LOCAL:6 = TA:1:(LOCAL:2):3
+		IF (LOCAL:3 * 100 + LOCAL:6) >= LOCAL:4
+			LOCAL:4 = (LOCAL:3 * 100 + LOCAL:6)
+			LOCAL:5 = LOCAL:2
+		ENDIF
+	ENDIF
+NEXT
+
+	;--------------------------------------------------------------------------
+	;実行部分
+	;--------------------------------------------------------------------------
+PRINTL ＜夜总会接客＞
+PRINTFORMW %CALLNAME:MASTER%被客人指名要求了。
+PRINT 今天的客人是
+IF RAND:2 == 0 && LOCAL:5 != 0
+	PRINTFORM %CALLNAME:(LOCAL:5)%の姐姐
+	TA:34:1:0 += 10
+	TA:34:1:4 += 10
+ELSE
+	IF RAND:4 == 3
+			PRINT 普通的
+	ELSEIF RAND:4 == 2
+			PRINT 脏兮兮的
+	ELSEIF RAND:4 == 1
+			PRINT 附近的
+	ELSE
+			PRINT 打扮得体的
+	ENDIF
+	IF RAND:4 == 3
+		PRINT 大叔
+	ELSEIF RAND:4 == 2
+		PRINT 上班族
+	ELSEIF RAND:4 == 1
+		PRINT 流氓
+	ELSE
+		PRINT 老爷爷
+	ENDIF
+ENDIF
+PRINTFORMW 呢。
+IF RAND:3 == 2
+	;体型
+	PRINTFORM 客人希望的是
+		;幼儿体型
+		IF TALENT:MASTER:100 == -2
+			PRINTFORM 年幼的外表
+		;矮小体型
+		ELSEIF TALENT:MASTER:100 == -1
+			PRINTFORM 天真无邪的笑容
+		;普通体型
+		ELSEIF TALENT:MASTER:100 == 0
+			PRINTFORM 青春的姿容
+		;長身
+		ELSEIF TALENT:MASTER:100 == 1
+			PRINTFORM 模特的体型
+		;長身以上
+		ELSEIF TALENT:MASTER:100 == 2
+			PRINTFORM 大个儿
+		ENDIF
+		IF RAND:4 == 3
+			PRINTFORMW 瞪大眼睛
+		ELSEIF RAND:4 == 2
+			PRINTFORMW 一种违背伦理的感觉产生了
+		ELSEIF RAND:4 == 1
+			PRINTFORMW 兴奋啊
+		ELSE
+			PRINTFORMW 无法抑制情欲
+		ENDIF
+ELSEIF RAND:3 == 1
+	;胸
+	PRINTFORM その目は%CALLNAME:MASTER%の。
+		;绝壁 or (男人＋並乳)
+		IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+			;女性
+			IF TALENT:MASTER:性別 & 1
+				;幼儿体型
+				SIF TALENT:MASTER:100 == -2
+					PRINTFORM 和体型相应的
+				;長身以上
+				SIF TALENT:MASTER:100 >= 1
+					PRINTFORM 和体型相反的
+			ENDIF
+			PRINTFORM 平坦的
+			;贫乳
+			ELSEIF TALENT:MASTER:105 == -1
+			;矮小体型
+			SIF TALENT:MASTER:100 == -1
+				PRINTFORM 和体型相应的
+			;長身以上
+			SIF TALENT:MASTER:100 >= 1
+				PRINTFORM 和体型相反的
+			PRINTFORM 略有凸起的
+			;巨乳
+			ELSEIF TALENT:MASTER:105 == 1
+			;矮小体型 or 幼儿体型
+				SIF TALENT:MASTER:100 == -1 || TALENT:MASTER:100 == -2
+					PRINTFORM 和体型相反的
+				PRINTFORM 丰满的
+			;爆乳
+			ELSEIF TALENT:MASTER:105 == 2
+				PRINTFORM 过度丰满的
+			ENDIF
+			PRINTFORMW 胸部被凝视着。
+	ELSEIF RAND:3 == 0
+		;足
+		PRINTFORMW 挨在%CALLNAME:MASTER%旁边坐好，手游走到了腰间。
+	ENDIF
+	PRINTFORML …………
+	PRINTFORML ………
+	PRINTFORML ……
+;判定大成功
+IF LOCAL == 3
+		PRINTFORML 客人对%CALLNAME:MASTER%有着很高的评价。
+		PRINTFORMW 约定下一次也要指名这个人，客人心情舒畅的离去了…………。
+		BASE:MASTER:評判 += 30
+		MONEY:MASTER += 2000
+;判定成功
+ELSEIF LOCAL == 2
+		PRINTFORML 好歹は%CALLNAME:MASTER%让客人满意了。
+		PRINTFORMW 约定下一次也要指名这个人し、客离开了店里…………。
+		BASE:MASTER:評判 += 20
+		MONEY:MASTER += 1000
+;判定中成功
+ELSEIF LOCAL == 1
+		PRINTFORML %CALLNAME:MASTER%总算是没有怠慢客人。
+		PRINTFORMW 希望下次会让客人更加满足吧…………。
+		BASE:MASTER:評判 += 10
+		MONEY:MASTER += 500
+;判定失敗
+ELSEIF LOCAL == 0
+		PRINTFORML 「换人」
+		PRINTFORML 客人对%CALLNAME:MASTER%完全没有兴趣了。
+		PRINTFORMW %CALLNAME:MASTER%在深夜的店里默默退开了…………。
+		BASE:MASTER:評判 -= 5
+		MONEY:MASTER -= 500
+ENDIF
+DOWNBASE:MASTER:ストレス -= 100
+RETURN
+

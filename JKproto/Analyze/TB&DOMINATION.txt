@@ -1,0 +1,1271 @@
+J:102 = 1
+FOR J:101,1,CHARANUM
+	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
+		J:102 = J:101
+NEXT
+
+PRINTFORM   支配者 = %NAME:(J:102)%
+PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)}
+
+
+
+
+
+
+
+
+
+
+
+Search "TB:0:0:0" (0 hits in 0 files)
+Search "TB:" (164 hits in 30 files)
+  G:\emuera\eraJK私\ERB\COMF\COMF1002.ERB (1 hit)
+	Line 17: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1005.ERB (1 hit)
+	Line 27: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 5
+  G:\emuera\eraJK私\ERB\COMF\COMF1007.ERB (1 hit)
+	Line 65: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 5
+  G:\emuera\eraJK私\ERB\COMF\COMF1010.ERB (4 hits)
+	Line 54: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 57: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 98: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 101: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1011.ERB (1 hit)
+	Line 43: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1012.ERB (1 hit)
+	Line 41: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF1013.ERB (1 hit)
+	Line 36: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1014.ERB (2 hits)
+	Line 26: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 28: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1015.ERB (5 hits)
+	Line 38: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 2
+	Line 47: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 58: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 59: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1016.ERB (5 hits)
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 40: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+	Line 47: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 60: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 61: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1110.ERB (1 hit)
+	Line 37: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+  G:\emuera\eraJK私\ERB\COMF\COMF1200.ERB (4 hits)
+	Line 33: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 34: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+	Line 48: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 15
+	Line 49: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 5
+  G:\emuera\eraJK私\ERB\COMF\COMF2700.ERB (8 hits)
+	Line 56: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 3
+	Line 57: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 4
+	Line 77: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 14
+	Line 78: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 8
+	Line 96: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 12
+	Line 97: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 7
+	Line 122: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 7
+	Line 123: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 10
+  G:\emuera\eraJK私\ERB\COMF\COMF2750.ERB (6 hits)
+	Line 50: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 30
+	Line 51: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 40
+	Line 70: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 14
+	Line 71: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 3
+	Line 84: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 12
+	Line 85: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF2800.ERB (6 hits)
+	Line 25: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+	Line 41: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 10
+	Line 48: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 49: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 55: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 56: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+  G:\emuera\eraJK私\ERB\COMF\COMF2850.ERB (6 hits)
+	Line 16: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 22: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 28: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 34: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 40: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 46: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF3007.ERB (1 hit)
+	Line 52: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF800.ERB (6 hits)
+	Line 28: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 44: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 51: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 52: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 58: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 59: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+  G:\emuera\eraJK私\ERB\COMF\COMF998.ERB (4 hits)
+	Line 29: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 30: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 40: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 3
+  G:\emuera\eraJK私\ERB\FIGHT1.ERB (2 hits)
+	Line 8: F:101 = TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG * BASE:ARG:評判 / 1000
+	Line 9: F:111 = TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) * BASE:(ARG:1):評判 / 1000
+  G:\emuera\eraJK私\ERB\INFO.ERB (3 hits)
+	Line 48: 	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
+	Line 48: 	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
+	Line 53: PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)}
+  G:\emuera\eraJK私\ERB\NMKAIWA.ERB (2 hits)
+	Line 91: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 92: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+  G:\emuera\eraJK私\ERB\NPC_ACTION.ERB (1 hit)
+	Line 130: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION1.ERB (15 hits)
+	Line 189: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 190: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 1
+	Line 256: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 257: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 3
+	Line 303: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 322: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 327: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 332: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 337: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 342: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 347: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 392: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 393: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 4
+	Line 412: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 413: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 3
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION2.ERB (16 hits)
+	Line 184: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 185: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 1
+	Line 249: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 250: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 3
+	Line 296: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 315: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 320: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 325: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 330: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 335: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 340: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 356: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 418: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 419: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 4
+	Line 438: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 439: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 3
+  G:\emuera\eraJK私\ERB\NPC_ENKOU.ERB (7 hits)
+	Line 41: 		TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 1
+	Line 129: TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 3
+	Line 191: 			TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 1
+	Line 292: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):ARG += 1
+	Line 293: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) += 1
+	Line 363: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):ARG += 2
+	Line 364: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 2
+  G:\emuera\eraJK私\ERB\NPC_KAN.ERB (28 hits)
+	Line 9: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 10: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 18: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 19: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 27: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 28: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 36: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 37: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 59: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 60: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 72: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 73: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 110: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 111: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 4
+	Line 131: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 132: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 3
+	Line 148: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 2
+	Line 149: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 165: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 166: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 186: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+	Line 187: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 5
+	Line 213: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 214: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 4
+	Line 234: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 235: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 3
+	Line 308: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 309: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 10
+  G:\emuera\eraJK私\ERB\NPC_MOVEMENT.ERB (1 hit)
+	Line 42: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\SHIHAI_SYUUKEI.ERB (21 hits)
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 157: 			SIF TB:0:(J:111):(S:398) > 0
+	Line 158: 				TB:0:(J:111):(S:398) = 0
+	Line 187: 			SIF TB:1:(J:111):(S:198) > 0
+	Line 188: 				TB:1:(J:111):(S:198) = 0
+	Line 217: 			SIF TB:2:(J:111):(S:298) > 0
+	Line 218: 				TB:2:(J:111):(S:298) = 0
+	Line 392: 	SIF TB:0:(J:111):(S:998) > 0
+	Line 393: 		TB:0:(J:111):(S:998) = 0
+	Line 398: 	SIF TB:1:(J:111):(S:998) > 0
+	Line 399: 		TB:1:(J:111):(S:998) = 0
+	Line 405: 	SIF TB:2:(J:111):(S:998) > 0
+	Line 406: 		TB:2:(J:111):(S:998) = 0
+  G:\emuera\eraJK私\ERB\お弁当.ERB (4 hits)
+	Line 63: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 64: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+	Line 73: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 74: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+Search "TB" (814 hits in 154 files)
+  G:\emuera\eraJK私\ERB\CLOTHES\CHANGE_CLOTHES.ERB (4 hits)
+	Line 15: 	SIF LOCAL == 216 && !GETBIT(TALENT:ARG:2,0)
+	Line 18: 	SIF LOCAL == 215 && GETBIT(TALENT:ARG:2,1)
+	Line 40: ELSEIF RESULT < 200 || RESULT > 217 || (RESULT == 216 && !GETBIT(TALENT:ARG:2,0))
+	Line 92: 			IF GETBIT(TALENT:ARG:2,1)
+  G:\emuera\eraJK私\ERB\CLOTHES\SUGGESTIVE_CLOTHES.ERB (12 hits)
+	Line 12: IF GETBIT(LOCAL:1,0)
+	Line 13: 	IF GETBIT(LOCAL:1,1)
+	Line 16: 	ELSEIF GETBIT(LOCAL:1,3)
+	Line 23: ELSEIF GETBIT(LOCAL:1,1)
+	Line 24: 	IF GETBIT(LOCAL:1,2)
+	Line 31: ELSEIF GETBIT(LOCAL:1,2)
+	Line 32: 	IF GETBIT(LOCAL:1,3)
+	Line 39: ELSEIF GETBIT(LOCAL:1,3)
+	Line 66: 	SIF LOCAL:2 == 102 && GETBIT(LOCAL:1,0)
+	Line 68: 	SIF LOCAL:2 == 103 && GETBIT(LOCAL:1,1)
+	Line 70: 	SIF LOCAL:2 == 114 && GETBIT(LOCAL:1,2)
+	Line 72: 	SIF (LOCAL:2 == 115 || LOCAL:2 == 116 || LOCAL:2 == 117) && GETBIT(LOCAL:1,3)
+  G:\emuera\eraJK私\ERB\COMF\COMF1000.ERB (12 hits)
+	Line 19: 		IF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),1)
+	Line 28: 		ELSEIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),0)
+	Line 43: 	IF GETBIT(DA:(CFLAG:MASTER:現在地区):(LOCAL:2),9) && !(CFLAG:MASTER:鍵)
+	Line 71: SIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),0)
+	Line 73: SIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),1)
+	Line 75: SIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),2)
+	Line 103: IF RESULT == 800 && GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),0)
+	Line 107: ELSEIF RESULT == 801 && GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),1)
+	Line 111: ELSEIF RESULT == 802 && GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),2)
+	Line 176: 	IF GETBIT(DA:(CFLAG:MASTER:現在地区):(LOCAL:1),9) && !(CFLAG:MASTER:鍵)
+	Line 182: 		IF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),1)
+	Line 189: 		ELSEIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),0)
+  G:\emuera\eraJK私\ERB\COMF\COMF1001.ERB (2 hits)
+	Line 32: 	SETBIT CFLAG:MASTER:出席,0
+	Line 53: 	SETBIT CFLAG:MASTER:出席,1
+  G:\emuera\eraJK私\ERB\COMF\COMF1002.ERB (1 hit)
+	Line 17: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1005.ERB (2 hits)
+	Line 5: SIF !GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),8)
+	Line 27: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 5
+  G:\emuera\eraJK私\ERB\COMF\COMF1006.ERB (51 hits)
+	Line 3: SIF !GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),7)
+	Line 191: 	SETBIT LOCAL,0
+	Line 194: 	SETBIT LOCAL,1
+	Line 197: 	SETBIT LOCAL,2
+	Line 200: 	SETBIT LOCAL,3
+	Line 203: 	SETBIT LOCAL,4
+	Line 206: 	SETBIT LOCAL,5
+	Line 209: 	SETBIT LOCAL,6
+	Line 219: 		SIF GETBIT(SHOP_CATEGORY(),3)
+	Line 222: 		SIF GETBIT(SHOP_CATEGORY(),0) || GETBIT(SHOP_CATEGORY(),3)
+	Line 222: 		SIF GETBIT(SHOP_CATEGORY(),0) || GETBIT(SHOP_CATEGORY(),3)
+	Line 225: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),4) || GETBIT(SHOP_CATEGORY(),5) || GETBIT(SHOP_CATEGORY(),6)
+	Line 225: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),4) || GETBIT(SHOP_CATEGORY(),5) || GETBIT(SHOP_CATEGORY(),6)
+	Line 225: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),4) || GETBIT(SHOP_CATEGORY(),5) || GETBIT(SHOP_CATEGORY(),6)
+	Line 225: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),4) || GETBIT(SHOP_CATEGORY(),5) || GETBIT(SHOP_CATEGORY(),6)
+	Line 228: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 228: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 231: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 231: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 234: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 234: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 237: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 237: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 240: 		SIF GETBIT(SHOP_CATEGORY(),1)
+	Line 243: 		SIF GETBIT(SHOP_CATEGORY(),1)
+	Line 246: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 246: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 249: 		SIF GETBIT(SHOP_CATEGORY(),2)
+	Line 252: 		SIF GETBIT(SHOP_CATEGORY(),2)
+	Line 255: 		SIF GETBIT(SHOP_CATEGORY(),2)
+	Line 258: 		SIF GETBIT(SHOP_CATEGORY(),2) || GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),1)
+	Line 258: 		SIF GETBIT(SHOP_CATEGORY(),2) || GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),1)
+	Line 258: 		SIF GETBIT(SHOP_CATEGORY(),2) || GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),1)
+	Line 261: 		SIF GETBIT(SHOP_CATEGORY(),2) || GETBIT(SHOP_CATEGORY(),3)
+	Line 261: 		SIF GETBIT(SHOP_CATEGORY(),2) || GETBIT(SHOP_CATEGORY(),3)
+	Line 264: 		SIF GETBIT(SHOP_CATEGORY(),2)
+	Line 267: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),1)
+	Line 267: 		SIF GETBIT(SHOP_CATEGORY(),3) || GETBIT(SHOP_CATEGORY(),1)
+	Line 270: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 270: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),5)
+	Line 273: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 273: 		SIF GETBIT(SHOP_CATEGORY(),1) || GETBIT(SHOP_CATEGORY(),3)
+	Line 276: 		SIF GETBIT(SHOP_CATEGORY(),4)
+	Line 332: ;SETBIT LOCAL 0薬屋取り扱い 1服屋取り扱い 2装饰品店铺取り扱い 3成人商店取り扱い 4家電屋取り扱い 5小卖部取り扱い 6书店取り扱い
+	Line 337: 		SETBIT LOCAL,3
+	Line 339: 		SETBIT LOCAL,0
+	Line 341: 		SETBIT LOCAL,2
+	Line 343: 		SETBIT LOCAL,4
+	Line 345: 		SETBIT LOCAL,5
+	Line 347: 		SETBIT LOCAL,6
+	Line 349: 		SETBIT LOCAL,1
+  G:\emuera\eraJK私\ERB\COMF\COMF1007.ERB (1 hit)
+	Line 65: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 5
+  G:\emuera\eraJK私\ERB\COMF\COMF1010.ERB (8 hits)
+	Line 7: SIF GETBIT(CFLAG:LOCAL:食事,1)
+	Line 9: SIF TCVAR:LOCAL:行為対象 && GETBIT(CFLAG:(TCVAR:ARG:行為対象):食事,1)
+	Line 41: SETBIT CFLAG:ARG:食事 , 1
+	Line 54: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 57: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 68: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):食事 , 1
+	Line 98: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 101: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1011.ERB (1 hit)
+	Line 43: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1012.ERB (1 hit)
+	Line 41: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF1013.ERB (1 hit)
+	Line 36: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1014.ERB (3 hits)
+	Line 5: SIF !GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),4)
+	Line 26: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 28: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1015.ERB (6 hits)
+	Line 5: SIF !GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),5)
+	Line 38: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 2
+	Line 47: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 58: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 59: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1016.ERB (5 hits)
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 40: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+	Line 47: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 60: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 61: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF1044.ERB (1 hit)
+	Line 5: SIF !GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),8)
+  G:\emuera\eraJK私\ERB\COMF\COMF1110.ERB (1 hit)
+	Line 37: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+  G:\emuera\eraJK私\ERB\COMF\COMF1200.ERB (4 hits)
+	Line 33: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 34: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+	Line 48: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 15
+	Line 49: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 5
+  G:\emuera\eraJK私\ERB\COMF\COMF2700.ERB (8 hits)
+	Line 56: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 3
+	Line 57: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 4
+	Line 77: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 14
+	Line 78: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 8
+	Line 96: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 12
+	Line 97: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 7
+	Line 122: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 7
+	Line 123: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 10
+  G:\emuera\eraJK私\ERB\COMF\COMF2750.ERB (6 hits)
+	Line 50: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 30
+	Line 51: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) -= 40
+	Line 70: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 14
+	Line 71: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 3
+	Line 84: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 12
+	Line 85: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(J:114) += 2
+  G:\emuera\eraJK私\ERB\COMF\COMF2800.ERB (6 hits)
+	Line 25: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+	Line 41: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 10
+	Line 48: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 49: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 55: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 56: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+  G:\emuera\eraJK私\ERB\COMF\COMF2820.ERB (5 hits)
+	Line 19: ;;;强奸の場合は女性はぺ二番装着と仮定（未実装だが）のでGETBIT(TALENT:XXX:2,1)は判定しない
+	Line 20: 		IF !GETBIT(TALENT:(TCVAR:ARG:行為対象):2,0)
+	Line 32: 		IF !GETBIT(TALENT:ARG:2,0)
+	Line 44: 		IF !GETBIT(TALENT:ARG:2,0) || !GETBIT(TALENT:(TCVAR:ARG:行為対象):2,0)
+	Line 44: 		IF !GETBIT(TALENT:ARG:2,0) || !GETBIT(TALENT:(TCVAR:ARG:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\COMF2850.ERB (6 hits)
+	Line 16: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 22: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 28: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 34: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 40: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 46: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF3007.ERB (2 hits)
+	Line 32: IF !GETBIT(DA:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置),10)
+	Line 52: TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\COMF\COMF800.ERB (6 hits)
+	Line 28: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+	Line 44: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 51: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 52: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	Line 58: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 59: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+  G:\emuera\eraJK私\ERB\COMF\COMF810.ERB (13 hits)
+	Line 86: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 175: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 188: SIF (GETBIT(TALENT:LOCAL:2,1)) && TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 18
+	Line 191: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 197: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+	Line 224: SIF (GETBIT(TALENT:LOCAL:2,1)) && TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 78
+	Line 227: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 233: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+	Line 460: IF TALENT:(TCVAR:ARG:行為対象):处女 == 1 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,3)
+	Line 462: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,3
+	Line 600: SIF !GETBIT(TALENT:ARG:2,0)
+	Line 681: SIF !GETBIT(TALENT:ARG:2,0)
+	Line 798: SIF !GETBIT(TALENT:ARG:2,0)
+  G:\emuera\eraJK私\ERB\COMF\COMF998.ERB (4 hits)
+	Line 29: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 30: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+	Line 39: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 40: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 3
+  G:\emuera\eraJK私\ERB\COMF\COM_MESSAGE\COM_MESSAGE810.ERB (2 hits)
+	Line 467: 	IF !GETBIT(TALENT:ARG:2,1)
+	Line 502: 	IF !GETBIT(TALENT:ARG:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF10.ERB (2 hits)
+	Line 115: ;IF TEQUIP:(TCVAR:ARG:行為対象):ビデオ撮影 && !GETBIT(CFLAG:3,0)
+	Line 117: ;	SETBIT CFLAG:3,0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF100.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 29: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF101.ERB (4 hits)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 11: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 31: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 37: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF102.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 25: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF103.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 25: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF105.ERB (6 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 29: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 128: SIF TALENT:ARG:处女 && !GETBIT(CFLAG:ARG:异常经验,1)
+	Line 129: 	SETBIT CFLAG:ARG:异常经验,1
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF106.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 25: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF107.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 29: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF108.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 29: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF109.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 25: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF11.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF110.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 25: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:(TCVAR:LOCAL:行為対象):后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF12.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF13.ERB (4 hits)
+	Line 8: ;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 10: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373)
+	Line 16: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 39: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF135.ERB (1 hit)
+	Line 8: ;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF14.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF140.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF15.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF2.ERB (1 hit)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF3.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF4.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF40.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF41.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF42.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF43.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF44.ERB (3 hits)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 98: IF TALENT:(TCVAR:ARG:行為対象):处女 == 1 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,3)
+	Line 100: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,3
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF48.ERB (1 hit)
+	Line 11: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF60.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 29: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF61.ERB (4 hits)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 11: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 31: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 37: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF62.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 25: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF63.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 25: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF65.ERB (6 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 29: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 127: SIF TALENT:(TCVAR:ARG:行為対象):处女 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,1)
+	Line 128: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,1
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF66.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 25: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF67.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 29: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF68.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 29: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 35: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF69.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 25: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF70.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 25: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 31: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF71.ERB (2 hits)
+	Line 7: SIF GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF80.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF81.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF82.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF83.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF84.ERB (4 hits)
+	Line 8: ;;;SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 11: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:下半身下着 == 373)
+	Line 17: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 41: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF85.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\性行為\COMF9.ERB (1 hit)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF921.ERB (1 hit)
+	Line 21: SIF GETBIT(TALENT:ARG:性別,1)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF931.ERB (2 hits)
+	Line 20: LOCAL = ABL:ARG:戦闘能力 - ABL:(TCVAR:ARG:行為対象):戦闘能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+	Line 20: LOCAL = ABL:ARG:戦闘能力 - ABL:(TCVAR:ARG:行為対象):戦闘能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF932.ERB (2 hits)
+	Line 20: LOCAL = ABL:ARG:戦闘能力 - ABL:(TCVAR:ARG:行為対象):戦闘能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+	Line 20: LOCAL = ABL:ARG:戦闘能力 - ABL:(TCVAR:ARG:行為対象):戦闘能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF934.ERB (1 hit)
+	Line 21: SIF GETBIT(TALENT:ARG:性別,1)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF935.ERB (3 hits)
+	Line 21: SIF GETBIT(TALENT:ARG:性別,0)
+	Line 23: LOCAL:1 = FAVOR_RANK(TCVAR:ARG:行為対象,ARG) - ABL:(TCVAR:ARG:行為対象):施虐属性 + GETBIT(TALENT:ARG:性別,0) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,0)
+	Line 23: LOCAL:1 = FAVOR_RANK(TCVAR:ARG:行為対象,ARG) - ABL:(TCVAR:ARG:行為対象):施虐属性 + GETBIT(TALENT:ARG:性別,0) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,0)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF936.ERB (3 hits)
+	Line 21: SIF GETBIT(TALENT:ARG:性別,0)
+	Line 24: LOCAL:1 += GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+	Line 24: LOCAL:1 += GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF937.ERB (3 hits)
+	Line 21: SIF GETBIT(TALENT:ARG:性別,0)
+	Line 23: LOCAL:1 = ABL:ARG:说话技巧技能 - ABL:(TCVAR:ARG:行為対象):说话技巧技能 - TALENT:(TCVAR:ARG:行為対象):態度 * 3 + GETBIT(TALENT:ARG:性別,0) * 2 - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,0) * 2
+	Line 23: LOCAL:1 = ABL:ARG:说话技巧技能 - ABL:(TCVAR:ARG:行為対象):说话技巧技能 - TALENT:(TCVAR:ARG:行為対象):態度 * 3 + GETBIT(TALENT:ARG:性別,0) * 2 - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,0) * 2
+  G:\emuera\eraJK私\ERB\COMF\襲撃\COMF961.ERB (2 hits)
+	Line 20: LOCAL = ABL:ARG:运动能力 - ABL:(TCVAR:ARG:行為対象):运动能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+	Line 20: LOCAL = ABL:ARG:运动能力 - ABL:(TCVAR:ARG:行為対象):运动能力 + GETBIT(TALENT:ARG:性別,1) - GETBIT(TALENT:(TCVAR:ARG:行為対象):性別,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2002.ERB (1 hit)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2003.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2004.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2009.ERB (1 hit)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2010.ERB (2 hits)
+	Line 116: ;IF TEQUIP:(TCVAR:ARG:行為対象):ビデオ撮影 && !GETBIT(CFLAG:3,0)
+	Line 118: ;	SETBIT CFLAG:3,0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2011.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2012.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2013.ERB (4 hits)
+	Line 8: ;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 10: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373)
+	Line 16: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 40: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2014.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2015.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2040.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2041.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2042.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2043.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2044.ERB (3 hits)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 102: IF TALENT:(TCVAR:ARG:行為対象):处女 == 1 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,3)
+	Line 104: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,3
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2048.ERB (1 hit)
+	Line 11: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2060.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 27: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2061.ERB (4 hits)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 11: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 29: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 38: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2062.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 23: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2063.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 23: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2065.ERB (6 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 27: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 129: SIF TALENT:(TCVAR:ARG:行為対象):处女 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,1)
+	Line 130: 	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,1
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2066.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 23: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2067.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 27: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2068.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	Line 27: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2069.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 23: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2070.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 23: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2071.ERB (2 hits)
+	Line 7: SIF GETBIT(TALENT:LOCAL:2,1)
+	Line 9: SIF GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2080.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2081.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2082.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2083.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2084.ERB (4 hits)
+	Line 8: ;;;SIF !GETBIT(TALENT:LOCAL:2,1)
+	Line 11: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:下半身下着 == 373)
+	Line 17: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	Line 41: SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2085.ERB (1 hit)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2100.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 27: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2101.ERB (4 hits)
+	Line 9: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 11: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 29: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 38: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2102.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 23: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2103.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 23: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2105.ERB (6 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 27: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+	Line 130: SIF TALENT:ARG:处女 && !GETBIT(CFLAG:ARG:异常经验,1)
+	Line 131: 	SETBIT CFLAG:ARG:异常经验,1
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2106.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 23: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2107.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 27: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2108.ERB (4 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 9: SIF !GETBIT(TALENT:LOCAL:2,0)
+	Line 27: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 36: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2109.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 23: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2110.ERB (3 hits)
+	Line 7: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	Line 23: SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	Line 32: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1) && EQUIP:LOCAL:捆绑式假阴茎 == 0 && EQUIP:(TCVAR:LOCAL:行為対象):捆绑式假阴茎 == 0
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2135.ERB (1 hit)
+	Line 8: ;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\COMF2140.ERB (1 hit)
+	Line 8: SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+  G:\emuera\eraJK私\ERB\COMF\Ｎ用性行為\NMESSAGE\EVENT_NMESSAGE.ERB (10 hits)
+	Line 86: 	IF GETBIT(TALENT:TARGET:2,0)
+	Line 143: 	IF GETBIT(TALENT:TARGET:2,1)
+	Line 155: 	IF GETBIT(TALENT:TARGET:2,1)
+	Line 167: 		IF GETBIT(TALENT:PLAYER:2,1)
+	Line 206: 		IF GETBIT(TALENT:PLAYER:2,1)
+	Line 470: 	IF !GETBIT(TALENT:TARGET:2,0)
+	Line 522: 	IF !GETBIT(TALENT:2,1)
+	Line 574: 	IF !GETBIT(TALENT:TARGET:2,1)
+	Line 1001: 	SIF TFLAG:29 >= 5 && GETBIT(TALENT:TARGET:2,1) == 0
+	Line 1005: 	SIF (TFLAG:29 < 5 || GETBIT(TALENT:TARGET:2,1)) && TFLAG:10 == 0 && TFLAG:11 == 0
+  G:\emuera\eraJK私\ERB\COMMON.ERB (4 hits)
+	Line 108: PRINTBUTTON (ARG > 9 ? TOSTR(ARG) # TOFULL(TOSTR(ARG))),ARG
+	Line 185: IF GETBIT(TALENT:ARG:2,0) == GETBIT(TALENT:(ARG:1):2,0)
+	Line 185: IF GETBIT(TALENT:ARG:2,0) == GETBIT(TALENT:(ARG:1):2,0)
+	Line 186: 	IF GETBIT(TALENT:ARG:2,0)
+  G:\emuera\eraJK私\ERB\FIELD\FIELD00.ERB (42 hits)
+	Line 3: ;SETBIT DA:0:0,0 は内部の存在判定に使ってますので消さないで下さい
+	Line 4: ;SETBIT DA:0:部屋番号,0 外に出れる場所
+	Line 5: ;SETBIT DA:0:部屋番号,1 中に入れる場所
+	Line 6: ;SETBIT DA:0:部屋番号,2 電車に乗れる場所
+	Line 7: ;SETBIT DA:0:部屋番号,3 屋内
+	Line 8: ;SETBIT DA:0:部屋番号,4 遊技場あり
+	Line 9: ;SETBIT DA:0:部屋番号,5 注文可
+	Line 10: ;SETBIT DA:0:部屋番号,7 買い物可
+	Line 11: ;SETBIT DA:0:部屋番号,8 打工可
+	Line 12: ;SETBIT DA:0:部屋番号,9 鍵が掛かってる
+	Line 13: ;SETBIT DA:0:部屋番号,10 ＮＰＣが自慰出来る場所
+	Line 16: SETBIT DA:0:0,0
+	Line 17: SETBIT DA:0:3,2
+	Line 18: SETBIT DA:0:8,7
+	Line 19: SETBIT DA:0:16,7
+	Line 20: SETBIT DA:0:8,8
+	Line 21: SETBIT DA:0:5,8
+	Line 22: SETBIT DA:0:6,8
+	Line 23: SETBIT DA:0:16,8
+	Line 24: SETBIT DA:0:1,3
+	Line 25: SETBIT DA:0:5,3
+	Line 26: SETBIT DA:0:6,3
+	Line 27: SETBIT DA:0:8,3
+	Line 28: SETBIT DA:0:12,3
+	Line 29: SETBIT DA:0:13,3
+	Line 30: SETBIT DA:0:16,3
+	Line 31: SETBIT DA:0:30,3
+	Line 32: SETBIT DA:0:1,10
+	Line 33: SETBIT DA:0:11,10
+	Line 34: SETBIT DA:0:30,10
+	Line 238: PRINTBUTTON (MAP_NAME_BUTTON(0,1)),1
+	Line 239: PRINTBUTTON (MAP_NAME_BUTTON(0,30)),30
+	Line 246: PRINTBUTTON (MAP_NAME_BUTTON(0,2)),2
+	Line 253: PRINTBUTTON (MAP_NAME_BUTTON(0,3)),3
+	Line 256: PRINTBUTTON (MAP_NAME_BUTTON(0,4)),4
+	Line 263: PRINTBUTTON (MAP_NAME_BUTTON(0,5)),5
+	Line 266: PRINTBUTTON (MAP_NAME_BUTTON(0,6)),6
+	Line 273: PRINTBUTTON (MAP_NAME_BUTTON(0,8)),8
+	Line 280: PRINTBUTTON (MAP_NAME_BUTTON(0,11)),11
+	Line 283: PRINTBUTTON (MAP_NAME_BUTTON(0,12)),12
+	Line 288: PRINTBUTTON (MAP_NAME_BUTTON(0,13)),13
+	Line 291: PRINTBUTTON (MAP_NAME_BUTTON(0,16)),16
+  G:\emuera\eraJK私\ERB\FIELD\FIELD10.ERB (82 hits)
+	Line 3: ;SETBIT DA:1:0,0 は内部の存在判定に使ってますので消さないで下さい
+	Line 4: ;SETBIT DA:1:部屋番号,0 外に出れる場所
+	Line 5: ;SETBIT DA:1:部屋番号,1 中に入れる場所
+	Line 6: ;SETBIT DA:1:部屋番号,2 電車に乗れる場所
+	Line 7: ;SETBIT DA:1:部屋番号,3 屋内
+	Line 8: ;SETBIT DA:1:部屋番号,4 遊技場あり
+	Line 9: ;SETBIT DA:1:部屋番号,5 注文可
+	Line 11: ;SETBIT DA:1:部屋番号,7 買い物可
+	Line 12: ;SETBIT DA:1:部屋番号,8 打工可
+	Line 13: ;SETBIT DA:1:部屋番号,9 鍵が掛かってる
+	Line 14: ;SETBIT DA:0:部屋番号,10 ＮＰＣが自慰出来る場所
+	Line 17: SETBIT DA:1:0,0
+	Line 18: SETBIT DA:1:1,0
+	Line 20: SETBIT DA:1:2,3
+	Line 21: SETBIT DA:1:4,3
+	Line 22: SETBIT DA:1:5,3
+	Line 23: SETBIT DA:1:6,3
+	Line 24: SETBIT DA:1:7,3
+	Line 25: SETBIT DA:1:8,3
+	Line 26: SETBIT DA:1:9,3
+	Line 27: SETBIT DA:1:10,3
+	Line 28: SETBIT DA:1:11,3
+	Line 29: SETBIT DA:1:15,3
+	Line 30: SETBIT DA:1:16,3
+	Line 31: SETBIT DA:1:17,3
+	Line 32: SETBIT DA:1:30,3
+	Line 34: SETBIT DA:1:18,3
+	Line 35: SETBIT DA:1:19,3
+	Line 36: SETBIT DA:1:20,3
+	Line 37: SETBIT DA:1:21,3
+	Line 38: SETBIT DA:1:22,3
+	Line 39: SETBIT DA:1:23,3
+	Line 40: SETBIT DA:1:24,3
+	Line 41: SETBIT DA:1:25,3
+	Line 42: SETBIT DA:1:26,3
+	Line 43: SETBIT DA:1:27,3
+	Line 44: SETBIT DA:1:28,3
+	Line 45: SETBIT DA:1:29,3
+	Line 47: SETBIT DA:1:7,7
+	Line 48: SETBIT DA:1:26,7
+	Line 50: SETBIT DA:1:6,10
+	Line 51: SETBIT DA:1:7,10
+	Line 52: SETBIT DA:1:10,10
+	Line 53: SETBIT DA:1:11,10
+	Line 54: SETBIT DA:1:12,10
+	Line 55: SETBIT DA:1:15,10
+	Line 56: SETBIT DA:1:17,10
+	Line 57: SETBIT DA:1:21,10
+	Line 58: SETBIT DA:1:22,10
+	Line 59: SETBIT DA:1:23,10
+	Line 60: SETBIT DA:1:24,10
+	Line 61: SETBIT DA:1:30,10
+	Line 668: PRINTBUTTON (MAP_NAME_BUTTON(1,1)),1
+	Line 669: PRINTBUTTON (MAP_NAME_BUTTON(1,15)),15
+	Line 670: PRINTBUTTON (MAP_NAME_BUTTON(1,29)),29
+	Line 679: PRINTBUTTON (MAP_NAME_BUTTON(1,2)),2
+	Line 680: PRINTBUTTON (MAP_NAME_BUTTON(1,16)),16
+	Line 681: PRINTBUTTON (MAP_NAME_BUTTON(1,30)),30
+	Line 689: PRINTBUTTON (MAP_NAME_BUTTON(1,3)),3
+	Line 690: PRINTBUTTON (MAP_NAME_BUTTON(1,17)),17
+	Line 693: PRINTBUTTON (MAP_NAME_BUTTON(1,4)),4
+	Line 694: PRINTBUTTON (MAP_NAME_BUTTON(1,18)),18
+	Line 703: PRINTBUTTON (MAP_NAME_BUTTON(1,5)),5
+	Line 704: PRINTBUTTON (MAP_NAME_BUTTON(1,19)),19
+	Line 709: PRINTBUTTON (MAP_NAME_BUTTON(1,6)),6
+	Line 710: PRINTBUTTON (MAP_NAME_BUTTON(1,20)),20
+	Line 723: PRINTBUTTON (MAP_NAME_BUTTON(1,7)),7
+	Line 724: PRINTBUTTON (MAP_NAME_BUTTON(1,21)),21
+	Line 729: PRINTBUTTON (MAP_NAME_BUTTON(1,8)),8
+	Line 730: PRINTBUTTON (MAP_NAME_BUTTON(1,22)),22
+	Line 739: PRINTBUTTON (MAP_NAME_BUTTON(1,9)),9
+	Line 740: PRINTBUTTON (MAP_NAME_BUTTON(1,23)),23
+	Line 745: PRINTBUTTON (MAP_NAME_BUTTON(1,10)),10
+	Line 746: PRINTBUTTON (MAP_NAME_BUTTON(1,24)),24
+	Line 759: PRINTBUTTON (MAP_NAME_BUTTON(1,11)),11
+	Line 760: PRINTBUTTON (MAP_NAME_BUTTON(1,25)),25
+	Line 769: PRINTBUTTON (MAP_NAME_BUTTON(1,12)),12
+	Line 770: PRINTBUTTON (MAP_NAME_BUTTON(1,26)),26
+	Line 777: PRINTBUTTON (MAP_NAME_BUTTON(1,13)),13
+	Line 778: PRINTBUTTON (MAP_NAME_BUTTON(1,27)),27
+	Line 781: PRINTBUTTON (MAP_NAME_BUTTON(1,14)),14
+	Line 782: PRINTBUTTON (MAP_NAME_BUTTON(1,28)),28
+  G:\emuera\eraJK私\ERB\FIELD\FIELD20.ERB (94 hits)
+	Line 3: ;SETBIT DA:2:0,0 は内部の存在判定に使ってますので消さないで下さい
+	Line 4: ;SETBIT DA:2:部屋番号,0 外に出れる場所
+	Line 5: ;SETBIT DA:2:部屋番号,1 中に入れる場所
+	Line 6: ;SETBIT DA:2:部屋番号,2 電車に乗れる場所
+	Line 7: ;SETBIT DA:2:部屋番号,3 屋内
+	Line 8: ;SETBIT DA:2:部屋番号,4 遊技場あり
+	Line 9: ;SETBIT DA:2:部屋番号,5 注文可
+	Line 10: ;SETBIT DA:2:部屋番号,7 買い物可
+	Line 11: ;SETBIT DA:2:部屋番号,8 打工可
+	Line 12: ;SETBIT DA:2:部屋番号,9 鍵が掛かってる
+	Line 13: ;SETBIT DA:0:部屋番号,10 ＮＰＣが自慰出来る場所
+	Line 16: SETBIT DA:2:0,0
+	Line 17: SETBIT DA:2:1,1
+	Line 18: SETBIT DA:2:3,2
+	Line 20: SETBIT DA:2:5,3
+	Line 21: SETBIT DA:2:6,3
+	Line 22: SETBIT DA:2:7,3
+	Line 23: SETBIT DA:2:8,3
+	Line 24: SETBIT DA:2:9,3
+	Line 25: SETBIT DA:2:10,3
+	Line 26: SETBIT DA:2:11,3
+	Line 27: SETBIT DA:2:12,3
+	Line 28: SETBIT DA:2:13,3
+	Line 29: SETBIT DA:2:14,3
+	Line 30: SETBIT DA:2:15,3
+	Line 31: SETBIT DA:2:16,3
+	Line 32: SETBIT DA:2:19,3
+	Line 33: SETBIT DA:2:20,3
+	Line 34: SETBIT DA:2:21,3
+	Line 35: SETBIT DA:2:25,3
+	Line 36: SETBIT DA:2:26,3
+	Line 37: SETBIT DA:2:27,3
+	Line 38: SETBIT DA:2:28,3
+	Line 40: SETBIT DA:2:7,4
+	Line 41: SETBIT DA:2:8,4
+	Line 43: SETBIT DA:2:6,5
+	Line 44: SETBIT DA:2:14,5
+	Line 45: SETBIT DA:2:12,5
+	Line 48: SETBIT DA:2:9,7
+	Line 49: SETBIT DA:2:10,7
+	Line 50: SETBIT DA:2:15,7
+	Line 51: SETBIT DA:2:20,7
+	Line 52: SETBIT DA:2:21,7
+	Line 53: SETBIT DA:2:24,7
+	Line 55: SETBIT DA:2:5,8
+	Line 56: SETBIT DA:2:6,8
+	Line 57: SETBIT DA:2:7,8
+	Line 58: SETBIT DA:2:8,8
+	Line 59: SETBIT DA:2:9,8
+	Line 60: SETBIT DA:2:10,8
+	Line 61: SETBIT DA:2:12,8
+	Line 62: SETBIT DA:2:14,8
+	Line 63: SETBIT DA:2:15,8
+	Line 64: SETBIT DA:2:16,8
+	Line 65: SETBIT DA:2:19,8
+	Line 66: SETBIT DA:2:20,8
+	Line 67: SETBIT DA:2:21,8
+	Line 69: SETBIT DA:2:26,9
+	Line 70: SETBIT DA:2:28,9
+	Line 72: SETBIT DA:2:7,10
+	Line 73: SETBIT DA:2:8,10
+	Line 74: SETBIT DA:2:14,10
+	Line 75: SETBIT DA:2:17,10
+	Line 76: ;SETBIT DA:2:22,10
+	Line 77: SETBIT DA:2:23,10
+	Line 78: SETBIT DA:2:26,10
+	Line 458: PRINTBUTTON (MAP_NAME_BUTTON(2,1)),1
+	Line 459: PRINTBUTTON (MAP_NAME_BUTTON(2,18)),18
+	Line 467: PRINTBUTTON (MAP_NAME_BUTTON(2,2)),2
+	Line 468: PRINTBUTTON (MAP_NAME_BUTTON(2,19)),19
+	Line 479: PRINTBUTTON (MAP_NAME_BUTTON(2,3)),3
+	Line 480: PRINTBUTTON (MAP_NAME_BUTTON(2,20)),20
+	Line 483: PRINTBUTTON (MAP_NAME_BUTTON(2,4)),4
+	Line 484: PRINTBUTTON (MAP_NAME_BUTTON(2,21)),21
+	Line 491: PRINTBUTTON (MAP_NAME_BUTTON(2,5)),5
+	Line 492: PRINTBUTTON (MAP_NAME_BUTTON(2,22)),22
+	Line 495: PRINTBUTTON (MAP_NAME_BUTTON(2,6)),6
+	Line 496: PRINTBUTTON (MAP_NAME_BUTTON(2,23)),23
+	Line 503: PRINTBUTTON (MAP_NAME_BUTTON(2,7)),7
+	Line 504: PRINTBUTTON (MAP_NAME_BUTTON(2,24)),24
+	Line 510: PRINTBUTTON (MAP_NAME_BUTTON(2,8)),8
+	Line 511: PRINTBUTTON (MAP_NAME_BUTTON(2,25)),25
+	Line 522: PRINTBUTTON (MAP_NAME_BUTTON(2,9)),9
+	Line 523: PRINTBUTTON (MAP_NAME_BUTTON(2,26)),26
+	Line 526: PRINTBUTTON (MAP_NAME_BUTTON(2,10)),10
+	Line 527: PRINTBUTTON (MAP_NAME_BUTTON(2,27)),27
+	Line 538: PRINTBUTTON (MAP_NAME_BUTTON(2,11)),11
+	Line 539: PRINTBUTTON (MAP_NAME_BUTTON(2,28)),28
+	Line 544: PRINTBUTTON (MAP_NAME_BUTTON(2,12)),12
+	Line 547: PRINTBUTTON (MAP_NAME_BUTTON(2,13)),13
+	Line 554: PRINTBUTTON (MAP_NAME_BUTTON(2,14)),14
+	Line 559: PRINTBUTTON (MAP_NAME_BUTTON(2,15)),15
+	Line 568: PRINTBUTTON (MAP_NAME_BUTTON(2,16)),16
+	Line 571: PRINTBUTTON (MAP_NAME_BUTTON(2,17)),17
+  G:\emuera\eraJK私\ERB\FIGHT1.ERB (2 hits)
+	Line 8: F:101 = TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG * BASE:ARG:評判 / 1000
+	Line 9: F:111 = TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) * BASE:(ARG:1):評判 / 1000
+  G:\emuera\eraJK私\ERB\GET_CUP_SIZE.ERB (1 hit)
+	Line 12: SIF GETBIT(TALENT:ARG:性別,0) == 0
+  G:\emuera\eraJK私\ERB\GET_VITAL_STATISTICS.ERB (1 hit)
+	Line 16: SIF GETBIT(TALENT:ARG:性別,0) == 0
+  G:\emuera\eraJK私\ERB\INFO.ERB (10 hits)
+	Line 48: 	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
+	Line 48: 	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
+	Line 53: PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)}
+	Line 65: SIF GETBIT(DA:(CFLAG:MASTER:現在地区):(CFLAG:MASTER:現在位置),3)
+	Line 275: IF GETBIT(TALENT:MASTER:性別,1)
+	Line 282: IF TARGET && GETBIT(TALENT:TARGET:性別,1)
+	Line 291: IF GETBIT(TALENT:MASTER:性別,1)
+	Line 298: IF TARGET && GETBIT(TALENT:TARGET:性別,1)
+	Line 306: IF GETBIT(TALENT:MASTER:性別,1)
+	Line 313: IF TARGET && GETBIT(TALENT:TARGET:性別,1)
+  G:\emuera\eraJK私\ERB\JYUGYOU.ERB (1 hit)
+	Line 929: 		IF GETBIT(TALENT:1:2,0)
+  G:\emuera\eraJK私\ERB\NMKAIWA.ERB (4 hits)
+	Line 35: 		IF !GETBIT(TALENT:ARG:2,0) || RAND:2 == 0
+	Line 37: 		ELSEIF !GETBIT(TALENT:ARG:2,0)
+	Line 91: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 92: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+  G:\emuera\eraJK私\ERB\NPC_ACTION.ERB (2 hits)
+	Line 130: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 212: 			IF GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),8)
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION1.ERB (16 hits)
+	Line 189: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 190: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 1
+	Line 256: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 257: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 3
+	Line 287: 		IF (GETBIT(DA:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置),10) || (ABL:ARG:自慰成瘾 > 2 && BASE:ARG:興奮度 > 5)) && RAND:2 ==1
+	Line 303: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 322: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 327: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 332: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 337: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 342: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 347: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 392: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 393: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 4
+	Line 412: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 413: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 3
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION2.ERB (17 hits)
+	Line 184: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 185: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 1
+	Line 249: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 250: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 3
+	Line 280: 		IF GETBIT(DA:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置),10) || (ABL:ARG:自慰成瘾 > 1 && BASE:ARG:興奮度 > 5)
+	Line 296: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 315: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 320: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 325: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 330: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 335: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 340: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	Line 356: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 418: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 419: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 4
+	Line 438: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 439: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 3
+  G:\emuera\eraJK私\ERB\NPC_ENKOU.ERB (19 hits)
+	Line 41: 		TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 1
+	Line 48: 			IF RAND(10) == 0 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 48: 			IF RAND(10) == 0 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 53: 			IF RAND(10) < 2 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 53: 			IF RAND(10) < 2 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 59: 			IF RAND(10) < 4 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 59: 			IF RAND(10) < 4 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 129: TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 3
+	Line 191: 			TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 1
+	Line 202: 			IF RAND(10) == 0 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 202: 			IF RAND(10) == 0 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 207: 			IF RAND(10) < 2 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 207: 			IF RAND(10) < 2 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 213: 			IF RAND(10) < 4 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 213: 			IF RAND(10) < 4 && ((!TALENT:(ARG:1):处女 && GETBIT(TALENT:(ARG:1):2,0)) || (TALENT:(ARG:1):童貞 && GETBIT(TALENT:(ARG:1):2,1)))
+	Line 292: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):ARG += 1
+	Line 293: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) += 1
+	Line 363: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):ARG += 2
+	Line 364: 	TB:(CFLAG:(ARG:1):現在地区):(CFLAG:(ARG:1):現在位置):(ARG:1) -= 2
+  G:\emuera\eraJK私\ERB\NPC_KAN.ERB (29 hits)
+	Line 9: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 10: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 18: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 19: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 27: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 28: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 33: 	IF !GETBIT(TALENT:ARG:2,1) && (TA:ARG:(CFLAG:I:タイプ):5) > 90
+	Line 36: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+	Line 37: 		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	Line 59: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 60: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 72: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 73: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 110: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 111: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 4
+	Line 131: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 132: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 3
+	Line 148: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 2
+	Line 149: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+	Line 165: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 166: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+	Line 186: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+	Line 187: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 5
+	Line 213: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+	Line 214: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 4
+	Line 234: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+	Line 235: 				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 3
+	Line 308: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	Line 309: 	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 10
+  G:\emuera\eraJK私\ERB\NPC_MOVEMENT.ERB (1 hit)
+	Line 42: 			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+  G:\emuera\eraJK私\ERB\PRINT_STATE.ERB (2 hits)
+	Line 46: 		SIF LOCAL == 115 && GETBIT(TALENT:ARG:2,1)
+	Line 113: SIF GETBIT(TALENT:ARG:性別,0) == 0
+  G:\emuera\eraJK私\ERB\SHIHAI_SYUUKEI.ERB (21 hits)
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 20: 		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 36: 		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 52: 		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+	Line 157: 			SIF TB:0:(J:111):(S:398) > 0
+	Line 158: 				TB:0:(J:111):(S:398) = 0
+	Line 187: 			SIF TB:1:(J:111):(S:198) > 0
+	Line 188: 				TB:1:(J:111):(S:198) = 0
+	Line 217: 			SIF TB:2:(J:111):(S:298) > 0
+	Line 218: 				TB:2:(J:111):(S:298) = 0
+	Line 392: 	SIF TB:0:(J:111):(S:998) > 0
+	Line 393: 		TB:0:(J:111):(S:998) = 0
+	Line 398: 	SIF TB:1:(J:111):(S:998) > 0
+	Line 399: 		TB:1:(J:111):(S:998) = 0
+	Line 405: 	SIF TB:2:(J:111):(S:998) > 0
+	Line 406: 		TB:2:(J:111):(S:998) = 0
+  G:\emuera\eraJK私\ERB\SHOP2.ERB (4 hits)
+	Line 50: 					SIF GETBIT(CFLAG:LOCAL:(FLAG:1004),0) 
+	Line 52: 					SIF GETBIT(CFLAG:LOCAL:(FLAG:1004),1) 
+	Line 61: 					SIF GETBIT(CFLAG:LOCAL:(FLAG:1004),0) 
+	Line 63: 					SIF GETBIT(CFLAG:LOCAL:(FLAG:1004),1) 
+  G:\emuera\eraJK私\ERB\SHOP_CUSTOM.ERB (20 hits)
+	Line 196: 	PRINTBUTTON "[キャンセル]",-1
+	Line 211: 	PRINTBUTTON "[不变]",""
+	Line 224: 	PRINTBUTTON "[不变]",""
+	Line 240: 	PRINTBUTTON "[－]", 0
+	Line 247: 	PRINTBUTTON "[＋]", 1
+	Line 258: 	PRINTBUTTON "[－]", 2
+	Line 265: 	PRINTBUTTON "[＋]", 3
+	Line 319: 	PRINTBUTTON "[998] - 前のページ                 ",998
+	Line 326: 	PRINTBUTTON "[999] - 次のページ",999
+	Line 350: 		PRINTBUTTON "[－]", LOCAL * 2
+	Line 357: 		PRINTBUTTON "[＋]", LOCAL * 2 + 1
+	Line 417: 	GETBIT LOCAL:0, LOCAL:1
+	Line 430: PRINTBUTTON "[1000] - 決定",1000
+	Line 442: 			GETBIT LOCAL:0, 0
+	Line 444: 			GETBIT LOCAL:0, 1
+	Line 446: 			GETBIT LOCAL:0, 2
+	Line 448: 			GETBIT LOCAL:0, 3
+	Line 450: 			GETBIT LOCAL:0, 4
+	Line 452: 			GETBIT LOCAL:0, 5
+	Line 465: 	INVERTBIT LOCAL:0, LOCAL:2
+  G:\emuera\eraJK私\ERB\SOURCE\SOURCE.ERB (9 hits)
+	Line 92: IF GETBIT(TALENT:ARG:性別,1)
+	Line 106: SIF GETBIT(TALENT:ARG:性別,1) && BASE:ARG:射精 > MAXBASE:ARG:射精
+	Line 215: IF GETBIT(TALENT:ARG:2,1)
+	Line 521: SIF !EXP:ARG:射精经验 && GETBIT(TALENT:ARG:性別,0)
+	Line 531: 	SIF GETBIT(TALENT:ARG:性別,0)
+	Line 536: 	SIF GETBIT(TALENT:ARG:性別,0)
+	Line 541: 	SIF GETBIT(TALENT:ARG:性別,0)
+	Line 546: 	SIF GETBIT(TALENT:ARG:性別,0)
+	Line 551: 	SIF GETBIT(TALENT:ARG:性別,0)
+  G:\emuera\eraJK私\ERB\SOURCE\SOURCE1.ERB (2 hits)
+	Line 1310: IF TALENT:ARG:性別嗜好 & 1 && TCVAR:ARG:行為対象 && GETBIT(TALENT:(TCVAR:ARG:行為対象):2,1) && TCVAR:ARG:行為対象 != CFLAG:ARG:最愛 && !LOVE_CHECK(ARG,TCVAR:ARG:行為対象)
+	Line 1339: IF TALENT:ARG:性別嗜好 & 2 && TCVAR:ARG:行為対象 && GETBIT(TALENT:(TCVAR:ARG:行為対象):2,0) && TCVAR:ARG:行為対象 != CFLAG:ARG:最愛 && !LOVE_CHECK(ARG,TCVAR:ARG:行為対象)
+  G:\emuera\eraJK私\ERB\SOURCE\TRACHECK.ERB (4 hits)
+	Line 137: 	IF !TALENT:ARG:童貞 && GETBIT(TALENT:ARG:2,1)
+	Line 144: 	SETBIT TALENT:ARG:童貞 , TCVAR:ARG:挿入 - 1
+	Line 928: 	IF TALENT:ARG:性別嗜好 & 1 && GETBIT(TALENT:(TCVAR:ARG:行為対象):2 ,1)
+	Line 932: 	ELSEIF TALENT:ARG:性別嗜好 & 2 && GETBIT(TALENT:(TCVAR:ARG:行為対象):2 ,0)
+  G:\emuera\eraJK私\ERB\SOURCE\TRACHECK_ORGASM.ERB (2 hits)
+	Line 381: 	IF !GETBIT(CFLAG:ARG:异常经验,2)
+	Line 383: 		SETBIT CFLAG:ARG:异常经验,2
+  G:\emuera\eraJK私\ERB\SYSTEM.ERB (1 hit)
+	Line 696: 	SIF GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\TIME_COUNT.ERB (1 hit)
+	Line 38: 	IF GETBIT(TALENT:LOCAL:2,1)
+  G:\emuera\eraJK私\ERB\お弁当.ERB (4 hits)
+	Line 63: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 64: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+	Line 73: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+	Line 74: 					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+Search "TB=" (0 hits in 0 files)
+Search "TB=" (0 hits in 0 files)
+Search "現在地区" (1 hit in 1 file)
+  G:\emuera\eraJK私\CSV\cflag.csv (1 hit)
+	Line 4: 4,現在地区
+Search "支配" (57 hits in 16 files)
+  G:\emuera\eraJK私\ERB\COMF\COMF1007.ERB (1 hit)
+	Line 64: ;;;	支配度に＋２
+  G:\emuera\eraJK私\ERB\COMF\COMF1014.ERB (1 hit)
+	Line 25: ;;;	支配度に＋２、相手に＋２
+  G:\emuera\eraJK私\ERB\COMF\COMF1015.ERB (3 hits)
+	Line 37: ;;;	支配度に＋２、相手に－２
+	Line 46: ;;;	支配度に－２、相手は無し
+	Line 57: ;;;	支配度に＋２、相手に－２
+  G:\emuera\eraJK私\ERB\COMF\COMF1016.ERB (3 hits)
+	Line 38: ;;;	支配度に＋２、相手に＋２
+	Line 46: ;;;	支配度に－２、相手は無し
+	Line 59: ;;;	支配度に＋２、相手に＋２
+  G:\emuera\eraJK私\ERB\COMF\COMF1200.ERB (2 hits)
+	Line 32: ;;;		支配度に－１０、相手に＋５
+	Line 47: ;;;		支配度に＋１０、相手に－１５
+  G:\emuera\eraJK私\ERB\COMF\COMF2800.ERB (4 hits)
+	Line 24: ;;;	支配度に－２、相手は無し
+	Line 40: ;;;	支配度に＋１、相手は無し
+	Line 47: ;;;		支配度に＋４、相手に－２
+	Line 54: ;;;	支配度に＋２、相手に－２
+  G:\emuera\eraJK私\ERB\COMF\COMF3007.ERB (1 hit)
+	Line 51: ;;;	支配度に＋１
+  G:\emuera\eraJK私\ERB\COMF\COMF800.ERB (1 hit)
+	Line 27: ;;;	支配度に－２、相手は無し
+  G:\emuera\eraJK私\ERB\COMF\COMF998.ERB (1 hit)
+	Line 28: ;;;		支配度に－１０、相手に＋５
+  G:\emuera\eraJK私\ERB\FIGHT1.ERB (8 hits)
+	Line 35: ;F:101		攻撃側支配度
+	Line 37: ;F:111		防御側支配度
+	Line 58: ;攻撃側と防御側、どちらも支配度0ならどちらも援軍は来ない
+	Line 62: ;攻撃側の支配度が0なら、支配度の分だけ援軍が来る（最大で戦闘場所のNPCの人数まで）
+	Line 62: ;攻撃側の支配度が0なら、支配度の分だけ援軍が来る（最大で戦闘場所のNPCの人数まで）
+	Line 70: ;防御側の支配度が0なら前述の逆
+	Line 78: ;ともに支配度があるなら、戦闘場所にいるNPCを互いの支配度で分配
+	Line 78: ;ともに支配度があるなら、戦闘場所にいるNPCを互いの支配度で分配
+  G:\emuera\eraJK私\ERB\INFO.ERB (2 hits)
+	Line 52: PRINTFORM   支配者 = %NAME:(J:102)%
+	Line 53: PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)}
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION1.ERB (2 hits)
+	Line 314: ;;;ここからモブさんとの会话（会话经验と支配度を上げる）
+	Line 351: ;;;戦闘（支配度と敵対度を上げる）
+  G:\emuera\eraJK私\ERB\NPC_AUTOACTION2.ERB (2 hits)
+	Line 307: ;;;ここからモブさんとの会话（会话经验と支配度を上げる）
+	Line 377: ;;;戦闘（支配度と敵対度を上げる）
+  G:\emuera\eraJK私\ERB\NPC_KAN.ERB (3 hits)
+	Line 58: ;;;	支配度に－１５、相手に＋１０
+	Line 71: ;;;	支配度に－１５、相手に＋１０
+	Line 164: ;;;	支配度に－１５、相手に＋１０
+  G:\emuera\eraJK私\ERB\SHIHAI_SYUUKEI.ERB (15 hits)
+	Line 137: PRINTW 月末了，本月支配者发表布了。
+	Line 141: PRINTW 支配者的发布。
+	Line 142: PRINTW 这个月的MAP0的支配者是
+	Line 161: 		PRINTW MAP0の支配度清零了
+	Line 172: PRINTW 今月のMAP1の支配者は
+	Line 191: 		PRINTW MAP1の支配度清零了
+	Line 202: PRINTW 今月のMAP2の支配者は
+	Line 221: 		PRINTW MAP2の的支配度清零了
+	Line 236: PRINTW 今月の総支配者は
+	Line 255: 		PRINTW （你支配了这条街道）
+	Line 291: 			PRINTL 总支配者的赠品
+	Line 295: 			PRINTW 请选择支配着者的赠品吧。
+	Line 301: 		PRINTFORML [2] - 让某人的支配度为0
+	Line 315: 		PRINTL 总支配者的赠品
+	Line 386: 	PRINTW 所有支配度都清零了
+  G:\emuera\eraJK私\ERB\SYSTEM.ERB (8 hits)
+	Line 548: 	PRINTW （この街を支配しろ！）
+	Line 551: 	PRINTW 支配？？？
+	Line 561: 	PRINTW （对了，支配）
+	Line 564: 	PRINTW 清爽的声音一点点的支配了这一带。
+	Line 567: 	PRINTW 和某人说话来支配他们么？
+	Line 576: 	PRINTW 不过，好像觉得痴汉被什么支配了。
+	Line 587: 	PRINTL 好，赢的一方支配弱者。
+	Line 595: 	PRINTL 无法从被支配中逃离么？
+Search "delchara" (0 hits in 0 files)
+Search "addchara" (4 hits in 2 files)
+  G:\emuera\eraJK私\ERB\SHOP_CUSTOM.ERB (1 hit)
+	Line 457: 			ADDCHARA LOCAL:2
+  G:\emuera\eraJK私\ERB\SYSTEM.ERB (3 hits)
+	Line 11: ;;;		ADDCHARA LOCAL
+	Line 13: ADDCHARA 1
+	Line 749: ;		ADDCHARA LOCAL

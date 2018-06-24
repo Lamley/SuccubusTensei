@@ -1,0 +1,23 @@
+﻿@COM_MESSAGE_1003
+SIF M:101 == 1
+	RETURN 0
+VARSET LOCAL
+;--------------------------------------------------------------------------
+;のんびりする
+;--------------------------------------------------------------------------
+PRINTFORML ＜のんびりする＞
+LOCAL = RAND:6
+IF LOCAL == 0
+	PRINTFORM 看了一本漫画
+ELSEIF LOCAL == 1
+	PRINTFORM 读了一本杂志
+ELSEIF LOCAL == 2
+	PRINTFORM 看了会儿电视
+ELSEIF LOCAL == 3
+	PRINTFORM 看了看家里的影碟
+ELSE
+	PRINTFORM ，真悠闲
+ENDIF
+PRINTFORMW 悠闲地时间度过了。
+M:101 = 1
+

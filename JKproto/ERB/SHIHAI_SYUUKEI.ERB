@@ -1,0 +1,423 @@
+﻿@SHIHAI_SYUUKEI()
+
+FOR J:101,301,(CHARANUM + 300)
+	S:(J:101) = 0
+NEXT
+FOR J:101,101,(CHARANUM + 100)
+	S:(J:101) = 0
+NEXT
+FOR J:101,201,(CHARANUM + 200)
+	S:(J:101) = 0
+NEXT
+FOR J:101,901,(CHARANUM + 900)
+	S:(J:101) = 0
+NEXT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP0	集計上は3
+FOR J:111,1,31
+	SIF PLACE_NAME_0(J:111) == ""
+		CONTINUE
+	J:102 = 0
+	FOR J:101,1,CHARANUM
+		SIF TB:0:(J:111):(J:101) > 0 && ((TB:0:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:0:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+			J:102 = J:101
+			X=TB:0:(J:111):(J:102)
+	NEXT
+	IF J:102
+		J:102 += 300
+		S:(J:102) += 1
+		J:102 += 600
+		S:(J:102) += 1
+	ENDIF
+NEXT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP1
+FOR J:111,1,31
+	SIF PLACE_NAME_1(J:111) == ""
+		CONTINUE
+	J:102 = 0
+	FOR J:101,1,CHARANUM
+		SIF TB:1:(J:111):(J:101) > 0 && ((TB:1:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:1:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+			J:102 = J:101
+			Y=TB:1:(J:111):(J:102)
+	NEXT
+	IF J:102
+		J:102 += 100
+		S:(J:102) += 1
+		J:102 += 800
+		S:(J:102) += 1
+	ENDIF
+NEXT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP2
+FOR J:111,1,29
+	SIF PLACE_NAME_2(J:111) == ""
+		CONTINUE
+	J:102 = 0
+	FOR J:101,1,CHARANUM
+		SIF TB:2:(J:111):(J:101) > 0 && ((TB:2:(J:111):(J:101) * BASE:(J:101):評判 / 1000) > (TB:2:(J:111):(J:102) * BASE:(J:102):評判 / 1000))
+			J:102 = J:101
+			Z=TB:2:(J:111):(J:102)
+	NEXT
+	IF J:102
+		J:102 += 200
+		S:(J:102) += 1
+		J:102 += 700
+		S:(J:102) += 1
+	ENDIF
+NEXT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP0	集計上は3
+J:102 = 0
+S:399 = 0
+FOR J:101,301,CHARANUM + 300
+	IF S:(J:101) > J:102
+		J:102 = S:(J:101)
+		S:399 = J:101 - 300
+	ENDIF
+NEXT
+J:102 = 0
+S:398 = 0
+IF S:399
+	FOR J:101,1,CHARANUM
+		SIF TA:(S:399):(J:101):6 > 0 && TA:(S:399):(J:101):6 > TA:(S:399):(J:102):6
+			J:102 = J:101
+	NEXT
+	SIF J:102
+		S:398 = J:102
+ENDIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP1
+J:102 = 0
+S:199 = 0
+FOR J:101,101,CHARANUM + 100
+	IF S:(J:101) > J:102
+		J:102 = S:(J:101)
+		S:199 = J:101 - 100
+	ENDIF
+NEXT
+J:102 = 0
+S:198 = 0
+IF S:199
+	FOR J:101,1,CHARANUM
+		SIF TA:(S:199):(J:101):6 > 0 && TA:(S:199):(J:101):6 > TA:(S:199):(J:102):6
+			J:102 = J:101
+	NEXT
+	SIF J:102
+		S:198 = J:102
+ENDIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;MAP2
+J:102 = 0
+FOR J:101,201,CHARANUM + 200
+	IF S:(J:101) > J:102
+		J:102 = S:(J:101)
+		S:299 = J:101 - 200
+	ENDIF
+NEXT
+J:102 = 0
+S:298 = 0
+IF S:299
+	FOR J:101,1,CHARANUM
+		SIF TA:(S:299):(J:101):6 > 0 && TA:(S:299):(J:101):6 > TA:(S:299):(J:102):6
+			J:102 = J:101
+	NEXT
+	SIF J:102
+		S:298 = J:102
+ENDIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;TOTAL
+J:102 = 0
+FOR J:101,901,CHARANUM + 900
+	IF S:(J:101) > J:102
+		J:102 = S:(J:101)
+		S:999 = J:101 - 900
+	ENDIF
+NEXT
+J:102 = 0
+S:998 = 0
+IF S:999
+	FOR J:101,1,CHARANUM
+		SIF TA:(S:999):(J:101):6 > 0 && TA:(S:999):(J:101):6 > TA:(S:999):(J:102):6
+			J:102 = J:101
+	NEXT
+	SIF J:102
+		S:998 = J:102
+ENDIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PRINTW 日末了，本日支配者发表布了。
+;PRINTFORML [0] - 「確認」
+;INPUT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PRINTW 支配者的发布。
+PRINTW 今日的MAP0的支配者是
+;PRINTL         ・
+PRINTL         ・
+PRINTW         ・
+IF S:399
+	SETCOLOR 0xFFCC00
+	PRINTFORMW %CALLNAME:(S:399)%！{X}
+	RESETCOLOR
+	PRINTL 恭喜恭喜
+	MAXBASE:(S:399):气力 += 10
+	PRINTFORMW %CALLNAME:(S:399)%の气力上升了10
+	IF S:398
+		FOR J:111,1,31
+			SIF PLACE_NAME_0(J:111) == ""
+				CONTINUE
+			IF TB:0:(J:111):(S:398) > 0
+			    X:1=TB:0:(J:111):(S:398)
+				TB:0:(J:111):(S:398) -= 3
+				X:2=TB:0:(J:111):(S:398)
+			ENDIF
+		NEXT
+		PRINTFORML %CALLNAME:(S:399)%和%CALLNAME:(S:398)%关系最差
+		PRINTFORML MAP0の支配度减少3  {X:1}  {X:2}
+	ELSE
+		PRINTFORML %CALLNAME:(S:399)%关系最差的人不存在。
+		PRINTW 太好了呢
+	ENDIF
+ELSE
+	PRINTW 可惜并没有啊
+ENDIF
+PRINTL
+PRINTL
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PRINTW 今日のMAP1の支配者は
+;PRINTL         ・
+PRINTL         ・
+PRINTW         ・
+IF S:199
+	SETCOLOR 0xFFCC00
+	PRINTFORMW %CALLNAME:(S:199)%！{Y}
+	RESETCOLOR
+	PRINTL 恭喜恭喜
+	MAXBASE:(S:199):气力 += 10
+	PRINTFORMW %CALLNAME:(S:199)%の气力上升了10
+	IF S:198
+		FOR J:111,1,31
+			SIF PLACE_NAME_1(J:111) == ""
+				CONTINUE
+			IF TB:1:(J:111):(S:198) > 0
+			    Y:1=TB:1:(J:111):(S:198)
+				TB:1:(J:111):(S:198) -= 3
+				Y:2=TB:1:(J:111):(S:198)
+				ENDIF
+		NEXT
+		PRINTFORML %CALLNAME:(S:199)%和%CALLNAME:(S:198)%关系最差
+		PRINTFORML MAP1の支配度减少3  {Y:1}  {Y:2}
+	ELSE
+		PRINTFORML %CALLNAME:(S:199)%关系最差的人不存在。
+		PRINTW 太好了呢
+	ENDIF
+ELSE
+	PRINTW 可惜并没有啊
+ENDIF
+PRINTL
+PRINTL
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PRINTW 今日のMAP2の支配者は
+;PRINTL         ・
+PRINTL         ・
+PRINTW         ・
+IF S:299
+	SETCOLOR 0xFFCC00
+	PRINTFORMW %CALLNAME:(S:299)%！{Z}
+	RESETCOLOR
+	PRINTL 恭喜恭喜
+	MAXBASE:(S:299):气力 += 10
+	PRINTFORMW %CALLNAME:(S:299)%の气力上升了10
+	IF S:298
+		FOR J:111,1,29
+			SIF PLACE_NAME_2(J:111) == ""
+				CONTINUE
+			IF TB:2:(J:111):(S:298) > 0
+				Z:1=TB:2:(J:111):(S:298)
+				TB:2:(J:111):(S:298) -= 3
+				Z:2=TB:2:(J:111):(S:298)
+				ENDIF
+		NEXT
+		PRINTFORML %CALLNAME:(S:299)%和%CALLNAME:(S:298)%的关系最差
+		PRINTFORML MAP2の的支配度减少3   {Z:1}  {Z:2}
+	ELSE
+		PRINTFORML %CALLNAME:(S:299)%并没有关系最差的人
+		PRINTW 太好了呢
+	ENDIF
+ELSE
+	PRINTW 可惜并没有啊
+ENDIF
+PRINTL
+PRINTL
+PRINTL         ・
+PRINTL         ・
+PRINTL         ・
+PRINTL そして、
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PRINTW 今日の総支配者は
+PRINTL         ・
+PRINTL         ・
+PRINTW         ・
+IF S:999
+	SETCOLOR 0xFF0000
+	PRINTFORMW %CALLNAME:(S:999)%！
+	RESETCOLOR
+	PRINTL 恭喜恭喜
+	MAXBASE:(S:999):体力 += 10
+	MAXBASE:(S:999):气力 += 10
+	PRINTFORMW %CALLNAME:(S:999)%の体力、气力都上升10
+	IF S:999 == 1
+		PRINTFORML [0] - 「確認」
+		INPUT
+		DRAWLINE
+		PRINTW （开心）
+		PRINTW 另外的声音说
+		CLEARLINE 2
+		PRINTW （你支配了这条街道）
+		PRINTW （因此我也得到了我想要的）
+		PRINTW （谢谢）
+		CLEARLINE 3
+		PRINTW （ 你也感觉了这街道异样的不和谐吧…）
+		PRINTW （是的，这是另一个世界）
+		PRINTW （希望回到原来的世界也是可能的）
+		PRINTW （怎么办？）
+		CLEARLINE 4
+		PRINTW （为了表示我小小的感谢）
+		PRINTW （原来世界的你）
+		PRINTW （运气会变得比较好哦）
+		CLEARLINE 3
+$INPUT_LOOP901
+		PRINTL どうしますか？
+		PRINTFORML [0] - 就这样呆在这里（就这样继续游戏）
+		PRINTFORML [1] - 返回原世界（结束游戏）
+		INPUT
+		SIF RESULT != 0 && RESULT != 1
+			GOTO INPUT_LOOP901
+		IF RESULT == 1
+			CLEARLINE 6
+			DRAWLINE
+			PRINTW 起床后在自己平时的房间。
+			PRINTW 但这里是原来的世界。
+			CLEARLINE 2
+			PRINTW 幸运是什么呢，恋人，钱，还是？
+			PRINTW 而且…………
+			PRINTW 体验了那么不可思议的事情、你感受到了一点小小的优越感。
+			CLEARLINE 3
+			PRINTW ………
+			PRINTW ………
+			PRINTW ………
+			PRINTW 结束
+			QUIT
+		ELSE
+			PRINTL 总支配者的赠品
+			PRINTL         ・
+			PRINTL         ・
+			PRINTL         ・
+			PRINTW 请选择支配着者的赠品吧。
+		ENDIF
+
+$INPUT_LOOP1
+		PRINTFORML [0] - 什么也不做
+		PRINTFORML [1] - 勒索大家的钱
+		PRINTFORML [2] - 让某人的支配度为0
+		INPUT
+		SIF RESULT != 0 && RESULT != 1 && RESULT != 2
+			GOTO INPUT_LOOP1
+		IF RESULT == 1
+			CALL HOUBI1(1)
+		ELSEIF RESULT == 2
+			CALL HOUBI2()
+			SIF RESULT == 0
+				GOTO INPUT_LOOP1
+		ELSE
+			PRINTW 哦，真是温柔的人啊。
+		ENDIF
+	ELSE
+		PRINTL 总支配者的赠品
+		PRINTL         ・
+		PRINTL         ・
+		PRINTW         ・
+		SELECTCASE NO:(S:999)
+		CASE 5,6,8,10,14,18,23,25,35
+			CALL HOUBI1(S:999)
+			PRINTFORMW %CALLNAME:(S:999)%的钱卷走了！
+		CASE 2,3,12,13,17,19,21,24,28,30,31,33
+			IF S:998
+				CALL HOUBI2()
+			ELSE
+				PRINTW 什么也没被要求。
+			ENDIF
+		CASEELSE
+				PRINTW 什么也没被要求。
+		ENDSELECT
+	ENDIF
+ELSE
+	PRINTW 可惜却没有了
+ENDIF
+PRINTL         ・
+PRINTL         ・
+PRINTL         ・
+PRINTL 这样，
+PRINTW 本月的表彰结束了。
+
+@HOUBI1(ARG)
+FOR J:101,1,CHARANUM
+	SIF J:101 == ARG
+		CONTINUE
+	SIF NO:(J:101) == 34
+		CONTINUE
+	IF MONEY:(J:101) > 0
+		TA:(J:101):ARG:6 += MONEY:(J:101)
+		MONEY:ARG += MONEY:(J:101)
+		MONEY:(J:101) = 0
+	ENDIF
+NEXT
+
+@HOUBI2()
+IF S:999 == 1
+	PRINTL 目标是谁呢？
+$INPUT_LOOP2
+		PRINTFORML [0] - 还是算了吧
+	FOR J:101,2,CHARANUM
+		SIF NO:(J:101) == 34
+			CONTINUE
+		PRINTFORML [{J:101}] - %CALLNAME:(J:101)%
+	NEXT
+	INPUT
+	SIF RESULT < 0 && RESULT > CHARANUM
+		GOTO INPUT_LOOP2
+	SIF RESULT == 0
+		RETURN 0
+	S:998 = RESULT
+	SETCOLOR 0xFF0000
+	PRINTFORML [{RESULT}] - %CALLNAME:(RESULT)%
+	RESETCOLOR
+	PRINTL 可以吗？
+		PRINTFORML [0] - 可以
+		PRINTFORML [1] - 再考虑下
+$INPUT_LOOP3
+	INPUT
+	SIF RESULT != 0 && RESULT != 1
+		GOTO INPUT_LOOP3
+	IF RESULT == 1
+		GOTO INPUT_LOOP2
+	ENDIF
+ELSE
+	PRINTFORML %CALLNAME:(S:999)%と跟%CALLNAME:(S:998)%的关系最差
+	PRINTW 所有支配度都清零了
+ENDIF
+
+FOR J:111,1,31
+	SIF PLACE_NAME_0(J:111) == ""
+		CONTINUE
+	SIF TB:0:(J:111):(S:998) > 0
+		TB:0:(J:111):(S:998) = 0
+NEXT
+FOR J:111,1,31
+	SIF PLACE_NAME_1(J:111) == ""
+		CONTINUE
+	SIF TB:1:(J:111):(S:998) > 0
+		TB:1:(J:111):(S:998) = 0
+NEXT
+
+FOR J:111,1,29
+	SIF PLACE_NAME_2(J:111) == ""
+		CONTINUE
+	SIF TB:2:(J:111):(S:998) > 0
+		TB:2:(J:111):(S:998) = 0
+NEXT
+RETURN 1
+
+

@@ -1,0 +1,460 @@
+﻿@NPC_AUTOACTION2(ARG)
+VARSET LOCAL
+;;;NPCキャラの自動行動２（打工可）
+E = RAND(1000)
+SELECTCASE E
+	CASE IS <= 150
+;;;ここから会话
+		H = 0
+		I = 0
+		FOR D,1,CHARANUM
+;;;20120527 自分の番号より小さいキャラ対応（移動しなかった場合に有効）
+			IF !CFLAG:D:会话 && !TCVAR:D:イベント && !(D == ARG) && CFLAG:D:現在位置 == CFLAG:ARG:現在位置 && CFLAG:D:現在地区 == CFLAG:ARG:現在地区 && !TCVAR:D:衰弱 && !TCVAR:D:睡眠 && (CFLAG:D:現在位置 != 30 || CFLAG:D:現在地区 != 0)
+				J = RAND(100)
+				IF H <= J
+					H = J
+					I = D
+				ENDIF
+			ENDIF
+		NEXT
+		IF I > 0
+;;;20120211 追加　面倒なので会话、調教判定時タゲられたら情欲度＋１（ほんとは同室全員にしたいんだけど、５分おきになる可能性もあるし
+			TA:ARG:I:4 += 1
+			IF I == 1 && RAND(2)
+				CALL NMKAIWA(ARG)
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+			IF TA:I:ARG:6 > 500 || TA:ARG:I:6 > 500
+				SIF I == 1
+					PRINTFORML %CALLNAME:I%和%CALLNAME:ARG%敌对了
+				TA:I:ARG:0 -= 10
+				TA:I:ARG:2 -= 10
+				TA:I:ARG:3 -= 10
+				TA:I:ARG:4 -= 10
+				TA:I:ARG:6 -= 10
+				TA:ARG:I:0 -= 10
+				TA:ARG:I:2 -= 10
+				TA:ARG:I:3 -= 10
+				TA:ARG:I:4 -= 10
+				TA:ARG:I:6 -= 10
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+
+			TFLAG:Ｎイベント = 8
+
+			TCVAR:I:目的位置 = 0
+			TCVAR:I:目的地区 = 0
+			TCVAR:ARG:目的位置 = 0
+			TCVAR:ARG:目的地区 = 0
+;;;多分ループ発生の原因になるため、!MASTER→ARGより大きいに変更
+			IF I > ARG
+				CFLAG:I:待機時間 = 0
+			ENDIF
+			CFLAG:ARG:受能動 = 1
+			CFLAG:I:受能動 = 2
+			TCVAR:ARG:行為対象 = I
+			TCVAR:I:行為対象 = ARG
+			CALL COM2800(ARG)
+			TCVAR:ARG:行為対象 = I
+			TCVAR:I:行為対象 = ARG
+			CALL SOURCE_CHECKS(ARG)
+			IF TFLAG:成否用変数 > -2
+				TFLAG:行為者 = I
+				CFLAG:ARG:受能動 = 2
+				CFLAG:I:受能動 = 1
+				TCVAR:ARG:行為対象 = I
+				TCVAR:I:行為対象 = ARG
+				CALL COM2801(I)
+				TCVAR:I:行為対象 = ARG
+				TCVAR:ARG:行為対象 = I
+				CALL SOURCE_CHECKS(I)
+				TFLAG:行為者 = ARG
+;;;20120717 追加　会话成功時にMAX气力＋１
+				MAXBASE:ARG:气力 += 1
+				MAXBASE:I:气力 += 1
+;;;20120211 追加　会话成功時に情欲度＋５
+				TA:I:ARG:4 += 5
+				TA:ARG:I:4 += 5
+;;;20120721 会话成功時に敵対－１
+				TA:I:ARG:6 -= 1
+				TA:ARG:I:6 -= 1
+				K:102 = RAND(40)
+				SELECTCASE K:102
+					CASE 0 TO 3
+						EXP:ARG:学習経験 += 1
+						EXP:I:学習経験 += 1
+					CASE 7 TO 10
+						EXP:ARG:運動経験 += 1
+						EXP:I:運動経験 += 1
+					CASE 14
+						EXP:ARG:戦闘経験 += 1
+						EXP:I:戦闘経験 += 1
+					CASE 16
+						J:102 = 0
+						IF RAND(10) > 6
+							J:102 = RAND(CHARANUM - 1)
+							IF J:102 >= ARG
+								J:102 += 2
+							ELSE
+								J:102 += 1
+							ENDIF
+						ELSE
+							FOR J:101,1,CHARANUM
+								SIF TA:ARG:(J:101):6 > 0 && TA:ARG:(J:101):6 > TA:ARG:(J:102):6
+									J:102 = J:101
+							NEXT
+						ENDIF
+						IF J:102
+							TA:ARG:(J:102):6 += 10
+							TA:(J:102):ARG:6 += 10
+							TA:I:(J:102):6 += 10
+						ENDIF
+				ENDSELECT
+			ENDIF
+			CFLAG:ARG:会话 = 1
+			CFLAG:I:会话 = 1
+			CALL EVENT_ESCAPE_NPC(ARG,I)
+			TFLAG:Ｎイベント = 0
+			GOTO SELECTEND
+		ENDIF
+	CASE 151 TO 200
+		IF NO:ARG == 40 && RAND(10) < 8
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF TALENT:ARG:200
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+;;;ここから性行為
+		H = 0
+		I = 0
+		FOR D,1,CHARANUM
+;;;20120527 自分の番号より小さいキャラ対応（移動しなかった場合に有効）
+			IF !CFLAG:D:会话 && !TCVAR:D:イベント && !(D == ARG) && CFLAG:D:現在位置 == CFLAG:ARG:現在位置 && CFLAG:D:現在地区 == CFLAG:ARG:現在地区 && !TCVAR:D:衰弱 && !TCVAR:D:睡眠 && (CFLAG:D:現在位置 != 30 || CFLAG:D:現在地区 != 0)
+				J = RAND(100)
+				IF H <= J
+					H = J
+					I = D
+				ENDIF
+			ENDIF
+		NEXT
+		IF I > 0
+;;;20120211 追加　面倒なので会话、調教判定時タゲられたら情欲度＋１
+			TA:ARG:I:4 += 1
+;;;情欲4が200未満は襲わない
+			IF TA:ARG:I:4 < 200
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+;;相手からの好意3が100以上、愛情1が1（又は服从2が100又は好意3が200以上）以上でなければ相手にされない
+			IF ((TA:ARG:(CFLAG:I:タイプ):5) > 40 + RAND(100) * (CFLAG:ARG:モラル / 1000)) && ((TA:I:ARG:1 >= 1) | (TA:I:ARG:2 - TA:I:ARG:6 >= 100) | (TA:I:ARG:3 - TA:I:ARG:6 >= 200)) && (TA:I:ARG:3 - TA:I:ARG:6 >= 100)
+			ELSE
+				PRINTFORML %CALLNAME:I%逃走了
+;;;失敗時に强奸へと移行
+				CALL NPC_KAN(ARG,I)
+				GOTO SELECTEND
+			ENDIF
+;2011.10.12 ゲイ抑制 元に戻すには次の行から７行をコメント化 A使いまわしてますけど気にしないでください 3行目の値を800にするとそこそこ行為が行われる様ですので調整はご自由に→解除
+;;;			IF TALENT:ARG:2 == 2 && TALENT:I:2 == 2
+;;;				A = RAND(900)
+;;;				IF !(A >850)
+;;;					CFLAG:ARG:待機時間 += 5
+;;;					GOTO SELECTEND
+;;;				ENDIF
+;;;			ENDIF
+			IF I == 1
+				PRINTFORML %CALLNAME:ARG%袭来了。
+				PRINTL どうしますか？
+				PRINTFORML [0] - 委身
+				PRINTFORML [1] - 逃跑
+$INPUT_LOOP1
+				INPUT
+				SIF RESULT != 0 && RESULT != 1
+					GOTO INPUT_LOOP1
+				IF RESULT == 1
+					PRINTFORML %CALLNAME:I%逃走了
+					TA:I:ARG:1 -= 10
+					TA:I:ARG:3 -= 5
+					TA:I:ARG:6 += 10
+					TA:ARG:I:6 += 10
+					CFLAG:ARG:待機時間 += 5
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 1
+					GOTO SELECTEND
+				ENDIF
+			ENDIF
+			IF NO:I == 40
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+			IF BASE:I:評判 < 400
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+			TCVAR:I:目的位置 = 0
+			TCVAR:I:目的地区 = 0
+			TCVAR:ARG:目的位置 = 0
+			TCVAR:ARG:目的地区 = 0
+			CFLAG:ARG:待機時間 = 0
+;;;多分ループ発生の原因になるため、!MASTER→ARGより大きいに変更
+			IF I > ARG
+				CFLAG:I:待機時間 = 0
+			ENDIF
+;;;20120331 テスト　マスターのイベント退避して0にする
+			I:13 = TCVAR:MASTER:イベント
+			TCVAR:MASTER:イベント = 0
+			IF TCVAR:MASTER:行為対象
+				I:14 = TCVAR:(TCVAR:MASTER:行為対象):イベント
+				TCVAR:(TCVAR:MASTER:行為対象):イベント = 0
+			ENDIF
+;;;20120212 TCVAR:ARG:イベント = 24 →　TFLAG:Ｎイベント = 8
+			TFLAG:Ｎイベント = 8
+			A:11 = 0
+			FOR G,0,5
+				TCVAR:ARG:行為対象 = I
+				TCVAR:I:行為対象 = ARG
+				CFLAG:ARG:受能動 = 1
+				CFLAG:I:受能動 = 2
+;Hはコマンド実行時のARG変数に代入
+				H = ARG
+				CALL COM2810(ARG)
+				TCVAR:ARG:行為対象 = I
+				CALL SOURCE_CHECKS(ARG)
+				TFLAG:行為者 = I
+				TCVAR:ARG:行為対象 = I
+				TCVAR:I:行為対象 = ARG
+				CFLAG:ARG:受能動 = 2
+				CFLAG:I:受能動 = 1
+;Hはコマンド実行時のARG変数に代入
+				H = I
+				CALL COM2810(I)
+				TCVAR:I:行為対象 = ARG
+				CALL SOURCE_CHECKS(I)
+				TFLAG:行為者 = ARG
+				A:11 += 1
+			NEXT
+			PRINTFORMW %CALLNAME:ARG%　→　%CALLNAME:I%　行為終了
+;;;20120717 追加　行為終了後にMAX体力＋５
+;;;20120717 追加　行為終了後にMAX气力＋５
+			MAXBASE:ARG:体力 += 5
+			MAXBASE:ARG:气力 += 5
+			MAXBASE:I:体力 += 5
+			MAXBASE:I:气力 += 5
+;;;20120721 行為成功時に敵対－１０
+			TA:I:ARG:6 -= 10
+			TA:ARG:I:6 -= 10
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 3
+			BASE:ARG:評判 -= 20
+			BASE:I:評判 -= 20
+;;;20120331 テスト　マスターのイベント退避して0にする
+			TCVAR:MASTER:イベント = I:13
+			IF TCVAR:MASTER:行為対象
+				TCVAR:(TCVAR:MASTER:行為対象):イベント = I:14
+			ENDIF
+			CFLAG:ARG:会话 = 1
+			CFLAG:I:会话 = 1
+			CALL EVENT_ESCAPE_NPC(ARG,I)
+			CFLAG:ARG:待機時間 += 10
+;;;20120212 TCVAR:ARG:イベント = 24 →　TFLAG:Ｎイベント = 8
+			TFLAG:Ｎイベント = 0
+			GOTO SELECTEND
+		ENDIF
+	CASE 201 TO 220
+		IF NO:ARG == 40 && RAND(10) < 8
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF BASE:ARG:評判 < 500
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF TALENT:ARG:200
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+;;;ここから自慰
+		IF GETBIT(DA:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置),10) || (ABL:ARG:自慰成瘾 > 1 && BASE:ARG:興奮度 > 5)
+			TFLAG:Ｎイベント = 8
+
+			TCVAR:ARG:目的位置 = 0
+			TCVAR:ARG:目的地区 = 0
+			PRINTFORML %NAME:ARG%は%PLACE_NAME(CFLAG:ARG:現在地区,CFLAG:ARG:現在位置)%自慰了
+			FOR G,1,5
+				CALL COM3007(ARG)
+				IF G == 5
+;経験を増やす
+					EXP:ARG:自慰经验 += 1
+;;;20120717 追加　自慰終了時にMAX体力＋３
+					MAXBASE:ARG:体力 += 3
+				ENDIF
+				CALL SOURCE_CHECKS(ARG)
+			NEXT
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+			SIF CFLAG:ARG:現在地区 != 0 || CFLAG:ARG:現在位置 != 1 || ARG != MASTER
+				BASE:ARG:評判 -= 20
+			EXP:ARG:自慰经验 += 1
+			CFLAG:ARG:会话 = 1
+			TCVAR:ARG:行為対象 = 0
+			TFLAG:Ｎイベント = 0
+;;;PRINTW ルパン
+			GOTO SELECTEND
+		ENDIF
+	CASE 301 TO 500
+;;;ここからモブさんとの会话（会话经验と支配度を上げる）
+		IF TALENT:ARG:200
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF N:101 > 1000
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ELSEIF N:101 > 100 && RAND(6) > 0
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ELSEIF N:101 > 10 && RAND(6) > 1
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ELSEIF N:101 > 4 && RAND(6) > 2
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ELSEIF N:101 > 1 && RAND(6) > 3
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ELSEIF N:101 > 0 && RAND(6) > 4
+			EXP:ARG:会话经验++
+			CALL SOURCE_ABLUP(ARG)
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+			BASE:ARG:評判 += 1
+		ENDIF
+	CASE 501 TO 700
+		IF NO:ARG == 40
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF TALENT:ARG:200
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		IF MONEY:ARG < 5000
+;;;打工
+			CFLAG:ARG:待機時間 += 120
+			MONEY:ARG += 2000
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+;;;援交判定
+			IF BASE:ARG:評判 < 900 && CFLAG:ARG:モラル >= 400
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND
+			ENDIF
+			I = 0
+			IF RAND(2)
+				FOR D,1,CHARANUM
+					SIF NO:D == 37
+						I = D
+				NEXT
+			ELSE
+				FOR D,1,CHARANUM
+					SIF NO:D == 38
+						I = D
+				NEXT
+			ENDIF
+			CALL NPC_ENKOU(I,ARG)
+		ENDIF
+	CASE 701 TO 750
+;;;戦闘（支配度と敵対度を上げる）
+		IF TALENT:ARG:200
+			CFLAG:ARG:待機時間 += 5
+			GOTO SELECTEND
+		ENDIF
+		H = 0
+		I = 0
+		FOR D,1,CHARANUM
+			IF (NO:ARG == 5 || NO:ARG == 6 || TA:ARG:D:6 > 99) && !CFLAG:D:会话 && !TCVAR:D:イベント && !(D == ARG) && CFLAG:D:現在位置 == CFLAG:ARG:現在位置 && CFLAG:D:現在地区 == CFLAG:ARG:現在地区 && !TCVAR:D:衰弱 && !TCVAR:D:睡眠 && (CFLAG:D:現在位置 != 30 || CFLAG:D:現在地区 != 0)
+				J = RAND(100)
+				IF H <= J
+					H = J
+					I = D
+				ENDIF
+			ENDIF
+		NEXT
+		IF I > 0
+			SIF I == 1
+				PRINTFORMW %CALLNAME:ARG%发起了战斗！
+			F:100 = 0
+			CALLFORM FIGHT1(ARG,I)
+			BASE:ARG:評判 -= 10
+			J:117 = RESULT
+			IF J:117 == 1
+				PRINTFORML 戦闘：%CALLNAME:ARG%对战%CALLNAME:I%と的战斗胜利了
+				IF TA:I:ARG:3 > 0
+					TA:I:ARG:3 -= 100
+				ELSE
+					TA:I:ARG:6 += 100
+				ENDIF
+				IF RAND(3)
+					TA:ARG:I:6 += 100
+				ELSE
+					TA:ARG:I:6 -= 50
+				ENDIF
+				IF TALENT:I:受虐狂 && RAND(4)
+					TA:I:ARG:0 += 20
+					TA:I:ARG:2 += 10
+					TA:I:ARG:3 += 50
+					TA:I:ARG:4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I -= 4
+			ELSEIF J:117 == 2
+				PRINTFORML 戦闘：%CALLNAME:ARG%对战%CALLNAME:I%的战斗输了
+				IF TA:ARG:I:3 > 0
+					TA:ARG:I:3 -= 30
+				ELSE
+					TA:ARG:I:6 += 30
+				ENDIF
+				IF RAND(2)
+					TA:I:ARG:6 += 80
+				ELSE
+					TA:I:ARG:6 -= 20
+				ENDIF
+				IF TALENT:ARG:受虐狂 && RAND(4)
+					TA:ARG:I:0 += 20
+					TA:ARG:I:2 += 10
+					TA:ARG:I:3 += 50
+					TA:ARG:I:4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):I += 3
+			ENDIF
+			TA:ARG:I:0 -= 1000
+			TA:ARG:I:1 -= 1
+			TA:ARG:I:2 -= 10
+			TA:I:ARG:0 -= 1000
+			TA:I:ARG:1 -= 1
+			TA:I:ARG:2 -= 10
+			J:117 = 0
+			CFLAG:ARG:待機時間 += 15
+		ENDIF
+	CASEELSE
+ENDSELECT
+IF TIME >= 1130
+	DOWNBASE:ARG:体力 -= 5
+	DOWNBASE:ARG:气力 -= 5
+ENDIF
+CFLAG:ARG:待機時間 += 5
+$SELECTEND
+
+
+

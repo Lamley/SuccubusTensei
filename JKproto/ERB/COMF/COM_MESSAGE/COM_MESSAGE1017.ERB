@@ -1,0 +1,23 @@
+﻿@COM_MESSAGE_1017
+SIF M:101 == 1
+	RETURN 0
+VARSET LOCAL
+;--------------------------------------------------------------------------
+;くつろぐ
+;--------------------------------------------------------------------------
+PRINTFORML ＜くつろぐ＞
+LOCAL = RAND:6
+IF LOCAL == 0
+	PRINTFORM 准备着社团活动
+ELSEIF LOCAL == 1
+	PRINTFORM 跟社团的后辈交谈了
+ELSEIF LOCAL == 2
+	PRINTFORM 跟其他部员交谈了
+ELSEIF LOCAL == 3
+	PRINTFORM 跟部门顾问交谈了
+ELSE
+	PRINTFORM 胡思乱想去了
+ENDIF
+PRINTFORMW 度过了悠闲地时间。
+M:101 = 1
+

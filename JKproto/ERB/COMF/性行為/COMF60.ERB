@@ -1,0 +1,199 @@
+﻿@COM_ABLE60(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:LOCAL:2,1)
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF J:115
+	RETURN 1
+SIF TCVAR:LOCAL:イベント == 4 && !CAN_COM60(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF TEQUIP:LOCAL:下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 19
+	RETURN 0
+;男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 18
+	RETURN 0
+;男性器のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＶオンリーＴ == 1
+	RETURN 0
+;行為者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:LOCAL:2,1)) && (TEQUIP:LOCAL:クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+;行為者が男性器なし且つ后庭拉珠なし
+SIF !GETBIT(TALENT:LOCAL:2,1) && EQUIP:LOCAL:后庭拉珠 == 0
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(60)
+
+;-------------------------------------------------
+;正常位
+;-------------------------------------------------
+@COM60(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 正常位(%CALLNAME:ARG%)
+
+;道具のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):膣 == 17
+	CFLAG:(TCVAR:ARG:行為対象):ＶオンリーＰ = 1
+ENDIF
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 20
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+DOWNBASE:ARG:体力 += 50
+DOWNBASE:ARG:气力 += 100
+
+SOURCE:ARG:性行動 = 100
+SOURCE:ARG:快Ｃ = 300
+SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 400
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 150
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 500
+SOURCE:(TCVAR:ARG:行為対象):露出 = 50
+;SIF CFLAG:193
+;	SOURCE:露出 = 300
+SOURCE:(TCVAR:ARG:行為対象):反感 = 300
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,1) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 60
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 300
+
+;贞操重视持ちで恋慕、相亲相爱持ち以外には常に反発のソースを追加する（セックス系のみ）
+SIF TALENT:(TCVAR:ARG:行為対象):貞操 > 0 && !LOVE_CHECK(TCVAR:ARG:行為対象,ARG)
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+
+;处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 2000
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 3000
+ENDIF
+
+;再生处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 2
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 500
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+ENDIF
+
+;Vへの痛苦は先に処理しておく
+CALL PAIN_CHECK_V(TCVAR:ARG:行為対象)
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;射精に関係なく行われる処理はここから
+;膣内に破瓜の血の汚れを付加
+SIF TALENT:(TCVAR:ARG:行為対象):处女
+	STAIN:(TCVAR:ARG:行為対象):6 |= 64
+;奴隷の膣内⇔調教者のＰの汚れが移動
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):3
+STAIN:ARG:2 |= STAIN:(TCVAR:ARG:行為対象):6
+STAIN:(TCVAR:ARG:行為対象):3 |= STAIN:ARG:2
+STAIN:(TCVAR:ARG:行為対象):6 |= STAIN:ARG:2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+EXP:(TCVAR:ARG:行為対象):Ｖ性交经验 ++
+EXP:ARG:Ｃ插入经验 ++
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,4)
+TCVAR:ARG:挿入 = 1
+CFLAG:ARG:待機時間 += 2
+
+TCVAR:(TCVAR:ARG:行為対象):被挿入 = 1
+
+VARSET ARG
+RETURN 1
+
+@CAN_COM60(ARG,ARG:1)
+#FUNCTION
+;;;VARSET LOCAL
+;绳子で縛られている場合は無視（绳子が無い時のみ実行判定を行う）
+SIF TEQUIP:(ARG:1):绳子 == 1
+	RETURNF 1
+
+A = 0
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:(ARG:1):欲望
+	A += ABL:(ARG:1):欲望 * 3
+ENDIF
+;ABL:Ｖ感觉
+IF ABL:(ARG:1):Ｖ感觉
+	A += ABL:(ARG:1):Ｖ感觉 * 2
+ENDIF
+;快乐刻印
+IF MARK:(ARG:1):快乐刻印
+	A += MARK:(ARG:1):快乐刻印 * 3
+ENDIF
+;PALAM:润滑（の不足）
+IF PALAM:(ARG:1):润滑 < PALAMLV:3
+	A -= 5
+ENDIF
+;PALAM:情欲
+IF GETPALAMLV(PALAM:(ARG:1):情欲,5)
+	A += GETPALAMLV(PALAM:(ARG:1):情欲,5) * 3
+ENDIF
+;害羞
+IF TALENT:(ARG:1):羞恥心 > 0
+	A -= 2
+ENDIF
+;否定快感
+IF TALENT:(ARG:1):快感応答 < 0 && !LOVE_CHECK(ARG:1,ARG)
+	A -= 5
+ENDIF
+;讨厌男人（恋慕、相亲相爱で無効）
+IF TALENT:(ARG:1):性別嗜好 & 1 && !(TALENT:ARG:2 & 1) && !LOVE_CHECK(ARG:1,ARG)
+	A -= 12
+ENDIF
+;处女
+IF TALENT:(ARG:1):处女
+	A -= MAX(10,40 - EXP:(ARG:1):Ｖ经验)
+;V経験
+ELSEIF EXP:(ARG:1):Ｖ经验 < EXPLV:2
+	A -= 15
+ENDIF
+
+;調教者が扶她
+IF (TALENT:ARG:2 & 3) == 3
+	A += 4
+ENDIF
+
+;春药
+IF TEQUIP:(ARG:1):春药
+	A += 6
+ENDIF
+;汚れあり
+IF STATIN_POINT(ARG,2)
+	A -= STATIN_POINT(ARG,2) * (2 - TALENT:(ARG:1):汚臭耐性) / 2
+ENDIF
+
+;実行できない
+SIF A < 20
+	RETURNF 0
+RETURNF 1
+

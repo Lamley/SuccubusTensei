@@ -1,0 +1,27 @@
+﻿;陵辱終了
+@COM_ABLE989(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF LOCAL != MASTER
+	RETURN 0
+SIF TCVAR:MASTER:イベント != 6
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(989)
+
+;-------------------------------------------------
+;陵辱終了
+;-------------------------------------------------
+@COM989(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 陵辱終了(%CALLNAME:ARG%)
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL EVENT_ESCAPE_ALL
+
+RETURN 1
+

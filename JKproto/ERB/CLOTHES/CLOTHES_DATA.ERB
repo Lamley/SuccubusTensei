@@ -1,0 +1,843 @@
+﻿;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+;装備に必要なV経験
+@EQUIP_LIMIT_V(ARG)
+#FUNCTION
+;ARG アイテム番号
+;RETURNF 必要経験
+
+SELECTCASE ARG
+	CASE 1
+		RETURNF 10
+ENDSELECT
+RETURNF 0
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+;装備に必要なアナル経験
+@EQUIP_LIMIT_A(ARG)
+#FUNCTION
+;ARG アイテム番号
+;RETURNF 必要経験
+
+SELECTCASE ARG
+	CASE 60
+		RETURNF 50
+	CASE 61
+		RETURNF 30
+	CASE 62
+		RETURNF 60
+ENDSELECT
+RETURNF 0
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+;アイテムが装備できるか返す
+@CAN_EQUIP(ARG)
+#FUNCTION
+;ARG アイテム番号
+;RETURNF 0装着できない 1できる
+
+SELECTCASE ARG
+	CASE 1 TO 19
+		IF EXP:MASTER:Ｖ经验 >= EQUIP_LIMIT_V(ARG)
+			RETURNF 1
+		ELSE
+			RETURNF 0
+		ENDIF
+	CASE 60 TO 79
+		IF EXP:MASTER:Ａ经验 >= EQUIP_LIMIT_A(ARG)
+			RETURNF 1
+		ELSE
+			RETURNF 0
+		ENDIF
+ENDSELECT
+RETURNF 1
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+
+@CLOTHES_COVERED(ARG)
+#FUNCTION
+;服が体の何処を隠してるか返す
+;1下着上見えない2下着下が見えない4胸が見えない8股間が見えない
+
+SELECTCASE ARG
+	CASE 200 TO 241,580
+		RETURNF 1
+	CASE 250 TO 299
+		RETURNF 2
+	CASE 300 TO 349
+		RETURNF 4
+	CASE 350 TO 373 , 375 TO 399
+		RETURNF 8
+	CASE 620 TO 719 ,581
+		RETURNF 3
+	CASE 720 TO 731 , 733 TO 819
+		RETURNF 12
+ENDSELECT
+RETURNF 0
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+
+;アイテム毎の刺激度を返す
+@SUGGESTIVE_POINT(ARG)
+#FUNCTION
+
+SELECTCASE ARG
+	CASE 203
+		RETURNF -5
+	CASE 206
+		RETURNF 5
+	CASE 207
+		RETURNF -15
+	CASE 208
+		RETURNF -20
+	CASE 209
+		RETURNF 5
+	CASE 211
+		RETURNF 10
+	CASE 212
+		RETURNF 5
+	CASE 213
+		RETURNF 15
+	CASE 214
+		RETURNF -10
+	CASE 217
+		RETURNF -15
+	CASE 218
+		RETURNF -15
+	CASE 219
+		RETURNF 10
+	CASE 220
+		RETURNF 15
+	CASE 240
+		RETURNF -10
+	CASE 241
+		RETURNF -10
+	CASE 251
+		RETURNF -15
+	CASE 253
+		RETURNF 5
+	CASE 254
+		RETURNF 20
+	CASE 255
+		RETURNF 5
+	CASE 256
+		RETURNF -5
+	CASE 259
+		RETURNF -5
+	CASE 260
+		RETURNF -15
+	CASE 275
+		RETURNF -5
+	CASE 276
+		RETURNF -10
+	CASE 277
+		RETURNF 5
+	CASE 278
+		RETURNF 10
+	CASE 279
+		RETURNF 10
+	CASE 280
+		RETURNF -10
+	CASE 281
+		RETURNF -10
+	CASE 282
+		RETURNF -15
+	CASE 283
+		RETURNF -20
+	CASE 284
+		RETURNF 15
+	CASE 285
+		RETURNF -15
+	CASE 301
+		RETURNF 5
+	CASE 302
+		RETURNF 5
+	CASE 303
+		RETURNF 15
+	CASE 304
+		RETURNF 5
+	CASE 305
+		RETURNF -15
+	CASE 306
+		RETURNF 10
+	CASE 307
+		RETURNF 10
+	CASE 310
+		RETURNF 15
+	CASE 311
+		RETURNF -5
+	CASE 312
+		RETURNF -10
+	CASE 313
+		RETURNF 15
+	CASE 314
+		RETURNF 15
+	CASE 315
+		RETURNF 20
+	CASE 316
+		RETURNF -5
+	CASE 317
+		RETURNF 25
+	CASE 318
+		RETURNF 15
+	CASE 319
+		RETURNF 20
+	CASE 320
+		RETURNF 25
+	CASE 321
+		RETURNF 25
+	CASE 322
+		RETURNF 25
+	CASE 351
+		RETURNF 5
+	CASE 352
+		RETURNF 5
+	CASE 353
+		RETURNF 15
+	CASE 354
+		RETURNF 5
+	CASE 355
+		RETURNF -15
+	CASE 356
+		RETURNF 15
+	CASE 357
+		RETURNF 15
+	CASE 358
+		RETURNF 10
+	CASE 359
+		RETURNF 10
+	CASE 360
+		RETURNF 5
+	CASE 361
+		RETURNF -5
+	CASE 362
+		RETURNF 5
+	CASE 363
+		RETURNF 15
+	CASE 364
+		RETURNF 25
+	CASE 365
+		RETURNF 20
+	CASE 366
+		RETURNF 15
+	CASE 367
+		RETURNF 15
+	CASE 368
+		RETURNF -10
+	CASE 369
+		RETURNF -10
+	CASE 370
+		RETURNF 25
+	CASE 371
+		RETURNF 20
+	CASE 372
+		RETURNF 25
+	CASE 373
+		RETURNF 20
+	CASE 374
+		RETURNF 15
+	CASE 450
+		RETURNF 5
+	CASE 528
+		RETURNF 20
+	CASE 529
+		RETURNF 20
+	CASE 530
+		RETURNF 25
+	CASE 542
+		RETURNF 25
+	CASE 580
+		RETURNF -10
+	CASE 581
+		RETURNF -25
+	CASE 582
+		RETURNF -10
+	CASE 584
+		RETURNF 20
+	CASE 585
+		RETURNF 25
+	CASE 586
+		RETURNF 25
+	CASE 587
+		RETURNF -10
+	CASE 588
+		RETURNF -20
+	CASE 589
+		RETURNF -10
+	CASE 590
+		RETURNF -5
+	CASE 621
+		RETURNF 10
+	CASE 622
+		RETURNF 15
+	CASE 627
+		RETURNF 15
+	CASE 628
+		RETURNF -10
+	CASE 629
+		RETURNF -15
+	CASE 630
+		RETURNF 5
+	CASE 631
+		RETURNF 5
+	CASE 632
+		RETURNF 15
+	CASE 633
+		RETURNF 15
+	CASE 634
+		RETURNF 20
+	CASE 635
+		RETURNF 5
+	CASE 636
+		RETURNF 5
+	CASE 637
+		RETURNF 10
+	CASE 638
+		RETURNF 10
+	CASE 639
+		RETURNF 15
+	CASE 640
+		RETURNF -5
+	CASE 641
+		RETURNF -20
+	CASE 644
+		RETURNF 5
+	CASE 645
+		RETURNF 20
+	CASE 646
+		RETURNF 5
+	CASE 648
+		RETURNF 10
+	CASE 649
+		RETURNF 10
+	CASE 720
+		RETURNF 15
+	CASE 721
+		RETURNF 20
+	CASE 722
+		RETURNF 30
+	CASE 723
+		RETURNF 15
+	CASE 724
+		RETURNF 30
+	CASE 725
+		RETURNF 10
+	CASE 726
+		RETURNF 15
+	CASE 727
+		RETURNF 20
+	CASE 728
+		RETURNF 25
+	CASE 729
+		RETURNF 20
+	CASE 730
+		RETURNF 20
+	CASE 731
+		RETURNF 25
+	CASE 732
+		RETURNF 25
+ENDSELECT
+RETURNF 0
+
+;アイテム毎の容姿＋を返す
+@ACCE_POINT(ARG)
+#FUNCTION
+
+SELECTCASE ARG
+	;200～249上半身上衣----------
+;制服の水手服,1000,;
+	CASE 200
+		RETURNF 10
+;制服の西装上衣,1000,;
+	CASE 201
+		RETURNF 0
+;コットン女衬衫,1000,;
+	CASE 202
+		RETURNF 0
+;シルク女衬衫,1000,;
+	CASE 203
+		RETURNF 10
+;サマーセーター,1000,;
+	CASE 206
+		RETURNF 10
+;ウールセーター,1000,;
+	CASE 207
+		RETURNF 20
+;タートルネック,1000,;
+	CASE 208
+		RETURNF 0
+;Ｙ衬衫,1000,;
+	CASE 209
+		RETURNF 0
+;Ｔ衬衫,1000,;
+	CASE 210
+		RETURNF 0
+;キャミソール,1000,;細い肩紐つき
+	CASE 211
+		RETURNF 20
+;タンクトップ,1000,;袖子子無し
+	CASE 212
+		RETURNF 10
+;チューブトップ,1000,;紐無し
+	CASE 213
+		RETURNF 10
+;パーカー,1000,;
+	CASE 214
+		RETURNF -10
+;カットソー,1000,;ニット系総称でもある
+	CASE 215
+		RETURNF 0
+;チュニック,1000,;普通の上衣ＵＯではよく作ったよ
+	CASE 217
+		RETURNF 0
+;トレーナー,1000,;
+	CASE 218
+		RETURNF -10
+;体操服,1000,;
+	CASE 219
+		RETURNF -10
+;ダメージＴ衬衫,1000
+	CASE 220
+		RETURNF 5
+;制服の詰襟,1000,;
+	CASE 240
+		RETURNF -5
+;スーツの上衣,1000,;
+	CASE 241
+		RETURNF 10
+	;250～274下半身上衣(裙子)----------
+;制服の裙子,1000,;
+	CASE 250
+		RETURNF 5
+;长裙,1000,;
+	CASE 251
+		RETURNF 0
+;ひざ丈裙子,1000,;
+	CASE 252
+		RETURNF 10
+;迷你裙,1000,;
+	CASE 253
+		RETURNF 5
+;マイクロミニ,1000,;
+	CASE 254
+		RETURNF 5
+;タイト裙子,1000,;ＯＬの制服のような
+	CASE 255
+		RETURNF 10
+;プリーツ裙子,1000,;ひだひだ学生服でよくある
+	CASE 256
+		RETURNF 10
+;フレア裙子,1000,;裾が波打ってるプリーツを柔らかくしたような
+	CASE 257
+		RETURNF 10
+;巻き裙子,1000,;布を腰に巻いてある感じの
+	CASE 258
+		RETURNF 10
+;吊り裙子,1000,;小学生の制服でよくあるような
+	CASE 259
+		RETURNF 0
+;背心裙,1000,;上下が繋がった袖子子の無い连衣裙状制服でもよくある
+	CASE 260
+		RETURNF 5
+	;275～299下半身上衣(裤子)----------
+;裙裤裙子,1000,;
+	CASE 275
+		RETURNF 5
+;コットンパンツ,1000,;
+	CASE 276
+		RETURNF 0
+;短裤,1000,;
+	CASE 277
+		RETURNF 0
+;热裤,1000,;
+	CASE 278
+		RETURNF 0
+;打底裤,1000,;
+	CASE 279
+		RETURNF 0
+;ローライズパンツ,1000,;
+	CASE 280
+		RETURNF 5
+;スリムジーンズ,1000,;
+	CASE 281
+		RETURNF 5
+;スラックス,1000,;
+	CASE 282
+		RETURNF 10
+;トレーニングパンツ,1000,;
+	CASE 283
+		RETURNF -10
+;运动短裤,1000,;
+	CASE 284
+		RETURNF -10
+;オーバーオール,1000,;
+	CASE 285
+		RETURNF -10
+;制服の裤子,1000,;
+	CASE 290
+		RETURNF 0
+;スーツの裤子,1000,;
+	CASE 291
+		RETURNF 10
+	;400～419帽子----------
+;ニット帽,500,;
+	CASE 400
+		RETURNF 20
+;麦わら帽,500,;
+	CASE 401
+		RETURNF 10
+;ベレー帽,500,;
+	CASE 402
+		RETURNF 0
+;つば広帽,500,;
+	CASE 403
+		RETURNF 20
+;ハンチング,500,;
+	CASE 404
+		RETURNF 10
+;ベースボールキャップ,500,;
+	CASE 405
+		RETURNF 10
+;インディ杏ハット,500,;
+	CASE 406
+		RETURNF 10
+;テンガロンハット,500,;
+	CASE 407
+		RETURNF 20
+;护士帽,1500,;
+	CASE 408
+		RETURNF 10
+;婦警の帽子,1500,;
+	CASE 409
+		RETURNF 5
+	;420～439靴----------
+;革靴,500,;
+	CASE 420
+		RETURNF 0
+;スニーカー,500,;
+	CASE 421
+		RETURNF 0
+;サンダル,500,;
+	CASE 422
+		RETURNF 10
+;ローファー,500,;
+	CASE 423
+		RETURNF 20
+;エナメルパンプス,500,;
+	CASE 424
+		RETURNF 10
+;ハイヒール,500,;
+	CASE 425
+		RETURNF 20
+;ピンヒール,500,;
+	CASE 426
+		RETURNF 20
+;ショートブーツ,500,;
+	CASE 427
+		RETURNF 20
+;ロングブーツ,500,;
+	CASE 428
+		RETURNF 10
+;ダンスシューズ,500,;
+	CASE 429
+		RETURNF 20
+;草履,500,;
+	CASE 430
+		RETURNF -10
+	;440～459袜子----------
+;ショートソックス,500,;
+	CASE 440
+		RETURNF 10
+;长筒袜,500,;
+	CASE 441
+		RETURNF 10
+;及膝袜,500,;
+	CASE 442
+		RETURNF 20
+;オーバー及膝袜,500,;
+	CASE 443
+		RETURNF 20
+;ルーズソックス,500,;
+	CASE 444
+		RETURNF 10
+;黒ストッキング,500,;
+	CASE 445
+		RETURNF 10
+;吊带袜,500,;
+	CASE 446
+		RETURNF 0
+;ロングタイツ,500,;
+	CASE 447
+		RETURNF 5
+;網タイツ,500,;
+	CASE 448
+		RETURNF 10
+;半透明连裤袜,500
+	CASE 449
+		RETURNF 0
+;破れたストッキング,500
+	CASE 450
+		RETURNF 0
+	;460～479眼鏡----------
+;メガネ,500,;
+	CASE 460
+		RETURNF 0
+;銀の眼鏡,15000,;
+	CASE 461
+		RETURNF 50
+	;480～499頭----------
+;发箍,500,;
+	CASE 480
+		RETURNF 30
+;喀秋莎,500,;
+	CASE 481
+		RETURNF 20
+;ヘッドドレス,500,;
+	CASE 482
+		RETURNF 20
+;バンダナ,500,;
+	CASE 483
+		RETURNF 5
+;かんざし,500,;
+	CASE 484
+		RETURNF 15
+;純白のヘッドドレス,15000,;
+	CASE 485
+		RETURNF 25
+;蝴蝶结,500
+	CASE 486
+		RETURNF 30
+;白色女仆发箍,500女仆が頭にしてるもの
+	CASE 487
+		RETURNF 30
+;猫耳喀秋莎,500
+	CASE 488
+		RETURNF 25
+;ウサ耳喀秋莎,500
+	CASE 489
+		RETURNF 25
+	;500～519耳----------
+;イヤリング,500,;
+	CASE 500
+		RETURNF 50
+	;520～539首----------
+;ネックレス,500,;
+	CASE 520
+		RETURNF 20
+;ペンダント,500,;
+	CASE 521
+		RETURNF 20
+;胸针,500,;
+	CASE 522
+		RETURNF 20
+;チョーカー,1500,;
+	CASE 523
+		RETURNF 15
+;名札,500,;
+	CASE 524
+		RETURNF 10
+;真珠のネックレス,15000,;
+	CASE 525
+		RETURNF 50
+;蒼いペンダント,15000,;
+	CASE 526
+		RETURNF 50
+;翡翠の胸针,15000,;
+	CASE 527
+		RETURNF 50
+;首輪,15000,;
+	CASE 528
+		RETURNF 10
+;赤い首輪,50000,;
+	CASE 529
+		RETURNF 25
+;奴隷管理用タグ,50000,;
+	CASE 530
+		RETURNF -10
+;涎掛け,500
+	CASE 531
+		RETURNF -5
+	;540～559腕----------
+;腕輪,1000,;
+	CASE 540
+		RETURNF 30
+;腕時計,1000
+	CASE 541
+		RETURNF 20
+;手錠,1000
+	CASE 542
+		RETURNF 0
+;手套,1000
+	CASE 543
+		RETURNF 10
+	;560～579指----------
+;エンゲージリング,100000,;
+	CASE 560
+		RETURNF 100
+	;580～619その他----------
+;半混血外套,1500,;
+	CASE 580
+		RETURNF 5
+;ロング外套,1500,;
+	CASE 581
+		RETURNF 5
+;レイン外套,1500,;
+	CASE 582
+		RETURNF 0
+;エプロン,1500,;
+	CASE 583
+		RETURNF 10
+;パレオ,1500,;
+	CASE 584
+		RETURNF 20
+;落書き,5000,;
+	CASE 585
+		RETURNF -10
+;猫尻尾,1500
+	CASE 586
+		RETURNF 10
+;ニット羊毛衫,1000,;
+	CASE 587
+		RETURNF 10
+;フリース羊毛衫,1000,;
+	CASE 588
+		RETURNF 20
+;ボレロ,1000,;
+	CASE 589
+		RETURNF 5
+;ソムリエエプロン,1000
+	CASE 590
+		RETURNF 10
+	;620～719上下一体型上衣----------
+;连衣裙,1000,;
+	CASE 620
+		RETURNF 20
+;ミニワンピ,1000,;
+	CASE 621
+		RETURNF 25
+;キャミソールワンピ,1000,;
+	CASE 622
+		RETURNF 30
+;エプロンドレス,1000,;
+	CASE 624
+		RETURNF 20
+;ピンクのロリータ服,5000,;
+	CASE 625
+		RETURNF 15
+;黒のゴシック服,5000,;
+	CASE 626
+		RETURNF 15
+;浴衣,5000,;
+	CASE 627
+		RETURNF 40
+;和服,10000,;
+	CASE 628
+		RETURNF 50
+;振袖子子,15000,;
+	CASE 629
+		RETURNF 70
+;便利店の制服,5000,;
+	CASE 630
+		RETURNF 15
+;ウェイトレスの制服,5000,;
+	CASE 631
+		RETURNF 15
+;旗袍,5000,;
+	CASE 632
+		RETURNF 30
+;女仆装,5000,;
+	CASE 633
+		RETURNF 40
+;兔女郎服,5000,;
+	CASE 634
+		RETURNF 20
+;护士服,5000,;
+	CASE 635
+		RETURNF 25
+;婦警の制服,5000,;
+	CASE 636
+		RETURNF 25
+;イブニングドレス,5000,;
+	CASE 637
+		RETURNF 15
+;网球服,5000,;
+	CASE 638
+		RETURNF 40
+;チアガールの服,5000,;
+	CASE 639
+		RETURNF 50
+;巫女装束,5000,;
+	CASE 640
+		RETURNF 40
+;ジャージ,1000,;
+	CASE 641
+		RETURNF -10
+;睡衣,1000,;
+	CASE 643
+		RETURNF -10
+;睡衣,1000,;
+	CASE 644
+		RETURNF -5
+;バスローブ,1000,;
+	CASE 645
+		RETURNF -20
+;ウェディングドレス,1000,;00,;
+	CASE 646
+		RETURNF 60
+;白ゴシックの服,1000,;
+	CASE 647
+		RETURNF 30
+;袈裟,1000,;
+	CASE 648
+		RETURNF -20
+;修道女の服,1000,;
+	CASE 649
+		RETURNF 10
+	;720～819上下一体型下着
+;ベビードール,1000,;
+	CASE 720
+		RETURNF 10
+;半体服,2000,;
+	CASE 721
+		RETURNF 50
+;拘束装スーツ,5000,;
+	CASE 722
+		RETURNF 40
+;全身タイツ,3000,;
+	CASE 723
+		RETURNF 0
+;肌襦袢,1000,;
+	CASE 724
+		RETURNF 20
+;学校泳装,1000,;
+	CASE 725
+		RETURNF 30
+;连衣裙水着,1000,;
+	CASE 726
+		RETURNF 40
+;ビキニ水着,3000,;
+	CASE 727
+		RETURNF 70
+;マイクロビキニ,3000,;
+	CASE 728
+		RETURNF 70
+;白い水着,3000,;
+	CASE 729
+		RETURNF 50
+;女王用拘束装,15000,;
+	CASE 730
+		RETURNF 20
+;奴隷用拘束装,15000,;
+	CASE 731
+		RETURNF 10
+;礼物蝴蝶结,3000
+	CASE 732
+		RETURNF 20
+
+ENDSELECT
+RETURNF 0

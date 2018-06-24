@@ -1,0 +1,70 @@
+﻿@COM_ABLE1016(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF CFLAG:LOCAL:現在地区 != 2 || CFLAG:LOCAL:現在位置 != 16
+	RETURN 0
+RETURN GLOBAL_COMABLE(1016)
+@COM1016(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+;施設を利用する
+IF MONEY:ARG < 1500
+	PRINTW お金が足りません
+	RETURN 0
+ENDIF
+DOWNBASE:ARG:体力 += 150
+DOWNBASE:ARG:气力 += 200
+CFLAG:ARG:待機時間 = 90
+MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 200 / 60
+MONEY:ARG -= 1500
+
+EXP:ARG:運動経験 += 5
+IF TCVAR:ARG:行為対象
+;相手からの好意が70以上、愛情が1以上（又は好意が140以上）、服从が1以上、肉欲が1以上でなければ相手にされない
+	IF (TA:(TCVAR:ARG:行為対象):ARG:0 >= 1) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 1) | (TA:(TCVAR:ARG:行為対象):ARG:3 >= 140)) && (TA:(TCVAR:ARG:行為対象):ARG:2 >= 1) && (TA:(TCVAR:ARG:行為対象):ARG:3 >= 70)
+		DOWNBASE:(TCVAR:ARG:行為対象):体力 += 150
+		DOWNBASE:(TCVAR:ARG:行為対象):气力 += 200
+		EXP:(TCVAR:ARG:行為対象):運動経験 += 5
+
+		CFLAG:(TCVAR:ARG:行為対象):待機時間 = 90
+		MAXBASE:(TCVAR:ARG:行為対象):体力 += CFLAG:(TCVAR:ARG:行為対象):待機時間 * 3 / 60
+
+		SOURCE:(TCVAR:ARG:行為対象):歓楽 = 600
+;行為者にも同じ値をセット（好意があるので話しかけたと仮定）
+		SOURCE:ARG:歓楽 = SOURCE:(TCVAR:ARG:行為対象):歓楽
+;;;	支配度に＋２、相手に＋２
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+	ELSE
+;但し、確率でOK
+		A = RAND(900)
+		IF !(A >500)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%提不起劲・・・
+;;;	支配度に－２、相手は無し
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		ELSE
+			DOWNBASE:(TCVAR:ARG:行為対象):体力 += 150
+			DOWNBASE:(TCVAR:ARG:行為対象):气力 += 200
+			EXP:(TCVAR:ARG:行為対象):運動経験 += 5
+
+			CFLAG:(TCVAR:ARG:行為対象):待機時間 = 90
+			MAXBASE:(TCVAR:ARG:行為対象):体力 += CFLAG:(TCVAR:ARG:行為対象):待機時間 * 3 / 60
+
+			SOURCE:(TCVAR:ARG:行為対象):歓楽 = 600
+;行為者にも同じ値をセット（好意があるので話しかけたと仮定）
+			SOURCE:ARG:歓楽 = SOURCE:(TCVAR:ARG:行為対象):歓楽
+;;;	支配度に＋２、相手に＋２
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 2
+		ENDIF
+	ENDIF
+ENDIF
+
+VARSET ARG
+RETURN 1
+
+
+

@@ -1,0 +1,14 @@
+﻿@COM_MESSAGE_961
+;--------------------------------------------------------------------------
+;逃げる
+;--------------------------------------------------------------------------
+PRINTFORML ＜逃げる＞
+SELECTCASE TFLAG:COM用変数
+	CASE -1
+		PRINTW 反抗不可
+	CASE 0
+		PRINTFORMW %CALLNAME:(TFLAG:行為者)%逃不掉...
+	CASE 1
+		PRINTFORMW %CALLNAME:(TFLAG:行為者)%成功逃走了
+ENDSELECT
+

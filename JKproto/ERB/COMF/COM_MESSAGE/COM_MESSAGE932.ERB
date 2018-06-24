@@ -1,0 +1,14 @@
+﻿@COM_MESSAGE_932
+;--------------------------------------------------------------------------
+;振り払う
+;--------------------------------------------------------------------------
+PRINTFORML ＜摆脱＞
+SELECTCASE TFLAG:COM用変数
+	CASE -1
+		PRINTW 反抗不可
+	CASE 0
+		PRINTFORMW %CALLNAME:(TFLAG:行為者)%想摆脱%CALLNAME:(TCVAR:(TFLAG:行為者):行為対象)%但失败了
+	CASE 1
+		PRINTFORMW %CALLNAME:(TFLAG:行為者)%成功摆脱了%CALLNAME:(TCVAR:(TFLAG:行為者):行為対象)%。
+ENDSELECT
+

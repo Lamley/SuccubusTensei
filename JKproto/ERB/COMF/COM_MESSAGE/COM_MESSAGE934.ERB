@@ -1,0 +1,17 @@
+﻿@COM_MESSAGE_934
+;--------------------------------------------------------------------------
+;脅す
+;--------------------------------------------------------------------------
+PRINTFORML ＜脅す＞
+SELECTCASE TFLAG:COM用変数
+	CASE -1
+		PRINTW 反抗不可
+	CASE 0
+		PRINTW ミス
+	CASE 1
+		PRINTW チップ
+	CASE 2
+		PRINTW ヒット
+	CASE 3
+		PRINTW クリティカル
+ENDSELECT

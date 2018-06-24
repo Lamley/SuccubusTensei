@@ -1,0 +1,127 @@
+﻿@COM_ABLE800(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+
+SIF TCVAR:LOCAL:イベント != 3
+	RETURN 0
+RETURN GLOBAL_COMABLE(800)
+
+@COM800(ARG)
+;雑談
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+IF !(TALENT:(TCVAR:ARG:行為対象):家族)
+;相手からの好意3が30以上且つ愛情1が1以上（又は好意が70以上）、又は、服从2が10以上且つ肉欲0が100以上
+	IF ((TA:(TCVAR:ARG:行為対象):ARG:0 >= 100) && (TA:(TCVAR:ARG:行為対象):ARG:2 >= 10)) | ((TA:(TCVAR:ARG:行為対象):ARG:3 >= 30) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 1) | (TA:(TCVAR:ARG:行為対象):ARG:3 >= 70)))
+	ELSE
+;但し、確率でOK
+		A = RAND(900)
+		A = A * TA:ARG:(CFLAG:(TCVAR:ARG:行為対象):タイプ):5 / 100
+		IF !(A >400)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%拒绝了。
+			TFLAG:成否用変数 = -2
+			CFLAG:ARG:待機時間 += 10
+;;;	支配度に－２、相手は無し
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 1
+			VARSET ARG
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+LOCAL = RAND(100)
+LOCAL:1 = 90 + (GET_SUCCESS_RATE(ARG) / 5) - TCVAR:ARG:会话累積値
+SIF LOCAL:1 > 99
+	LOCAL:1 = 99
+SIF LOCAL:1 < 0
+	LOCAL:1 = 0
+
+IF LOCAL >= LOCAL:1
+	;10～1％で失敗
+	TFLAG:成否用変数 = -1
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+ELSE
+	IF LOCAL <= 19
+		;10％で大成功
+		TFLAG:成否用変数 = 2
+		EXP:ARG:会话经验 += 2
+		EXP:(TCVAR:ARG:行為対象):会话经验 += 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	ELSE
+	;残りは成功
+	TFLAG:成否用変数 = 1
+	EXP:ARG:会话经验++
+	EXP:(TCVAR:ARG:行為対象):会话经验++
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 1
+	ENDIF
+ENDIF
+;行為者にも同じ値をセット（好意があるので話しかけたと仮定）
+CALL COM801(ARG)
+I = TCVAR:ARG:行為対象
+TCVAR:ARG:行為対象 = I
+TCVAR:I:行為対象 = ARG
+TFLAG:行為者 = I
+CALL SOURCE_CHECKS(I)
+TFLAG:行為者 = ARG
+TCVAR:ARG:行為対象 = I
+
+DOWNBASE:ARG:气力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 10
+;固定で獲得するソース
+SOURCE:(TCVAR:ARG:行為対象):歓楽 = 200
+
+
+;;;20120211 追加　会话成功時に情欲度＋１、＋５、＋７
+IF TFLAG:成否用変数 == -1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.10
+	TA:ARG:(TCVAR:ARG:行為対象):4 += 1
+	TA:(TCVAR:ARG:行為対象):ARG:4 += 1
+ELSEIF TFLAG:成否用変数 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.00
+	TA:ARG:(TCVAR:ARG:行為対象):4 += 5
+	TA:(TCVAR:ARG:行為対象):ARG:4 += 5
+ELSE
+	TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 2.00
+	TA:ARG:(TCVAR:ARG:行為対象):4 += 7
+	TA:(TCVAR:ARG:行為対象):ARG:4 += 7
+ENDIF
+SELECTCASE ABL:ARG:说话技巧技能
+	CASE 0
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.20
+	CASE 1
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.40
+	CASE 2
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 0.70
+	CASE 3
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.00
+	CASE 4
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 1.50
+	CASEELSE
+		TIMES SOURCE:(TCVAR:ARG:行為対象):歓楽 , 2.00
+ENDSELECT
+
+;;;20120717 追加　会话成功時にMAX气力＋１
+MAXBASE:ARG:气力 += 1
+MAXBASE:I:气力 += 1
+;;; 会话成功時に好意＋１
+TA:ARG:(TCVAR:ARG:行為対象):3 += 1
+TA:(TCVAR:ARG:行為対象):ARG:3 += 1
+;;;20120721 会话成功時に敵対－１
+TA:I:ARG:6 -= 1
+TA:ARG:I:6 -= 1
+
+
+;会话累積値
+TCVAR:ARG:会话累積値 += 90 / (3 + ABL:ARG:说话技巧技能)
+
+CFLAG:ARG:待機時間 += 10
+
+
+VARSET ARG
+RETURN 1
+
+

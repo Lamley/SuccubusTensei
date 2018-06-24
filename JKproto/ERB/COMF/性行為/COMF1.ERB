@@ -1,0 +1,91 @@
+﻿;爱抚
+@COM_ABLE1(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(1)
+
+@COM1(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 爱抚(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+SIF TEQUIP:(TCVAR:ARG:行為対象):下半身下着 != 373
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 80
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 50
+SOURCE:ARG:性行動 = 60
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):不潔 = 30
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 20
+SOURCE:(TCVAR:ARG:行為対象):反感 = 20
+
+;舌を使う調教では、調教者の善用舌头によって、快感のソース増加
+IF TALENT:ARG:善用舌头
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｃ , 1.50
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｂ , 1.50
+	TIMES SOURCE:(TCVAR:ARG:行為対象):情愛 , 1.50
+ENDIF
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+IF (STAIN:(TCVAR:ARG:行為対象):0 >= 2 && (STAIN:(TCVAR:ARG:行為対象):0 != 16 && STAIN:(TCVAR:ARG:行為対象):0 != 17) && TALENT:ARG:汚臭耐性 < 2) || TEQUIP:(TCVAR:ARG:行為対象):口塞球
+;相手の口の汚れがあるときキスはない（愛液と母乳よごれはＯＫ、脏污无视は問題なし）
+;口塞球使用中もなし
+	SOURCE:(TCVAR:ARG:行為対象):不潔 = 0
+	SOURCE:(TCVAR:ARG:行為対象):情愛 /= 4
+	SOURCE:(TCVAR:ARG:行為対象):液体 /= 2
+ELSE
+	;キス経験
+	EXP:(TCVAR:ARG:行為対象):キス経験 ++
+	EXP:ARG:キス経験 ++
+	;汚臭钝感
+	SIF TALENT:(TCVAR:ARG:行為対象):汚臭耐性 > 0
+		SOURCE:(TCVAR:ARG:行為対象):不潔 /= 4
+	;汚臭敏感
+	SIF TALENT:(TCVAR:ARG:行為対象):汚臭耐性 < 0
+		SOURCE:(TCVAR:ARG:行為対象):不潔 *= 3
+	;高傲
+	SIF TALENT:(TCVAR:ARG:行為対象):プライド > 0
+		SOURCE:(TCVAR:ARG:行為対象):不潔 *= 2
+	IF STAIN:ARG:0
+	;行為者の口の汚れがあると不潔150%
+		SOURCE:(TCVAR:ARG:行為対象):不潔 *= 3
+		SOURCE:(TCVAR:ARG:行為対象):不潔 /= 2
+	ENDIF
+	;行為者の口⇔相手の口の汚れが移動
+	STAIN:(TCVAR:ARG:行為対象):0 |= STAIN:ARG:0
+	STAIN:ARG:0 |= STAIN:(TCVAR:ARG:行為対象):0
+ENDIF
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,5)
+
+
+;手交経験
+EXP:ARG:手交経験 ++
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

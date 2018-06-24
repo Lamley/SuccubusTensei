@@ -1,0 +1,117 @@
+﻿;自慰棒
+@COM_ABLE44(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF !EQUIP:LOCAL:自慰棒
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 19
+	RETURN 0
+;道具反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):膣 == 17
+	RETURN 0
+;道具のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＶオンリーＰ == 1
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(44)
+
+;-------------------------------------------------
+;自慰棒
+;-------------------------------------------------
+@COM44(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 自慰棒(%CALLNAME:ARG%)
+
+;男性器のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):膣 == 18
+	CFLAG:(TCVAR:ARG:行為対象):ＶオンリーＴ = 1
+ENDIF
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+IF !TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 100
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 250
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 50
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 40
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 40
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 20
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 30
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 40
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 20
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+IF !TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	;压抑、反抗持ちには、抑郁ソース追加
+	SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+		SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 40
+ENDIF
+
+;处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 2000
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 3000
+ENDIF
+
+;再生处女だった場合は、痛苦のソースと反発のソースを追加する
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 2
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 += 500
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 1000
+ENDIF
+
+;Vへの痛苦は先に処理しておく
+CALL PAIN_CHECK_V(TCVAR:ARG:行為対象)
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;挿入時はＶ经验+
+;EXP:(TCVAR:ARG:行為対象):Ｖ经验 ++
+
+;异常经验
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1 && !GETBIT(CFLAG:(TCVAR:ARG:行為対象):异常经验,3)
+	EXP:异常经验 ++
+	SETBIT CFLAG:(TCVAR:ARG:行為対象):异常经验,3
+ENDIF
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+
+IF TEQUIP:(TCVAR:ARG:行為対象):膣 == 1
+	TEQUIP:(TCVAR:ARG:行為対象):膣 = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):膣 = 1
+ENDIF
+
+TCVAR:(TCVAR:ARG:行為対象):被挿入 = 1
+
+EXP:ARG:道具使用経験 ++
+VARSET ARG
+RETURN 1
+

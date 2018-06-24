@@ -1,0 +1,44 @@
+﻿@COM_ABLE996(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 3 || TCVAR:(TCVAR:LOCAL:行為対象):同行
+	RETURN 0
+;SIF TA:(TCVAR:LOCAL:行為対象):LOCAL:3 + TA:(TCVAR:LOCAL:行為対象):LOCAL:2 * 10 < 100
+;	RETURN 0
+RETURN GLOBAL_COMABLE(996)
+
+@COM996(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+TFLAG:成否用変数 = 0
+IF !(TALENT:(TCVAR:ARG:行為対象):家族)
+;相手からの好意が50以上、肉欲が1以上（又は好意が120以上）、服从が1以上、愛情が1以上でなければ相手にされない
+	IF TALENT:(TCVAR:ARG:行為対象):163 | (TA:(TCVAR:ARG:行為対象):ARG:0 >= 1) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 1) | (TA:(TCVAR:ARG:行為対象):ARG:3 >= 120)) && (TA:(TCVAR:ARG:行為対象):ARG:2 >= 1) && (TA:(TCVAR:ARG:行為対象):ARG:3 >= 50)
+	ELSE
+;但し、確率でOK
+		A = RAND(900)
+		A = A * TA:ARG:(TCVAR:ARG:行為対象):5 / 100
+		IF !(A >620)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%拒绝了
+			TFLAG:成否用変数 = -2
+			B = RAND(100)
+			IF B >= 50
+				PRINTFORML 逃走了
+				CFLAG:ARG:待機時間 += 10
+				CALL EVENT_ESCAPE_ALL
+			ENDIF
+			VARSET ARG
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+
+;同行してもらう
+TCVAR:ARG:同行 = 1
+TCVAR:(TCVAR:ARG:行為対象):同行 = 1
+VARSET ARG
+RETURN 1
+

@@ -1,0 +1,18 @@
+﻿@COM_ABLE999(ARG)
+SIF TCVAR:MASTER:イベント != 3
+	RETURN 0
+RETURN GLOBAL_COMABLE(999)
+@COM999(ARG)
+VARSET LOCAL
+;会话を終える
+PRINTL 
+PRINTFORML %"=" * 107%
+;--------------------------------------------------------------------------
+;会话を終える
+;--------------------------------------------------------------------------
+PRINTFORML ＜会话を終える＞
+PRINTFORML 和%CALLNAME:(TCVAR:MASTER:行為対象)%的会话结束了。
+CALL EVENT_ESCAPE_ALL
+
+RETURN 1
+

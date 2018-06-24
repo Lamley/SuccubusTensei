@@ -1,0 +1,45 @@
+﻿@COM_ABLE998(ARG)
+SIF TCVAR:MASTER:イベント != 3
+	RETURN 0
+SIF TALENT:(TCVAR:1:行為対象):200
+	RETURN 0
+RETURN GLOBAL_COMABLE(998)
+
+@COM998(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+;相手からの好意3が100以上、愛情1が1（又は服从2が100又は好意3が200以上）以上でなければ相手にされない
+IF ((TA:ARG:(CFLAG:(TCVAR:ARG:行為対象):タイプ):5) > 40 + RAND(100) * (CFLAG:ARG:モラル / 1000)) && ((TA:(TCVAR:ARG:行為対象):ARG:1 >= 1) | (TA:(TCVAR:ARG:行為対象):ARG:2 - TA:(TCVAR:ARG:行為対象):ARG:6 >= 100) | (TA:(TCVAR:ARG:行為対象):ARG:3 - TA:(TCVAR:ARG:行為対象):ARG:6 >= 200)) && (TA:(TCVAR:ARG:行為対象):ARG:3 - TA:(TCVAR:ARG:行為対象):ARG:6 >= 100)
+ELSE
+;但し、確率でOK
+	A = RAND(900)
+	A = A * TA:ARG:(CFLAG:(TCVAR:ARG:行為対象):タイプ):5 / 100
+	IF !(A >800)
+		PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%にうまく逃げられた
+		CALL EVENT_ESCAPE_ALL
+;好意度、情欲度に-1
+		TA:(TCVAR:ARG:行為対象):ARG:3 -= 1
+		TA:(TCVAR:ARG:行為対象):ARG:4 -= 1
+;;;20120721 敵対+1
+		TA:(TCVAR:ARG:行為対象):ARG:6 += 1
+		TA:ARG:(TCVAR:ARG:行為対象):6 += 1
+;;;		支配度に－１０、相手に＋５
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) += 1
+		CFLAG:ARG:待機時間 += 10
+		RETURN 1
+	ENDIF
+ENDIF
+
+;押し倒す
+CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,4)
+CFLAG:ARG:待機時間 += 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(TCVAR:ARG:行為対象) -= 3
+		BASE:ARG:評判 -= 10
+		BASE:(TCVAR:ARG:行為対象):評判 -= 10
+
+VARSET ARG
+RETURN 1

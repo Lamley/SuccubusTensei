@@ -1,0 +1,126 @@
+﻿@COM_MESSAGE_1007
+;===============================================================================
+;自慰とか
+;===============================================================================
+SIF M:101 == 1
+	RETURN 0
+;--------------------------------------------------------------------------
+;自慰する
+;　情欲PALAMが一定以上の場合に使用可能な感じで。
+;--------------------------------------------------------------------------
+PRINTFORML ＜自慰する＞
+;春药
+IF TEQUIP:MASTER:春药
+	PRINTFORM 春药による
+ENDIF
+PRINTFORM 为了平息欲火、%CALLNAME:MASTER%的手
+;自慰经验＋调教自慰经验が30未満
+SIF EXP:MASTER:自慰经验 + EXP:MASTER:调教自慰经验 < 30
+	PRINTFORM 无意识的动作着，
+;下半身下着あり
+IF TEQUIP:MASTER:下半身下着
+	;PALAM润滑Lv3以上＋女性器あり
+	SIF PALAM:MASTER:润滑 >= PALAMLV:3 && TALENT:MASTER:性別 & 1
+		PRINTFORM 湿了。
+	PRINTFORM 伸入了%ITEMNAME:(TEQUIP:MASTER:下半身下着)%之中、
+ENDIF
+;膣に玩具
+IF TEQUIP:MASTER:膣 == 1
+	;PALAM润滑Lv3以上
+	SIF PALAM:MASTER:润滑 >= PALAMLV:3
+		PRINTFORM 流出了爱液
+	PRINTFORM 阴道被%ITEMNAME:(TEQUIP:MASTER:膣)%玩弄着
+;男性器あり
+ELSEIF TALENT:MASTER:性別 & 2
+	;PALAM情欲Lv3以上
+	IF PALAM:MASTER:情欲 >= PALAMLV:3
+		PRINTFORM 在勃起了的
+	ELSE
+		PRINTFORM 在还是软的
+	ENDIF
+	PRINTFORM 阴茎上撸动着
+;アナルに玩具
+ELSEIF TEQUIP:MASTER:アナル == (60 | 61 | 62)
+	;PALAM润滑Lv3以上
+	SIF PALAM:MASTER:润滑 >= PALAMLV:3
+		PRINTFORM 腸液止不住
+	PRINTFORM 直肠被%ITEMNAME:(TEQUIP:MASTER:アナル)%刺激着
+;女性器あり
+ELSEIF TALENT:MASTER:性別 & 1
+	;Ｖ经验1以上
+	IF EXP:MASTER:Ｖ经验 >= 1
+		;PALAM润滑Lv3以上
+		SIF PALAM:MASTER:润滑 >= PALAMLV:3
+			PRINTFORM 爱液流出了
+		PRINTFORM 手指在阴道内抽送
+	;Ｃ感觉Lv3以上
+	ELSEIF ABL:MASTER:Ｃ感觉 >= 3
+		;PALAM情欲Lv3以上
+		SIF PALAM:MASTER:情欲 >= PALAMLV:3
+			PRINTFORM 开始完全勃起了
+		PRINTFORM 敏感的肉豆被刺激着。
+	ELSE
+		;PALAM润滑Lv3以上
+		SIF PALAM:MASTER:润滑 >= PALAMLV:3
+			PRINTFORM 爱液不断流出从
+		;矮小体型以下＋贫乳以下
+		IF TALENT:MASTER:体型 <= -1 && TALENT:MASTER:胸围サイズ <= -1
+			PRINTFORM 裂缝
+		ELSE
+			PRINTFORM 恥裂
+		ENDIF
+		PRINTFORM 开始感受到了刺激
+	ENDIF
+ENDIF
+PRINTFORM 另一只手也在
+;绝壁 or (男人＋並乳)
+IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+	PRINTFORM 捏着平坦的胸的尖端
+ELSE
+	;贫乳
+	SIF TALENT:MASTER:胸围サイズ == -1
+		PRINTFORM 略有凸起的
+	;巨乳
+	SIF TALENT:MASTER:胸围サイズ == 1
+		PRINTFORM 丰满的
+	;爆乳
+	SIF TALENT:MASTER:胸围サイズ == 2
+		PRINTFORM 过分丰满的
+	PRINTFORM 乳房上揉搓着
+ENDIF
+PRINTFORMW ，提供更多的快感。
+PRINTFORM 想要停止，但是、
+;自慰成瘾Lv3以上
+IF ABL:MASTER:自慰成瘾 >= 3
+	PRINTFORM 像平常一样进行着大量的自慰行动的
+;自慰成瘾Lv1以上
+ELSEIF ABL:MASTER:自慰成瘾 >= 1
+	PRINTFORM 进行了次数虽少却有快感的自慰后
+;容易自慰 or 容易上瘾
+ELSEIF TALENT:MASTER:容易自慰 || TALENT:MASTER:容易上瘾
+	PRINTFORM 有着容易自慰的体质的
+ENDIF
+PRINTFORML %CALLNAME:MASTER%手指的行动依然没有停止。
+;PALAM情欲Lv3以上
+IF PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORM 更高的欲望就这样被触发了
+;春药効果
+ELSEIF TEQUIP:MASTER:春药
+	PRINTFORM 由于春药的效果、更高的欲望被触发了
+ELSE
+	PRINTFORM 为了平息身体的欲望
+ENDIF
+PRINTFORML 自慰继续着。
+PRINTFORM 不久、
+;女性器あり
+IF TALENT:MASTER:性別 & 1
+	PRINTFORM 黏黏糊糊的液体的声音传了出来，跟
+	;胆怯 or 老实 or 害羞
+	SIF TALENT:MASTER:度胸 == -1 || TALENT:MASTER:応答 == -1 || TALENT:MASTER:羞恥心 == 1
+		PRINTFORM 被克制着的
+	PRINTFORMW 剧烈的的喘息呻吟重叠在一起…
+ELSE
+	PRINTFORMW 剧烈的喘息声从%CALLNAME:MASTER%的嘴中吐漏出来。
+ENDIF
+M:101 = 1
+

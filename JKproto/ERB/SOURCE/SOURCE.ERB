@@ -1,0 +1,586 @@
+﻿@SOURCE_CHECK
+
+@SOURCE_CHECKS(ARG)
+VARSET LOCAL
+SIF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+	DRAWLINE
+
+FOR LOCAL,1,CHARANUM
+	SIF LOCAL != ARG && TCVAR:LOCAL:行為対象 != ARG
+		CONTINUE
+	CALL SOURCE_CHECK_1(LOCAL)
+NEXT
+SIF ARG == MASTER || ARG == TCVAR:MASTER:行為対象
+	TRYCALLFORM COM_MESSAGE_{SELECTCOM:ARG}
+
+FOR LOCAL,1,CHARANUM
+	SIF LOCAL != ARG && TCVAR:LOCAL:行為対象 != ARG
+		CONTINUE
+	CALL SOURCE_CHECK_2(LOCAL)
+	CALL SOURCE_RESET(LOCAL)
+NEXT
+SIF ARG == MASTER || (TCVAR:ARG:行為対象 == MASTER && TFLAG:Ｎイベント != 8 && TCVAR:ARG:イベント != 24)
+	WAIT
+
+@SOURCE_CHECK_1(ARG)
+
+
+;-------------------------------------------------
+;主人、同性、調教者の能力の処理
+;-------------------------------------------------
+IF TCVAR:ARG:行為対象
+	CALL SOURCE_SEX_CHECK(ARG,TCVAR:ARG:行為対象)
+	CALL PLAYER_SKILL_CHECK(ARG,TCVAR:ARG:行為対象)
+ENDIF
+;-------------------------------------------------
+;技巧、好感度、興奮度、理性のチェック
+;-------------------------------------------------
+FOR LOCAL,0,100
+	SOURCE:ARG:LOCAL = SOURCE:ARG:LOCAL *  MASTER_FAVOR_CHECK(ARG,LOCAL) * TECHNIQUE_CHECK(ARG,LOCAL) / 10000
+	SOURCE:ARG:LOCAL = SOURCE:ARG:LOCAL *  EXCITE_CHECK(ARG,LOCAL) * REASON_CHECK(ARG,LOCAL) / 10000
+NEXT
+;-------------------------------------------------
+;服装や自慰棒など付けっぱなしアイテムのチェック
+;-------------------------------------------------
+SIF (TFLAG:行為者 == ARG && CFLAG:ARG:待機時間 > 0) || (TFLAG:行為者 != ARG && CFLAG:(TCVAR:ARG:行為対象):待機時間 > 0)
+	CALL EQUIP_CHECK(ARG)
+
+;-------------------------------------------------
+;経験加算
+;-------------------------------------------------
+CALL SOURCE_EXP(ARG)
+
+;-------------------------------------------------
+;处女、童貞喪失の処理
+;-------------------------------------------------
+CALL LOST_VIRGIN(ARG)
+
+;-------------------------------------------------
+;快Ｃのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:快Ｃ
+	CALL SOURCE_快Ｃ(ARG)
+;-------------------------------------------------
+;快Ｖのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:快Ｖ
+	CALL SOURCE_快Ｖ(ARG)
+;-------------------------------------------------
+;快Ａのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:快Ａ
+	CALL SOURCE_快Ａ(ARG)
+;-------------------------------------------------
+;快Ｂのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:快Ｂ
+	CALL SOURCE_快Ｂ(ARG)
+
+;-------------------------------------------------
+;同じコマンドの連続実行による上下の処理（快楽系）
+;-------------------------------------------------
+IF (TFLAG:行為者 == ARG && SELECTCOM:ARG == CFLAG:ARG:前回行動) || (TFLAG:行為者 != ARG && SELECTCOM:(TCVAR:ARG:行為対象) == CFLAG:ARG:前回被行動)
+	;UP:0,1,2,3は絶頂に絡むので先に処理してある
+	CUP:ARG:快Ｃ /= 2
+	CUP:ARG:快Ｖ /= 2
+	CUP:ARG:快Ａ /= 2
+	CUP:ARG:快Ｂ /= 2
+ENDIF
+
+CALL SOURCE_CVAB_EXTRA(ARG)
+
+IF GETBIT(TALENT:ARG:性別,1)
+	BASE:ARG:勃起 = BASE:ARG:勃起 + (CUP:ARG:快Ｃ / 5 + CUP:ARG:快Ｖ / 10 + CUP:ARG:快Ａ / 10 + CUP:ARG:快Ｂ / 10) * BASE:ARG:興奮度 * BASE:ARG:精力 / (20 * MAXBASE:ARG:精力)
+	BASE:ARG:勃起 = MIN(MAXBASE:ARG:勃起 , BASE:ARG:勃起)
+	BASE:ARG:射精 = BASE:ARG:射精 + (CUP:ARG:快Ｃ * 2 + CUP:ARG:快Ｖ + CUP:ARG:快Ａ + CUP:ARG:快Ｂ) * BASE:ARG:勃起 / MAXBASE:ARG:勃起 * BASE:ARG:興奮度 / 20
+ENDIF
+
+;-------------------------------------------------
+;絶頂処理
+;-------------------------------------------------
+CALL ORGASM_ADD(ARG)
+
+;-------------------------------------------------
+;射精チェック（扶她・男人）
+;-------------------------------------------------
+SIF GETBIT(TALENT:ARG:性別,1) && BASE:ARG:射精 > MAXBASE:ARG:射精
+	CALL EVENT_SHOOT(ARG)
+
+;-------------------------------------------------
+;調教対象の噴乳チェック
+;-------------------------------------------------
+CALL TARGET_MILK_CHECK(ARG)
+
+
+;-------------------------------------------------
+;情愛のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:情愛
+	CALL SOURCE_情愛(ARG)
+;-------------------------------------------------
+;性行動のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:性行動
+	CALL SOURCE_性行動(ARG)
+;-------------------------------------------------
+;達成のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:達成
+	CALL SOURCE_達成(ARG)
+;-------------------------------------------------
+;痛みのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:痛苦
+	CALL SOURCE_痛苦(ARG)
+;-------------------------------------------------
+;恐れのソース
+;-------------------------------------------------
+SIF SOURCE:ARG:恐怖
+	CALL SOURCE_恐怖(ARG)
+;-------------------------------------------------
+;液体のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:液体
+	CALL SOURCE_液体(ARG)
+;-------------------------------------------------
+;情欲のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:情欲
+	CALL SOURCE_情欲(ARG)
+;-------------------------------------------------
+;恭顺のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:恭顺
+	CALL SOURCE_恭顺(ARG)
+;-------------------------------------------------
+;露出のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:露出
+	CALL SOURCE_露出(ARG)
+;-------------------------------------------------
+;屈従のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:屈従
+	CALL SOURCE_屈従(ARG)
+;-------------------------------------------------
+;奉仕のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:奉仕
+	CALL SOURCE_奉仕(ARG)
+;-------------------------------------------------
+;歓楽のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:歓楽
+	CALL SOURCE_歓楽(ARG)
+;-------------------------------------------------
+;不潔のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:不潔
+	CALL SOURCE_不潔(ARG)
+;-------------------------------------------------
+;鬱屈のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:鬱屈
+	CALL SOURCE_鬱屈(ARG)
+;-------------------------------------------------
+;逸脱のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:逸脱
+	CALL SOURCE_逸脱(ARG)
+;-------------------------------------------------
+;反感のソース
+;-------------------------------------------------
+SIF SOURCE:ARG:反感
+	CALL SOURCE_反感(ARG)
+;-------------------------------------------------
+;素質などによる上下の処理
+;-------------------------------------------------
+CALL SOURCE_EXTRA(ARG)
+
+
+;-------------------------------------------------
+;同じコマンドの連続実行による上下の処理
+;-------------------------------------------------
+IF (TFLAG:行為者 == ARG && SELECTCOM:ARG == CFLAG:ARG:前回行動) || (TFLAG:行為者 != ARG && SELECTCOM:(TCVAR:ARG:行為対象) == CFLAG:ARG:前回被行動)
+	;UP:0,1,2は絶頂に絡むので先に処理してある
+	CUP:ARG:情欲 /= 2
+	CUP:ARG:恭顺 /= 2
+	CUP:ARG:屈服 /= 2
+	CUP:ARG:学习 /= 2
+	CUP:ARG:耻情 /= 2
+	CUP:ARG:恐怖 /= 2
+	CUP:ARG:痛苦 /= 2
+	CUP:ARG:優越 /= 2
+ENDIF
+IF GETBIT(TALENT:ARG:2,1)
+	LOCAL:1 = 0
+	LOCAL:1 += CUP:ARG:情欲 / 5
+	LOCAL:1 += MAX(5,(ABL:ARG:受虐属性 - 3)) * (CUP:ARG:痛苦 + CUP:ARG:痛苦) / 2
+	LOCAL:1 += MAX(5,(ABL:ARG:受虐属性 - 1)) * CUP:ARG:耻情 / 2
+	LOCAL:1 = MIN(500,ARG:1)
+	BASE:ARG:勃起 = BASE:ARG:勃起 + LOCAL:1
+	BASE:ARG:勃起 = MIN(MAXBASE:ARG:勃起 , BASE:ARG:勃起)
+ENDIF
+
+;-------------------------------------------------
+;体力・气力の減少
+;-------------------------------------------------
+CALL SOURCE_DOWNBASE(ARG)
+
+;-------------------------------------------------
+;痛苦快楽経験、侍奉快乐经验のチェック
+;-------------------------------------------------
+CALL EXP_GOT_CHECK(ARG,TCVAR:ARG:行為対象)
+
+
+
+@SOURCE_CHECK_2(ARG)
+
+
+;-------------------------------------------------
+;EXP取得表示
+;-------------------------------------------------
+
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+FOR LOCAL,0,100
+	IF EXP_UP(LOCAL,ARG)
+		PRINTFORML %EXPNAME:LOCAL% +{EXP_UP(LOCAL,ARG)}(%CALLNAME:ARG%)
+	ENDIF
+NEXT
+ENDIF
+
+;-------------------------------------------------
+;ABLUP
+;-------------------------------------------------
+CALL SOURCE_ABLUP(ARG)
+
+;-------------------------------------------------
+;触手の射精時の口上
+;-------------------------------------------------
+	;CALL KOJO_MESSAGE_PALAMCNG_E
+;-------------------------------------------------
+;絶頂時の口上
+;-------------------------------------------------
+CALL MESSAGE_PALAMCNG_B2(ARG)
+	;CALL KOJO_MESSAGE_PALAMCNG_B(LOCAL)
+
+
+;-------------------------------------------------
+;射精時の口上
+;-------------------------------------------------
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+IF NOWEX:ARG:11
+	SIF NOWEX:ARG:11 > 1
+		PRINT 大量
+	PRINTFORMW 射精(%CALLNAME:ARG%)
+ENDIF
+ENDIF
+;CALL KOJO_MESSAGE_PALAMCNG_A
+
+;-------------------------------------------------
+;調教後の口上
+;-------------------------------------------------
+;CALL KOJO_MESSAGE_PALAMCNG_C
+;-------------------------------------------------
+;パラメータ変動による口上
+;-------------------------------------------------
+;CALL KOJO_MESSAGE_PALAMCNG_D
+;-------------------------------------------------
+;刻印取得のチェック
+;-------------------------------------------------
+FOR LOCAL,1,CHARANUM
+	SIF TFLAG:行為者 == LOCAL
+		CONTINUE
+	CALL MARK_GOT_CHECK(LOCAL)
+	;-------------------------------------------------
+	;刻印取得による口上
+	;-------------------------------------------------
+	;CALL KOJO_MESSAGE_MARKCNG(LOCAL)
+NEXT
+;-------------------------------------------------
+;従順上昇による[反抗]の消滅チェック
+;-------------------------------------------------
+FOR LOCAL,1,CHARANUM
+	CALL JUJUN_UP_CHECK(LOCAL)
+NEXT
+;-------------------------------------------------
+;調教ソースの表示
+;-------------------------------------------------
+VARSET LOCAL
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+FOR LOCAL,0,56
+	SIF SOURCENAME:LOCAL == ""
+		CONTINUE
+	IF SOURCE:ARG:LOCAL > 0
+		SIF !LOCAL:1
+			PRINTFORM %CALLNAME:ARG%
+		PRINTFORM %SOURCENAME:LOCAL%({SOURCE:ARG:LOCAL})
+		LOCAL:1++
+	ENDIF
+NEXT
+SIF LOCAL:1
+	PRINTL 
+
+ENDIF
+
+;-------------------------------------------------
+;数値変動の表示
+;-------------------------------------------------
+
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+
+;相性
+;FOR LOCAL,1,CHARANUM
+
+;SIF TCVAR:LOCAL:攻め受け && RELATION:LOCAL:(TCVAR:LOCAL:行為対象) != 0
+;	PRINTFORML ＜相性%CALLNAME:LOCAL%→%CALLNAME:(TCVAR:LOCAL:行為対象)%{RELATION:LOCAL:(TCVAR:LOCAL:行為対象)/100}.{RELATION:LOCAL:(TCVAR:LOCAL:行為対象)%100}倍＞
+
+;IF (TCVAR:ARG:攻め受け == 1 && TCVAR:ARG:今回行動 == TCVAR:ARG:前回行動) || (TCVAR:ARG:攻め受け == 2 && TCVAR:ARG:今回被行動 == TCVAR:ARG:前回被行動)
+;	PRINTFORM %CALLNAME:LOCAL%
+;	PRINTL ＜同一コマンド連続実行＞
+;ENDIF
+;气力０
+LOCAL:1 = 0
+SIF BASE:ARG:气力 <= 0
+	PRINTFORML ★气力０★(%CALLNAME:ARG%)
+IF DOWNBASE:ARG:体力
+	PRINTFORM 体力\@DOWNBASE:ARG:体力 > 0?-#+\@{ABS(DOWNBASE:ARG:体力)} 
+	LOCAL:1 ++
+ENDIF
+IF DOWNBASE:ARG:气力
+	PRINTFORM 气力\@DOWNBASE:ARG:气力 > 0?-#+\@{ABS(DOWNBASE:ARG:气力)} 
+	LOCAL:1 ++
+ENDIF
+;NEXT
+IF MONEY:ARG != TCVAR:ARG:お金
+	IF ARG == 1
+		PRINTFORM お金\@MONEY:ARG - TCVAR:ARG:お金 > 0?+#-\@{ABS(MONEY:ARG - TCVAR:ARG:お金)}円
+		LOCAL:1 ++
+	ENDIF
+	TCVAR:ARG:お金 = MONEY:ARG
+ENDIF
+SIF LOCAL:1
+	PRINTFORML (%CALLNAME:ARG%)
+LOCAL:1 = 0
+
+ENDIF
+
+;-------------------------------------------------
+;パラメータの上昇＆表示（DOWNもここで）
+;-------------------------------------------------
+VARSET LOCAL
+LOCAL:3 = 0
+FOR LOCAL,0,100
+	SIF PALAMNAME:LOCAL == ""
+		CONTINUE
+	SIF CUP:ARG:LOCAL - CDOWN:ARG:LOCAL == 0
+		CONTINUE
+	IF !LOCAL:3
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+		PRINTL
+		PRINTFORML %CALLNAME:ARG%
+ENDIF
+	ENDIF
+	LOCAL:3 ++
+	LOCAL:2 = CUP:ARG:LOCAL - CDOWN:ARG:LOCAL
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+	PRINTFORML %PALAMNAME:LOCAL,8,LEFT% {PALAM:ARG:LOCAL,10,LEFT} + {CUP:ARG:LOCAL,10,LEFT} =   {PALAM:ARG:LOCAL + CUP:ARG:LOCAL,10,LEFT}
+ENDIF
+	PALAM:ARG:LOCAL += CUP:ARG:LOCAL - CDOWN:ARG:LOCAL
+	
+NEXT
+;経験値取表示用
+FOR LOCAL:1,0,100
+	TCVAR:ARG:(400 + LOCAL:1) = EXP:ARG:(LOCAL:1)
+NEXT
+;-------------------------------------------------
+;好意等の上昇
+;-------------------------------------------------
+CALL FAVOR_CALC(ARG)
+;-------------------------------------------------
+;好意等の表示
+;-------------------------------------------------
+;;;SIF TCVAR:ARG:イベント == 24
+;;;	PRINTW まて
+FOR LOCAL,0,4
+	IF TCVAR:ARG:(LOCAL + 390)
+		SIF ARG == 1 || TCVAR:ARG:行為対象 == 1
+			PRINTFORML %TCVARNAME:(LOCAL + 390)% %CALLNAME:ARG% → %CALLNAME:(TCVAR:ARG:行為対象)%\@(TCVAR:ARG:(LOCAL + 390) >= 0) ? ＋ # －\@{ABS(TCVAR:ARG:(LOCAL + 390))}
+		TA:ARG:(TCVAR:ARG:行為対象):LOCAL += TCVAR:ARG:(LOCAL + 390)
+		TCVAR:ARG:(LOCAL + 390) = 0
+		IF LOCAL == 3
+;好意度により愛情度に＋１する
+			SELECTCASE TA:ARG:(TCVAR:ARG:行為対象):1
+				CASE IS <= 10
+					IF TA:ARG:(TCVAR:ARG:行為対象):1 <= 0
+;;;１００以上ならSOURCECHECKが行われる度に+1でOK
+						SIF TA:ARG:(TCVAR:ARG:行為対象):3 > 100
+							TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+					ELSE
+						SIF TA:ARG:(TCVAR:ARG:行為対象):3 / TA:ARG:(TCVAR:ARG:行為対象):1 > 200
+							TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+					ENDIF
+				CASE 11 TO 30
+					SIF TA:ARG:(TCVAR:ARG:行為対象):3 / TA:ARG:(TCVAR:ARG:行為対象):1 > 700
+						TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+				CASE 31 TO 50
+					SIF TA:ARG:(TCVAR:ARG:行為対象):3 / TA:ARG:(TCVAR:ARG:行為対象):1 > 2000
+						TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+				CASE 51 TO 100
+					SIF TA:ARG:(TCVAR:ARG:行為対象):3 / TA:ARG:(TCVAR:ARG:行為対象):1 > 5000
+						TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+				CASEELSE
+					IF TA:ARG:(TCVAR:ARG:行為対象):1 <= 0
+						SIF TA:ARG:(TCVAR:ARG:行為対象):3 > 10000
+							TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+					ELSE
+						SIF TA:ARG:(TCVAR:ARG:行為対象):3 / TA:ARG:(TCVAR:ARG:行為対象):1 > 10000
+							TA:ARG:(TCVAR:ARG:行為対象):1 += 1
+					ENDIF
+			ENDSELECT
+		ENDIF
+		IF LOCAL == 0
+;肉欲度により服从度に＋１する
+			SELECTCASE TA:ARG:(TCVAR:ARG:行為対象):2
+				CASE IS <= 10
+					IF TA:ARG:(TCVAR:ARG:行為対象):2 <= 0
+						SIF TA:ARG:(TCVAR:ARG:行為対象):0 > 100
+							TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+					ELSE
+						SIF TA:ARG:(TCVAR:ARG:行為対象):0 / TA:ARG:(TCVAR:ARG:行為対象):2 > 200
+							TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+					ENDIF
+				CASE 11 TO 30
+					SIF TA:ARG:(TCVAR:ARG:行為対象):0 / TA:ARG:(TCVAR:ARG:行為対象):2 > 700
+						TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+				CASE 31 TO 50
+					SIF TA:ARG:(TCVAR:ARG:行為対象):0 / TA:ARG:(TCVAR:ARG:行為対象):2 > 2000
+						TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+				CASE 51 TO 100
+					SIF TA:ARG:(TCVAR:ARG:行為対象):0 / TA:ARG:(TCVAR:ARG:行為対象):2 > 5000
+						TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+				CASEELSE
+					IF TA:ARG:(TCVAR:ARG:行為対象):2 <= 0
+						SIF TA:ARG:(TCVAR:ARG:行為対象):0 > 10000
+							TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+					ELSE
+						SIF TA:ARG:(TCVAR:ARG:行為対象):0 / TA:ARG:(TCVAR:ARG:行為対象):2 > 10000
+							TA:ARG:(TCVAR:ARG:行為対象):2 += 1
+					ENDIF
+			ENDSELECT
+		ENDIF
+	ENDIF
+NEXT
+
+[SKIPSTART]
+
+
+FOR LOCAL,1,CHARANUM
+	VARSET SOURCE:LOCAL:0
+	IF TCVAR:LOCAL:攻め受け == 1
+		TCVAR:LOCAL:前回行動 = TCVAR:LOCAL:今回行動
+	ELSEIF TCVAR:LOCAL:攻め受け == 2
+		TCVAR:LOCAL:前回被行動 = TCVAR:LOCAL:今回被行動
+	ENDIF
+	TCVAR:LOCAL:攻め受け = 0
+	VARSET DOWNBASE:LOCAL:0
+	VARSET NOWEX:LOCAL:0
+	FOR LOCAL:1,801,828
+		TCVAR:LOCAL:(LOCAL:1 + 30) = TCVAR:LOCAL:(LOCAL:1)
+	NEXT
+NEXT
+TFLAG:破瓜抑制 = 0
+SKIPDISP 0
+DRAWLINE
+WAIT
+[SKIPEND]
+IF ARG == MASTER || TCVAR:ARG:行為対象 == MASTER
+PRINTL
+ENDIF
+
+
+@SOURCE_RESET(ARG)
+VARSET SOURCE:ARG:0
+VARSET DOWNBASE:ARG:0
+VARSET NOWEX:ARG:0
+VARSET CUP:ARG:0
+VARSET CDOWN:ARG:0
+
+TCVAR:ARG:破瓜抑制 = 0
+TCVAR:ARG:挿入 = 0
+
+@EVENT_SHOOT(ARG)
+SIF BASE:ARG:射精 > 100000
+	BASE:ARG:射精 = 100000
+WHILE BASE:ARG:射精 > MAXBASE:ARG:射精
+	BASE:ARG:射精 -= MAXBASE:ARG:射精
+	NOWEX:ARG:11++
+	
+WEND
+
+SIF !EXP:ARG:射精经验 && GETBIT(TALENT:ARG:性別,0)
+	EXP:ARG:异常经验 += 1
+
+DOWNBASE:ARG:体力 += 20 * NOWEX:ARG:11 - 1
+DOWNBASE:ARG:气力 += 40 + 60 * (NOWEX:ARG:11 - 1)
+
+
+IF EXP:ARG:射精经验 < EXPLV:1
+	SOURCE:ARG:露出 += 5000 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 2500 * (NOWEX:ARG:11 + 1) / 2
+	SIF GETBIT(TALENT:ARG:性別,0)
+		SOURCE:ARG:不潔 += 900 * (NOWEX:ARG:11 + 1) / 2
+ELSEIF EXP:ARG:射精经验 < EXPLV:2
+	SOURCE:ARG:露出 += 2500 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 2000 * (NOWEX:ARG:11 + 1) / 2
+	SIF GETBIT(TALENT:ARG:性別,0)
+		SOURCE:ARG:不潔 += 700 * (NOWEX:ARG:11 + 1) / 2
+ELSEIF EXP:ARG:射精经验 < EXPLV:3
+	SOURCE:ARG:露出 += 1000 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 800 * (NOWEX:ARG:11 + 1) / 2
+	SIF GETBIT(TALENT:ARG:性別,0)
+		SOURCE:ARG:不潔 += 500 * (NOWEX:ARG:11 + 1) / 2
+ELSEIF EXP:ARG:射精经验 < EXPLV:4
+	SOURCE:ARG:露出 += 800 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 600 * (NOWEX:ARG:11 + 1) / 2
+	SIF GETBIT(TALENT:ARG:性別,0)
+		SOURCE:ARG:不潔 += 350 * (NOWEX:ARG:11 + 1) / 2
+ELSEIF EXP:ARG:射精经验 < EXPLV:5
+	SOURCE:ARG:露出 += 400 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 400 * (NOWEX:ARG:11 + 1) / 2
+	SIF GETBIT(TALENT:ARG:性別,0)
+		SOURCE:ARG:不潔 += 200 * (NOWEX:ARG:11 + 1) / 2
+ELSE
+	SOURCE:ARG:露出 += 200 * (NOWEX:ARG:11 + 1) / 2
+	SOURCE:ARG:屈従 += 250 * (NOWEX:ARG:11 + 1) / 2
+ENDIF
+
+EXP:ARG:射精经验 += NOWEX:ARG:11
+EXP:(TCVAR:ARG:行為対象):精液经验 += NOWEX:ARG:11
+SIF TCVAR:ARG:行為対象
+	EXP:(TCVAR:ARG:行為対象):精液经验 += NOWEX:ARG:11
+EX:ARG:射精 += NOWEX:ARG:11
+BASE:ARG:精力 = MAX(BASE:ARG:精力 - NOWEX:ARG:11 * 1000 * (3 - TALENT:ARG:绝伦 * 2), 0)
+BASE:ARG:性欲 = MAX(BASE:ARG:性欲 - NOWEX:ARG:11 * 1000 * (3 - TALENT:ARG:绝伦 * 2), 0)
+BASE:ARG:興奮度 = MAX(BASE:ARG:興奮度 - NOWEX:ARG:11 * 100 * (3 - TALENT:ARG:绝伦 * 2), 0)
+BASE:ARG:理性 = MIN(BASE:ARG:理性 + NOWEX:ARG:11 * 300,MAXBASE:ARG:理性)
+BASE:ARG:勃起 = BASE:ARG:勃起 / (NOWEX:ARG:11 + 2)
+
+;-------------------------------------------------
+;中毒充足チェック
+;-------------------------------------------------
+
+;精液成瘾
+IF EXP_UP(14,ARG) && ABL:ARG:精液成瘾
+	LOCAL:1 = 100 + GET_REVISION(ABL:ARG:精液成瘾 * EXP_UP(14,ARG), 500, 30)
+	SOURCE:ARG:情愛 = SOURCE:ARG:情愛 * LOCAL:1 / 100
+	SOURCE:ARG:性行動 = SOURCE:ARG:性行動 * LOCAL:1 / 100
+	SOURCE:ARG:達成 = SOURCE:ARG:達成 * LOCAL:1 / 100
+	SOURCE:ARG:情欲 = SOURCE:ARG:情欲 * LOCAL:1 / 100
+	SOURCE:ARG:恭顺 = SOURCE:ARG:恭顺 * LOCAL:1 / 100
+	SOURCE:ARG:屈従 = SOURCE:ARG:屈従 * LOCAL:1 / 100
+ENDIF
+
+SIF TCVAR:ARG:行為対象
+	TCVAR:ARG:服从 += NOWEX:ARG:11
+

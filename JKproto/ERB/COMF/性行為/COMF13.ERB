@@ -1,0 +1,404 @@
+﻿;泡泡浴する
+@COM_ABLE13(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+;;;	RETURN 0
+SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373)
+	RETURN 0
+;自宅、情人旅馆、宿舍以外は不可
+SIF !((CFLAG:LOCAL:現在地区 == 0 && CFLAG:LOCAL:現在位置 == 1) | (CFLAG:LOCAL:現在地区 == 2 && CFLAG:LOCAL:現在位置 == 22) | (CFLAG:LOCAL:現在地区 == 2 && CFLAG:LOCAL:現在位置 == 26) | (CFLAG:LOCAL:現在地区 == 0 && CFLAG:LOCAL:現在位置 == 30))
+	RETURN 0
+;対象者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+SIF !CAN_COM13(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+;;;20120208 膣系に正常位と同じ判定追加
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+SIF TEQUIP:LOCAL:下半身下着 == 373
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+;;;SIF TEQUIP:LOCAL:膣 == 19
+;;;	RETURN 0
+;男性器反抗時は取り敢えずスルー
+;;;SIF TEQUIP:LOCAL:膣 == 18
+;;;	RETURN 0
+;男性器のみ反抗時CFLAGは取り敢えずスルー
+;;;SIF CFLAG:LOCAL:ＶオンリーＴ == 1
+;;;	RETURN 0
+;対象者が男性器で名器装着時は不可
+SIF (GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)) && (TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80)
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(13)
+
+;-------------------------------------------------
+;泡泡浴する
+;奉仕系コマンド：調教対象が調教者のペニスをクリトリスとヴァギナで刺激
+;主に屈従と逸脱を上げる
+;-------------------------------------------------
+@COM13(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 泡泡浴する(%CALLNAME:ARG%)
+;;;20120208 膣系に正常位と同じ判定追加
+;道具のみ反抗時はCFLAG立て
+IF TEQUIP:ARG:膣 == 17
+	CFLAG:ARG:ＶオンリーＰ = 1
+ENDIF
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 50
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+DOWNBASE:ARG:体力 += 50
+DOWNBASE:ARG:气力 += 50
+
+SOURCE:ARG:屈従 = 40
+SOURCE:ARG:逸脱 = 30
+SOURCE:ARG:液体 = 1000
+
+;ABL:侍奉精神をみる
+IF ABL:ARG:13 == 0
+	SOURCE:ARG:性行動 = 40
+	SOURCE:ARG:達成 = 6
+	SOURCE:ARG:不潔 = 2
+ELSEIF ABL:13 == 1
+	SOURCE:ARG:性行動 = 45
+	SOURCE:ARG:達成 = 8
+	SOURCE:ARG:不潔 = 1
+ELSEIF ABL:13 == 2
+	SOURCE:ARG:性行動 = 47
+	SOURCE:ARG:達成 = 10
+	SOURCE:ARG:不潔 = 1
+ELSEIF ABL:13 == 3
+	SOURCE:ARG:性行動 = 50
+	SOURCE:ARG:達成 = 15
+	SOURCE:ARG:不潔 = 0
+ELSEIF ABL:13 == 4
+	SOURCE:ARG:性行動 = 52
+	SOURCE:ARG:達成 = 20
+	SOURCE:ARG:不潔 = 0
+ELSE
+	SOURCE:ARG:性行動 = 55
+	SOURCE:ARG:達成 = 30
+	SOURCE:ARG:不潔 = 0
+ENDIF
+
+;ABL:Ｃ感觉をみる
+IF ABL:ARG:0 == 0
+	SOURCE:ARG:快Ｃ = 60
+ELSEIF ABL:ARG:0 == 1
+	SOURCE:ARG:快Ｃ = 70
+ELSEIF ABL:ARG:0 == 2
+	SOURCE:ARG:快Ｃ = 80
+ELSEIF ABL:ARG:0 == 3
+	SOURCE:ARG:快Ｃ = 100
+ELSEIF ABL:ARG:0 == 4
+	SOURCE:ARG:快Ｃ = 110
+ELSE
+	SOURCE:ARG:快Ｃ = 130
+ENDIF
+
+;ABL:Ｂ感觉をみる
+IF ABL:ARG:3 == 0
+	A = 50
+ELSEIF ABL:ARG:3 == 1
+	A = 60
+ELSEIF ABL:ARG:3 == 2
+	A = 70
+ELSEIF ABL:ARG:3 == 3
+	A = 90
+ELSEIF ABL:ARG:3 == 4
+	A = 100
+ELSE
+	A = 120
+ENDIF
+;巨乳
+IF TALENT:ARG:105 > 0
+	TIMES A , 1.20
+ENDIF
+;Ｂ敏感、Ｂ钝感
+IF TALENT:ARG:104 == 1
+	TIMES A , 1.20
+ELSEIF TALENT:ARG:104 == -1
+	TIMES A , 0.70
+ENDIF
+
+SOURCE:ARG:快Ｂ += A
+
+;ABL:Ｖ感觉をみる
+;;;男人はダメ
+IF !(TALENT:ARG:2 == 2)
+	IF ABL:ARG:1 == 0
+		SOURCE:ARG:快Ｖ = 30
+	ELSEIF ABL:ARG:1 == 1
+		SOURCE:ARG:快Ｖ = 35
+	ELSEIF ABL:ARG:1 == 2
+		SOURCE:ARG:快Ｖ = 40
+	ELSEIF ABL:ARG:1 == 3
+		SOURCE:ARG:快Ｖ = 50
+	ELSEIF ABL:ARG:1 == 4
+		SOURCE:ARG:快Ｖ = 55
+	ELSE
+		SOURCE:ARG:快Ｖ = 65
+	ENDIF
+ENDIF
+
+;ABL:技巧をみる（性行動、達成）
+IF ABL:ARG:12 == 0
+	TIMES SOURCE:ARG:11 , 0.80
+	TIMES SOURCE:ARG:12 , 0.80
+ELSEIF ABL:ARG:12 == 1
+	TIMES SOURCE:ARG:11 , 1.00
+	TIMES SOURCE:ARG:12 , 1.00
+ELSEIF ABL:ARG:12 == 2
+	TIMES SOURCE:ARG:11 , 1.30
+	TIMES SOURCE:ARG:12 , 1.30
+ELSEIF ABL:ARG:12 == 3
+	TIMES SOURCE:ARG:11 , 1.60
+	TIMES SOURCE:ARG:12 , 1.60
+ELSEIF ABL:ARG:12 == 4
+	TIMES SOURCE:ARG:11 , 1.90
+	TIMES SOURCE:ARG:12 , 1.90
+ELSE
+	TIMES SOURCE:ARG:11 , 2.30
+	TIMES SOURCE:ARG:12 , 2.30
+ENDIF
+;-------------------------------------------------
+;射精槽チェック（射精はSOURCE.ERB）
+;-------------------------------------------------
+;ABL:Ｃ感觉をみる
+IF ABL:(TCVAR:ARG:行為対象):0 == 0
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 150
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 1
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 160
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 2
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 170
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 3
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 190
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 4
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 220
+ELSE
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 300
+ENDIF
+
+;ABL:Ｂ感觉をみる
+IF ABL:(TCVAR:ARG:行為対象):3 == 0
+	A = 80
+ELSEIF ABL:(TCVAR:ARG:行為対象):3 == 1
+	A = 90
+ELSEIF ABL:(TCVAR:ARG:行為対象):3 == 2
+	A = 100
+ELSEIF ABL:(TCVAR:ARG:行為対象):3 == 3
+	A = 110
+ELSEIF ABL:(TCVAR:ARG:行為対象):3 == 4
+	A = 120
+ELSE
+	A = 130
+ENDIF
+
+;ABL:行為者の技巧をみる
+IF ABL:ARG:12 == 0
+	TIMES A , 0.80
+ELSEIF ABL:ARG:12 == 1
+	TIMES A , 1.00
+ELSEIF ABL:ARG:12 == 2
+	TIMES A , 1.30
+ELSEIF ABL:ARG:12 == 3
+	TIMES A , 1.60
+ELSEIF ABL:ARG:12 == 4
+	TIMES A , 1.90
+ELSE
+	TIMES A , 2.30
+ENDIF
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ += A
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:ARG:自己愛 < 0 || TALENT:ARG:反抗
+	SOURCE:ARG:鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の手の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,2)
+
+
+;爱情经验
+EXP:ARG:爱情经验 ++
+;泡泡浴経験
+EXP:ARG:泡泡浴経験 ++
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1
+
+@CAN_COM13(ARG,ARG:1)
+#FUNCTION
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+A = 0
+S = 0
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:ARG:11
+	SIF S
+	A += ABL:ARG:欲望 * 1
+	S = 1
+ENDIF
+;ABL:侍奉精神
+IF ABL:ARG:13
+	SIF S
+	A += ABL:ARG:13 * 4
+	S = 1
+ENDIF
+;ABL:精液成瘾
+IF ABL:ARG:31
+	SIF S
+	A += ABL:ARG:31 * 3
+	S = 1
+ENDIF
+
+;快乐刻印
+IF MARK:ARG:1
+	SIF S
+	A += MARK:ARG:1 * 1
+	S = 1
+ENDIF
+
+
+;PALAM:情欲
+IF PALAM:ARG:11 < PALAMLV:1
+	L = 0
+ELSEIF PALAM:ARG:11 < PALAMLV:2
+	L = 1
+ELSEIF PALAM:ARG:11 < PALAMLV:3
+	L = 2
+ELSEIF PALAM:ARG:11 < PALAMLV:4
+	L = 3
+ELSEIF PALAM:ARG:11 < PALAMLV:5
+	L = 4
+ELSE
+	L = 5
+ENDIF
+IF L
+	SIF S
+	A += L * 1
+	S = 1
+ENDIF
+
+;害羞
+IF TALENT:ARG:33 == 1
+	A -= 3
+	S = 1
+ENDIF
+;汚臭钝感
+IF TALENT:ARG:61 >= 1
+	SIF S
+	A += 1
+	S = 1
+ENDIF
+;汚臭敏感
+IF TALENT:ARG:61 < 0
+	A -= 3
+	S = 1
+ENDIF
+;献身
+IF TALENT:ARG:62
+	SIF S
+	A += 6
+	S = 1
+ENDIF
+;否定快感
+IF TALENT:ARG:70 < 0
+	A -= 3
+	S = 1
+ENDIF
+;讨厌男人
+IF (TALENT:ARG:81 == 1) && (TALENT:(TCVAR:ARG:行為対象):2 == 1)
+	A -= 12
+	S = 1
+ENDIF
+;愛（怀孕、育儿中、母性に変更）
+IF TALENT:ARG:153 | TALENT:ARG:154 | TALENT:ARG:155
+	SIF S
+	A += 5
+	S = 1
+ENDIF
+
+;調教者が扶她
+IF TALENT:ARG:2 == 3
+	SIF S
+	A += 8
+	S = 1
+ENDIF
+;汚れは取り敢えず無視
+;;;Y = 0
+;愛液の汚れ
+;;;SIF STAIN:ARG:2 & 1
+;;;	Y += 1
+;精液の汚れ
+;;;SIF STAIN:ARG:2 & 4
+;;;	Y += 3
+;アナルの汚れ
+;;;SIF STAIN:ARG:2 & 8
+;;;	Y += 7
+;母乳の汚れ
+;;;SIF STAIN:ARG:2 & 16
+;;;	Y += 1
+;尿の汚れ
+;;;SIF STAIN:ARG:4 & 32
+;;;	Y += 3
+
+;;;SIF TALENT:61
+;;;	Y /= 3
+;;;SIF TALENT:62
+;;;	Y *= 2
+;汚れあり
+;;;IF Y
+;;;	A -= Y
+;;;	S = 1
+;;;ENDIF
+
+;合計を表示(30以上で実行)
+
+V = 30
+
+;実行できない
+SIF A < V
+	RETURNF 0
+
+RETURNF 1
+

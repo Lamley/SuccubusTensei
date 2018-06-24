@@ -1,0 +1,65 @@
+﻿;名器
+@COM_ABLE43(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	RETURN 0
+SIF !EQUIP:LOCAL:名器
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(43)
+
+;-------------------------------------------------
+;名器
+;-------------------------------------------------
+@COM43(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 名器(%CALLNAME:ARG%)
+
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 200
+SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 30
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+
+IF TEQUIP:(TCVAR:ARG:行為対象):クリトリス == 80
+	TEQUIP:(TCVAR:ARG:行為対象):クリトリス = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):クリトリス = 80
+ENDIF
+
+EXP:ARG:道具使用経験 ++
+VARSET ARG
+
+RETURN 1

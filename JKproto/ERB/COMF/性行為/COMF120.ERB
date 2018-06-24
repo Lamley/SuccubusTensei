@@ -1,0 +1,156 @@
+﻿;打屁股
+@COM_ABLE120(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(120)
+
+;-------------------------------------------------
+;打屁股
+;-------------------------------------------------
+@COM120(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 打屁股(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 80
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 40
+DOWNBASE:ARG:体力 += 60
+DOWNBASE:ARG:气力 += 20
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):露出 = 200
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 500
+;PALAM:痛苦をみる
+IF PALAM:(TCVAR:ARG:行為対象):15 < PALAMLV:1
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 300
+ELSEIF PALAM:(TCVAR:ARG:行為対象):15 < PALAMLV:2
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 500
+ELSEIF PALAM:(TCVAR:ARG:行為対象):15 < PALAMLV:3
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 800
+ELSEIF PALAM:(TCVAR:ARG:行為対象):15 < PALAMLV:4
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 1200
+ELSEIF PALAM:(TCVAR:ARG:行為対象):15 >= PALAMLV:4
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 1800
+ENDIF
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+SOURCE:(TCVAR:ARG:行為対象):液体 = 20
+
+;PALAM:情欲をみる
+IF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.80
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:2
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.90
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:3
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.00
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.10
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 >= PALAMLV:4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.20
+ENDIF
+
+;ABL:受虐属性をみる
+;経験があればＶやＡも
+IF ABL:(TCVAR:ARG:行為対象):15 == 0
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 20
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 20
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 20
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 20
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.80
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 1
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 30
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 30
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 30
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 30
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.00
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 2
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 40
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 40
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 40
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 40
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.30
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 3
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 60
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 60
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 60
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 60
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.60
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 4
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 80
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 80
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 80
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+ELSE
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 100
+	SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 100
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 100
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		SOURCE:(TCVAR:ARG:行為対象):快Ａ = 100
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 3.00
+ENDIF
+
+;性倒错
+SIF TALENT:(TCVAR:ARG:行為対象):80
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+
+;受虐狂
+IF TALENT:(TCVAR:ARG:行為対象):83
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｃ , 2.00
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｂ , 2.00
+	SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+		TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｖ , 2.00
+	SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+		TIMES SOURCE:(TCVAR:ARG:行為対象):快Ａ , 2.00
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の手の汚れが移動
+;;;;;STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:1
+;;;;;STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,2)
+
+
+
+;痛苦快楽経験
+EXP:(TCVAR:ARG:行為対象):痛苦快楽経験 ++
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

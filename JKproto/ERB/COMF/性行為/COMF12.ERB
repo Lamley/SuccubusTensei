@@ -1,0 +1,151 @@
+﻿;乳交する
+@COM_ABLE12(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	RETURN 0
+SIF TALENT:LOCAL:胸围サイズ == -2 || TALENT:LOCAL:性別 == 2
+	RETURN 0
+SIF TALENT:LOCAL:胸围サイズ + ABL:LOCAL:技巧 < 3
+	RETURN 0
+;対象者が名器装着時は不可
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):クリトリス == 80
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(12)
+
+;--------------------------------------------------
+;乳交する
+;--------------------------------------------------
+@COM12(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 乳交する(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 75
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 150
+SOURCE:(TCVAR:ARG:行為対象):露出 = 30
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):反感 = 20
+
+
+SOURCE:ARG:屈従 = 18
+SOURCE:ARG:逸脱 = 9
+;ABL:侍奉精神をみる
+IF ABL:ARG:侍奉精神 == 0
+	SOURCE:ARG:性行動 = 8
+	SOURCE:ARG:達成 = 1
+	SOURCE:ARG:不潔 = 4
+ELSEIF ABL:ARG:侍奉精神 == 1
+	SOURCE:ARG:性行動 = 9
+	SOURCE:ARG:達成 = 3
+	SOURCE:ARG:不潔 = 3
+ELSEIF ABL:ARG:侍奉精神 == 2
+	SOURCE:ARG:性行動 = 10
+	SOURCE:ARG:達成 = 6
+	SOURCE:ARG:不潔 = 1
+ELSEIF ABL:ARG:侍奉精神 == 3
+	SOURCE:ARG:性行動 = 11
+	SOURCE:ARG:達成 = 9
+	SOURCE:ARG:不潔 = 0
+ELSEIF ABL:ARG:侍奉精神 == 4
+	SOURCE:ARG:性行動 = 13
+	SOURCE:ARG:達成 = 15
+	SOURCE:ARG:不潔 = 0
+ELSE
+	SOURCE:ARG:性行動 = 15
+	SOURCE:ARG:達成 = 22
+	SOURCE:ARG:不潔 = 0
+ENDIF
+
+;ABL:Ｂ感觉をみる
+IF ABL:ARG:Ｂ感觉 == 0
+	A = 60
+ELSEIF ABL:ARG:Ｂ感觉 == 1
+	A = 70
+ELSEIF ABL:ARG:Ｂ感觉 == 2
+	A = 80
+ELSEIF ABL:ARG:Ｂ感觉 == 3
+	A = 100
+ELSEIF ABL:ARG:Ｂ感觉 == 4
+	A = 110
+ELSE
+	A = 130
+ENDIF
+
+;巨乳
+IF TALENT:ARG:105 == 1
+	TIMES A , 1.20
+ENDIF
+;Ｂ敏感
+IF TALENT:ARG:104 >= 1
+	TIMES A , 1.20
+;Ｂ钝感
+ELSEIF TALENT:ARG:104 < 0
+	TIMES A , 0.70
+ENDIF
+
+SOURCE:ARG:快Ｂ += A
+
+;ABL:技巧をみる
+IF ABL:ARG:技巧 == 0
+	TIMES SOURCE:ARG:性行動 , 0.50
+	TIMES SOURCE:ARG:達成   , 0.50
+ELSEIF ABL:ARG:技巧 == 1
+	TIMES SOURCE:ARG:性行動 , 0.80
+	TIMES SOURCE:ARG:達成   , 0.80
+ELSEIF ABL:ARG:技巧 == 2
+	TIMES SOURCE:ARG:性行動 , 1.00
+	TIMES SOURCE:ARG:達成   , 1.00
+ELSEIF ABL:ARG:技巧 == 3
+	TIMES SOURCE:ARG:性行動 , 1.20
+	TIMES SOURCE:ARG:達成   , 1.20
+ELSEIF ABL:ARG:技巧 == 4
+	TIMES SOURCE:ARG:性行動 , 1.50
+	TIMES SOURCE:ARG:達成   , 1.50
+ELSE
+	TIMES SOURCE:ARG:性行動 , 2.00
+	TIMES SOURCE:ARG:達成   , 2.00
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の胸の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:5
+STAIN:ARG:5 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,5)
+
+
+
+;乳交経験
+EXP:ARG:乳交経験 ++
+CFLAG:ARG:待機時間 += 2
+VARSET ARG
+RETURN 1

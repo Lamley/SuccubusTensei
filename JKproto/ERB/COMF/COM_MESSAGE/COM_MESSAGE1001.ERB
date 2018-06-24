@@ -1,0 +1,320 @@
+﻿@COM_MESSAGE_1001
+;--------------------------------------------------------------------------
+;学校：授業を受ける
+;--------------------------------------------------------------------------
+SIF M:101 == 1
+	RETURN 0
+;TFLAG:COM用変数 0 座学, 1 体育
+SELECTCASE TFLAG:COM用変数
+CASE 0
+
+;===============================================================================
+;授業を受ける（座学）
+;===============================================================================
+;--------------------------------------------------------------------------
+;淫具装着授業
+;--------------------------------------------------------------------------
+;胸・クリ・膣・アナルに何かを着けている
+IF TEQUIP:MASTER:胸 || TEQUIP:MASTER:クリトリス || (TEQUIP:MASTER:膣 == 1) || (TEQUIP:MASTER:アナル == (60 | 61 | 62))
+	PRINTFORML ＜淫具装着授業＞
+	PRINTFORM 学生在教室中上课、
+	;--------------------------------------------------------------------------
+	;膣
+	;--------------------------------------------------------------------------
+	IF TEQUIP:MASTER:膣
+		PRINTFORM %CALLNAME:MASTER%的私处被%ITEMNAME:(TEQUIP:MASTER:膣)%训练了。
+	;--------------------------------------------------------------------------
+	;クリトリス
+	;--------------------------------------------------------------------------
+	ELSEIF TEQUIP:MASTER:クリトリス
+		PRINTFORM 安装的%ITEMNAME:(TEQUIP:MASTER:クリトリス)%刺激着敏感的肉豆。
+	;--------------------------------------------------------------------------
+	;胸
+	;--------------------------------------------------------------------------
+	ELSEIF TEQUIP:MASTER:胸
+		PRINTFORM 安装了%ITEMNAME:(TEQUIP:MASTER:胸)%在%CALLNAME:MASTER%
+		;绝壁 or (男人＋並乳)
+		IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+			;女性器あり
+			IF TALENT:MASTER:性別 & 1
+				;幼儿体型
+				SIF TALENT:MASTER:体型 == -2
+					PRINTFORM 跟外表一样的
+				;長身以上
+				SIF TALENT:MASTER:体型 >= 1
+					PRINTFORM 跟体型相反的
+			ENDIF
+			PRINTFORM 平坦的
+		;贫乳
+		ELSEIF TALENT:MASTER:胸围サイズ == -1
+			;矮小体型
+			SIF TALENT:MASTER:体型 == -1
+				PRINTFORM 跟外表一样
+			;長身以上
+			SIF TALENT:MASTER:体型 >= 1
+				PRINTFORM 跟体型相反
+			PRINTFORM 平缓的
+		;巨乳
+		ELSEIF TALENT:MASTER:胸围サイズ == 1
+			;矮小体型 or 幼儿体型
+			SIF TALENT:MASTER:体型 == -1 || TALENT:MASTER:体型 == -2
+				PRINTFORM 跟体型相反的
+			PRINTFORM 丰满的
+		;爆乳
+		ELSEIF TALENT:MASTER:胸围サイズ == 2
+			PRINTFORM 过分丰满的
+		ENDIF
+		PRINTFORM 胸上
+	;--------------------------------------------------------------------------
+	;アナル
+	;--------------------------------------------------------------------------
+	ELSEIF TEQUIP:MASTER:アナル
+		PRINTFORM 被%ITEMNAME:(TEQUIP:MASTER:アナル)%在%CALLNAME:MASTER%の直腸内
+	ENDIF
+	;--------------------------------------------------------------------------
+	;共通
+	;--------------------------------------------------------------------------
+	PRINTFORML 刺激着。
+	PRINTFORM 淫乱的玩具
+	;PALAM情欲Lv3以上
+	IF PALAM:MASTER:情欲 >= PALAMLV:3
+		PRINTFORML 效果大的惊人、%CALLNAME:MASTER%的忍耐到达极限了。
+		;女性器あり
+		IF TALENT:MASTER:性別 & 1
+			;下半身下着
+			IF TEQUIP:MASTER:下半身下着
+				PRINTFORM 穿着内衣
+			ELSE
+				PRINTFORM 不穿内衣的私处
+			ENDIF
+			;PALAM润滑Lv3以上
+			IF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORMW 爱液不受控制的流出，下体湿透了…
+			ELSE
+				PRINTFORMW 爱液开始流了出来…
+			ENDIF
+		ELSE
+			PRINTFORM  下体勃起了
+			;裙子類
+			IF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+				PRINTFORMW 裙子被撑起了帐篷
+			ELSE
+				PRINTFORM 隔着%ITEMNAME:(TEQUIP:MASTER:下半身上衣)%也能看出形状
+				;下半身下着なし
+				SIF TEQUIP:MASTER:下半身下着 == 0
+					PRINTFORM 很清楚
+				PRINTFORMW 。
+			ENDIF
+		ENDIF
+	ELSE
+		PRINTFORML 是的，可是%CALLNAME:MASTER%感觉到痛苦。
+		PRINTFORMW 忍受着痛苦、%CALLNAME:MASTER%的课结束了。
+	ENDIF
+;--------------------------------------------------------------------------
+;発情授業
+;　「春药」使用時に発動
+;--------------------------------------------------------------------------
+ELSEIF TEQUIP:MASTER:春药
+	PRINTFORML ＜発情授業＞
+	PRINTFORML 教室里的同学都在听着课、%CALLNAME:MASTER%の脸变红了。
+	PRINTFORM 由于药物的效果整个人都变淫乱了
+	;女性器あり
+	SIF TALENT:MASTER:性別 & 1
+		PRINTFORM 女
+	PRINTFORML 身体被侵蚀着。
+	PRINTFORM 受到一点点刺激身体就迎来了高潮
+	IF RAND:2 == 0
+		PRINTFORMW 、%CALLNAME:MASTER%桌子下的脚绞动着…
+	ELSE
+		PRINTFORMW 、%CALLNAME:MASTER%已经厌倦了…
+	ENDIF
+;--------------------------------------------------------------------------
+;我慢授業（仮称）
+;　「利尿剂」使用時に発動
+;--------------------------------------------------------------------------
+ELSEIF TEQUIP:MASTER:利尿剂
+	PRINTFORML ＜忍耐授業＞
+	PRINTFORML 教室里同学们听着课、%CALLNAME:MASTER%却平静不下来。
+	PRINTFORMW 平常时绝不会有的尿意袭来了。
+	PRINTFORML 膀胱快要决堤般，平明的忍受着。
+	PRINTFORMW 不能声张，但也去不了厕所啊…
+;--------------------------------------------------------------------------
+;授業を受ける
+;--------------------------------------------------------------------------
+ELSE
+	PRINTFORML ＜上课＞
+	PRINTFORML %CALLNAME:MASTER%认真上课了。
+	;教養Lv4以上
+	IF ABL:MASTER:教養 >= 4
+		PRINTFORMW 这样下去下次的考试没什么问题呢。
+	;教養Lv2以上
+	ELSEIF ABL:MASTER:教養 >= 2
+		PRINTFORMW 没什么特别的就下课了。
+	ELSE
+		PRINTFORMW …好吧，还是没理解上课的内容。
+	ENDIF
+ENDIF
+
+
+CASE 1
+;--------------------------------------------------------------------------
+;体育の授業
+;--------------------------------------------------------------------------
+;現状、強制的に体操服に着替える感じで。
+PRINTFORML ＜体育の授業＞
+PRINTFORM 今天的体育课
+LOCAL = RAND:3
+IF LOCAL == 0
+	;種目をランダム決定。チーム競技で統一。
+	IF RAND:2 == 0
+		PRINTFORMW 打篮球。
+	ELSE
+		PRINTFORMW 打垒球。
+	ENDIF
+	;胸・クリ・膣・アナルに何かを着けている
+	IF TEQUIP:MASTER:胸 || TEQUIP:MASTER:クリトリス || (TEQUIP:MASTER:膣 == 1) || (TEQUIP:MASTER:アナル == (60 | 61 | 62))
+		PRINTFORM 被淫具调教的身体继续感到刺激，
+		;PALAM情欲Lv3以上
+		IF PALAM:MASTER:情欲 >= PALAMLV:3
+			PRINTFORML 快感持续着、%CALLNAME:MASTER%被快感摆布了。
+			PRINTFORM 体操服
+			;女性器あり
+			IF TALENT:MASTER:性別 & 1
+				;PALAM润滑Lv3以上
+				IF PALAM:MASTER:润滑 >= PALAMLV:3
+					PRINTFORMW 的屁股上的布被爱液打湿了，不久大腿上出现了几条湿线…
+				ELSE
+					PRINTFORMW 股间的布有些潮湿、%CALLNAME:MASTER%羞耻的扭动着身体。
+				ENDIF
+			ELSE
+				PRINTFORM 的股間
+				;PALAM情欲Lv3以上
+				IF PALAM:MASTER:情欲 >= PALAMLV:3
+					PRINTFORMW ，战战兢兢的发现自己勃起了、%CALLNAME:MASTER%很难受…
+				ELSE
+					PRINTFORMW 感觉阴茎开始膨胀、%CALLNAME:MASTER%害羞的扭动着身体。
+				ENDIF
+			ENDIF
+		ELSE
+			PRINTFORMW 这违合感、让%CALLNAME:MASTER%不敢太用力活动…
+		ENDIF
+	;春药使用中
+	ELSEIF TEQUIP:MASTER:春药
+		PRINTFORML 是春药的效果吧，肌肤和衣服的摩擦间感到了强烈的快感。
+		PRINTFORM 体操服
+		;女性器あり
+		IF TALENT:MASTER:性別 & 1
+			;PALAM润滑Lv3以上
+			IF PALAM:MASTER:润滑 >= 3
+				PRINTFORMW 的屁股上的布被爱液打湿了，不久大腿上出现了几条湿线…
+			ELSE
+				PRINTFORMW 股间的布有些潮湿、%CALLNAME:MASTER%羞耻的扭动着身体。
+			ENDIF
+		ELSE
+			PRINTFORM の股間
+			;PALAM情欲Lv3以上
+			IF PALAM:MASTER:情欲 >= PALAMLV:3
+				PRINTFORMW ，战战兢兢的发现自己勃起了、%CALLNAME:MASTER%很难受…
+
+			ELSE
+				PRINTFORMW 感觉阴茎开始膨胀、%CALLNAME:MASTER%害羞的扭动着身体。
+			ENDIF
+		ENDIF
+	;利尿剂使用中
+	ELSEIF TEQUIP:MASTER:利尿剂
+		PRINTFORMW %CALLNAME:MASTER%的膀胱因为利尿剂的效果，快要绝提了
+		;尿意一定以上（未設定） or お漏らし癖がある場合、低確率でハプニング。
+		IF RAND:5 == 0 && TALENT:MASTER:漏尿癖
+			PRINTFORML ――啊！
+			PRINTFORMW 被同学冲撞了、%CALLNAME:MASTER%跌倒在地。
+			PRINTFORML …这个瞬間、%CALLNAME:MASTER%的股间的尿意决堤了。
+			PRINTFORML 下半身被温暖的尿液包围了，发出尿骚味。
+			PRINTFORMW 听着骚动起来的同学的声音、终于尿出来的%CALLNAME:MASTER%の流下了眼泪…
+		ELSE
+			PRINTFORMW 每个偶然的瞬间都可能会产生破绽、%CALLNAME:MASTER%拼命的忍耐着…
+		ENDIF
+	;运动能力Lv4以上
+	ELSEIF ABL:MASTER:运动能力 >= 4
+		PRINTFORM %CALLNAME:MASTER%
+		;刚强
+		IF TALENT:MASTER:度胸 == 1
+			PRINTFORM 带领着队伍、
+		;老实
+		ELSEIF TALENT:MASTER:応答 == -1
+			PRINTFORM 一点风头都不想出、
+		ELSE
+			;运动能力Lv5以上
+			SIF ABL:MASTER:运动能力 >= 5
+				PRINTFORM 能力超群
+			PRINTFORM 发挥出了自己的运动实力、
+		ENDIF
+		PRINTFORMW 获得了胜利。
+	;运动能力Lv2以上
+	ELSEIF ABL:MASTER:运动能力 >= 2
+		PRINTFORM %CALLNAME:MASTER%は
+		;胆怯
+		IF TALENT:MASTER:度胸 == -1
+			PRINTFORM 面对飞来的球都害怕失误、
+		;人間不信
+		ELSEIF TALENT:MASTER:性別嗜好 == 3
+			PRINTFORM 无意识的和对手避开接触、
+		ELSE
+			PRINTFORM 一直在运动者、
+		ENDIF
+		PRINTFORMW 对队伍做出了贡献。
+	ELSE
+		IF RAND:2 == 0
+			PRINTFORM 并没有能胜利、
+		ELSE
+			PRINTFORM 胜率有点低、
+		ENDIF
+		PRINTFORMW 运动了很长时间。
+	ENDIF
+;屋内の温水游泳池、ということで何月でも対応。月に対応させるなら、７～８月でしょうか。
+ELSEIF LOCAL == 1
+	PRINTFORMW 游泳。
+	;春药効果発動中
+	IF TEQUIP:MASTER:春药
+		PRINTFORMW 由于春药发热的身体，感受到冰冷的水的感觉…
+	;利尿剂効果発動中
+	ELSEIF TEQUIP:MASTER:利尿剂
+		PRINTFORMW 被利尿剂侵蚀的身体不能作出太激烈的运动…
+	ELSE
+		PRINTFORM 整节课上都在
+		IF RAND:2 == 0
+			PRINTFORM 感受水的触感，
+		ELSE
+			PRINTFORM 游泳，
+		ENDIF
+		PRINTFORMW 真享受啊
+	ENDIF
+ELSE
+	PRINTFORMW 马拉松
+	;上半身下着なし
+	IF TEQUIP:MASTER:上半身下着 == 0
+		;女性器あり（女性）
+		SIF TALENT:MASTER:性別 & 1
+			PRINTFORM 没有胸罩的
+		;绝壁 or (男人＋並乳)
+		IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+			PRINTFORM 乳尖，每次跑的时候被
+		ELSE
+			PRINTFORM 乳房摇晃着，乳头被
+		ENDIF
+		PRINTFORML 体操服的内部摩擦着。
+		;Ｂ感觉Lv4以上
+		IF ABL:MASTER:Ｂ感觉 >= 4
+			PRINTFORMW 断断续续的感到电击一样的快感、%CALLNAME:MASTER%は拼命的继续奔跑…
+		;Ｂ感觉Lv2以上 or Ｂ敏感
+		ELSEIF ABL:MASTER:Ｂ感觉 >= 2 || TALENT:MASTER:Ｂ感度 == 1
+			PRINTFORMW 这种刺激下乳头自主的在衣服下变硬了起来。
+		ELSE
+			PRINTFORMW 因为疼痛皱着眉毛、%CALLNAME:MASTER%艰难的跑着。
+		ENDIF
+	ELSE
+		PRINTFORMW 已经被持续不断的跑步搞得精疲力尽了…
+	ENDIF
+ENDIF
+ENDSELECT
+M:101 = 1
+

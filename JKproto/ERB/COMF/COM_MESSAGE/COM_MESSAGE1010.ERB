@@ -1,0 +1,31 @@
+﻿@COM_MESSAGE_1010
+SIF M:101 == 1
+	RETURN 0
+;--------------------------------------------------------------------------
+;昼食を食べる
+;　体力小回復。所持金消費（弁当代や学食の費用として）。
+;　弁当の方が安い気もしますが、こまけえことは（ry　の理論でスルーしてますw
+;--------------------------------------------------------------------------
+;TFLAG:COM用変数 0 一人で,1 他の人と一緒に
+PRINTFORML ＜昼食を食べる＞
+SELECTCASE TFLAG:COM用変数
+	CASE 0
+		PRINTW 去学生食堂吃午饭。
+	CASE 1
+		PRINTFORMW 在教室跟%CALLNAME:(TCVAR:MASTER:行為対象)%一起吃午饭。
+	CASE 2
+		PRINTW 吃美味的便当
+	CASE 3
+		PRINTW 吃了一般的便当
+	CASE 4
+		PRINTW 忍耐着吃了难吃的便当…
+ENDSELECT
+;春药使用中 or PALAM情欲Lv3以上
+IF TEQUIP:MASTER:春药 || PALAM:MASTER:情欲 >= PALAMLV:3
+	;春药使用中
+	SIF TEQUIP:MASTER:春药
+		PRINTFORM 春药の効果で
+	PRINTFORMW 身体像火一样的燥热、周围人投来了惊讶的目光…
+ENDIF
+M:101 = 1
+

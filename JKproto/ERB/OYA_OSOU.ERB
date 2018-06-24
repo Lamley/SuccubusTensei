@@ -1,0 +1,194 @@
+﻿@OYA_OSOU(ARG)
+SIF CFLAG:ARG:衰弱
+	RETURN 0
+;;;午後9:59
+IF TIME == 1319
+	IF CFLAG:ARG:現在地区 == 0 && CFLAG:ARG:現在位置 == 30
+;;;まずは姐姐のみ
+		FOR D,1,CHARANUM
+			SIF NO:D == 34
+				I = D
+		NEXT
+;;;		SIF ARG == MASTER || ARG == I
+		SIF ARG == I
+			RETURN 0
+;;;無条件に親→女の情欲に＋
+		TA:I:ARG:4 += 5
+;;;親モラルが0以外
+		IF CFLAG:ARG:親モラル != 0 || TA:ARG:I:4 < -10
+			A = RAND(900)
+			SELECTCASE A
+				CASE 0 TO 299
+;;;無条件にRETURN 0
+					CFLAG:ARG:待機時間 += 10
+					RETURN 0
+				CASE 300 TO 599
+;;;モラル＋女→親の好意度100以上ならば抜けて行為に入る（RETURN 0にいかない）
+;;;親→女の情欲700以上ならば無条件に行為20120526追加
+					IF !(CFLAG:ARG:親モラル < 300 || CFLAG:ARG:親モラル < 700 && (TA:ARG:I:3 >= 100) || (TA:I:ARG:4 >= 700))
+						CFLAG:ARG:待機時間 += 10
+						RETURN 0
+					ENDIF
+					IF TA:ARG:I:4 < -10
+						CFLAG:ARG:待機時間 += 10
+						RETURN 0
+					ENDIF
+				CASEELSE
+;;;条件にて会话発生（RETURN 0で必ず抜ける、行為には行かない）
+					A:12 = RAND(900)
+					IF CFLAG:ARG:親モラル < 500
+;;;親→女の情欲100未満
+						IF A:12 < 301 && TA:I:ARG:4 < 100
+							CFLAG:ARG:待機時間 += 10
+							RETURN 0
+						ENDIF
+					ELSE
+						IF A:12 < 600 && TA:I:ARG:4 < 100
+							CFLAG:ARG:待機時間 += 10
+							RETURN 0
+						ENDIF
+					ENDIF
+					PRINTFORMW %CALLNAME:ARG%の姐姐和%CALLNAME:ARG%会话了
+;;;20120331 テスト　マスターのイベント退避して0にする
+					I:13 = TCVAR:MASTER:イベント
+					TCVAR:MASTER:イベント = 0
+					IF TCVAR:MASTER:行為対象
+						I:14 = TCVAR:(TCVAR:MASTER:行為対象):イベント
+						TCVAR:(TCVAR:MASTER:行為対象):イベント = 0
+					ENDIF
+;;;20120331 E
+					D:3 = 5
+					SIF CFLAG:ARG:親モラル < 500
+						D:3 += 5
+					FOR G,1,D:3
+						TFLAG:Ｎイベント = 8
+						TCVAR:I:目的位置 = 0
+						TCVAR:I:目的地区 = 0
+						TCVAR:ARG:目的位置 = 0
+						TCVAR:ARG:目的地区 = 0
+						CFLAG:I:受能動 = 1
+						CFLAG:ARG:受能動 = 2
+						TCVAR:I:行為対象 = ARG
+						TCVAR:ARG:行為対象 = I
+						CALL COM2800(I)
+						TCVAR:I:行為対象 = ARG
+						TCVAR:ARG:行為対象 = I
+						CALL SOURCE_CHECKS(I)
+						IF TFLAG:成否用変数 > -2
+							TFLAG:行為者 = ARG
+							CFLAG:I:受能動 = 2
+							CFLAG:ARG:受能動 = 1
+							TCVAR:I:行為対象 = ARG
+							TCVAR:ARG:行為対象 = I
+							CALL COM2801(ARG)
+							TCVAR:ARG:行為対象 = I
+							TCVAR:I:行為対象 = ARG
+							CALL SOURCE_CHECKS(ARG)
+							TFLAG:行為者 = I
+;;;20120211 追加　会话成功時に情欲度-（初期の無条件と合せて親は大体-4）
+							IF TA:ARG:I:4 < 0
+								TA:ARG:I:4 += 1
+							ELSE
+								TA:ARG:I:4 -= 1
+							ENDIF
+							TA:I:ARG:4 -= 2
+;;;20120717 追加　会话成功時にMAX气力＋１
+							MAXBASE:ARG:气力 += 1
+							MAXBASE:I:气力 += 1
+						ENDIF
+						CFLAG:ARG:会话 = 1
+						CFLAG:I:会话 = 1
+						CALL EVENT_ESCAPE_NPC(I,ARG)
+						TFLAG:Ｎイベント = 0
+					NEXT
+;;;20120331 テスト　マスターのイベント退避して0にする
+					TCVAR:MASTER:イベント = I:13
+					IF TCVAR:MASTER:行為対象
+						TCVAR:(TCVAR:MASTER:行為対象):イベント = I:14
+					ENDIF
+;;;20120331 E
+					CFLAG:ARG:待機時間 += 10
+					RETURN 0
+			ENDSELECT
+		ENDIF
+		IF ARG == 1
+			PRINTFORML %CALLNAME:I%袭来了。
+			PRINTL どうしますか？
+			PRINTFORML [0] - 委身
+			PRINTFORML [1] - 逃走
+$INPUT_LOOP1
+			INPUT
+			SIF RESULT != 0 && RESULT != 1
+				GOTO INPUT_LOOP1
+			IF RESULT == 1
+				PRINTFORML %CALLNAME:ARG%逃走了
+				CFLAG:ARG:待機時間 += 5
+				GOTO SELECTEND2
+			ENDIF
+		ENDIF
+		PRINTFORMW %CALLNAME:ARG%の姐姐对%CALLNAME:ARG%发动袭击！
+;;;20120331 テスト　マスターのイベント退避して0にする
+		I:13 = TCVAR:MASTER:イベント
+		TCVAR:MASTER:イベント = 0
+		IF TCVAR:MASTER:行為対象
+			I:14 = TCVAR:(TCVAR:MASTER:行為対象):イベント
+			TCVAR:(TCVAR:MASTER:行為対象):イベント = 0
+		ENDIF
+;;;20120331 E
+;;;20120212 TCVAR:ARG:イベント = 24 →　TFLAG:Ｎイベント = 8
+		TFLAG:Ｎイベント = 8
+;;;		TCVAR:ARG:イベント = 24
+;;;		TCVAR:I:イベント = 24
+		D:2 = 5
+		SIF EXP:ARG:Ｖ性交经验
+				D:2 += 5
+		SIF EXP:ARG:Ａ性交经验
+				D:2 += 2
+		SIF TA:ARG:I:1 > 0
+				D:2 += 5
+		SIF TA:ARG:I:2 > 0
+				D:2 += 3
+		FOR G,0,D:2
+			TFLAG:行為者 = I
+			TCVAR:ARG:行為対象 = I
+			TCVAR:I:行為対象 = ARG
+			CFLAG:ARG:受能動 = 2
+			CFLAG:I:受能動 = 1
+;Hはコマンド実行時のARG変数に代入
+			H = I
+			CALL COM2810(I)
+			TCVAR:I:行為対象 = ARG
+			CALL SOURCE_CHECKS(I)
+			SIF ARG == 1
+				PRINTW
+		NEXT
+;;;20120717 追加　行為終了後にMAX体力＋５
+;;;20120717 追加　行為終了後にMAX气力＋５
+		MAXBASE:ARG:体力 += 5
+		MAXBASE:ARG:气力 += 5
+		MAXBASE:I:体力 += 5
+		MAXBASE:I:气力 += 5
+;;;お互いの好意度変化
+		TA:ARG:I:3 += 5
+		TA:I:ARG:3 += 10
+;;;親の情欲を０に
+		TA:I:ARG:4 = 0
+		PRINTFORMW %CALLNAME:ARG%の姐姐　→　%CALLNAME:ARG%　行為終了
+;;;20120331 テスト　マスターのイベント退避して0にする
+		TCVAR:MASTER:イベント = I:13
+		IF TCVAR:MASTER:行為対象
+			TCVAR:(TCVAR:MASTER:行為対象):イベント = I:14
+		ENDIF
+;;;20120331 E
+		TCVAR:ARG:イベント = 0
+		TCVAR:I:イベント = 0
+		CALL EVENT_ESCAPE_NPC(ARG,I)
+;;;20120212 TCVAR:ARG:イベント = 24 →　TFLAG:Ｎイベント = 8
+		TFLAG:Ｎイベント = 0
+		BASE:ARG:体力 = MAXBASE:ARG:体力
+		BASE:ARG:气力 = MAXBASE:ARG:气力
+		CFLAG:ARG:待機時間 += 10
+	ENDIF
+ENDIF
+$SELECTEND2
+

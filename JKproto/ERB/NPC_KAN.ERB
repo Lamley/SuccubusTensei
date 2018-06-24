@@ -1,0 +1,324 @@
+﻿@NPC_KAN(ARG,ARG:1)
+VARSET LOCAL
+;;;移動以外の処理
+;相手からの好意3が100以上、愛情1が1（又は服从2が100又は好意3が200以上）以上でなければ相手にされない
+;;;という通常性行為が可能な場合は行われない
+IF ((TA:(ARG:1):ARG:1 >= 1) | (TA:(ARG:1):ARG:2 - TA:(ARG:1):ARG:6 >= 100) | (TA:(ARG:1):ARG:3 - TA:(ARG:1):ARG:6 >= 200)) && (TA:(ARG:1):ARG:3 - TA:(ARG:1):ARG:6 >= 100)
+	SIF TA:ARG:(ARG:1):4 > 0
+		TA:ARG:(ARG:1):4 -= 10
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+	CFLAG:ARG:待機時間 += 10
+	RETURN 1
+ELSE
+;;;情欲4が1000未満は襲わない
+	IF TA:ARG:(ARG:1):4 < 1000
+		SIF TA:ARG:(ARG:1):4 > 0
+			TA:ARG:(ARG:1):4 -= 10
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+		CFLAG:ARG:待機時間 += 10
+		RETURN 1
+	ENDIF
+;;;仕事が2又は3の場合襲わない
+	IF CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 3
+		SIF TA:ARG:(ARG:1):4 > 0
+			TA:ARG:(ARG:1):4 -= 10
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+		CFLAG:ARG:待機時間 += 10
+		RETURN 1
+	ENDIF
+;;;女性で相性が１００％以上は襲わない
+	IF !GETBIT(TALENT:ARG:2,1) && (TA:ARG:(CFLAG:I:タイプ):5) > 90
+		SIF TA:ARG:(ARG:1):4 > 0
+			TA:ARG:(ARG:1):4 -= 10
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 2
+		TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 1
+		CFLAG:ARG:待機時間 += 10
+		RETURN 1
+	ENDIF
+;;;男同士での强奸阻止
+IF TALENT:(ARG:1):2 == 2 && TALENT:(ARG):2 == 2
+		RETURN 1
+ENDIF
+;確率で始めてみます
+	A = RAND(900)
+	IF CFLAG:ARG:モラル * TA:ARG:(CFLAG:(ARG:1):タイプ):5 == 0
+	ELSE
+		A = A * 100000 / CFLAG:ARG:モラル * TA:ARG:(CFLAG:(ARG:1):タイプ):5
+		IF A <= 4000 && !(CFLAG:ARG:仕事 == 2) && (CFLAG:(ARG:1):仕事 == 2 || CFLAG:(ARG:1):仕事 == 3)
+			PRINTFORML %CALLNAME:(ARG)%从%CALLNAME:(ARG:1)%逃走了
+;情欲度に－相手からの好意度に－、敵対度に＋
+			TA:(ARG:1):ARG:1 -= 10
+			TA:(ARG:1):ARG:3 -= 10
+			TA:(ARG:1):ARG:6 += 100
+			TA:ARG:(ARG:1):6 += 100
+			TA:ARG:(ARG:1):4 -= 100
+;;;	支配度に－１５、相手に＋１０
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+			CFLAG:ARG:待機時間 += 10
+			RETURN 1
+		ELSEIF A <= 850
+			PRINTFORML %CALLNAME:(ARG:1)%逃走了
+;情欲度に－相手からの好意度に－、敵対度に＋
+			TA:(ARG:1):ARG:1 -= 10
+			TA:(ARG:1):ARG:3 -= 10
+			TA:(ARG:1):ARG:6 += 100
+			TA:ARG:(ARG:1):6 += 100
+			TA:ARG:(ARG:1):4 -= 100
+;;;	支配度に－１５、相手に＋１０
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+			CFLAG:ARG:待機時間 += 10
+			RETURN 1
+		ENDIF
+	ENDIF
+	IF ARG:1 == 1
+		PRINTFORML %CALLNAME:ARG%将被强奸！
+		PRINTL 怎么办？
+		PRINTFORML [0] - 委身
+		PRINTFORML [1] - 战斗
+		PRINTFORML [2] - 逃走
+$INPUT_LOOP1
+		INPUT
+		SIF RESULT != 0 && RESULT != 1 && RESULT != 2
+			GOTO INPUT_LOOP1
+		IF RESULT == 1
+			F:100 = 1
+			CALLFORM FIGHT1(ARG,1)
+			J:117 = RESULT
+			IF J:117 == 1
+				PRINTFORML %CALLNAME:ARG%的战斗输了
+				IF TA:(ARG:1):ARG:3 > 0
+					TA:(ARG:1):ARG:3 -= 100
+				ELSE
+					TA:(ARG:1):ARG:6 += 100
+				ENDIF
+				IF RAND(3)
+					TA:ARG:(ARG:1):6 += 100
+				ELSE
+					TA:ARG:(ARG:1):6 -= 50
+				ENDIF
+				IF TALENT:(ARG:1):受虐狂 && RAND(4)
+					TA:(ARG:1):ARG:0 += 20
+					TA:(ARG:1):ARG:2 += 10
+					TA:(ARG:1):ARG:3 += 50
+					TA:(ARG:1):ARG:4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 4
+			ELSEIF J:117 == 2
+				PRINTFORML %CALLNAME:ARG%的战斗胜利了
+				TA:ARG:(ARG:1):4 -= 100
+				IF TA:ARG:(ARG:1):3 > 0
+					TA:ARG:(ARG:1):3 -= 30
+				ELSE
+					TA:ARG:(ARG:1):6 += 30
+				ENDIF
+				IF RAND(2)
+					TA:(ARG:1):ARG:6 += 80
+				ELSE
+					TA:(ARG:1):ARG:6 -= 20
+				ENDIF
+				IF TALENT:ARG:受虐狂 && RAND(4)
+					TA:ARG:(ARG:1):0 += 20
+					TA:ARG:(ARG:1):2 += 10
+					TA:ARG:(ARG:1):3 += 50
+					TA:ARG:(ARG:1):4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 += 3
+				J:117 = 0
+				RETURN 1
+			ELSEIF J:117 == 3
+				PRINTFORML %CALLNAME:1%逃走了
+				TA:ARG:(ARG:1):4 -= 100
+				IF TA:(ARG:1):ARG:3 > 0
+					TA:(ARG:1):ARG:3 -= 100
+				ELSE
+					TA:(ARG:1):ARG:6 += 100
+				ENDIF
+				IF RAND(3)
+					TA:ARG:(ARG:1):6 += 100
+				ELSE
+					TA:ARG:(ARG:1):6 -= 50
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 2
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+				J:117 = 0
+				RETURN 1
+			ENDIF
+		ELSEIF RESULT == 2
+			A = RAND(1000)
+			IF A >800
+				PRINTFORML %CALLNAME:(ARG:1)%逃走了。
+;情欲度に－相手からの好意度に－、敵対度に＋
+				TA:(ARG:1):ARG:1 -= 10
+				TA:(ARG:1):ARG:3 -= 10
+				TA:(ARG:1):ARG:6 += 100
+				TA:ARG:(ARG:1):6 += 100
+				TA:ARG:(ARG:1):4 -= 100
+				CFLAG:ARG:待機時間 += 10
+;;;	支配度に－１５、相手に＋１０
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 15
+				RETURN 1
+			ELSE
+				SETCOLOR 0xFF0000
+				PRINTFORMW %CALLNAME:(ARG:1)%逃不掉了。
+				RESETCOLOR
+			ENDIF
+		ENDIF
+	ELSE
+IF TALENT:(ARG:1):2 == 2 && TALENT:(ARG):2 == 2
+;		PRINTFORMW %CALLNAME:(ARG:1)%和%CALLNAME:ARG%会面了。
+		RETURN 1
+ENDIF
+		IF RAND(10) < 2
+			PRINTFORML %CALLNAME:ARG%从%CALLNAME:(ARG:1)%手中逃走了
+			TA:ARG:(ARG:1):4 -= 100
+			TA:(ARG:1):ARG:1 -= 10
+			TA:(ARG:1):ARG:3 -= 100
+			TA:(ARG:1):ARG:6 += 500
+			CFLAG:ARG:待機時間 += 10
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 10
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 5
+			RETURN 1
+		ELSEIF RAND(10) > 8
+		ELSEIF TA:(ARG:1):ARG:6 > 99 || ABL:(ARG:1):戦闘能力 || RAND(10) < 2
+			PRINTFORML %CALLNAME:(ARG:1)%对%CALLNAME:ARG%的袭击进行反击了！
+			F:100 = 1
+			CALLFORM FIGHT1(ARG,ARG:1)
+			J:117 = RESULT
+			IF J:117 == 1
+				PRINTFORML %CALLNAME:ARG%战胜了%CALLNAME:(ARG:1)%
+				IF TA:(ARG:1):ARG:3 > 0
+					TA:(ARG:1):ARG:3 -= 100
+				ELSE
+					TA:(ARG:1):ARG:6 += 100
+				ENDIF
+				IF RAND(3)
+					TA:ARG:(ARG:1):6 += 100
+				ELSE
+					TA:ARG:(ARG:1):6 -= 50
+				ENDIF
+				IF TALENT:(ARG:1):受虐狂 && RAND(4)
+					TA:(ARG:1):ARG:0 += 20
+					TA:(ARG:1):ARG:2 += 10
+					TA:(ARG:1):ARG:3 += 50
+					TA:(ARG:1):ARG:4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 3
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 4
+			ELSEIF J:117 == 2
+				PRINTFORML %CALLNAME:ARG%输给了%CALLNAME:(ARG:1)%
+				TA:ARG:(ARG:1):4 -= 100
+				IF TA:ARG:(ARG:1):3 > 0
+					TA:ARG:(ARG:1):3 -= 30
+				ELSE
+					TA:ARG:(ARG:1):6 += 30
+				ENDIF
+				IF RAND(2)
+					TA:(ARG:1):ARG:6 += 80
+				ELSE
+					TA:(ARG:1):ARG:6 -= 20
+				ENDIF
+				IF TALENT:ARG:受虐狂 && RAND(4)
+					TA:ARG:(ARG:1):0 += 20
+					TA:ARG:(ARG:1):2 += 10
+					TA:ARG:(ARG:1):3 += 50
+					TA:ARG:(ARG:1):4 += 100
+				ENDIF
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 4
+				TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) += 3
+				CFLAG:ARG:待機時間 += 10
+				J:117 = 0
+				RETURN 1
+			ENDIF
+		ENDIF
+		SETCOLOR 0xFF0000
+		PRINTFORMW %CALLNAME:ARG%把%CALLNAME:(ARG:1)%强奸了。
+		RESETCOLOR
+		PRINTFORML [0] - 確認
+		INPUT
+	ENDIF
+	J:115 = 1
+	TCVAR:(ARG:1):目的位置 = 0
+	TCVAR:(ARG:1):目的地区 = 0
+	TCVAR:ARG:目的位置 = 0
+	TCVAR:ARG:目的地区 = 0
+	CFLAG:ARG:待機時間 = 0
+	IF ARG:1 > ARG
+		CFLAG:(ARG:1):待機時間 = 0
+	ENDIF
+	I:13 = TCVAR:MASTER:イベント
+	TCVAR:MASTER:イベント = 0
+	IF TCVAR:MASTER:行為対象
+		I:14 = TCVAR:(TCVAR:MASTER:行為対象):イベント
+		TCVAR:(TCVAR:MASTER:行為対象):イベント = 0
+	ENDIF
+	TFLAG:Ｎイベント = 8
+	TFLAG:行為者 = ARG
+	FOR G,0,5
+		TCVAR:ARG:行為対象 = ARG:1
+		TCVAR:(ARG:1):行為対象 = ARG
+		CFLAG:ARG:受能動 = 1
+		CFLAG:(ARG:1):受能動 = 2
+;Hはコマンド実行時のARG変数に代入
+		H = ARG
+		CALL COM2820(ARG,0)
+		TCVAR:ARG:行為対象 = ARG:1
+		CALL SOURCE_CHECKS(ARG)
+		TFLAG:行為者 = ARG
+		SIF ARG:1 == 1
+			PRINTW
+	NEXT
+	TEQUIP:(ARG:1):膣 = 0
+	TEQUIP:(ARG:1):アナル = 0
+	FOR G,0,10
+		TCVAR:ARG:行為対象 = ARG:1
+		TCVAR:(ARG:1):行為対象 = ARG
+		CFLAG:ARG:受能動 = 1
+		CFLAG:(ARG:1):受能動 = 2
+;Hはコマンド実行時のARG変数に代入
+		H = ARG
+		CALL COM2820(ARG,1)
+		TCVAR:ARG:行為対象 = ARG:1
+		CALL SOURCE_CHECKS(ARG)
+		TFLAG:行為者 = ARG
+		SIF ARG:1 == 1
+			PRINTW
+	NEXT
+	PRINTFORMW %CALLNAME:ARG%　→　%CALLNAME:I%　行為終了
+;;;20120717 追加　行為終了後にMAX体力＋５
+;;;20120717 追加　行為終了後にMAX气力＋５
+	MAXBASE:ARG:体力 += 10
+	MAXBASE:ARG:气力 += 10
+;;;20120721 行為成功時に敵対－１００相手からは＋１０００
+;情欲度に－相手からの好意度に－
+	TA:(ARG:1):ARG:1 -= 100
+	TA:(ARG:1):ARG:2 -= 50
+	TA:(ARG:1):ARG:3 -= 100
+	TA:(ARG:1):ARG:6 += 1000
+	TA:ARG:(ARG:1):4 -= 500
+	TA:ARG:(ARG:1):6 -= 100
+	BASE:ARG:評判 -= 100
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 30
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):(ARG:1) -= 10
+	TCVAR:MASTER:イベント = I:13
+	IF TCVAR:MASTER:行為対象
+		TCVAR:(TCVAR:MASTER:行為対象):イベント = I:14
+	ENDIF
+	CFLAG:ARG:会话 = 1
+	CFLAG:(ARG:1):会话 = 1
+	CALL EVENT_ESCAPE_NPC(ARG,ARG:1)
+	TFLAG:Ｎイベント = 0
+	J:115 = 0
+	CFLAG:ARG:待機時間 += 30
+	CFLAG:(ARG:1):待機時間 += 30
+ENDIF
+
+
+

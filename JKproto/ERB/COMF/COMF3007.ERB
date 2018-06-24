@@ -1,0 +1,54 @@
+﻿@COM_ABLE3007(ARG)
+;安全な場所では必ず実行できる
+;それ以外の場所では自慰成瘾か、よほど情欲の値が大きくないと実行できない
+;どこが「安全な場所」なのかはあとで考えることにする
+;現状は自宅のみ
+RETURN GLOBAL_COMABLE(3007)
+
+
+
+@COM3007(ARG)
+;自慰
+
+;時間経過は20分以内とする
+;20分以上自慰しつづけるとかダイナミック自慰過ぎる…
+CFLAG:ARG:待機時間 = RAND:5 +1
+
+DOWNBASE:ARG:体力 += 1
+DOWNBASE:ARG:气力 += 5
+
+SOURCE:ARG:快Ｃ = 80
+SOURCE:ARG:快Ｂ = 80
+SOURCE:ARG:性行動 = 100
+
+
+;経験があればＶやＡもいじる
+SIF EXP:ARG:Ｖ经验
+	SOURCE:ARG:快Ｖ = 80
+SIF EXP:ARG:Ａ经验
+	SOURCE:ARG:快Ａ = 80
+
+;場所が自宅でなければ露出のソースが加わり、逸脱と恐怖も増える
+IF !GETBIT(DA:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置),10)
+	SOURCE:ARG:露出 = 500
+	SOURCE:ARG:逸脱 = 300
+	SOURCE:ARG:恐怖 = 200
+
+ENDIF
+;自慰がしたくてしょうがなかったなら鬱屈も少し減る
+;ストレス発散だ！
+;どういう状態が自慰したくてしょうがないのかは考えよう
+;現状では取りあえず興奮度が高いとよし。
+;IF BASE:ARG:興奮度 >= 4
+;	SOURCE:ARG:鬱屈 = -(RAND:10)
+;	SIF SOURCE:ARG:鬱屈 < 0
+;		SOURCE:ARG:鬱屈 = 0
+;ENDIF
+
+;压抑、反抗持ちには、鬱屈ソース追加
+SIF TALENT:ARG:自己愛 == -1 || TALENT:ARG:反抗
+	SOURCE:ARG:鬱屈 = 30
+;;;	支配度に＋１
+TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+
+RETURN 1

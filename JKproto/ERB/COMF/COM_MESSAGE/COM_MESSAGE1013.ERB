@@ -1,0 +1,64 @@
+﻿@COM_MESSAGE_1013
+;--------------------------------------------------------------------------
+;部活動
+;--------------------------------------------------------------------------
+SIF M:101 == 1
+	RETURN 0
+PRINTFORML %CLUB_NAME(CFLAG:MASTER:部活)%的活动开始了。
+;ノーパン＋女性＋テニス部
+IF TEQUIP:MASTER:下半身下着 == 0 && TALENT:MASTER:性別 & 1 && CFLAG:MASTER:部活 == 1
+	PRINTFORML 穿着外套到处跑着，但每次裙子都会飘起来。
+	IF ABL:MASTER:露出癖 >= 2
+		PRINTFORML 网球裙下面就是内衣，所以有很大的走光的可能啊。
+		PRINTFORM 感受到强烈的羞耻
+		SIF ABL:MASTER:露出癖 >= 4
+			PRINTFORM 感受到惊险的快感
+	ELSE
+		PRINTFORML 虽然穿着网球裙，但下面就是内衣啊。
+		PRINTFORM 感受到了一点曝光的羞耻
+		;露出癖Lv1 or 不知羞耻
+		SIF ABL:MASTER:露出癖 == 1 || TALENT:MASTER:羞恥心 == 1
+			PRINTFORM 和稍微的快乐
+	ENDIF
+	PRINTFORMW %CALLNAME:MASTER%继续着活动…
+;水泳部（↓のノーブラ時の运动部活動の文に違和感が出るので隔離。現状では空です）
+ELSEIF CFLAG:MASTER:部活 == 2
+;	PRINTFORML 
+;新体操部（同上）
+ELSEIF CFLAG:MASTER:部活 == 3
+;	PRINTFORML 
+;ノーブラ＋女性＋运动部
+ELSEIF TEQUIP:MASTER:上半身下着 == 0 && TALENT:MASTER:性別 & 1 && CFLAG:MASTER:部活 <= 30
+	PRINTFORM 每次进行动作的时候，内衣覆盖下
+	;绝壁
+	IF TALENT:MASTER:胸围サイズ == -2
+		PRINTFORM 平坦的胸部
+	ELSE
+		;贫乳
+		IF TALENT:MASTER:胸围サイズ == -1
+			PRINTFORM 略有起伏的胸口微微地
+		;巨乳
+		ELSEIF TALENT:MASTER:胸围サイズ == 1
+			PRINTFORM 丰满的乳房
+		;爆乳
+		ELSEIF TALENT:MASTER:胸围サイズ == 2
+			PRINTFORM 过于丰满的乳房重重的
+		ELSE
+			PRINTFORM 乳房
+		ENDIF
+		PRINTFORM 摇晃着
+	ENDIF
+	PRINTFORM 摩擦胸前衣服的布料
+	;Ｂ感觉Lv4以上
+	IF ABL:MASTER:Ｂ感觉 >= 4
+		PRINTFORML 不断感到快感涌来。
+	;Ｂ感觉Lv2以上 or Ｂ敏感
+	ELSEIF ABL:MASTER:Ｂ感觉 >= 2 || TALENT:MASTER:Ｂ感度 == 1
+		PRINTFORML %CALLNAME:MASTER%的身体感受到快感。
+	ELSE
+		PRINTFORML 感到疼痛。
+	ENDIF
+	PRINTFORMW 忍受着这种感觉、%CALLNAME:MASTER%继续着活动…
+ENDIF
+M:101 = 1
+

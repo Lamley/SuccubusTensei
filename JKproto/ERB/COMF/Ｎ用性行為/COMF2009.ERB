@@ -1,0 +1,157 @@
+﻿@COM_ABLE2009(ARG)
+LOCAL = ARG
+VARSET ARG
+LOCAL = TFLAG:行為者
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+
+SIF !CAN_COM2009(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+RETURN GLOBAL_COMABLE(2009)
+;-------------------------------------------------
+;秘貝開帳させる
+;-------------------------------------------------
+@COM2009(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 秘貝開帳させる(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 50
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 90
+
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 43
+SOURCE:(TCVAR:ARG:行為対象):達成 = 20
+SOURCE:(TCVAR:ARG:行為対象):恐怖 = 120
+SOURCE:(TCVAR:ARG:行為対象):液体 = 10
+SOURCE:(TCVAR:ARG:行為対象):露出 = 300
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 450
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 150
+SOURCE:(TCVAR:ARG:行為対象):反感 = 150
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 150
+
+;处女、贞操重视
+IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):恐怖 , 1.20
+	TIMES SOURCE:(TCVAR:ARG:行為対象):屈従 , 1.20
+	TIMES SOURCE:(TCVAR:ARG:行為対象):反感 , 1.20
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 300
+	IF TALENT:(TCVAR:ARG:行為対象):貞操 > 0
+		TIMES SOURCE:(TCVAR:ARG:行為対象):露出 , 2.00
+		TIMES SOURCE:(TCVAR:ARG:行為対象):逸脱 , 2.00
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＶ⇔指の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):3 |= STAIN:(TCVAR:ARG:行為対象):1
+STAIN:(TCVAR:ARG:行為対象):1 |= STAIN:(TCVAR:ARG:行為対象):3
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;露出癖Lv3以上で自慰经验加算
+SIF ABL:(TCVAR:ARG:行為対象):露出癖 >= 3
+	EXP:(TCVAR:ARG:行為対象):自慰经验 ++
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1
+
+@CAN_COM2009(ARG,ARG:1)
+#FUNCTION
+;;;VARSET LOCAL
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:(ARG:1):欲望
+	A += ABL:(ARG:1):欲望 * 3
+ENDIF
+;ABL:Ｖ感觉
+IF ABL:(ARG:1):Ｖ感觉
+	A += ABL:(ARG:1):Ｖ感觉 * 2
+ENDIF
+;ABL:侍奉精神
+IF ABL:(ARG:1):侍奉精神
+	A += ABL:(ARG:1):侍奉精神 * 4
+ENDIF
+;ABL:露出癖
+IF ABL:(ARG:1):露出癖
+	A += ABL:(ARG:1):露出癖 * 3
+ENDIF
+;ABL:自慰成瘾
+IF ABL:(ARG:1):自慰成瘾
+	A += ABL:(ARG:1):自慰成瘾 * 3
+ENDIF
+
+IF MARK:(ARG:1):快乐刻印
+	A += MARK:(ARG:1):快乐刻印 * 3
+ENDIF
+
+;PALAM:润滑（の不足）
+IF PALAM:(ARG:1):润滑 < PALAMLV:3
+	A -= 5
+ENDIF
+;PALAM:情欲
+IF GETPALAMLV(PALAM:(ARG:1):情欲,5)
+	A += GETPALAMLV(PALAM:(ARG:1):情欲,5) * 3
+ENDIF
+
+;害羞
+IF TALENT:(ARG:1):羞恥心 > 0
+	A -= 2
+ENDIF
+;否定快感（淫乱、娼妇で無効）
+IF TALENT:(ARG:1):快感応答 < 0 && !TALENT:(ARG:1):淫乱
+	A -= 5
+ENDIF
+;讨厌男人（恋慕、相亲相爱で無効）
+IF TALENT:(ARG:1):性別嗜好 & 1 && !(TALENT:ARG:2 & 1) && !LOVE_CHECK(ARG:1,ARG)
+	A -= 12
+ENDIF
+
+;处女
+IF TALENT:(ARG:1):处女 == 1
+	A -= 20
+ELSEIF EXP:(ARG:1):Ｖ经验 < EXPLV:2
+	A -= 5
+ENDIF
+
+;調教者が扶她
+IF (TALENT:ARG:2 & 3) == 3
+	A += 4
+ENDIF
+
+;春药
+IF TEQUIP:(ARG:1):春药
+	A += 6
+ENDIF
+
+;実行できない
+SIF A < 18
+	RETURNF 0
+RETURNF 1
+

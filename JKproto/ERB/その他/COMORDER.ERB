@@ -1,0 +1,197 @@
+﻿@COM_ORDER(ARG,ARG:1)
+#FUNCTION
+VARSET LOCAL
+
+;好感度
+IF TA:(ARG:1):ARG:3 > 29
+	LOCAL += FAVOR_RANK(ARG:1,ARG) * 3
+ENDIF
+
+;服从度
+IF TA:(ARG:1):ARG:2 > TA:ARG:(ARG:1):2
+	LOCAL += OBEY_RANK(ARG:1,ARG) * 5
+ENDIF
+
+;ABL:従順
+IF ABL:(ARG:1):従順
+	LOCAL += ABL:(ARG:1):従順 * 4
+ENDIF
+;ABL:受虐属性
+IF ABL:(ARG:1):受虐属性
+	LOCAL += ABL:(ARG:1):受虐属性 * 2
+ENDIF
+;レズ調教
+IF HETEROSEX(ARG,ARG:1) == 1
+	;ABL:(ARG:1):百合属性
+	IF ABL:(ARG:1):百合属性
+		LOCAL += ABL:(ARG:1):百合属性 * 3
+	ENDIF
+	;ABL:百合成瘾
+	IF ABL:(ARG:1):百合成瘾
+		LOCAL += ABL:(ARG:1):百合成瘾 * 3
+	ENDIF
+	;TALENT:男女通吃
+	IF TALENT:(ARG:1):性別嗜好 == -1
+		LOCAL += 10
+	ENDIF
+	;好奇心
+	IF TALENT:(ARG:1):性的興味 > 0
+		LOCAL += 7
+	ENDIF
+	;保守
+	IF TALENT:(ARG:1):性的興味 < 0
+		LOCAL -= 13
+	ENDIF
+;ゲイ調教
+ELSEIF HETEROSEX(ARG,ARG:1) == 2
+	;ABL:ホモっ気
+	IF ABL:(ARG:1):ホモっ気
+		LOCAL += ABL:(ARG:1):ホモっ気 * 3
+	ENDIF
+	;ABL:ゲイ中毒
+	IF ABL:(ARG:1):ゲイ中毒
+		LOCAL += ABL:(ARG:1):ゲイ中毒 * 3
+	ENDIF
+	;TALENT:男女通吃
+	IF TALENT:(ARG:1):性別嗜好 == -1
+		LOCAL += 10
+	ENDIF
+	;好奇心
+	IF TALENT:(ARG:1):性的興味 > 0
+		LOCAL += 7
+	ENDIF
+	;保守
+	IF TALENT:(ARG:1):性的興味 < 0
+		LOCAL -= 13
+	ENDIF
+ELSE
+	;好奇心
+	IF TALENT:(ARG:1):性的興味 > 0
+		LOCAL += 5
+	ENDIF
+	;保守
+	IF TALENT:(ARG:1):性的興味 < 0
+		LOCAL -= 10
+	ENDIF
+ENDIF
+
+;刻印チェック
+IF MARK:(ARG:1):痛苦刻印
+	LOCAL += MARK:(ARG:1):痛苦刻印 * 5
+ENDIF
+
+
+;屈服刻印および反抗刻印
+IF MARK:(ARG:1):屈服刻印
+	LOCAL += MARK:(ARG:1):屈服刻印 * 3
+ENDIF
+IF MARK:(ARG:1):反抗刻印
+	LOCAL -= MARK:(ARG:1):反抗刻印 * 5
+ENDIF
+
+
+;PALAM:恭顺
+IF GETPALAMLV(PALAM:(ARG:1):恭顺,5)
+	LOCAL += GETPALAMLV(PALAM:(ARG:1):恭顺,5) * 3
+ENDIF
+;PALAM:恐怖
+IF GETPALAMLV(PALAM:(ARG:1):恐怖,5)
+	LOCAL += GETPALAMLV(PALAM:(ARG:1):恐怖,5) * 3
+ENDIF
+
+;服从と隶属
+LOCAL += OBEY_CHECK(ARG:1,ARG) * 10
+
+
+;反抗（服从、隶属で無効）
+IF TALENT:(ARG:1):態度 > 0 && !OBEY_CHECK(ARG:1,ARG)
+	LOCAL -= 5
+ENDIF
+;刚强
+IF TALENT:(ARG:1):度胸 > 0
+	LOCAL -= 5
+ENDIF
+;直率
+IF TALENT:(ARG:1):態度 < 0
+	LOCAL += 5
+ENDIF
+;高傲
+IF TALENT:(ARG:1):プライド > 0
+	LOCAL -= 15
+ENDIF
+;自卑
+IF TALENT:(ARG:1):プライド < 0
+	LOCAL += 5
+ENDIF
+;喜欢引人注目
+IF TALENT:(ARG:1):喜欢引人注目
+	LOCAL += 2
+ENDIF
+;压抑
+IF TALENT:(ARG:1):自己愛 < 0
+	LOCAL -= 10
+ENDIF
+;反抗
+IF TALENT:(ARG:1):反抗
+	LOCAL -= 10
+ENDIF
+;弱势
+IF TALENT:(ARG:1):弱势
+	LOCAL += 12
+ENDIF
+;容易高潮
+IF TALENT:(ARG:1):容易高潮
+	LOCAL += 10
+ENDIF
+;迷信
+IF TALENT:(ARG:1):迷信
+	LOCAL += 8
+ENDIF
+
+;恋慕
+IF LOVE_CHECK(ARG:1,ARG)
+	LOCAL += 15
+ENDIF
+;最愛
+IF CFLAG:(ARG:1):最愛 >= 0
+	IF CFLAG:(ARG:1):最愛 == ARG
+		LOCAL += 10
+	ELSEIF TALENT:(ARG:1):貞操 > -1
+		LOCAL -= (TALENT:(ARG:1):貞操 + 1) * 10
+	ENDIF
+ENDIF
+
+;調教者の能力、素質
+;ABL:施虐属性
+IF ABL:ARG:施虐属性
+	LOCAL += ABL:ARG:施虐属性 * 2
+ENDIF
+;魅惑
+IF TALENT:ARG:魅惑
+	LOCAL += 6
+ENDIF
+;谜之魅力
+IF TALENT:ARG:谜之魅力
+	LOCAL += 8
+ENDIF
+;施虐狂
+IF TALENT:ARG:施虐狂
+	LOCAL += 3
+ENDIF
+
+
+;相性チェック
+IF RELATION:(ARG:1):ARG > 0 && RELATION:(ARG:1):ARG < 30
+	LOCAL -= 10
+ELSEIF RELATION:(ARG:1):ARG > 0 && RELATION:(ARG:1):ARG < 70
+	LOCAL -= 6
+ELSEIF RELATION:(ARG:1):ARG > 0 && RELATION:(ARG:1):ARG < 100
+	LOCAL -= 3
+ELSEIF RELATION:(ARG:1):ARG >= 100 && RELATION:(ARG:1):ARG < 130
+	LOCAL += 3
+ELSEIF RELATION:(ARG:1):ARG >= 100 && RELATION:(ARG:1):ARG < 170
+	LOCAL += 6
+ELSEIF RELATION:(ARG:1):ARG >= 100 && RELATION:(ARG:1):ARG >= 170
+	LOCAL += 10
+ENDIF
+RETURNF LOCAL

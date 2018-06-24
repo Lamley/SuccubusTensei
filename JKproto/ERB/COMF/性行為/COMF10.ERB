@@ -1,0 +1,196 @@
+﻿@COM_ABLE10(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;相手が绳子装着時は不可
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):绳子
+	RETURN 0
+SIF !CAN_COM10(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(10)
+;-------------------------------------------------
+;自慰させる
+;-------------------------------------------------
+@COM10(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 自慰させる(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+SIF !(TEQUIP:(TCVAR:ARG:行為対象):下半身下着 == 373)
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 80
+SOURCE:(TCVAR:ARG:行為対象):性行動 = 100
+SOURCE:(TCVAR:ARG:行為対象):恐怖 = 200
+SOURCE:(TCVAR:ARG:行為対象):露出 = 400
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 500
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 300
+SOURCE:(TCVAR:ARG:行為対象):反感 = 250
+
+;経験があればＶやＡもいじる
+SIF EXP:(TCVAR:ARG:行為対象):Ｖ经验
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 80
+SIF EXP:(TCVAR:ARG:行為対象):Ａ经验
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ = 80
+
+[SKIPSTART]
+;自慰棒
+IF (TEQUIP:(TCVAR:ARG:行為対象):膣 == 1) && (TALENT:(TCVAR:ARG:行為対象):性別 == 0)
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ += 80
+	SOURCE:(TCVAR:ARG:行為対象):屈従 += 100
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 100
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｃ , 0.70
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｂ , 0.70
+ENDIF
+;肛塞
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == (60 | 61 | 62)
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ += 80
+	SOURCE:(TCVAR:ARG:行為対象):屈従 += 150
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 150
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｃ , 0.70
+	TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｂ , 0.70
+ENDIF
+;淋浴
+;;;IF TEQUIP:(TCVAR:ARG:行為対象):32
+;;;	SOURCE:(TCVAR:ARG:行為対象):快Ｃ += 50
+;;;	SOURCE:(TCVAR:ARG:行為対象):露出 += 100
+;;;	SOURCE:(TCVAR:ARG:行為対象):屈従 += 50
+;;;	SOURCE:(TCVAR:ARG:行為対象):反感 += 80
+;;;ENDIF
+;ビデオ
+;;;IF TEQUIP:(TCVAR:ARG:行為対象):28
+;;;	SOURCE:(TCVAR:ARG:行為対象):液体 += 50
+;;;	SOURCE:(TCVAR:ARG:行為対象):情欲 += 100
+;;;	SOURCE:(TCVAR:ARG:行為対象):反感 += 200
+;;;ENDIF
+[SKIPEND]
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 400
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷の指⇔奴隷のＢの汚れが移動
+STAIN:(TCVAR:ARG:行為対象):1 |= STAIN:(TCVAR:ARG:行為対象):5
+STAIN:(TCVAR:ARG:行為対象):5 |= STAIN:(TCVAR:ARG:行為対象):1
+
+IF TALENT:(TCVAR:ARG:行為対象):性別 == 0
+	;奴隷の指⇔奴隷のＶの汚れが移動
+	STAIN:(TCVAR:ARG:行為対象):1 |= STAIN:(TCVAR:ARG:行為対象):3
+	STAIN:(TCVAR:ARG:行為対象):3 |= STAIN:(TCVAR:ARG:行為対象):1
+ENDIF
+;;;[SKIPSTART]
+;淋浴自慰の場合汚れをリセット、润滑更に半分。
+;;;IF TEQUIP:(TCVAR:ARG:行為対象):32 == 1
+;;;	STAIN:(TCVAR:ARG:行為対象):1 = 0
+;;;	STAIN:(TCVAR:ARG:行為対象):2 = 2
+;;;	STAIN:(TCVAR:ARG:行為対象):3 = 1
+;;;	STAIN:(TCVAR:ARG:行為対象):4 = 8
+;;;	PALAM:(TCVAR:ARG:行為対象):4 /= 2
+;;;ENDIF
+;;;[SKIPEND]
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;ビデオ撮影時は経験にプラス
+;IF TEQUIP:(TCVAR:ARG:行為対象):ビデオ撮影
+;	EXP:(TCVAR:ARG:行為対象):自慰经验 += 2
+;	EXP:(TCVAR:ARG:行為対象):调教自慰经验 += 2
+;ELSE
+	EXP:(TCVAR:ARG:行為対象):自慰经验 += 1
+	EXP:(TCVAR:ARG:行為対象):调教自慰经验 += 1
+;ENDIF
+;公開自慰時は异常经验付加
+;IF TEQUIP:(TCVAR:ARG:行為対象):ビデオ撮影 && !GETBIT(CFLAG:3,0)
+;	EXP:(TCVAR:ARG:行為対象):异常经验 ++
+;	SETBIT CFLAG:3,0
+;ENDIF
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,4)
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+
+RETURN 1
+
+
+@CAN_COM10(ARG,ARG:1)
+#FUNCTION
+;;;VARSET LOCAL
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = 0
+A = COM_ORDER(ARG,ARG:1)
+;ABL:欲望
+IF ABL:(ARG:1):欲望
+	A += ABL:(ARG:1):欲望 * 3
+ENDIF
+;ABL:露出癖
+IF ABL:(ARG:1):露出癖
+	A += ABL:(ARG:1):露出癖 * 4
+ENDIF
+;ABL:自慰成瘾
+IF ABL:(ARG:1):自慰成瘾
+	A += ABL:(ARG:1):自慰成瘾 * 3
+ENDIF
+IF MARK:(ARG:1):快乐刻印
+	A += MARK:(ARG:1):快乐刻印 * 3
+ENDIF
+;自制力
+IF TALENT:(ARG:1):自制力
+	A -= 5
+ENDIF
+;害羞
+IF TALENT:(ARG:1):羞恥心 > 0
+	A -= 5
+ENDIF
+;不知羞耻
+IF TALENT:(ARG:1):羞恥心 < 0
+	A += 2
+ENDIF
+;容易自慰
+IF TALENT:(ARG:1):容易自慰
+	A += 5
+ENDIF
+;接受快感
+IF TALENT:(ARG:1):快感応答 > 0
+	A += 5
+ENDIF
+;否定快感（淫乱、娼妇で無効）
+IF TALENT:(ARG:1):快感応答 < 0 && !TALENT:(ARG:1):淫乱
+	A -= 5
+ENDIF
+;春药
+IF TEQUIP:(ARG:1):春药
+	A += 8
+ENDIF
+[SKIPSTART]
+;難易度上昇
+;公開で10、自慰棒で5、肛塞で5、淋浴で3
+;;;SIF TEQUIP:(ARG:1):ビデオ撮影
+;;;	A -= 10
+;;;SIF TEQUIP:(ARG:1):淋浴
+;;;	A -= 3
+SIF TEQUIP:(ARG:1):膣 == 1
+	A -= 5
+SIF TEQUIP:(ARG:1):アナル == (60 | 61 | 62)
+	A -= 5
+[SKIPEND]
+;実行できない
+SIF A < 33
+	RETURNF 0
+RETURNF 1

@@ -1,0 +1,148 @@
+﻿@NMKAIWA(ARG)
+J:102 = 0
+K:101 = 0
+IF RAND(10) > 6
+	J:102 = RAND(CHARANUM - 2)
+	IF J:102 >= ARG
+		J:102 += 2
+	ELSE
+		J:102 += 1
+	ENDIF
+ELSE
+	FOR J:101,1,CHARANUM
+		SIF TA:ARG:(J:101):6 > 0 && TA:ARG:(J:101):6 > TA:ARG:(J:102):6
+			J:102 = J:101
+	NEXT
+ENDIF
+SIF J:102
+	K:101 = J:102
+K:102 = RAND(20)
+PRINTFORML %CALLNAME:ARG%说话了
+SELECTCASE K:102
+	CASE 0 TO 6
+		IF TALENT:ARG:学年 == 1
+			PRINTL 「请教我学习吧！」
+		ELSEIF TALENT:ARG:学年 == 2 || TALENT:ARG:学年 == 3
+			PRINTL 「一起学习吧！」
+		ELSE
+			PRINTL 「不学习么？」
+		ENDIF
+	CASE 7 TO 13
+			PRINTL 「社团活动也很重要啊」
+	CASE 14,15
+		PRINTL 「也要准备战斗呢」
+	CASE 16
+		IF !GETBIT(TALENT:ARG:2,0) || RAND:2 == 0
+			PRINTL 「不来一发么？」
+		ELSEIF !GETBIT(TALENT:ARG:2,0)
+			PRINTL 「不来一发么？」
+		ELSEIF NO:ARG == 40
+			IF TALENT:ARG:处女
+				PRINTL 「学习点什么吧？」
+			ELSE
+				PRINTL 「给，给我调教吧？」
+			ENDIF
+		ELSE
+			PRINTL 「来H吧？」
+		ENDIF
+	CASEELSE
+		IF K:101 && K:101 != 1
+			TA:ARG:(K:101):6 += 10
+			TA:(K:101):ARG:6 += 10
+			PRINTFORML 「%CALLNAME:(K:101)%是个坏家伙！」
+		ELSE
+			IF TALENT:ARG:学年 == 1
+				PRINTL 「教我学习吧！」
+			ELSEIF TALENT:ARG:学年 == 2 || TALENT:ARG:学年 == 3
+				PRINTL 「一起学习吗！」
+			ELSE
+				PRINTL 「不学习么？」
+			ENDIF
+		ENDIF
+ENDSELECT
+$INPUT_LOOP1
+PRINTL 怎么回答呢？
+PRINTFORML [0] - 好
+PRINTFORML [1] - 不好
+INPUT
+SIF RESULT != 0 && RESULT != 1
+	GOTO INPUT_LOOP1
+SIF RESULT == 1
+	RETURN 1
+
+SELECTCASE K:102
+	CASE 0 TO 6
+		EXP:ARG:学習経験 += 1
+		EXP:1:学習経験 += 1
+	CASE 7 TO 13
+		EXP:ARG:運動経験 += 1
+		EXP:1:運動経験 += 1
+	CASE 14,15
+		EXP:ARG:戦闘経験 += 1
+		EXP:1:戦闘経験 += 1
+	CASE 16
+		IF NO:ARG == 40 && TALENT:ARG:处女
+			EXP:ARG:学習経験 += 1
+			EXP:1:学習経験 += 1
+		ELSE
+			K:104 = 1
+			CALL EVENT_JOIN(1,ARG,4)
+			CFLAG:ARG:待機時間 += 2
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+			K:104 = 0
+			RETURN 1
+		ENDIF
+	CASEELSE
+		IF K:101
+			TA:1:(K:101):6 += 10
+		ELSE
+			EXP:ARG:学習経験 += 1
+			EXP:1:学習経験 += 1
+		ENDIF
+ENDSELECT
+
+K:103 = 1
+
+	TFLAG:Ｎイベント = 8
+
+	TCVAR:I:目的位置 = 0
+	TCVAR:I:目的地区 = 0
+	TCVAR:ARG:目的位置 = 0
+	TCVAR:ARG:目的地区 = 0
+	CFLAG:ARG:受能動 = 1
+	CFLAG:I:受能動 = 2
+	TCVAR:ARG:行為対象 = I
+	TCVAR:I:行為対象 = ARG
+	CALL COM2800(ARG)
+	TCVAR:ARG:行為対象 = I
+	TCVAR:I:行為対象 = ARG
+	CALL SOURCE_CHECKS(ARG)
+	IF TFLAG:成否用変数 > -2
+		TFLAG:行為者 = I
+		CFLAG:ARG:受能動 = 2
+		CFLAG:I:受能動 = 1
+		TCVAR:ARG:行為対象 = I
+		TCVAR:I:行為対象 = ARG
+		CALL COM2801(I)
+		TCVAR:I:行為対象 = ARG
+		TCVAR:ARG:行為対象 = I
+		CALL SOURCE_CHECKS(I)
+		TFLAG:行為者 = ARG
+		MAXBASE:ARG:气力 += 1
+		MAXBASE:I:气力 += 1
+		TA:I:ARG:4 += 5
+		TA:ARG:I:4 += 5
+		TA:I:ARG:6 -= 1
+		TA:ARG:I:6 -= 1
+	ENDIF
+	CFLAG:ARG:会话 = 1
+	CFLAG:I:会话 = 1
+	CALL EVENT_ESCAPE_NPC(ARG,I)
+	TFLAG:Ｎイベント = 0
+
+K:103 = 0
+
+RETURN 1
+
+

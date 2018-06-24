@@ -1,0 +1,62 @@
+﻿@COM_ABLE2850(ARG)
+SIF TCVAR:1:イベント
+	RETURN 0
+RETURN GLOBAL_COMABLE(2850)
+
+@COM2850(ARG)
+;近くの人と雑談
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+IF N:101 > 1000 || ABL:ARG:说话技巧技能 > 4
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSEIF (N:101 > 100 || ABL:ARG:说话技巧技能 > 3) && RAND(5) > 0
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSEIF (N:101 > 10 || ABL:ARG:说话技巧技能 > 2) && RAND(5) > 1
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSEIF (N:101 > 4 || ABL:ARG:说话技巧技能 > 1) && RAND(5) > 2
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSEIF (N:101 > 1 || ABL:ARG:说话技巧技能 > 0) && RAND(5) > 3
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSEIF N:101 > 0 && RAND(5) > 4
+	PRINTL 近くの人と雑談した
+	EXP:ARG:会话经验++
+	CALL SOURCE_ABLUP(ARG)
+	TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 1
+	BASE:ARG:評判 += 1
+ELSE
+	PRINTL うまくいかなかった
+ENDIF
+
+CFLAG:ARG:待機時間 += 10
+
+;;;ナンパ（死語？）されるということ
+CALL NANPA1
+J:118 += RESULT
+SIF J:118 <= 3
+	CALL NANPA1
+
+VARSET ARG
+RETURN 1
+

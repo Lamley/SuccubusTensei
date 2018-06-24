@@ -1,0 +1,127 @@
+﻿@BENTO
+SIF CFLAG:MASTER:現在地区 != 0 && CFLAG:MASTER:現在位置 != 1
+	RETURN 0
+SIF	(D:101) != 0
+	RETURN 0
+;LOCAL=作ってくれる人、LOCAL:1=作ってくれる人の料理補正
+LOCAL = 0
+LOCAL:1 = 0
+IF RAND:4 == 1 && GETCHARA(11) != -1
+;母
+	LOCAL = GETCHARA(11)
+	LOCAL:1 = 1
+ELSEIF RAND:3 == 1 && GETCHARA(13) != -1
+;妹妹妹妹
+	LOCAL = GETCHARA(13)
+	LOCAL:1 = 5
+ELSEIF RAND:2 == 1 && GETCHARA(15) != -1
+;姐姐
+	LOCAL = GETCHARA(15)
+	LOCAL:1 = 3
+ELSE
+	RETURN 0
+ENDIF
+PRINTFORML %CALLNAME:LOCAL%开始制作便当。
+IF RAND(15) - ABL:LOCAL:料理技能 * 3 - LOCAL:1 < 1
+	IF RAND(10) - (ABL:LOCAL:料理技能 - 2) * 2 < 1
+		PRINTW 做出了特别美味的便当！
+		EQUIP:MASTER:美味的便当++
+		EXP:LOCAL:料理经验 += 3
+	ELSE
+		PRINTW 做出了一般味道的便当
+		EQUIP:MASTER:普通的便当++
+		EXP:LOCAL:料理经验 += 2
+	ENDIF
+ELSE
+	PRINTW 做出了可怕的便当･･････
+	SIF NO:LOCAL == 13
+	PRINTFORML 但不知为什么%CALLNAME:LOCAL%还挺自豪的･･････
+	EQUIP:MASTER:可怕的便当++
+	EXP:LOCAL:料理经验 += 1
+ENDIF
+
+
+@DOGEZA(ARG)
+	PRINTFORML 这次应该直率地向%CALLNAME:ARG%道歉的感觉。
+$INPUT_LOOP1000
+	
+	PRINTFORML [0] - 直率的道歉
+	PRINTFORML [1] - 果断停止吧
+INPUT
+	
+         SIF RESULT != 0 && RESULT != 1
+			GOTO INPUT_LOOP1000
+	 IF RESULT == 0
+			EQUIP:MASTER:《如何高明的道歉》--
+;反抗
+			IF TALENT:ARG:態度 == 1
+				IF TA:ARG:1:4 > 200
+					PRINTW %CALLNAME:ARG%喜欢我的身体的话，就应该原谅我吧
+					K:104 = 1
+					CALL EVENT_JOIN(1,ARG,4)
+					CFLAG:ARG:待機時間 += 2
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+					TA:1:ARG:2 += 30
+					TA:ARG:1:4 += 20
+					K:104 = 0
+				ELSEIF TA:ARG:1:4 > 100
+					PRINTW 给%CALLNAME:ARG%提供服务的话，就能原谅我吧
+					K:104 = 1
+					CALL EVENT_JOIN(1,ARG,4)
+					CFLAG:ARG:待機時間 += 2
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG -= 5
+					TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):1 -= 3
+					TA:1:ARG:2 += 15
+					TA:ARG:1:4 += 10
+					K:104 = 0
+				ELSE
+					PRINTW 勉勉强强原谅了我
+					TA:1:ARG:2 += 5
+					TA:ARG:1:4 += 1
+				ENDIF
+;直率
+			ELSEIF TALENT:ARG:態度 == -1
+				PRINTW 爽快的原谅了我
+				TA:1:ARG:1 += 1
+			ELSE
+				PRINTW 原谅了我
+			ENDIF
+			TA:1:ARG:6 == 0
+			TA:ARG:1:6 == 0
+		ELSEIF RESULT == 1
+			PRINTW 放弃了
+		ENDIF
+	RETURN
+
+@YURUSU(ARG)
+	PRINTFORML %CALLNAME:ARG%在请求我的原谅啊。
+$INPUT_LOOP1001
+	PRINTFORML [0] - 原谅
+	PRINTFORML [1] - 不原谅
+INPUT
+	SIF RESULT != 0 && RESULT != 1
+			GOTO INPUT_LOOP1001
+		IF RESULT == 0
+			EQUIP:MASTER:《宽广心胸》--
+;反抗
+			IF TALENT:1:態度 == 1
+				PRINTW 勉勉强强原谅了
+				TA:1:ARG:6 == 0
+				TA:ARG:1:6 == 0
+;直率
+			ELSEIF TALENT:1:態度 == -1
+				PRINTW 爽快的原谅了
+				TA:1:ARG:6 == 0
+				TA:ARG:1:6 == 0
+			ELSE
+				PRINTW 原谅了
+				TA:1:ARG:6 == 0
+				TA:ARG:1:6 == 0
+			ENDIF
+		ELSEIF RESULT == 1
+			PRINTW 不原谅
+		ENDIF
+	RETURN
+
+

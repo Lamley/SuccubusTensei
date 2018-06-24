@@ -1,0 +1,266 @@
+﻿;痴漢カウンターコマンド実行判定等
+@COM_ABLE820(ARG)
+;舐める判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TALENT:ARG:痴漢 == 1 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL != 1
+	RETURN 0
+SIF CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 == 0
+	RETURN 0
+RETURN 1
+@COM_ABLE821(ARG)
+;胸を触らせる判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TALENT:ARG:痴漢 == 1 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL != 1
+	RETURN 0
+SIF CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 == 0
+	RETURN 0
+RETURN 1
+@COM_ABLE822(ARG)
+;乳首を探る判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TALENT:ARG:痴漢 == 1 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL != 1
+	RETURN 0
+SIF CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 == 0
+	RETURN 0
+RETURN 1
+@COM_ABLE823(ARG)
+;股間を触る判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TALENT:ARG:痴漢 == 1 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF LOCAL != 1
+	RETURN 0
+SIF CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 == 0
+	RETURN 0
+RETURN 1
+@COM_ABLE824(ARG)
+;下着をずらす2判定
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF TCVAR:LOCAL:イベント != 1
+	RETURN 0
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF TALENT:LOCAL:痴漢 == 1 && (ABL:LOCAL:欲望 + ABL:LOCAL:技巧 + ABL:LOCAL:施虐属性 - ABL:LOCAL:受虐属性 + (EXP:LOCAL:痴汉经验 / 10)) < 5
+	RETURN 0
+SIF ARG != 1
+	RETURN 0
+;すでにずらされてる
+SIF TCVAR:(TCVAR:LOCAL:行為対象):601
+	RETURN 0
+;履いてない
+SIF !TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着
+	RETURN 0
+SIF CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 == 0
+	RETURN 0
+RETURN 1
+
+@COM820(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 舐める
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 0
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:ARG:性行動 = 10
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 50
+SOURCE:(TCVAR:ARG:行為対象):性行動 = 10
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 10
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,0) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 10
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+FOR D,1,CHARANUM
+	SIF D == ARG
+		CONTINUE
+	SIF TCVAR:D:イベント == 1 & T:105
+		TA:ARG:D:6 -= 5
+NEXT
+
+VARSET ARG
+RETURN 1
+
+@COM821(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 胸を触らせる
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:ARG:快Ｂ = 100
+SOURCE:ARG:露出 = 20
+SOURCE:ARG:逸脱 = 30
+SOURCE:ARG:性行動 = 20
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+SOURCE:(TCVAR:ARG:行為対象):性行動 = 20
+SOURCE:(TCVAR:ARG:行為対象):情欲 = 20
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+ENDIF
+CFLAG:ARG:待機時間 += 2
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;同性愛　レズなら戻り値1ゲイなら戻り値2
+IF HETEROSEX(ARG,TCVAR:ARG:行為対象)
+	EXP:ARG:(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+	EXP:(TCVAR:ARG:行為対象):(50 + HETEROSEX(ARG,TCVAR:ARG:行為対象)) += 2
+ENDIF
+FOR D,1,CHARANUM
+	SIF D == ARG
+		CONTINUE
+	SIF TCVAR:D:イベント == 1 & T:105
+		TA:ARG:D:6 -= 5
+NEXT
+
+VARSET ARG
+RETURN 1
+
+@COM822(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 乳首を探る
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 60
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 30
+SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 10
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,5)
+
+;手交経験
+EXP:ARG:手交経験 ++
+CFLAG:ARG:待機時間 += 2
+FOR D,1,CHARANUM
+	SIF D == ARG
+		CONTINUE
+	SIF TCVAR:D:イベント == 1 & T:105
+		TA:ARG:D:6 -= 5
+NEXT
+
+VARSET ARG
+RETURN 1
+
+@COM823(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTL 股間をさする
+;消費体力、气力
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+SOURCE:(TCVAR:ARG:行為対象):露出 = 15
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	SOURCE:(TCVAR:ARG:行為対象):露出 += 5
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 += 10
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ += 20
+	SOURCE:(TCVAR:ARG:行為対象):反感 += 5
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の手の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,2)
+;手交経験
+IF TCVAR:(TCVAR:ARG:行為対象):601
+	EXP:ARG:手交経験 ++
+ENDIF
+CFLAG:ARG:待機時間 += 2
+FOR D,1,CHARANUM
+	SIF D == ARG
+		CONTINUE
+	SIF TCVAR:D:イベント == 1 & T:105
+		TA:ARG:D:6 -= 5
+NEXT
+
+VARSET ARG
+RETURN 1
+

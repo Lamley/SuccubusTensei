@@ -1,0 +1,57 @@
+﻿@COM_ABLE8(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+RETURN GLOBAL_COMABLE(8)
+
+;-------------------------------------------------
+;乳首責め
+;-------------------------------------------------
+@COM8(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 乳首責め(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 30
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 80
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 30
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 10
+SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+SOURCE:(TCVAR:ARG:行為対象):不潔 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 10
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＢ⇔調教者の指の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):5 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):5
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,5)
+
+;手交経験
+EXP:ARG:手交経験 ++
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

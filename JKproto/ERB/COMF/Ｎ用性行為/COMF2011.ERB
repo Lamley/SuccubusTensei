@@ -1,0 +1,69 @@
+﻿;手交する
+@COM_ABLE2011(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(2011)
+
+RETURN 0
+
+;-------------------------------------------------
+;手交する
+;-------------------------------------------------
+@COM2011(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 手交する(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 80
+SOURCE:(TCVAR:ARG:行為対象):露出 = 15
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の手の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,2)
+
+
+
+;手交経験
+EXP:ARG:手交経験 ++
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

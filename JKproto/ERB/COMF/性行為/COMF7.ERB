@@ -1,0 +1,73 @@
+﻿@COM_ABLE7(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(7)
+
+
+;-------------------------------------------------
+;胸爱抚
+;爱抚系コマンド、レベル2
+;-------------------------------------------------
+@COM7(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 胸爱抚(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 5
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+
+SOURCE:ARG:性行動 = 30
+SOURCE:(TCVAR:ARG:行為対象):快Ｂ = 100
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 50
+SOURCE:ARG:性行動 = 60
+SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+SOURCE:(TCVAR:ARG:行為対象):不潔 = 20
+SOURCE:(TCVAR:ARG:行為対象):反感 = 20
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷の胸の汚れがなければ口をつかう（愛液と母乳よごれはＯＫ、脏污无视か助手調教時は問題なし）
+IF STAIN:(TCVAR:ARG:行為対象):5 < 2 || STAIN:(TCVAR:ARG:行為対象):5 == 16 || STAIN:(TCVAR:ARG:行為対象):5 == 17 || TALENT:ARG:汚臭耐性 == 2
+	;調教者のTALENT:善用舌头をみる
+	TIMES SOURCE:(TCVAR:ARG:行為対象):不潔 , 1.40
+	SIF TALENT:ARG:善用舌头
+		TIMES SOURCE:(TCVAR:ARG:行為対象):快Ｂ , 1.40
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += SOURCE:(TCVAR:ARG:行為対象):不潔 / 20
+	;奴隷のＢ⇔調教者の口の汚れが移動
+	STAIN:(TCVAR:ARG:行為対象):5 |= STAIN:ARG:0
+	STAIN:ARG:0 |= STAIN:(TCVAR:ARG:行為対象):5
+ENDIF
+;奴隷のＢ⇔調教者の指の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):5 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):5
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,5)
+
+;手交経験
+EXP:ARG:手交経験 ++
+
+CFLAG:ARG:待機時間 += 2
+
+
+VARSET ARG
+RETURN 1

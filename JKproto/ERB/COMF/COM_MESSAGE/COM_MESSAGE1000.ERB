@@ -1,0 +1,97 @@
+﻿@COM_MESSAGE_1000
+VARSET LOCAL
+SIF M:101 == 1
+	RETURN 0
+IF CFLAG:MASTER:乗車
+	PRINTW 電車に乗った
+ELSE
+	;===============================================================================
+	;通常の移動
+	;===============================================================================
+	PRINTFORML ＜移動＞
+	;--------------------------------------------------------------------------
+	;露出的移動
+	;--------------------------------------------------------------------------
+	PRINTFORMW 开始向目的地移动。
+	;刺激度601以上（>>49氏を参考に）
+	IF BASE:MASTER:刺激度 >= 601
+		;７時～24時まで
+		IF TIME / 60 >= 7 && TIME / 60 <= 24
+			PRINTFORML 是因为谁身上衣服的原因吧？擦肩而过的人们的视线，热切的可怕。
+		ELSE
+			;５時～
+			IF TIME / 60 >= 5
+				PRINTFORM 是早上的说、
+			;０時～５時まで
+			ELSE
+				PRINTFORM 是午夜的说、
+			ENDIF
+			PRINTFORMW 像这样子出门，的确需要很大的勇气啊。
+		ENDIF
+	;内部刺激度601以上
+	ELSEIF BASE:MASTER:内部刺激度 >= 601
+		PRINTFORM 周围人看起来没什么不同，大概从外面看不见衣服下面把。
+		;900（全裸）以上
+		IF BASE:MASTER:内部刺激度 > 900
+			PRINTFORM 全裸真是可耻
+		ELSEIF BASE:MASTER:内部刺激度 >= 801
+			PRINTFORM 穿成这样就像全裸
+		ELSE
+			PRINTFORM 已经露出很多
+		ENDIF
+		PRINTFORMW 的样子。。
+	;--------------------------------------------------------------------------
+	;通常
+	;--------------------------------------------------------------------------
+	ELSE
+		PRINTFORMW 移动到了目的地。
+	ENDIF
+	;--------------------------------------------------------------------------
+	;共通
+	;--------------------------------------------------------------------------
+	;刺激度601以上 or 内部刺激度601以上
+	IF BASE:MASTER:刺激度 >= 601 || BASE:MASTER:内部刺激度 >= 601
+		;PALAM情欲Lv3以上＋（露出癖Lv3以上 or 露出癖Lv5＋害羞）
+		IF PALAM:MASTER:情欲 >= PALAMLV:3 && ((ABL:MASTER:露出癖 >= 3) || (ABL:MASTER:露出癖 >= 5 && TALENT:MASTER:羞恥心 == 1))
+			PRINTFORML 身体感觉疼痛。
+			;自慰经验＋调教自慰经验が20回以上
+			SIF EXP:MASTER:自慰经验 + EXP:MASTER:调教自慰经验 >= 20
+				PRINTFORM 像往常一样
+			;受虐狂 or 受虐属性Lv3以上
+			SIF TALENT:MASTER:受虐狂 || ABL:MASTER:受虐属性 >= 3
+				PRINTFORM 激烈
+			;男性器あり
+			IF TALENT:MASTER:性別 & 2
+				PRINTFORMW 挤压
+			;Ａ经验1以上でかつ、Ｖ经验より多い
+			ELSEIF EXP:MASTER:Ａ经验 >= 1 && EXP:MASTER:Ａ经验 > EXP:MASTER:Ｖ经验
+				PRINTFORM 穿って
+			;Ｖ经验1以上
+			ELSEIF EXP:MASTER:Ｖ经验 >= 1
+				PRINTFORM かき回して
+			ELSE
+				PRINTFORM 弄って
+			ENDIF
+			PRINTFORMW 想要、%CALLNAME:MASTER%细声说。
+			;自慰成瘾Lv3以上
+			IF ABL:MASTER:自慰成瘾 >= 3
+				PRINTFORML …忍不住了啊。
+				PRINTFORMW %CALLNAME:MASTER%放弃了去目的地，开始寻找自慰的地方…
+			ELSE
+				PRINTFORML …忍不住了。
+				PRINTFORMW 身体像火烧一样、赶向目的地…
+			ENDIF
+		ELSE
+			;露出癖Lv3 or 喜欢引人注目 or 不知羞耻
+			IF ABL:MASTER:露出癖 >= 3 || TALENT:MASTER:26 || TALENT:MASTER:33 == -1
+				PRINTFORMW 一点都不介意的走向那个地方。
+			ELSE
+				PRINTFORML …羞耻啊。
+				PRINTFORMW 红着脸，快步走到那个地方…
+			ENDIF
+		ENDIF
+	ENDIF
+	DRAWLINE
+ENDIF
+M:101 = 1
+

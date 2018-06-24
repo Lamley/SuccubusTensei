@@ -1,0 +1,81 @@
+﻿@COM_ABLE2004(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(2004)
+;-------------------------------------------------
+;手指插入
+;-------------------------------------------------
+@COM2004(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 指入れ(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;破瓜抑制
+TCVAR:(TCVAR:ARG:行為対象):破瓜抑制 = 1
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+
+SOURCE:ARG:性行動 = 30
+IF !TALENT:(TCVAR:ARG:行為対象):处女
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 120
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 15
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 20
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 20
+;V経験が0の時はV経験を伴わない物に派生
+;Vの珠は入らないが、快Vが高いと慣らしてあるため处女喪失時に影響
+ELSE
+	SOURCE:(TCVAR:ARG:行為対象):快Ｖ = 60
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 10
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 30
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 30
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+ENDIF
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+IF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 20
+	;处女
+	SIF TALENT:(TCVAR:ARG:行為対象):处女
+		SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 10
+ENDIF
+;Vへの痛苦
+CALL PAIN_CHECK_V(TCVAR:ARG:行為対象)
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷の膣内⇔調教者の指の汚れが移動
+	STAIN:(TCVAR:ARG:行為対象):6 |= STAIN:ARG:1
+	STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):6
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+
+;手交経験
+EXP:ARG:手交経験 ++
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

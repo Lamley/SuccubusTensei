@@ -1,0 +1,65 @@
+﻿@COM_ABLE1001(ARG)
+SIF !(CFLAG:MASTER:現在地区 == 1 && CFLAG:MASTER:現在位置 == 2) || D:101 || TIME < 360 || TIME >= 960
+	RETURN 0
+RETURN GLOBAL_COMABLE(1001)
+
+
+@COM1001(ARG)
+PRINTL 
+PRINTFORML %"=" * 107%
+;授業を受ける
+
+IF TIME < 750
+	CFLAG:MASTER:待機時間 = 750 - TIME
+	IF RAND(3) != 0
+		TFLAG:COM用変数 = 0
+		EXP:ARG:学習経験 += CFLAG:ARG:待機時間 * 4 / 60 / 5
+		BASE:ARG:学习成绩 = MIN(BASE:ARG:学习成绩 + CFLAG:ARG:待機時間 / 6,MAXBASE:ARG:学习成绩)
+		DOWNBASE:ARG:体力 -= CFLAG:ARG:待機時間 * 20 / 60
+		DOWNBASE:ARG:气力 += CFLAG:ARG:待機時間 * 40 / 60
+		DOWNBASE:ARG:ストレス -= CFLAG:ARG:待機時間 * 40 / 60
+		MAXBASE:ARG:气力 += CFLAG:ARG:待機時間 * 3 / 60
+
+	ELSE
+		TFLAG:COM用変数 = 1
+		EXP:ARG:運動経験 += CFLAG:ARG:待機時間 * 2 / 60
+		DOWNBASE:ARG:体力 += CFLAG:ARG:待機時間 * 40 / 60
+		DOWNBASE:ARG:气力 -= CFLAG:ARG:待機時間 * 20 / 60
+		DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 50 / 60
+		MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+
+	ENDIF
+	SETBIT CFLAG:MASTER:出席,0
+ELSE
+	CFLAG:MASTER:待機時間 = 960 - TIME
+	IF RAND(3) != 0
+		TFLAG:COM用変数 = 0
+		EXP:ARG:学習経験 += CFLAG:ARG:待機時間 * 4 / 60 / 5
+		BASE:ARG:学习成绩 = MIN(BASE:ARG:学习成绩 + CFLAG:ARG:待機時間 / 6,MAXBASE:ARG:学习成绩)
+		DOWNBASE:ARG:体力 -= CFLAG:ARG:待機時間 * 20 / 60
+		DOWNBASE:ARG:气力 += CFLAG:ARG:待機時間 * 40 / 60
+		DOWNBASE:ARG:ストレス -= CFLAG:ARG:待機時間 * 40 / 60
+		MAXBASE:ARG:气力 += CFLAG:ARG:待機時間 * 3 / 60
+	ELSE
+		TFLAG:COM用変数 = 1
+		EXP:ARG:運動経験 += CFLAG:ARG:待機時間 * 2 / 60
+		DOWNBASE:ARG:体力 += CFLAG:ARG:待機時間 * 40 / 60
+		DOWNBASE:ARG:气力 -= CFLAG:ARG:待機時間 * 20 / 60
+		DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 50 / 60
+		MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+
+	ENDIF
+
+	SETBIT CFLAG:MASTER:出席,1
+ENDIF
+J:151 = 1
+M:101 = 0
+RETURN 1
+
+
+@COM_RESULT1001
+
+
+
+
+

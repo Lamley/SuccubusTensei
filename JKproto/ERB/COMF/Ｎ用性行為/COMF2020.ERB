@@ -1,0 +1,149 @@
+﻿@COM_ABLE2020(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !CAN_COM2020(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+;口塞球装着時は不可
+SIF TEQUIP:LOCAL:口塞球
+	RETURN 0
+;相手が口塞球装着時は可（不可にしたければコメント外す）
+;;;SIF TEQUIP:(TCVAR:LOCAL:行為対象):口塞球
+;;;	RETURN 0
+
+RETURN GLOBAL_COMABLE(2020)
+;-------------------------------------------------
+;キス
+;-------------------------------------------------
+@COM2020(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML キス(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;;;口上呼び出し（どっちかが1の場合のみ）
+SIF ARG == 1 || (TCVAR:ARG:行為対象) == 1
+	PRINTL
+	CALL NMESSAGE_2020(ARG,TCVAR:ARG:行為対象)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 0
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 20
+
+SOURCE:ARG:性行動 = 10
+SOURCE:(TCVAR:ARG:行為対象):情愛 = 50
+SOURCE:(TCVAR:ARG:行為対象):性行動 = 10
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 10
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+SOURCE:(TCVAR:ARG:行為対象):反感 = 10
+
+SOURCE:(TCVAR:ARG:行為対象):不潔 = STATIN_POINT(ARG,0) * (2 - TALENT:(TCVAR:ARG:行為対象):汚臭耐性) * 5 + 10
+
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 10
+
+;舌を使う調教では、調教者の善用舌头によって、快感のソース増加
+SIF TALENT:ARG:善用舌头
+	TIMES SOURCE:(TCVAR:ARG:行為対象):情愛 , 1.50
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷の口⇔調教者の口の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):0 |= STAIN:ARG:0
+STAIN:ARG:0 |= STAIN:(TCVAR:ARG:行為対象):0
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,3)
+
+
+
+EXP:(TCVAR:ARG:行為対象):キス経験 ++
+EXP:ARG:キス経験 ++
+CFLAG:ARG:待機時間 += 2
+
+;;;従順4以上で愛情に+1
+SIF ABL:(TCVAR:ARG:行為対象):10 >= 4
+	TA:(TCVAR:ARG:行為対象):ARG:2 += 1
+
+
+VARSET ARG
+
+RETURN 1
+
+@CAN_COM2020(ARG,ARG:1)
+#FUNCTION
+;;;VARSET LOCAL
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+
+A = 0
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:(TCVAR:ARG:行為対象):欲望
+	A += ABL:(ARG:1):欲望 * 1
+ENDIF
+;ABL:侍奉精神
+IF ABL:(ARG:1):侍奉精神
+	A += ABL:(ARG:1):侍奉精神 * 4
+ENDIF
+
+IF MARK:(ARG:1):快乐刻印
+	A += MARK:(ARG:1):快乐刻印 * 2
+ENDIF
+
+;PALAM:情欲
+IF GETPALAMLV(PALAM:(ARG:1):情欲,5)
+	A += GETPALAMLV(PALAM:(ARG:1):情欲,5) * 1
+ENDIF
+
+;害羞
+IF TALENT:(ARG:1):羞恥心 > 0
+	A -= 1
+ENDIF
+;汚臭钝感
+IF TALENT:(ARG:1):汚臭耐性 > 0
+	A += 1
+ENDIF
+;汚臭敏感
+IF TALENT:(ARG:1):汚臭耐性 < 0
+	A -= 1
+ENDIF
+;献身
+IF TALENT:(ARG:1):献身
+	A += 6
+ENDIF
+;否定快感（淫乱、娼妇で無効）
+IF TALENT:(ARG:1):快感応答 < 0 && !TALENT:(ARG:1):淫乱
+	A -= 1
+ENDIF
+
+;キスでは汚れがそれほど影響しない
+
+;汚れあり
+IF STATIN_POINT(ARG,0)
+	A -= STATIN_POINT(ARG,0) * (2 - TALENT:(ARG:1):汚臭耐性) / 4
+ENDIF
+
+
+;実行できない
+SIF A < 15
+	RETURNF 0
+RETURNF 1
+

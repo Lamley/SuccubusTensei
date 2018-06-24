@@ -1,0 +1,141 @@
+﻿;===============================================================================
+;反抗するか否か
+;===============================================================================
+;--------------------------------------------------------------------------
+;痴漢を探す
+;　この判定に成功することで、「強気に反抗する」が使用可能に。痴漢を見付けたらコマンド消滅。
+;　成否に関わらず、痴漢側に無条件で一手与える。
+;--------------------------------------------------------------------------
+@COM_MESSAGE_901
+
+PRINTFORML ＜痴漢を探す＞
+PRINTFORM 身体感觉到了奇怪的触感
+;PALAM情欲Lv3以上
+IF PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORM 呼吸乱了。
+ELSE
+	PRINTFORM 感到不快。
+ENDIF
+PRINTFORML 一边寻找着痴汉。
+;一定確率で成功。混み具合で変動とか？　とりあえず、テスト用に1/2で固定。
+IF RAND:2 == 0
+	T:105 = 1
+	PRINTFORM …显然、
+	IF RAND:3 == 0
+		PRINTFORM 在背后 
+	ELSEIF RAND:3 == 1
+		PRINTFORM 站在旁边
+	ELSE
+		PRINTFORM 就在眼前
+	ENDIF
+	IF TALENT:(TCVAR:MASTER:行為対象):学生
+		IF NO:(TCVAR:MASTER:行為対象) == 4
+			PRINTFORM 是其他学校的学生。
+		ELSE
+			PRINTFORM 穿着自己学校的制服，
+			IF TALENT:(TCVAR:MASTER:行為対象):性別 & 1
+				PRINTFORM 少女
+			ELSE
+				PRINTFORM 少年
+			ENDIF
+		ENDIF
+	ELSE
+		PRINTFORM %CALLNAME:(TCVAR:MASTER:行為対象)%
+	ENDIF
+	;同性の場合。女性の痴漢の場合は「痴女」にするべきかもですが、イメージ的に違う気がしないでもなく。
+	PRINTFORMW が、%CALLNAME:MASTER%的身体被痴汉触摸了。
+	;主人公の家族の場合
+	IF NO:(TCVAR:MASTER:行為対象) >= 10 && NO:(TCVAR:MASTER:行為対象) <= 15
+		PRINTFORM よく見るとそれは、%CALLNAME:MASTER%の
+		IF NO:(TCVAR:MASTER:行為対象) == 10
+			PRINTFORMW …
+		ELSEIF NO:(TCVAR:MASTER:行為対象) == 11
+			PRINTFORMW …
+		ELSEIF NO:(TCVAR:MASTER:行為対象) == 12
+			PRINTFORMW …
+		ELSEIF NO:(TCVAR:MASTER:行為対象) == 13
+			PRINTFORMW 妹妹妹妹だ…
+		ELSEIF NO:(TCVAR:MASTER:行為対象) == 14
+			PRINTFORMW …
+		ELSEIF NO:(TCVAR:MASTER:行為対象) == 15
+			PRINTFORMW 姐姐だ…
+		ENDIF
+	ELSEIF (TALENT:MASTER:性別 & 1 && TALENT:(TCVAR:MASTER:行為対象):性別 & 1) || (TALENT:MASTER:性別 == 3 && TALENT:(TCVAR:MASTER:行為対象):性別 == 3)
+		PRINTFORMW …真罕见，居然是同性的痴汉。
+	ENDIF
+	CFLAG:(TCVAR:MASTER:行為対象):痴漢発見 = 1
+ELSE
+	LOCAL = RAND:3
+	IF LOCAL == 0
+		PRINTFORMW 但是，地铁里人群太混乱，不知道是谁…
+	ELSEIF LOCAL == 1
+		PRINTFORMW 是那个女人吗，不，好像认错人了。
+	ELSE
+		PRINTFORMW 啊！不..好像不太对。
+	ENDIF
+ENDIF
+;--------------------------------------------------------------------------
+;我慢する
+;　黙って痴漢されるよりも性的なPALAM上昇低め、利点は時間経過のみ
+;--------------------------------------------------------------------------
+@COM_MESSAGE_902
+
+PRINTFORML ＜忍耐＞
+LOCAL = RAND:3
+IF LOCAL == 0
+	PRINTFORML …不反抗的话，行动也许会更过分啊。
+ELSEIF LOCAL == 1
+	PRINTFORML 相比反抗，忍耐或许会更好一点也说不定…
+ELSE
+	PRINTFORML 现在，赶快到达目的地啊…
+ENDIF
+PRINTFORM %CALLNAME:MASTER%は
+;胆怯 or 老实
+IF TALENT:MASTER:度胸 == -1 || TALENT:MASTER:応答 == -1
+	LOCAL = RAND:2
+	IF LOCAL == 0
+		PRINTFORM 低着头、咬着嘴唇
+	ELSE
+		PRINTFORM 眼角流下泪水、
+	ENDIF
+ELSE
+	LOCAL = RAND:2
+	IF LOCAL == 0
+		PRINTFORM 咬牙切齿的、
+	ELSE
+		PRINTFORM 留下了屈辱的眼泪、
+	ENDIF
+ENDIF
+PRINTFORMW 痴汉的行为还要继续忍受下去。
+;--------------------------------------------------------------------------
+;強気に反抗する（「痴漢を探す」に成功する必要あり。[胆怯][老实]では実行不可）
+;　反抗成功率・高、成否に関わらず耻情PALAM増加
+;--------------------------------------------------------------------------
+@COM_MESSAGE_903
+
+PRINTFORML ＜强烈的反抗＞
+PRINTFORM %CALLNAME:MASTER%は
+LOCAL = RAND:3
+IF LOCAL == 0
+	PRINTFORMW 立即回头抓住了惊讶的痴汉的手。
+ELSEIF LOCAL == 1
+	PRINTFORMW 沉默的用脚后跟在痴汉脚上踩去。
+ELSE
+	PRINTFORMW 对痴汉瞪着眼，发出四周都能听清楚的质问。
+ENDIF
+
+
+;--------------------------------------------------------------------------
+;控えめに反抗する
+;　反抗成功率・低、PALAM変動なし
+;--------------------------------------------------------------------------
+@COM_MESSAGE_904
+
+PRINTFORML ＜保守的反抗＞
+PRINTFORM %CALLNAME:MASTER%は
+LOCAL = RAND:2
+IF LOCAL == 0
+	PRINTFORMW 按住痴汉的手，身体也跟着扭动来反抗。
+ELSE
+	PRINTFORMW 用周围人勉强能听到的声音制止痴汉。
+ENDIF

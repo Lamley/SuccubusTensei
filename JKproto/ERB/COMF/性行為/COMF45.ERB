@@ -1,0 +1,96 @@
+﻿;肛塞
+@COM_ABLE45(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !EQUIP:LOCAL:肛塞
+	RETURN 0
+;道具男性器反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 79
+	RETURN 0
+;道具反抗時は取り敢えずスルー
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):アナル == 77
+	RETURN 0
+;道具のみ反抗時CFLAGは取り敢えずスルー
+SIF CFLAG:(TCVAR:LOCAL:行為対象):ＡオンリーＰ == 1
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(45)
+
+;-------------------------------------------------
+;肛塞
+;-------------------------------------------------
+@COM45(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 肛塞(%CALLNAME:ARG%)
+
+;男性器のみ反抗時はCFLAG立て
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == 78
+	CFLAG:(TCVAR:ARG:行為対象):ＡオンリーＴ = 1
+ENDIF
+
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル != 60 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 61 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 62
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 60
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 150
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ = 250
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 250
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 50
+	SOURCE:(TCVAR:ARG:行為対象):屈従 = 50
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 50
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 200
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 40
+	
+	SOURCE:(TCVAR:ARG:行為対象):快Ａ = 40
+	SOURCE:(TCVAR:ARG:行為対象):痛苦 = 40
+	SOURCE:(TCVAR:ARG:行為対象):露出 = 20
+	SOURCE:(TCVAR:ARG:行為対象):屈従 = 10
+	SOURCE:(TCVAR:ARG:行為対象):逸脱 = 10
+	SOURCE:(TCVAR:ARG:行為対象):反感 = 50
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル != 60 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 61 && TEQUIP:(TCVAR:ARG:行為対象):アナル != 62
+	SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+		SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 70
+
+	;Aへの痛苦は先に処理しておく
+	CALL PAIN_CHECK_A(TCVAR:ARG:行為対象)
+ENDIF
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+STAIN:(TCVAR:ARG:行為対象):7 |= STAIN:(TCVAR:ARG:行為対象):4
+STAIN:(TCVAR:ARG:行為対象):4 |= STAIN:(TCVAR:ARG:行為対象):7
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+;Ａ经验
+;EXP:(TCVAR:ARG:行為対象):Ａ经验 ++
+
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+IF TEQUIP:(TCVAR:ARG:行為対象):アナル == 60 || TEQUIP:(TCVAR:ARG:行為対象):アナル == 61 || TEQUIP:(TCVAR:ARG:行為対象):アナル == 62
+	TEQUIP:(TCVAR:ARG:行為対象):アナル = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):アナル = 60
+ENDIF
+EXP:ARG:道具使用経験 ++
+VARSET ARG
+RETURN 1

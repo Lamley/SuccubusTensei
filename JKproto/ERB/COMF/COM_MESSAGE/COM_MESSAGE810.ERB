@@ -1,0 +1,524 @@
+﻿
+;===============================================================================
+;上半身系コマンド
+;　共通：主人公体力1000以下or主人公气力500以下or主人公興奮度500以上＋痴漢興奮度500以上で行動変化
+;===============================================================================
+;--------------------------------------------------------------------------
+;胸を揉む（绝壁だと実行不可能、とか面白いでしょうかw）
+;--------------------------------------------------------------------------
+@COM_MESSAGE_810
+
+PRINTFORML ＜胸を揉む＞
+PRINTFORM 痴汉的手
+;上半身下着あり
+IF TEQUIP:MASTER:上半身下着
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 潜入了内衣
+	ELSE
+		PRINTFORM 、从内衣上
+	ENDIF
+;上半身上衣あり
+ELSEIF TEQUIP:MASTER:上半身上衣
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 钻进了衣服、
+	ELSE
+		PRINTFORM 、从衣服上面
+	ENDIF
+ENDIF
+PRINTFORM 在%CALLNAME:MASTER%的
+;绝壁 or (男人＋並乳)
+IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+	PRINTFORML 平坦的胸上抚摸着。
+ELSE
+	;巨乳 or 爆乳
+	IF TALENT:MASTER:胸围サイズ >= 1
+		PRINTFORM 豊乳
+
+	ELSE
+		SIF TALENT:MASTER:胸围サイズ == 1
+			PRINTFORM 小巧的
+		PRINTFORM 乳房
+	ENDIF
+	PRINTFORML 上揉捏着。
+ENDIF
+PRINTFORM 对于那个可恶的动作、%CALLNAME:MASTER%
+;PALAM情欲Lv3以上
+IF PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORMW 很快产生了快感。
+;PALAM情欲Lv1以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:1
+	PRINTFORMW 呼吸有一点点急促了…
+ELSE
+	PRINTFORMW 只感到不快而已。
+ENDIF
+;--------------------------------------------------------------------------
+;乳首を摘む
+;--------------------------------------------------------------------------
+@COM_MESSAGE_811
+
+PRINTFORML ＜乳首を摘む＞
+PRINTFORM 痴漢の
+;上半身下着あり
+IF TEQUIP:MASTER:上半身下着
+	PRINTFORM 手钻进内衣，那手指
+;上半身上衣あり
+ELSEIF TEQUIP:MASTER:上半身上衣
+	PRINTFORM 手钻进衣服，那手指
+ELSE
+	PRINTFORM 手指、
+ENDIF
+PRINTFORM 捏住了%CALLNAME:MASTER%的
+;绝壁 or (男人＋並乳)
+IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+	PRINTFORM 平坦的胸部。
+;巨乳 or 爆乳
+ELSEIF TALENT:MASTER:胸围サイズ >= 1
+	PRINTFORM 丰满乳房的乳头，
+ELSE
+	SIF TALENT:MASTER:胸围サイズ == 1
+		PRINTFORM 小巧
+	PRINTFORM 乳房的乳头，
+ENDIF
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORM 乳头已经硬了。
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORM 乳头正在变硬。
+ELSE
+	PRINTFORM 乳头还柔软着。
+ENDIF
+PRINTFORML 乳头被捏着，拉扯着。
+PRINTFORM 就这样被揉捏、%CALLNAME:MASTER%
+;PALAM情欲Lv3以上
+IF PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORM 不由得
+	;女性器あり
+	SIF TALENT:MASTER:性別 & 1
+		PRINTFORM 发出了可爱的
+	PRINTFORMW 呻吟。
+;PALAM情欲Lv1以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:1
+	PRINTFORMW 的呼吸变得急促了…
+ELSE
+	PRINTFORMW 感觉身体不适而十分苦闷。
+ENDIF
+;--------------------------------------------------------------------------
+;乳头跳蛋
+;--------------------------------------------------------------------------
+@COM_MESSAGE_812
+
+PRINTFORML ＜乳头跳蛋＞
+;上半身上衣あり
+IF TEQUIP:MASTER:上半身上衣
+	PRINTFORM 服の中に潜り込んだ
+ENDIF
+PRINTFORML 痴漢的手上、握着震动的跳蛋。
+PRINTFORM 它
+;上半身下着なし or PALAM情欲Lv3以上
+IF TEQUIP:MASTER:上半身下着 == 0 || PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORM 直接对着
+;上半身下着あり
+ELSEIF TEQUIP:MASTER:上半身下着
+	PRINTFORM 隔着内衣对着
+ENDIF
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORM 硬了的
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORM 正在变硬的
+ELSE
+	PRINTFORM 柔软的
+ENDIF
+PRINTFORM 乳头压了上去、%CALLNAME:MASTER%
+;PALAM情欲Lv3以上
+IF PALAM:MASTER:情欲 >= PALAMLV:3
+	PRINTFORM 不由得
+	;女性器あり
+	SIF TALENT:MASTER:性別 & 1
+		PRINTFORM 发出了可爱的
+	PRINTFORMW 呻吟。
+;PALAM情欲Lv1以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:1
+	PRINTFORMW 的呼吸变得急促起来…
+ELSE
+	PRINTFORMW 因为不快而皱起了眉。
+ENDIF
+
+
+;===============================================================================
+;下半身系コマンド
+;===============================================================================
+;--------------------------------------------------------------------------
+;お尻を触る
+;--------------------------------------------------------------------------
+@COM_MESSAGE_813
+
+PRINTFORML ＜お尻を触る＞
+PRINTFORM 痴汉用惯用的手法
+;PALAM情欲Lv3未満
+SIF PALAM:MASTER:情欲 < PALAMLV:3
+	PRINTFORM 、
+;裙子類
+IF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 卷起裙子、
+		;下半身下着あり
+		IF TEQUIP:MASTER:下半身下着
+			;PALAM润滑Lv2以上＋女性器あり
+			IF PALAM:MASTER:润滑 >= PALAMLV:2 && TALENT:MASTER:性別 & 1
+				;PALAM润滑Lv4以上
+				SIF PALAM:MASTER:润滑 >= PALAMLV:4
+					PRINTFORM 从湿透了的
+				PRINTFORM 从湿的
+			ENDIF
+			;PALAM情欲Lv3以上
+			IF PALAM:MASTER:情欲 >= PALAMLV:3
+				PRINTFORM 内衣中手把手伸了进去、
+			ELSE
+				PRINTFORM 内衣上面
+			ENDIF
+		ELSE
+			PRINTFORM 直接
+		ENDIF
+	ELSE
+		PRINTFORM 隔着裙子
+	ENDIF
+;裤子類
+ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 从%ITEMNAME:(TEQUIP:MASTER:下半身下着)%之中把手伸了进去、
+	ELSE
+		PRINTFORM 从%ITEMNAME:(TEQUIP:MASTER:下半身下着)%的上面
+	ENDIF
+;下半身下着あり
+ELSEIF TEQUIP:MASTER:下半身下着
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 从内衣之中把手伸了进去、
+	ELSE
+		PRINTFORM 在内衣上面
+	ENDIF
+ENDIF
+PRINTFORML 来回抚摸着%CALLNAME:MASTER%的屁股。
+PRINTFORM その動きは次第に大胆さを増し、%CALLNAME:MASTER%
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORMW 快乐的扭动着身体。
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORMW 的性欲在上升…
+ELSE
+	PRINTFORMW 不快的蹙着眉毛。
+ENDIF
+;--------------------------------------------------------------------------
+;股間を触る
+;--------------------------------------------------------------------------
+@COM_MESSAGE_814
+
+PRINTFORML ＜股間を触る＞
+PRINTFORM 痴汉用惯用的手法
+;PALAM情欲Lv3未満
+SIF PALAM:MASTER:情欲 < PALAMLV:3
+	PRINTFORM 、
+;裙子類
+IF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 卷起裙子、
+		;下半身下着あり
+		IF TEQUIP:MASTER:下半身下着
+			;PALAM润滑Lv2以上＋女性器あり
+			IF PALAM:MASTER:润滑 >= PALAMLV:2 && TALENT:MASTER:性別 & 1
+				;PALAM润滑Lv4以上
+				SIF PALAM:MASTER:润滑 >= PALAMLV:4
+					PRINTFORM 从湿透的
+				PRINTFORM 从湿了的
+			ENDIF
+			;痴漢興奮度800以上
+			IF BASE:(TCVAR:MASTER:行為対象):興奮度 >= 800
+				PRINTFORM 内衣下面伸进了手、
+			ELSE
+				PRINTFORM 内衣上
+			ENDIF
+		ELSE
+			PRINTFORM 直接
+		ENDIF
+	ELSE
+		PRINTFORM 隔着裙子
+	ENDIF
+;裤子類
+ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 从%ITEMNAME:(TEQUIP:MASTER:下半身下着)%的下面把手伸了进去、
+	ELSE
+		PRINTFORM 在%ITEMNAME:(TEQUIP:MASTER:下半身下着)%的上面
+	ENDIF
+;下半身下着あり
+ELSEIF TEQUIP:MASTER:下半身下着
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 从内衣把手伸了进去、
+	ELSE
+		PRINTFORM 在内衣上
+	ENDIF
+ENDIF
+PRINTFORM 对%CALLNAME:MASTER%の的
+;男性器あり
+IF TALENT:MASTER:性別 & 2
+	;PALAM情欲Lv3以上
+	SIF PALAM:MASTER:情欲 >= PALAMLV:3
+		PRINTFORM 完全勃起的
+	PRINTFORM 阴茎
+ELSE
+	;PALAM情欲Lv3以上
+	SIF PALAM:MASTER:情欲 >= PALAMLV:3
+		PRINTFORM 发情了的
+	;矮小体型以下＋贫乳以下
+	IF TALENT:MASTER:体型 <= -1 && TALENT:MASTER:胸围サイズ <= -1
+		PRINTFORM 秘缝
+	ELSE
+		PRINTFORM 秘唇
+	ENDIF
+ENDIF
+PRINTFORML 实施着爱抚。
+PRINTFORM 敏感部位受到了刺激、%CALLNAME:MASTER%
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORMW 扭动着肢体腰身。
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORMW 的性欲逐步提高着…
+ELSE
+	PRINTFORMW 感到非常厌恶…
+ENDIF
+;--------------------------------------------------------------------------
+;自慰棒を弄る
+;　女性器あり＋裤子類を装備していない＋事前に自慰棒装備時のみ実行可能
+;--------------------------------------------------------------------------
+@COM_MESSAGE_815
+
+PRINTFORML ＜自慰棒を弄る＞
+PRINTFORM %CALLNAME:MASTER%的下体被伸入了震动棒
+;裙子類
+SIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+	PRINTFORM 潜入裙子中的
+PRINTFORM 痴漢的手
+;下半身下着あり
+IF TEQUIP:MASTER:下半身下着
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 、伸进了内衣
+	ELSE
+		PRINTFORM 、隔着内衣
+	ENDIF
+ENDIF
+PRINTFORML 抓住震动棒。
+PRINTFORM 并将它固定在%CALLNAME:MASTER%下体间、此时下体
+;PALAM润滑Lv4以上
+IF PALAM:MASTER:润滑 >= PALAMLV:4
+	PRINTFORM 好像流出了的什么的样子。
+;PALAM润滑Lv2以上
+ELSEIF PALAM:MASTER:润滑 >= PALAMLV:2
+	PRINTFORM 爱液分泌了。
+ELSE
+	PRINTFORM 还不太湿。
+ENDIF
+PRINTFORML 下体的自慰棒被抽出一点后，又狠狠地刺了进去。
+PRINTFORM 感受到强有力的抽动、%CALLNAME:MASTER%
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORMW 膝盖微微颤抖着…
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORMW 身体出现了强烈的反应…
+ELSE
+	PRINTFORMW 感到很痛苦…
+ENDIF
+;--------------------------------------------------------------------------
+;肛塞を弄る
+;　女性器あり＋裤子類を装備していない＋事前に肛塞装備時のみ実行可能
+;--------------------------------------------------------------------------
+@COM_MESSAGE_816
+
+PRINTFORML ＜肛塞を弄る＞
+PRINTFORM %CALLNAME:MASTER%的屁股被插入了自慰棒、
+;裙子類
+SIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+	PRINTFORM 潜入裙子的
+PRINTFORM 痴漢的手
+;下半身下着あり
+IF TEQUIP:MASTER:下半身下着
+	IF (BASE:MASTER:体力 <= 1000 || BASE:MASTER:气力 <= 500 || BASE:MASTER:興奮度 >= 500) && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 、越过内衣
+	ELSE
+		PRINTFORM 、隔着内衣
+	ENDIF
+ENDIF
+PRINTFORML 抓住了震动棒。
+PRINTFORM 并将它固定在%CALLNAME:MASTER%下体间、此时下体
+;PALAM润滑Lv4以上＋女性器あり
+IF PALAM:MASTER:润滑 >= PALAMLV:4 && TALENT:MASTER:性別 & 1
+	PRINTFORM 好像流出了的什么的样子。
+;PALAM润滑Lv2以上
+ELSEIF PALAM:MASTER:润滑 >= PALAMLV:2
+	;女性器あり
+	SIF TALENT:MASTER:性別 & 1
+		PRINTFORM 爱液和
+	PRINTFORM 肠液分泌着。
+ELSE
+	PRINTFORM 还是干的。
+ENDIF
+PRINTFORML 下体的自慰棒被抽出一点后，又狠狠地刺了进去。
+PRINTFORM 感受到这强力的抽送、%CALLNAME:MASTER%
+;PALAM情欲Lv4以上
+IF PALAM:MASTER:情欲 >= PALAMLV:4
+	PRINTFORMW 膝盖微微地颤抖着…
+;PALAM情欲Lv2以上
+ELSEIF PALAM:MASTER:情欲 >= PALAMLV:2
+	PRINTFORMW 身体起了强烈的反应…
+ELSE
+	PRINTFORMW 感到十分痛苦…
+ENDIF
+;--------------------------------------------------------------------------
+;下着をずらす
+;--------------------------------------------------------------------------
+@COM_MESSAGE_817(ARG)
+IF T:102 == 0
+	IF T:104
+		ARG = (TCVAR:1:行為対象)
+	ELSE
+		ARG = 1
+	ENDIF
+	PRINTFORML ＜下着をずらす＞
+	PRINTFORM 痴汉用惯用的手法
+;PALAM情欲Lv3未満
+	SIF PALAM:(TCVAR:ARG:行為対象):情欲 < PALAMLV:3
+		PRINTFORM 、
+;裙子類
+	IF TEQUIP:(TCVAR:ARG:行為対象):下半身上衣 <= 274 && TEQUIP:(TCVAR:ARG:行為対象):下半身上衣 != 0
+		PRINTFORM 卷起裙子、
+	;PALAM润滑Lv2以上＋女性器あり
+		IF PALAM:(TCVAR:ARG:行為対象):润滑 >= PALAMLV:2 && TALENT:(TCVAR:ARG:行為対象):性別 & 1
+		;PALAM润滑Lv4以上
+			SIF PALAM:(TCVAR:ARG:行為対象):润滑 >= PALAMLV:4
+				PRINTFORM 湿透了的
+			PRINTFORM 湿的
+		ENDIF
+	;痴漢興奮度800以上
+		IF BASE:(TCVAR:(TCVAR:ARG:行為対象):行為対象):興奮度 >= 800
+			PRINTFORM 从内衣中把手伸了进去、
+		ELSE
+			PRINTFORM 将内衣用力拉扯着、
+		ENDIF
+;裤子類
+	ELSEIF TEQUIP:(TCVAR:ARG:行為対象):下半身上衣 >= 275
+		PRINTFORM %ITEMNAME:(TEQUIP:(TCVAR:ARG:行為対象):下半身下着)%をずらし、下着に手をかけ、
+;下半身下着あり
+	ELSEIF TEQUIP:(TCVAR:ARG:行為対象):下半身下着
+		IF (BASE:(TCVAR:ARG:行為対象):体力 <= 1000 || BASE:(TCVAR:ARG:行為対象):气力 <= 500 || BASE:(TCVAR:ARG:行為対象):興奮度 >= 500) && BASE:(TCVAR:(TCVAR:ARG:行為対象):行為対象):興奮度 >= 500
+			PRINTFORM 从内衣中把手伸了进去、使
+		ELSE
+			PRINTFORM 将内衣用力拉扯着、使
+		ENDIF
+	ENDIF
+	PRINTFORM %CALLNAME:(TCVAR:ARG:行為対象)%的
+;男性器あり
+	IF TALENT:(TCVAR:ARG:行為対象):性別 & 2
+	;PALAM情欲Lv3以上
+		SIF PALAM:(TCVAR:ARG:行為対象):情欲 >= PALAMLV:3
+			PRINTFORM 完全勃起了的
+		PRINTFORM 阴茎
+	ELSE
+	;PALAM情欲Lv3以上
+		SIF PALAM:(TCVAR:ARG:行為対象):情欲 >= PALAMLV:3
+			PRINTFORM 发情的
+	;矮小体型以下＋贫乳以下
+		IF TALENT:(TCVAR:ARG:行為対象):体型 <= -1 && TALENT:(TCVAR:ARG:行為対象):胸围サイズ <= -1
+			PRINTFORM 秘缝
+		ELSE
+			PRINTFORM 秘唇
+		ENDIF
+	ENDIF
+	PRINTFORML 露了出来。
+	PRINTFORM 想象着之后会发生的事、%CALLNAME:(TCVAR:ARG:行為対象)%
+	IF T:101 >= 1
+		PRINTFORMW 瞪着は%CALLNAME:ARG%。
+;PALAM情欲Lv4以上
+	ELSEIF PALAM:(TCVAR:ARG:行為対象):情欲 >= PALAMLV:4
+		PRINTFORMW 左右挥舞着肢体。
+;PALAM情欲Lv2以上
+	ELSEIF PALAM:(TCVAR:ARG:行為対象):情欲 >= PALAMLV:2
+		PRINTFORMW 心中的不安感不断提升…
+	ELSE
+		PRINTFORMW 感到不安…
+	ENDIF
+ENDIF
+;--------------------------------------------------------------------------
+;挿入
+;　女性器あり＋下着無しまたは下着ずらされてる場合可能
+;--------------------------------------------------------------------------
+@COM_MESSAGE_818(ARG)
+
+IF T:102 == 0
+	IF T:104
+		ARG = (TCVAR:1:行為対象)
+	ELSE
+		ARG = 1
+	ENDIF
+	PRINTFORML ＜挿入＞
+	IF !GETBIT(TALENT:ARG:2,1)
+		PRINTFORM %CALLNAME:ARG%戴着的捆绑式的假阴茎、挥入了
+	ELSE
+		PRINTFORM %CALLNAME:ARG%勃起的阴茎，挥入了
+	ENDIF
+	PRINTFORM %CALLNAME:(TCVAR:ARG:行為対象)%的阴道、
+	IF ((BASE:(TCVAR:ARG:行為対象):体力 <= 1000 || BASE:(TCVAR:ARG:行為対象):气力 <= 500 || BASE:(TCVAR:ARG:行為対象):興奮度 >= 500) && BASE:ARG:興奮度 >= 500) || T:101 >= 2
+		PRINTFORM 一口气
+	ELSE
+		PRINTFORM 慢慢的
+	ENDIF
+	PRINTFORM 进入了。
+;处女
+	PRINTFORM %CALLNAME:(TCVAR:ARG:行為対象)%
+	IF TALENT:(TCVAR:ARG:行為対象):处女 == 1
+		PRINTFORM 破处的痛苦使脸庞扭曲着、
+	ELSE
+		PRINTFORM 感受着侵犯的行为
+	ENDIF
+	PRINTFORMW 身体和膝盖颤抖起来…
+ENDIF
+
+;--------------------------------------------------------------------------
+;アナル挿入
+;　女性器あり＋下着無しまたは下着ずらされてる場合可能
+;--------------------------------------------------------------------------
+@COM_MESSAGE_819(ARG)
+
+IF T:102 == 0
+	IF T:104
+		ARG = (TCVAR:1:行為対象)
+	ELSE
+		ARG = 1
+	ENDIF
+	PRINTFORML ＜アナル挿入＞
+	IF !GETBIT(TALENT:ARG:2,1)
+		PRINTFORM %CALLNAME:ARG%戴着的捆绑式的假阴茎、挥入了、
+	ELSE
+		PRINTFORM %CALLNAME:ARG%勃起的阴茎，挥入了
+	ENDIF
+	PRINTFORM %CALLNAME:(TCVAR:ARG:行為対象)%的后庭。
+	IF ((BASE:(TCVAR:ARG:行為対象):体力 <= 1000 || BASE:(TCVAR:ARG:行為対象):气力 <= 500 || BASE:(TCVAR:ARG:行為対象):興奮度 >= 500) && BASE:ARG:興奮度 >= 500) || T:101 >= 2
+		PRINTFORM 一口气
+	ELSE
+		PRINTFORM 慢慢的
+	ENDIF
+	PRINTFORM 进入了。
+;处女
+	PRINTFORM %CALLNAME:(TCVAR:ARG:行為対象)%
+	IF (BASE:(TCVAR:ARG:行為対象):体力 <= 1000 || BASE:(TCVAR:ARG:行為対象):气力 <= 500 || BASE:(TCVAR:ARG:行為対象):興奮度 >= 500) && BASE:ARG:興奮度 >= 500
+		PRINTFORM 发出小声的呻吟
+	ELSE
+		PRINTFORM 痛苦的脸扭曲着、
+	ENDIF
+	PRINTFORMW 膝盖微微颤动着…
+ENDIF
+
+

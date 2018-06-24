@@ -1,0 +1,46 @@
+﻿@EVENT_MESSAGE_1
+;電車で痴漢イベント
+;--------------------------------------------------------------------------
+;痴漢に遭遇
+;--------------------------------------------------------------------------
+IF FLAG:痴漢され中 >= 1
+	PRINTFORMW %CALLNAME:MASTER%が忍受着痴汉的骚扰，突然有一种触摸自己的手增加了的感觉
+	PRINTFORMW 显然这是来自不同方向的手
+	PRINTFORMW 好像痴汉变多了
+ELSE
+	;午前７時～10時 or 午後６時～９時までラッシュ時間と想定
+	IF (TIME / 60 >= 7 && TIME / 60 <= 10) || (TIME / 60 >= 18 && TIME / 60 <= 21)
+		PRINTFORMW 因为是高峰期的缘故，车内人声嘈杂。
+		PRINTFORM …
+	ELSE
+		PRINTFORM 电车摇晃着、
+	ENDIF
+	PRINTFORMW 突然，腰的后面出现了一点违和感。
+	PRINTFORMW 某人可恶的手、来回抚摸着%CALLNAME:MASTER%の的屁股…有痴汉！
+	FLAG:痴漢され中 += 1
+ENDIF
+
+@EVENT_END_MESSAGE_1
+VARSET LOCAL
+SELECTCASE TFLAG:イベント変数
+	;騒ぎ > 混雑
+	CASE 1
+		PRINTFORMW 怕被周围的人发现，%CALLNAME:(TCVAR:MASTER:行為対象)%逃走了
+	;電車到着
+	CASE 2
+		PRINTFORMW 電电车到站了%CALLNAME:MASTER%赶紧逃走了
+	;痴漢興奮度一定値以下
+	CASE 3
+		PRINTFORMW 萎靡不振的%CALLNAME:(TCVAR:MASTER:行為対象)%自己离开了
+	;逃走成功
+	CASE 4
+		PRINTFORMW 找到空隙%CALLNAME:MASTER%逃走了
+	;痴漢全員体力切れ
+	CASE 5
+		PRINTFORMW 痴汉们的体力都耗尽了･･････
+ENDSELECT
+
+@EVENT_NPC_END_MESSAGE_1(ARG)
+VARSET LOCAL
+PRINTFORMW %CALLNAME:ARG%没有体力逃跑了･･････
+

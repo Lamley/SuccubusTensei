@@ -1,0 +1,692 @@
+﻿@COM_MESSAGE_1005
+SIF M:101 == 1
+	RETURN 0
+
+IF CFLAG:MASTER:職業 == 13
+	;成人商店
+	;===============================================================================
+	;打工をする
+	;　ランダムで、淫具実演（内部で更に分岐）、淫具解説、撮影会に分岐
+	;===============================================================================
+	LOCAL = RAND:3
+	;--------------------------------------------------------------------------
+	;淫具実演
+	;--------------------------------------------------------------------------
+	;露出癖Lv2以上 or 不知羞耻
+	IF LOCAL == 0 && (ABL:MASTER:露出癖 >= 2 || TALENT:MASTER:羞恥心 == -1)
+		PRINTFORML ＜淫具実演＞
+		PRINTFORMW 客人要求进行淫具表演。
+		;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+		IF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+			PRINTFORM %CALLNAME:MASTER%表现出快乐的样子
+		;露出癖Lv3以上
+		ELSEIF ABL:MASTER:露出癖 >= 3
+			PRINTFORML 这也是打工的一环么，没有办法拒绝啊。
+			PRINTFORM %CALLNAME:MASTER%脸上浮出羞耻的表情
+			;刚强 or 反抗 or 高傲 or 反抗
+			IF TALENT:MASTER:度胸 == 1 || TALENT:MASTER:態度 == 1 || TALENT:MASTER:プライド == 1 || TALENT:MASTER:反抗
+				PRINTFORM 、咬着牙。
+			ELSE
+				PRINTFORM 、羞答答。
+			ENDIF
+		ELSE
+			PRINTFORML 店长的眼里，好像是要“做”的表情，%CALLNAME:MASTER%发现。
+			PRINTFORMW …不能拒绝。
+			PRINTFORM %CALLNAME:MASTER%脸涨红了。
+		ENDIF
+		LOCAL = RAND:6
+		;--------------------------------------------------------------------------
+		;自慰棒
+		;--------------------------------------------------------------------------
+		;Ｖ经验1以上＋处女ではない＋女性器あり
+		IF LOCAL == 0 && EXP:MASTER:Ｖ经验 >= 1 && TALENT:MASTER:处女 == 0 && TALENT:MASTER:性別 & 1
+			;下半身下着あり＋下半身上衣なし
+			IF TEQUIP:MASTER:下半身上衣 == 0 && TEQUIP:MASTER:下半身下着
+				PRINTFORM 脱下内衣、
+			;裙子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+				PRINTFORM 卷起裙子、
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 脱下内衣
+			;裤子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 和内衣一起，
+				PRINTFORM %ITEMNAME:(TEQUIP:MASTER:下半身上衣)%被脱了下来。
+			ENDIF
+			;PALAM润滑Lv3以上
+			SIF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORM 湿了的
+			PRINTFORML 私处暴露出来，客人将自慰棒的前端抵在阴道口上。
+			;Ｖ感觉Lv3以上
+			IF ABL:MASTER:Ｖ感觉 >= 3
+				PRINTFORM 被完全开发的私处、人工の肉棒轻易就
+			ELSE
+				PRINTFORM 没有什么经验的私处、自慰棒一点点
+			ENDIF
+			PRINTFORML 插了进来。
+			PRINTFORM 按照客人的要求继续暴露着、%CALLNAME:MASTER%
+			;Ｖ感觉Lv3以上
+			IF ABL:MASTER:Ｖ感觉 >= 3
+				PRINTFORM 充满情欲的喘息声中、自慰棒
+			ELSE
+				PRINTFORM 眼角含着泪水、自慰棒を
+			ENDIF
+			;PALAM润滑Lv3以上
+			SIF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORM 沾着爱液
+			PRINTFORMW 被拔了出来…
+		;--------------------------------------------------------------------------
+		;肛塞
+		;--------------------------------------------------------------------------
+		;Ａ经验1以上
+		ELSEIF LOCAL == 1 && EXP:MASTER:Ａ经验 >= 1
+			;下半身下着あり＋下半身上衣なし
+			IF TEQUIP:MASTER:下半身上衣 == 0 && TEQUIP:MASTER:下半身下着
+				PRINTFORM 脱下内衣、
+			;裙子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+				PRINTFORM 卷起裙子、
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 脱下内衣
+			;裤子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 和内衣一起
+				PRINTFORM %ITEMNAME:(TEQUIP:MASTER:下半身上衣)%被脱了下来
+			ENDIF
+			PRINTFORML 屁股暴露着、客人将自慰棒的前端抵在菊花的洞里。
+			;Ａ感觉Lv3以上
+			IF ABL:MASTER:Ａ感觉 >= 3
+				PRINTFORM 完全被开发的肛门、人工の肉棒轻易就
+			ELSE
+				PRINTFORM 肛门还有些僵硬、尽管如此自慰棒还是
+			ENDIF
+			PRINTFORML 插了进去。
+			PRINTFORM 继续按客人的要求暴露着、%CALLNAME:MASTER%
+			;Ａ感觉Lv3以上
+			IF ABL:MASTER:Ａ感觉 >= 3
+				PRINTFORM 发出充满情欲的喘息
+			ELSE
+				PRINTFORM 眼中泛着泪光
+			ENDIF
+			PRINTFORMW 自慰棒还在震动着…
+		;--------------------------------------------------------------------------
+		;乳头夹
+		;--------------------------------------------------------------------------
+		ELSEIF LOCAL == 2
+			;上半身上衣あり or 上半身下着あり
+			SIF TEQUIP:MASTER:上半身上衣 || TEQUIP:MASTER:上半身下着
+				PRINTFORM 脱下了上半身的衣服、观众将乳头夹夹在
+			PRINTFORM 暴露出赤裸的胸部、
+			;绝壁 or (男人＋並乳)
+			IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+				PRINTFORM 平坦的胸上
+			ELSE
+				PRINTFORM 乳房的顶端那
+			ENDIF
+			;PALAM情欲Lv3以上
+			IF PALAM:MASTER:情欲 >= PALAMLV:3
+				PRINTFORM 硬了的
+			ELSE
+				PRINTFORM 柔软的
+			ENDIF
+			PRINTFORML 乳头上、松开手指。
+			PRINTFORM 乳头被紧紧的吸附着
+			;Ｂ感觉Lv3以上
+			IF ABL:MASTER:3 >= 3
+				PRINTFORML 全身被快感贯着、%CALLNAME:MASTER%高潮了。
+			ELSE
+				PRINTFORML 痛苦着、%CALLNAME:MASTER%发出浅浅的呻吟。
+			ENDIF
+			LOCAL = RAND:3
+			IF LOCAL == 0
+				PRINTFORMW 客人微笑着注视着这边的情况…
+			ELSEIF LOCAL == 1
+				PRINTFORMW %CALLNAME:MASTER%苦闷的样子、被客人注意到了…
+			ELSE
+				PRINTFORMW 客人露出了恶意的笑容、%CALLNAME:MASTER%被彻底的玩弄着…
+			ENDIF
+		;--------------------------------------------------------------------------
+		;阴蒂夹
+		;--------------------------------------------------------------------------
+		;女性器あり
+		ELSEIF LOCAL == 3 && TALENT:MASTER:性別 & 1
+			;下半身下着あり＋下半身上衣なし
+			IF TEQUIP:MASTER:下半身上衣 == 0 && TEQUIP:MASTER:下半身下着
+				PRINTFORM 脱下内衣、
+			;裙子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+				PRINTFORM 卷起裙子、
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 脱下内衣
+			;裤子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 跟内裤一起
+				PRINTFORM %ITEMNAME:(TEQUIP:MASTER:下半身上衣)%被脱下了
+			ENDIF
+			;PALAM润滑Lv3以上
+			SIF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORM 湿了的
+			PRINTFORML 私处暴露出来、客人将阴蒂夹夹在了敏感的阴蒂上，松开手指。
+			PRINTFORM 阴核被紧紧的夹着
+			;Ｃ感觉Lv3以上
+			IF ABL:MASTER:0 >= 3
+				PRINTFORML 的时候全身被快感贯穿了、%CALLNAME:MASTER%引来了高潮。
+			ELSE
+				PRINTFORML 真痛苦、%CALLNAME:MASTER%低声呻吟。
+			ENDIF
+			LOCAL = RAND:3
+			IF LOCAL == 0
+				PRINTFORMW 客人微笑着注视着这边的情况…
+			ELSEIF LOCAL == 1
+				;PALAM润滑Lv3以上
+				IF PALAM:MASTER:润滑 >= PALAMLV:3
+					PRINTFORM 爱也从%CALLNAME:MASTER%の私处溢出
+				ELSE
+					PRINTFORM %CALLNAME:MASTER%露出苦闷的様子
+				ENDIF
+				PRINTFORMW 客人微笑着注视着这边的情况…
+			ELSE
+				PRINTFORMW 客人露出了恶意的笑容、%CALLNAME:MASTER%被告知只能通过自慰来解脱…
+			ENDIF
+		;--------------------------------------------------------------------------
+		;跳蛋
+		;--------------------------------------------------------------------------
+		;女性器あり
+		ELSEIF LOCAL == 4 && TALENT:MASTER:性別 & 1
+			;下半身下着あり＋下半身上衣なし
+			IF TEQUIP:MASTER:下半身上衣 == 0 && TEQUIP:MASTER:下半身下着
+				PRINTFORM 脱掉内衣、
+			;裙子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 <= 274 && TEQUIP:MASTER:下半身上衣 != 0
+				PRINTFORM 卷起裙子、
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 脱掉内衣
+			;裤子類
+			ELSEIF TEQUIP:MASTER:下半身上衣 >= 275
+				;下半身下着あり
+				SIF TEQUIP:MASTER:下半身下着
+					PRINTFORM 跟内衣一起
+				PRINTFORM %ITEMNAME:(TEQUIP:MASTER:下半身上衣)%被拖掉了
+			ENDIF
+			;PALAM润滑Lv3以上
+			SIF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORM 湿了的
+			PRINTFORML 私处暴露出来、客人取出跳蛋，放在了阴道里。
+			;PALAM润滑Lv3以上
+			SIF PALAM:MASTER:润滑 >= PALAMLV:3
+				PRINTFORM 一边洒出爱液，一边
+			;Ｃ感觉Lv3以上
+			IF ABL:MASTER:0 >= 3
+				PRINTFORM 感受着身体里的震动
+			ELSE
+				PRINTFORM 露出痛苦与愉悦混合的表情
+			ENDIF
+			PRINTFORMW %CALLNAME:MASTER%被客人微笑地注视着…
+		;--------------------------------------------------------------------------
+		;乳头跳蛋
+		;--------------------------------------------------------------------------
+		ELSE
+			;上半身上衣あり or 上半身下着あり
+			SIF TEQUIP:MASTER:上半身上衣 || TEQUIP:MASTER:上半身下着
+				PRINTFORM 脱掉上半身的衣服、
+			PRINTFORM 暴露出胸部，客人拿出挑蛋放在
+			;绝壁 or (男人＋並乳)
+			IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+				PRINTFORM 平坦的胸上
+			ELSE
+				PRINTFORM 乳房顶端
+			ENDIF
+			;PALAM情欲Lv3以上
+			IF PALAM:MASTER:情欲 >= PALAMLV:3
+				PRINTFORM 硬了的
+			ELSE
+				PRINTFORM 柔软的
+			ENDIF
+			PRINTFORML 乳头上。
+			PRINTFORM 跳蛋传递着淫乱的震动
+			;Ｂ感觉Lv3以上
+			IF ABL:MASTER:Ｂ感觉 >= 3
+				PRINTFORM 感受着身体里的震动
+			ELSE
+				PRINTFORM 露出痛苦与愉悦混合的表情
+			ENDIF
+			PRINTFORMW %CALLNAME:MASTER%被客人微笑地注视着…
+		ENDIF
+	;--------------------------------------------------------------------------
+	;淫具解説
+	;--------------------------------------------------------------------------
+	ELSEIF LOCAL == 1
+		PRINTFORML ＜淫具解説＞
+		PRINTFORMW 客人要求解说成人商品。
+		;无动于衷 or 缺乏感情
+		IF TALENT:MASTER:无动于衷 || TALENT:MASTER:缺乏感情
+			PRINTFORMW 看着%CALLNAME:MASTER%平淡的说明的様子，客人感到很无聊…
+		;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+		ELSEIF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+			IF RAND:2 == 0
+				PRINTFORM 看着洋溢着淫靡的气息，
+			ELSE
+				PRINTFORM 仿佛在挑逗的样子的
+			ENDIF
+			PRINTFORM %CALLNAME:MASTER%に、客人
+			IF RAND:3 == 0
+				PRINTFORMW 提起了精神…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 胯下支起了小帐篷…
+			ELSE
+				PRINTFORMW 吞下一口唾沫…
+			ENDIF
+		;露出癖Lv3以上
+		ELSEIF ABL:MASTER:露出癖 >= 3
+			IF RAND:2 == 0
+				PRINTFORM 涨红了脸的
+			ELSE
+				PRINTFORM 害羞的
+			ENDIF
+			PRINTFORMW %CALLNAME:MASTER%继续说明着、客人露出兴奋的表情…
+		ELSE
+			PRINTFORML 因为羞耻涨红了脸的%CALLNAME:MASTER%声音越来越小、说明的内容几乎听不见了。
+			PRINTFORMW 客人看到这个样子的%CALLNAME:MASTER%开心的笑了…
+		ENDIF
+	;--------------------------------------------------------------------------
+	;撮影会
+	;　上衣は店側で用意。下着が必要な場合は自前のもので判定。玩具類は外してる感じで。
+	;　現状、女仆装、水手服、西装上衣制服、半体服、競泳水着、スク水、运动短裤、拘束装に対応
+	;--------------------------------------------------------------------------
+	ELSE
+		PRINTFORML ＜撮影会＞
+		PRINTFORML 被命令在Cosplay撮影会中扮演角色。
+		PRINTFORM 穿的衣服是
+		LOCAL = RAND:4
+		IF LOCAL == 0
+			;裙子ありの衣服
+			LOCAL = RAND:3
+			IF LOCAL == 0
+				PRINTFORMW 女仆装哦。
+			ELSEIF LOCAL == 1
+				PRINTFORMW 水手服哦。
+			ELSE
+				PRINTFORMW 西装上衣的制服哦。
+			ENDIF
+			PRINTFORM 在摄影者的指示下，%CALLNAME:MASTER%
+			;无动于衷 or 缺乏感情
+			IF TALENT:MASTER:无动于衷 || TALENT:MASTER:缺乏感情
+				PRINTFORM 连反抗都没有
+			;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+			ELSEIF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+				PRINTFORM 有些着急的
+			;露出癖Lv3以上
+			ELSEIF ABL:MASTER:露出癖 >= 3
+				PRINTFORM 羞耻的
+			ELSE
+				PRINTFORM 胆怯的
+			ENDIF
+			PRINTFORM 举起了裙子、
+			;下半身下着なし
+			IF TEQUIP:MASTER:下半身下着 == 0
+				PRINTFORM 没穿内衣，将
+				;男性器あり
+				IF TALENT:MASTER:性別 & 2
+					PRINTFORM 裸露着的
+					;PALAM情欲Lv3以上
+					SIF PALAM:MASTER:情欲 >= PALAMLV:3
+						PRINTFORM 勃起
+					PRINTFORM 阴茎
+				ELSE
+					;PALAM润滑Lv3以上
+					SIF PALAM:MASTER:润滑 >= PALAMLV:3
+						PRINTFORM 湿了的
+					PRINTFORM 私处
+				ENDIF
+				PRINTFORMW 暴露出来、顾客们发出了嘈杂轻浮的声音。
+			ELSE
+				;PALAM润滑Lv3以上＋女性器あり
+				SIF PALAM:MASTER:润滑 >= PALAMLV:3 && TALENT:MASTER:性別 & 1
+					PRINTFORM 湿了的
+				PRINTFORMW 将内衣暴露出来，顾客中传来了欢快的声音。
+			ENDIF
+		ELSEIF LOCAL == 1
+			;肩紐・股布ずらしに対応した衣服。主に连衣裙水着・半体服系。
+			IF LOCAL == 0
+				PRINTFORMW 紧紧的衣服勾勒出上半身的线条。
+			ELSEIF LOCAL == 1
+				PRINTFORMW 泳衣勾勒出上半身的线条。
+			ELSE
+				;矮小体型以下 or （贫乳以下＋女性）
+				IF TALENT:MASTER:体型 <= -1 || (TALENT:MASTER:胸围サイズ <= -1 && TALENT:MASTER:性別 & 1)
+					PRINTFORM 幼小的肢体跟
+				;巨乳 or 爆乳
+				ELSEIF TALENT:MASTER:胸围サイズ >= 1
+					PRINTFORM 有肉感的身体和
+				ELSE
+					PRINTFORM  身体的线条跟
+				ENDIF
+				PRINTFORMW 学校泳装很相配。
+			ENDIF
+			PRINTFORM 在摄影者们的指示下，%CALLNAME:MASTER%が
+			;无动于衷 or 缺乏感情
+			IF TALENT:MASTER:无动于衷 || TALENT:MASTER:缺乏感情
+				PRINTFORM 没怎么反抗就
+			;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+			ELSEIF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+				PRINTFORM 有些焦躁的
+			;露出癖Lv3以上
+			ELSEIF ABL:MASTER:露出癖 >= 3
+				PRINTFORM 害羞的
+			ELSE
+				PRINTFORM 胆怯的
+			ENDIF
+			IF RAND:2 == 0
+				PRINTFORM 将肩膀上的带子卸下，露出
+				;绝壁以外＋女性
+				IF TALENT:MASTER:105 != -2 && TALENT:MASTER:性別 & 1
+					;巨乳 or 爆乳
+					SIF TALENT:MASTER:胸围サイズ >= 1
+						PRINTFORM 丰满的
+					PRINTFORM 乳房
+				ENDIF
+				;PALAM情欲Lv3以上
+				IF PALAM:MASTER:情欲 >= PALAMLV:3
+					PRINTFORM 硬了的乳头
+				ELSE
+					PRINTFORM 柔软的乳头
+				ENDIF
+			ELSE
+				PRINTFORM 错开股间的衣物，露出
+				;男性器あり
+				IF TALENT:MASTER:性別 & 2
+					;PALAM情欲Lv3以上
+					SIF PALAM:MASTER:情欲 >= PALAMLV:3
+						PRINTFORM 勃起
+					PRINTFORM 阴茎
+				ELSE
+					;PALAM润滑Lv3以上
+					SIF PALAM:MASTER:润滑 >= PALAMLV:3
+						PRINTFORM 湿了的
+					PRINTFORM 私处
+				ENDIF
+			ENDIF
+			PRINTFORMW 、観客中传来欢呼声。
+		ELSEIF LOCAL == 2
+			;上衣捲り・股布ずらしに対応した衣服。現状は运动短裤のみ。
+			PRINTFORMW 穿上了下身是运动短裤的体操服。
+			PRINTFORM 在摄影者们的指示下%CALLNAME:MASTER%が
+			;无动于衷 or 缺乏感情
+			IF TALENT:MASTER:无动于衷 || TALENT:MASTER:缺乏感情
+				PRINTFORM 没怎么反抗
+			;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+			ELSEIF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+				PRINTFORM 有些焦虑的
+			;露出癖Lv3以上
+			ELSEIF ABL:MASTER:露出癖 >= 3
+				PRINTFORM 羞涩地
+			ELSE
+				PRINTFORM 胆怯的
+			ENDIF
+			IF RAND:2 == 0
+				PRINTFORM 举起衣服的下摆、
+				;上半身下着あり
+				SIF TEQUIP:MASTER:上半身下着
+					PRINTFORM 被内衣包裹的
+				;绝壁 or (男人＋並乳)
+				IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+					PRINTFORM 胸
+				ELSE
+					;巨乳 or 爆乳
+					SIF TALENT:MASTER:胸围サイズ >= 1
+						PRINTFORM 丰满的
+					PRINTFORM 乳房
+				ENDIF
+				;PALAM情欲Lv3以上＋上半身下着なし
+				IF PALAM:MASTER:情欲 >= PALAMLV:3 && TEQUIP:MASTER:上半身下着 == 0
+					PRINTFORM 硬了的乳头
+				;上半身下着なし
+				ELSEIF TEQUIP:MASTER:上半身下着 == 0
+					PRINTFORM 柔软的乳头
+				ENDIF
+			ELSE
+				PRINTFORM 错开股间的衣物，露出
+				;男性器あり
+				IF TALENT:MASTER:性別 & 2
+					;PALAM情欲Lv3以上
+					SIF PALAM:MASTER:情欲 >= PALAMLV:3
+						PRINTFORM 勃起
+					PRINTFORM 阴茎
+				ELSE
+					;PALAM润滑Lv3以上
+					SIF PALAM:MASTER:润滑 >= PALAMLV:3
+						PRINTFORM 湿了的
+					PRINTFORM 私处
+				ENDIF
+			ENDIF
+			PRINTFORMW ，顾客中传来欢呼。
+		ELSEIF LOCAL == 3
+			;局部にジッパー付きの衣服。…拘束装くらいしか対応しませんが。
+			;巨乳 or 爆乳
+			IF TALENT:MASTER:胸围サイズ >= 1
+				PRINTFORM 有肉感的身体展现出最大的魅力在
+			ELSE
+				PRINTFORM 身体的线条浮现在
+			ENDIF
+			PRINTFORMW 拘束皮装里。
+			PRINTFORM 撮影者たちに指示された%CALLNAME:MASTER%が
+			;无动于衷 or 缺乏感情
+			IF TALENT:MASTER:无动于衷 || TALENT:MASTER:缺乏感情
+				PRINTFORM 没怎么反抗就
+			;露出癖Lv3以上＋不知羞耻 or 露出癖Lv6以上
+			ELSEIF (ABL:MASTER:露出癖 >= 3 && TALENT:MASTER:羞恥心 == -1) || ABL:MASTER:露出癖 >= 6
+				PRINTFORM 有些焦躁的
+			;露出癖Lv3以上
+			ELSEIF ABL:MASTER:露出癖 >= 3
+				PRINTFORM 羞涩的
+			ELSE
+				PRINTFORM 胆怯的
+			ENDIF
+			PRINTFORM 拉开一部分的拉链，露出
+			;男性器あり
+			IF TALENT:MASTER:性別 & 2
+				;PALAM情欲Lv3以上
+				SIF PALAM:MASTER:情欲 >= PALAMLV:3
+					PRINTFORM 勃起
+				PRINTFORM 阴茎
+			ELSE
+				;PALAM润滑Lv3以上
+				SIF PALAM:MASTER:润滑 >= PALAMLV:3
+					PRINTFORM 湿了的
+				PRINTFORM 私处
+			ENDIF
+			PRINTFORMW 、顾客中传来来欢呼声。
+		ENDIF
+	ENDIF
+
+ELSEIF CFLAG:MASTER:職業 == 14
+	CALL bite14
+ELSE
+	;===============================================================================
+	;打工をする
+	;===============================================================================
+	PRINTFORML ＜打工をする＞
+	;--------------------------------------------------------------------------
+	;淫具装着
+	;--------------------------------------------------------------------------
+	IF TEQUIP:MASTER:胸 || TEQUIP:MASTER:クリトリス || (TEQUIP:MASTER:膣 == 1) || (TEQUIP:MASTER:アナル == (60 | 61 | 62))
+		;確率が一定じゃないのは故意にやってます
+		IF RAND:5 == 0
+			PRINTFORM 客人很多，非常拥挤
+		ELSEIF RAND:5 == 1
+			PRINTFORM 门庭冷落
+		ELSE
+			PRINTFORM 一成不变的样子
+		ENDIF
+		PRINTFORM 被安置在店里的
+		;胸刺激
+		IF TEQUIP:MASTER:胸
+			PRINTFORM %ITEMNAME:(TEQUIP:MASTER:胸)%が%CALLNAME:MASTER%の
+			;绝壁 or (男人＋並乳)
+			IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+				;女性
+				IF TALENT:MASTER:性別 & 1
+					;幼儿体型
+					SIF TALENT:MASTER:100 == -2
+						PRINTFORM 和体型相应的
+					;長身以上
+					SIF TALENT:MASTER:100 >= 1
+						PRINTFORM 和体型相反的
+				ENDIF
+				PRINTFORM 平坦的
+			;贫乳
+			ELSEIF TALENT:MASTER:105 == -1
+				;矮小体型
+				SIF TALENT:MASTER:100 == -1
+					PRINTFORM 和体型相应的
+				;長身以上
+				SIF TALENT:MASTER:100 >= 1
+					PRINTFORM 和体型相反的
+				PRINTFORM 略有凸起的
+
+			;巨乳
+			ELSEIF TALENT:MASTER:105 == 1
+				;矮小体型 or 幼儿体型
+				SIF TALENT:MASTER:100 == -1 || TALENT:MASTER:100 == -2
+					PRINTFORM 和体型相反的
+				PRINTFORM 丰满的
+			;爆乳
+			ELSEIF TALENT:MASTER:105 == 2
+				PRINTFORM 过分丰满的
+			ENDIF
+			PRINTFORML 胸被刺激着。
+		;クリ刺激
+		ELSEIF TEQUIP:MASTER:クリトリス
+			PRINTFORML %ITEMNAME:(TEQUIP:MASTER:クリトリス)%が%CALLNAME:MASTER%的阴蒂被刺激着。
+		;膣刺激
+		ELSEIF TEQUIP:MASTER:膣
+			PRINTFORML %ITEMNAME:(TEQUIP:MASTER:膣)%が%CALLNAME:MASTER%的阴道里震动着。
+		;アナル刺激
+		ELSEIF TEQUIP:MASTER:アナル
+			PRINTFORML %ITEMNAME:(TEQUIP:MASTER:アナル)%が%CALLNAME:MASTER%的直肠里震动着。
+		ENDIF
+		;PALAM情欲Lv3以上
+		IF PALAM:MASTER:情欲 >= PALAMLV:3
+			PRINTFORML 集中精力工作的话、和想的一样、淫具的刺激は%CALLNAME:MASTER%太难忍受了。
+			;女性器あり
+			IF TALENT:MASTER:性別 & 1
+				;下半身下着
+				IF TEQUIP:MASTER:下半身下着
+					PRINTFORM 被内衣包裹的私处的
+				ELSE
+					PRINTFORM 不穿内衣的私处的
+				ENDIF
+				;PALAM润滑Lv3以上
+				IF PALAM:MASTER:润滑 >= PALAMLV:3
+					PRINTFORMW 爱液溢出来，在衣服上划出几条湿线。
+				ELSE
+					PRINTFORMW 渗出了爱液。
+				ENDIF
+			ELSE
+				PRINTFORM 胯下勃起的肉棒
+				;裙子類
+				IF TEQUIP:MASTER:下半身上衣 <= 274
+					PRINTFORMW 将裙子撑起了小帐篷。
+				ELSE
+					PRINTFORM 的形状从%ITEMNAME:(TEQUIP:MASTER:下半身上衣)%中显现的
+					;下半身下着なし
+					SIF TEQUIP:MASTER:下半身下着 == 0
+						PRINTFORM 很清楚
+					PRINTFORMW 明显。
+				ENDIF
+			ENDIF
+		ELSE
+			PRINTFORMW 忍受着淫具赋予的痛苦、%CALLNAME:MASTER%は专心打工。
+		ENDIF
+
+	;--------------------------------------------------------------------------
+	;ノーパン・通常
+	;--------------------------------------------------------------------------
+	ELSE
+		PRINTFORM 今日的店里
+		;確率が一定じゃないのは故意にやってます
+		IF RAND:5 == 0
+			PRINTFORML 盛况空前。
+			;下半身下着なし
+			IF TEQUIP:MASTER:下半身下着 == 0
+				;露出癖Lv3以上 or 露出癖Lv5以上＋害羞
+				IF ABL:MASTER:露出癖 >= 3 || (ABL:MASTER:露出癖 >= 5 && TALENT:MASTER:羞恥心 == 1)
+					PRINTFORML 不穿内衣的下半身大概会很疼吧。
+					PRINTFORMW %CALLNAME:MASTER%愉快的走进了拥挤的店里。
+				ELSE
+					PRINTFORML 今天大概会非常忙。
+					PRINTFORML 穿着内衣的话，危险性会小一点吧。
+					PRINTFORMW %CALLNAME:MASTER%有点不安，向拥挤的店里走去…
+				ENDIF
+			ELSE
+				PRINTFORMW …今天真忙啊。
+			ENDIF
+		ELSEIF RAND:5 == 1
+			PRINTFORML 门庭冷落。
+			;下半身下着なし
+			IF TEQUIP:MASTER:下半身下着 == 0
+				;露出癖Lv3以上 or 露出癖Lv4以上＋害羞
+				IF ABL:MASTER:露出癖 >= 3 || (ABL:MASTER:露出癖 >= 4 && TALENT:MASTER:羞恥心 == 1)
+					PRINTFORML …好不容易不穿一次内衣。
+					PRINTFORMW %CALLNAME:MASTER%有些可惜的叹了口气。
+				ELSE
+					PRINTFORML …这样的话，穿不穿内衣也没什么两样了。
+					PRINTFORMW %CALLNAME:MASTER%放心的出喘了口气，总之专心工作吧。
+				ENDIF
+			ELSE
+				PRINTFORMW %CALLNAME:MASTER%叹了口气，开始了店的扫除。
+			ENDIF
+		ELSE
+			PRINTFORML 、和平常一样的客人数目。
+			;下半身下着なし
+			SIF TEQUIP:MASTER:下半身下着 == 0
+				PRINTFORML …没有被人发现没穿内衣，好好工作吧。
+			PRINTFORM %CALLNAME:MASTER%对着进来的客人
+			;露出癖Lv3以上 or 露出癖Lv4以上＋害羞
+			IF ABL:MASTER:露出癖 >= 3 || (ABL:MASTER:露出癖 >= 4 && TALENT:MASTER:羞恥心 == 1)
+				PRINTFORM 有点高兴的
+			;胆怯 or 下半身下着なし
+			ELSEIF TALENT:MASTER:度胸 == -1 || TEQUIP:MASTER:下半身下着 == 0
+				PRINTFORM 生硬的
+			;刚强 or 陽気 or 喜欢引人注目
+			ELSEIF TALENT:MASTER:度胸 == 1 || TALENT:MASTER:陽気／陰気 == 1 || TALENT:MASTER:喜欢引人注目
+				PRINTFORM 充满精神的
+			;老实
+			ELSEIF TALENT:MASTER:応答 == -1
+				PRINTFORM 温柔的
+			ENDIF
+			PRINTFORMW 微笑、并说欢迎光临。
+		ENDIF
+	ENDIF
+ENDIF
+;;;援交判定
+I = 0
+IF RAND(2)
+	FOR D,1,CHARANUM
+		SIF NO:D == 37
+			I = D
+	NEXT
+ELSE
+	FOR D,1,CHARANUM
+		SIF NO:D == 38
+			I = D
+	NEXT
+ENDIF
+
+IF BASE:1:評判 >= 600
+	CALL NPC_ENKOU(I,1)
+ENDIF
+
+M:101 = 1
+
+

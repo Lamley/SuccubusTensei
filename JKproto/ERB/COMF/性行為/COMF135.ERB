@@ -1,0 +1,204 @@
+﻿;绳子
+@COM_ABLE135(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;;;SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+;;;	RETURN 0
+SIF !EQUIP:LOCAL:绳子
+	RETURN 0
+;;;SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+;;;	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(135)
+
+;-------------------------------------------------
+;绳子
+;-------------------------------------------------
+@COM135(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 绳子(%CALLNAME:ARG%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+;紧缚经验が高いと消費減少
+IF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:3 / 2
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 100
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 150
+ELSEIF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:4 / 2
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 80
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 120
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 60
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 90
+ENDIF
+
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 800
+SOURCE:(TCVAR:ARG:行為対象):液体 = 800
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 500
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 500
+SOURCE:(TCVAR:ARG:行為対象):反感 = 30
+;PALAM:情欲をみる
+IF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.80
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:2
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.90
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:3
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.00
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.10
+ELSEIF PALAM:(TCVAR:ARG:行為対象):11 >= PALAMLV:4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.20
+ENDIF
+
+;ABL:従順をみる
+IF ABL:(TCVAR:ARG:行為対象):10 == 0
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.40
+ELSEIF ABL:(TCVAR:ARG:行為対象):10 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.60
+ELSEIF ABL:(TCVAR:ARG:行為対象):10 == 2
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.80
+ELSEIF ABL:(TCVAR:ARG:行為対象):10 == 3
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.00
+ELSEIF ABL:(TCVAR:ARG:行為対象):10 == 4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.10
+ELSE
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.20
+ENDIF
+
+;ABL:受虐属性をみる
+IF ABL:(TCVAR:ARG:行為対象):15 == 0
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 0.80
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.00
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 2
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.30
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 3
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 1.60
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+ELSE
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 3.00
+ENDIF
+
+;性倒错
+SIF TALENT:(TCVAR:ARG:行為対象):80
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+
+;受虐狂
+SIF TALENT:(TCVAR:ARG:行為対象):83
+	TIMES SOURCE:(TCVAR:ARG:行為対象):液体 , 2.00
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 30
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+;绳子の着脱
+IF TEQUIP:(TCVAR:ARG:行為対象):绳子 == 1
+	TEQUIP:(TCVAR:ARG:行為対象):绳子 = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):绳子 = 1
+ENDIF
+;;;TEQUIP:(TCVAR:ARG:行為対象):91 = 1 - TEQUIP:(TCVAR:ARG:行為対象):91
+;;;IF TEQUIP:90
+;;;	T = 0
+
+EXP:(TCVAR:ARG:行為対象):紧缚经验 += 5
+EXP:ARG:道具使用経験 ++
+
+VARSET ARG
+RETURN 1
+
+;;;以下は別処理で行っている為無意味（コピー元を崩さない為残してる）
+;-------------------------------------------------
+;-------------------------------------------------
+;绳子で緊縛中
+;-------------------------------------------------
+;;;@EQUIP_COM135
+;;;IF TEQUIP:90
+;;;	PRINTL ＜触手紧缚中＞
+;;;ELSE
+;;;	PRINTL ＜緊縛中＞
+;;;ENDIF
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+;紧缚经验が高いと消費減少
+;;;IF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:3 / 2
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 50
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 100
+;;;ELSEIF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:4 / 2
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 40
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+;;;ELSE
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 30
+;;;	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 60
+;;;ENDIF
+
+;ABL:受虐属性をみる
+;;;IF ABL:15 == 0
+;;;	A = 60
+;;;ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 1
+;;;	A = 180
+;;;ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 2
+;;;	A = 300
+;;;ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 3
+;;;	A = 480
+;;;ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 4
+;;;	A = 700
+;;;ELSE
+;;;	A = 850
+;;;ENDIF
+
+;性倒错
+;;;SIF TALENT:(TCVAR:ARG:行為対象):80
+;;;	TIMES A , 2.00
+
+;PALAM:情欲をみる
+;;;IF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:1
+;;;	TIMES A , 0.80
+;;;ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:2
+;;;	TIMES A , 0.90
+;;;ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:3
+;;;	TIMES A , 1.00
+;;;ELSEIF PALAM:(TCVAR:ARG:行為対象):11 < PALAMLV:4
+;;;	TIMES A , 1.10
+;;;ELSEIF PALAM:(TCVAR:ARG:行為対象):11 >= PALAMLV:4
+;;;	TIMES A , 1.20
+;;;ENDIF
+
+;;;SOURCE:(TCVAR:ARG:行為対象):痛苦 += A
+;;;SOURCE:(TCVAR:ARG:行為対象):露出 += A
+;;;SOURCE:(TCVAR:ARG:行為対象):屈従 += A
+;;;SOURCE:(TCVAR:ARG:行為対象):逸脱 += A
+
+;-------------------------------------------------
+;経験上昇
+;-------------------------------------------------
+;;;CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+
+;;;SIF ASSIPLAY == 0 && ABL:21 >= 2
+;;;	TFLAG:30 += 1
+
+;;;SIF TEQUIP:90
+;;;	T += 1
+
+;;;EXP:ARG:紧缚经验 += 2
+;;;PRINTL 紧缚经验＋２
+;

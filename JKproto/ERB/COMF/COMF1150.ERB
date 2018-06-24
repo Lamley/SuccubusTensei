@@ -1,0 +1,284 @@
+﻿@COM_ABLE1150(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TFLAG:同室
+	RETURN 0
+SIF !CFLAG:LOCAL:所属
+	RETURN 0
+SIF CFLAG:LOCAL:現在位置 != DANTAI_PLACE(CFLAG:LOCAL:所属) || CFLAG:LOCAL:現在地区 != 2
+	RETURN 0
+;;;SIF !(TIME >= 960 && TIME < 1130) && !D:101
+;;;	RETURN 0
+
+RETURN GLOBAL_COMABLE(1150)
+
+@COM1150(ARG)
+VARSET LOCAL
+PRINTL 
+PRINTFORML %"=" * 107%
+
+PRINTL 試合
+;試合
+PRINTL 誰と試合をしますか？
+PRINTL レスラー♀   報酬 2000円 VA爱抚のみ          陵辱回数10
+PRINTL レスラー♂弱 報酬 3000円 V爱抚のみ強制Aあり  陵辱回数10
+PRINTL レスラー♂強 報酬10000円 強制VAあり          陵辱回数30
+FOR A,1,CHARANUM
+	SIF A == MASTER
+		CONTINUE
+	SIF !TCVAR:A:同室 || CFLAG:A:睡眠 || CFLAG:A:衰弱
+		CONTINUE
+	PRINTFORML [{A,2}] - %CALLNAME:A%
+NEXT
+PRINTL [99] - 戻る
+$INPUT_LOOP
+INPUT
+IF RESULT == 99
+	RETURN 0
+ELSEIF EXISTCSV(RESULT,0) && TCVAR:RESULT:同室
+	TCVAR:ARG:行為対象 = RESULT
+ELSE
+	CLEARLINE 1
+	GOTO INPUT_LOOP
+ENDIF
+
+TFLAG:陵辱開始 = 0
+TFLAG:陵辱終了 = 0
+
+;取り敢えず乱数での簡単処理
+A = 0
+A = RAND(1000)
+SELECTCASE (ABL:ARG:戦闘能力) - (ABL:(TCVAR:ARG:行為対象):戦闘能力)
+	CASE IS < 1
+		IF !(A >800)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			PRINTL 試合に勝ちました
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+	CASE 1
+		IF !(A >700)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+	CASE 2
+		IF !(A >600)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+	CASE 3
+		IF !(A >500)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+	CASE 4
+		IF !(A >300)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+	CASEELSE
+		IF !(A >100)
+			PRINTFORML %CALLNAME:(TCVAR:ARG:行為対象)%に負けてしまった
+;試合後陵辱
+			BASE:(TCVAR:ARG:行為対象):体力 = MAXBASE:(TCVAR:ARG:行為対象):体力
+			BASE:(TCVAR:ARG:行為対象):气力 = MAXBASE:(TCVAR:ARG:行為対象):气力
+			TFLAG:陵辱開始 = 1
+			TFLAG:陵辱回数 = 0
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				TEQUIP:ARG:膣 = 0
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 58
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 0
+				CFLAG:ARG:待機時間 += 18
+			ELSE
+				TEQUIP:ARG:膣 = 19
+				TEQUIP:ARG:アナル = 79
+				CFLAG:ARG:待機時間 += 18
+			ENDIF
+			CALL EVENT_JOIN(ARG,TCVAR:ARG:行為対象,6)
+		ELSE
+			IF NO:(TCVAR:ARG:行為対象) == 27
+				EXP:ARG:戦闘経験 += 5
+				PRINTW 報酬を貰いました(+10000円)
+				MONEY:MASTER += 10000
+			ELSEIF NO:(TCVAR:ARG:行為対象) == 26
+				EXP:ARG:戦闘経験 += 3
+				PRINTW 報酬を貰いました(+3000円)
+				MONEY:MASTER += 3000
+			ELSE
+				EXP:ARG:戦闘経験 += 2
+				PRINTW 報酬を貰いました(+2000円)
+				MONEY:MASTER += 2000
+			ENDIF
+		ENDIF
+ENDSELECT
+
+CFLAG:ARG:待機時間 += 60
+CFLAG:(TCVAR:ARG:行為対象):待機時間 += 60
+
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1

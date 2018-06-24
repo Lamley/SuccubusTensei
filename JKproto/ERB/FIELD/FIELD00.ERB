@@ -1,0 +1,293 @@
+﻿;*************************************************
+;@PLACE_SET_0 場所の属性
+;SETBIT DA:0:0,0 は内部の存在判定に使ってますので消さないで下さい
+;SETBIT DA:0:部屋番号,0 外に出れる場所
+;SETBIT DA:0:部屋番号,1 中に入れる場所
+;SETBIT DA:0:部屋番号,2 電車に乗れる場所
+;SETBIT DA:0:部屋番号,3 屋内
+;SETBIT DA:0:部屋番号,4 遊技場あり
+;SETBIT DA:0:部屋番号,5 注文可
+;SETBIT DA:0:部屋番号,7 買い物可
+;SETBIT DA:0:部屋番号,8 打工可
+;SETBIT DA:0:部屋番号,9 鍵が掛かってる
+;SETBIT DA:0:部屋番号,10 ＮＰＣが自慰出来る場所
+;*************************************************
+@PLACE_SET_0
+SETBIT DA:0:0,0
+SETBIT DA:0:3,2
+SETBIT DA:0:8,7
+SETBIT DA:0:16,7
+SETBIT DA:0:8,8
+SETBIT DA:0:5,8
+SETBIT DA:0:6,8
+SETBIT DA:0:16,8
+SETBIT DA:0:1,3
+SETBIT DA:0:5,3
+SETBIT DA:0:6,3
+SETBIT DA:0:8,3
+SETBIT DA:0:12,3
+SETBIT DA:0:13,3
+SETBIT DA:0:16,3
+SETBIT DA:0:30,3
+SETBIT DA:0:1,10
+SETBIT DA:0:11,10
+SETBIT DA:0:30,10
+;*************************************************
+;@PLACE_NAME_0(ARG) 場所名
+;CASE 場所番号
+;	PRINT 場所名
+;*************************************************
+
+@PLACE_NAME_0(ARG)
+#FUNCTIONS
+SELECTCASE ARG
+
+	CASE 1
+		RETURNF @"%CALLNAME:MASTER%の家"
+	CASE 2
+		RETURNF "去车站的路"
+	CASE 3
+		RETURNF "最近的车站"
+	CASE 4
+		RETURNF "繁華街"
+	CASE 5
+		RETURNF "便利店"
+	CASE 6
+		RETURNF "超级市场"
+	CASE 8
+		RETURNF "薬屋"
+	CASE 11
+		RETURNF "公園"
+	CASE 12
+		RETURNF "病院"
+	CASE 13
+		RETURNF "警察署"
+	CASE 16
+		RETURNF "书店"
+	CASE 30
+		RETURNF "NPCの家"
+
+ENDSELECT
+
+@PLACE_CROWDED_0(ARG)
+VARSET LOCAL
+RETURN 100
+
+SELECTCASE ARG
+	CASE 1,14
+		RETURN 0
+	CASE 3,4
+		RETURN 100
+	CASEELSE
+		RETURN 30
+ENDSELECT
+;*************************************************
+;@CAN_MOVE_0(ARG,ARG:1) 移動可能判定
+;CASE 現在位置
+;	SIF ARG:1 == 移動候補
+;		RETURN 1 移動可 RETURN 2 移動と視認可
+;*************************************************
+
+@CAN_MOVE_0(ARG,ARG:1)
+;RETURN 移動に掛かる時間,返し値がない場合は移動不可
+SELECTCASE ARG
+	;家
+	CASE 1
+		SIF ARG:1 == 2
+			RETURN 10
+	;去车站的路
+	CASE 2
+		SIF ARG:1 == 1
+			RETURN 10
+		SIF ARG:1 == 3
+			RETURN 5
+	;最近的车站
+	CASE 3
+		SIF ARG:1 == 2
+			RETURN 5
+		SIF ARG:1 == 4
+			RETURN 5
+	;繁華街
+	CASE 4
+		SIF ARG:1 == 3
+			RETURN 5
+		SIF ARG:1 == 5
+			RETURN 1		
+		SIF ARG:1 == 6
+			RETURN 1
+		SIF ARG:1 == 8
+			RETURN 1
+		SIF ARG:1 == 11
+			RETURN 1
+		SIF ARG:1 == 12
+			RETURN 1
+		SIF ARG:1 == 13
+			RETURN 1
+		SIF ARG:1 == 16
+			RETURN 1
+		SIF ARG:1 == 30
+			RETURN 1
+	;便利店
+	CASE 5
+		SIF ARG:1 == 4
+			RETURN 1
+	;超级市场
+	CASE 6
+		SIF ARG:1 == 4
+			RETURN 1
+
+	;薬屋
+	CASE 8
+		SIF ARG:1 == 4
+			RETURN 1
+	;公園
+	CASE 11
+		SIF ARG:1 == 4
+			RETURN 1
+	;病院
+	CASE 12
+		SIF ARG:1 == 4
+			RETURN 1
+	;警察署
+	CASE 13
+		SIF ARG:1 == 4
+			RETURN 1
+	;书店
+	CASE 16
+		SIF ARG:1 == 4
+			RETURN 1
+	;NPCの家
+	CASE 30
+		SIF ARG:1 == 4
+			RETURN 1
+
+
+ENDSELECT
+;*************************************************
+;@FARMOVE_0(ARG,ARG:1) 遠距離移動
+;LOCAL:0 現在の位置
+;LOCAL:1 暫定目的地
+;ARG 移動するキャラ番号
+;ARG:1 最終目的地
+;RETURN 今回移動するところ
+;*************************************************
+
+@FARMOVE_0(ARG,ARG:1)
+;現在位置取得
+LOCAL:0 = CFLAG:ARG:現在位置
+
+;暫定目的地決定
+LOCAL:1 = ARG:1
+;;;$LOOP
+;暫定目的地に直接移動できる場合
+CALLFORM CAN_MOVE_{CFLAG:ARG:現在地区}(CFLAG:ARG:現在位置,LOCAL:1)
+IF RESULT
+	;そこに移動
+	RETURNFORM {LOCAL:1}
+ENDIF
+
+;袋小路から行ける場所は固定なので、そこを目指す
+SELECTCASE LOCAL:0
+	CASE 1
+		RETURN 2
+	CASE 5,6,8,11,12,13,16,30
+		RETURN 4
+ENDSELECT
+
+;直接移動できない場合、1つ近い位置を暫定目的地に設定し直してループ
+SELECTCASE LOCAL:0
+CASE 1
+		RETURN 2
+CASE 2
+	SELECTCASE LOCAL:1
+		CASE 1
+			RETURN 1
+		CASEELSE
+			RETURN 3
+	ENDSELECT
+CASE 3
+	SELECTCASE LOCAL:1
+		CASE 1
+			RETURN 2
+		CASEELSE
+			RETURN 4
+	ENDSELECT
+CASE 4
+	SELECTCASE LOCAL:1
+		CASE 1 TO 3
+			RETURN 3
+		CASEELSE
+			RETURNFORM {LOCAL:1}
+	ENDSELECT
+CASEELSE
+	RETURN 4
+
+ENDSELECT
+;;;GOTO LOOP
+
+
+;*************************************************
+;@GET_MAP_0 マップ表示
+;各地区で表示したいマップを記入して下さい。
+;*************************************************
+
+@GET_MAP_0
+
+
+PRINT ■■■■■■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,1)),1
+PRINTBUTTON (MAP_NAME_BUTTON(0,30)),30
+PRINTL 
+CALL GETMAP(3)
+PRINT □□□□
+CALL GETMAP(2)
+PRINT □□
+CALL GETMAP(1)
+PRINTBUTTON (MAP_NAME_BUTTON(0,2)),2
+PRINTL 
+PRINT ■■
+CALL GETMAP(5)
+PRINT □
+CALL GETMAP(6)
+PRINT ■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,3)),3
+PRINTL 
+PRINT ■■■□■■□□■
+PRINTBUTTON (MAP_NAME_BUTTON(0,4)),4
+PRINTL 
+PRINT ■■■
+CALL GETMAP(4)
+PRINT □□
+CALL GETMAP(11)
+PRINT □■
+PRINTBUTTON (MAP_NAME_BUTTON(0,5)),5
+PRINTL 
+PRINT ■■■□■■□□■
+PRINTBUTTON (MAP_NAME_BUTTON(0,6)),6
+PRINTL 
+PRINT ■■
+CALL GETMAP(13)
+PRINT □
+CALL GETMAP(16)
+PRINT ■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,8)),8
+PRINTL 
+PRINT ■■
+CALL GETMAP(12)
+PRINT □
+CALL GETMAP(8)
+PRINT ■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,11)),11
+PRINTL 
+PRINT ■■■□■■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,12)),12
+PRINTL 
+PRINT ■■■
+CALL GETMAP(30)
+PRINT ■■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,13)),13
+PRINTL 
+PRINT ■■■■■■■■■
+PRINTBUTTON (MAP_NAME_BUTTON(0,16)),16
+PRINTL 
+PRINTL 

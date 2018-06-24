@@ -1,0 +1,234 @@
+﻿@NPC_ACTION(ARG)
+VARSET LOCAL
+IF TCVAR:ARG:イベント
+	IF TCVAR:ARG:同行
+		IF CFLAG:ARG:現在地区 != CFLAG:MASTER:現在地区 || CFLAG:ARG:現在位置 != CFLAG:MASTER:現在位置
+			CFLAG:ARG:現在地区 = CFLAG:MASTER:現在地区
+			CFLAG:ARG:現在位置 = CFLAG:MASTER:現在位置
+			CFLAG:ARG:待機時間 = CFLAG:MASTER:待機時間
+			RETURN 1
+		ELSEIF CFLAG:ARG:乗車 != CFLAG:MASTER:乗車
+			CFLAG:ARG:到着地区 = CFLAG:MASTER:到着地区
+			CFLAG:ARG:到着位置 = CFLAG:MASTER:到着位置
+			CFLAG:ARG:乗車 = CFLAG:MASTER:乗車
+			CFLAG:ARG:待機時間 = CFLAG:MASTER:待機時間
+			CFLAG:ARG:到着時間 = CFLAG:MASTER:到着時間
+			RETURN 1
+		ENDIF
+	ENDIF
+	TCVAR:MASTER:行為対象 = ARG
+	TCVAR:ARG:行為対象 = MASTER
+	;TCVAR:ARG:攻め受け = 1
+	;TCVAR:(TCVAR:ARG:行為対象):攻め受け = 2
+;#;PRINTVL ARG
+	CALLFORM NPC_ACTION_{TCVAR:ARG:イベント}(ARG)
+	CALLFORM COM{SELECTCOM:ARG}(ARG)
+	CALL SOURCE_CHECKS(ARG)
+ELSE
+	IF TIME >= CFLAG:ARG:就寝時間 || TIME <= CFLAG:ARG:起床時間
+		CFLAG:ARG:待機時間 += 5
+	ELSEIF TCVAR:ARG:目的位置
+		CALL NPC_MOVEMENT(ARG)
+		CALL SOURCE_CHECKS(ARG)
+;;;華澄先生授業前移動処理
+	ELSEIF TALENT:ARG:教师 && ((TIME >= 420 && TIME <= 510) || (TIME >= 750 && TIME <= 810) || TIME >= 960) && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 4) && !D:101
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 4
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+	ELSEIF TALENT:ARG:教师 && ((TIME >= 510 && TIME <= 750) || (TIME >= 810 && TIME <= 960)) && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 2) && !D:101
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 2
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+;;;午前の授業処理
+	ELSEIF (TALENT:ARG:学生 || CFLAG:ARG:仕事 == 1) && TIME >= 510 && TIME <= 749 && !D:101
+		IF TALENT:ARG:学年 == 1 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 8)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 8
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSEIF TALENT:ARG:学年 == 2 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 2)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 2
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSEIF TALENT:ARG:学年 == 3 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 9)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 9
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSE
+			CFLAG:ARG:待機時間 += 750 - TIME
+			IF TFLAG:COM用変数 == 0
+				BASE:ARG:学习成绩 = MIN(BASE:ARG:学习成绩 + CFLAG:ARG:待機時間 / 6,MAXBASE:ARG:学习成绩)
+				EXP:ARG:学習経験 += CFLAG:ARG:待機時間 * 4 / 60 / 5
+				MAXBASE:ARG:气力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:气力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:ストレス -= CFLAG:ARG:待機時間 * 40 / 60
+			ELSE
+				EXP:ARG:運動経験 += CFLAG:ARG:待機時間 * 2 / 60
+				MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:气力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 50 / 60
+			ENDIF
+		ENDIF
+;;;午後の授業処理
+	ELSEIF (TALENT:ARG:学生 || CFLAG:ARG:仕事 == 1) && TIME >= 810 && TIME <= 959 && !D:101
+		IF TALENT:ARG:学年 == 1 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 8)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 8
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSEIF TALENT:ARG:学年 == 2 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 2)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 2
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSEIF TALENT:ARG:学年 == 3 && !(CFLAG:ARG:現在地区 == 1 && CFLAG:ARG:現在位置 == 9)
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = 9
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ELSE
+			CFLAG:ARG:待機時間 += 960 - TIME
+			IF TFLAG:COM用変数 == 0
+				BASE:ARG:学习成绩 = MIN(BASE:ARG:学习成绩 + CFLAG:ARG:待機時間 / 6,MAXBASE:ARG:学习成绩)
+				EXP:ARG:学習経験 += CFLAG:ARG:待機時間 * 4 / 60 / 5
+				MAXBASE:ARG:气力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:气力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:ストレス -= CFLAG:ARG:待機時間 * 40 / 60
+			ELSE
+				EXP:ARG:運動経験 += CFLAG:ARG:待機時間 * 2 / 60
+				MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:气力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 50 / 60
+			ENDIF
+		ENDIF
+;;;部活処理
+	ELSEIF (TALENT:ARG:学生 || CFLAG:ARG:仕事 == 1) && CFLAG:ARG:部活 && TIME >= 960 && TIME <= 1129
+		IF CFLAG:ARG:現在位置 == CLUB_PLACE(CFLAG:ARG:部活) && CFLAG:ARG:現在地区 == 1
+			CFLAG:ARG:待機時間 += 1130 - TIME
+			IF CFLAG:ARG:部活 < 30
+				EXP:ARG:運動経験 += CFLAG:ARG:待機時間 * 2 / 60
+				MAXBASE:ARG:体力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:气力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 50 / 60
+			ELSE
+				BASE:ARG:学习成绩 = MIN(BASE:ARG:学习成绩 + CFLAG:ARG:待機時間 / 6,MAXBASE:ARG:学习成绩)
+				EXP:ARG:学習経験 += CFLAG:ARG:待機時間 * 4 / 60 / 5
+				MAXBASE:ARG:气力 += CFLAG:ARG:待機時間 * 3 / 60
+				DOWNBASE:ARG:体力 -= CFLAG:ARG:待機時間 * 20 / 60
+				DOWNBASE:ARG:气力 += CFLAG:ARG:待機時間 * 40 / 60
+				DOWNBASE:ARG:疲労 -= CFLAG:ARG:待機時間 * 40 / 60
+			ENDIF
+			TB:(CFLAG:ARG:現在地区):(CFLAG:ARG:現在位置):ARG += 2
+		ELSE
+			TCVAR:ARG:目的地区 = 1
+			TCVAR:ARG:目的位置 = CLUB_PLACE(CFLAG:ARG:部活)
+			CFLAG:ARG:モラル = MAX(CFLAG:ARG:C - FLAG:危険度 * 200,0)
+			CALL NPC_MOVEMENT(ARG)
+			CALL SOURCE_CHECKS(ARG)
+		ENDIF
+	ELSE
+		IF TIME % 60 >= 55 && TIME % 60 <= 59
+			CALL TEIJI_DOUSHITU(ARG)
+		ENDIF
+;;;まず移動判定
+;;;CFLAG:ARG:A:その時間の目的地区	CFLAG:ARG:B:その時間の目的位置	CFLAG:ARG:C:その時間のモラル
+		IF TIME == 1440
+			A = 123
+			B = 153
+			C = 183
+		ELSE
+			A = (TIME / 60) + 100
+			B = (TIME / 60) + 130
+			C = (TIME / 60) + 160
+		ENDIF
+;;;マップ0が全てFELSEになるので対応が必要
+;;;		IF CFLAG:ARG:A && CFLAG:ARG:B
+		IF CFLAG:ARG:B && (!D:101 || CFLAG:ARG:仕事 == 2 || CFLAG:ARG:仕事 == 4)
+			TCVAR:ARG:目的地区 = CFLAG:ARG:A
+			TCVAR:ARG:目的位置 = CFLAG:ARG:B
+			CFLAG:ARG:モラル = MAX(CFLAG:ARG:C - FLAG:危険度 * 200,0)
+			IF !(CFLAG:ARG:現在地区 == CFLAG:ARG:A && CFLAG:ARG:現在位置 == CFLAG:ARG:B)
+				CALL NPC_MOVEMENT(ARG)
+				CALL SOURCE_CHECKS(ARG)
+			ENDIF
+		ELSE
+			IF TIME % 60 >= 0 && TIME % 60 <= 4
+;;;CFLAG:ARG:Aを聞くのが間違ってる（0で正の場合あり）
+;;;				IF CFLAG:ARG:A
+;;;					CFLAG:ARG:目的地区 = CFLAG:ARG:A
+;;;				ELSE
+					CFLAG:ARG:目的地区 = RAND(3)
+;;;				ENDIF
+				R = 0
+				FOR P,1,50
+					IF PLACE_NAME(CFLAG:ARG:目的地区,P) != ""
+						Q = RAND(100)
+						IF R < Q
+							R = Q
+							S = P
+						ENDIF
+					ENDIF
+				NEXT
+				IF S
+					CFLAG:ARG:目的位置 = S
+				ELSE
+					CFLAG:ARG:目的位置 = 1
+				ENDIF
+			ENDIF
+			IF CFLAG:ARG:目的位置
+				TCVAR:ARG:目的地区 = CFLAG:ARG:目的地区
+				TCVAR:ARG:目的位置 = CFLAG:ARG:目的位置
+				CFLAG:ARG:モラル = MAX(CFLAG:ARG:C - FLAG:危険度 * 200,0)
+				IF !(CFLAG:ARG:現在地区 == TCVAR:ARG:目的地区 && CFLAG:ARG:現在位置 == TCVAR:ARG:目的位置)
+					CALL NPC_MOVEMENT(ARG)
+					CALL SOURCE_CHECKS(ARG)
+				ENDIF
+			ENDIF
+		ENDIF
+;;;移動以外の処理
+;;;襲い掛かるをやめてみる
+;;;		CALL COM_ABLE1021(ARG)
+;;;		IF RESULT && (((BASE:MASTER:刺激度 * 3 + BASE:MASTER:容姿) * SQRT(BASE:ARG:興奮度) / 100) > (300 - FLAG:危険度 * 100 + RAND(400) + (CFLAG:ARG:モラル * 3 / 4))) && !(BASE:LOCAL:体力 < 500)
+;;;			;PRINTFORMW {(BASE:MASTER:刺激度 * 3 + BASE:MASTER:容姿) * SQRT(BASE:ARG:興奮度) / 100}
+;;;			CALL COM1021(ARG)
+		IF (CFLAG:ARG:仕事 == 2 && !D:101 && (TIME >= 1080 || TIME <= 1049)) || (CFLAG:ARG:仕事 == 2 && D:101 && TIME >= 1080)
+			CFLAG:ARG:待機時間 += 5
+		ELSEIF CFLAG:ARG:仕事 == 4 && TIME >= 600 && TIME <= 1140
+			CFLAG:ARG:待機時間 += 5
+		ELSEIF CFLAG:ARG:仕事 == 1 && TIME <= 960
+			CFLAG:ARG:待機時間 += 5
+		ELSEIF !D:101 && TALENT:ARG:家族 && TIME <= 660
+			CFLAG:ARG:待機時間 += 5
+		ELSE
+			IF GETBIT(DA:(CFLAG:LOCAL:現在地区):(CFLAG:LOCAL:現在位置),8)
+				CALL NPC_AUTOACTION2(ARG)
+			ELSE
+				CALL NPC_AUTOACTION1(ARG)
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+@TEIJI_DOUSHITU(ARG)
+FOR D,1,CHARANUM
+	IF !CFLAG:D:会话 && !TCVAR:D:イベント && !(D == ARG) && CFLAG:D:現在位置 == CFLAG:ARG:現在位置 && CFLAG:D:現在地区 == CFLAG:ARG:現在地区 && !TCVAR:D:衰弱 && !TCVAR:D:睡眠 && (CFLAG:D:現在位置 != 30 || CFLAG:D:現在地区 != 0)
+		J:101 = ((BASE:D:刺激度 * 2 + BASE:D:容姿) * SQRT(BASE:ARG:性欲 / 2000) - 1400) / 50
+		IF J:101 > 0
+			IF CFLAG:ARG:モラル == 0
+				TA:ARG:D:4 += J:101 * 10
+			ELSE
+				TA:ARG:D:4 += J:101 * 1000 / CFLAG:ARG:モラル
+			ENDIF
+		ENDIF
+	ENDIF
+NEXT
+

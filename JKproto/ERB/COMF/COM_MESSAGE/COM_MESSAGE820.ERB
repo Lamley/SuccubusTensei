@@ -1,0 +1,150 @@
+﻿;===============================================================================
+;痴漢カウンターコマンド
+;===============================================================================
+;--------------------------------------------------------------------------
+;舐める
+;--------------------------------------------------------------------------
+@COM_MESSAGE_820(ARG)
+
+PRINTFORML ＜舐める＞
+IF T:102 == 0
+	IF T:104
+		ARG = (TCVAR:1:行為対象)
+	ELSE
+		ARG = 1
+	ENDIF
+	PRINTFORM %CALLNAME:MASTER%简直是在挑衅啊
+		PRINTFORM %CALLNAME:(TCVAR:MASTER:行為対象)%的脸
+	PRINTL 有些气愤…
+ENDIF
+
+;--------------------------------------------------------------------------
+;胸を触らせる
+;--------------------------------------------------------------------------
+@COM_MESSAGE_821
+
+PRINTFORML ＜胸を触らせる＞
+PRINTFORM %CALLNAME:MASTER%抓住了痴汉玩弄自己的手、
+PRINTFORM 按在自己
+;绝壁 or (男人＋並乳)
+IF TALENT:MASTER:胸围サイズ == -2 || (TALENT:MASTER:性別 == 2 && TALENT:MASTER:胸围サイズ == 0)
+	PRINTFORML 平坦的胸上。
+ELSE
+	;巨乳 or 爆乳
+	IF TALENT:MASTER:胸围サイズ >= 1
+		PRINTFORM 自豪的丰乳
+
+	ELSEIF TALENT:MASTER:胸围サイズ == 1
+			PRINTFORM 小巧的乳房
+	ELSE
+			PRINTFORM 自豪的美乳
+	ENDIF
+	PRINTFORML 上揉动。
+ENDIF
+PRINTFORM 痴汉的手一下子明白了%CALLNAME:MASTER%的意图、
+;上半身上衣あり
+IF TEQUIP:MASTER:上半身上衣
+	IF BASE:MASTER:興奮度 >= 500 && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 钻入衣服、
+	ELSE
+		PRINTFORM 、在衣服上
+	ENDIF
+;上半身下着あり
+ELSEIF TEQUIP:MASTER:上半身下着
+	IF BASE:MASTER:興奮度 >= 500 && BASE:(TCVAR:MASTER:行為対象):興奮度 >= 500
+		PRINTFORM 钻入内衣、
+	ELSE
+		PRINTFORM 、隔着内衣
+	ENDIF
+ENDIF
+PRINTFORM 在胸上
+;PALAM情欲Lv3以上
+IF PALAM:(TCVAR:MASTER:行為対象):情欲 >= PALAMLV:3
+	PRINTFORMW 鼻息粗重的揉搓着。
+;PALAM情欲Lv1以上
+ELSEIF PALAM:(TCVAR:MASTER:行為対象):情欲 >= PALAMLV:1
+	PRINTFORMW 感受着掌握全乳的触觉。
+ELSE
+	PRINTFORMW 高兴的摩擦着。
+ENDIF
+
+;--------------------------------------------------------------------------
+;乳首を探る
+;--------------------------------------------------------------------------
+@COM_MESSAGE_822
+
+PRINTFORML ＜乳首を探る＞
+PRINTFORM %CALLNAME:MASTER%掌握了痴汉的位置、
+;绝壁 or (男人＋並乳)
+IF TALENT:(TCVAR:MASTER:行為対象):胸围サイズ == -2 || (TALENT:(TCVAR:MASTER:行為対象):性別 == 2 && TALENT:(TCVAR:MASTER:行為対象):胸围サイズ == 0)
+	PRINTFORM 平坦胸口的中心
+;巨乳 or 爆乳
+ELSEIF TALENT:(TCVAR:MASTER:行為対象):胸围サイズ >= 1
+	PRINTFORM 丰乳的顶端
+ELSE
+	SIF TALENT:(TCVAR:MASTER:行為対象):胸围サイズ == 1
+		PRINTFORM 小巧的
+	PRINTFORM 乳房的中心
+ENDIF
+;PALAM情欲Lv4以上
+IF PALAM:(TCVAR:MASTER:行為対象):情欲 >= PALAMLV:4
+	PRINTFORM 变硬了的
+;PALAM情欲Lv2以上
+ELSEIF PALAM:(TCVAR:MASTER:行為対象):情欲 >= PALAMLV:2
+	PRINTFORM 正在变硬的
+ELSE
+	PRINTFORM 依然柔软的
+ENDIF
+PRINTFORML 乳头、
+;上半身下着あり
+IF TEQUIP:(TCVAR:MASTER:行為対象):上半身上衣
+	PRINTFORM 在衣服外面
+;上半身上衣あり
+ELSEIF TEQUIP:(TCVAR:MASTER:行為対象):上半身下着
+	PRINTFORM 在内衣外面
+ENDIF
+PRINTFORML 寻求着刺激。
+PRINTFORML %CALLNAME:MASTER%积极的表现让痴汉更加兴奋了。
+
+;--------------------------------------------------------------------------
+;股間をさする
+;--------------------------------------------------------------------------
+@COM_MESSAGE_823
+
+PRINTFORML ＜股間をさする＞
+PRINTFORM %CALLNAME:MASTER%在痴汉胯下的
+SIF TCVAR:(TCVAR:MASTER:行為対象):601
+	PRINTFORM 裤子外面
+PRINTFORML 诱惑而温柔的抚摸着。
+;男性器あり
+IF TALENT:(TCVAR:MASTER:行為対象):性別 & 2
+	PRINTFORML 痴汉的阴茎勃起得凶猛无比。
+ELSE
+	PRINTFORML 痴汉的阴蒂变硬了。
+ENDIF
+
+;--------------------------------------------------------------------------
+;足を踏む
+;--------------------------------------------------------------------------
+@COM_MESSAGE_825
+
+PRINTFORML ＜足を踏む＞
+PRINTFORM %CALLNAME:MASTER%对着痴汉的脚
+IF TALENT:MASTER:施虐狂 || ABL:MASTER:施虐属性 >= 3
+	PRINTFORM 不假思索的跺下、用力的碾动着脚后跟。
+ELSEIF TALENT:MASTER:度胸 == -1
+	PRINTFORML 惊恐的跺下脚后跟。
+ELSE
+	PRINTFORML 践踏起来。
+ENDIF
+IF TALENT:(TCVAR:MASTER:行為対象):受虐狂 || ABL:(TCVAR:MASTER:行為対象):受虐属性 >= 3
+	PRINTFORML 啊、
+	PRINTFORML 
+	PRINTFORML 痴汉痛苦的忍受着，没有退开脚。
+	PRINTFORML 倒是%CALLNAME:MASTER%显得有些兴奋了。
+	SIF TALENT:MASTER:度胸 == -1
+		PRINTFORML 这种行为%CALLNAME:MASTER%完全无法理解啊。
+ELSE
+	PRINTFORML 痴汉发出吃痛的低呼、手上的动作变弱了。
+ENDIF
+

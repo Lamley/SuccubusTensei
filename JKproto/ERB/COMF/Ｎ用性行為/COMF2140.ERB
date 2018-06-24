@@ -1,0 +1,154 @@
+﻿;口塞球
+@COM_ABLE2140(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,0)
+	RETURN 0
+SIF !EQUIP:LOCAL:口塞球
+	RETURN 0
+;;;SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+;;;	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+;;;2012/02/07 従順2以上　以外は無理にした
+SIF !(ABL:(TCVAR:LOCAL:行為対象):従順 >= 2)
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(2140)
+
+;-------------------------------------------------
+;口塞球
+;-------------------------------------------------
+@COM2140(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 口塞球(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+;紧缚经验が高いと消費減少
+IF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:3 / 2
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 80
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 100
+ELSEIF EXP:(TCVAR:ARG:行為対象):56 < EXPLV:4 / 2
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 60
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 80
+ELSE
+	DOWNBASE:(TCVAR:ARG:行為対象):体力 += 40
+	DOWNBASE:(TCVAR:ARG:行為対象):气力 += 60
+ENDIF
+
+SOURCE:(TCVAR:ARG:行為対象):痛苦 = 50
+SOURCE:(TCVAR:ARG:行為対象):達成 = 50
+SOURCE:(TCVAR:ARG:行為対象):露出 = 80
+SOURCE:(TCVAR:ARG:行為対象):屈従 = 150
+SOURCE:(TCVAR:ARG:行為対象):逸脱 = 80
+SOURCE:(TCVAR:ARG:行為対象):反感 = 20
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:(TCVAR:ARG:行為対象):自己愛 < 0 || TALENT:(TCVAR:ARG:行為対象):反抗
+	SOURCE:(TCVAR:ARG:行為対象):鬱屈 += 30
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,1)
+CFLAG:ARG:待機時間 += 2
+;口塞球の着脱
+IF TEQUIP:(TCVAR:ARG:行為対象):口塞球 == 1
+	TEQUIP:(TCVAR:ARG:行為対象):口塞球 = 0
+ELSE
+	TEQUIP:(TCVAR:ARG:行為対象):口塞球 = 1
+ENDIF
+;;;TEQUIP:(TCVAR:ARG:行為対象):91 = 1 - TEQUIP:(TCVAR:ARG:行為対象):91
+;;;IF TEQUIP:90
+;;;	T = 0
+
+EXP:(TCVAR:ARG:行為対象):紧缚经验 += 2
+EXP:ARG:道具使用経験 ++
+
+VARSET ARG
+RETURN 1
+
+;;;以下は別処理で行っている為無意味（コピー元を崩さない為残してる）
+;-------------------------------------------------
+;-------------------------------------------------
+;-------------------------------------------------
+;口塞球装備中
+;-------------------------------------------------
+;;;@EQUIP_COM45
+
+;;;PRINTL ＜口塞球装備中＞
+
+;紧缚经验が高いと消費減少
+;;;IF EXP:51 < EXPLV:3
+;;;	LOSEBASE:0 += 50
+;;;	LOSEBASE:1 += 100
+;;;ELSEIF EXP:51 < EXPLV:4
+;;;	LOSEBASE:0 += 40
+;;;	LOSEBASE:1 += 80
+;;;ELSE
+;;;	LOSEBASE:0 += 30
+;;;	LOSEBASE:1 += 60
+;;;ENDIF
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+;ABL:受虐属性をみる
+;;;IF ABL:21 == 0
+;;;	A = 40
+;;;ELSEIF ABL:21 == 1
+;;;	A = 120
+;;;ELSEIF ABL:21 == 2
+;;;	A = 250
+;;;ELSEIF ABL:21 == 3
+;;;	A = 450
+;;;ELSEIF ABL:21 == 4
+;;;	A = 600
+;;;ELSE
+;;;	A = 750
+;;;ENDIF
+
+;PALAM:情欲をみる
+;;;IF PALAM:5 < PALAMLV:1
+;;;	TIMES A , 0.80
+;;;ELSEIF PALAM:5 < PALAMLV:2
+;;;	TIMES A , 0.90
+;;;ELSEIF PALAM:5 < PALAMLV:3
+;;;	TIMES A , 1.00
+;;;ELSEIF PALAM:5 < PALAMLV:4
+;;;	TIMES A , 1.10
+;;;ELSEIF PALAM:5 >= PALAMLV:4
+;;;	TIMES A , 1.20
+;;;ENDIF
+
+;;;SOURCE:12 += A
+;;;SOURCE:13 += A
+;;;SOURCE:14 += A
+;;;SOURCE:16 += A
+
+;-------------------------------------------------
+;経験上昇
+;-------------------------------------------------
+;;;IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+;;;	PRINTS EXPNAME:40
+;;;	PRINTL +1
+;;;	EXP:40 += 1
+;;;ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+;;;	PRINTS EXPNAME:41
+;;;	PRINTL +1
+;;;	EXP:41 += 1
+;;;ENDIF
+
+;;;EXP:51 += 1
+;;;PRINTL 紧缚经验＋１
+

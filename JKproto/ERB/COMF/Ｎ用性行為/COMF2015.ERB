@@ -1,0 +1,361 @@
+﻿;足交施虐
+@COM_ABLE2015(ARG)
+VARSET LOCAL
+LOCAL = ARG
+VARSET ARG
+SIF !TCVAR:LOCAL:行為対象
+	RETURN 0
+;対象者が男性器のみ
+SIF !GETBIT(TALENT:(TCVAR:LOCAL:行為対象):2,1)
+	RETURN 0
+;対象者が貞操帯装着時は不可
+SIF TEQUIP:(TCVAR:LOCAL:行為対象):下半身下着 == 373
+	RETURN 0
+;行為者が绳子装着時は不可
+SIF TEQUIP:LOCAL:绳子
+	RETURN 0
+
+SIF !CAN_COM2015(LOCAL,TCVAR:LOCAL:行為対象)
+	RETURN 0
+
+RETURN GLOBAL_COMABLE(2015)
+
+;-------------------------------------------------
+;足交施虐
+;-------------------------------------------------
+@COM2015(ARG)
+VARSET LOCAL
+
+PRINTL 
+PRINTFORML %"=" * 107%
+PRINTFORML 足交施虐(%CALLNAME:ARG%,%CALLNAME:(TCVAR:ARG:行為対象)%)
+;-------------------------------------------------
+;ソース追加処理
+;-------------------------------------------------
+;消費体力、气力
+DOWNBASE:ARG:体力 += 10
+DOWNBASE:ARG:气力 += 50
+DOWNBASE:(TCVAR:ARG:行為対象):体力 += 10
+DOWNBASE:(TCVAR:ARG:行為対象):气力 += 50
+
+SOURCE:ARG:屈従 = 5
+SOURCE:ARG:逸脱 = 1
+SOURCE:ARG:不潔 = 1
+
+;ABL:侍奉精神をみる（性行動、達成、不潔）
+IF ABL:ARG:13 == 0
+	SOURCE:ARG:性行動 = 3
+	SOURCE:ARG:達成   = 0
+	TIMES SOURCE:ARG:30 , 4.00
+ELSEIF ABL:ARG:13 == 1
+	SOURCE:ARG:性行動 = 3
+	SOURCE:ARG:達成   = 1
+	TIMES SOURCE:ARG:30 , 2.50
+ELSEIF ABL:ARG:13 == 2
+	SOURCE:ARG:性行動 = 4
+	SOURCE:ARG:達成   = 1
+	TIMES SOURCE:ARG:30 , 1.50
+ELSEIF ABL:ARG:13 == 3
+	SOURCE:ARG:性行動 = 4
+	SOURCE:ARG:達成   = 2
+	TIMES SOURCE:ARG:30 , 1.00
+ELSEIF ABL:ARG:13 == 4
+	SOURCE:ARG:性行動 = 5
+	SOURCE:ARG:達成   = 2
+	TIMES SOURCE:ARG:30 , 0.50
+ELSE
+	SOURCE:ARG:性行動 = 5
+	SOURCE:ARG:達成   = 3
+	TIMES SOURCE:ARG:30 , 0.10
+ENDIF
+
+;ABL:技巧をみる（性行動、達成）
+IF ABL:ARG:12 == 0
+	TIMES SOURCE:ARG:11 , 0.50
+	TIMES SOURCE:ARG:12 , 0.50
+ELSEIF ABL:ARG:12 == 1
+	TIMES SOURCE:ARG:11 , 0.80
+	TIMES SOURCE:ARG:12 , 0.80
+ELSEIF ABL:ARG:12 == 2
+	TIMES SOURCE:ARG:11 , 1.00
+	TIMES SOURCE:ARG:12 , 1.00
+ELSEIF ABL:ARG:12 == 3
+	TIMES SOURCE:ARG:11 , 1.20
+	TIMES SOURCE:ARG:12 , 1.20
+ELSEIF ABL:ARG:12 == 4
+	TIMES SOURCE:ARG:11 , 1.50
+	TIMES SOURCE:ARG:12 , 1.50
+ELSE
+	TIMES SOURCE:ARG:11 , 2.00
+	TIMES SOURCE:ARG:12 , 2.00
+ENDIF
+
+;ABL:施虐属性をみる（性行動、達成）
+IF ABL:ARG:16 == 0
+	TIMES SOURCE:ARG:11 , 1.00
+	TIMES SOURCE:ARG:12 , 1.00
+ELSEIF ABL:ARG:16 == 1
+	TIMES SOURCE:ARG:11 , 1.20
+	TIMES SOURCE:ARG:12 , 1.20
+ELSEIF ABL:ARG:16 == 2
+	TIMES SOURCE:ARG:11 , 1.40
+	TIMES SOURCE:ARG:12 , 1.40
+ELSEIF ABL:ARG:16 == 3
+	TIMES SOURCE:ARG:11 , 1.60
+	TIMES SOURCE:ARG:12 , 1.60
+ELSEIF ABL:ARG:16 == 4
+	TIMES SOURCE:ARG:11 , 1.80
+	TIMES SOURCE:ARG:12 , 1.80
+ELSE
+	TIMES SOURCE:ARG:11 , 2.00
+	TIMES SOURCE:ARG:12 , 2.00
+ENDIF
+
+;TALENT:施虐狂の場合は２倍（性行動、達成）
+IF TALENT:ARG:82
+	TIMES SOURCE:ARG:11 , 2.00
+	TIMES SOURCE:ARG:12 , 2.00
+ENDIF
+
+;-------------------------------------------------
+;相手の快感上昇
+;-------------------------------------------------
+
+;ABL:Ｃ感觉をみる
+IF ABL:(TCVAR:ARG:行為対象):0 == 0
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 20
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 1
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 22
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 2
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 25
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 3
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 28
+ELSEIF ABL:(TCVAR:ARG:行為対象):0 == 4
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 33
+ELSE
+	SOURCE:(TCVAR:ARG:行為対象):快Ｃ = 38
+ENDIF
+
+;ABL:受虐属性をみる（快Ｃ）
+IF ABL:(TCVAR:ARG:行為対象):15 == 0
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 1.00
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 1
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 1.20
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 2
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 1.40
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 3
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 1.60
+ELSEIF ABL:(TCVAR:ARG:行為対象):15 == 4
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 1.80
+ELSE
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 2.00
+ENDIF
+
+;TALENT:受虐狂の場合は２倍（快Ｃ）
+IF TALENT:(TCVAR:ARG:行為対象):83
+	TIMES SOURCE:(TCVAR:ARG:行為対象):0 , 2.00
+ENDIF
+
+;-------------------------------------------------
+;特殊ソース処理
+;-------------------------------------------------
+;压抑、反抗持ちには、抑郁ソース追加
+SIF TALENT:ARG:自己愛 < 0 || TALENT:ARG:反抗
+	SOURCE:ARG:鬱屈 += 20
+
+
+;-------------------------------------------------
+;汚れの処理
+;-------------------------------------------------
+;奴隷のＰ⇔調教者の手の汚れが移動
+STAIN:(TCVAR:ARG:行為対象):2 |= STAIN:ARG:1
+STAIN:ARG:1 |= STAIN:(TCVAR:ARG:行為対象):2
+
+;-------------------------------------------------
+;経験の処理
+;-------------------------------------------------
+CALL HETEROSEX_EXP(ARG,TCVAR:ARG:行為対象,2)
+
+
+
+
+;嗜虐快乐经验
+;施虐狂又は欲望又は施虐属性
+IF TALENT:ARG:82 == 1 || (ABL:ARG:11 >= 3 && ABL:ARG:16 >= 3)
+	EXP:ARG:嗜虐快乐经验 += 3
+ELSEIF ABL:ARG:11 >= 3 && ABL:ARG:16 >= 1
+	EXP:ARG:嗜虐快乐经验 += 2
+ELSE
+	EXP:ARG:嗜虐快乐经验 += 1
+ENDIF
+CFLAG:ARG:待機時間 += 2
+
+VARSET ARG
+RETURN 1
+
+
+@CAN_COM2015(ARG,ARG:1)
+#FUNCTION
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+A = 0
+S = 0
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+A = COM_ORDER(ARG,ARG:1)
+
+;ABL:欲望
+IF ABL:ARG:11
+	SIF S
+	A += ABL:ARG:欲望 * 1
+	S = 1
+ENDIF
+;ABL:侍奉精神
+IF ABL:ARG:13
+	SIF S
+	A += ABL:ARG:13 * 4
+	S = 1
+ENDIF
+;ABL:施虐属性
+IF ABL:ARG:16
+	SIF S
+	A += ABL:ARG:16 * 5
+	S = 1
+ENDIF
+;ABL:精液成瘾
+IF ABL:ARG:31
+	SIF S
+	A += ABL:ARG:31 * 1
+	S = 1
+ENDIF
+
+;快乐刻印
+IF MARK:ARG:1
+	SIF S
+	A += MARK:ARG:1 * 1
+	S = 1
+ENDIF
+
+
+;PALAM:情欲
+IF PALAM:ARG:11 < PALAMLV:1
+	L = 0
+ELSEIF PALAM:ARG:11 < PALAMLV:2
+	L = 1
+ELSEIF PALAM:ARG:11 < PALAMLV:3
+	L = 2
+ELSEIF PALAM:ARG:11 < PALAMLV:4
+	L = 3
+ELSEIF PALAM:ARG:11 < PALAMLV:5
+	L = 4
+ELSE
+	L = 5
+ENDIF
+IF L
+	SIF S
+	A += L * 1
+	S = 1
+ENDIF
+
+;害羞
+IF TALENT:ARG:33 == 1
+	A -= 3
+	S = 1
+ENDIF
+;汚臭钝感
+IF TALENT:ARG:61 >= 1
+	SIF S
+	A += 1
+	S = 1
+ENDIF
+;汚臭敏感
+IF TALENT:ARG:61 < 0
+	A -= 1
+	S = 1
+ENDIF
+;献身
+IF TALENT:ARG:62
+	SIF S
+	A += 6
+	S = 1
+ENDIF
+;否定快感
+IF TALENT:ARG:70 < 0
+	A -= 3
+	S = 1
+ENDIF
+;讨厌男人
+IF (TALENT:ARG:81 == 1) && (TALENT:(TCVAR:ARG:行為対象):2 == 1)
+	A -= 8
+	S = 5
+ENDIF
+;性倒错
+IF TALENT:ARG:80
+	SIF S
+	A += 4
+	S = 4
+ENDIF
+;愛（怀孕、育儿中、母性に変更）
+IF TALENT:ARG:153 | TALENT:ARG:154 | TALENT:ARG:155
+	SIF S
+	A += 5
+	S = 5
+ENDIF
+;施虐狂
+IF TALENT:ARG:82
+	SIF S
+	A += 10
+	S = 4
+ENDIF
+;小恶魔
+IF TALENT:ARG:86
+	SIF S
+	A += 4
+	S = 4
+ENDIF
+;調教者が扶她
+IF (TALENT:ARG:2 & 3) == 3
+	SIF S
+	A += 8
+	S = 1
+ENDIF
+;汚れは取り敢えず無視
+;;;Y = 0
+;愛液の汚れ
+;;;SIF STAIN:PLAYER:2 & 1
+;;;	Y += 1
+;精液の汚れ
+;;;SIF STAIN:PLAYER:2 & 4
+;;;	Y += 3
+;アナルの汚れ
+;;;SIF STAIN:PLAYER:2 & 8
+;;;	Y += 7
+;母乳の汚れ
+;;;SIF STAIN:PLAYER:2 & 16
+;;;	Y += 1
+;尿の汚れ
+;;;SIF STAIN:PLAYER:4 & 32
+;;;	Y += 3
+;;;SIF TALENT:61
+;;;	Y /= 3
+;;;SIF TALENT:62
+;;;	Y *= 2
+;足交侍奉では汚れがそれほど影響しない
+;;;Y /= 3
+;汚れあり
+;;;IF Y
+;;;	A -= Y
+;;;	S = 1
+;;;ENDIF
+
+;合計を表示(22以上で実行)
+
+V = 22
+
+;実行できない
+SIF A < V
+	RETURNF 0
+RETURNF 1
+
