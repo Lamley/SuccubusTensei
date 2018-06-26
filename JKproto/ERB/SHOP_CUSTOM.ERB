@@ -388,7 +388,7 @@ PRINTL
 @CUSTOM_FAMILY
 VARSET LOCAL
 LOCAL:0 = 19
-	;0:姐姐 1:姐姐 2:姐姐 3:姐姐 4:妹妹 5:妹妹
+	;0:姐姐 1:姐姐 2:姐姐 3:妹妹 4:妹妹 5:妹妹
 
 PRINTL 决定家庭的构成吧
 $INPUT_LOOP
@@ -405,7 +405,7 @@ FOR LOCAL:1, 0,6
 		CASE 2
 			LOCALS += "姐姐"
 		CASE 3
-			LOCALS += "姐姐"
+			LOCALS += "妹妹"
 		CASE 4
 			LOCALS += "妹妹"
 		CASE 5
@@ -416,7 +416,7 @@ FOR LOCAL:1, 0,6
 	
 	GETBIT LOCAL:0, LOCAL:1
 	SIF RESULT:0 != 1
-		SETCOLOR 100,100,100
+		SETCOLOR 220,20,60
 	
 	PRINTFORM %LOCALS,15,LEFT%
 

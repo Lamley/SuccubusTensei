@@ -1,0 +1,132 @@
+﻿;@SYSTEM_TITLE
+
+
+
+;批量賦予STR:0到STR:6值的方法
+PRINTFORMW FLAG:0的數值是{FLAG:灵梦的年龄}
+
+FLAG:灵梦的年龄 = 16
+
+PRINTFORMW 灵梦的年齡是{FLAG:灵梦的年龄}歲
+
+A = 1
+
+;賦予A初始值
+
+$SHOW_STATUS
+
+;$設定標籤，$和GOTO只能在同一個函數內使用，類似@和CALL
+
+IF A > 6
+
+A = 6
+
+ELSEIF A < 0
+
+A = 0
+
+ELSE
+
+A = A
+
+ENDIF
+
+;設定A的範圍
+
+;可用LIMIT A, 0, 6 A = RESULT代替
+
+ALIGNMENT CENTER
+
+;居中
+
+DRAWLINE
+
+;畫線
+
+PRINTFORML 靈夢%STR:A%
+
+DRAWLINE
+
+PRINTFORM % "[0] 摸PP", 20, LEFT %
+
+PRINTFORML % "[1] 摸胸", 20, LEFT %
+
+PRINTFORM % "[2] 彈額頭", 20, LEFT %
+
+PRINTFORML % "[3] 打PP", 20, LEFT %
+
+PRINTFORM % "[999] 不玩了", 20, LEFT %
+
+PRINTFORML % "", 20, LEFT %
+
+;這個格式是為了設定每個按鈕的長度，不會因為文字長度不同而對不齊，具體效果可運行來看
+
+ALIGNMENT LEFT
+
+;左對齊
+
+$INPUTLOOP
+
+INPUT
+
+IF RESULT == 0
+
+A += 1
+
+CLEARLINE LINECOUNT
+
+;清屏
+
+GOTO SHOW_STATUS
+
+;跳轉到標籤
+
+ELSEIF RESULT == 1
+
+A += 2
+
+;別問我為什麼摸胸加得多
+
+CLEARLINE LINECOUNT
+
+GOTO SHOW_STATUS
+
+ELSEIF RESULT == 2
+
+A -= 1
+
+CLEARLINE LINECOUNT
+
+GOTO SHOW_STATUS
+
+ELSEIF RESULT == 3
+
+CLEARLINE 1
+
+A -= 2
+
+CLEARLINE LINECOUNT
+
+GOTO SHOW_STATUS
+
+ELSEIF RESULT == 999
+
+PRINTFORMW 再見啦
+
+QUIT
+
+ELSE
+
+CLEARLINE 1
+
+;清除輸入的文字
+
+REUSELASTLINE 沒有這樣的命令
+
+;REUSELASTLINE類似PRINTFORM的用法，顯示文字後會返回輸入指令，大致只有在這種地方會用
+
+GOTO INPUTLOOP
+
+ENDIF
+
+;=====================================

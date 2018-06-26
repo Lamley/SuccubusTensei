@@ -20,7 +20,7 @@ CALL CUSTM_OTHER
 CFLAG:MASTER:起床時間 = 420
 CFLAG:MASTER:就寝時間 = 22 * 60
 
-;キャラ毎に初期TA値を設定
+;キャラ毎に初期TA値を設定 角色
 TA:009:001:3 = 50
 
 FOR LOCAL,0,CHARANUM
@@ -539,13 +539,13 @@ FOR LOCAL,1,CHARANUM
 	CSTR:LOCAL:10 = 初期服装
 NEXT
 $INPUT_LOOP02
-PRINTL オープニングを見ますか？
+PRINTL オープニングを見ますか（看开场吗）？
 PRINTL [0] - はい
 PRINTL [1] - いいえ
 INPUT
 IF RESULT == 0
 	DRAWLINE
-	PRINTW （この街を支配しろ！）
+	PRINTW （この街を支配しろ！支配这个城市吧）
 	CLEARLINE 1
 	PRINTW 梦中有人喊了起来。
 	PRINTW 支配？？？
@@ -553,7 +553,7 @@ IF RESULT == 0
 	PRINTW 说什么呢？………嘛！从今天开始，要准备去学校了。
 	PRINTFORMW %CALLNAME:1%是时候起床准备去学校了
 	CLEARLINE 2
-	PRINTW 和邻居家的阿姨一起离开家
+	PRINTW 和邻居家的姐姐一起离开家
 	CLEARLINE 1
 	PRINTL 「早上好」
 	PRINTW 「早上好呀，从今天开始就是高中生了吗，真令人羡慕」
@@ -673,7 +673,7 @@ ENDIF
 
 @SET_BENTO
 DRAWLINE
-PRINTL 母亲、姐姐、妹妹存在的时候，平时会经常做便当吗？
+PRINTL 姐姐、妹妹存在的时候，平时会经常做便当吗？
 
 
 PRINTL [0] - 不需要

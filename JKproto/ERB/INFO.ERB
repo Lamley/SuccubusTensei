@@ -20,6 +20,8 @@ IF TCVAR:MASTER:イベント == 1 || TCVAR:MASTER:イベント == 2
 		PRINTFORML （到着時間:{CFLAG:MASTER:到着時間 / 60}時{CFLAG:MASTER:到着時間 % 60}分）
 	ENDIF
 ENDIF
+;显示目前场景的npc
+
 PRINTFORM {DAY:1}年目{DAY:2}月{DAY:3}日% WEEK(DAY)%曜日
 SETCOLOR 0xFFD700
 PRINTFORM  %TSTR:11%
@@ -47,8 +49,8 @@ J:102 = 1
 FOR J:101,1,CHARANUM
 	SIF TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101) > TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:102)
 		J:102 = J:101
-		PRINTFORM    %NAME:(J:101)%の
-        PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101)}，
+;		PRINTFORM    %NAME:(J:101)%の
+;        PRINTFORM   支配度 = {TB:(CFLAG:1:現在地区):(CFLAG:1:現在位置):(J:101)}，
 NEXT
 
 PRINTFORM   『支配者 = %NAME:(J:102)%
@@ -427,7 +429,7 @@ DAY:3 += 1
 TIME = 0
 ;次の月になるときの処理
 ;;;悪いけど-29や-30や-12は1を代入に直させていただきます。
-IF DAY:3 > 1
+IF DAY:3 > 30
 	CALL SHIHAI_SYUUKEI
 ENDIF
 
