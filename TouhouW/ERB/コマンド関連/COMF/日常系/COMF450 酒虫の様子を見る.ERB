@@ -1,0 +1,67 @@
+﻿@COM450
+#DIM 醸造量
+;FLAG:酒虫 水の種類、50超えると酒の道具番号
+
+VARSET LOCAL
+
+PRINTFORML %CALLNAME:MASTER%往放着酒虫的瓶子里窥去
+PRINTFORML 瓶里装満了%STR:(7000 + FLAG:酒虫)%…
+DRAWLINE
+PRINTFORML [0] 什么也不做
+IF TFLAG:打水
+	PRINTFORML [1] 替换成%STR:(TFLAG:打水 + 7000)%
+ELSE
+	PRINTPLAIN [1] 沒有帯着可以替換的水
+	PRINTL 
+ENDIF
+SIF ITEM:濁酒 >= 5 && FLAG:酒虫 == 1 && DAY:10 < 3
+	PRINTFORML [2] 添加浊酒（消費5浊酒）
+;それ以上手を加えても中身が変化しない場合は表示させないように
+SIF BASE:MASTER:8 >= 2400 && (FLAG:酒虫 < 51 || FLAG:酒虫 == 51)
+	PRINTFORML [3] 操纵時間造酒（消費TSP2400）
+INPUT
+IF RESULT == 1 && TFLAG:打水
+	PRINTFORML %CALLNAME:MASTER%取出了%STR:(7000 + FLAG:酒虫)%并换成了%STR:(TFLAG:打水 + 7000)%
+	;酒ができてた場合
+	IF FLAG:酒虫 > 50
+		醸造量 = 醸造できた量(FLAG:酒虫)
+		PRINTFORML 得到了{醸造量}个%ITEMNAME:(FLAG:酒虫)%
+		ITEM:(FLAG:酒虫) += 醸造量
+	ENDIF
+	DAY:10 = 0
+	FLAG:酒虫 = TFLAG:打水
+	TFLAG:打水 = 0
+ELSEIF RESULT == 2 && ITEM:濁酒 >= 5 && FLAG:酒虫 == 1 && DAY:10 < 3
+	PRINTFORML %CALLNAME:MASTER%把浊酒倒进了瓶子里
+	PRINTFORML 这样応该能快一点吧…
+	DAY:10 += 3
+	ITEM:濁酒-= 5
+;それ以上手を加えても中身が変化しない場合は表示させないように
+ELSEIF RESULT == 3 && BASE:MASTER:8 >= 2400 && (FLAG:酒虫 < 51 || FLAG:酒虫 == 51)
+	PRINTFORML %CALLNAME:MASTER%使用時間停止能力强行加速了瓶中的時间
+	DAY:10 += 1
+	BASE:MASTER:8 -= 2400
+ELSE
+	RETURN -1
+ENDIF
+TIME += 5
+RETURN 1
+
+
+;察看酒虫的様子
+@COM_ABLE450
+;停止中は不可
+SIF FLAG:70 == 1
+	RETURN 0
+;移動実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(450)
+	RETURN RESULT
+;廚房
+SIF CFLAG:MASTER:現在位置 != 拠点_酒虫
+	RETURN 0
+SIF CFLAG:うふふ
+	RETURN 0
+RETURN 1

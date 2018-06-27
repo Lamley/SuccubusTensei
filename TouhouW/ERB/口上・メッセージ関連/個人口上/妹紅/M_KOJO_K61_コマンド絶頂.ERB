@@ -1,0 +1,1628 @@
+﻿;-------------------------------------------------
+;奴隷の絶頂時の口上
+;NOWEX:1～4 CVABＭ絶頂
+;NOWEX:6 二重絶頂
+;NOWEX:7 三重絶頂
+;NOWEX:8 四重絶頂
+;NOWEX:9 五重絶頂
+;NOWEX:10 噴乳
+;NOWEX:11 射精
+;NOWEX:12 放尿
+;適当に組み合わせて使ってください
+;-------------------------------------------------
+@M_KOJO_MESSAGE_PALAMCNG_B_K61
+CALL PALAM_MESSAGE_B
+VARSET LOCAL
+;-------------------------------------------------
+;絶頂
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	;-------------------------------------------------
+	;自慰絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TFLAG:3 == 9
+		IF TEQUIP:50 != PLAYER && TEQUIP:51 != PLAYER
+			IF 陥落状態() >= 4
+				PRINTFORML 「はぁはぁ、いいの、気持ちいいの。自分でしてるのに、%MASTERNAME:61%のじゃないのに」
+				PRINTFORML 「じぶんでいじりながら、イッちゃぅところみててよぉ」
+				PRINTFORML 「んっっんっっっ、んきゅぅぅっっっっっ！！！」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「はぁはぁ、%CALLNAME:MASTER%に見られると体あつくなるのぉ」
+				PRINTFORML 「イク、イクよ、自分でいじりながらイッちゃぅぅぅっっっっっっ！！」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んきゅぅっっ、見られてるだけで感じすぎて、イクぅぅぅっっっっっっっ！！」
+			ELSE
+				PRINTFORML 「はぁはぁ、んくっっ、はぁっっ、自分でいじるの、きもち、いいっ、んくぅぅぅっっっ！！」
+			ENDIF
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「はーはー、きもちいいよぉ、\@ TEQUIP:50 == PLAYER ? おまんこ # しりあな \@犯されながら自分でいじるのきもちいーの」
+				PRINTFORML 「ふぁんっっ！！　んくっっ！！　良い、いいよっっ！！　イクの止められないのっ！！」
+				PRINTFORML 「んくぅぅっっっ！！　ふぁぁぁぁああああああっっっっっっっっ！！」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「\@ TEQUIP:50 == PLAYER ? おまんこ # おしり \@きもちよすぎぃ、自分で\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@とおっぱいいじるの気持ちいい」
+				PRINTFORML 「あっあっああっっっ！！　イクイクイクイクイクぅぅぅっっっっっっっ！！」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「ふにゃぁっっ！　入れられてるのに、いじるの止められないっっ！！　んにゃぁああっっっ！！」
+			ELSE
+				PRINTFORML 「んくぅっっ、入ってる上にいじるのきもち、良いっっ、～～～っっっっっ！！」
+			ENDIF
+		ENDIF
+		PRINTFORMW 
+	;-------------------------------------------------
+	;五重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:五重絶頂
+		IF 陥落状態() >= 4
+			PRINTFORML 「ま、まって、まってっっ！！　みゃっへっっ！　っっっ！！！」
+			PRINTFORML 「～～～～～～～～～～～～～っっっっっっっっっ！！！！！！！」
+			PRINTFORML 「――――っ、………………は、はぁ、んぅ……きもちよしゅぎて、しにゅぅ」
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「イク、全部でイク、イクイク、いくぅぅううううっっっっ！！！！」
+		ELSE
+			PRINTFORML 「くぅっ、んぅっっ、っっっっ！！！」
+		ENDIF
+		PRINTFORMW 
+	ENDIF
+	;-------------------------------------------------
+	;四重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	ELSEIF LOCAL:1 && NOWEX:四重絶頂
+		SELECTCASE NOWEX:四重絶頂
+			;Ｃ＆Ｖ＆Ａ＆Ｂ絶頂
+			CASE 1
+				IF 陥落状態() >= 4
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「だめぇ、おまんこもおしりもおっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんてぇっ！」
+					PRINTFORML 「っっ！！　っっっっ！！！　んぅぅうっっっっ！！　…………は、ん、はぁ、きもちいひ……」
+				ELSEIF 陥落状態() == 2
+				ELSE
+				ENDIF
+				PRINTFORMW 
+			;Ｍ絶頂含む
+			CASEELSE
+				GOTO Ｍ絶頂系
+		ENDSELECT
+		PRINTFORMW 
+	;-------------------------------------------------
+	;三重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	ELSEIF LOCAL:1 && NOWEX:三重絶頂
+		SELECTCASE NOWEX:三重絶頂
+			;Ｃ＆Ｖ＆Ａ絶頂
+			CASE 1
+				IF 陥落状態() >= 4
+					PRINTFORML 「ひぅんっ！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もおまんこもおしりもなんてぇ！！」
+					PRINTFORML 「や、ま、っ！！　～～～～～っっっ！！」
+					PRINTFORML 「………………は、ぁ、ん……すけ、べ、ぇ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「だめ、だめ、だめぇ！　おまんこでイク！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@でイク！　おしりでイク！」
+					PRINTFORML 「ふぁっ！！　ああああっっっっっっ！！！！　…………はぁ、きもち、いいよぉ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「や、おしり！？　ひ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@も！？　おまんこまでぇ！？　っっ、～～～～～～～！！！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「ふぁあっ！！　三ヶ所でなんて、くぅっ！！　ひぁあああああああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっ、んぅぅっっっっっっ！！！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｂ＆Ｖ＆Ａ絶頂
+			CASE 2
+				IF 陥落状態() >= 4
+					PRINTFORML 「やらぁ、おまんこもおしりもおっぱいもなんてぇ……っっ！」
+					PRINTFORML 「んっっ、んぅっっっっ！！　っっっっっっっっっっっっっっっっ！！！！！」
+					PRINTFORML 「……はぁ……はぁはぁ……ん……、あたま、ばかになるぅ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あひぃっっ！！　おまんこおしりおっぱいもなんてぇっ！　ふにゃっあにゅぅっっ！！」
+					PRINTFORML 「ひぁあああああああっっっっ！！　……ふにゅぅ…………」
+				ELSEIF 陥落状態() == 2
+					PRINTFORMW 「や、おしり！？　ひ、おまんこも！？　おっぱいもぉ！？　っっ、～～～～～～～！！！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「ふぁあっ！！　三ヶ所でなんて、くぅっ！！　ひぁあああああああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっ、んぅぅっっっっっっ！！！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｃ＆Ｂ＆Ａ絶頂
+			CASE 3
+				IF 陥落状態() >= 4
+					PRINTFORML 「んきゅぅっっ！？　おひりにゃのにぃ、おみゃんこじゃにゃいにょにぃっっ！！」
+					PRINTFORML 「や、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@も！？　おっぱいみょ！？　ふにゃぁあっっっ！！」
+					PRINTFORML 「っっっっっっっっ！！　っっっ……！　……ふみゅぅ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あふゅ！？　や、やらやらやらやら、おみゃんこいがいでにゃんてっ」
+					PRINTFORML 「ふみゃぁああああっっっっ！！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「や、おしり！？　ひ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@も！？　おっぱいもぉ！？　っっ、～～～～～～～！！！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「ふぁあっ！！　三ヶ所でなんて、くぅっ！！　ひぁあああああああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっ、んぅぅっっっっっっ！！！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｃ＆Ｖ＆Ｂ絶頂
+			CASE 4
+				IF 陥落状態() >= 4
+					PRINTFORML 「やぁ、そんなのやぁ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もおっぱいもおまんこもなんてぇ……」
+					PRINTFORML 「んっっ、ひんっっ！！　んきゅぅぅぅうぅうううっっっっっっっっっっっ！！」
+					PRINTFORML 「はっはっはっっ……はぁ……はぁ、きもちいーよぉ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「ひぁぁっっ！　おまんこおっぱい\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@イク、イッちゃぅ！！」
+					PRINTFORML 「あひぃっ、んきゅぅぅぅうぅうううっっっっっっっっっっっ！！！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「や、おまんこ！？　ひ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@も！？　おっぱいもぉ！？　っっ、～～～～～～～！！！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「ふぁあっ！！　三ヶ所でなんて、くぅっ！！　ひぁあああああああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっ、んぅぅっっっっっっ！！！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｍ絶頂含む
+			CASEELSE
+				GOTO Ｍ絶頂系
+		ENDSELECT
+	;-------------------------------------------------
+	;二重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	ELSEIF LOCAL:1 && NOWEX:二重絶頂
+		SELECTCASE NOWEX:二重絶頂
+			;Ｃ＆Ｖ絶頂
+			CASE 1
+				IF 陥落状態() >= 4
+					PRINTFORML 「おまんここすられるのも、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しごかれるのも気持ちいいっ！」
+					PRINTFORML 「もう、だめ、我慢できないっ！　ふぁあああああああっっっっっっ！！！」
+					PRINTFORML 「……はぁはぁ、ん……気持ちいいよぉ」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「おまんこ良い！！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@良い！！」
+					PRINTFORML 「んっんっんくぅっ！　んぅぅぅぅぅぅぅぅぅぅっっっっっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おまんこも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｃ＆Ａ絶頂
+			CASE 2
+				IF 陥落状態() >= 4
+					PRINTFORML 「\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@良いよぉ、おしりも良いよぉっ！！」
+					PRINTFORML 「やぁ、馬鹿になるばかになっちゃぅ、んきゅぅぅぅぅ！！！！」
+					PRINTFORML 「はひ……おかしく、なりゅぅ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「おしりもっとして、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もっとしてぇっ！！」
+					PRINTFORML 「んっふっ、ひぁああっっ！！　～～～～～～～っっっっっ！！！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おしりも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｖ＆Ａ絶頂
+			CASE 3
+				IF 陥落状態() >= 4
+					PRINTFORML 「や、おまんこもおしりもなんて、だめだめだめぇ……」
+					PRINTFORML 「くぅ、んぅっ……、んーーーーーーーーーーーーっっっっっっっっっ！！」
+					PRINTFORML 「はぁ、はぁ、はぁ……、おまんこおしりくぽくぽされるの、きもちいい……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「おしりだめ、おまんこだめぇ、りょうほうなんて、りょうほうなんてぇ……」
+					PRINTFORML 「んっんっんぅ、っっ、ひぁあああああああっっっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おしりもおまんこもなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｃ＆Ｂ絶頂
+			CASE 4
+				IF 陥落状態() >= 4
+					PRINTFORML 「\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しごかれて、おっぱいもまれていっちゃう」
+					PRINTFORML 「ふぁあっっ！！　あひぃっっっ！！　んきゅぅぅぅぅっっっっっっっ！！」
+					PRINTFORML 「……は、はぁ、ん、これ、すてきぃ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「まって、まってって！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@こするのおっぱいもむのまってっっっ、んくぅっっ！」
+					PRINTFORML 「ひぁあああああああっっっっ！！　……はぁはぁ……イッちゃった……じゃない……ばかぁ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｖ＆Ｂ絶頂
+			CASE 5
+				IF 陥落状態() >= 4
+					PRINTFORML 「いいっ！　おまんこいいの、おっぱいも良いのっ！　ひぁっ！　や、イク、両方でイクぅ」
+					PRINTFORML 「ふぁああっっ！！　ひぅんっっっっ！」
+					PRINTFORML 「……は、ん、おっぱい良い、おまんこも良いよぉ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んきゅっ、や、おまんここつこつしながらおっぱいもみもみしないでよぉっっ！！」
+					PRINTFORML 「んっふっ、あひんっっっっっっっ！！　は……ぁ、はぁ……きもちいーよぉ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おまんこもおっぱいもなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ａ＆Ｂ絶頂
+			CASE 6
+				IF 陥落状態() >= 4
+					PRINTFORML 「や、やら、おひりもおっぱいもなんてやらぁ、おかしきゅなりゅっっ！！」
+					PRINTFORML 「～～～～～～っっっっっっ！！　んんぅぅうーーーーーっっっっっ！！」
+					PRINTFORML 「はひ、ふ、は、しんじゃい、そう……はふぅ」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「ひぅんっっ！　おしりもおっぱいもなんて、だめぇ……」
+					PRINTFORML 「んっひぅっ、ふぁあああああああっっっっっっ！！！　……はぁ、はぁ……んぅ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！！　そんな、おしりもおっぱいもなんて、んく、あーーーーーっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「や、そんな両方攻められたら、んっんっひぅんっっっっ！！」
+				ELSE
+					PRINTFORML 「んっ、やぁ、りょうほうなんて、あふんっっっっ！！」
+				ENDIF
+				PRINTFORMW 
+			;Ｍ絶頂含む
+			CASEELSE
+				GOTO Ｍ絶頂系
+		ENDSELECT
+	;-------------------------------------------------
+	;絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	ELSEIF LOCAL:1
+		IF NOWEX:Ｃ絶頂 && !NOWEX:射精
+			;超強絶頂Ｃ
+			IF NOWEX:Ｃ絶頂 == 3
+				LOCAL:4 ++
+				GOTO 超強絶頂系
+			;強絶頂Ｃ
+			ELSEIF NOWEX:Ｃ絶頂 == 2
+				IF 陥落状態() >= 4
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「っっっ！！　や、クリやらっっ！！　んきゅっあひゅっっ！！」
+						PRINTFORML 「いきゅっいきゅにょぉっっっ！！　くりでいっちゃうにょぉ」
+					ELSE
+						PRINTFORML 「やあ、なんでにゃんでぇ、でにゃいにょに、せーえきでないにょにー」
+						PRINTFORML 「おちんちん、びくびくって、びくびくっってぇっ！！」
+					ENDIF
+					PRINTFORML 「～～～～～～～～～～～～～～～～～っっっっっっっ！！！！」
+				ELSEIF 陥落状態() == 3
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「やぁっっ！　クリだめぇ、おかしきゅなりゅぅ」
+					ELSE
+						PRINTFORML 「でない、せーえきでないのにーっっ！！」
+					ENDIF
+					PRINTFORML 「イク、イきゅぅっっっっ！！　ふぁあああああああっっっっっっ！！！」
+				ELSEIF 陥落状態() == 2
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「ひぅっっ！？　クリこわれりゅぅっっっっ！！　んぅぅぅぅぅぅっっっっっっっ！！」
+					ELSE
+						PRINTFORML 「や、でないのにせーえきでないのに、おちんちんでイきゅぅぅぅぅぅぅぅ」
+					ENDIF
+				ELSEIF TALENT:思慕
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「んっんっっんっっっっ！！　ふぁああああああっっっっっっ！！！」
+					ELSE
+						PRINTFORML 「ひっ！？　おちんちんでないでないのに、ふぁああっっ、～～～～～！！！！！」
+					ENDIF
+				ELSE
+					PRINTFORML 「っっ！？　っっっっ！！　っっっっ～～～～～～っっっっっ！！！」
+				ENDIF
+				PRINTFORMW 
+			;絶頂Ｃ
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「ふぁぁっっ！！　そこだめ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@こすっちゃだめぇ」
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「やらぁ、クリからくるすごいの来る、すごいのぉ、っっ！？　ふぁああっっ！！！」
+					ELSE
+						PRINTFORML 「や！？　おちんちんイッてるのに出ない！？　なんで、なんでぇっ！　んきゅぅっっっ！！」
+					ENDIF
+					PRINTFORML 「…………はぁ、はぁ……、んぅ……」
+				ELSEIF 陥落状態() == 3
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「ふぁあっ！　クリだめぇっ！　おかしくなるおかしきゅなりゅっっっっ！！」
+					ELSE
+						PRINTFORML 「やぁあ、出ないのにせーえきでないのにおちんちんイクぅっっっ！！」
+					ENDIF
+					PRINTFORML 「ひぁああああっっっっ！！！　……はーはー」
+				ELSEIF 陥落状態() == 2
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「ひぅっっ！！　ふぁあっっっ！！　んきゅぅぅぅぅっっっっっっっっっ！！」
+					ELSE
+						PRINTFORML 「や、せーえきださせてっ！　や、でないのに、おちんちんイッちゃう！！」
+					ENDIF
+				ELSEIF TALENT:思慕
+					IF !GETBIT (TALENT:2 ,1)
+						PRINTFORML 「ひぅんっっ！？　んくぅっっ！！　ふぁああっっっっ！！」
+					ELSE
+						PRINTFORML 「や、おちんちん出させて、精液びゅるびゅるさせてっっ！？　ひくぅぅぅぅっっっ！！」
+					ENDIF
+				ELSE
+					PRINTFORML 「くぅっっ、んぅっっ、ふぁああっっ！！」
+				ENDIF
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+		IF NOWEX:Ｖ絶頂
+			;超強絶頂Ｖ
+			IF NOWEX:Ｖ絶頂 == 3
+				LOCAL:4 ++
+				GOTO 超強絶頂系
+			;強絶頂Ｖ
+			ELSEIF NOWEX:Ｖ絶頂 == 2
+				IF 陥落状態() >= 4
+					PRINTFORML 「んきゅぅっっ！？　おまんこ、おみゃんこいいにょぉっっ！！」
+					PRINTFORML 「もっと、もっとこしゅって、おくまでごつごつしてぇっっ！！」
+					PRINTFORML 「んっんっっ！！　～～～～～～－－－－－－－っっっっっっっっっっっっ！！！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んぅっっ！！　いいよぉっっ、おみゃんこきもちいいよぉっっっ！！」
+					PRINTFORML 「ひぅっっ、んくっっ、くぅんんっっっっっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ひぅっっ！？　おまんここわれりゅぅっっっっ！！　んぅぅぅぅぅぅっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「んっんっっんっっっっ！！　ふぁああああああっっっっっっ！！！」
+				ELSE
+					PRINTFORML 「っっ！？　っっっっ！！　っっっっ～～～～～～っっっっっ！！！」
+				ENDIF
+				PRINTFORMW 
+			;絶頂Ｖ
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「ひぅっっ！！　いいよっっ！！　おまんこもっと、%MASTERNAME:61%もっとぉっっ！！」
+					PRINTFORML 「はふっひあっんくっっ！！　ひんっっ、こつこついいのぉごりごりいいのぉっ！！」
+					PRINTFORML 「あっあっあっ、ひぁあああああああっっっっ！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「はひ、はひ、ひふっっ、んきゅぅぅうっっっ！！　おまんこ良いよ、おまんこいいよぉっっ！！」
+					PRINTFORML 「ひくっ、んぅっっ、ひあああああああっっっっっ！！」
+				ELSEIF 陥落状態() == 2
+						PRINTFORML 「ひぅっっ！！　ふぁあっっっ！！　んきゅぅぅぅぅっっっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+						PRINTFORML 「ひぅんっっ！？　んくぅっっ！！　ふぁああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっっ、んぅっっ、ふぁああっっ！！」
+				ENDIF
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+		IF NOWEX:Ａ絶頂
+			;超強絶頂Ａ
+			IF NOWEX:Ａ絶頂 == 3
+				LOCAL:4 ++
+				GOTO 超強絶頂系
+			;強絶頂Ａ
+			ELSEIF NOWEX:Ａ絶頂 == 2
+				IF 陥落状態() >= 4
+					PRINTFORML 「しりあな、こわれりゅ、%MASTERNAME:61%ようになるにょぉ」
+					PRINTFORML 「いいよぉっ、もっと、もっともっともっとぉっっ！！」
+					PRINTFORML 「っっっっ！！　～～～～～～～～～～～～～～～～～！！！！！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「おしりいいのぉっ！！　もっとしてっっっ！！　ふぁっっ！！　んきゅっっっ！！」
+					PRINTFORML 「あひぃいいいいっっっっっっっっっっっっ！！！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ひぅっっ！？　しりあなこわれりゅぅっっっっ！！　んぅぅぅぅぅぅっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「んっんっっんっっっっ！！　ふぁああああああっっっっっっ！！！」
+				ELSE
+					PRINTFORML 「っっ！？　っっっっ！！　っっっっ～～～～～～っっっっっ！！！」
+				ENDIF
+				PRINTFORMW 
+			;絶頂Ａ
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「いいのっっ、おしりぐぽぐぽされてイクのっっ！　いっちゃうのぉっっ！！」
+					PRINTFORML 「あひっはひっくふっっ！　んぅっんっっひぁあああっっっ！！」
+					PRINTFORML 「ふぁあああああああっっっっっっ！！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あふっおしり、いいよぉっこれ、よすぎるのぉっっ！！」
+					PRINTFORML 「ひぅんっっ、んくっっふぁぁぁあああっっっっっっっっっ！！！」
+				ELSEIF 陥落状態() == 2
+						PRINTFORML 「ひぅっっ！！　ふぁあっっっ！！　んきゅぅぅぅぅっっっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+						PRINTFORML 「ひぅんっっ！？　んくぅっっ！！　ふぁああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっっ、んぅっっ、ふぁああっっ！！」
+				ENDIF
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+		IF NOWEX:Ｂ絶頂
+			;超強絶頂Ｂ
+			IF NOWEX:Ｂ絶頂 == 3
+				LOCAL:4 ++
+				GOTO 超強絶頂系
+			;強絶頂Ｂ
+			ELSEIF NOWEX:Ｂ絶頂 == 2
+				IF 陥落状態() >= 4
+					PRINTFORML 「やあ、おっぱいだめ、もみもみだめくりくりだめぺろぺろだめぇっっっ！！！」
+					PRINTFORML 「いきゅのっっ！！　おっぱいでイクイクイクイクぅぅぅっっっっっっっ！！」
+					PRINTFORML 「あーーーーーーーーーーーーーーーーっっっっっっっっっっっっっっっっ！！！！！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「だめ、おっぱいだめ、おっぱいらめぇっっっっっっ！！」
+					PRINTFORML 「っっっっっ！！　んーーーーーーーーーーっっっっっっっ！！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ひぅっっ！？　おっぱいこわれりゅぅっっっっ！！　んぅぅぅぅぅぅっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「んっんっっんっっっっ！！　ふぁああああああっっっっっっ！！！」
+				ELSE
+					PRINTFORML 「っっ！？　っっっっ！！　っっっっ～～～～～～っっっっっ！！！」
+				ENDIF
+				PRINTFORMW 
+			;絶頂Ｂ
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「や、おっぱいでイク、おっぱいで、イクぅっっっっ！！　んくぅぅぅぅっっっ！！」
+					PRINTFORML 「はひ、はひ、んくっっっっ！？　んくぅぅぅぅぅぅっっっっっっ！！！」
+					PRINTFORML 「あひぃっっっっっっっっっっっっっ！！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「はふ、んくっっっ！！　おっぱいいいよぉっっ！！　や、いくっっ！？」
+					PRINTFORML 「いくのっっ、おっぱいでイクーーーーーーーっっっっっっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ひぅっっ！！　ふぁあっっっ！！　んきゅぅぅぅぅっっっっっっっっっ！！」
+				ELSEIF TALENT:思慕
+					PRINTFORML 「ひぅんっっ！？　んくぅっっ！！　ふぁああっっっっ！！」
+				ELSE
+					PRINTFORML 「くぅっっ、んぅっっ、ふぁああっっ！！」
+				ENDIF
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+		$Ｍ絶頂系
+		IF NOWEX:Ｍ絶頂
+			PRINTFORML 「んっちゅっちゅっ、んぅっっ……じゅるちゅる、んんぅぅ～～！！」
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+	$超強絶頂系
+	IF LOCAL:4
+		IF 陥落状態() >= 4
+			PRINTFORML 「ゆるしれ、%MASTERNAME:61%！　わらし、わらしもうもう」
+			PRINTFORML 「いきゅのいきゅ、いきゅいきゅいきゅっっっ！」
+			PRINTFORML 「んにゃぁぁあああっっっっっっっーーーーーーーーーーーーーーーーー！！！！」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「しゅき、らいしゅき、もっと、もっろしれぇっっ！！」
+			PRINTFORML 「んっんっんぅっっ！！　ふぁあああああああっっっっっっ！！！」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「もっと、もっとぉっ！　イクイクイク、イッちゃぅううっっっっっっっ！！！」
+		ELSEIF TALENT:思慕
+			PRINTFORML 「これ、これぇっっっ！！　や、やらやらこれこれぇっっっっっっっっっ！！」
+		ELSE
+			PRINTFORML や、ま、おか、おかひふっ、しにゅ、しんじゃうぅっっっっっっ！！」
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;射精
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;TCVAR:2 射精箇所フラグ（-1=避孕套 1=膣内 2=アナル 3=手淫 4=口淫 5=乳交 6=素股 7=足交 8=体表 9=肛門奉仕 10=道具 11=触手）
+;-------------------------------------------------
+IF LOCAL && NOWEX:射精 && !FLAG:70
+	FOR LOCAL:2,0,7
+		SIF NOWEX:(LOCAL:2)
+			LOCAL:3 += 1
+	NEXT
+	IF !GETBIT(TALENT:MASTER:性別,0)
+		PRINTFORMDL 妹紅の男性器からこぼれる精液を、%CALLNAME:MASTER%はただ眺めている
+	;MASTERの口に中だし
+	;Futanari主人公専用
+	ELSEIF TCVAR:2 == 4 && GETBIT(TALENT:MASTER:性別,0)
+		IF LOCAL:3 > 4
+			PRINTFORMD 舌を突き出しよだれを垂れ流しながら
+		ELSEIF LOCAL:3 >0
+			PRINTFORMD うっとりとした表情で身を震わせ
+		ELSE
+			PRINTFORMD びくびくと腰を震わせながら
+		ENDIF
+		PRINTFORMDW 妹紅は%CALLNAME:MASTER%の口内に射精した
+		;精飲
+		IF EXP_UP(15,0) == NOWEX:射精 * 3
+			IF NOWEX:射精 == 1
+				PRINTFORMDL %CALLNAME:MASTER%は唇で亀頭をしごいて%SAMEN_DESCRIPTION_K61()%を口内に受け止めてから
+				PRINTFORMDW 口内の精液を喉を鳴らして飲み込んだ…
+			ELSE
+				PRINTFORMDW %CALLNAME:MASTER%は亀頭を咥えたまま口内に放たれる%SAMEN_DESCRIPTION_K61()%を飲み込んでいった…
+			ENDIF
+			IF 陥落状態() >= 4
+				PRINTFORML 「ふぅ～～…………、%MASTERNAME:61%、ありがとう」
+				PRINTFORML 「ふふ、私にもさせてるから？　そう言ってくれるの、嬉しい」
+				PRINTFORML 「ほんとにありがとう」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「……おいしい？　ふふ、私も%CALLNAME:MASTER%のならおいしいんだよ」
+				PRINTFORML 「でも、ありがとうね」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んぅ……ふぅ……、あ、飲んでくれたんだ。ふふ、嬉しい」
+			ELSEIF TALENT:思慕
+				PRINTFORML 「……あ、…………ごめん……」
+			ELSE
+				PRINTFORML 「…………っ……」
+			ENDIF
+		ELSE
+			IF TCVAR:精飲経験 < 20
+				PRINTFORMDL 射精が終わると%CALLNAME:MASTER%は口の中の精液を吐き出してしまった
+				PRINTFORMDW まだ精液の味に慣れないようだ…
+			ELSE
+				IF NOWEX:PLAYER:射精 == 1
+					PRINTFORMDL %CALLNAME:MASTER%は唇で亀頭をしごいてすべての精液を口内に受け止めてから
+					PRINTFORMDW 広げた手の上に精液を吐き出し妹紅に見せつけてきた…
+				ELSE
+					PRINTFORMDL %CALLNAME:MASTER%は舌を突き出しながら精液が吹き出す尿道口を刺激し、
+					PRINTFORMDW 開かれた口からは精液がダラダラとこぼれでている…
+				ENDIF
+			ENDIF
+			IF 陥落状態() >= 4
+				PRINTFORML 「ごめん、気持ち悪かったよね」
+				PRINTFORML 「%MASTERNAME:61%が可愛くて、我慢できなかったんだ」
+				PRINTFORML 「……でも、%MASTERNAME:61%がしてくれて、すごく嬉しい」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「きもちよかったぁ……、ありがとう%CALLNAME:MASTER%」
+				PRINTFORML 「でも、%CALLNAME:MASTER%にはつらかったよね、ごめんなさい」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んぅ……ふぅ……、ださせてくれたんだよね、嬉しいよ」
+			ELSEIF TALENT:思慕
+				PRINTFORML 「……あ、…………ごめん……」
+			ELSE
+				PRINTFORML 「…………っ……」
+			ENDIF
+		ENDIF
+	;MASTERのアナルに中だし
+	;Futanari主人公専用
+	ELSEIF TCVAR:2 == 2 && GETBIT(TALENT:MASTER:性別,0)
+		IF LOCAL:3 > 4
+			PRINTFORMD 舌を突き出しよだれを垂れ流しながら
+		ELSEIF LOCAL:3 >0
+			PRINTFORMD うっとりとした表情で身を震わせ
+		ELSE
+			PRINTFORMD びくびくと腰を震わせながら
+		ENDIF
+		PRINTFORMDL 妹紅は%CALLNAME:MASTER%の腸内に射精した
+		PRINTFORMDW %SAMEN_DESCRIPTION_K61()%で溢れている腸内は細かく震え、%TINKO(TARGET)%をきつく締めつけている…
+		IF 陥落状態() >= 4
+			PRINTFORML 「……はぁはぁ……、%MASTERNAME:61%は気持ちよかった？」
+			PRINTFORML 「熱い？　ふふ、それだけ、%MASTERNAME:61%が気持ちよかったってことだから」
+			PRINTFORML 「私も、すごく気持ちよかったし」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「あふっ、んくぅ……、%CALLNAME:MASTER%のおしり、気持ちいい……」
+			PRINTFORML 「あ、中で出しちゃった……、ごめんね」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「んぅ……ふぅ……、ださせてくれたんだよね、嬉しいよ」
+		ELSEIF TALENT:思慕
+			PRINTFORML 「……あ、…………ごめん……」
+		ELSE
+			PRINTFORML 「…………っ……」
+		ENDIF
+	;MASTERの膣に中だし
+	ELSEIF TCVAR:2 == 1
+	;通常
+		;膣奥責めは四分の一
+		IF !RAND:4
+			IF LOCAL:3 > 4
+				PRINTFORMD 舌を突き出しよだれを垂れ流しながら
+			ELSEIF LOCAL:3 >0
+				PRINTFORMD うっとりとした表情で身を震わせ
+			ELSE
+				PRINTFORMD びくびくと腰を震わせながら
+			ENDIF
+			PRINTFORMDL 妹紅は%CALLNAME:MASTER%の膣奥に%TINKO(TARGET)%を固定し
+			PRINTFORMDW 子宮に直に%SAMEN_DESCRIPTION_K61()%を注ぎ込んだ…
+				SIF EXP:MASTER:子宮口開発経験 >= 300
+					PRINTFORMDW %SAMEN_DESCRIPTION_K61()%の味を覚え込まされた子宮は大きく口を開き、貪欲に%SAMEN_DESCRIPTION_K61()%を飲み干している…
+			LOCAL:1 = 1
+		ELSE
+			PRINTFORMDL 妹紅は%CALLNAME:MASTER%の膣内に%SAMEN_DESCRIPTION_K61()%を注ぎ込んだ…
+			IF CFLAG:MASTER:900 == 7
+				PRINTFORMDW 危険日の膣肉は小刻みに蠢き、子種を最奥に送り込もうとしている…
+			ELSE
+				PRINTFORMDW %CALLNAME:MASTER%の膣肉は%TINKO(TARGET)%の脈動に合わせるかのように痙攣し、射精中の%TINKO(TARGET)%に絡みつく…
+			ENDIF
+			LOCAL:1 = 0
+		ENDIF
+			SIF NOWEX:射精 > 1
+				PRINTFORMDL 妹紅はとろけるような射精感に腰をびくつかせながら、長々と%SAMEN_DESCRIPTION_K61()%を注ぎ込み続けた…
+		IF 陥落状態() >= 4
+			IF LOCAL:1 == 1
+				PRINTFORML 「は、んっ、……%MASTERNAME:61%のおまんこの奥の奥まで注いであげるぅ」
+				PRINTFORML 「子宮が灼ける？　ふふ、妊娠できるといいね……」
+				PRINTFORML 「私には、できないことだしさ」
+			ELSE
+				PRINTFORML 「んっ、はぁ、%MASTERNAME:61%のおまんこ、気持ちよすぎて出ちゃった」
+				PRINTFORML 「……熱い？　ふふ、それだけ%MASTERNAME:61%を愛してるってことだよ」
+				PRINTFORML 「あかちゃん、できると良いなぁ」
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			IF LOCAL:1 == 1
+				PRINTFORML 「はっ、んっ……、%CALLNAME:MASTER%のおまんこの奥まで、どろどろにしてあげるよ」
+				PRINTFORML 「嬉しい？　私も嬉しいな。……兒童できると良いね」
+			ELSE
+				PRINTFORML 「んくっ、はぁはぁ、%CALLNAME:MASTER%の膣内、気持ちよすぎ」
+				PRINTFORML 「精液でおなかいっぱいになった？　ふふ、もっと注いで良いよね？」
+			ENDIF
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「んぅ……ふぅ……、ださせてくれたんだよね、嬉しいよ」
+		ELSEIF TALENT:思慕
+			PRINTFORML 「……あ、…………ごめん……」
+		ELSE
+			PRINTFORML 「…………っ……」
+		ENDIF
+	ELSE
+		IF LOCAL:3 > 4
+			PRINTFORMD 舌を突き出しよだれを垂れ流しながら
+		ELSEIF LOCAL:3 >0
+			PRINTFORMD うっとりとした表情で身を震わせ
+		ELSE
+			PRINTFORMD びくびくと腰を震わせながら
+		ENDIF
+		PRINTFORMDL 妹紅は%TINKO(TARGET)%から精を打ち出した
+		IF 陥落状態() >= 4
+			PRINTFORML 「はぁはぁ、んくぅ…………出ちゃった」
+			PRINTFORML 「できれば%MASTERNAME:61%の中に出したかったのになぁ」
+			PRINTFORML 「って、もう一回すれば良いんだ。ふふ、%MASTERNAME:61%も嬉しそうだね、そんなにしてほしい？」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「あっっ、んっっ…………はぁ、気持ちよかったぁ……」
+			PRINTFORML 「でも、できれば%CALLNAME:MASTER%の中で受け止めてほしかったなぁ」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「んぅ……ふぅ……、ださせてくれたんだよね、嬉しいよ」
+		ELSEIF TALENT:思慕
+			PRINTFORML 「……あ、…………ごめん……」
+		ELSE
+			PRINTFORML 「…………っ……」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+ENDIF
+
+;-------------------------------------------------
+;放尿
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && NOWEX:放尿 && !FLAG:70
+	IF 陥落状態() >= 4
+		PRINTFORML 「んっっ……あ、みちゃいやぁ……おしっこやぁ」
+		PRINTFORML 「……おしっこするくらいかんじてるのがかわいい？」
+		PRINTFORMW 「…………%MASTERNAME:61%の変態……」
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「あ、もれちゃう……みないでよ、ばかぁ」
+		PRINTFORMW 「はずかしくて、生きていけない。……死なないくせにとか言わないでよ」
+	ELSEIF 陥落状態() == 2
+		PRINTFORMW 「んっ、きもちい、い、っって！？　だだだだだめ、止まって止まって、……みないでよぉ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「やぁ、みないで、いやぁ……っっっ…………」
+	ELSE
+		PRINTFORMW 「………………みるな、ばか……」
+	ENDIF
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;噴乳
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && NOWEX:噴乳 && !FLAG:70
+	IF 陥落状態() >= 4
+		PRINTFORML 「……はぁはぁ、あ、おっぱいミルクでてるぅ……」
+		PRINTFORML 「飲みたい？　いいよ、んっ、ふふ、可愛い」
+		PRINTFORMW 「や、そんなちゅうちゅうされたら、また気持ちよく」
+ELSEIF 陥落状態() == 3
+		PRINTFORML 「ん、ふぅ……あ、ミルク出ちゃった……」
+		PRINTFORMW 「……飲みたい？　良いよ、\@ !EXP:出産経験 ? …………あげる相手もいないしね # %CALLNAME:MASTER%はパパなのにね \@」
+	ELSEIF 陥落状態() == 2
+		PRINTFORMW 「あふ、ん、お乳でちゃった……、あ、ん、なめられるの恥ずかしい」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「……んっ……なんで、これ」
+	ELSE
+		PRINTFORMW 「…………ん」
+	ENDIF
+	PRINTFORMW 
+ENDIF
+
+
+;-------------------------------------------------
+;射精に関する口上の表示
+;一時的にTARGETを口上主に設定している
+;-------------------------------------------------
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_0(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;避孕套
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	[SKIPSTART]
+	IF EXP:出産経験
+		IF 陥落状態() >= 4
+			PRINTFORML 「あ、せーえき出てる……、って、なんで中にくれないんだか」
+			PRINTFORML 「子作りしようよ、赤ちゃん作ろうよ、ね、ね？」
+			PRINTFORML 「%MASTERNAME:61%の赤ちゃん産みたいよ、こんなので遮らないでよ、ねぇってばぁ」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「あ、赤ちゃんの元出てる…………、ってなんで赤ちゃん作らせてくれないの？」
+			PRINTFORML 「生で膣内射精してほしいよ、赤ちゃん作ろうよ、ねぇってば」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「赤ちゃん欲しかったのに、こんなので止めたりしないで欲しいな」
+		ENDIF
+	ELSE
+	[SKIPEND]
+		IF 陥落状態() >= 4
+			PRINTFORML 「あ……、中にほしかったなぁ……」
+			PRINTFORML 「兒童できないんだから、好きなだけ生で中だしできるのに」
+			PRINTFORML 「私だって、生で精液注がれるの気持ちいいし」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「どうせ、できないのに、なんでゴムなんて……」
+			PRINTFORML 「生でやるより気持ちよくないでしょ？」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「中にほしいよ、そんなゴムに出すなんてもったいないじゃない」
+		ENDIF
+	;ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_23(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;強制口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF 陥落状態() >= 4
+		IF TCVAR:精飲経験 < 20
+			PRINTFORML 「っくんっ…………けほ、けほ……これいやだよ」
+			PRINTFORML 「%MASTERNAME:61%のばかぁ、こんなの飲みたくないってば」
+			PRINTFORML 「……気持ちよくなってくれたことは、嬉しいけど」
+		ELSE
+			PRINTFORML 「こく、こくん…………はぁ、おいしい」
+			PRINTFORML 「でも、私からちゃんとご奉仕した上で飲ませてほしかったな」
+			PRINTFORML 「%MASTERNAME:61%が無理矢理の方が良いっていうなら、我慢するけど」
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF TCVAR:精飲経験 < 20
+			PRINTFORML 「っく、……はぁ……のどがイガイガする」
+			PRINTFORML 「……できれば、こういうのは勘弁してほしい」
+		ELSE
+			PRINTFORML 「っくん……、はぁ……おいしいね」
+			PRINTFORML 「のどに纏わり付く感触が、のどの奥まで%CALLNAME:MASTER%に愛されてるみたいで気持ちいい」
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF TCVAR:精飲経験 < 20
+			PRINTFORML 「こく……ん……はぁ、この味もにおいも感触も好きになれないな～」
+		ELSE
+			PRINTFORML 「こくん、もっとじゅるれろこく、はぁ……、おいしくて心臓どきどきしてくるね」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_22(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;六九式
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	;同時射精
+	;Futanari主人公専用
+	IF NOWEX:射精 && NOWEX:MASTER:射精 && GETBIT(TALENT:MASTER:性別,0)
+		IF TCVAR:精飲経験 < 20
+[SKIPSTART]
+			IF 陥落状態() >= 4
+「んぶっ、けほっけほっ、こほっ……」
+「……ん、こほ……、ごめんなさい、のめなくて」
+				IF TCVAR:MASTER:精飲経験 < 20
+「でも、%MASTERNAME:61%も飲んでないから、おあいこだよね」
+				ELSE
+「%MASTERNAME:61%は飲んでくれたのに……、ごめんなさい」
+				ENDIF
+			ELSEIF 陥落状態() == 3
+「」
+			ELSEIF 陥落状態() == 2
+			ENDIF
+[SKIPEND]
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「んっ、んっっ、こくっ、んっ……」
+				PRINTFORML 「はぁ……、%MASTERNAME:61%のおいしい……、%MASTERNAME:61%はどう？」
+				PRINTFORML 「ふふ、嬉しい」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「っ、こく、こくん……れろじゅる……はぁ」
+				PRINTFORML 「%CALLNAME:MASTER%の精液おいしい。私のは？　ふふ、よかった」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「こくっ、こくんっ……はぁ、せーえきおいしい、私のもおいしいでしょ？」
+			ENDIF
+		ENDIF
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		;Futanari主人公専用
+		IF GETBIT(TALENT:MASTER:性別,0) && GETBIT(TALENT:MASTER:性別,1)
+			IF 陥落状態() >= 4
+				PRINTFORML 「ふぅ～～…………、%MASTERNAME:61%、ありがとう」
+				PRINTFORML 「ふふ、私にもさせてるから？　そう言ってくれるの、嬉しい」
+				PRINTFORML 「ほんとにありがとう」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「……おいしい？　ふふ、私も%CALLNAME:MASTER%のならおいしいんだよ」
+				PRINTFORML 「でも、ありがとうね」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んぅ……ふぅ……、あ、飲んでくれたんだ。ふふ、嬉しい」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「ふぅ～～…………、%MASTERNAME:61%、ありがとう」
+				PRINTFORML 「ふふ、私にもさせてるから？　そう言ってくれるの、嬉しい」
+				PRINTFORML 「ほんとにありがとう」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「……おいしい？　ふふ、私も%CALLNAME:MASTER%のならおいしいんだよ」
+				PRINTFORML 「でも、ありがとうね」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んぅ……ふぅ……、あ、飲んでくれたんだ。ふふ、嬉しい」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	;Futanari主人公専用
+	ELSEIF GETBIT(TALENT:MASTER:性別,0) && GETBIT(TALENT:MASTER:性別,1)
+		;TARGETについてる
+		IF TALENT:2 & 2
+			IF 陥落状態() >= 4
+				PRINTFORML 「んっ、んっっ、こくっ、んっ……」
+				PRINTFORML 「はぁ……、%MASTERNAME:61%のおいしい……、私のも飲んでほしかったなぁ」
+				PRINTFORML 「ふふ、またあとでね」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「っ、こく、こくん……れろじゅる……はぁ」
+				PRINTFORML 「%CALLNAME:MASTER%の精液おいしい」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「こくっ、こくんっ……はぁ、せーえきおいしい、私のもおいしいけどね」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「んっ、んっっ、こくっ、んっ……」
+				PRINTFORML 「はぁ……、%MASTERNAME:61%のおいしい……」
+				PRINTFORML 「ふふ、もっと出して良いからね」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「っ、こく、こくん……れろじゅる……はぁ」
+				PRINTFORML 「%CALLNAME:MASTER%の精液おいしい」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「こくっ、こくんっ……はぁ、せーえきおいしい」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_21(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳夾口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF 陥落状態() >= 4
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「っっ！　っっっ……じゅるる、れろこく……」
+			PRINTFORML 「……は、はぁ……、せーえきおいひぃよぉ」
+			PRINTFORML 「は、はぁ…………、ん、……乳交しながら吸い付くの可愛い？　……バカ」
+		ELSE
+			PRINTFORML 「んっんっ、んぅ…………こく、れろ」
+			PRINTFORML 「私のおっぱいとお口きもちよかった？」
+			PRINTFORML 「ふふ、%MASTERNAME:61%のせーえきおいしい」
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「っ……、はぁ……れろ、じゅる……ん……」
+			PRINTFORML 「おっぱい気持ちよかったよ……、ふふ、精液いっぱいだね」
+		ELSE
+			PRINTFORML 「ん、ふふ、そんなに私の口とおっぱい気持ちよかった？」
+			PRINTFORML 「イッてくれて、すごく嬉しいな」
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「はっん……、イカせながらイカされるの、どんな気分？　私は最高だけどね」
+		ELSE
+			PRINTFORML 「ふふ、出た出た、れろちゅぱ、ふふ、そんなに気持ちよかったんだ、可愛い」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_20(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF 陥落状態() >= 4
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			PRINTFORML 「んぶっっ！！　……んっ…………こくっ、れろ、こくん……」
+			PRINTFORML 「はぁ……、おいしい……、あ、中に残ってるのも、全部」
+			PRINTFORML 「……ふふ、咥えられながらごしゅごしゅされて、ぴくぴくしてるね、可愛い」
+		ELSE
+			IF TCVAR:精飲経験 == 0
+				PRINTFORML 「けほっ、ん……はぁ……、んー、さすがにこれは、ちょっといただけないかなぁ」
+				PRINTFORML 「こしゅこしゅしながら、咥えるのは好きだけどさ」
+				PRINTFORML 「……そんなに飲んでほしかった？　……うん、次からは頑張る」
+			ELSE
+				PRINTFORML 「……んっ…………こくっ……」
+				PRINTFORML 「はぁ……、おいしい……、あ、中に残ってるのも、全部」
+				PRINTFORML 「……ふふ、咥えられながらごしゅごしゅされて、ぴくぴくしてるね、可愛い」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			PRINTFORML 「んっっ！！　っっっ、んくっっ……こくんこくっこくっ……」
+			PRINTFORML 「はぁ……出し過ぎだってば。そんなに咥えながらこすられるのよかった？」
+		ELSE
+			IF TCVAR:精飲経験 == 0
+				PRINTFORML 「けほっ、こほっっ……ん……、変な味……」
+				PRINTFORML 「あ、やっぱり飲んだ方がよかった？　ごめんね」
+			ELSE
+				PRINTFORML 「んくっっ……こくんこくっこくっ……」
+				PRINTFORML 「はぁ……、そんなに咥えながらこすられるのよかった？」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			PRINTFORML 「んぶっ、っくん…………、はぁ、こすられてしゃぶられるの、そんなによかったんだ？」
+		ELSE
+			IF TCVAR:精飲経験 == 0
+				PRINTFORML 「けほっ……、んっ、……変な味だね……、ごめん飲めなくて」
+			ELSE
+				PRINTFORML 「んぶっ、っくん…………、はぁ、こすられてしゃぶられるの、そんなによかったんだ？」
+			ENDIF
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_9(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;肛門奉仕
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;Futanari主人公専用
+IF LOCAL && GETBIT(TALENT:MASTER:性別,0) && !FLAG:70
+	IF CFLAG:うふふ == 2
+		PRINTFORML 「ふふ、おしりの穴ぺろぺろされてイッちゃった？　ふふ可愛い」
+		PRINTFORML 「自分の精液で顔どろどろになってるのも可愛いよ」
+		PRINTFORML 「おしりでもっとイッてみる？」
+	ELSEIF 陥落状態() >= 4
+		PRINTFORML 「おしりひくひくしてて、可愛い」
+		PRINTFORML 「あ、自分のせーえき、自分の顔にかかるのはいやだった？」
+		PRINTFORML 「でも%MASTERNAME:61%も、私のおまんこやアナルに入れたの咥えさせるからおあいこだよね」
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「ふふ、おしり気持ちいい？　自分の顔、精液で汚すくらいに？」
+		PRINTFORML 「私も似たようなことされてるし、たまにはお返しくらい良いよね？」
+	ELSEIF 陥落状態() == 2
+		PRINTFORML 「ふふ、自分の顔汚れてもいいくらい、おしり気持ちいいんだ？　可愛い」
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_8(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;泡泡浴
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	;同時射精
+	;Futanari主人公専用
+	IF NOWEX:射精 && NOWEX:MASTER:射精 && GETBIT(TALENT:MASTER:性別,0)
+		IF 陥落状態() >= 4
+			PRINTFORML 「ん、からだもおちんちんもぬるぬるで気持ちいい……」
+			PRINTFORML 「%MASTERNAME:61%のせーえきも気持ちいい……、私のせーえきは？」
+			PRINTFORML 「ふふ、嬉しい、おそろいだね」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「はぁはぁ、きもちいい、おちんちんこすれるの精液かけあうの気持ちいいよぉ」
+			PRINTFORML 「はぁ、ん、これ、素敵ぃ……」
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「あふ、ん、%CALLNAME:MASTER%の精液あったかぁい。私のは熱くて癖になる？　ふふ」
+		ENDIF
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		;Futanari主人公専用
+		IF GETBIT(TALENT:MASTER:性別,0) && GETBIT(TALENT:MASTER:性別,1)
+			IF 陥落状態() >= 4
+				PRINTFORML 「ん、ふふ、わたしのせーえき、きもちいいでしょ？」
+				PRINTFORML 「%MASTERNAME:61%の肌もぬるぬるできもちいいよ」
+				PRINTFORML 「%MASTERNAME:61%のおちんちんも私のせーえきでぬるぬるにしちゃうね」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「はぁはぁ、ん、おちんちんきもちいいよぉ」
+				PRINTFORML 「%CALLNAME:MASTER%のおちんちんも気持ちよくしてあげるね」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んっ、%CALLNAME:MASTER%の肌とこすれるのも、おちんちんこすれ合うのも気持ちいい……」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「ん、ふふ、わたしのせーえき、きもちいいでしょ？」
+				PRINTFORML 「%MASTERNAME:61%の肌もぬるぬるできもちいいよ」
+				PRINTFORML 「%MASTERNAME:61%も私のせーえきでぬるぬるにしちゃうね」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「はぁはぁ、ん、おちんちんきもちいいよぉ」
+				PRINTFORML 「%CALLNAME:MASTER%の体中にすり込んであげるね」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「んっ、%CALLNAME:MASTER%の肌とこすれるの、とっても気持ちいいよ」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	;Futanari主人公専用
+	ELSEIF GETBIT(TALENT:MASTER:性別,0) && GETBIT(TALENT:MASTER:性別,1)
+		;TARGETについてる
+		IF GETBIT(TALENT:性別,1)
+			IF 陥落状態() >= 4
+				PRINTFORML 「あはぁ、%MASTERNAME:61%のおちんちん、びくびくしてる」
+				PRINTFORML 「ん、%MASTERNAME:61%のせーえきぬりゅぬりゅできもちいい」
+				PRINTFORML 「ふふ、わたしのおちんちん、%MASTERNAME:61%のせーえきでにちゃにちゃにするね」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「あふ、%CALLNAME:MASTER%の精液、体中にぬりぬりするねぇ」
+				PRINTFORML 「おちんちんも%CALLNAME:MASTER%の精液まみれ……、ふふ、なんだか嬉しい」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「ふぁん……、%CALLNAME:MASTER%の精液で体中白くなるね、ふふ、当然おちんちんもね」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「あはぁ、%MASTERNAME:61%のおちんちん、びくびくしてる」
+				PRINTFORML 「ん、%MASTERNAME:61%のせーえきぬりゅぬりゅできもちいい」
+				PRINTFORML 「ふふ、わたしのおまんこに、%MASTERNAME:61%のせーえきちゃんと塗り込むね？」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「あふ、%CALLNAME:MASTER%の精液、体中にぬりぬりするねぇ」
+				PRINTFORML 「おっぱいもおまんこもも%CALLNAME:MASTER%の精液まみれ……、ふふ、なんだか嬉しい」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「ふぁん……、%CALLNAME:MASTER%の精液で体中白くなるぅ」
+			ENDIF
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_7(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;足交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		PRINTFORML 「ふふ、足でこすられるのそんなによかった？」
+		PRINTFORML 「ほら、精液でどろどろになった足、舐めて綺麗にしてほしーなー」
+		IF !GETBIT(TALENT:MASTER:性別,0)
+			PRINTFORML 「それはいや？　出しといてわがまま言うんだ？　ふふ、もっといじめちゃおうかなー」
+		ELSE
+			PRINTFORML 「ほんとにしてくれるんだ、ふふ、すっごく嬉しいな」
+		ENDIF
+	ELSEIF 陥落状態() >= 4
+		PRINTFORML 「ふふ、足でなんてされてよくなっちゃったんだ？」
+		PRINTFORML 「%MASTERNAME:61%のせーえきで、足どろどろ」
+		PRINTFORML 「すごく、嬉しいよ」
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「足でこすられてイクって、そんなによかった？」
+		PRINTFORML 「ふふ、私も気持ちよかった、って言ったら嬉しい？」
+	ELSEIF 陥落状態() == 2
+		PRINTFORML 「足が良いなんてへんたい。……なんてね、%CALLNAME:MASTER%がイッてくれて、私も嬉しい」
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_6(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;素股
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		PRINTFORML 「んっ、ふふ、精液いっぱい出てるぅ……、でも、中にほしかったなー」
+		PRINTFORML 「入れさせない方が悪いって、そんなこと言うんだ？　ふふ、ならもっといじめてあげる」
+		PRINTFORML 「ほらほら、精液でにゅるにゅるになったおまんこでこすられるの、気持ちいいでしょ？」
+	ELSEIF 陥落状態() >= 4
+		PRINTFORML 「ふぁぁっ……、ん……はぁ……」
+		PRINTFORML 「もう、%MASTERNAME:61%はひどいよぉ……、下の唇に塗り込むなんてぇ」
+		IF GETBIT (TALENT:2 ,1)
+			IF NOWEX:Ｃ絶頂 && !NOWEX:射精
+				PRINTFORML 「……私もおちんちん、出ないのにイッちゃったじゃない」
+			ELSEIF NOWEX:射精
+				PRINTFORML 「せーえき出ちゃったじゃない。どうせだったら%MASTERNAME:61%の中に出したいのに」
+			ELSE
+				PRINTFORML 「んっ、おちんちんの根元こすられるの気持ちいいよぉ」
+			ENDIF
+		ELSE
+			IF NOWEX:Ｃ絶頂
+				PRINTFORML 「クリでイキながら、せーえきでぬちゃぬちゃにされたら、気持ちよくなりすぎるよぉ」
+			ELSE
+				PRINTFORML 「ん、どうせだったら、中で出してほしかったなぁ……」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「ふぁっ……んっっ……はぁ、おまんこにゅりゅにゅりゅってぇ……」
+		IF GETBIT (TALENT:2 ,1)
+			IF NOWEX:Ｃ絶頂 && !NOWEX:射精
+				PRINTFORML 「んっ……、せーえきでないのに、おちんちんイクのってくるしいんだからね」
+			ELSEIF NOWEX:射精
+				PRINTFORML 「はぁっ……、どうせなら、無駄撃ちじゃ無くて%CALLNAME:MASTER%の中で出させてほしい」
+			ELSE
+				PRINTFORML 「んっ、んっ……おちんちんの根元こすれて、気持ちいいよぉ」
+			ENDIF
+		ELSE
+			IF NOWEX:Ｃ絶頂
+				PRINTFORML 「ふぁ、んくぅ……はぁ、クリこわれるかと思ったよ」
+			ELSE
+				PRINTFORML 「なんで中にくれないの？　いぢわる」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF GETBIT (TALENT:2 ,1)
+			IF NOWEX:Ｃ絶頂 && !NOWEX:射精
+				PRINTFORML 「んっっ！　……はぁ、でないのにイクの、くるしいってば。ま、出してくれたから良いけどさ」
+			ELSEIF NOWEX:射精
+				PRINTFORML 「んっ……、ふふ、一緒に出せたね、嬉しいよ」
+			ELSE
+				PRINTFORML 「はふ、んっ、にちゃにちゃにするなら、中にちょうだいよ」
+			ENDIF
+		ELSE
+			IF NOWEX:Ｃ絶頂
+				PRINTFORML 「んっ……、ふふ、一緒にイケたね、嬉しいよ」
+			ELSE
+				PRINTFORML 「はふ、んっ、にちゃにちゃにするなら、中にちょうだいよ」
+			ENDIF
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_5(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「んっんっんっ……、はぁ、おっぱいでイッちゃたよ。でもそっちも精液いっぱい出てるね」
+			PRINTFORML 「んっ、はぁ、あー、もっとイキたいなぁ。もっと精液で汚してほしいなぁ」
+			PRINTFORML 「ふふ、だから、もっともっとしてあげるね」
+		ELSE
+			PRINTFORML 「はぁ…………、ふふ、精液でどろどろにされちゃったね」
+			PRINTFORML 「ほら、舐めとってくれるよね？」
+			IF !GETBIT(TALENT:MASTER:性別,0)
+				PRINTFORML 「いやなの？　ふーん、自分はさせるのに、されるのはいやなんだ。もっといじめようかな」
+			ELSE
+				PRINTFORML 「んっっ……、ふふ、ちゃんと舐めてくれるの嬉しい。じゃいただきます。ちゅっ、れろちゅるちゅぱ」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() >= 4
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「んっ…………はぁ……気持ちいいよぉ」
+			PRINTFORML 「あ、かおべたべた……、れろ」
+			PRINTFORML 「ふふ、%MASTERNAME:61%に綺麗にしてほしいところだけどね」
+		ELSE
+			PRINTFORML 「ん、顔も胸も温かいよ。%MASTERNAME:61%は気持ちよかった？」
+			PRINTFORML 「せーえきいっぱい出してて気持ちよくない訳ないか」
+			PRINTFORML 「ふふ、もっとしたい？」
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「はぁはぁ、ん…………、はぁ……、乳交しながら、イッっちゃった」
+			PRINTFORML 「%CALLNAME:MASTER%も一緒にイッてくれて、嬉しい」
+		ELSE
+			PRINTFORML 「んっ、ふふ、%CALLNAME:MASTER%の精液あったかいね」
+			PRINTFORML 「なんだか、さらに%CALLNAME:MASTER%のモノになれた気がする」
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF NOWEX:Ｂ絶頂
+			PRINTFORML 「っっっ……っ……はぁ、一緒にイケてうれしい……」
+		ELSE
+			PRINTFORML 「んっ、もう、こんなに顔とおっぱいにかけるなんて、……なんでだろ、すごく嬉しい」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_4(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		PRINTFORML 「れろれろ、じゅるる、れろっ、こくっこくんっれろ」
+		PRINTFORML 「ぷはっ、ふふ、私のお口そんなによかった？」
+		PRINTFORML 「でも、まだゆるしてあげない。もっとだしてね。れろれろちゅぱちゅる……」
+	ELSEIF 陥落状態() >= 4
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			IF NOWEX:PLAYER:射精 == 1
+				PRINTFORML 「ん～～、こくん…………はぁ、すてきだね」
+				PRINTFORML 「ふふ、%MASTERNAME:61%のせーえき、おいしいよ」
+				PRINTFORML 「実際の味どうこうじゃなくて、%MASTERNAME:61%の出したモノだからだけどね」
+			ELSE
+				PRINTFORML 「んっ、こくっ、こくんっ……こく……」
+				PRINTFORML 「んぅ………………ぷはっ……もう、どれだけ出したら気が済むんだか」
+				PRINTFORML 「%MASTERNAME:61%のせーえきは大好きだけど、結構疲れる」
+			ENDIF
+		ELSE
+			IF TCVAR:精飲経験 ==  0
+				PRINTFORML 「んぶっっ！？　けほっけほっこほっっ！！　わぷっ！」
+				PRINTFORML 「えう…………、けほっ……あー、気持ち、よかった？」
+				PRINTFORML 「それは結構、……私はあまり良い気分じゃ無いけど」
+			ELSEIF TCVAR:精飲経験 < 20
+				PRINTFORML 「けほ、けほ……こほっ、んっ……これ、あまり好きになれないなぁ」
+				PRINTFORML 「%MASTERNAME:61%が気持ちよくなってくれたことは、嬉しいけど」
+				PRINTFORML 「でも、やっぱり、口に出されるのは……」
+			ELSE
+				IF NOWEX:PLAYER:射精 == 1
+					PRINTFORML 「ほらほら、%MASTERNAME:61%の精液こんなにぷりぷりでどろどろなんだよ」
+					PRINTFORML 「ふふ、%MASTERNAME:61%も自分で舐めてみる？」
+					PRINTFORML 「それはいや？　私の口に出してるのに勝手だね、ふふ、まあしょうがないけど」
+				ELSE
+					PRINTFORML 「んっんっんっ…………」
+					PRINTFORML 「もう、口の周りが精液でべとべとになったじゃない」
+					PRINTFORML 「ほんと、%MASTERNAME:61%は出し過ぎだってば」
+				ENDIF
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			IF NOWEX:PLAYER:射精 == 1
+				PRINTFORML 「っくん……、はぁ……おいしいね」
+				PRINTFORML 「のどに纏わり付く感触が、のどの奥まで%CALLNAME:MASTER%に愛されてるみたいで気持ちいい」
+			ELSE
+				PRINTFORML 「こくこくこく…………ぷはっ……はーはー……、どれだけためたらこれだけ出るんだか」
+				PRINTFORML 「食道から胃まで精液で犯されてるみたいだね、なんだか嬉しいけど」
+			ENDIF
+		ELSE
+			IF TCVAR:精飲経験 ==  0
+				PRINTFORML 「けほっこほっ、こほっ……ん……このにおいも味も好きになれないかな」
+				PRINTFORML 「でも、口で受け止めるのは、%CALLNAME:MASTER%的には嬉しいんだよね？　……はぁ」
+			ELSEIF TCVAR:精飲経験 < 20
+				PRINTFORML 「こほっこほっ、……はぁ……やっぱりこれ飲んでほしい？」
+				PRINTFORML 「……善処はしたいけど、ちょっとつらいかも……」
+			ELSE
+				IF NOWEX:PLAYER:射精 == 1
+					PRINTFORML 「……んー、ほら、こんないっぱい出たよ」
+					PRINTFORML 「私のお口、そんなによかったんだ。ふふ、なんだか興奮するね」
+				ELSE
+					PRINTFORML 「れろじゅる、んっ、じゅるる、んんっっ…………はぁ」
+					PRINTFORML 「もう、出し過ぎだよ。口の周り精液だらけになったじゃない。ふふ、このまま接吻？」
+				ENDIF
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF EXP_UP(15) == NOWEX:PLAYER:射精 * 3
+			IF NOWEX:PLAYER:射精 == 1
+				PRINTFORML 「ん、こくっ…………はぁ、心臓が熱くなる味だね、これ」
+			ELSE
+				PRINTFORML 「こくん、もっとじゅるれろこく、はぁ……、おいしくて心臓どきどきしてくるね」
+			ENDIF
+		ELSE
+			IF TCVAR:精飲経験 ==  0
+				PRINTFORML 「けほっけほっ…………、ごめんね、さすがに飲めそうにないや」
+			ELSEIF TCVAR:精飲経験 < 20
+				PRINTFORML 「ごほっこほっ、……この味もにおいも感触も好きになれないな～」
+			ELSE
+				IF NOWEX:PLAYER:射精 == 1
+					PRINTFORML 「んっ……、ふふ、ほらほらこんなに出したんだね。%CALLNAME:MASTER%も舐めてみる？」
+				ELSE
+					PRINTFORML 「んっんっ……、もう、精液で溺れさせる気？　口元べたべたになっちゃったじゃない」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_3(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		PRINTFORML 「ふふ、ほらほら、これがきもちいいんだよね。もっとごしゅごしゅしてあげる」
+		PRINTFORML 「うわ\@ NOWEX:PLAYER:射精 > 1 ? すごい量 # どくどく出てる \@。ふふ、そんなによかった？」
+		PRINTFORML 「もっとほしい？　ふふ、どーしよっかなー」
+	ELSEIF 陥落状態() >= 4
+		IF ABL:精液中毒 >= 5 && ABL:技巧 > 3
+			PRINTFORML 「あはぁ……、%MASTERNAME:61%にマーキングされてるぅ」
+			PRINTFORML 「んー、顔もお口もせーえきでべとべとだよぉ」
+			PRINTFORML 「%MASTERNAME:61%のモノだって証だね。ふふ」
+		ELSEIF NOWEX:PLAYER:射精 == 1
+			PRINTFORML 「んっ、はぁ……あったかい……」
+			PRINTFORML 「あーもう、顔中にちゃにちゃになっちゃったじゃない」
+			PRINTFORML 「それがくせになる？　さあどうだろうね」
+		ELSE
+			PRINTFORML 「んっんっんっんっ……、あったかいね」
+			PRINTFORML 「%MASTERNAME:61%の精液で真っ白にされちゃった」
+			PRINTFORML 「ふふ、でもこれ素敵ぃ……」
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF ABL:精液中毒 >= 5 && ABL:技巧 > 3
+			PRINTFORML 「んっ……ふふ、顔中べたべただよぉ」
+			PRINTFORML 「%CALLNAME:MASTER%の精液かけられるのなんだか、すごく興奮する」
+		ELSEIF NOWEX:PLAYER:射精 == 1
+			PRINTFORML 「はぁ……、んっ、顔中ねちゃねちゃにされちゃった」
+			PRINTFORML 「ふふ、でも、%CALLNAME:MASTER%のだと思うと、なんだか興奮する」
+		ELSE
+			PRINTFORML 「んっ、んっ、んぅっ…………、はぁ、もうそんなに私にかけるの好きなの？」
+			PRINTFORML 「……まあ、そりゃこんなたくさん出るくらい、感じてくれるのは嬉しいけど」
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF ABL:精液中毒 >= 5 && ABL:技巧 > 3
+			PRINTFORML 「んっ……ふふ、顔中精液まみれにされて、感じちゃった」
+		ELSEIF NOWEX:PLAYER:射精 == 1
+			PRINTFORML 「あふっ、んっ、ふぁっ……、はぁ、顔でろでろになっちゃった。ふふ」
+		ELSE
+			PRINTFORML 「あったかぁい……ふふ、嬉しいなぁ」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_2(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;アナル
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		IF NOWEX:Ａ絶頂
+			PRINTFORML 「あふんっっ、んくぅっっ…………はぁ、はぁ……おしりにいっぱい出てるぅ」
+			PRINTFORML 「ふふ、んっ、尻穴にしぼりとられて、ふぁっ、嬉しい？　変態だね」
+			PRINTFORML 「イッてるくせに？　ふふ、私は変態でも好東西。そっちが私をこうしたんだから」
+		ELSE
+			PRINTFORML 「ふぁっ、んっ……ふふ、出ちゃった？　可愛いね、尻穴で逆強姦されるのが気持ちいいんだ？」
+			PRINTFORML 「んくっ！　怒った？　ふぁんっ！　抜かずに続ける？　あふっ！　もっとして、あふっ」
+			PRINTFORML 「ふぁんっ、ふふ、ほらほら、もっとこし、うごかして、っっんくぅっっ！！」
+		ENDIF
+	ELSEIF 陥落状態() >= 4
+		IF NOWEX:Ａ絶頂
+			PRINTFORML 「んぅ……はぁはぁ、ん、おしりに熱いの出てるぅ……」
+			PRINTFORML 「いっしょに、イケて、うれしいよぉ……、シリアナでイクへんたいでもいいのぉ」
+			PRINTFORML 「はぁ、よだれ出てる？　いーの、%MASTERNAME:61%のせーえきがきもちいーんだもん」
+		ELSE
+			PRINTFORML 「んくっ……はぁ……、おしりの中、灼けちゃいそうだね」
+			PRINTFORML 「んっ！　ふふ、締め付けたらまた出た。そんなに私のおしり気持ちいい？」
+			PRINTFORML 「褒められるとすごく嬉しいな。ふふ、おしりの奥の奥まで愛されてるって感じが好き」
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF NOWEX:Ａ絶頂
+			PRINTFORML 「っっっっっっ…………、はぁ、あ、ん、おしり、いっぱい入ってぇ……」
+		ELSE
+			PRINTFORML 「ん、気持ちよかった？　射精してるのに、よくないわけないよね？」
+		ENDIF
+		PRINTFORML 「…………ん、ふふ、おしりに出すのが好きだなんて、へんたいさんだね」
+	ELSEIF 陥落状態() == 2
+		IF NOWEX:Ａ絶頂
+			PRINTFORML 「あふっっ、んくぅっ……、はぁ、おしりでイキながら、出されるの、素敵だね」
+		ELSE
+			PRINTFORML 「んく、ふふ、っおしり精液でいっぱいにされちゃった。ふふ、気持ちいいよ」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K61_1(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;膣内
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF CFLAG:うふふ == 2
+		IF 陥落状態() >= 4
+			IF NOWEX:Ｖ絶頂
+				PRINTFORML 「はぁっはぁっ、んっっ……、ふふ、一緒にイケて嬉しいな」
+				PRINTFORML 「%MASTERNAME:61%のせーえきで、おなかいっぱいだよ」
+				PRINTFORML 「ほら、また動いてあげるから、いっぱい出して？　\@ !EXP:出産経験 ?  # 赤ちゃんの元、もっと注いで？ \@」
+			ELSE
+				PRINTFORML 「んっ……、ふふ、もう出た？　私のおまんこ、そんなによかった？」
+				PRINTFORML 「びゅるびゅるっておなかの奥に\@ !EXP:出産経験 ? せーえき # 赤ちゃんの元 \@が打ち付けられるの、\@ !EXP:出産経験 ? すごく興奮するね # 嬉しいよ \@」
+				PRINTFORML 「それじゃ、続きしよ。空っぽになるまで、私のおまんこ使って」
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			IF NOWEX:Ｖ絶頂
+				PRINTFORML 「はふ、んくっ、ふぁ……、んぅ……」
+				PRINTFORML 「%CALLNAME:MASTER%の精液でお腹いっぱい……。\@ !EXP:出産経験 ? あく、ぁ……きもちいいよぉ # 赤ちゃん出来てると良いね \@」
+			ELSE
+				PRINTFORML 「んくっ、ふぅ………ふふ、いっぱい出てるもっとだしてくれるよね？」
+				PRINTFORML 「ふふ、%CALLNAME:MASTER%の\@ !EXP:出産経験 ? こ……んなに、出るんだね # 兒童きっと出来てるよね \@」
+			ENDIF
+		ELSE
+			IF NOWEX:Ｖ絶頂
+				PRINTFORML 「はっ、はっ、はぁ……、ん、出されながらイクの、つらい……」
+			ELSE
+				PRINTFORML 「んっっ……、中出てる」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() >= 4
+		IF NOWEX:Ｖ絶頂
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「はぁ……はぁ……、%MASTERNAME:61%のせーえきで、はぁ、しきゅーが、溺れちゃいそう」
+					PRINTFORML 「%MASTERNAME:61%の\@ !EXP:出産経験 ? あか…………っん、ふふ、ふふふふ、なんでもないよ # 赤ちゃん、きっと出来てるよね、しきゅーいっぱいだもん \@」
+					PRINTFORML 「ね、お願いもっとして、もっとおなかふくらむくらいまで%MASTERNAME:61%のせーえき注いでよぉ」
+				ELSE
+					PRINTFORML 「はぁはぁっんくっ……はぁ、はぁ……しきゅーに注がれながらイクの、きもちいーよぉ」
+					PRINTFORML 「はっ、んっ、ねえもっとして、しきゅーがせーえきでいっぱいになるまでそそいで？」
+					PRINTFORML 「いいでしょ、\@ !EXP:出産経験 ? どうせ――――だし # 赤ちゃんほしいから \@、好きなだけだしていいから、もっとほしーよぉ」
+				ENDIF
+			ELSE
+				PRINTFORML 「んきゅぅっっ、……あ、中、出てる。ふふ、一緒にイケて嬉しいな」
+				PRINTFORML 「んくっ、またびゅっ！　って、ふふ、そんなに私のおまんこ気持ちいいんだ？」
+				PRINTFORML 「私も気持ちいいよ、%MASTERNAME:61%の\@ !EXP:出産経験 ? せーえき # 子種 \@きもちいーよ」
+			ENDIF
+		ELSE
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「んっ、ふふ、しきゅーでせーえき飲んであげるぅ……」
+					PRINTFORML 「中の中までみたされる感じがして、これ気持ちいぃ……」
+					PRINTFORML 「\@ !EXP:出産経験 ? 快楽のためだけでしかないけど、それでも、 # もっと赤ちゃん産みたいよ、だから、 \@%MASTERNAME:61%のせーえきもっとほしいよぉ」
+				ELSE
+					PRINTFORML 「きゅぅん…………、ふふ、%MASTERNAME:61%のせーえき、おいしーよ」
+					PRINTFORML 「\@ !EXP:出産経験 ? 空の子宮が満たされる感覚が # 子作りだって思いながらするのが \@、こんなに素敵だなんて、思ってもみなかったな」
+					PRINTFORML 「ねえお願い、もっと注いでおなかぱんぱんにふくれるぐらい注ぎ込んでよぉ」
+				ENDIF
+			ELSE
+				PRINTFORML 「ふふ、あ、ん、%CALLNAME:MASTER%のせーえきが中にいっぱい来てるぅ」
+				PRINTFORML 「きゅっ、と。ふふ、ちょっと締めただけなのに、また出た。ねえまだ出せるでしょ」
+				PRINTFORML 「注いで、\@ !EXP:出産経験 ? おまんこが溺れるまで # また赤ちゃん出来るまで \@、せーえきいっぱい注いでよぉ」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		IF NOWEX:Ｖ絶頂
+			PRINTFORML 「はひ、んきゅ……、あ、……なか、でてりゅぅ」
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「んん、ふふ、精液しきゅうで全部飲んであげるからぁ、もっと、もっとしてぇ」
+				ELSE
+					PRINTFORML 「はぁ、んっ、しきゅー精液でいっぱい\@ !EXP:出産経験 ? ……こど……なんでもない # 赤ちゃんほしいからぁ \@、もっとしてよぉ」
+				ENDIF
+			ELSE
+				PRINTFORML 「はふ、んく、はぁ……、ふふ、もっと、もっと注いでほしいなぁ」
+			ENDIF
+		ELSE
+			PRINTFORML 「はぁはぁ、んぅ……、ふふ、精液出てる。すごく気持ちよくて、嬉しい」
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「ふぁんっ、ふふ、子宮に精液飲まされ\@ !EXP:出産経験 ? るの、癖になっちゃった # れて、赤ちゃんほしくなっちゃった \@。ね、もっとして？」
+				ELSE
+					PRINTFORML 「ふふ、子宮の中までいっぱいだね\@ !EXP:出産経験 ? ……でき……、んっ、ふふ # 、でも赤ちゃん作るには足りないかも \@、もっとできるよね」
+				ENDIF
+			ELSE
+				PRINTFORML 「んぅ、……はぁ……、膣内射精されるの気持ちいい\@ !EXP:出産経験 ?  # 、赤ちゃん出来ると良いなぁ \@」
+			ENDIF
+		ENDIF
+	ELSEIF 陥落状態() == 2
+		IF NOWEX:Ｖ絶頂
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「んきゅうっ……、はぁ、はぁ、子宮が熱いよぉ、精液熱すぎるよぉ」
+				ELSE
+					PRINTFORML 「くぅんっ、はぁ、んっ、はぅん、子宮、精液でいっぱいぃ……、気持ちよすぎぃ」
+				ENDIF
+			ELSE
+				PRINTFORML 「はぁ、はぁ、んくぅっ……精液気持ちいいよぉ……んきゅぅ……」
+			ENDIF
+		ELSE
+			IF TFLAG:50 == 7
+				IF EXP:TARGET:子宮口開発経験 >= 300
+					PRINTFORML 「んっ、はぁはぁ、んく……ふふ、子宮まで精液で犯されちゃったなぁ」
+				ELSE
+					PRINTFORML 「はぁ、はぁ、んぅ……はぁ、精液が子宮まで来てる……」
+				ENDIF
+			ELSE
+				PRINTFORML 「んくっ、はぁはぁ、おまんこ精液でぬるぬるになっちゃったね。ふふ、まだできる？」
+			ENDIF
+		ENDIF
+		SIF EXP:出産経験
+			PRINTFORML 「赤ちゃん……、できるかなぁ……、ね、もっとしよ？」
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_F_K61(ARG)
+CALL PALAM_MESSAGE_F
+;-------------------------------------------------
+;焦らし
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@SAMEN_DESCRIPTION_K61()
+#FUNCTIONS
+VARSET LOCALS
+	SIF NOWEX:射精 >1
+		LOCALS += "大量の"
+	LOCALS += "火傷しそうな熱い精液"
+RETURNF LOCALS

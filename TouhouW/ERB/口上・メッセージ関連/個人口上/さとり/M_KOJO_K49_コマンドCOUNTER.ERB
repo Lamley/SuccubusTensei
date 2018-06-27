@@ -1,0 +1,1086 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;"COUNTER"系口上
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;-------------------------------------------------
+;コミュニケーション
+;-------------------------------------------------
+;==================================================
+;距離が近い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_1
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	FOR LOCAL,0,3
+		IF PALAM:LOCAL == 9999
+			LOCAL:1 = 2
+		ELSEIF PALAM:LOCAL >= 5000
+			LOCAL:1 = 1
+		ENDIF
+	NEXT
+	IF LOCAL:1 == 2
+		PRINTFORMDW 覚は潤んだ瞳で吐息を漏らしている
+	ELSEIF LOCAL:1 == 1
+		PRINTFORMDW 覚は何か言いたげに、唇をとがらせている
+	ENDIF
+	CALL M_KOJO_MESSAGE_COUNTER_K49_1_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_1_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「主様主様、好き好き大好きですー」
+		PRINTFORML 「『嬉しそう』？　違いますよ、嬉しいですよー」
+		PRINTFORMW 「『その割に遠い』？　うふふ、たまには主様の尊顔を眺めたいですしねー」
+	ELSE
+		PRINTFORML 「ふふ、主様好きですよ」
+		PRINTFORML 「『遠くないか』？　ふふ、たまにはいいんじゃないですか？」
+		PRINTFORMW 「それともべったりひっついている方が良いですか？」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「『微妙な距離だな』？　ふふ、さあどうでしょうね」
+	PRINTFORMW 「%CALLNAME:MASTER%がそう思うならそうなのでしょうけど」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「ふふ、まあ、たまにはこうのもいいでしょう?」
+ELSE
+	PRINTFORMW 「ああ、気にしないで下さい。%CALLNAME:MASTER%風に言えば、ただの気まぐれですから」
+ENDIF
+RETURN 1
+
+;==================================================
+;チラ見
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_2
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	FOR LOCAL,0,3
+		IF PALAM:LOCAL == 9999
+			LOCAL:1 = 2
+		ELSEIF PALAM:LOCAL >= 5000
+			LOCAL:1 = 1
+		ENDIF
+	NEXT
+	IF LOCAL:1 == 2
+		PRINTFORMDL こちらを見る瞳が熱情に潤んでいる気がした
+	ELSEIF LOCAL:1 == 1
+		PRINTFORMDL なんとはなしに視線は熱っぽさを感じさせた
+	ENDIF
+	CALL M_KOJO_MESSAGE_COUNTER_K49_2_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_2_1
+IF GETBIT(TALENT:MASTER:性別,0) || (GETBIT(TALENT:MASTER:性別,1) && TALENT:MASTER:体型 < 0)
+	LOCALS = "可愛い"
+ELSE
+	LOCALS = "凜々しい"
+ENDIF
+
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「主様はどうしてこんなに%LOCALS%なんですか？」
+		PRINTFORML 「『そんなの知らない』？　うふふ、でも私だけが知ってれば良いことですよね」
+		PRINTFORMW 「うふふ、主様大好きです」
+	ELSE
+		PRINTFORML 「主様はいつ見ても%LOCALS%ですねぇ」
+		PRINTFORML 「『当然だ』？　ふふ、なら、時止めのイタズラをしなくても、堕とせるのでは？」
+		PRINTFORMW 「『それは別』ですか。まあ、能力がある以上仕方ないですか」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「はぁ、ふふ、別になにもないですよ」
+	PRINTFORMW 「たんに%LOCALS%%CALLNAME:MASTER%を見ているのが面白いだけですから」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「ふふ、なんでもないですよ。%LOCALS%%CALLNAME:MASTER%を見ていただけです」
+ELSE
+	PRINTFORMW 「……別にそちらを見ていたわけではありません」
+ENDIF
+RETURN 1
+
+;==================================================
+;おはなし
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_3
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	FOR LOCAL,0,3
+		IF PALAM:LOCAL == 9999
+			LOCAL:1 = 2
+		ELSEIF PALAM:LOCAL >= 5000
+			LOCAL:1 = 1
+		ENDIF
+	NEXT
+	IF LOCAL:1 == 2
+		PRINTFORMDL が、甘い吐息が混じるせいで、よく聞き取れない
+	ELSEIF LOCAL:1 == 1
+		PRINTFORMDL 言葉の端々に熱情が薫っている
+	ENDIF
+	CALL M_KOJO_MESSAGE_COUNTER_K49_3_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_3_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「『おもしろい話だった』？　うふふ、主様にそう言ってもらえると嬉しーです」
+		PRINTFORML 「いつも聞いてる、主様のお話ほどじゃ無いかも知れないですけどね」
+		PRINTFORMW 「主様のお話も声も大好きです」
+	ELSE
+		PRINTFORML 「『なかなか興味深い』？　ふふ、主様でもそう思うんですね」
+		PRINTFORML 「少しでも、主様に喜んでいただけて嬉しいです」
+		PRINTFORMW 「『自分が楽しいだけだろう』？　……ふふ、そうかも知れませんね」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「『面白かった』？　ふふ、そう言ってもらえると嬉しいですね」
+	PRINTFORMW 「まあ、あの子達の騒動は端から見れば面白くはありますけど」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「ふふ、どうです、私の話は面白かったですか？」
+ELSE
+	PRINTFORMW 「……そちらばかりに話をさせるのは若干不公平ではありますしね」
+ENDIF
+RETURN 1
+
+;==================================================
+;いい匂い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_4
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	FOR LOCAL,0,3
+		IF PALAM:LOCAL == 9999
+			LOCAL:1 = 2
+		ELSEIF PALAM:LOCAL >= 5000
+			LOCAL:1 = 1
+		ENDIF
+	NEXT
+	IF LOCAL:1 == 2
+		PRINTFORMDL その甘さが欲情していることを如実に伝えてくる
+	ELSEIF LOCAL:1 == 1
+		PRINTFORMDL どことなく、熱情が燻る様な甘さを覚えた
+	ENDIF
+	CALL M_KOJO_MESSAGE_COUNTER_K49_4_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_4_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「クンクン……はぁ……主様の匂い……、美味しそう」
+		PRINTFORML 「『性的な意味で』？　性的な意味で、ですよぉ」
+		PRINTFORMW 「はぁはぁ、くんくん、良い匂いれす…………すんすん……」
+	ELSE
+		PRINTFORML 「すんすん……、ふふ、私のが良い匂いなら、主様の匂いは美味しそうですね」
+		PRINTFORML 「『食べるつもりか』？　ふふ、まさか、食欲と愛欲はべつものですよ」
+		PRINTFORMW 「主様に良い匂いと思われるのは嬉しいですけどね」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「ふふ、そう思われるのは光栄ですね。でもそんなに良いと思います？」
+	PRINTFORMW 「『甘くて芳しい薫り』？　……体臭をそう言われると気恥ずかしいです」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「『良い匂い』？　香水はつけてはいませんけど？」
+ELSE
+	PRINTFORMW 「『いい匂い』？　セクハラは止めて下さい」
+ENDIF
+RETURN 1
+
+;-------------------------------------------------
+;ベリーソフト
+;-------------------------------------------------
+;==================================================
+;近寄ってくる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_11
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF (BASE:酒気 < (MAXBASE:酒気 / 10) * 4)
+	IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+		CALL UFUFUTO49(1)
+	ELSE
+		CALL EVENT_COUNTER_MESSAGE
+		FOR LOCAL,0,3
+			IF PALAM:LOCAL == 9999
+				LOCAL:1 = 2
+			ELSEIF PALAM:LOCAL >= 5000
+				LOCAL:1 = 1
+			ENDIF
+		NEXT
+		IF LOCAL:1 == 2
+			PRINTFORMDL はぁはぁと息を荒げながら、覚は頬を赤くしている
+		ELSEIF LOCAL:1 == 1
+			PRINTFORMDL ふぅ、ふぅと、息を整えつつ、恨めしげな表情を浮かべている
+		ENDIF
+	ENDIF
+ELSE
+	PRINTFORML 覚はふらふらと頼りない足取りで、%CALLNAME:PLAYER%の側に近寄ってきた…
+	SIF FLAG:口上色
+		TRYCALLFORM M_KOJO_COLOR_K49
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_11_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COUNTER_K49_11_1
+IF GETBIT(TALENT:MASTER:性別,0) || (GETBIT(TALENT:MASTER:性別,1) && TALENT:MASTER:体型 < 0)
+	LOCALS = "可愛い"
+ELSE
+	LOCALS = "凜々しい"
+ENDIF
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,312,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「不思議ですね、主様が側に居るだけなのに、すごく嬉しーです」
+		PRINTFORML 「『ならいつも街道に抱きつけば良い』？　うふふ、単なる気分の問題ですよー」
+		PRINTFORMW 「それに、主様の%LOCALS%姿を見てるのも良いものですし」
+	ELSE
+		PRINTFORML 「ふふ、怒ってる様に見えます？」
+		PRINTFORML 「『不愉快そうに見える』？　ふふ、不愉快、ではないですよ」
+		PRINTFORMW 「主様も、覚であれば、理解できたかも知れませんけどね」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「『何かしたか』？　いいえ、別になんでもないですよ」
+	PRINTFORMW 「『心情不快そう』？　ふふ、さあどうでしょうね」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「……ん、ちょっとした気まぐれですよ、ふふ、%CALLNAME:MASTER%」
+ENDIF
+RETURN 1
+
+;==================================================
+;笑顔を浮かべる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_12
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF (BASE:酒気 < (MAXBASE:酒気 / 10) * 4)
+	IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+		CALL UFUFUTO49(1)
+	ELSE
+		CALL EVENT_COUNTER_MESSAGE
+		FOR LOCAL,0,3
+			IF PALAM:LOCAL == 9999
+				LOCAL:1 = 2
+			ELSEIF PALAM:LOCAL >= 5000
+				LOCAL:1 = 1
+			ENDIF
+		NEXT
+		IF LOCAL:1 == 2
+			PRINTFORMDL 頬には熱情の紅をのせ、目は欲情に潤んでいる
+		ELSEIF LOCAL:1 == 1
+			PRINTFORMDL 強気な口元とは裏腹に、目元には媚びが浮かんでいる
+		ENDIF
+	ENDIF
+ELSE
+	PRINTFORML 覚は%CALLNAME:PLAYER%に満面の笑みを向けてくる…
+	SIF FLAG:口上色
+		TRYCALLFORM M_KOJO_COLOR_K49
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_12_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_12_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,312,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	IF 陥落状態() == 5
+		PRINTFORML 「『相変わらず嬉しそう』？　違いますよ、そう、じゃなくて嬉しいんです」
+		PRINTFORML 「『昔は仏頂面だった』　……むー、私だってここまで心許せるとは思ってなかったですよ」
+		PRINTFORMW 「主様だから、主様だけに、心を曝け出してるんですからね」
+	ELSE
+		PRINTFORML 「……ああ、別に意味は無いのですよ」
+		PRINTFORML 「ただ、主様を見ていると自然と口元が緩んでしまうのです」
+		PRINTFORMW 「『別に面白くないだろう』？　ふふ、面白いのではなく、楽しいのですが」
+	ENDIF
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「『楽しそう』？　ふふ、単にそういう気分なだけですよ」
+	PRINTFORMW 「ただ、%CALLNAME:MASTER%を見ていると楽しいのは事実ですが」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「『楽しいことでもあったか』？　ええ、そうですね」
+ENDIF
+RETURN 1
+
+;==================================================
+;構って欲しがる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_13
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF (BASE:酒気 < (MAXBASE:酒気 / 10) * 4)
+	IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+		CALL UFUFUTO49(1)
+	ELSE
+		CALL EVENT_COUNTER_MESSAGE
+		FOR LOCAL,0,3
+			IF PALAM:LOCAL == 9999
+				LOCAL:1 = 2
+			ELSEIF PALAM:LOCAL >= 5000
+				LOCAL:1 = 1
+			ENDIF
+		NEXT
+		IF LOCAL:1 == 2
+			PRINTFORMDL 時折こするように指を動かすのは、自分がされたいことをしているからだろう
+		ELSEIF LOCAL:1 == 1
+			PRINTFORMDL すこし強めに押しつけてくるのは、気持ちよくなりたいと言う無言の請求だろう
+		ENDIF
+	ENDIF
+ELSE
+	PRINTFORML 覚は%CALLNAME:MASTER%の手を取って、嬉しそうにほおずりをしている
+	SIF FLAG:口上色
+		TRYCALLFORM M_KOJO_COLOR_K49
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_13_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_13_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+		PRINTFORML 「……主様、こうされるのはおいやですか？」
+		PRINTFORML 「『見ればわかるだろう』？　ふふ、いやがってる様には”視”えませんが？」
+		PRINTFORMW 「『だからみればわかるだろう』？　ちゃんと言葉で聞かせて欲しいのですけどね」
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「『こそばい』？　ふふ、私には関係ないことですね」
+	PRINTFORMW 「『しているくせに』？　ふふふふふ、させているのは%CALLNAME:MASTER%でしょう」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「『くすぐったい』？　そうですか、大変ですね」
+ENDIF
+RETURN 1
+
+;==================================================
+;身をすり寄せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_14
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF (BASE:酒気 < (MAXBASE:酒気 / 10) * 4)
+	IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+		CALL UFUFUTO49(1)
+	ELSE
+		CALL EVENT_COUNTER_MESSAGE
+		FOR LOCAL,0,3
+			IF PALAM:LOCAL == 9999
+				LOCAL:1 = 2
+			ELSEIF PALAM:LOCAL >= 5000
+				LOCAL:1 = 1
+			ENDIF
+		NEXT
+		IF LOCAL:1 == 2
+			PRINTFORMDL そのままこちらのうなじに、荒く甘い吐息を幾度となくぶつけてくる
+		ELSEIF LOCAL:1 == 1
+			PRINTFORMDL 肩を掴む力の強さに、熱情が感じられた
+		ENDIF
+	ENDIF
+ELSE
+	PRINTFORML すすっとちかよってきた覚が、%CALLNAME:MASTER%の腕にしがみついてくる
+	SIF FLAG:口上色
+		TRYCALLFORM M_KOJO_COLOR_K49
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_14_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_14_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	PRINTFORML 「ああ、動かないでください。単にこうしたいだけですから」
+	PRINTFORML 「『何がしたい』？　ふふ、何がしたいんでしょうね」
+	PRINTFORMW 「主様を占有したいとは常々思っているところですが」
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「……だいぶ凝ってますね。『覚がいると気が抜けないから』？」
+	PRINTFORMW 「ふふ、ならもっと存分に肩を凝らせてあげますね」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「動かないでくださいね？」
+ENDIF
+RETURN 1
+
+;==================================================
+;見つめてくる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_15
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF (BASE:酒気 < (MAXBASE:酒気 / 10) * 4)
+	IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+		CALL UFUFUTO49(1)
+	ELSE
+		CALL EVENT_COUNTER_MESSAGE
+		FOR LOCAL,0,3
+			IF PALAM:LOCAL == 9999
+				LOCAL:1 = 2
+			ELSEIF PALAM:LOCAL >= 5000
+				LOCAL:1 = 1
+			ENDIF
+		NEXT
+		IF LOCAL:1 == 2
+			PRINTFORMDL 荒い吐息と赤く上気した頬が、熱情を伝えてくる
+		ELSEIF LOCAL:1 == 1
+			PRINTFORMDL 潤んだ瞳が、欲情を伝えてくる
+		ENDIF
+	ENDIF
+ELSE
+	PRINTFORML 覚はうっとりとした表情でこちらをじっと見つめている…
+	SIF FLAG:口上色
+		TRYCALLFORM M_KOJO_COLOR_K49
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_15_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_15_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	PRINTFORML 「主様は、本当に女心がわかっていませんね」
+	PRINTFORML 「唇をとがらせているから不快だと思っているんですか？」
+	PRINTFORMW 「『覚じゃないからな』？　ああ、そういえばそうでしたね」
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「本当に%CALLNAME:MASTER%は見てて面白い人です」
+	PRINTFORMW 「『変わったことはしてない』？　そういうところも面白いんですけどね」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「……別に睨んでるわけではありません」
+ENDIF
+RETURN 1
+
+;==================================================
+;肩にあご乗せ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_16
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+ENDIF
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	PRINTFORMDL そのまま、ぺろぺろと%CALLNAME:MASTER%の耳や頬を舐めしゃぶり始める
+ELSEIF SELECTCOM != 312
+	FOR LOCAL,0,3
+		IF PALAM:LOCAL == 9999
+			LOCAL:1 = 2
+		ELSEIF PALAM:LOCAL >= 5000
+			LOCAL:1 = 1
+		ENDIF
+	NEXT
+	IF LOCAL:1 == 2
+		PRINTFORMDL はぁはぁと、荒い息を漏らし、乳房を懸命にこすりつけてくる
+	ELSEIF LOCAL:1 == 1
+		PRINTFORMDL ふぅふぅと、耳元に甘い吐息を吹きかけてくる
+	ENDIF
+ENDIF
+SIF SELECTCOM != 312 || TARGET != 49
+	CALL M_KOJO_MESSAGE_COUNTER_K49_16_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_16_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+	PRINTFORML 「主様は温かいですね。ふふ、こうしてると気持ちが良いです」
+	PRINTFORML 「『覚の方が温かい』？　そう言っていただけると光栄です」
+	PRINTFORMW 「だから、お礼です、ちゅっ」
+ELSEIF 陥落状態() == 3
+	PRINTFORML 「ふふ、こうして抱きつくと、%CALLNAME:MASTER%の肩はちょうど良い位置ですね」
+	PRINTFORMW 「『あごが当たっていたい』？　ふふ、でも胸を押し当てられるのは気持ちいいでしょう？」
+ELSEIF 陥落状態() == 2
+	PRINTFORMW 「ん、特に他意はありませんよ。『温かい』？　せめて、柔らかいと言って欲しいですね」
+ENDIF
+RETURN 1
+
+;-------------------------------------------------
+;ソフト
+;-------------------------------------------------
+;==================================================
+;色っぽい仕草
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_20
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_20_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;==================================================
+;見つめる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_21
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_21_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ENDIF
+RETURN 1
+
+;==================================================
+;体を摺り寄せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_22
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_22_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;==================================================
+;掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_23
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_23_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;==================================================
+;息を吹きかける
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_24
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_24_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;==================================================
+;摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_25
+SIF GETBIT (CFLAG:1490,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_25_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;==================================================
+;腕抱き付き
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_26
+SIF GETBIT (CFLAG:1491,0) && !TALENT:恋慕 && !TALENT:恋人
+	RETURN 0
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_26_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+;==================================================
+;谷間を見せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_27
+IF SELECTCOM == 312 && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSE
+	CALL EVENT_COUNTER_MESSAGE
+	CALL M_KOJO_MESSAGE_COUNTER_K49_22_1
+ENDIF
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_27_1
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 4)
+	CALL DRUNKER49(300)
+ELSEIF GROUPMATCH(SELECTCOM,310,311,313,314,315,316,330) && GET_TARGETNUM() == 1
+	CALL UFUFUTO49(1)
+ELSEIF 陥落状態() >= 4
+ELSEIF 陥落状態() == 3
+ELSEIF 陥落状態() == 2
+ELSE
+ENDIF
+RETURN 1
+
+;-------------------------------------------------
+;セクハラ
+;-------------------------------------------------
+;==================================================
+;キス
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_30
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_30_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_30_1
+RETURN 1
+
+;==================================================
+;後ろから抱きつく
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_31
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_31_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_31_1
+RETURN 1
+
+;==================================================
+;前ろから抱きつく
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_32
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_32_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_32_1
+RETURN 1
+
+;==================================================
+;胸を揉ませる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_33
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_33_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_33_1
+RETURN 1
+
+;==================================================
+;股間をまさぐる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_34
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_34_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_34_1
+RETURN 1
+
+;==================================================
+;裙子の中を見せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_35
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_35_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_35_1
+RETURN 1
+
+;==================================================
+;後ろから胸もみもみ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_36
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_36_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_36_1
+RETURN 1
+
+
+;-------------------------------------------------
+;愛撫
+;-------------------------------------------------
+;==================================================
+;手淫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_50
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_50_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_50_1
+RETURN 1
+
+;==================================================
+;口淫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_51
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_51_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_51_1
+RETURN 1
+
+;==================================================
+;素股
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_52
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_52_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_52_1
+RETURN 1
+
+;==================================================
+;乳交
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_53
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_53_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_53_1
+RETURN 1
+
+;==================================================
+;足交
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_54
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_54_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_54_1
+RETURN 1
+
+;==================================================
+;肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_55
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_55_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_55_1
+RETURN 1
+
+;==================================================
+;舐肛
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_56
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_56_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_56_1
+RETURN 1
+
+;==================================================
+;指挿入
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_57
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_57_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_57_1
+RETURN 1
+
+;==================================================
+;胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_58
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_58_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_58_1
+RETURN 1
+
+;==================================================
+;乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_59
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_59_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_59_1
+RETURN 1
+
+;==================================================
+;ディープキス
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_60
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_60_1
+RETURN 1
+
+
+;-------------------------------------------------
+;奉仕
+;-------------------------------------------------
+;==================================================
+;強制舐陰
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_70
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_70_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_70_1
+RETURN 1
+
+;==================================================
+;口交強制
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_71
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_71_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_71_1
+RETURN 1
+
+;==================================================
+;肛門奉仕
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_72
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_72_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_72_1
+RETURN 1
+
+;==================================================
+;ぱふぱふ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_73
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_73_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_73_1
+RETURN 1
+
+;==================================================
+;乳合わせ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_74
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_74_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_74_1
+RETURN 1
+
+;==================================================
+;タワシ洗い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_75
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_75_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_75_1
+RETURN 1
+
+;==================================================
+;強制アソコ愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_76
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_76_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_76_1
+RETURN 1
+
+;==================================================
+;乳を吸わせる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_77
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_77_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_77_1
+RETURN 1
+;-------------------------------------------------
+;性交
+;-------------------------------------------------
+;==================================================
+;挿入される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_80
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_80_1
+RETURN 1
+
+;==================================================
+;Ｖ挿入する（TARGET受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_85
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_85_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_85_1
+RETURN 1
+
+;==================================================
+;だいしゅきホールド
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_86
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_86_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_86_1
+RETURN 1
+
+;==================================================
+;Ａ挿入する（TARGET受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_87
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_87_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_87_1
+RETURN 1
+
+;==================================================
+;Ｖ腰振り（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_88
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_88_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_88_1
+RETURN 1
+
+;==================================================
+;Ａ腰振り（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_89
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_89_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_89_1
+RETURN 1
+
+;==================================================
+;Ａ挿入される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_90
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_90_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_90_1
+RETURN 1
+
+;==================================================
+;強制口交される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_91
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_91_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_91_1
+RETURN 1
+
+;==================================================
+;アナル開発許可を求める
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K49_92
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K49_92_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K49_92_1
+RETURN 1

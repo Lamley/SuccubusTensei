@@ -1,0 +1,15 @@
+﻿;道具の説明文
+@ITEM_DESCRIPTION(ARG)
+PRINTFORML %ITEMNAME:ARG%:%ITEM_EXPLANATION(ARG)%
+;--------------------------------------------------------
+;道具のボタン付き説明文
+@ITEM_BUTTON(ARG)
+PRINTFORML [{ARG}] %ITEMNAME:ARG%:%ITEM_EXPLANATION(ARG)%
+;--------------------------------------------------------
+@ITEM_EXPLANATION(ARG)
+#FUNCTIONS
+SELECTCASE ARG
+	CASE 48
+		RETURNF "稗和粟之类的　穷人的主食"
+ENDSELECT
+		

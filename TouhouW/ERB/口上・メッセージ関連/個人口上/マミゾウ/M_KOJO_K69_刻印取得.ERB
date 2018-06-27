@@ -1,0 +1,83 @@
+﻿;-------------------------------------------
+;刻印取得
+;-------------------------------------------
+@M_KOJO_MESSAGE_MARKCNG_K69
+;このままだと地の文が表示されません
+;地の文を表示したい方は、下記のコメントアウトを削除して下さい
+CALL MARK_MESSAGE
+;苦痛刻印
+IF TFLAG:苦痛刻印取得 == 1
+	PRINTFORMW 「くぅ……、痛いわ、馬鹿もん」
+ELSEIF TFLAG:苦痛刻印取得 == 2
+	PRINTFORMW 「く、つぅ……、し、終いに怒るぞ」
+ELSEIF TFLAG:苦痛刻印取得 == 3
+	PRINTFORML 「ぐっ、つ、うくっ、もう、やめて、おねがいじゃ」
+	PRINTFORMW ぽろぽろと涙をこぼして、猯藏が懇願してくる
+ENDIF
+
+;快楽刻印
+IF TFLAG:23 == 1
+	PRINTFORMW 「ふぁんっっ！　い、今のは気の迷いじゃ」
+ELSEIF TFLAG:23 == 2
+	PRINTFORMW 「んきゅっ、あふっ……、良いな、これは良い」
+ELSEIF TFLAG:23 == 3
+	PRINTFORML 「ひぁんっっ！！　んきゅうっっ！！　ふみゅっ！　や、おかしくなるっ！！」
+	PRINTFORMW びくびくと体を震わせる猯藏が、涎をこぼしながら蕩けるような瞳を向けてきた
+ENDIF
+
+;不埒刻印
+;快楽による刻印
+;LV1
+IF TFLAG:24 == 11
+	IF !CFLAG:TARGET:睡眠
+		PRINTFORMW 「……全く、この儂に何をするんじゃ」
+	ELSE
+		PRINTFORMW 「ふみゅ、んきゅぅ……」
+	ENDIF
+;LV2
+ELSEIF TFLAG:24 == 12
+	IF !CFLAG:TARGET:睡眠
+		PRINTFORMW 「……んく……、な、なあ、い、いや何でもない」
+	ELSE
+		PRINTFORMW 「んみゅ、にゅぅ……」
+	ENDIF
+;LV3
+ELSEIF TFLAG:24 == 13
+	IF !CFLAG:TARGET:睡眠
+		PRINTFORML 「ふぁんっ！　も、もっと、もっとしてほしいのじゃっ！」
+		PRINTFORMW 快楽に溺れる猯藏の言葉に、自然と笑みが浮かんだ
+	ELSE
+		PRINTFORML 「んきゅぅ……ふみゅ、あふっ、んぅっ……もっ、とぉ……」
+		PRINTFORMW 寝言で続きを求める猯藏に、遠慮無く指を這わせた
+	ENDIF
+;不埒、恭順による刻印
+;LV1
+ELSEIF TFLAG:24 == 31
+	PRINTFORMW 「ふふ、お前さんは中々面白いな」
+;LV2
+ELSEIF TFLAG:24 == 32
+	PRINTFORMW 「なあ、何かしてほしいことはないか？　なんでもしてやるぞ」
+;LV3
+ELSEIF TFLAG:24 == 33
+	PRINTFORML 「ん？　見ておるだけじゃ。特に問題はなかろう」
+	PRINTFORMW どこか甘さを含んだ声音で囁く猯藏が、じっと見つめてくる
+ENDIF
+
+;反発刻印
+IF TFLAG:反発刻印取得 == 1
+	PRINTFORMW 「……ふふ。儂にこんなことをするとはのう」
+ELSEIF TFLAG:反発刻印取得 == 2
+	PRINTFORMW 「儂も舐められたものよ。……殺しはせんが、痛めつけても良かろうか」
+ELSEIF TFLAG:反発刻印取得 == 3
+	PRINTFORMW 「……ふ、ふふ、ふふふふふ」
+ENDIF
+
+
+;時姦刻印
+IF TFLAG:時姦刻印取得 == 1
+	PRINTFORMW 
+ELSEIF TFLAG:時姦刻印取得 == 2
+	PRINTFORMW 
+ELSEIF TFLAG:時姦刻印取得 == 3
+	PRINTFORMW 
+ENDIF

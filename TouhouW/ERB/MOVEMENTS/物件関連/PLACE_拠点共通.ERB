@@ -1,0 +1,743 @@
+﻿;FileName_COMMON.ERB ------------------------------- Rev1.00
+;部屋に居る人数取得
+;CALL		USER
+;ARG		部屋NO
+;RETURN		人数
+;COMMENT	
+;-----------------------------------------------------------
+@IN_ROOM_NUMBER(ARG)
+#FUNCTION
+RETURNF CMATCH(CFLAG:現在位置, ARG)
+[SKIPSTART]
+VARSET LOCAL
+FOR LOCAL,0,CHARANUM
+	SIF CFLAG:LOCAL:現在位置 == ARG
+		LOCAL:1 ++
+NEXT
+RETURNF LOCAL:1
+[SKIPEND]
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;部屋最小数参照
+;CALL		USER
+;ARG		VOID
+;RETURN		最小部屋番号
+;COMMENT	場所を追加した場合、RETRUNFの数を変更の事
+;-----------------------------------------------------------
+
+@MINROOM()
+#FUNCTION
+SELECTCASE MAIN_MAP
+	CASE 1
+		RETURNF 101
+	CASE 10
+		RETURNF 1001
+	CASEELSE
+		RETURNF MAIN_MAP * 100 + 1
+ENDSELECT
+
+
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;待客室
+;CALL		USER
+;ARG		VOID
+;RETURN		待客室の数値
+;COMMENT	視認性向上のため
+;-----------------------------------------------------------
+@OMANEKIBEYA()
+#FUNCTION
+RETURNF 98 + MAIN_MAP * 100
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;SUKIMA
+;CALL		USER
+;ARG		VOID
+;RETURN		どこにもいないキャラが送られる場所
+;COMMENT	視認性向上のため
+;-----------------------------------------------------------
+@SUKIMA()
+#FUNCTION
+RETURNF 99 + MAIN_MAP * 100
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;廁所がある部屋
+;CALL		USER
+;ARG		場所ID
+;RETURNF		廁所の場所か否か
+;COMMENT	場所を変更した場合、RETURNFを変更の事
+;-----------------------------------------------------------
+
+@IN_TOILET(ARG)
+#FUNCTION
+SIF ROOMDATA:(ARG % 100) & 場所_廁所 && IN_HOME(ARG)
+	RETURNF 1
+RETURNF 0
+
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;浴室がある場所判定
+;CALL		USER
+;ARG		判定場所ID
+;RETURN		有るなら1、無いなら0
+;COMMENT	場所を変更した場合、RETURNFを変更の事
+;-----------------------------------------------------------
+@BATHCHECK(ARG)
+#FUNCTION
+SIF ROOMDATA:(ARG % 100) & 場所_浴室 && IN_HOME(ARG)
+	RETURNF 1
+IF !IN_HOME(ARG)
+	SELECTCASE ARG
+		CASE 大衆浴場,旧地獄温泉
+			RETURNF 1
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;身体測定できる場所判定
+;CALL		USER
+;ARG		判定場所ID
+;RETURN		有るなら1、無いなら0
+;COMMENT	場所を変更した場合、RETURNFを変更の事
+;-----------------------------------------------------------
+@MEASUREMENTCHECK(ARG)
+#FUNCTION
+SIF ROOMDATA:(ARG % 100) & 場所_身体測定 && IN_HOME(ARG)
+	RETURNF 1
+SIF GET_MAPID(ARG) == MAIN_MAP
+	RETURNF 0
+SELECTCASE ARG
+	CASE 大衆浴場,旧地獄温泉,永遠亭
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;浴室がある部屋
+;CALL		USER
+;ARG		VOID
+;RETURN		浴室の場所
+;COMMENT	場所を変更した場合、RETURNFを変更の事
+;-----------------------------------------------------------
+@BATHROOM(ARG)
+#FUNCTION
+SIF !ARG
+	ARG = CFLAG:MASTER:現在位置
+SIF ROOMDATA:(ARG % 100) & 場所_浴室 && IN_HOME(ARG)
+	RETURNF 1
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;布団がある部屋
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		布団の有無 有なら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@BEDROOM(ARG)
+#FUNCTION
+SIF ARG == 0
+	ARG = CFLAG:MASTER:現在位置
+IF ARG == OMANEKIBEYA()
+	RETURNF 1
+ELSEIF MAIN_MAP == GET_MAPID(ARG)
+	SIF (ROOMDATA:(ARG % 100) & 場所_布団 && IN_HOME(ARG)) || ARG == CFLAG:MASTER:初期位置
+		RETURNF 1
+ENDIF
+SELECTCASE ARG
+	CASE 情人用宿屋,情人旅館,長屋街,OMANEKIBEYA()
+		RETURNF 1
+	CASE 540
+		SIF TALENT:11:恋慕
+			RETURNF 1
+	CASE 550
+		SIF TALENT:17:恋慕
+			RETURNF 1
+	CASE 630
+		SIF TALENT:25:恋慕 || TALENT:26:恋慕
+			RETURNF 1
+	CASE 750
+		SIF TALENT:43:恋慕
+			RETURNF 1
+	CASE 830
+		SIF TALENT:31:恋慕 || TALENT:32:恋慕 || TALENT:33:恋慕
+			RETURNF 1
+	CASE 950
+		SIF TALENT:36:恋慕 || TALENT:37:恋慕 || TALENT:38:恋慕 || TALENT:49:恋慕
+			RETURNF 1
+	CASE BATHROOM()
+		;塑料地墊
+		SIF ITEM:20
+			RETURNF 1
+ENDSELECT
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;月見ポイント
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		月が見える場所なら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@MOON_WATCH_POINT(ARG)
+#FUNCTION
+;屋外＋神社内の室外
+IF (!INROOM(ARG) && AT_HOME(MASTER) == 1) || OUTROOF(ARG) 
+	RETURNF 1
+ELSE
+	IF MAIN_MAP == GET_MAPID(ARG)
+		SIF ROOMDATA:(ARG % 100) & 場所_月見 && IN_HOME(ARG)
+			RETURNF 1
+	ENDIF
+	SELECTCASE CHK_INHOME(ARG)
+	;走廊,温泉,倒垂的柳樹下
+	CASE 130,命蓮寺本堂,聖徳道場,商家町,呑屋小道,寺子屋,長屋街,永遠亭,守矢神社本殿,白玉楼
+		RETURNF 1
+	CASE OMANEKIBEYA()
+		;誰的房間か
+		SELECTCASE CFLAG:MASTER:お招き
+		;地底住人
+		CASE 36,37,38,49,60,64,83,84
+			RETURNF 0
+		ENDSELECT
+		RETURNF 1
+	CASEELSE
+		RETURNF 0
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;厨房がある部屋
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		厨房の有無 有なら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@KITCHEN(ARG)
+#FUNCTION
+SIF ARG == OMANEKIBEYA()
+	RETURNF 1
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_厨房 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+	CASE 長屋街,OMANEKIBEYA()
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;室内
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		室内か否か 和室なら１、洋室なら２
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@INROOM(ARG)
+#FUNCTION
+SIF ARG == OMANEKIBEYA()
+	RETURNF 1
+IF MAIN_MAP == GET_MAPID(ARG)
+	IF MAIN_MAP == 3
+		SIF (ROOMDATA:(ARG % 100) & 場所_屋内) && IN_HOME(ARG)
+			RETURNF 2
+	ELSEIF MAIN_MAP == 9
+		SIF ARG >= 901 && ARG <= 913
+			RETURNF 2
+		SIF (ROOMDATA:(ARG % 100) & 場所_屋内) && IN_HOME(ARG)
+			RETURNF 1
+	ELSE
+		SIF (ROOMDATA:(ARG % 100) & 場所_屋内) && IN_HOME(ARG)
+			RETURNF 1
+	ENDIF
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+	CASE 命蓮寺本堂,聖徳道場,寺子屋,情人用宿屋,長屋街,大衆浴場,白玉楼,仙人宅邸,永遠亭,永遠亭的内院,霧雨魔法店,迷途之家,仙人宅邸,守矢神社本殿
+		RETURNF 1
+	CASE 廃洋館,大庁,食堂,大図書館,地下室,人偶的洋館,地霊殿,情人旅館
+		RETURNF 2
+	CASEELSE
+		RETURNF 0
+ENDSELECT
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;青天井
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		屋根付きか否か 屋根なしなら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;鳥居,境内,手水舎,庭,本殿内部,参道,鎮守之森,艦橋
+;地蔵小路,命蓮寺境内,墓地,広場,正門,竹林入口,迷失的小道,斜角的竹林,霧之湖,,
+;森林的入口,古木的大樹,玄武之澤,山麓樹海,大蛤蟆之池,九天瀑布,絶景之丘
+;100の倍数はお出かけ時,めんどくさいのでデート道中も全部詰め込むことにした←屋内関数にすりゃよかったんだが、最初は屋外のが少ないと思ったんだよう！
+;関数名はINROOMのもじり
+;-----------------------------------------------------------
+@OUTROOF(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_青天井 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+	CASE 地蔵小路,命蓮寺境内,墓地,広場,正門,竹林入口,迷失的小道,斜角的竹林,無名之丘,太陽花田,霧之湖,森林的入口,古木的大樹,再思之道,無縁塚,中有之道,三途之川,彼岸,白玉楼庭,玄武之澤,山麓樹海,大蛤蟆之池,九天瀑布,絶景之丘,山之湖,守矢神社境内,天界
+		RETURNF 1
+	CASE 100 TO 109,200 TO 209,300 TO 309,400 TO 409,500 TO 509,600 TO 609,700 TO 709,800 TO 809
+		RETURNF 1
+	CASEELSE
+		RETURNF 0
+ENDSELECT
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;見通しの良い場所
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:広い室内, 2:野外
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@OPENPLACE(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG) && ROOMDATA:(ARG % 100) & 場所_見通し
+	IF ROOMDATA:(ARG % 100) & 場所_屋内 && IN_HOME(ARG)
+		RETURNF 1
+	ELSE
+		RETURNF 2
+	ENDIF
+ENDIF
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;うたた寝可能エリア
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:可能, 2:常時可
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@CATNAP_PLACE(ARG,ARG:1)
+#FUNCTION
+SIF ARG:1 == CFLAG:ARG:初期位置 || ARG:1 == OMANEKIBEYA()
+	RETURNF 2
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_うたた寝_可能 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG:1)
+	;居間、各部屋
+	CASE 寺子屋,長屋街
+		RETURNF 1
+	RETURNF 0
+ENDSELECT
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;狭い部屋
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:狭い, 2:狭くない
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@SMALL_PLACE(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_狭い && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;休憩可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:休憩できる
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@休憩可(ARG)
+#FUNCTION
+SIF ARG == OMANEKIBEYA()
+	RETURNF 1
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_休憩 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+	CASE 大庁,食堂,大図書館,寺子屋,情人用宿屋,情人旅館
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;戦闘訓練可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:訓練できる
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@戦闘訓練可(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_訓練 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+	CASE 白玉楼庭
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;学習可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:学習できる
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@学習可(ARG)
+#FUNCTION
+SIF ARG == OMANEKIBEYA()
+	RETURNF 1
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_学習 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+SELECTCASE CHK_INHOME(ARG)
+;	CASE 240
+	CASE 寺子屋
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;天の声
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:天の声が聞こえる
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@天の声可(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_天の声 && IN_HOME(ARG)
+		RETURNF 1
+	SIF ITEM:祭壇 && CFLAG:MASTER:現在位置 == CFLAG:MASTER:311
+		RETURNF 1
+ENDIF
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;家庭菜園可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:家庭菜園が出来る場所
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@家庭菜園可(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_菜園 && IN_HOME(ARG)
+		RETURNF 1
+ENDIF
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;打水可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:打水が出来る場所
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@打水可(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+	SIF ROOMDATA:(ARG % 100) & 場所_打水 && IN_HOME(ARG)
+		RETURNF 1
+ELSEIF CFLAG:MASTER:現在位置 == 霧之湖
+	RETURNF 1
+ENDIF
+RETURNF 0
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;物干し可
+;CALL		USER
+;ARG		判定部屋NO
+;RETURN		1:物干しが出来る場所
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@物干し可(ARG)
+#FUNCTION
+SIF ROOMDATA:(ARG % 100) & 場所_物干し && IN_HOME(ARG)
+	RETURNF 1
+RETURNF 0
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;基本的なGETMAP　大抵の拠点はこれでおｋ
+;-----------------------------------------------------------
+@GETMAP_BASIC(ARG)
+#DIM 気配
+気配 = 0
+IF TALENT:MASTER:居場所察知 && FLAG:察知モード == 1
+	FOR LOCAL, 1, CHARANUM
+		IF CFLAG:LOCAL:現在位置 == ARG
+			IF CFLAG:LOCAL:行動 == 5
+				気配 = 2
+				BREAK
+			ELSEIF CFLAG:LOCAL:睡眠
+				気配 = 3
+				BREAK
+			ENDIF
+			気配 = 1
+		ENDIF
+	NEXT
+	IF 気配 == 1
+		SETCOLOR 255, 100, 200
+	ELSEIF 気配 == 2
+		SETCOLOR 255, 100, 0
+	ELSEIF 気配 == 3
+		SETCOLOR 0, 120, 180
+	ELSEIF ROOMDATA:(ARG % 100) & 場所_モブ
+		SETCOLOR C_D_PINK
+	ENDIF
+ENDIF
+CALL GETMAP_YOGORE(ARG)
+
+@GETMAP_YOGORE(ARG)
+IF TALENT:MASTER:汚部屋察知 && FLAG:察知モード == 2
+	IF ARG == 0
+		SIF YOGORE:(CFLAG:MASTER:初期位置) >= 500 && YOGORE:(CFLAG:MASTER:初期位置) < 1000
+			SETCOLOR 0xFFFF00
+		SIF YOGORE:(CFLAG:MASTER:初期位置) > 1000 && YOGORE:(CFLAG:MASTER:初期位置) < 2000
+			SETCOLOR 0xFFFF00
+		SIF YOGORE:(CFLAG:MASTER:初期位置) >= 2000 && YOGORE:(CFLAG:MASTER:初期位置) < 3500
+			SETCOLOR 0xFF00FF
+		SIF YOGORE:(CFLAG:MASTER:初期位置) >= 3500 && YOGORE:(CFLAG:MASTER:初期位置) < 5000
+			SETCOLOR 0xFF00FF
+		SIF YOGORE:(CFLAG:MASTER:初期位置) >= 5000
+			SETCOLOR 0xFF0000
+	ELSE
+		SIF YOGORE:(ARG) >= 500 && YOGORE:(ARG) < 1000
+			SETCOLOR 0xFFFF00
+		SIF YOGORE:(ARG) > 1000 && YOGORE:(ARG) < 2000
+			SETCOLOR 0xFFFF00
+		SIF YOGORE:(ARG) >= 2000 && YOGORE:(ARG) < 3500
+			SETCOLOR 0xFF00FF
+		SIF YOGORE:(ARG) >= 3500 && YOGORE:(ARG) < 5000
+			SETCOLOR 0xFF00FF
+		SIF YOGORE:(ARG) >= 5000
+			SETCOLOR 0xFF0000
+	ENDIF
+ENDIF
+SIF CFLAG:MASTER:現在位置 == ARG
+	SETCOLOR 0 , 255, 0
+PRINTBUTTON ((ARG % 100) > 9 ? TOSTR((ARG % 100)) # TOFULL(TOSTR((ARG % 100)))),ARG
+RESETCOLOR
+
+@GETMAP_BUILDING(ARG,ARG:1,ARG:2)
+IF !INRANGE(CFLAG:MASTER:現在位置,ARG:1,ARG:2) && INRANGE(CFLAG:ARG:現在位置,ARG:1,ARG:2)
+	IF CFLAG:ARG:行動 == 5
+		KEHAI = 2
+	ELSEIF CFLAG:ARG:睡眠
+		KEHAI = 3
+	ELSE
+		KEHAI = 1
+	ENDIF
+ENDIF
+
+
+
+;蔵書閲覧判定
+;
+;拠点/散策MAP両方使えます
+;MASTERの現在位置を放り込むと資料を見せてくれるかどうかを判定
+;戻り値は0もしくは「拠点MAPの場所ID」です
+;散策マップでどこそこで資料見たよってやる用
+;PLACE_IDとMASTERの現在位置が違う場合は想定していません
+;つまり、博麗神社にいる時に阿求のお屋敷の判定しちゃダメ
+@IS_LIBRARY(PLACE_ID)
+#FUNCTION
+#DIM PLACE_ID              ;かならずMASTERの現在位置を渡すこと
+#DIM DYNAMIC PLACE_LIBRARY
+IF GET_MAPID(PLACE_ID) == MAIN_MAP
+	SELECTCASE GET_MAPNAME(GET_MAPID(PLACE_ID))
+	CASE "博麗神社"
+	;MAP_博麗神社　研究助手を毎日やってたせいで誰でも資料閲覧できそうなイメージ
+		SIF GROUPMATCH(NAME_FROM_PLACE(PLACE_ID), "夢幻遺跡・第一資料室", "夢幻遺跡・研究室", "夢幻遺跡・第二資料室")
+			PLACE_LIBRARY = PLACE_ID
+	CASE "命連寺"
+	;MAP_命連寺、寺/道場ともに頼めば資料を見せてくれそう
+		SIF GROUPMATCH(NAME_FROM_PLACE(PLACE_ID), "経堂", "道場")
+			PLACE_LIBRARY = PLACE_ID
+	CASE "人里"
+	;MAP_人里、貸本屋と個人宅
+		SIF GROUPMATCH(NAME_FROM_PLACE(PLACE_ID), "鈴奈庵", "寺子屋", "慧音宅", "阿求的住宅")
+			PLACE_LIBRARY = PLACE_ID
+	CASE "紅魔館"
+	;MAP_紅魔館、とりあえず使用条件とかないので素通し
+		SIF NAME_FROM_PLACE(PLACE_ID) == "図書館"
+			PLACE_LIBRARY = PLACE_ID
+	CASE "迷途竹林"
+	;MAP_迷途竹林、このマップ特に図書室的なものが無い
+		;永遠亭はたくさん蔵書がありそうなイメージ
+		SIF GROUPMATCH(NAME_FROM_PLACE(PLACE_ID), "輝夜私室", "庫房", "倉庫")
+			PLACE_LIBRARY = PLACE_ID
+	CASE "魔法之森"
+	;MAP_魔法之森、魔法使いたちは資料持ってるでしょう
+		SIF GROUPMATCH(NAME_FROM_PLACE(PLACE_ID), "魔理沙宅・研究部屋", "人偶洋館・研究室")
+			PLACE_LIBRARY = PLACE_ID
+	CASE "妖怪之山・山麓"
+	;MAP_魔法之森、華扇屋敷のみ
+		SIF NAME_FROM_PLACE(PLACE_ID) == "仙人宅邸・書斎"
+			PLACE_LIBRARY = PLACE_ID
+	CASE "地底"
+	;MAP_地底、覚の書斎のみ
+		SIF NAME_FROM_PLACE(PLACE_ID) == "書斎"
+			PLACE_LIBRARY = PLACE_ID
+	ENDSELECT
+ELSE
+	SELECTCASE STR:(5000 + (GET_MAPID(PLACE_ID)))
+	CASE "博麗神社"
+		SIF STR:(6000 + PLACE_ID / 10) == "夢幻遺跡"
+			PLACE_LIBRARY = 49
+	CASE "命蓮寺"
+		SIF STR:(6000 + PLACE_ID / 10) == "命蓮寺境内"
+			PLACE_LIBRARY = 105
+		SIF STR:(6000 + PLACE_ID / 10) == "聖徳道場"
+			PLACE_LIBRARY = 126
+	CASE "人間之里"
+		SIF STR:(6000 + PLACE_ID / 10) == "商家町"
+			PLACE_LIBRARY = 213
+		SIF STR:(6000 + PLACE_ID / 10) == "寺子屋"
+			PLACE_LIBRARY = 222
+		SIF STR:(6000 + PLACE_ID / 10) == "長屋街"
+			PLACE_LIBRARY = 221
+	CASE "霧之湖～紅魔館"
+		SIF STR:(6000 + PLACE_ID / 10) == "大図書館"
+			PLACE_LIBRARY = 310
+	CASE "迷途竹林"
+		SIF STR:(6000 + PLACE_ID / 10) == "永遠亭的内院"
+			PLACE_LIBRARY = 427
+	CASE "魔法之森"
+		SIF STR:(6000 + PLACE_ID / 10) == "霧雨魔法店"
+			PLACE_LIBRARY = 513
+		SIF STR:(6000 + PLACE_ID / 10) == "人偶的洋館"
+			PLACE_LIBRARY = 524
+	CASE "三途之川～冥界"
+		[SKIPSTART]
+		IF STR:(6000 + PLACE_ID / 10) == "迷途之家"
+			PLACE_LIBRARY = 630
+		ENDIF
+		IF STR:(6000 + PLACE_ID / 10) == "白玉楼"
+			PLACE_LIBRARY = 690
+		ENDIF
+		[SKIPEND]
+	CASE "妖怪之山 (山麓)"
+		IF STR:(6000 + PLACE_ID / 10) == "仙人宅邸"
+			PLACE_LIBRARY = 724
+		ENDIF
+	CASE "妖怪之山 (山頂)"
+		[SKIPSTART]
+		IF STR:(6000 + PLACE_ID / 10) == "天界"
+			PLACE_LIBRARY = 890
+		ENDIF
+		[SKIPEND]
+	CASE "地底"
+		IF STR:(6000 + PLACE_ID / 10) == "地霊殿"
+			PLACE_LIBRARY = 920
+		ENDIF
+	CASE "夢之世界～月"
+		[SKIPSTART]
+		IF STR:(6000 + PLACE_ID / 10) == "綿月亭"
+			PLACE_LIBRARY = 1060
+		ENDIF
+		[SKIPEND]
+	ENDSELECT
+ENDIF
+RETURNF CAN_READ_BOOK_COLLECTION(PLACE_LIBRARY)
+
+
+
+
+;蔵書閲覧許諾判定
+;・かならず拠点マップの場所ID（詳細な地点の方）を渡すこと
+;・MASTERがその場所にいるのが前提で処理を組んでます
+@CAN_READ_BOOK_COLLECTION(PLACE_ID)
+#FUNCTION
+#DIM PLACE_ID
+SELECTCASE PLACE_ID
+;夢幻遺跡は素通し
+CASE 48, 49, 50
+	RETURNF PLACE_ID
+;寺と聖徳道場は素通し
+CASE 105, 126
+	RETURNF PLACE_ID
+;鈴奈庵と寺子屋は素通し
+CASE 213, 222
+	RETURNF PLACE_ID
+;阿求的住宅
+;思慕/恋慕で解放
+CASE 221
+	SIF !TALENT:80:恋慕 && !TALENT:80:思慕
+		RETURNF 0
+	RETURNF PLACE_ID
+;慧音宅
+CASE 224
+	SIF FLAG:なりきり == 67
+		RETURNF PLACE_ID
+	SIF CFLAG:67:信頼度 < 30
+		RETURNF 0
+	SIF CFLAG:67:現在位置 == CFLAG:MASTER:現在位置
+		RETURNF PLACE_ID
+;図書館は素通し
+CASE 310
+	RETURNF PLACE_ID
+;輝夜私室
+CASE 414
+	SIF GROUPMATCH(FLAG:なりきり, 52, 53, 62, 72)
+		RETURNF PLACE_ID
+	SIF !TALENT:62:恋慕 && !TALENT:62:思慕
+		RETURNF 0
+	SIF CFLAG:62:現在位置 == CFLAG:MASTER:現在位置
+		RETURNF PLACE_ID
+;庫房/倉庫の捜索はゆるく
+;誰か一人同席してればよし
+CASE 424, 427
+	SIF GROUPMATCH(FLAG:なりきり, 52, 53, 62, 72)
+		RETURNF PLACE_ID
+	SIF GROUPMATCH(CFLAG:MASTER:現在位置, CFLAG:52:現在位置, CFLAG:53:現在位置, CFLAG:62:現在位置, CFLAG:72:現在位置)
+		RETURNF PLACE_ID
+;魔理沙宅の研究室
+;多少の信頼度でおｋ
+CASE 513
+	SIF FLAG:なりきり == 11
+		RETURNF PLACE_ID
+	SIF CFLAG:11:信頼度 < 30
+		RETURNF 0
+	SIF CFLAG:11:現在位置 == CFLAG:MASTER:現在位置
+		RETURNF PLACE_ID
+;人形館の研究室
+CASE 524
+	SIF GROUPMATCH(FLAG:なりきり, 17, 102)
+		RETURNF PLACE_ID
+	SIF INRANGE(CFLAG:MASTER:初期位置, 521, 531)
+		RETURNF PLACE_ID
+	SIF !TALENT:17:恋慕 && !TALENT:17:思慕 && !TALENT:102:恋慕 && !TALENT:102:思慕
+		RETURNF 0
+	SIF GROUPMATCH(CFLAG:MASTER:現在位置, CFLAG:17:現在位置, CFLAG:102:現在位置)
+		RETURNF PLACE_ID
+;仙人屋敷の書斎
+CASE 724
+	SIF FLAG:なりきり == 43
+		RETURNF PLACE_ID
+	SIF INRANGE(CFLAG:MASTER:初期位置, 720, 730)
+		RETURNF PLACE_ID
+	SIF !TALENT:43:恋慕 && !TALENT:43:思慕
+		RETURNF 0
+	SIF CFLAG:43:現在位置 == CFLAG:MASTER:現在位置
+		RETURNF PLACE_ID
+;覚の書斎
+;同居してても信頼度50必要
+CASE 920
+	SIF FLAG:なりきり == 49
+		RETURNF PLACE_ID
+	SIF CFLAG:49:信頼度 < 50
+		RETURNF 0
+	SIF INRANGE(CFLAG:MASTER:初期位置, 902, 926)
+		RETURNF PLACE_ID
+	SIF !TALENT:49:恋慕 && !TALENT:49:思慕
+		RETURNF 0
+	SIF CFLAG:49:現在位置 == CFLAG:MASTER:現在位置
+		RETURNF PLACE_ID
+ENDSELECT

@@ -1,0 +1,108 @@
+﻿@デート終了タイムアップ処理
+VARSET LOCAL
+;気力ゼロ,衰弱時デート中断
+FOR LOCAL,0,CHARANUM
+	SIF CHK_DATENOW(CFLAG:LOCAL:デート中) && (CFLAG:LOCAL:衰弱 || (BASE:LOCAL:気力 == 0 && CFLAG:LOCAL:現在位置 != 連れ込み宿 && CFLAG:LOCAL:現在位置 != OMANEKIBEYA()))
+		LOCAL:1 ++
+	SIF CHK_DATENOW(CFLAG:LOCAL:デート中) && CFLAG:LOCAL:衰弱
+		CALL ENDUFUFU(LOCAL)
+NEXT
+SIF NEMUKE() >= 720 || BASE:MASTER:酒気 >= MAXBASE:MASTER:酒気
+	LOCAL:2 ++
+;お招きしていて連泊でなければ泊めて貰える
+IF CFLAG:MASTER:お招き && (LOCAL:1 || LOCAL:2) && !FLAG:70
+	IF LOCAL:1
+		PRINT 気力がなくなってきましたが
+	ELSEIF LOCAL:2
+		PRINT そろそろ帰る時間ですが
+	ENDIF
+	SIF !TCVAR:(CFLAG:MASTER:お招き):連泊禁止
+		PRINTFORMW 今日は%CALLNAME:(CFLAG:MASTER:お招き)%が泊めてくれるそうです
+	SIF TCVAR:(CFLAG:MASTER:お招き):連泊禁止
+		PRINTFORMW 今日も%CALLNAME:(CFLAG:MASTER:お招き)%に泊めてもらいますか？
+	PRINTL [0]泊めてもらう [1]帰る
+	WHILE 1
+	INPUT
+	SIF RESULT == 0 || RESULT == 1
+		BREAK
+	WEND
+	IF !RESULT && !TCVAR:(CFLAG:MASTER:お招き):連泊禁止
+		PRINTFORMW お言葉に甘えて泊めてもらうことにした
+		;デートは終了
+		CFLAG:MASTER:デート中 = MAIN_MAP
+		CFLAG:TARGET:デート中 = MAIN_MAP
+		FLAG:デート相手 = 0
+		TFLAG:デート前好感度 = 0
+		CALL 守矢くじデート相手のリセット()
+		;以後の処理をカット
+		GOTO OTOMARI
+	ELSEIF !RESULT && TCVAR:(CFLAG:MASTER:お招き):連泊禁止
+		PRINTFORMW 流石に連泊は断られてしまった…
+	ENDIF
+ENDIF
+IF LOCAL:1 && CFLAG:MASTER:現在位置
+	PRINTL 
+	PRINTW ***** 気力が０になったため、帰路につきました *****
+	CALL 帰宅の時間経過
+	FLAG:70 = 0
+	RESETBGCOLOR
+ELSEIF LOCAL:2
+	PRINTL
+	IF BASE:MASTER:酒気 >= MAXBASE:MASTER:酒気
+		PRINTW ***** 酩酊してきたため、千鳥足で帰路につきました *****
+		PRINTFORMW %GET_MAPNAME(MAIN_MAP,0)%に帰り着いた%CALLNAME:MASTER%はその場で倒れ込みました
+	ELSE
+		PRINTW ***** 眠気が襲ってきたため、帰路につきました *****
+	ENDIF
+	CALL 帰宅の時間経過
+ENDIF
+IF LOCAL:1 || LOCAL:2
+	FOR LOCAL,0,CHARANUM
+		IF LOCAL && CFLAG:LOCAL:衰弱
+			IF !CFLAG:LOCAL:神社在住
+				CFLAG:LOCAL:初期位置 = SUKIMA()
+				CFLAG:LOCAL:現在位置 = SUKIMA()
+				CLEARBIT FLAG:(50 + (LOCAL) / 64),(LOCAL) % 64
+				CALL KOJO_MESSAGE_SEND("EVENT",20,LOCAL,2,0)
+				PRINTFORMW 疲れ切った%CALLNAME:LOCAL%は帰っていきました
+			ELSE
+				PRINTFORM %CALLNAME:LOCAL%は%NAME_FROM_PLACE(CFLAG:LOCAL:初期位置)%
+				PRINTW に戻りました
+				SIF CFLAG:MASTER:初期位置 != CFLAG:LOCAL:初期位置
+					LOCK:(CFLAG:LOCAL:初期位置) = 1
+				CFLAG:LOCAL:現在位置 = CFLAG:LOCAL:初期位置
+				CALL KOJO_MESSAGE_SEND("EVENT",3,1,LOCAL,0)
+			ENDIF
+		ENDIF
+		CALL SET_DATE(99,LOCAL)
+		IF CFLAG:LOCAL:お招き
+			CFLAG:LOCAL:お招き = 0
+			IF LOCAL == 0
+			ELSEIF CFLAG:LOCAL:神社在住
+				CFLAG:LOCAL:初期位置 = CFLAG:LOCAL:神社在住
+			ELSE
+				CFLAG:LOCAL:初期位置 = SUKIMA()
+			ENDIF
+		ENDIF
+		SIF CFLAG:LOCAL:添い寝中 > 0
+			CFLAG:LOCAL:添い寝中 = 0
+		SIF CFLAG:LOCAL:うふふ
+			CALL ENDUFUFU(LOCAL)
+	NEXT
+	CALL 守矢くじデート相手のリセット()
+ENDIF
+IF ((CFLAG:MASTER:現在位置 % 100) % 10) == 0 && (CFLAG:MASTER:現在位置 % 100) == 0
+	IF CFLAG:MASTER:現在位置 == 1100
+		FOR LOCAL,0,CHARANUM
+			SIF CHK_DATENOW(CFLAG:LOCAL:デート中)
+				CFLAG:LOCAL:現在位置 -= 1100
+		NEXT
+	ENDIF
+	SIF CHK_DATENOW(CFLAG:MASTER:デート中)
+		PRINTFORMW %DATENAME_PLACE()%に到着しました
+	FOR LOCAL,0,CHARANUM
+		SIF CHK_DATENOW(CFLAG:LOCAL:デート中)
+			CFLAG:LOCAL:現在位置 += 10
+	NEXT
+ENDIF
+$OTOMARI

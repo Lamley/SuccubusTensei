@@ -1,0 +1,715 @@
+﻿;────────────────────────────────────
+;絶頂系の処理など
+;────────────────────────────────────
+;-------------------------------------------------
+;絶頂処理
+;-------------------------------------------------
+@ORGASM_ADD(ARG)
+#DIM 合計絶頂数
+#DIM 焦らし中
+
+VARSET LOCAL
+焦らし中 = 0
+LOCAL = ((CUP:ARG:快Ｃ + PALAM:ARG:快Ｃ) >= PALAMLV:4) + (CUP:ARG:快Ｖ + PALAM:ARG:快Ｖ >= PALAMLV:4) + (CUP:ARG:快Ａ + PALAM:ARG:快Ａ >= PALAMLV:4) + (CUP:ARG:快Ｂ + PALAM:ARG:快Ｂ >= PALAMLV:4) + (CUP:ARG:快Ｍ + PALAM:ARG:快Ｍ >= PALAMLV:4)
+SELECTCASE LOCAL
+	CASE 5
+		LOCAL:1 = 5000
+	CASE 4
+		LOCAL:1 = 3000
+	CASE 3
+		LOCAL:1 = 2000
+	CASE 2
+		LOCAL:1 = 1500
+	CASE 1
+		LOCAL:1 = 1000
+ENDSELECT
+
+;視認性の問題で残しておく
+C = 0
+V = 0
+A = 0
+B = 0
+M = 0
+;絶頂Ｃ
+;うっかり絶頂
+CALL 絶頂強度判定(ARG,0,LOCAL:1)
+C = RESULT
+;絶頂Ｖ
+CALL 絶頂強度判定(ARG,1,LOCAL:1)
+V = RESULT
+
+;絶頂Ａ
+CALL 絶頂強度判定(ARG,2,LOCAL:1)
+A = RESULT
+
+;絶頂Ｂ
+CALL 絶頂強度判定(ARG,3,LOCAL:1)
+B = RESULT
+	
+;絶頂Ｍ
+CALL 絶頂強度判定(ARG,4,LOCAL:1)
+M = RESULT
+IF TEQUIP:ARG:焦らしモード
+	IF 焦らし発生(ARG,C + V + A + B + M)
+		EX:ARG:Ｃ寸止め += C
+		EX:ARG:Ｖ寸止め += V
+		EX:ARG:Ａ寸止め += A
+		EX:ARG:Ｂ寸止め += B
+		EX:ARG:Ｍ寸止め += M
+		TCVAR:ARG:焦らし回数 ++
+		焦らし中 = 1
+	ENDIF
+ENDIF
+SIF 焦らし中
+	GOTO JIRASI
+IF CUP:ARG:快Ｃ
+	C += EX:ARG:Ｃ寸止め
+	EX:ARG:Ｃ寸止め = 0
+ENDIF
+IF CUP:ARG:快Ｖ
+	V += EX:ARG:Ｖ寸止め
+	EX:ARG:Ｖ寸止め = 0
+ENDIF
+IF CUP:ARG:快Ａ
+	A += EX:ARG:Ａ寸止め
+	EX:ARG:Ａ寸止め = 0
+ENDIF
+IF CUP:ARG:快Ｂ
+	B += EX:ARG:Ｂ寸止め
+	EX:ARG:Ｂ寸止め = 0
+ENDIF
+IF CUP:ARG:快Ｍ
+	M += EX:ARG:Ｍ寸止め
+	EX:ARG:Ｍ寸止め = 0
+ENDIF
+;-------------------------------------------------
+;絶頂時の追加処理
+;-------------------------------------------------
+IF C && V && A && B && M
+	C *= 16
+	V *= 16
+	A *= 16
+	B *= 16
+	M *= 16
+	NOWEX:ARG:五重絶頂 = 1
+ELSEIF C && V && A && B
+	C *= 8
+	V *= 8
+	A *= 8
+	B *= 8
+	NOWEX:ARG:四重絶頂 = 1
+ELSEIF C && V && A && M
+	C *= 8
+	V *= 8
+	A *= 8
+	M *= 8
+	NOWEX:ARG:四重絶頂 = 2
+ELSEIF C && V && B && M
+	C *= 8
+	V *= 8
+	B *= 8
+	M *= 8
+	NOWEX:ARG:四重絶頂 = 3
+ELSEIF C && A && B && M
+	C *= 8
+	A *= 8
+	B *= 8
+	M *= 8
+	NOWEX:ARG:四重絶頂 = 4
+ELSEIF V && A && B && M
+	V *= 8
+	A *= 8
+	B *= 8
+	M *= 8
+	NOWEX:ARG:四重絶頂 = 5
+ELSEIF C && V && A
+	C *= 4
+	V *= 4
+	A *= 4
+	NOWEX:ARG:三重絶頂 = 1
+ELSEIF B && V && A
+	B *= 4
+	V *= 4
+	A *= 4
+	NOWEX:ARG:三重絶頂 = 2
+ELSEIF C && B && A
+	C *= 4
+	B *= 4
+	A *= 4
+	NOWEX:ARG:三重絶頂 = 3
+ELSEIF C && V && B
+	C *= 4
+	V *= 4
+	B *= 4
+	NOWEX:ARG:三重絶頂 = 4
+ELSEIF C && V && M
+	C *= 4
+	V *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 5
+ELSEIF B && V && M
+	B *= 4
+	V *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 6
+ELSEIF A && V && M
+	A *= 4
+	V *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 7
+ELSEIF B && C && M
+	C *= 4
+	B *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 8
+ELSEIF A && B && M
+	A *= 4
+	B *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 9
+ELSEIF C && A && M
+	C *= 4
+	A *= 4
+	M *= 4
+	NOWEX:ARG:三重絶頂 = 10
+ELSEIF C && V
+	C *= 2
+	V *= 2
+	NOWEX:ARG:二重絶頂 = 1
+ELSEIF C && A
+	C *= 2
+	A *= 2
+	NOWEX:ARG:二重絶頂 = 2
+ELSEIF V && A
+	V *= 2
+	A *= 2
+	NOWEX:ARG:二重絶頂 = 3
+ELSEIF C && B
+	C *= 2
+	B *= 2
+	NOWEX:ARG:二重絶頂 = 4
+ELSEIF V && B
+	V *= 2
+	B *= 2
+	NOWEX:ARG:二重絶頂 = 5
+ELSEIF A && B
+	A *= 2
+	B *= 2
+	NOWEX:ARG:二重絶頂 = 6
+ELSEIF A && M
+	A *= 2
+	M *= 2
+	NOWEX:ARG:二重絶頂 = 7
+ELSEIF V && M
+	V *= 2
+	M *= 2
+	NOWEX:ARG:二重絶頂 = 8
+ELSEIF C && M
+	C *= 2
+	M *= 2
+	NOWEX:ARG:二重絶頂 = 9
+ELSEIF B && M
+	B *= 2
+	M *= 2
+	NOWEX:ARG:二重絶頂 = 10
+ENDIF
+
+
+IF (C + V + A + B + M) > 0
+	TCVAR:ARG:焦らし回数 = 0
+	TEQUIP:ARG:焦らしモード = 0
+ENDIF
+合計絶頂数 = C + V + A + B + M
+;時姦刻印
+IF FLAG:70 && ARG
+	IF 合計絶頂数 >= 16 && MARK:ARG:時姦刻印 < 3
+		TCVAR:ARG:時姦刻印取得用 = 3
+	ELSEIF 合計絶頂数 >= 8 && MARK:ARG:時姦刻印 < 2
+		TCVAR:ARG:時姦刻印取得用 = 2
+	ELSEIF  合計絶頂数 >= 1 && MARK:ARG:時姦刻印 < 1
+		TCVAR:ARG:時姦刻印取得用 = 1
+	ENDIF
+ELSE
+;快楽刻印の処理
+;絶頂の部位と強度の合計が一定以上で刻印を取得する
+;合計絶頂数が8以上で快楽刻印３に相当
+	IF 合計絶頂数 >= 24 && MARK:ARG:快楽刻印 <= 3
+		TCVAR:ARG:快楽強度 = 3
+	;合計絶頂数が5以上で快楽刻印２に相当
+	ELSEIF 合計絶頂数 >= 16 && MARK:ARG:快楽刻印 < 2
+		TCVAR:ARG:快楽強度 = 2
+	;合計絶頂数が2以上で快楽刻印１に相当
+	ELSEIF 合計絶頂数 >= 2 && MARK:ARG:快楽刻印 < 1
+		TCVAR:ARG:快楽強度 = 1
+	ELSE
+		TCVAR:ARG:快楽強度 = 0
+	ENDIF
+ENDIF
+IF FLAG:70 == 1
+ELSE
+
+IF C
+	SOURCE:ARG:露出 += 500 * C
+	SOURCE:ARG:屈従 += 200 * C
+	;SOURCE:ARG:反感 += 50 * C
+	SOURCE:ARG:反感 += 40 * C * (CFLAG:ARG:うふふ ? 1 # 3)
+	DOWNBASE:ARG:体力 += 20
+	DOWNBASE:ARG:気力 += 10
+ENDIF
+IF V
+	SOURCE:ARG:欲情 += 800 * V
+	SOURCE:ARG:恭順 += 500 * V
+	SOURCE:ARG:露出 += 700 * V
+	SOURCE:ARG:屈従 += 400 * V
+	SOURCE:ARG:反感 += 80 * V * (CFLAG:ARG:うふふ ? 1 # 3)
+	DOWNBASE:ARG:体力 += 30
+	DOWNBASE:ARG:気力 += 20
+ENDIF
+IF A
+	SOURCE:ARG:欲情 += 500 * A
+	SOURCE:ARG:恭順 += 700 * A
+	SOURCE:ARG:露出 += 900 * A
+	SOURCE:ARG:屈従 += 500 * A
+	SOURCE:ARG:反感 += 120 * A * (CFLAG:ARG:うふふ ? 1 # 3)
+	DOWNBASE:ARG:体力 += 40
+	DOWNBASE:ARG:気力 += 20
+ENDIF
+IF B
+	SOURCE:ARG:露出 += 500 * B
+	SOURCE:ARG:屈従 += 200 * B
+	SOURCE:ARG:反感 += 50 * B * (CFLAG:ARG:うふふ ? 1 # 3)
+	DOWNBASE:ARG:体力 += 20
+	DOWNBASE:ARG:気力 += 10
+ENDIF
+IF M
+	SOURCE:ARG:情愛 += 1500 * M
+	SOURCE:ARG:恭順 += 1000 * M
+	DOWNBASE:ARG:体力 += 10
+	DOWNBASE:ARG:気力 += 5
+ENDIF
+IF C && V && A && B && M
+	DOWNBASE:ARG:体力 -= 80
+	DOWNBASE:ARG:気力 -= 70
+ELSEIF (C && V && A && B) || (C && V && A && M) || (B && V && A && M) || (C && B && A && M) || (C && V && B && M)
+	DOWNBASE:ARG:体力 -= 40
+	DOWNBASE:ARG:気力 -= 30
+
+ELSEIF (C && V && A) || (B && V && A) || (C && B && A) || (C && V && B) || (C && V && M) || (B && V && M) || (C && B && M) || (C && A && M) || (V && A && M) || (B && A && M)
+	DOWNBASE:ARG:体力 -= 20
+	DOWNBASE:ARG:気力 -= 10
+ENDIF
+ENDIF
+;NOWEXにデータを入れる（絶頂時口上に使う）
+NOWEX:ARG:Ｃ絶頂 = C
+NOWEX:ARG:Ｖ絶頂 = V
+NOWEX:ARG:Ａ絶頂 = A
+NOWEX:ARG:Ｂ絶頂 = B
+NOWEX:ARG:Ｍ絶頂 = M
+;絶頂回数を増やす
+EX:ARG:Ｃ絶頂 += C
+EX:ARG:Ｖ絶頂 += V
+EX:ARG:Ａ絶頂 += A
+EX:ARG:Ｂ絶頂 += B
+EX:ARG:Ｍ絶頂 += M
+
+;時間停止中もしくは睡眠中なら、無自覚絶頂回数を増やす（ただし、主人公を除く）
+IF FLAG:70 > 0 || CFLAG:ARG:睡眠 && ARG
+	EX:ARG:無自覚Ｃ絶頂 += C
+	EX:ARG:無自覚Ｖ絶頂 += V
+	EX:ARG:無自覚Ａ絶頂 += A
+	EX:ARG:無自覚Ｂ絶頂 += B
+	EX:ARG:無自覚Ｍ絶頂 += M
+ENDIF
+
+;絶頂経験を増やす
+EXP:ARG:絶頂経験 += 合計絶頂数
+
+;体位別絶頂経験
+IF TEQUIP:ARG:50 > -1
+	LOCAL:3 = TEQUIP:ARG:体位
+ELSEIF TEQUIP:ARG:51 > -1
+	LOCAL:3 = TEQUIP:ARG:体位 + 5
+ELSE
+	LOCAL:3 = 0
+ENDIF
+SIF LOCAL:3
+	EXP:ARG:(LOCAL:3 + 100) += 1
+
+;絶頂経験の追加、無自覚のみ主人公に加算されない
+SIF FLAG:70 == 1 || CFLAG:ARG:睡眠 && ARG
+	EXP:ARG:無自覚絶頂経験 += C + V + A + B + M
+EXP:ARG:Ｃ絶頂経験 += C
+EXP:ARG:Ｖ絶頂経験 += V
+EXP:ARG:Ａ絶頂経験 += A
+EXP:ARG:Ｂ絶頂経験 += B
+EXP:ARG:Ｍ絶頂経験 += M
+
+;ビデオ
+IF TEQUIP:ARG:28
+	IF NOWEX:ARG:8
+		LOCALS = O2/O3/O4/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:7
+		LOCALS = O2/O3/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:6
+		LOCALS = O2/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:0 == 2
+		LOCALS = C/C/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:0 == 1
+		LOCALS = C/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:1 == 2
+		LOCALS = V/V/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:1 == 1
+		LOCALS = V/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:2 == 2
+		LOCALS = A/A/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:2 == 1
+		LOCALS = A/
+		TSTR:1 += LOCALS
+	ENDIF
+	IF NOWEX:ARG:3 == 2
+		LOCALS = B/B/
+		TSTR:1 += LOCALS
+	ELSEIF NOWEX:ARG:3 == 1
+		LOCALS = B/
+		TSTR:1 += LOCALS
+	ENDIF
+ENDIF
+$JIRASI
+;IF 焦らし中
+
+RETURN 1
+
+@MESSAGE_PALAMCNG_B2
+IF NOWEX:五重絶頂
+	IF !GETBIT(CFLAG:3,2)
+		EXP:異常経験 ++
+		SETBIT CFLAG:3,2
+	ENDIF
+	PRINTL 五 重 絶 頂
+	PRINTL (分别得到了16倍的珠)
+ELSEIF NOWEX:四重絶頂
+	PRINTL 四 重 絶 頂
+	SELECTCASE NOWEX:四重絶頂
+		CASE 1
+			PRINTL Ｃ＆Ｖ＆Ａ＆Ｂ絶頂
+			PRINTL (分别得到了8倍的珠)
+		CASE 2
+			PRINTL Ｃ＆Ｖ＆Ａ＆Ｍ絶頂
+			PRINTL (分别得到了8倍的珠)
+		CASE 3
+			PRINTL Ｃ＆Ｖ＆Ｂ＆Ｍ絶頂
+			PRINTL (分别得到了8倍的珠)
+		CASE 4
+			PRINTL Ｃ＆Ａ＆Ｂ＆Ｍ絶頂
+			PRINTL (分别得到了8倍的珠)
+		CASE 5
+			PRINTL Ｖ＆Ａ＆Ｂ＆Ｍ絶頂
+			PRINTL (分别得到了8倍的珠)
+	ENDSELECT
+ELSEIF NOWEX:三重絶頂
+	SELECTCASE NOWEX:三重絶頂
+		CASE 1
+			PRINTL Ｃ＆Ｖ＆Ａ絶頂
+		CASE 2
+			PRINTL Ｂ＆Ｖ＆Ａ絶頂
+		CASE 3
+			PRINTL Ｃ＆Ｂ＆Ａ絶頂
+		CASE 4
+			PRINTL Ｃ＆Ｖ＆Ｂ絶頂
+		CASE 5
+			PRINTL Ｃ＆Ｖ＆Ｍ絶頂
+		CASE 6
+			PRINTL Ｂ＆Ｖ＆Ｍ絶頂
+		CASE 7
+			PRINTL Ａ＆Ｖ＆Ｍ絶頂
+		CASE 8
+			PRINTL Ｃ＆Ｂ＆Ｍ絶頂
+		CASE 9
+			PRINTL Ａ＆Ｂ＆Ｍ絶頂
+		CASE 10
+			PRINTL Ｃ＆Ａ＆Ｍ絶頂
+	ENDSELECT
+			PRINTL (分别得到了4倍的珠)
+ELSEIF NOWEX:二重絶頂
+	SELECTCASE NOWEX:二重絶頂
+		CASE 1
+			PRINTL Ｃ＆Ｖ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 2
+			PRINTL Ｃ＆Ａ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 3
+			PRINTL Ｖ＆Ａ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 4
+			PRINTL Ｃ＆Ｂ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 5
+			PRINTL Ｖ＆Ｂ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 6
+			PRINTL Ａ＆Ｂ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 7
+			PRINTL Ａ＆Ｍ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 8
+			PRINTL Ｖ＆Ｍ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 9
+			PRINTL Ｃ＆Ｍ絶頂
+			PRINTL (分别得到了2倍的珠)
+		CASE 10
+			PRINTL Ｂ＆Ｍ絶頂
+			PRINTL (分别得到了2倍的珠)
+	ENDSELECT
+ELSEIF NOWEX:Ｂ絶頂
+	IF NOWEX:Ｂ絶頂 == 3
+		PRINTL 超強絶頂Ｂ
+	ELSEIF NOWEX:Ｂ絶頂 == 2
+		PRINTL 強絶頂Ｂ
+	ELSE
+		PRINTL 絶頂Ｂ
+	ENDIF
+ELSEIF NOWEX:Ａ絶頂
+	IF NOWEX:Ａ絶頂 == 3
+		PRINTL 超強絶頂Ａ
+	ELSEIF NOWEX:Ａ絶頂 == 2
+		PRINTL 強絶頂Ａ
+	ELSE
+		PRINTL 絶頂Ａ
+	ENDIF
+ELSEIF NOWEX:Ｖ絶頂
+	IF NOWEX:Ｖ絶頂 == 3
+		PRINTL 超強絶頂Ｖ
+	ELSEIF NOWEX:Ｖ絶頂 == 2
+		PRINTL 強絶頂Ｖ
+	ELSE
+		PRINTL 絶頂Ｖ
+	ENDIF
+ELSEIF NOWEX:Ｃ絶頂
+	IF NOWEX:Ｃ絶頂 == 3
+		PRINTL 超強絶頂Ｃ
+	ELSEIF NOWEX:Ｃ絶頂 == 2
+		PRINTL 強絶頂Ｃ
+	ELSE
+		PRINTL 絶頂Ｃ
+	ENDIF
+ELSEIF NOWEX:Ｍ絶頂
+	IF NOWEX:Ｍ絶頂 == 3
+		PRINTL 超強絶頂Ｍ
+	ELSEIF NOWEX:Ｍ絶頂 == 2
+		PRINTL 強絶頂Ｍ
+	ELSE
+		PRINTL 絶頂Ｍ
+	ENDIF
+ENDIF
+
+;絶頂による欲望ＬＶアップ
+LOCAL = 0
+SIF NOWEX:Ｃ絶頂 >= 2 || NOWEX:Ｂ絶頂 >= 2 || NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂
+	LOCAL = 1
+SIF NOWEX:Ｖ絶頂 >= 2 || NOWEX:Ａ絶頂 >= 2 || NOWEX:Ｍ絶頂 >= 1
+	LOCAL = 3
+SIF (NOWEX:Ｃ絶頂 >= 2 || NOWEX:Ｂ絶頂 >= 2) && NOWEX:二重絶頂
+	LOCAL = 3
+SIF NOWEX:三重絶頂
+	LOCAL = 5
+SIF NOWEX:四重絶頂
+	LOCAL = 7
+SIF NOWEX:五重絶頂
+	LOCAL = 10
+;自制心があると１下がる
+SIF TALENT:自制心
+	LOCAL -= 1
+
+IF ABL:欲望 < LOCAL
+	ABL:欲望 = LOCAL
+	PRINTFORML 并且欲望変成了LV{LOCAL}
+	;欲望の上昇による[圧抑]の消滅をチェック
+	CALL YOKUBO_UP_CHECK
+ENDIF
+PRINTL 
+;-------------------------------------------------
+;調教対象の噴乳チェック
+;-------------------------------------------------
+@TARGET_MILK_CHECK(ARG)
+SIF !TALENT:ARG:母乳体質
+	RETURN 0
+
+LOCAL = CUP:ARG:快Ｃ / 10 + CUP:ARG:快Ｖ / 10 + CUP:ARG:快Ａ / 10 + CUP:ARG:快Ｂ * 3
+SIF LOCAL == 0
+	RETURN 0
+
+;自制心
+SIF TALENT:ARG:自制心
+	LOCAL /= 2
+
+;接受快感
+SIF TALENT:ARG:快感応答 > 0
+	TIMES LOCAL , 1.20
+
+;否定快感（淫乱、娼婦で無効）
+SIF TALENT:ARG:快感応答 < 0 && !TALENT:ARG:淫乱
+	TIMES LOCAL , 0.80
+
+;B敏感
+SIF TALENT:ARG:Ｂ感度 > 0
+	TIMES LOCAL , 1.20
+
+;媚薬
+SIF TCVAR:ARG:媚薬 || TCVAR:ARG:発情
+	LOCAL *= 2
+
+;利尿剤
+SIF TCVAR:ARG:利尿剤
+	LOCAL /= 2
+
+;睡眠薬
+SIF TCVAR:ARG:睡眠薬強度
+	LOCAL /= 2
+
+;調教者が幼児退行
+SIF TALENT:PLAYER:幼児／幼児退行
+	TIMES LOCAL , 1.20
+
+;調教者が幼稚
+SIF TALENT:PLAYER:幼稚
+	TIMES LOCAL , 1.20
+
+;貧乳
+SIF TALENT:ARG:胸囲 < 0
+	TIMES LOCAL , 0.50
+
+LOCAL = 100 + LOCAL / 2
+SIF TEQUIP:ARG:焦らしモード
+	LOCAL = LOCAL * 8 / 10
+BASE:ARG:母乳 += LOCAL
+IF TEQUIP:ARG:焦らしモード && BASE:ARG:母乳 > MAXBASE:ARG:母乳 && ARG
+	TCVAR:ARG:焦らし回数 ++
+	RETURN 0
+ELSEIF  BASE:ARG:母乳 > MAXBASE:ARG:母乳 * 2
+	LOCAL = 1
+ELSEIF BASE:ARG:母乳 > MAXBASE:ARG:母乳
+	LOCAL = 0
+ELSE
+	RETURN 0
+ENDIF
+LOCAL ++
+DOWNBASE:ARG:体力 += 20 * LOCAL
+DOWNBASE:ARG:気力 += 40 * LOCAL
+IF EXP:ARG:噴乳経験 < EXPLV:1
+	SOURCE:ARG:露出 += 250 * LOCAL
+	SOURCE:ARG:屈従 += 150 * LOCAL
+ELSEIF EXP:ARG:噴乳経験 < EXPLV:2
+	SOURCE:ARG:露出 += 500 * LOCAL
+	SOURCE:ARG:屈従 += 250 * LOCAL
+	SOURCE:ARG:不潔 += 200 * LOCAL
+ELSEIF EXP:ARG:噴乳経験 < EXPLV:3
+	SOURCE:ARG:露出 += 750 * LOCAL
+	SOURCE:ARG:屈従 += 400 * LOCAL
+	SOURCE:ARG:不潔 += 350 * LOCAL
+ELSEIF EXP:ARG:噴乳経験 < EXPLV:4
+	SOURCE:ARG:露出 += 1500 * LOCAL
+	SOURCE:ARG:屈従 += 750 * LOCAL
+	SOURCE:ARG:不潔 += 500 * LOCAL
+ELSEIF EXP:ARG:噴乳経験 < EXPLV:5
+	SOURCE:ARG:露出 += 2500 * LOCAL
+	SOURCE:ARG:屈従 += 1500 * LOCAL
+	SOURCE:ARG:不潔 += 750 * LOCAL
+ELSE
+	SOURCE:ARG:露出 += 5000 * LOCAL
+	SOURCE:ARG:屈従 += 2500 * LOCAL
+	SOURCE:ARG:不潔 += 1000 * LOCAL
+ENDIF
+
+IF EXP:ARG:噴乳経験 == 0
+	EXP:ARG:異常経験 ++
+ENDIF
+EXP:ARG:噴乳経験 += LOCAL
+;Ｂに母乳汚れ
+STAIN:ARG:5 |= 16
+	BASE:ARG:母乳 -= MAXBASE:ARG:母乳 * LOCAL
+SIF BASE:ARG:母乳 >= MAXBASE:ARG:母乳
+	BASE:ARG:母乳 = MAXBASE:ARG:母乳 - 1
+NOWEX:ARG:噴乳 += LOCAL
+EX:ARG:噴乳 += LOCAL
+
+@TARGET_MILK_MESSAGE(ARG)
+CALL COLORMESSAGE(@"《噴乳》（%CALLNAME:ARG%）",C_PINK,1,1)
+PRINTFORML 從%CALLNAME:ARG%的乳頭噴出了\@ NOWEX:ARG:噴乳 > 1 ? 大量的 # \@母乳
+IF TEQUIP:ARG:乳首吸い
+	PRINTFORML %CALLNAME:MASTER%将充満嘴里的醇厚甘甜的奶水咕噜作响地喝下去了
+	CALL RECOVER(MASTER,NOWEX:ARG:噴乳 * 10,"体力")
+	CALL RECOVER(MASTER,NOWEX:ARG:噴乳 * 20,"気力")
+	CALL RECOVER(MASTER,NOWEX:ARG:噴乳 * 10,"精力")
+	CALL COLORMESSAGE(@"体力＋{NOWEX:ARG:噴乳 * 10}",C_AQUA,1)
+	CALL COLORMESSAGE(@"気力＋{NOWEX:ARG:噴乳 * 20}",C_AQUA,1)
+	CALL COLORMESSAGE(@"精力＋{NOWEX:ARG:噴乳 * 10}",C_AQUA,1)
+ENDIF
+
+
+@絶頂強度判定(ARG,絶頂部位,ARG:2)
+#DIM 絶頂部位
+#DIM 欲求不満低下係数
+; ARG:2=絶頂補正
+VARSET LOCAL
+欲求不満低下係数 = MAX(30 - ABL:ARG:欲望,10)
+SIF FLAG:70
+	欲求不満低下係数 /= 2
+SIF TCVAR:ARG:発情
+	欲求不満低下係数 /= 2
+LOCAL = (CUP:ARG:絶頂部位 > 0) * ARG:2
+IF CUP:ARG:絶頂部位 + PALAM:ARG:絶頂部位 + LOCAL >= PALAMLV:4 * 3
+	LOCAL:1 = 3
+	CDOWN:ARG:絶頂部位 = PALAMLV:4 * 3 - LOCAL
+ELSEIF CUP:ARG:絶頂部位 + PALAM:ARG:絶頂部位 + LOCAL >= PALAMLV:4 * 2
+	LOCAL:1 = 2
+	CDOWN:ARG:絶頂部位 = PALAMLV:4 * 2 - LOCAL
+ELSEIF CUP:ARG:絶頂部位 + PALAM:ARG:絶頂部位 + LOCAL >= PALAMLV:4
+	LOCAL:1 = 1
+	CDOWN:ARG:絶頂部位 = PALAMLV:4 - LOCAL
+ENDIF
+;DOWN:0で下げても絶頂以上なら
+;その値-1になるように調整（10000で絶頂なら9999）
+SIF CUP:ARG:絶頂部位 + PALAM:ARG:絶頂部位 - CDOWN:ARG:絶頂部位 >= PALAMLV:4
+	CDOWN:ARG:絶頂部位 = CUP:ARG:絶頂部位 + PALAM:ARG:絶頂部位 - PALAMLV:4 + 1
+CFLAG:ARG:溜まってる度 -= LOCAL:1 * 欲求不満低下係数
+CFLAG:ARG:溜まってる度 = MAX(CFLAG:ARG:溜まってる度, 0)
+IF ARG == MASTER && TARGET >= 1 && (TALENT:ARG:性別 & 1) && !FLAG:70
+	CFLAG:ARG:溜まってる度 -= LOCAL:1 * 20
+	CFLAG:ARG:溜まってる度 = MAX(CFLAG:ARG:溜まってる度, 0)
+ENDIF
+LOCAL:2 = LOCAL:1
+IF !TALENT:ARG:妄想的産物
+	SIF MAXBASE:ARG:体力 > CSVBASE(ARG,0) * 2 || MAXBASE:ARG:気力 > CSVBASE(ARG,1) * 2
+		LOCAL:2 -= 1
+	SIF MAXBASE:ARG:体力 > CSVBASE(ARG,0) * 3 || MAXBASE:ARG:気力 > CSVBASE(ARG,1) * 3
+		LOCAL:2 -= 1
+	IF ARG
+		MAXBASE:ARG:体力 += MAX(LOCAL:2,0)
+		MAXBASE:ARG:気力 += MAX(LOCAL:2,0)
+	ENDIF
+ENDIF
+RETURN LOCAL:1
+
+@焦らし発生(ARG,ARG:1)
+#FUNCTION
+SIF TCVAR:MASTER:イきそう
+	RETURNF 0
+SIF (ARG:1 + EX:ARG:Ｃ寸止め + EX:ARG:Ｖ寸止め + EX:ARG:Ａ寸止め + EX:ARG:Ｂ寸止め + EX:ARG:Ｍ寸止め) >= (5 - TCVAR:ARG:焦らし回数) * 2
+	RETURNF 0
+RETURNF 1

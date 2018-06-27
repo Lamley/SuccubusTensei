@@ -1,0 +1,330 @@
+﻿;-------------------------------------------------
+;関数名:GET_TALENTNAME
+;概　要:素質名取得関数
+;引　数:ARG:0…TALENT登録番号
+;　　　:ARG:1…TALENTの中身
+;戻り値:素質名
+;備　考:文中関数
+;素質の名前を返す。
+;-------------------------------------------------
+@GET_TALENTNAME(ARG,ARG:1)
+#FUNCTIONS
+SELECTCASE ARG
+	;処女
+	CASE 0
+		IF ARG:1 == -1
+			RETURNF "無自覚非処女"
+		ELSEIF ARG:1 
+			RETURNF "処女"
+		ENDIF
+	;童貞
+	CASE 1
+		SIF !ARG:1
+			RETURNF "童貞"
+	;性別
+	CASE 2
+		IF ARG:1 == 3
+			RETURNF "Futanari"
+		ELSEIF ARG:1 == 2
+			RETURNF "男人"
+		ENDIF
+	;無接吻経験
+	CASE 6
+		SIF ARG:1
+			RETURNF "無接吻経験"
+	;胆量
+	CASE 10
+		IF ARG:1 == -1
+			RETURNF "胆怯"
+		ELSEIF ARG:1 == 1
+			RETURNF "堅強"
+		ENDIF
+	;態度
+	CASE 11
+		IF ARG:1 == -1
+			RETURNF "坦率"
+		ELSEIF ARG:1 == 1
+			RETURNF "叛逆"
+		ENDIF
+	;応答
+	CASE 12
+		IF ARG:1 == -1
+			RETURNF "老実"
+		ELSEIF ARG:1 == 1
+			RETURNF "傲慢"
+		ENDIF
+	;自尊心
+	CASE 13
+		IF ARG:1 == -1
+			RETURNF "自尊心低"
+		ELSEIF ARG:1 == 1
+			RETURNF "自尊心高"
+		ENDIF
+	;心情
+	CASE 15
+		IF ARG:1 == -1
+			RETURNF "心情不快"
+		ELSEIF ARG:1 == 1
+			RETURNF "心情愉快"
+		ENDIF
+	;容姿
+	CASE 16
+		IF ARG:1 == -1
+			RETURNF "醜悪"
+		ELSEIF ARG:1 == 1
+			RETURNF "美形"
+		ENDIF
+	;年齢
+	CASE 17
+		IF ARG:1 == -1
+			RETURNF "兒童"
+		ELSEIF ARG:1 == 1
+			RETURNF "中年"
+		ELSEIF ARG:1 == 2
+			RETURNF "老人"
+		ENDIF
+	;性的興味
+	CASE 23
+		IF ARG:1 == -1
+			RETURNF "保守的"
+		ELSEIF ARG:1 == 1
+			RETURNF "好奇心"
+		ENDIF
+	;陽気／陰気,
+	CASE 24
+		IF ARG:1 == -1
+			RETURNF "陰気"
+		ELSEIF ARG:1 == 1
+			RETURNF "陽気"
+		ENDIF
+	;貞操観念
+	CASE 30
+		IF ARG:1 == -1
+			RETURNF "不在乎貞操"
+		ELSEIF ARG:1 == 1
+			RETURNF "貞操観念"
+		ENDIF
+	;自己愛
+	CASE 31
+		IF ARG:1 == -1
+			RETURNF "圧抑"
+		ELSEIF ARG:1 == 1
+			RETURNF "解放"
+		ENDIF
+	;羞恥心
+	CASE 33
+		IF ARG:1 == -1
+			RETURNF "不知羞恥"
+		ELSEIF ARG:1 == 1
+			RETURNF "害羞"
+		ENDIF
+	;痛覚
+	CASE 40
+		IF ARG:1 == -1
+			RETURNF "不怕痛"
+		ELSEIF ARG:1 == 1
+			RETURNF "怕痛"
+		ENDIF
+	;弄湿難易
+	CASE 41
+		IF ARG:1 == -1
+			RETURNF "不易湿"
+		ELSEIF ARG:1 == 1
+			RETURNF "容易湿"
+		ENDIF
+	;習得速度
+	CASE 50
+		IF ARG:1 == -1
+			RETURNF "学習慢"
+		ELSEIF ARG:1 == 1
+			RETURNF "学習快"
+		ENDIF
+	;汚臭耐性
+	CASE 61
+		IF ARG:1 == -2
+			RETURNF "潔癖症"
+		ELSEIF ARG:1 == -1
+			RETURNF "汚臭敏感"
+		ELSEIF ARG:1 == 1
+			RETURNF "汚臭鈍感"
+		ELSEIF ARG:1 == 2
+			RETURNF "汚臭無視"
+		ENDIF
+	;快感応答
+	CASE 70
+		IF ARG:1 == -1
+			RETURNF "否定快感"
+		ELSEIF ARG:1 == 1
+			RETURNF "接受快感"
+		ENDIF
+	;性別嗜好
+	CASE 81
+		IF ARG:1 == -1
+			RETURNF "兩面通吃"
+		ELSEIF ARG:1 == 3
+			RETURNF "不信任人類"
+		ELSEIF ARG:1 == 1
+			RETURNF "討厭男人"
+		ELSEIF ARG:1 == 2
+			RETURNF "討厭女人"
+		ENDIF
+	;体型
+	CASE 100
+		IF ARG:1 == -5
+			RETURNF "小人"
+		ELSEIF ARG:1 == -2
+			RETURNF "幼児体型"
+		ELSEIF ARG:1 == -1
+			RETURNF "矮小体型"
+		ELSEIF ARG:1 == 1
+			RETURNF "長身"
+		ELSEIF ARG:1 == 2
+			RETURNF "巨躯"
+		ELSEIF ARG:1 == 3
+			RETURNF "巨人"
+		ENDIF
+	;Ｃ感度
+	CASE 101
+		IF ARG:1 == -1
+			RETURNF "Ｃ鈍感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｃ敏感"
+		ENDIF
+	;Ｖ感度
+	CASE 102
+		IF ARG:1 == -1
+			RETURNF "Ｖ鈍感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｖ敏感"
+		ENDIF
+	;Ａ感度
+	CASE 103
+		IF ARG:1 == -1
+			RETURNF "Ａ鈍感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ａ敏感"
+		ENDIF
+	;Ｂ感度
+	CASE 104
+		IF ARG:1 == -1
+			RETURNF "Ｂ鈍感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｂ敏感"
+		ENDIF
+	;胸囲
+	CASE 105
+		IF ARG:1 == -2
+			RETURNF "絶壁"
+		ELSEIF ARG:1 == -1
+			RETURNF "貧乳"
+		;ELSEIF ARG:1 == 0
+			;RETURNF "普乳"
+		ELSEIF ARG:1 == 1
+			RETURNF "巨乳"
+		ELSEIF ARG:1 == 2
+			RETURNF "爆乳"
+		ENDIF
+	;Ｍ感度
+	CASE 106
+		IF ARG:1 == -1
+			RETURNF "Ｍ鈍感"
+		ELSEIF ARG:1 == 1
+			RETURNF "Ｍ敏感"
+			ELSEIF ARG:1 == 2
+			RETURNF "Ｍ過敏"
+		ENDIF
+	;酒耐性
+	CASE 121
+		IF ARG:1 == -2
+			RETURNF "不会喝酒"
+		ELSEIF ARG:1 == -1
+			RETURNF "不擅喝酒"
+		ELSEIF ARG:1 == 1
+			RETURNF "擅于喝酒"
+		ELSEIF ARG:1 == 2
+			RETURNF "酒豪"
+		ELSEIF ARG:1 == 3
+			RETURNF "海量"
+		ENDIF
+	;回復速度
+	CASE 130
+		IF ARG:1 == -1
+			RETURNF "回復慢"
+		ELSEIF ARG:1 == 1
+			RETURNF "回復快"
+		ENDIF
+	CASE 143
+		SELECTCASE ARG:1
+			CASE 1
+				RETURNF "動物耳"
+			CASE 2
+				RETURNF "ウサミミ"
+			CASE 3
+				RETURNF "イヌミミ"
+			CASE 4
+				RETURNF "ネコミミ"
+		ENDSELECT
+	;音楽知識
+	CASE 161
+		SELECTCASE ARG:1
+			CASE 1
+				RETURNF "楽器知識"
+			CASE 2
+				RETURNF "歌唱知識"
+			CASE 3
+				RETURNF "舞踏知識"
+		ENDSELECT
+	;音感
+	CASE 162
+		IF ARG:1 == -1
+			RETURNF "音痴"
+		ELSEIF ARG:1 == 1
+			RETURNF "音感"
+		ELSEIF ARG:1 == 2
+			RETURNF "絶対音感"
+		ENDIF
+	;氷精
+	CASE 164
+		IF ARG:1 == 1
+			RETURNF "氷精"
+		ELSEIF ARG:1 == 2
+			RETURNF "雪女"
+		ENDIF
+	;炮友
+	CASE 185
+		IF ARG:1 == 1
+			RETURNF "炮友"
+		ELSEIF ARG:1 == 2
+			RETURNF "愛人"
+		ENDIF
+	;非生物
+	CASE 192
+		IF ARG:1 == 1
+			RETURNF "非生物"
+		ELSEIF ARG:1 == 2
+			RETURNF "霊体"
+		ENDIF
+	;神霊
+	CASE 193
+		IF ARG:1 == 2
+			RETURNF "死神"
+		ELSEIF ARG:1 == 3
+			RETURNF "閻魔"
+		ENDIF
+	;人間
+	CASE 194
+		IF ARG:1 == 2
+			RETURNF "魔法使い"
+		ELSEIF ARG:1 == 3
+			RETURNF "巫女"
+		ELSEIF ARG:1 == 4
+			RETURNF "天人"
+		ELSEIF ARG:1 == 5
+			RETURNF "仙人"
+		ELSEIF ARG:1 == 6
+			RETURNF "月人"
+		ENDIF
+	CASEELSE
+		SIF ARG:1
+			RETURNF @"%TALENTNAME:ARG%"
+ENDSELECT

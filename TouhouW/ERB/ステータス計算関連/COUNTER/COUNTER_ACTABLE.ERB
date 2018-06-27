@@ -1,0 +1,882 @@
+﻿@ACTABLE(ARG,ARG:1)
+#FUNCTION
+#DIM 実行中コマンド,200
+VARSET LOCAL
+;前一位角色が何をしたかを[実行中コマンド]に出力
+FOR LOCAL,1,CHARANUM
+	SIF TARGET:LOCAL <= 0
+		CONTINUE
+	SIF TCVAR:(TARGET:LOCAL):20
+		実行中コマンド:(TCVAR:(TARGET:LOCAL):20) ++
+NEXT
+
+SELECTCASE ARG:1
+	;距離が近い
+	CASE 1
+		RETURNF 1
+	;チラ見
+	CASE 2
+		RETURNF 1
+	;おはなし
+	CASE 3
+		RETURNF 1
+	;いい匂い
+	CASE 4
+		RETURNF 1
+	;中だし後(?)
+	CASE 9
+		SIF 充填率(ARG,4) >= 15
+			RETURNF 1
+;------------------------------------------
+;10～19 ベリーソフト
+;------------------------------------------
+	;近寄ってくる
+	CASE 11
+		RETURNF 1
+	;笑顔を浮かべる
+	CASE 12
+		RETURNF 1
+	;構って欲しがる
+	CASE 13
+		RETURNF 1
+	;身をすり寄せる
+	CASE 14
+		RETURNF 1
+	;見つめてくる
+	CASE 15
+		RETURNF 1
+	;肩にあご乗せ
+	CASE 16
+		RETURNF 1
+;------------------------------------------
+;20～29 誘惑
+;------------------------------------------
+	;色っぽい仕草
+	CASE 20
+		RETURNF 1
+	;見つめる
+	CASE 21
+		RETURNF 1
+	;体を摺り寄せる
+	CASE 22
+		RETURNF 1
+	;裙子を捲る
+	CASE 23
+		;服装制限
+		SIF !(EQUIP:PLAYER:裙子 || EQUIP:PLAYER:連衣裙 || EQUIP:PLAYER:和服)
+		RETURNF 0
+		SIF TEQUIP:PLAYER:0 > 3
+			RETURNF 0
+		SIF !EQUIP:PLAYER:0
+			RETURNF 0
+		SIF !ONCE("裙子めくられ",1,ARG)
+			RETURNF 0
+		RETURNF 1
+	;耳元に息を吹きかける
+	CASE 24
+		;会話中はダメ
+		SIF SELECTCOM == 300
+			RETURNF 0
+		RETURNF 1
+	;摸屁股
+	CASE 25
+		SIF !(TALENT:MASTER:2 & 1)
+			RETURNF 0
+		RETURNF 1
+	;腕に抱き付き
+	CASE 26
+		RETURNF 1
+	;谷間を見せる
+	CASE 27
+		SIF TALENT:ARG:胸囲 <= -1
+			RETURNF 0
+		SIF TEQUIP:ARG:1 == 1
+			RETURNF 0
+		RETURNF 1
+	;尻ズリ
+	CASE 28
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF TFLAG:64
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 500
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+;------------------------------------------
+;30～39 着衣セクハラ
+;------------------------------------------
+	;キス
+	CASE 30
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:MASTER:体位 == 2
+			RETURNF 0
+		RETURNF 1
+	;後ろから抱きつく
+	CASE 31
+		SIF 実行中コマンド:31
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		RETURNF 1
+	;前から抱きつく
+	CASE 32
+		SIF 実行中コマンド:32
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,5)
+			RETURNF 0
+		;キス
+		SIF 実行中コマンド:31
+			RETURNF 0
+		SIF TEQUIP:MASTER:体位 == 2
+			RETURNF 0
+		RETURNF 1
+	;胸を揉ませる
+	CASE 33
+		SIF TFLAG:61
+			RETURNF 0
+		SIF TEQUIP:MASTER:体位 == 2
+			RETURNF 0
+		RETURNF 1
+	;股間をまさぐる
+	CASE 34
+		SIF TEQUIP:PLAYER:0 <= 3
+			RETURNF 0
+		SIF TFLAG:62
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;裙子の中を見せる
+	CASE 35
+		;服装制限(条件が意味不明なので、再設定（裙子を沒穿かつ連衣裙をきてないかつ和服をきてないに）
+		;SIF !(EQUIP:9 || EQUIP:15 || EQUIP:16)
+		SIF !EQUIP:13 && !EQUIP:16 && !EQUIP:17
+			RETURNF 0
+		SIF TEQUIP:0 > 3
+			RETURNF 0
+		;全裸(MASTERの有無は関係ないよね？
+		SIF !EQUIP:0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;胸を揉む
+	CASE 36
+		SIF !(TALENT:MASTER:2 & 1)
+			RETURNF 0
+		SIF TEQUIP:PLAYER:1 < 1
+			RETURNF 0
+		SIF TFLAG:65
+			RETURNF 0
+		SIF TEQUIP:MASTER:体位 == 1
+			RETURNF 0
+		RETURNF 1
+;------------------------------------------
+;40～49 おねだり
+;------------------------------------------
+	;正常位・後背位Ｖおねだり
+	CASE 41,43
+		SIF 挿入不可(ARG) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TFLAG:MASTERのＶ使用中 || TEQUIP:50 >= 0 || TEQUIP:51 >= 0 || TFLAG:MASTERのＡ使用中
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF PALAM:ARG:潤滑 < PALAMLV:3
+			RETURNF 0
+		SIF TEQUIP:ARG:振動棒
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		;IF 妊娠可否(TARGET) && CFLAG:TARGET:生解禁 != 2 && !TALENT:TARGET:無知 && !TCVAR:TARGET:泥酔
+		;	SIF !TEQUIP:MASTER:避孕套
+		;		RETURNF 0
+		;ENDIF
+		;貞操帯、触手胖次、振動棒胖次、二穴振動棒胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28 || EQUIP:下半身内袴２ == 29 || EQUIP:下半身内袴２ == 30
+			RETURNF 0
+		RETURNF 1
+	CASE 42
+	;後背位Ａおねだり
+	CASE 44
+		SIF 挿入不可(ARG) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TFLAG:MASTERのＶ使用中 || TEQUIP:50 >= 0 || TEQUIP:51 >= 0 || TFLAG:MASTERのＡ使用中
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF PALAM:ARG:潤滑 < PALAMLV:3
+			RETURNF 0
+		SIF TEQUIP:ARG:肛用振動棒
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF EXP:ARG:Ａ経験 < 30
+			RETURNF 0
+		;貞操帯、触手胖次、振動棒胖次、二穴振動棒胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28 || EQUIP:下半身内袴２ == 29 || EQUIP:下半身内袴２ == 30
+			RETURNF 0
+		RETURNF 1
+;C
+;	CASE 45
+;B
+;	CASE 46
+;V
+;	CASE 47
+;A
+;	CASE 48
+;M
+;	CASE 49
+;------------------------------------------
+;50～69 脱衣セクハラ(愛撫)
+;------------------------------------------
+	;手淫
+	CASE 50
+		SIF TFLAG:62
+			RETURNF 0
+		SIF ABL:ARG:指 < 1
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 && !(TALENT:MASTER:2 & 2)
+			RETURNF 0
+		RETURNF 1
+	;口交
+	CASE 51
+		SIF TFLAG:62
+			RETURNF 0
+		SIF ABL:ARG:舌 < 1
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;素股
+	CASE 52
+		SIF TFLAG:62
+			RETURNF 0
+		SIF ABL:ARG:腰 < 1
+			RETURNF 0
+		;潤滑
+		SIF PALAM:ARG:潤滑 < 2000
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;乳交
+	CASE 53
+		SIF TFLAG:62
+			RETURNF 0
+		SIF ABL:ARG:胸 < 1
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		;[絶壁]だと不可
+		SIF TALENT:ARG:胸囲 == -2
+			RETURNF 0
+		;[爆乳]なら技巧LV1以上、[巨乳]でなければ技巧3以上、[貧乳]だと技巧4以上必要
+		SIF TALENT:ARG:胸囲 + ABL:ARG:技巧 < 3
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;足交
+	CASE 54
+		SIF TCVAR:MASTER:120 != 1
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF TFLAG:62
+			RETURNF 0
+		SIF ABL:ARG:施虐属性 < 1
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;肛門愛撫
+	CASE 55
+		SIF TFLAG:64
+			RETURNF 0
+		SIF ABL:ARG:指 < 1
+			RETURNF 0
+		SIF TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:2
+			RETURNF 0
+		RETURNF 1
+	;舐肛
+	CASE 56
+		SIF TFLAG:64
+			RETURNF 0
+		SIF STAIN:PLAYER:4 & 8 && TALENT:ARG:汚臭耐性 < 1
+			RETURNF 0
+		SIF ABL:ARG:舌 < 1
+			RETURNF 0
+		SIF TEQUIP:ARG:50 >= 0 || TEQUIP:ARG:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 == ARG
+			RETURNF 0
+		SIF TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;指挿入
+	CASE 57
+		SIF TFLAG:63
+			RETURNF 0
+		SIF TALENT:PLAYER:処女 && TALENT:PLAYER:処女 != -1
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 1)
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:2
+			RETURNF 0
+		RETURNF 1
+	;胸愛撫
+	CASE 58
+		SIF TFLAG:65
+			RETURNF 0
+		SIF ABL:ARG:指 < 1
+			RETURNF 0
+		RETURNF 1
+	;乳首吸い
+	CASE 59
+		SIF TFLAG:65
+			RETURNF 0
+		SIF ABL:ARG:舌 < 1
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;ディープキス
+	CASE 60
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+;------------------------------------------
+;70～79 脱衣セクハラ(強要)
+;------------------------------------------
+	;強制舐陰
+	CASE 70
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:ARG:50 >= 0 || TEQUIP:ARG:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		;貞操帯、触手胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28
+			RETURNF 0
+		RETURNF 1
+	;口交強制
+	CASE 71
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:ARG:50
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 == ARG || TEQUIP:MASTER:51 == ARG
+			RETURNF 0
+		RETURNF 1
+	;肛門奉仕
+	CASE 72
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:ARG:50 >= 0 || TEQUIP:ARG:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;ぱふぱふ
+	CASE 73
+		SIF TEQUIP:MASTER:50 == ARG || TEQUIP:MASTER:51 == ARG
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,5)
+			RETURNF 0
+		RETURNF 1
+	;乳合わせ
+	CASE 74
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF TFLAG:65
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		RETURNF 1
+	;タワシ洗い
+	CASE 75
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		;潤滑
+		SIF PALAM:ARG:潤滑 < 1500
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		;口が空いてれば舐陰させる
+		SIF !TFLAG:60
+			RETURNF 0
+		SIF TFLAG:61 > 1
+			RETURNF 0
+		RETURNF 1
+	;強制アソコ愛撫
+	CASE 76
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		;潤滑
+		SIF PALAM:ARG:潤滑 < 1000
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 == ARG || TEQUIP:MASTER:51 == ARG
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		;貞操帯、触手胖次、振動棒胖次、二穴振動棒胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28 || EQUIP:下半身内袴２ == 29 || EQUIP:下半身内袴２ == 30
+			RETURNF 0
+		RETURNF 1
+	;乳を吸わせる
+	CASE 77
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 == ARG || TEQUIP:MASTER:51 == ARG
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,5)
+			RETURNF 0
+		RETURNF 1
+	;尻ズリ
+	CASE 78
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF TFLAG:64
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 500
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		RETURNF 1
+;------------------------------------------
+;80～89 性交
+;------------------------------------------
+	;正常位Ｖ挿入される
+	CASE 80
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 1)
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 1000
+			RETURNF 0
+		SIF TFLAG:63
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		;貞操帯、触手胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:3
+			RETURNF 0
+		RETURNF 1
+
+	;後背位Ｖ挿入される
+	CASE 83
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 1)
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 1000
+			RETURNF 0
+		SIF TFLAG:63
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		;貞操帯、触手胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:3
+			RETURNF 0
+		RETURNF 1
+	;腰振りＶ受け
+	CASE 84
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 1)
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 != ARG
+			RETURNF 0
+		RETURNF 1
+	;Ｖ挿入する
+	CASE 85
+		SIF 挿入不可(ARG) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TFLAG:63
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF PALAM:ARG:潤滑 < PALAMLV:3
+			RETURNF 0
+		SIF TEQUIP:ARG:振動棒
+			RETURNF 0
+		;貞操帯、触手胖次、振動棒胖次、二穴振動棒胖次をはいてるとダメ
+		SIF EQUIP:下半身内袴２ == 27 || EQUIP:下半身内袴２ == 28 || EQUIP:下半身内袴２ == 29 || EQUIP:下半身内袴２ == 30
+			RETURNF 0
+		RETURNF 1
+	;だいしゅきホールド
+	CASE 86
+		SIF !TCVAR:MASTER:イきそう
+			RETURNF 0
+		SIF TEQUIP:ARG:50 < 0
+			RETURNF 0
+		SIF CFLAG:ARG:生解禁 != 2
+			RETURNF 0
+		SIF TEQUIP:ARG:体位 == 2 || TEQUIP:ARG:体位 == 5
+			RETURNF 0
+		RETURNF 1
+	;Ａ挿入する
+	CASE 87
+		SIF 挿入不可(ARG) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TALENT:ARG:妊娠 && (CFLAG:ARG:903 <= 30 || CFLAG:ARG:903 >= 71)
+			RETURNF 0
+		SIF CFLAG:ARG:育児人数 >= 1 && CFLAG:ARG:育児人数 <= 30
+			RETURNF 0
+		SIF ABL:2 < 3
+			RETURNF 0
+		SIF TFLAG:63
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:ARG:体位
+			RETURNF 0
+		SIF PALAM:ARG:潤滑 < PALAMLV:3
+			RETURNF 0
+		SIF TEQUIP:ARG:肛用振動棒
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;腰振りＶ
+	CASE 88
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:ARG:50 < 0
+			RETURNF 0
+		SIF !TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TCVAR:ARG:100 != PLAYER
+			RETURNF 0
+		SIF ABL:ARG:腰 < 2
+			RETURNF 0
+		RETURNF 1
+	;腰振りＡ
+	CASE 89
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:ARG:51 < 0
+			RETURNF 0
+		SIF !TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TCVAR:ARG:101 != PLAYER
+			RETURNF 0
+		SIF ABL:ARG:腰 < 2
+			RETURNF 0
+		RETURNF 1
+
+;------------------------------------------
+;90～99 TARGETによる責め（ハードめ）
+;------------------------------------------
+	;後背位Ａ挿入される
+	CASE 90
+		SIF 挿入不可(MASTER) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF TFLAG:64
+			RETURNF 0
+		SIF ABL:MASTER:2 < 2
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:3
+			RETURNF 0
+		RETURNF 1
+	;強制口交される
+	CASE 91
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TEQUIP:PLAYER:50 == ARG || TEQUIP:PLAYER:51 == ARG
+			RETURNF 0
+		SIF TFLAG:60
+			RETURNF 0
+		RETURNF 1
+	;腰振り逆A
+	CASE 93
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF TEQUIP:PLAYER:51 != ARG
+			RETURNF 0
+		RETURNF 1
+	;正常位Ａ挿入される
+	CASE 94
+		SIF 挿入不可(MASTER) >= 2
+			RETURNF 0
+		SIF !(TALENT:ARG:2 & 2)
+			RETURNF 0
+		SIF BASE:ARG:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF TFLAG:64
+			RETURNF 0
+		SIF ABL:MASTER:2 < 2
+			RETURNF 0
+		SIF PALAM:MASTER:潤滑 < PALAMLV:3
+			RETURNF 0
+		RETURNF 1
+;------------------------------------------
+;100～119 挿入中専用
+;------------------------------------------
+[SKIPSTART]
+	;前から抱きつく;CASE 32
+	CASE 100
+		;前一位角色が抱き着く、キスを選択
+		SIF 実行中コマンド:100 || 実行中コマンド:31 || 実行中コマンド:32
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,5)
+			RETURNF 0
+		SIF TEQUIP:MASTER:体位 == 2
+			RETURNF 0
+		RETURNF 1
+	;胸を揉ませる 33
+	CASE 101
+		SIF TFLAG:61
+			RETURNF 0
+		RETURNF 1
+	;裙子の中を見せる 35
+	CASE 102
+		;服装制限
+		SIF !(EQUIP:9 || EQUIP:15 || EQUIP:16) || EQUIP:0 == 0
+			RETURNF 0
+		SIF TEQUIP:0 > 3
+			RETURNF 0
+		;全裸
+		SIF !EQUIP:0
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;肛門愛撫 55
+	CASE 103
+		SIF TFLAG:64
+			RETURNF 0
+		SIF ABL:ARG:指 < 1
+			RETURNF 0
+		SIF TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,3,5)
+			RETURNF 0
+		RETURNF 1
+	;胸愛撫 58
+	CASE 104
+		SIF TFLAG:65
+			RETURNF 0
+		SIF ABL:ARG:指 < 1
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,3,5)
+			RETURNF 0
+		RETURNF 1
+	;乳首吸い 59
+	CASE 105
+		SIF TFLAG:65
+			RETURNF 0
+		SIF ABL:ARG:舌 < 1
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;ディープキス 60
+	CASE 106
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 >= 0 || TEQUIP:MASTER:51 >= 0
+			RETURNF 0
+		RETURNF 1
+	;乳を吸わせる 77
+	CASE 107
+		SIF TFLAG:60
+			RETURNF 0
+		SIF TEQUIP:MASTER:50 == ARG || TEQUIP:MASTER:51 == ARG
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,3,5)
+			RETURNF 0
+		RETURNF 1
+	;だいしゅきホールド 86
+	CASE 108
+		SIF !TCVAR:MASTER:イきそう
+			RETURNF 0
+		SIF TEQUIP:ARG:50 < 0
+			RETURNF 0
+		SIF CFLAG:ARG:生解禁 != 2
+			RETURNF 0
+		SIF GROUPMATCH(TEQUIP:ARG:体位,2,3,5)
+			RETURNF 0
+		RETURNF 1
+	;腰振りV 88
+	CASE 109
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:ARG:50 < 0
+			RETURNF 0
+		SIF !TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TCVAR:ARG:100 != PLAYER
+			RETURNF 0
+		SIF ABL:ARG:腰 < 2
+			RETURNF 0
+		RETURNF 1
+	;腰振りA 89
+	CASE 110
+		SIF !(TALENT:ARG:2 & 1)
+			RETURNF 0
+		SIF !(TALENT:PLAYER:2 & 2)
+			RETURNF 0
+		SIF BASE:MASTER:勃起 < 1000
+			RETURNF 0
+		SIF TEQUIP:ARG:51 < 0
+			RETURNF 0
+		SIF !TEQUIP:50 >= 0 || TEQUIP:51 >= 0
+			RETURNF 0
+		SIF TCVAR:ARG:101 != PLAYER
+			RETURNF 0
+		SIF ABL:ARG:腰 < 2
+			RETURNF 0
+		RETURNF 1
+[SKIPEND]
+;------------------------------------------
+;120～139 抱きつきモード
+;------------------------------------------
+	;頭撫で
+	CASE 120
+		RETURNF 1
+	;髪梳き
+	CASE 121
+		RETURNF 1
+	;抱きつき
+	CASE 122
+		RETURNF 1
+	;抱きしめ
+	CASE 123
+		RETURNF TALENT:ARG:体型 >= TALENT:MASTER:体型
+	;頬撫で
+	CASE 124
+		RETURNF 1
+	;くすぐり
+	CASE 125
+		RETURNF 1
+	;膝枕させる
+	CASE 126
+		RETURNF TALENT:ARG:体型 <= TALENT:MASTER:体型 + 1
+	;匂いを嗅ぐ
+	CASE 127
+		;犬耳・猫耳キャラ限定
+		RETURNF GROUPMATCH(TALENT:ARG:動物耳, 2, 4)
+	;話しかける
+	CASE 128
+		RETURNF 1
+	;首筋舐め
+	CASE 129
+		RETURNF BASE:ARG:理性 <= 800
+
+ENDSELECT

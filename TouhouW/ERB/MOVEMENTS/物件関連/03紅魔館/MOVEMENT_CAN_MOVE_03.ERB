@@ -1,0 +1,398 @@
+﻿
+;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;地点関連性応答処理
+;CALL		USER
+;ARG		0:現在地点, 1:比較先地点
+;RETURN		1:移動可/見えない 2:移動不可/見える 3:移動可/見える
+;COMMENT	
+;-----------------------------------------------------------
+@CAN_MOVE_3(ARG, ARG:1)
+#FUNCTION
+#DIM 参照先
+参照先 = ARG:1 % 100
+SELECTCASE ARG % 100
+	;正門
+	;3守衛小屋、4空的小屋、43湖畔に移動可能、2庭と直通
+	CASE 1
+		SIF 参照先 == 2
+			RETURNF 3
+		SIF 参照先 == 3
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+	;庭
+	;3守衛小屋、4空的小屋、6後院、9大庁に移動可能、1正門、7東陽台、8西陽台と直通
+	CASE 2
+		SIF 参照先 == 1
+			RETURNF 3
+		SIF 参照先 == 7
+			RETURNF 3
+		SIF 参照先 == 8
+			RETURNF 3
+		SIF 参照先 == 3
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 6
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+	;守衛小屋
+	;1正門、2庭に移動可能
+	CASE 3
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 2
+			RETURNF 1
+	;空的小屋
+	;1正門、2庭、5納屋、6後院に移動可能
+	CASE 4
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 6
+			RETURNF 1
+	;納屋
+	;4空的小屋、6後院に移動可能
+	CASE 5
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 6
+			RETURNF 1
+	;後院
+	;4空的小屋、5納屋、13厨房に移動可能
+	CASE 6
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+	;東陽台
+	;10図書館に移動可能、2庭と直通
+	CASE 7
+		SIF 参照先 == 2
+			RETURNF 3
+		SIF 参照先 == 10
+			RETURNF 1
+	;西陽台
+	;15会客庁に移動可能、2庭と直通
+	CASE 8
+		SIF 参照先 == 2
+			RETURNF 3
+		SIF 参照先 == 15
+			RETURNF 1
+	;大庁
+	;2庭、10図書館、13厨房、14食堂、15会客庁、16一層廁所、18地下樓梯に移動可能、17大樓梯と直通
+	CASE 9
+		SIF 参照先 == 17
+			RETURNF 3
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 10
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 15
+			RETURNF 1
+		SIF 参照先 == 16
+			RETURNF 1
+		SIF 参照先 == 18
+			RETURNF 1
+	;図書館
+	;7東陽台、9大庁、11琶秋莉私室、12小悪魔私室に移動可能
+	CASE 10
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 11
+			RETURNF 1
+		SIF 参照先 == 12
+			RETURNF 1
+	;琶秋莉私室
+	;10図書館に移動可能、6後院が見える
+	CASE 11
+		SIF 参照先 == 6
+			RETURNF 2
+		SIF 参照先 == 10
+			RETURNF 1
+	;小悪魔私室
+	;10図書館に移動可能、6後院が見える
+	CASE 12
+		SIF 参照先 == 6
+			RETURNF 2
+		SIF 参照先 == 10
+			RETURNF 1
+	;厨房
+	;6後院、9大庁、14食堂に移動可能
+	CASE 13
+		SIF 参照先 == 6
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+	;食堂
+	;9大庁、13厨房に移動可能
+	CASE 14
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+	;会客庁
+	;9大庁、8西陽台に移動可能、2庭が見える
+	CASE 15
+		SIF 参照先 == 2
+			RETURNF 2
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+	;一層廁所
+	;2境内に移動可能、1鳥居が見える
+	CASE 16
+		SIF 参照先 == 9
+			RETURNF 1
+	;大樓梯
+	;9大庁、19二階廊下と直通
+	CASE 17
+		SIF 参照先 == 9
+			RETURNF 3
+		SIF 参照先 == 19
+			RETURNF 3
+	;地下樓梯
+	;9大庁、28地下廊下に移動可能
+	CASE 18
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 28
+			RETURNF 1
+	;二階廊下
+	;20咲夜私室、21空的部屋、22メイド妖精詰所、23二層廁所、25三階樓梯に移動可能、17大樓梯、24大露台と直通
+	CASE 19
+		SIF 参照先 == 17
+			RETURNF 3
+		SIF 参照先 == 24
+			RETURNF 3
+		SIF 参照先 == 20
+			RETURNF 1
+		SIF 参照先 == 21
+			RETURNF 1
+		SIF 参照先 == 22
+			RETURNF 1
+		SIF 参照先 == 23
+			RETURNF 1
+		SIF 参照先 == 25
+			RETURNF 1
+	;咲夜私室
+	;19二階廊下に移動可能、6後院が見える
+	CASE 20
+		SIF 参照先 == 6
+			RETURNF 2
+		SIF 参照先 == 19
+			RETURNF 1
+	;空的部屋
+	;19二階廊下に移動可能、6後院が見える
+	CASE 21
+		SIF 参照先 == 6
+			RETURNF 2
+		SIF 参照先 == 19
+			RETURNF 1
+	;二層廁所
+	;19二階廊下に移動可能
+	CASE 22
+		SIF 参照先 == 19
+			RETURNF 1
+	;妖精女僕的值班室
+	;19二階廊下に移動可能
+	CASE 23
+		SIF 参照先 == 19
+			RETURNF 1
+	;大露台
+	;19二階廊下と直通、1正門、2庭が見える
+	CASE 24
+		SIF 参照先 == 19
+			RETURNF 3
+		SIF 参照先 == 1
+			RETURNF 2
+		SIF 参照先 == 2
+			RETURNF 2
+	;三階廊下
+	;19二階廊下、26蕾米莉亜私室に移動可能
+	CASE 25
+		SIF 参照先 == 19
+			RETURNF 1
+		SIF 参照先 == 26
+			RETURNF 1
+	;蕾米莉亜私室
+	;25三階樓梯に移動可能、27小露台と直通
+	CASE 26
+		SIF 参照先 == 27
+			RETURNF 3
+		SIF 参照先 == 25
+			RETURNF 1
+	;小露台
+	;26蕾米莉亜私室と直通、1正門、2庭、24大露台が見える
+	CASE 27
+		SIF 参照先 == 26
+			RETURNF 3
+		SIF 参照先 == 1
+			RETURNF 2
+		SIF 参照先 == 2
+			RETURNF 2
+		SIF 参照先 == 24
+			RETURNF 2
+	;地下廊下
+	;18地下樓梯、29倉庫、30使用人部屋、31地下室、32脱衣所に移動可能
+	CASE 28
+		SIF 参照先 == 18
+			RETURNF 1
+		SIF 参照先 == 29
+			RETURNF 1
+		SIF 参照先 == 30
+			RETURNF 1
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 32
+			RETURNF 1
+	;倉庫
+	;28地下廊下に移動可能、CASE31まで同じ
+	CASE 29
+		SIF 参照先 == 28
+			RETURNF 1
+	;使用人部屋
+	CASE 30
+		SIF 参照先 == 28
+			RETURNF 1
+	;地下室
+	CASE 31
+		SIF 参照先 == 28
+			RETURNF 1
+	;脱衣所
+	;28地下廊下、33大浴場に移動可能
+	CASE 32
+		SIF 参照先 == 28
+			RETURNF 1
+		SIF 参照先 == 33
+			RETURNF 1
+	;大浴場
+	;32脱衣所に移動可能
+	CASE 33
+		SIF 参照先 == 32
+			RETURNF 1
+	;廃洋館・入口
+	;35大庁、43湖畔に移動可能
+	CASE 34
+		SIF 参照先 == 35
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+	;廃洋館・大庁
+	;34入口、38浴室に移動可能、36樓梯、37廚房と直通
+	CASE 35
+		SIF 参照先 == 36
+			RETURNF 3
+		SIF 参照先 == 37
+			RETURNF 3
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 38
+			RETURNF 1
+	;廃洋館・樓梯
+	;35大庁、39二階廊下と直通
+	CASE 36
+		SIF 参照先 == 35
+			RETURNF 3
+		SIF 参照先 == 39
+			RETURNF 3
+	;廃洋館・廚房
+	;35大庁と直通
+	CASE 37
+		SIF 参照先 == 35
+			RETURNF 3
+	;廃洋館・浴室
+	;35大庁に移動可能
+	CASE 38
+		SIF 参照先 == 35
+			RETURNF 1
+	;廃洋館・二階廊下
+	;40露娜薩私室、41梅露蘭私室、42莉莉喀私室に移動可能、36樓梯と直通
+	CASE 39
+		SIF 参照先 == 36
+			RETURNF 3
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 41
+			RETURNF 1
+		SIF 参照先 == 42
+			RETURNF 1
+	;露娜薩私室
+	;39二階廊下に移動可能、CASE42まで同じ
+	CASE 40
+		SIF 参照先 == 39
+			RETURNF 1
+	;梅露蘭私室
+	CASE 41
+		SIF 参照先 == 39
+			RETURNF 1
+	;莉莉喀私室
+	CASE 42
+		SIF 参照先 == 39
+			RETURNF 1
+	;湖畔
+	;1正門、34廃洋館・入口、44蕾蒂的冰屋、45琪露諾的冰屋、46大妖精宅に移動可能、47霧之湖と直通、49霧の向こうが見える
+	CASE 43
+		SIF 参照先 == 47
+			RETURNF 3
+		SIF 参照先 == 49
+			RETURNF 2
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+	;蕾蒂的冰屋
+	;43湖畔に移動可能、CASE46まで同じ
+	CASE 44
+		SIF 参照先 == 43
+			RETURNF 1
+	;琪露諾的冰屋
+	CASE 45
+		SIF 参照先 == 43
+			RETURNF 1
+	;大妖精宅
+	CASE 46
+		SIF 参照先 == 43
+			RETURNF 1
+	;霧之湖
+	;48霧之湖・湖底に移動可能、43湖畔と直通
+	CASE 47
+		SIF 参照先 == 43
+			RETURNF 3
+		SIF 参照先 == 48
+			RETURNF 1
+	;霧之湖・湖底
+	;47霧之湖と直通
+	CASE 48
+		SIF 参照先 == 47
+			RETURNF 1
+	;霧の向こう
+	;湖畔へのみ一方通行、EXキャラ待機用
+	CASE 49
+		SIF 参照先 == 43
+			RETURNF 1
+ENDSELECT
+RETURNF 0

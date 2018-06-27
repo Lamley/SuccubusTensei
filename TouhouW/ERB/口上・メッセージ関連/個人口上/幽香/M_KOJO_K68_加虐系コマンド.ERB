@@ -1,0 +1,331 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;加虐系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;
+;屈服・服従系の追記をするときにまとめて書こうと思います
+;（まだ服従も妄信も実装されてないみたいですが）
+;現状実装されているのは打屁股(100)、眼罩(104)、縄(105)、拘束PLAY(107)、打胸部(108)
+;
+;==================================================
+;100,打屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_100
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_100_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_100_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORML 「あぁっ、くうっ！　はぁ、やめなさいよ……！」
+			PRINTFORMDW 幽香は痛みと快感が混じった複雑な表情で、%CALLNAME:MASTER%を睨みつけている
+		ELSE
+			PRINTFORML 「く、うっ……はぁ、その程度？」
+			SIF ABL:68:受虐属性 >= 2
+				PRINTFORML （っ、こんなことされて、なんで疼いてくるのよ……！？）
+			PRINTFORMDW 幽香の尻を何度叩いても、「痛い」とすら言わせることができなかった
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;101,鞭
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_101
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_101_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_101_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;まだ実装されていません。残念
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「く、あぁっ！　こんなことして、どういうつもり……？」
+			CASEELSE
+				PRINTFORML 「っ、痛みで屈服させようとでも……？　そう考えてるなら無駄よ」
+				SIF ABL:68:受虐属性 >= 2
+					PRINTFORML （……むしろ気持ちいい、なんて言えないけど……）
+		ENDSELECT
+		PRINTFORMDW 鞭を使っても幽香の心を折らせることができないどころか、体に傷一つつけられない……
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;102,蝋燭
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_102
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_102_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_102_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+;まだ実装されていません。残念
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;103,針
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_103
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_103_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_103_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+;まだ実装されていません。残念
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;104,眼罩
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_104
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_104_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_104_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;解除時
+		IF !TEQUIP:68:眼罩
+			PRINTFORMW 「……はぁ、満足した？」
+		ELSE
+			PRINTFORMW 「こんなのして、どうなるって言うのよ……」
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;105,縄
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_105
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_105_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_105_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;解除時
+		IF !TEQUIP:縄
+			PRINTFORMW 「っ……あぁ、痕になっちゃうじゃない……」
+		ELSE
+			PRINTFORMW 「……はぁ……こっちの身にもなってほしいものだわ……」
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;106,口枷
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_106
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_106_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_106_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;コマンドは実装されてるけど口枷が売ってないという謎
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;解除時
+		IF !TEQUIP:口枷
+			PRINTFORMW 「……っく、はぁ、はぁっ……」
+		ELSE
+			PRINTFORMW 「……こんなの無くても、お望みなら黙ってるのに」
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;107,拘束PLAY
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_107
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_107_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_107_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;解除時
+		IF !TEQUIP:拘束
+			PRINTFORMW 「っ、はぁ……ふん、下らない……」
+		ELSE
+			PRINTFORMW 「縛ってレイプする妄想……とかなら承知しないわよ」
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;108,打胸部
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_108
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_108_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_108_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORML 「いっ、何するのよ！　ふっ、あぁ、……っくぅ！」
+			PRINTFORMDW 幽香には大して効いていないようだが、征服感から%CALLNAME:MASTER%の腰の動きは自然に早くなった
+		ELSE
+			PRINTFORML 「っ……この、変態……」
+			SIF ABL:68:受虐属性 >= 2
+				PRINTFORML （はぁ、このヒリヒリした感じ……気持ちいいわね）
+			PRINTFORMDW 幽香には大して効いていないようだが、強大な妖怪の肌を真っ赤にしただけで十分な満足感が得られた
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1

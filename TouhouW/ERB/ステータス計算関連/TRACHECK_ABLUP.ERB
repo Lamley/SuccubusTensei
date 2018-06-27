@@ -1,0 +1,138 @@
+﻿@SOURCE_ABLUP(ARG)
+IF ABL:ARG:戦闘能力 < 6
+	IF EXP:ARG:戦闘経験 > EXPLV:(ABL:ARG:戦闘能力 + 3) || (EXP:ARG:戦闘経験 > 5 && ABL:ARG:戦闘能力 == 0)
+		ABL:ARG:戦闘能力 ++
+		PRINTFORMW %CALLNAME:ARG%的戦闘能力変成了LV{ABL:ARG:戦闘能力}
+	ENDIF
+ENDIF
+IF ABL:ARG:話術技能 < 6
+	IF EXP:ARG:会話経験 > EXPLV:(ABL:ARG:話術技能 + 3)
+		ABL:ARG:話術技能 ++
+		PRINTFORMW %CALLNAME:ARG%的話術技能変成了LV{ABL:ARG:話術技能}
+	ENDIF
+ENDIF
+
+IF ABL:ARG:清掃技能 < 6
+	IF EXP:ARG:清掃経験 > EXPLV:(ABL:ARG:清掃技能 + 3)
+		ABL:ARG:清掃技能 ++
+		PRINTFORMW %CALLNAME:ARG%的清掃技能変成了LV{ABL:ARG:清掃技能}
+	ENDIF
+ENDIF
+IF ABL:ARG:教養 < 6
+	IF EXP:ARG:学習経験 > EXPLV:(ABL:ARG:教養 + 3) || (EXP:ARG:学習経験 > 5 && ABL:ARG:教養 == 0)
+		ABL:ARG:教養 ++
+		PRINTFORMW %CALLNAME:ARG%的教養変成了LV{ABL:ARG:教養}
+		SIF ABL:ARG:教養 == 1 && !ARG
+			PRINTW 可以使用媚薬了
+	ENDIF
+ENDIF
+IF ABL:ARG:料理技能 < 6
+	IF EXP:ARG:料理経験 > EXPLV:(ABL:ARG:料理技能 + 3) || (EXP:ARG:料理経験 > 5 && ABL:ARG:料理技能 == 0)
+		ABL:ARG:料理技能 ++
+		PRINTFORMW %CALLNAME:ARG%的料理技能変成了LV{ABL:ARG:料理技能}
+	ENDIF
+ENDIF
+[SKIPSTART]
+IF ABL:ARG:採集技能 < 6
+	IF EXP:ARG:採集経験 > EXPLV:(ABL:ARG:採集技能 + 3) || (EXP:ARG:採集経験 > 5 && ABL:ARG:採集技能 == 0)
+		ABL:ARG:採集技能 ++
+		PRINTFORMW %CALLNAME:ARG%的採集技能変成了LV{ABL:ARG:採集技能}
+	ENDIF
+ENDIF
+[SKIPEND]
+IF ABL:ARG:音楽技能 < 6
+	IF (EXP:ARG:歌唱経験 > EXPLV:(ABL:ARG:音楽技能 + 3) * 2 || (EXP:ARG:歌唱経験 > 20 && ABL:ARG:音楽技能 == 0)) || (EXP:ARG:演奏経験 > EXPLV:(ABL:ARG:音楽技能 + 3) * 2 || (EXP:ARG:演奏経験 > 20 && ABL:ARG:音楽技能 == 0))
+		ABL:ARG:音楽技能 ++
+		PRINTFORMW %CALLNAME:ARG%的音楽技能変成了LV{ABL:ARG:音楽技能}
+		SIF ABL:ARG:音楽技能 == 2 && ARG == MASTER
+			PRINTW 可以使用小提琴了
+	ENDIF
+ENDIF
+IF ABL:ARG:釣魚技能 < 6
+	IF EXP:ARG:釣魚経験 > EXPLV:(ABL:ARG:釣魚技能 + 3) || (EXP:ARG:釣魚経験 > 5 && ABL:ARG:釣魚技能 == 0)
+		ABL:ARG:釣魚技能 ++
+		PRINTFORMW %CALLNAME:ARG%の釣魚技能がLV{ABL:ARG:釣魚技能}成為了
+	ENDIF
+ENDIF
+
+IF ABL:ARG:指 < 6
+	LOCAL = EXP:ARG:手淫経験
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:霊活手指 * 2 + TALENT:ARG:習得速度
+	IF LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:指 + 3) / 2; && EXP_UP(24,ARG)
+		ABL:ARG:指 ++
+		PRINTFORMW %CALLNAME:ARG%的手指変得霊活了
+		IF ABL:ARG:指 >= 5
+			PRINTFORMW %CALLNAME:ARG%获得了[霊活手指]
+			TALENT:ARG:霊活手指 = 1
+		ENDIF
+	ENDIF
+ENDIF
+IF ABL:ARG:舌 < 6
+	LOCAL = EXP:ARG:口淫経験
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:舌頭霊活 * 2 + TALENT:ARG:習得速度
+	IF  LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:舌 + 3); && EXP_UP(25,ARG)
+		ABL:ARG:舌 ++
+		PRINTFORMW %CALLNAME:ARG%的舌头変得霊活了
+		IF ABL:ARG:舌 >= 5
+			PRINTFORMW %CALLNAME:ARG%获得了[舌頭霊活]
+			TALENT:ARG:舌頭霊活 = 1
+		ENDIF
+	ENDIF
+ENDIF
+IF ABL:ARG:胸 < 6
+	LOCAL = EXP:ARG:乳交経験 * 2 +  EXP:ARG:Ｂ経験 / 5 + EXP:ARG:噴乳経験  / 4
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:胸囲 + TALENT:ARG:習得速度
+	SIF FLAG:抱負 == 5
+		LOCAL:1 ++
+	SIF GETBIT (CFLAG:ARG:引き継ぎ, 5)
+		LOCAL:1 *= 3
+	IF LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:胸 + 3) && EXP:ARG:乳交経験 + EXP:ARG:噴乳経験  / 5 > EXPLV:(ABL:ARG:胸 + 1); && EXP_UP(26,ARG)
+		ABL:ARG:胸 ++
+		PRINTFORMW %CALLNAME:ARG%在使用胸部的性技上的技術提高了
+		IF ABL:ARG:胸 >= 5 && TALENT:ARG:2 != 2
+			PRINTFORMW %CALLNAME:ARG%获得了[淫乳]
+			TALENT:ARG:淫乳 = 1
+		ENDIF
+	ENDIF
+ENDIF
+IF ABL:ARG:腰 < 6
+	LOCAL = EXP:ARG:Ｖ性交経験 + EXP:ARG:Ａ性交経験 + EXP:ARG:挿入経験
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:習得速度
+	IF LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:腰 + 3)
+		ABL:ARG:腰 ++
+		PRINTFORMW %CALLNAME:ARG%的腰技変得更高明了
+	ENDIF
+ENDIF
+IF ABL:ARG:膣 < 6
+	;広げすぎるとガバガバになっちゃいますよ
+	LOCAL = EXP:ARG:Ｖ性交経験  * 2 +  EXP:ARG:Ｖ経験 / 5 + (EXP:ARG:Ｖ拡張経験 <= 10 ? EXP:ARG:Ｖ拡張経験 * 5 # 100 - EXP:ARG:Ｖ拡張経験 * 5)
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:習得速度
+	SIF FLAG:抱負 == 3
+		LOCAL:1 ++
+	SIF GETBIT (CFLAG:ARG:引き継ぎ, 3)
+		LOCAL:1 *= 3
+	IF LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:膣 + 3) && EXP:ARG:Ｖ性交経験 >  EXPLV:(ABL:ARG:膣 + 1); && EXP_UP(20,ARG)
+		ABL:ARG:膣 ++
+		PRINTFORMW %CALLNAME:ARG%的性交技術提高了
+		IF ABL:ARG:膣 >= 5 && TALENT:ARG:2 != 2
+			PRINTFORMW %CALLNAME:ARG%获得了[淫壺]
+			TALENT:ARG:淫壺 = 1
+		ENDIF
+	ENDIF
+ENDIF
+IF ABL:ARG:肛 < 6
+	LOCAL = EXP:ARG:Ａ性交経験  * 2 +  EXP:ARG:Ａ経験 / 5 + (EXP:ARG:Ａ拡張経験 <= 25 ? EXP:ARG:Ａ拡張経験 * 2 # 100 - 2 * EXP:ARG:Ａ拡張経験)
+	LOCAL:1 = 10 + ABL:ARG:技巧 / 2 + TALENT:ARG:習得速度
+	SIF FLAG:抱負 == 4
+		LOCAL:1 ++
+	SIF GETBIT (CFLAG:ARG:引き継ぎ, 4)
+		LOCAL:1 *= 3
+	IF LOCAL * LOCAL:1 / 10 > EXPLV:(ABL:ARG:肛 + 3) && EXP:ARG:Ａ性交経験 > EXPLV:(ABL:ARG:肛 + 1); && EXP_UP(21,ARG)
+		ABL:ARG:肛 ++
+		PRINTFORMW %CALLNAME:ARG%用肛门性交的技術提高了
+		IF ABL:ARG:肛 >= 5
+			PRINTFORMW %CALLNAME:ARG%获得了[尻穴狂]
+			TALENT:ARG:尻穴狂 = 1
+		ENDIF
+	ENDIF
+ENDIF

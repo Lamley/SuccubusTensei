@@ -1,0 +1,161 @@
+﻿@SHOW_COLLECTION
+DRAWLINE
+CALL DISPLAY_COLLECTION
+LOCAL = RESULT:0
+FLAG:獲得パンツ種数 = RESULT:1
+PRINTL 　 
+PRINTFORML 総数：{LOCAL}枚	種別：{FLAG:獲得パンツ種数}種	ダブり：{LOCAL - FLAG:獲得パンツ種数}枚
+PRINT [0] - 返回 
+SIF LOCAL - FLAG:獲得パンツ種数
+	PRINT [1] - 每种留下1条剩下的全部卖出
+INPUT
+IF RESULT == 1 && (LOCAL - FLAG:獲得パンツ種数) != 0
+	CALL SPEND_COLLECTION
+	PRINTFORMW 全部{RESULT:0}条 \\{100 * RESULT:0}卖出了
+	MONEY += 100 * RESULT:0
+ELSE
+	RETURN 0
+ENDIF
+RESTART
+
+;收藏表示
+;引数	ARG:0	表示対象	0=收藏	,1=手持ち
+;		ARG:1	表示種類	0=通常表示		,1=選択
+;戻り値	RESULT:0	総数
+;		RESULT:1	所有種類数
+@DISPLAY_COLLECTION(ARG:0=0,ARG:1=0)
+#DIM 対象
+#DIM 種類
+#DIM 所有数
+#DIM 名前表示
+#DIM 改行用
+
+VARSET RESULT
+
+FOR 対象,1,CHARANUM
+	名前表示 = 0
+	改行用 = 0
+	FOR 種類,0,MAXPANTS
+		IF ARG:0 == 0
+			所有数 = CFLAG:対象:(種類 + 100)
+		ELSE
+			;所有数 = STRCOUNT(CSTR:MASTER:12,CALLNAME:対象 + TOSTR(種類) + "/")
+			所有数 = PANTS_TEMP:対象:種類
+		ENDIF
+		IF 所有数
+			IF !名前表示
+				PRINTL
+				PRINTFORML 【%CALLNAME:対象%】
+				名前表示 = 1
+			ENDIF
+			RESULT:0 += 所有数
+			RESULT:1 ++
+			改行用 ++
+			IF ARG:1 == 0
+				LOCALS = %PANTSNAME(種類)% {所有数}枚
+				PRINTFORMLC %LOCALS,25,LEFT%
+				IF 改行用 % 4 == 0 && 改行用
+					PRINTL
+					改行用 = 0
+				ENDIF
+			ELSE
+				LOCALS = [%PANTSNAME(種類)%] {所有数}枚
+				PRINTBUTTONLC LOCALS,(対象 * 100 + 種類)
+				PRINTS "  "
+			ENDIF
+		ENDIF
+	NEXT
+	SIF 改行用
+		PRINTL
+NEXT
+
+RETURN (RESULT:0),(RESULT:1)
+
+;收藏消費
+;引数	ARG:0	消費対象種類	-1=1枚残して消費
+;戻り値	RESULT:0	消費数
+@SPEND_COLLECTION(ARG=-1)
+#DIM 対象
+#DIM 種類
+#DIM 所有数
+
+VARSET RESULT
+
+IF ARG == -1
+	FOR 対象,1,CHARANUM
+		FOR 種類,0,MAXPANTS
+			所有数 = CFLAG:対象:(種類 + 100)
+			IF 所有数 > 1
+				RESULT:0 += (所有数 - 1)
+				CFLAG:対象:(種類 + 100) = 1
+			ENDIF
+		NEXT
+	NEXT
+ELSE
+	対象 = ARG / 100
+	種類 = ARG % 100
+	IF CFLAG:対象:(種類 + 100) >= 1
+		RESULT:0 = 1
+		CFLAG:対象:(種類 + 100) -= 1
+	ENDIF
+ENDIF
+	
+RETURN (RESULT:0)
+
+;收藏枚数確認
+;引数	ARG:0		対象
+;戻り値	RESULT:0	総数
+;		RESULT:1	種類数
+@CHECK_COLLECTION(対象)
+#DIM 対象
+#DIM 種類
+
+VARSET RESULT
+
+FOR 種類,0,MAXPANTS
+	IF CFLAG:対象:(種類 + 100)
+		RESULT:0 += CFLAG:対象:(種類 + 100)
+		RESULT:1 ++
+	ENDIF
+NEXT
+
+RETURN RESULT:0,RESULT:1
+
+;手持ちの收藏1枚消費(DISPLAY_COLLECTION(1,1)と併用)
+;引数	ARG:0	消費対象種類
+;戻り値	RESULT:0	消費判定
+@SPEND_HAVE_COLLECTION(ARG)
+#DIM 対象
+#DIM 種類
+#DIM 所有数
+#DIM 消費フラグ
+
+VARSET LOCALS
+VARSET RESULT
+所有数 = 0
+FOR 対象,1,CHARANUM
+	FOR 種類,0,MAXPANTS
+		;LOCALS:0 = %CALLNAME:対象%{種類}/
+		;所有数 = STRCOUNT(CSTR:MASTER:12, LOCALS:0)
+		;IF 所有数
+		IF PANTS_TEMP:対象:種類
+			消費フラグ = 0
+			IF ARG != 0 && ARG == (対象 * 100 + 種類)
+				消費フラグ = 1
+				RESULT:0 = 1
+				;パンツフラグ
+				CFLAG:対象:293 = 0
+				PANTS_TEMP:対象:種類 -= 1
+			ENDIF
+			;LOCALS:1 = %LOCALS:1 + LOCALS:0 * (所有数 - 消費フラグ)%
+		ENDIF
+		SIF PANTS_TEMP:対象:種類
+			所有数 += PANTS_TEMP:対象:種類
+	NEXT
+NEXT
+SIF !所有数
+	FLAG:パンツ輸送 = 0
+;CSTR:MASTER:12 = %LOCALS:1%
+
+RETURN (RESULT:0)
+

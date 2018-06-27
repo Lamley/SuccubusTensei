@@ -1,0 +1,1173 @@
+﻿;-------------------------------------------
+;よっぱらいもーど
+;-------------------------------------------
+@DRUNKER49(ARG,ARG:1)
+IF (BASE:酒気 > (MAXBASE:酒気 / 10) * 6)
+	IF !ARG
+		IF 陥落状態() >= 4
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ふにゃぁ、のみすぎてふらふらしましゅ」
+				CASE 1
+					PRINTFORML 「んにゅぅ、ぬししゃまぁ、いちゅからぶんしんできるようにぃ？」
+				CASE 0
+					PRINTFORML 「あふぅ、あはははは、おいしぃでしゅ、あはははは」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 顔を真っ赤にして嬉しそうにわらいながら覚がしなだれかかってくる
+				CASE 0
+					PRINTFORMDW 酔いに身を任せた覚が、けらけらとヘンな笑い方をしてしなだれかかってくる
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ねえぬししゃまＨしましょ、わらしがいちばんりゃって、しょうめいしてくらしゃい」
+				CASE 1
+					PRINTFORML 「ぬししゃまのゆびでおみゃんこいじってほしいにゃあ、ねえぬししゃまぁ」
+				CASE 0
+					PRINTFORML 「うふふ、ぬししゃま、だーいしゅきでしゅぅ、りゃからＨしてぇ」
+			ENDSELECT
+			IF GET_TARGETNUM() >= 2
+				SELECTCASE RAND:2
+					CASE 1
+						PRINTFORMDW 服を脱ぎながらそんなことを言い出す覚に、周りからの視線が冷たくなる
+					CASE 0
+						PRINTFORMDW よそでやれと周囲からの怒濤のツッコミに、冷や汗が背中にたれる
+				ENDSELECT
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「みんにゃ、ぬししゃまとわたしのなかにしっとちゅうれしゅね、ふふ、うふふふふふ」
+					CASE 1
+						PRINTFORML 「ふにゅ、ぬししゃまは、おいや？　ふふ、まわりにみせちゅけるのもいいれしょ」
+					CASE 0
+						PRINTFORML 「んみゅぅ、ふふふ、みんなほんとはみたがってりゅんだから、Ｈぃでしゅ」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:2
+					CASE 1
+						PRINTFORMDW くすくす笑いながら服を脱ぎ出す覚を慌てて止める
+					CASE 0
+						PRINTFORMDW こちらの手を掴んで秘所へ導こうとするのをなんとか抑える
+				ENDSELECT
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「ぬししゃま、いっっっっっっっつも、おしゃわりしゅるのになんれしないんれしゅ？」
+					CASE 1
+						PRINTFORML 「ふにゅ、ぬししゃまは、おいや？　ふふ、わらしのおみゃんこしゅきにできりゅのに」
+					CASE 0
+						PRINTFORML 「うふふ、ぬししゃまいがいにやさしぃでしゅね」
+				ENDSELECT
+			ENDIF
+			SELECTCASE RAND:2
+					CASE 1
+					PRINTFORMDW とりあえず、はだけようとする覚をなんとか抑えこんだ
+				CASE 0
+					PRINTFORMDW 深々とため息をつきながら、とりあえず服を着させた
+			ENDSELECT
+		ELSEIF 陥落状態() == 3
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「もう、こんらにのあせてあにするつもり－」
+				CASE 1
+					PRINTFORML 「あたまふわふわするー、ふふ、うふふ、これきもちー」
+				CASE 0
+					PRINTFORML 「あはは、こういうのもいいれすねー、あはははは」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 普段とはちがうけらけらと笑う覚に、すこし呑ませすぎたかと冷や汗が浮かぶ
+				CASE 0
+					PRINTFORMDW 楽しげに笑う覚に、どうすべきかとおもいしばし考え込む
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「いつもろーりにＨなことれもすればいいれしゅ、あははは」
+				CASE 1
+					PRINTFORML 「うふふふふ、Ｈぃことれもしましゅ？」
+				CASE 0
+					PRINTFORML 「ふふ、よわせてＨしたいんじゃなかったんれすかぁ？」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 笑いながら身をすり寄せてくる覚の頭を、軽くなでながらため息をついた
+				CASE 0
+					PRINTFORMDW 酔っ払い相手は楽しくない、そんな内心を見て取ったのか覚がほおを膨らませた
+			ENDSELECT
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ふあー、のみしゅぎましたー、あちゅいでしゅ、ふくじゃまー」
+				CASE 1
+					PRINTFORML 「あー、やらしーめでみてましゅねーいーでしゅよ、いまからぜんぶみせてあげましゅ」
+				CASE 0
+					PRINTFORML 「ふふ、ふふふ、しょんなにわらしのおっぱいみらいんでしゅか？　いーでしゅよー」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 楽しそうに笑いながら服を脱ごうとする覚に、苦笑を向けて押しとどめた
+				CASE 0
+					PRINTFORMDW けらけらと笑い服を脱ぎ捨てようとする覚に、呆れながらなんとか着せ直した
+			ENDSELECT
+		ENDIF
+	;SPイベント
+	;デート帰りキス
+	ELSEIF ARG == 10
+		PRINTFORML 「……ちゅっ……ふふ、ごちそーしゃまでしゅ」
+		PRINTFORMDL いきなり抱きつき唇を奪った覚の、嬉しそうな笑顔に文句を言い出せない
+		PRINTFORML 「にゅふふ、キス、はじめてのきす、にゅふふふふ」
+		PRINTFORMDL さも楽しげに頬を緩める覚
+		PRINTFORML 「ねえ、ろーれす、じかんとえてうばうより、いいれしょー」
+		PRINTFORML 「ふふ、もっろちゅっちゅっしたいにゃー」
+		PRINTFORML 「あ、れもれも、わらしからしらいんれすから、じかんろめにゃいでほしいれしゅ」
+		PRINTFORMDL そう言ったあと、また唇を重ねてきた
+	;デート帰り告白
+	ELSEIF ARG == 11
+		PRINTFORML 「ねえ、ろーしてわらしをこうしてつれまわすんれしゅか」
+		PRINTFORMDL 帰路の途中、そんなことを呟いた覚がじっとこちらを見つめてきた
+		PRINTFORML 「『きまぐれ』ぇ？　いっちゅもしょのころばでごあかすんれすから」
+		PRINTFORMDL 唇をとがらせた覚が、胡乱げな視線を向けてくる
+		PRINTFORML 「わらしは%CALLNAME:MASTER%おろくべつにしたいれす」
+		PRINTFORML 「きまぐれなんかじゃないでしゅ」
+		PRINTFORML 「ねえ、わらしは、%CALLNAME:MASTER%のろなりにいてはらめれすか？」
+	;デート帰り告白受け入れ
+	ELSEIF ARG == 12
+		PRINTFORML 「……ふふ、にゅふふふ……、だいしゅきれしゅよ」
+		PRINTFORMDL 受け入れるか？　と内心で考えると同時、嬉しそうに頬を緩めた覚が抱きついてきた
+		PRINTFORML 「うけいれてくれてうれしーれす、ありがとごじゃます」
+		PRINTFORMDL まだ受け入れるとは思ってない、そう言おうとして
+		PRINTFORML 「べつにいーれしゅよ、うけいれてくれないならー、%CALLNAME:MASTER%のこといいふらしましゅ」
+		PRINTFORMDL いきなりそんなことを言い始める覚に、苦笑が浮かぶ
+		PRINTFORML 「『きょーはくか』？　はいしょーれしゅ、ふふ、じゅるいおんにゃにゃんでしゅよ、わらしは」
+		PRINTFORMDL ケラケラとわらう覚に、まあそれも良いかと考え、いきなり唇を奪った
+	;デート帰り告白拒否
+	ELSEIF ARG == 13
+		PRINTFORMDL 受け入れるつもりはない、それをことばにするよりもはやく、
+		PRINTFORML 「ひろい……」
+		PRINTFORMDL 呟いた覚の目尻に、涙がもりあがる
+		PRINTFORML 「うわーんっ！　わらしほんきにゃのにー！　にゃんでうけいれてくれないんれしゅかー！！」
+		PRINTFORMDL ぺたんと地面に尻を落として、幼子の様に泣き始めた
+		PRINTFORML 「いっちゅもちゅれだしゅから、とくべちゅらとしゃっかくしゃしぇたの、そっちなのに」
+		PRINTFORML 「ぐすっえぐっっ、ひろい、ひろいれしゅー！」
+		PRINTFORMDL そのままわんわんと泣き叫ぶ覚に、小さくため息をつき、%CALLNAME:MASTER%も腰を落とす
+		PRINTFORML 「うわーんっっ、えぐっっ！？」
+		PRINTFORMDL 驚きで覚の涙が引っ込んだ
+		PRINTFORMDL %CALLNAME:MASTER%が優しく抱き寄せ摸頭、と言う行為に出たからだ
+		PRINTFORML 「え、えぅ？」
+		PRINTFORMDL なにも考えずソレを続ける%CALLNAME:MASTER%に、覚はただ黙ってされるがままになっている
+	;デート帰り
+	ELSEIF ARG == 14
+		IF 陥落状態() >= 4
+			PRINTFORML 「きょうはおわりれすか、ぬししゃま？」
+			PRINTFORMDL 何が楽しいのか口元を緩めて、腕を絡めている覚が見つめてくる
+			PRINTFORML 「ふふ、ぬししゃまは、いっちゅもきまぐれれすねー」
+			PRINTFORMD ……その手に
+			SELECTCASE RAND:5
+				CASE 4
+					PRINTFORMD 光る宝塔
+				CASE 3
+					PRINTFORMD 鋭利な槍
+				CASE 2
+					PRINTFORMD 髪飾り
+				CASE 1
+					PRINTFORMD 虎皮の腰巻き
+				CASE 0
+					PRINTFORMD 長い白布
+			ENDSELECT
+			PRINTFORMDL をぶら下げてる事に気づいて小首をかしげる
+			PRINTFORML 「『なんらそれあ』？　あれ？　なんでわらしこんなのもっれるんらろ？」
+			PRINTFORMDL そう言ってケラケラ笑う覚の背後から納茲琳が駆け寄ってくるのが見えた
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「んー、もーすこしおれかけつじゅけたいれすね」
+			PRINTFORMDL 唇をとがらせて文句をいう覚に、頭を撫でながら歩く
+			PRINTFORML 「ん、ふふ、よっぱらっれると%CALLNAME:MASTER%はやさしーれすね」
+			PRINTFORMDL くすくす笑ってる覚に気のせいだと答えて、その肩を抱き寄せた
+		ELSE
+			PRINTFORML 「ふふ、こーゆーのもいいれすねー」
+			PRINTFORMDL クスクス笑いながらしなだれかかってくる覚を、かるく抱き留めながら%CALLNAME:MASTER%は歩いた
+		ENDIF
+	;反発刻印消去&低下
+	ELSEIF ARG == 15
+		IF 陥落状態() >= 4
+			PRINTFORML 「……ぬしさまのばかぁ、……おこるのもしんおいんれしゅからね」
+			PRINTFORMDL 唇をとがらせる覚が頬を膨らませて見つめてくる
+			PRINTFORML 「わらしおおこらしぇてたのしーでしゅかー」
+			PRINTFORMDL そうやって頬を膨らませてるのが可愛い、そう言った瞬間、思い切り横っ面をはたかれた
+			PRINTFORML 「そーやっれごまかしゅんでしゅね？　こまっらひとれす」
+			PRINTFORMDL そう言ったかと思うと、覚が抱きついてきてキスをしてくる…………が、酒臭かった
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「まっらくしょうあないひろれす」
+			PRINTFORMDL 唇をとがらせた覚がじっとにらみつけてくる
+			PRINTFORML 「……わらしをおこらしぇないれくらさい」
+			PRINTFORMDL 文句を言いつつ、しなだれかかってきた
+		ELSE
+			PRINTFORML 「はー、もうこまっらひろれす……、はぁ……」
+			PRINTFORMDL 深々とため息をついた覚が、腕を絡めてきた
+		ENDIF
+	;遭遇イベント
+	;覚のいるところにMASTERが入っていった
+	ELSEIF ARG == 20
+		IF 陥落状態() >= 4
+			PRINTFORML 「あー、ろこいっれらんれすかー」
+			PRINTFORMDL ケラケラ笑いながら覚が駆け寄ってきて抱きついてきた
+			PRINTFORML 「もー、こいいろおいれいくなんれひろいれしゅ」
+			PRINTFORMDL 手招きする覚の側に行った途端、覚に抱きつかれた
+			PRINTFORML 「えへへ、ぬししゃまだいしゅき」
+			PRINTFORMDL 嬉しそうに笑う覚に、普段からこうなら良いのにと考え頬をつねられた
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「みーつけた、ふふ、うふふふふふ」
+			PRINTFORMDL 嬉しそうに含み笑いしながら近づいてきた覚が、おもむろに唇を重ねてきた
+			PRINTFORML 「『しゃけくしゃい』？　のあせたの%CALLNAME:MASTER%れしょ、あはは」
+			PRINTFORMDL 何が楽しいのか嬉しそうに笑う覚の頭を、軽く撫でてやった
+		ELSE
+			PRINTFORML 「こんらにのあせてにげにゃいでくらしゃい」
+			PRINTFORMDL 覚の手招きに応じて近寄ると、いきなり抱きつかれキスされた
+		ENDIF
+	;MASTERのいるところに覚が入ってきた
+	ELSEIF ARG == 21
+		IF 陥落状態() >= 4
+			PRINTFORML 「ぬししゃま、こいいろよあせれろこいっれらんれしゅか？」
+			PRINTFORMDL ふらふらよろよろした足取りで現れたきた覚が、こちらに向かって歩いてくる
+			PRINTFORML 「えへへ、ごーりゅれしゅ、ぬししゃまだーいしゅき」
+			PRINTFORMDL くすくすと嬉しそうに笑いながら抱きついてきた覚が頬をすり寄せてくる
+			PRINTFORML 「『はじゅかしー』？　へー、ぬしさまにもそんにゃきもちあったんれすかー」
+			PRINTFORMDL そんなことをのたまい、酒臭い息を吐きかけてくる覚に苦笑が浮かんだ
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「ふふ、もくほーはっけーん」
+			PRINTFORMDL 千鳥足の覚がちかよってきたかと思うと、いきなり抱きついてきた
+			PRINTFORML 「んーーーーー、ちゅぱ……、ふふごちそーしゃまでしゅ」
+			PRINTFORMDL 酒臭い吐息で酒の味のするキスをしてくる覚にただ苦笑した
+		ELSE
+			PRINTFORML 「あーこんらろころにー、のあせるらけのあせれにげにゃいでくらしゃい」
+			PRINTFORMDL ふらふらと歩み寄ってきた覚が、こちらの腕をしっかりと掴んできた
+		ENDIF
+	;覚が浴室に入ってきた
+	ELSEIF ARG == 22
+		IF 陥落状態() >= 4
+			PRINTFORML 「ふにゅぅ、あ、ぬししゃま」
+			PRINTFORMDL 酔っ払っての浴室は危ないだろう、そんなことを考える%CALLNAME:MASTER%を覚がジト目で見つめてくる
+			PRINTFORML 「ぬししゃまだってよっれるじゃにゃいれしゅか、うふふよーかいらかららいりょうう」
+			PRINTFORMDL ろれつのまわらない口調で呟いた覚が、倒れ込んでくるのを受け止める
+			PRINTFORML 「ふふ、ぬししゃまおいしそーなにおいれす」
+			PRINTFORMDL そんなことをのたまった覚が、こちらの股間に顔を埋めて深呼吸した
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「なんれここにいるんれすか？」
+			PRINTFORMDL 不思議そうに呟いた覚が、内袴姿のまま湯船に入ろうとする
+			PRINTFORML 「ふふ、%CALLNAME:MASTER%はりちぎでしゅねー」
+			PRINTFORMDL 時を止め、内袴を脱がせて脱衣かごに放り込んできた%CALLNAME:MASTER%をみて覚が笑った
+		ELSE
+			PRINTFORML 「あー、なんれいるんれすかー」
+			PRINTFORMDL 不思議そうに言いながら、覚が入ってきた
+		ENDIF
+	;覚が浴室に入って来てすぐ出て行った(恋慕以上は出ない筈
+	ELSEIF ARG == 23
+			PRINTFORML 「んー、おじゃあしあした」
+			PRINTFORMDL ふらふらと出て行く覚をなんとなく見送った
+	;覚が浴室に入って来てMASTERが追い出された
+	ELSEIF ARG == 24
+			PRINTFORML 「わらしがいあからはいりゅんでしゅかられていっれくらさい」
+			PRINTFORMDL じっとりとした視線に、冷や汗をかきつつ浴室場を後にする%CALLNAME:MASTER%だった
+	;覚と外出先で出会った
+	ELSEIF ARG == 25
+		IF 陥落状態() >= 4
+			PRINTFORML 「まっらく、ぬししゃまはへんにゃことしましゅね」
+			PRINTFORMDL 顔を赤くした覚がじっと睨んでくる
+			PRINTFORML 「さんざんのあせてきぶんよくさせて、いきなりほかのところにいっれまらもろってくるなんて」
+			PRINTFORMDL 唇をとがらせつつ、それでも嬉しそうな覚に苦笑が浮かぶ
+			PRINTFORML 「『かあいいやつらにゃ』？　にゅふふ、とーぜんでしゅ、ぬししゃまのこいびろれしゅもの」
+			PRINTFORMDL そう言ったかと思うと、ぎゅっと抱きついてきた
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「もーのあせるらけのあせれろこいっれらんれしゅか」
+			PRINTFORMDL 唇をとがらせた覚がふらふらと近寄ってくる
+			PRINTFORML 「まっらくひろいひろれすね」
+			PRINTFORMDL そのまま倒れ込んできた覚が、しゅにしゅにとこちらの股間をなで始めた
+		ELSE
+			PRINTFORML 「いっらりきらりたいへんれしゅね」
+			PRINTFORMDL けらけらと笑いながら覚が近寄ってきた
+		ENDIF
+	;他キャラとデート中に覚と出会った
+	ELSEIF ARG == 26
+		IF 陥落状態() >= 4
+			PRINTFORML 「ぬししゃまぁ？　のあせるらけのあせていなきゅなって、ほかのおんなとれーとれすか？」
+			PRINTFORMDL ゆらふわと近寄ってきた覚が、いきなり唇を重ね舌を送り込んできた
+			PRINTFORML 「んー…………ちゅぽんっ…………、しからないれすから、めかけにもゆじゅってあげましゅ」
+			PRINTFORMDL その言葉に何か言いたげな表情を浮かべる%CALLNAME:(ARG:1)%
+			PRINTFORML 「『めかけじゃない』？　わらしがせいさいなんれすから、ほかはめかけれす」
+			PRINTFORMDL 言いながらこちらの手を秘処に導こうとする覚をなんとか抑えた
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「わらしをよあせて、いにゃくなっらとおもっららほかのおんにゃをつれまわしゅんでしゅか」
+			PRINTFORMDL 赤ら顔で睨んでくる覚に、%CALLNAME:(ARG:1)%が珍しそうな表情を浮かべている
+			PRINTFORM 「「
+			IF ARG:1 == 38
+				PRINTFORM おねえちゃん
+			ELSEIF ARG:1 ==36 || ARG:1 ==37
+				PRINTFORM 覚様
+			ELSE
+				PRINTFORM 覚
+			ENDIF
+			PRINTFORM がこうにゃるなんれ
+			IF ARG:1 ==36 || ARG:1 ==37 || ARG:1 == 38
+				PRINTFORM めじゅらしい
+			ELSE
+				PRINTFORM かあいい
+			ENDIF
+			PRINTFORML 」？　のあせらひろあわるいんれす」
+			PRINTFORMDL 恥ずかしげに顔を背ける覚が、横目で%CALLNAME:(ARG:1)%をちらりと見た
+		ELSE
+			PRINTFORML 「しゃんじゃんのあせて、にげらしてほかのおんにゃとでえとですか？」
+			PRINTFORMDL ジト目で見つめてくる覚に、%CALLNAME:(ARG:1)%が不審そうな目を向けてくる
+		ENDIF
+	;お休みイベント(地底以外非住み込みは帰宅口上行き
+	;覚住み込み中かつ部屋は別（非衰弱
+	ELSEIF ARG == 30
+		IF 陥落状態() >= 4
+			PRINTFORML 「ふぁ、そろしょろねるじかんれしゅね」
+			PRINTFORMDL ふらりと覚が立ち上がった
+			PRINTFORML 「ぬししゃまをらきまくらにしらいんれすけろ」
+			PRINTFORMDL そんな言葉に、気が向けば行くと答えて軽く手を振る
+			PRINTFORML 「むー、ほんろかっれなひろれしゅ」
+			PRINTFORMDL 唇をとがらせた覚が、おぼつかない足取りで歩き出した
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「ん、それりゃぁへやにもろりあすね」
+			PRINTFORMDL そういったあと、いきなりよろけて倒れ込んできた
+			PRINTFORML 「ん、うふふ、うけとえれくれれうれしーでしゅ」
+			PRINTFORMDL 本当に嬉しそうに笑った覚が、いきなり唇を重ねてきた
+		ENDIF
+	;覚住み込み中かつ部屋は一緒（非衰弱
+	ELSEIF ARG == 31
+		IF 陥落状態() >= 4
+			PRINTFORML 「ねーぬししゃまいっしょにおへやかえりあしょ」
+			PRINTFORMDL こちらの服の裾を掴んでくいくい引っ張る覚
+			PRINTFORML 「ぬししゃまもらきまくらほしーれすよね？」
+			PRINTFORMDL そう言いながら抱きついてきた覚が、下腹を押しつけてくる
+			PRINTFORML 「『もーすこしいらい』？　むー、ぬししゃまのいぢわりゅ」
+			PRINTFORMDL 全身で絡みついてくる覚をなんとか引きはがし、部屋に戻るのを見送った
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「もー、まらいるんれすか？　いっしょにへあにもろりあしょ」
+			PRINTFORMDL けらけらと笑いながら腕を組んでくる覚に苦笑が浮かぶ
+			PRINTFORML 「『まらいる』？　むー、かっれれしゅねー」
+			PRINTFORMDL 唇をとがらせた覚が、背中を向けて歩き出した
+		ENDIF
+	;覚が居間（orMASTER初期位置）にて休憩中
+	ELSEIF ARG == 32
+		IF 陥落状態() >= 4
+			PRINTFORML 「ふぁ……、ちゅかれましら……」
+			PRINTFORMDL ぐったりとした様子の覚が、恨みがましい視線をこちらに向けてくる
+			PRINTFORML 「ぬししゃまのせーです、ホントにぬししゃまはひろいれす」
+			PRINTFORMDL そんな言葉を聞き流しながら、なんとなく覚の頭を軽く撫でる
+			PRINTFORML 「んみゅー、そんにゃのれごまかしゃれにゃいんでしゅからね」
+			PRINTFORMDL そう言いながらも、嬉しそうな笑顔を浮かべて、覚が横になった
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「んぅー、しんろいれすー」
+			PRINTFORMDL そう言いながら床に横になる覚
+			PRINTFORML 「まっらく、%CALLNAME:MASTER%ももうすこしじちょーしてくらさい」
+			PRINTFORMDL 唇をとがらせて文句を言う覚に、強引にキスして黙らせた
+		ENDIF
+	;地底MAP時、覚が自室に戻る
+	ELSEIF ARG == 33
+		IF 陥落状態() >= 4
+			PRINTFORML 「ふぁぁ、ぬししゃま、おへやにちゅれれっれくらしゃい」
+			PRINTFORMDL 舌足らずな言葉に、苦笑を向けて首を横に振り、転びかけた覚を受け止める
+			PRINTFORML 「『あうにゃっかしい』？　なりゃ、ぬししゃまがはこんれくらさい」
+			PRINTFORMDL すりすりと頬ずりしてくる覚の、愛くるしいおねだりに、わざとらしくため息を返す
+			PRINTFORML 「うーうーうー、ぬししゃまのいぢめっこぉ」
+			PRINTFORMDL 唇をとがらせて文句を言ったあと、ふわふわと浮かんだ覚が部屋へと戻っていった
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「うー、しんろいれすー」
+			PRINTFORMDL 唇をとがらせる覚が、そのまましなだれかかってくる
+			PRINTFORML 「%CALLNAME:MASTER%のせーなんれすから、へやまではこんれくらさい」
+			PRINTFORMDL 自分で行けるだろう、そう答える%CALLNAME:MASTER%に胡乱げな視線を向けてから、覚が歩き出した
+		ELSE
+			PRINTFORML 「うー、ふらふらしあす……、よかっららおくっれいっれくらさいー」
+			PRINTFORMDL 千鳥足の覚に、イヤだと即答し、軽く睨まれてしまった
+		ENDIF
+	;眠そう（恋慕つきかつ睡眠時間中かつ添い寝中
+	ELSEIF ARG == 34
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;MASTERの方がダウン（恋慕必須
+	ELSEIF ARG == 35
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室(MASTER同棲)まで戻ってきて、そのまま寝た
+	ELSEIF ARG == 36
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室(MASTER別居)まで戻ってきて、そのまま寝た
+	ELSEIF ARG == 37
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室まで戻ってきて、追い出された
+	ELSEIF ARG == 38
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;移動時すれ違い
+	;立ち止まった
+	ELSEIF ARG == 40
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;会釈した
+	ELSEIF ARG == 41
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;無視
+	ELSEIF ARG == 42
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;情緒変化
+	;1種類だけ
+	ELSEIF ARG == 50
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;他人とＨしてるところを覚に見られた
+	;Ｈ終了
+	ELSEIF ARG == 60
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚も参加
+	ELSEIF ARG == 61
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が去って行きました
+	ELSEIF ARG == 62
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚とＨしてるところを他人に見られた
+	;Ｈ終了
+	ELSEIF ARG == 70
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;相手も参加
+	ELSEIF ARG == 71
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;相手が去って行きました
+	ELSEIF ARG == 72
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;弱みをにぎられてしまった
+	;パンツが見つかってしまった
+	ELSEIF ARG == 80
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;MASTERが押し倒された
+	;開始
+	ELSEIF ARG == 90
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;終了
+	ELSEIF ARG == 91
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;浴場で遭遇
+	;追い出された
+	ELSEIF ARG == 100
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;追い出されなかった
+	ELSEIF ARG == 101
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;寝床に忍び込み
+	;侵入成功
+	ELSEIF ARG == 110
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入成功＠恋慕
+	ELSEIF ARG == 111
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入成功＠恋慕＠衰弱
+	ELSEIF ARG == 112
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入失敗
+	ELSEIF ARG == 113
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入失敗＠衰弱
+	ELSEIF ARG == 114
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;お吃飯
+	;食べられた
+	ELSEIF ARG == 120
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;押し倒した
+	;終了
+	ELSEIF ARG == 130
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;添い寝
+	;終了
+	ELSEIF ARG == 140
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;時止め終了
+	;謎の快感
+	ELSEIF ARG == 150
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;絶頂
+	ELSEIF ARG == 151
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;パンツ消滅
+	ELSEIF ARG == 152
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;口内射精
+	ELSEIF ARG == 153
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;顔面射精
+	ELSEIF ARG == 154
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;手淫射精
+	ELSEIF ARG == 155
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;アナル射精
+	ELSEIF ARG == 156
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;処女喪失
+	ELSEIF ARG == 157
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;膣内射精
+	ELSEIF ARG == 158
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;帰宅
+	;通常
+	ELSEIF ARG == 160
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;デート中
+	ELSEIF ARG == 161
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;お見送り
+	ELSEIF ARG == 162
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;陥落素質
+	;恋慕
+	ELSEIF ARG == 170
+	;思慕（合意ありのみ
+	ELSEIF ARG == 171
+	;愛欲
+	ELSEIF ARG == 172
+	;愛人
+	ELSEIF ARG == 173
+	;炮友
+	ELSEIF ARG == 174
+	;調教後自慰
+	;自慰
+	ELSEIF ARG == 180
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;浴槽連れ込み
+	;断られた(思慕or合意
+	ELSEIF ARG == 190
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;一緒に入った
+	ELSEIF ARG == 191
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;デートのお誘い
+	;誘い方
+	ELSEIF ARG == 200
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;許可
+	ELSEIF ARG == 201
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;拒否
+	ELSEIF ARG == 202
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;酔っ払いカウンター
+	ELSEIF ARG == 300
+		IF 陥落状態() >= 4
+			PRINTFORML 「ぬししゃまはおいしーれしゅねー♪」
+			PRINTFORML 「にゅふふ、ぬししゃまぬししゃまー♪」
+			PRINTFORML 「らーいしゅきー♪　にゅふふふふ」
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「ふふ、ろーれす、いっちゅもしれるころ、しゃれるのあ」
+			PRINTFORML 「にゅふふ、わらしはらのしーれしゅ♪」
+		ELSE
+			PRINTFORML 「にゅふふ、いらずら♪　いらじゅら♪」
+		ENDIF
+	ENDIF
+	SIF GET_TARGETNUM() >= 2 && ARG != 200
+		PRINTFORMDL あまりにもふだんと違う覚に、周囲の者が呆れたり顔を赤くしたりしている
+ELSE
+	IF !ARG
+		IF 陥落状態() >= 4
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「主様、なんだかふわふわした気分です」
+				CASE 1
+					PRINTFORML 「ん、すこし酔いが回ってきてますね、ふふ、うふふふ」
+				CASE 0
+					PRINTFORML 「ふふ、相変わらず主様は素敵ですねぇ」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW うっとりした表情でこちらを見つめては、覚が笑みを浮かべる
+				CASE 0
+					PRINTFORMDW クスクスと楽しげに笑いながら、覚が見つめてくる
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ふふ、主様はどうですか？　気持ちよくなってますか？」
+				CASE 1
+					PRINTFORML 「主様も酔ってます？　まだならほらぐびぐびいきましょう」
+				CASE 0
+					PRINTFORML 「主様、大好きです、主様ぁ、ふふ、あははは」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 普段に比べて格段に陽気さを見せる覚に、しばし考えあぐねる
+				CASE 0
+					PRINTFORMDW すこし呑ませすぎたかと思いながら、覚を見つめる
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ええ、ええ、呑んでます、呑んでるから、こういうことだって出来ますし」
+				CASE 1
+					PRINTFORML 「もう、これだけ呑ませたのは主様なのに、ノリが悪いですねぇ」
+				CASE 0
+					PRINTFORML 「ふふ、うふふふふ、これは酔ってるから、酔ってるからですよ、うふふふふふ」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 不意に顔を寄せてきた覚が、そのまま唇を押しつけ舌を送り込んできた
+				CASE 0
+					PRINTFORMDW こちらの手を握った覚が、秘所に導き腰を振り始めた
+			ENDSELECT
+		ELSEIF 陥落状態() == 3
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ん、なんだか、ふわふわして良い気分……、ふふ、%CALLNAME:MASTER%はどうかしら」
+				CASE 1
+					PRINTFORML 「ふふ、気持ちいい。良い酒があって、良い相手がいるなんて素敵ですね」
+				CASE 0
+					PRINTFORML 「はぁ、すこし酔ってしまいました。ふふ、こういうのもたまには良い物です」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW どこか楽しげな覚に、返す言葉が出てこない
+				CASE 0
+					PRINTFORMDW 優しい微笑みを浮かべる覚に、ただ見ほれてしまう
+			ENDSELECT
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「『酔うと可愛い』？　ふふ、酔わなくても私は可愛いでしょう？」
+				CASE 1
+					PRINTFORML 「そんなに見つめられると、照れてしまいますね。ふふふ」
+				CASE 0
+					PRINTFORML 「はぁ、%CALLNAME:MASTER%といるとつい酒が過ぎてしまいますね」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW こういうのも笑い上戸にはいるのだろうかと、つまらないことを思ってしまう
+				CASE 0
+					PRINTFORMDW クスクス笑う覚に、たまには良いかと苦笑を浮かべつつ眺めた
+			ENDSELECT
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ふふ、すこし酔ってしまったようです。こういうのも良い物ですね」
+				CASE 1
+					PRINTFORML 「なんだか、すこしふわふわした気分です、ふふ、お酒はいいですね」
+				CASE 0
+					PRINTFORML 「うふふ、%CALLNAME:MASTER%も気分がいいですか？　私は良いですよ」
+			ENDSELECT
+			SELECTCASE RAND:2
+				CASE 1
+					PRINTFORMDW 楽しそうにほほえむ覚に、しようとした事も忘れて見とれてしまう
+				CASE 0
+					PRINTFORMDW 笑顔の覚に苦笑を返し、しようとしていたことを忘れてしまう
+			ENDSELECT
+		ENDIF
+	;SPイベント
+	;デート帰りキス
+	ELSEIF ARG == 10
+	;デート帰り告白
+	ELSEIF ARG == 11
+	;デート帰り告白受け入れ
+	ELSEIF ARG == 12
+	;デート帰り告白拒否
+	ELSEIF ARG == 13
+	;デート帰り
+	ELSEIF ARG == 15
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;反発刻印消去&低下
+	ELSEIF ARG == 16
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;遭遇イベント
+	;覚のいるところにMASTERが入っていった
+	ELSEIF ARG == 20
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;MASTERのいるところに覚が入ってきた
+	ELSEIF ARG == 21
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が浴室に入ってきた
+	ELSEIF ARG == 22
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が浴室に入って来てすぐ出て行った
+	ELSEIF ARG == 23
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が浴室に入って来てMASTERが追い出された
+	ELSEIF ARG == 24
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚と外出先で出会った
+	ELSEIF ARG == 25
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;他キャラとデート中に覚と出会った
+	ELSEIF ARG == 26
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;お休みイベント(地底以外非住み込みは帰宅口上行き
+	;覚住み込み中かつ部屋は別（非衰弱
+	ELSEIF ARG == 30
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚住み込み中かつ部屋は一緒（非衰弱
+	ELSEIF ARG == 31
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が居間（orMASTER初期位置）にて休憩中(おそらく最低合意が着かないと発生しないというかそこまで体力を減らせない筈
+	ELSEIF ARG == 32
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;地底MAP時、覚が自室に戻る
+	ELSEIF ARG == 33
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;眠そう（恋慕つきかつ睡眠時間中かつ添い寝中
+	ELSEIF ARG == 34
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;MASTERの方がダウン（恋慕必須
+	ELSEIF ARG == 35
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室(MASTER同棲)まで戻ってきて、そのまま寝た
+	ELSEIF ARG == 36
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室(MASTER別居)まで戻ってきて、そのまま寝た
+	ELSEIF ARG == 37
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;TARGETが自室まで戻ってきて、追い出された
+	ELSEIF ARG == 38
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;移動時すれ違い
+	;立ち止まった
+	ELSEIF ARG == 40
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;会釈した
+	ELSEIF ARG == 41
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;無視
+	ELSEIF ARG == 42
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;情緒変化
+	;1種類だけ
+	ELSEIF ARG == 50
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;他人とＨしてるところを覚に見られた
+	;Ｈ終了
+	ELSEIF ARG == 60
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚も参加
+	ELSEIF ARG == 61
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚が去って行きました
+	ELSEIF ARG == 62
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;覚とＨしてるところを他人に見られた
+	;Ｈ終了
+	ELSEIF ARG == 70
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;相手も参加
+	ELSEIF ARG == 71
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;相手が去って行きました
+	ELSEIF ARG == 72
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;弱みをにぎられてしまった
+	;パンツが見つかってしまった
+	ELSEIF ARG == 80
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;MASTERが押し倒された
+	;開始
+	ELSEIF ARG == 90
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;終了
+	ELSEIF ARG == 91
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;浴場で遭遇
+	;追い出された
+	ELSEIF ARG == 100
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;追い出されなかった
+	ELSEIF ARG == 101
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;寝床に忍び込み
+	;侵入成功
+	ELSEIF ARG == 110
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入成功＠恋慕
+	ELSEIF ARG == 111
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入成功＠恋慕＠衰弱
+	ELSEIF ARG == 112
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入失敗
+	ELSEIF ARG == 113
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;侵入失敗＠衰弱
+	ELSEIF ARG == 114
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;お吃飯
+	;食べられた
+	ELSEIF ARG == 120
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;押し倒した
+	;終了
+	ELSEIF ARG == 130
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;添い寝
+	;終了
+	ELSEIF ARG == 140
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;時止め終了
+	;謎の快感
+	ELSEIF ARG == 150
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;絶頂
+	ELSEIF ARG == 151
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;パンツ消滅
+	ELSEIF ARG == 152
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;口内射精
+	ELSEIF ARG == 153
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;顔面射精
+	ELSEIF ARG == 154
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;手淫射精
+	ELSEIF ARG == 155
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;アナル射精
+	ELSEIF ARG == 156
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;処女喪失
+	ELSEIF ARG == 157
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;膣内射精
+	ELSEIF ARG == 158
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;帰宅
+	;通常
+	ELSEIF ARG == 160
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;デート中
+	ELSEIF ARG == 161
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;お見送り
+	ELSEIF ARG == 162
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;陥落素質
+	;恋慕
+	ELSEIF ARG == 170
+	;思慕（合意ありのみ
+	ELSEIF ARG == 171
+	;愛欲
+	ELSEIF ARG == 172
+	;愛人
+	ELSEIF ARG == 173
+	;炮友
+	ELSEIF ARG == 174
+	;調教後自慰
+	;自慰
+	ELSEIF ARG == 180
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;浴槽連れ込み
+	;断られた(思慕or合意
+	ELSEIF ARG == 190
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;一緒に入った
+	ELSEIF ARG == 191
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	;酔っ払いカウンター
+	ELSEIF ARG == 300
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSE
+		ENDIF
+	ENDIF
+ENDIF
+RESETCOLOR
+RETURN 1

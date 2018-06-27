@@ -1,0 +1,50 @@
+﻿@GETMAP_7(ARG)
+#DIM 気配
+気配 = 0
+IF TALENT:MASTER:居場所察知 && FLAG:察知モード == 1
+	SIF ROOMDATA:(ARG % 100) & 場所_モブ
+		SETCOLOR C_D_PINK
+	FOR LOCAL, 1, CHARANUM
+		IF CFLAG:LOCAL:現在位置 == ARG
+			IF CFLAG:LOCAL:行動 == 5
+				気配 = 2
+				BREAK
+			ELSEIF CFLAG:LOCAL:睡眠
+				気配 = 3
+				BREAK
+			ENDIF
+			気配 = 1
+		ENDIF
+		IF ARG == 716 && !GROUPMATCH(CFLAG:MASTER:現在位置,715,716,717,718,719)
+			IF GROUPMATCH(CFLAG:LOCAL:現在位置,716,717,718,719)
+				IF CFLAG:LOCAL:行動 == 5
+					気配 = 2
+					BREAK
+				ELSEIF CFLAG:LOCAL:睡眠
+					気配 = 3
+					BREAK
+				ENDIF
+				気配 = 1
+			ENDIF
+		ELSEIF ARG == 729 && !INRANGE(CFLAG:MASTER:現在位置,720,730)
+			IF INRANGE(CFLAG:LOCAL:現在位置,720,729)
+				IF CFLAG:LOCAL:行動 == 5
+					気配 = 2
+					BREAK
+				ELSEIF CFLAG:LOCAL:睡眠
+					気配 = 3
+					BREAK
+				ENDIF
+				気配 = 1
+			ENDIF
+		ENDIF
+	NEXT
+	IF 気配 == 1
+		SETCOLOR 255, 100, 200
+	ELSEIF 気配 == 2
+		SETCOLOR 255, 100, 0
+	ELSEIF 気配 == 3
+		SETCOLOR 0, 120, 180
+	ENDIF
+ENDIF
+CALL GETMAP_YOGORE(ARG)

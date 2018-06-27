@@ -1,0 +1,2673 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;日常系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;300,会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_300
+;コマンド共通メッセージ(TRAIN_MESSAGE) 
+;削除すると「～話をした。」とかが消えます
+;CALL TRAIN_MESSAGE
+DRAWLINE
+;口上メイン呼出
+CALL M_KOJO_MESSAGE_COM_K111_300_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;ここに口上書いて下さい
+	IF ALCOHOL_FACE(111) == "酔いどれ" || ALCOHOL_FACE(111) == "ぐでぐで"
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に話し掛けてみたが、%CALLNAME:TARGET%は呂律が回っておらず何を言っているかも聴き取れない
+	ELSE
+		PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%と
+		IF TALENT:111:恋慕
+			PRINTDATA
+				DATAFORM 隣り合って
+				DATAFORM 少し照れながら
+				DATAFORM 微笑みを交わしながら
+				DATAFORM 和やかな雰囲気で
+				DATAFORM 少し熱くなりながら
+				DATAFORM じゃれ合いながら
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATAFORM くだらない
+				DATAFORM たわいのない
+				DATAFORM 世間
+				DATAFORM 平和な
+				DATAFORM よくある
+				DATAFORM ちょっとした
+				DATAFORM 可笑しな
+			ENDDATA
+		ENDIF
+		IF TFLAG:SELECTCOMの分岐 > 0
+			PRINTFORML 話をして盛り上がった
+		ELSEIF TFLAG:SELECTCOMの分岐 < 0
+			PRINTFORML 話をしていたが話が途切れてしまった……
+		ELSE
+			PRINTFORML 話をした
+		ENDIF
+	ENDIF
+	PRINTW 
+	IF ALCOHOL_FACE(111) == "酔いどれ" || ALCOHOL_FACE(111) == "ぐでぐで"
+		IF !RAND:2
+			PRINTFORML 「きゃははは♪ おしゃけだ～いしゅき♪ おしゃけしゅきな%CALLNAME:MASTER%もしゅきぃ%UNICODE(0x2764)%」
+			PRINTFORMW 「～～ッ！！＠＃！＄％！？＊＊＊＊ッ！！」
+		ELSE
+			PRINTFORML 「しょれでぇ～～、ごひゅびんひゃまがぁ～～～ぶぁ～～～～～って！」
+			PRINTFORMW 「れもあらいはひゅ～～ぐ、ひゅ～～～～ぐひゃひぇひゅへ、ひゃ～はははは！！」
+		ENDIF
+		PRINTFORML 
+		PRINTFORMW ほとんど会話にならなかった……
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORML 「なーに！？」
+		PRINTFORMW 「あたいじゃなくて、他の娘と喋ってれば？」
+	;会話不能
+	ELSEIF TCVAR:111:会話不能
+		PRINTFORML 「その話さっきしたー」
+		PRINTFORMW 「つまんないー」
+	;失敗
+	ELSEIF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORML 「……ふーん」
+		PRINTFORMW 「何の話かよく分からないや」
+	;夏,野外,昼間,汗フラグなしで確定
+	ELSEIF DAY:2 == 2 && OUTROOF(CFLAG:111:現在位置) && !TCVAR:111:350 && TIME >= 600 && TIME <= 960
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「毎日暑いね……」
+			PRINTFORMW 「灼熱地獄に比べたらこれでも涼しい方なんだろうケド」
+		CASE 1
+			PRINTFORMW 「地上もこんなに暑いなんて……」
+		CASE 2
+			PRINTFORML 「ぐでー……あついー……」
+			PRINTFORMW 「%CALLNAME:MASTER%、この暑さなんとかならないのー？」
+		ENDSELECT
+		PRINTFORML 克労恩皮絲は夏用の短い袴襪を履いているが
+		PRINTFORMW ムンムンとした熱気でだいぶ蒸れているようだ……
+		TCVAR:111:350 = 1
+	;レア
+	ELSEIF !RAND:200
+		PRINTFORMW 「へっくしっ！」
+	;状況会話
+	ELSEIF !RAND:12
+		;春,野外
+		IF DAY:2 == 1 && OUTROOF(CFLAG:111:現在位置)
+			IF !RAND:2
+				PRINTFORML 「お花がきれいね」
+				PRINTFORMW 「地獄にも血針草って花があるよ」
+				PRINTFORMW 「人の血を吸って成長してー……」
+			ELSE
+				PRINTFORML 「うー、最近なんだか目がかゆくて……」
+				PRINTFORMW 「鼻もムズムズするし、風邪ひいちゃったかなぁ？」
+			ENDIF
+		;秋,野外
+		ELSEIF DAY:2 == 3 && OUTROOF(CFLAG:111:現在位置)
+			IF !RAND:2
+				PRINTFORML 「紅葉ってきれいだね」
+				PRINTFORMW 「まるで返り血を浴びたみたい♪」
+			ELSE
+				PRINTFORMW 「秋は"もみじ狩り"ってスポーツをするんでしょ？」
+				PRINTFORMW 「"もみじ"ってどのぐらい強いの？」
+			ENDIF
+		;冬,野外
+		ELSEIF DAY:2 == 4 && OUTROOF(CFLAG:111:現在位置)
+			IF !RAND:2
+				PRINTFORMW 「ねえ%CALLNAME:MASTER%……」
+				PRINTFORMW 「さむい……」
+			ELSE
+				PRINTFORML 「わぁー！ 雪よ！」
+				PRINTFORMW 「きゃははははー！」
+				PRINTFORMW 「%CALLNAME:MASTER%、遊ぼ♪ 遊ぼ♪」
+			ENDIF
+		ELSEIF TALENT:111:恋慕
+			GOTO RENBO
+		ELSE
+			GOTO SONOTA
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:111:恋慕
+		$RENBO
+		SELECTCASE RAND:13
+		CASE 0
+			PRINTFORML 「ここはいいね、苦しそうにしてる人がいなくて」
+			PRINTFORMW 「地獄は怨嗟の声しか聞こえないから退屈でしょうがないよ」
+		CASE 1
+			PRINTFORML 「%CALLNAME:MASTER%は何が好きなのー？」
+			PRINTFORMW 「あたいはねー……」
+		CASE 2
+			PRINTFORML 「この服かわいいでしょー！」
+			PRINTFORMW 「ご主人様に作ってもらったのよ♪」
+		CASE 3
+			PRINTFORML 「今日は何して遊ぼっかなー」
+			PRINTFORMW 「芜菁でも育ててみようかな」
+		CASE 4
+			PRINTFORML 「友人様は知ってる？」
+			PRINTFORMW 「友人様はとっても優しくて、いつもなでなでしてくれるの」
+		CASE 5
+			PRINTFORML 「あたいは人を狂わす能力があるけど」
+			PRINTFORMW 「%CALLNAME:MASTER%はどんな能力があるの？」
+			PRINTFORMW 「あたいと本気で戦ったらどうなるかな？」
+		CASE 6
+			PRINTFORML 「%CALLNAME:MASTER%は人間よねー」
+			PRINTFORMW 「あたいは妖精だけど……」
+			PRINTFORMW 「%CALLNAME:MASTER%はどう思う？」
+		CASE 7
+			PRINTFORML 「ねえ%CALLNAME:MASTER%ー」
+			PRINTFORMW 「えへへ、よんだだけー」
+		CASE 8
+			PRINTFORMW 「あーあ、%CALLNAME:MASTER%が地獄に堕ちてくれたら地獄もちょっとは楽しくなるのになー」
+		CASE 9
+			PRINTFORML 「地上は楽しいけど、なんか妖精への風当たりは強いのよね」
+			PRINTFORMW 「サベツってやつ？ ま、あたいは全然気にならないケド」
+		CASE 10
+			PRINTFORMW 「なんかおもしろいところに行きたいなー♪ カジノとか！」
+		CASE 11
+			PRINTFORML 「ねえ、%CALLNAME:MASTER%」
+			PRINTFORMW 「あたいってその……かわいい、かな？」
+			PRINTFORMW 「あ！！ やっぱりなんでもない！」
+		CASEELSE
+			PRINTFORML 「オー、セーイキャンユーシー♪」
+			PRINTFORMW 「地獄でブームの歌だよ♪」
+		ENDSELECT
+	;通常
+	ELSE
+		$SONOTA
+		SELECTCASE RAND:8
+		CASE 0
+			PRINTFORML 「地上は至る所に自然が溢れていて感動しちゃった」
+			PRINTFORMW 「本当に地獄とは正反対なのね」
+		CASE 1
+			PRINTFORML 「%CALLNAME:MASTER%の話っていつも可怪しいわね」
+			PRINTFORMW 「地上人はみんなそうなのかな」
+		CASE 2
+			PRINTFORML 「あたいはねえ、人を狂わすことができるの」
+			PRINTFORML 「月の光よりずうっと強力で純粋な狂気」
+			PRINTFORMW 「どう？ 味わってみたいと思わない？」
+		CASE 3
+			PRINTFORML 「それってどういうこと？」
+			PRINTFORMW 「もっと聞かせて！」
+		CASE 4
+			PRINTFORML 「ご主人様は地獄の神様だよ」
+			PRINTFORMW 「月と地球と異界に１人ずつ居て……え？ よくわからない？」
+		CASE 5
+			PRINTFORMW 「漢堡が食べたくなってきた！」
+		CASE 6
+			PRINTFORMW 「ねえ%CALLNAME:MASTER%、きいてきいて！」
+		CASEELSE
+			PRINTFORML 「困ったことがあったらご主人様に聞いてみるといいよ」
+			PRINTFORMW 「なんだって解決してくれちゃうんだから」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;301,泡茶
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_301
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_301_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_301_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML %CALLNAME:PLAYER%はお茶を淹れて%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 達 # \@に差し出した…
+	PRINTW 
+	IF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「ん……どーも」
+		RETURN 1
+	ENDIF
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMW 「ずずず……ぷはー！」
+	CASE 1
+		PRINTFORMW 「お茶もいいけどコーラはないの？」
+	CASE 2
+		PRINTFORML 「ありがとー！」
+		PRINTFORMW 「ずず……あちちっ！」
+	ENDSELECT
+	;大成功
+	IF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW 「んー♪ すごく美味しい♪」
+	;失敗
+	ELSEIF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORMW 「うえっ、にがいー……」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;302,身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_302
+;とりあえず消してみる
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_302_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_302_1
+#DIM 分岐数
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;恋慕に0,1以外の数字が入った時のために一応
+IF TALENT:111:恋慕
+	分岐数 = 8
+ELSE
+	分岐数 = 4
+ENDIF
+IF LOCAL
+	;心情不快
+	IF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%との身体接触を図ろうとした
+		PRINTW 
+		PRINTFORML 「むぅ……！」
+		PRINTFORMW 「今はそんな気分じゃ……」
+		RETURN 1
+	;背中を流す
+	ELSEIF BATHCHECK(CFLAG:MASTER:現在位置) && IN_HOME(CFLAG:MASTER:現在位置)
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の背中を流してあげた
+		PRINTW 
+		PRINTFORML 「洗ってくれるの？ じゃあお願いっ♪」
+		PRINTFORMW 「やんっ%UNICODE(0x2764)% 触りすぎだぉ♪」
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%との身体接触を図った
+		PRINTW 
+		SELECTCASE RAND:分岐数
+		CASE 0
+			PRINTFORML 「きゃははは！」
+			PRINTFORMW 「くすぐったいー！」
+		CASE 1
+			PRINTFORML 「なにするのさ！」
+			PRINTFORMW 「えいえい！とお！」
+		CASE 2
+			PRINTFORML 「羽が気になるの？」
+			PRINTFORMW 「やさしくさわってね」
+		CASE 3
+			PRINTFORML 「ちょっとだけ狂ってみる？」
+			PRINTFORMW 「ほらほら、どう？」
+		;ここから恋慕
+		CASE 4
+			PRINTFORML 「あっ……\/\/\/」
+			PRINTFORMW 「それ気持ちいいかも\/\/\/」
+		CASE 5
+			PRINTFORMW 「すりすりしてすりすり！」
+		CASE 6
+			PRINTFORML 「ねえぺろぺろしていい？」
+			PRINTFORMW 「ぺろぺろ、ぺろぺろ」
+		CASE 7
+			PRINTFORML 「やぁ……\/\/\/」
+			PRINTFORMW 「それはちょっと恥ずかしいよう……\/\/\/」
+		ENDSELECT
+	ENDIF
+	;大成功
+	IF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW 「きゃはっ♪ %CALLNAME:MASTER%、楽しいね♪」
+	;失敗
+	ELSEIF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORMW 「いたっ！ もー、ぶつけないでよー！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;303,道歉
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_303
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_303_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_303_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF TFLAG:SELECTCOMの分岐 == -2 || TFLAG:SELECTCOMの分岐 == 2
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に許してもらうためにとっておきのお菓子を差し出した
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は必死になって%CALLNAME:TARGET%に頭を下げた
+	ENDIF
+	PRINTW 
+	IF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW 「いいよ♪ 別にそんなに怒ってなかったし！」
+	ELSEIF TFLAG:SELECTCOMの分岐 == 2
+		PRINTFORML 「わぁー！ すごいお菓子！もらっていいの！？」
+		PRINTFORMW 「わ～い♪ ありがと%CALLNAME:MASTER%、もう怒ってないよ♪」
+	ELSEIF TFLAG:SELECTCOMの分岐 == 0
+		PRINTFORMW 「もー、しょうがないなぁ……、次からは気をつけてよね」
+	ELSEIF TFLAG:SELECTCOMの分岐 == -2
+		PRINTFORMW 「わぁー！ すごいお菓子！」
+		PRINTFORMW 「…ってダメ！ こ、こんなのであたいは騙されないぞ！」
+		PRINTFORMW 「で、でも貰ってあげてもいいわよ……」
+		;地の文のままだと分岐==-2の時点心盒受け取ってくれない,COMFでも点心盒はなくならないが
+		;克労恩皮絲はお菓子が欲しいのでもらうだけ貰って許してはくれないわがままさんなのだ
+		ITEM:点心盒 --
+	ELSE
+		PRINTFORML 「そんなんじゃだーめ！」
+		PRINTFORMW 「叫喚地獄みたく灼熱の釜に浸かって１兆年詫び続けなさい！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;304,幇忙干活
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_304
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_304_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_304_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;305,索求膝枕
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_305
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_305_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_305_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「勝手にすれば？」
+	ELSE
+		SELECTCASE RAND:5
+		CASE 0
+			PRINTFORMW 「はいどうぞ！」
+		CASE 1
+			PRINTFORMW 「どんな気分？」
+		CASE 2
+			PRINTFORML 「ふゎぁ～～ぁ……」
+			PRINTFORMW 「楽しい？」
+		CASE 3
+			PRINTFORMW 「あたいもやりたい！」
+		CASE 4
+			PRINTFORMW 「ねえねえ代わってよー」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;306,撫摸肚子
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_306
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_306_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_306_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「むー……！」
+	ELSEIF TALENT:111:妊娠
+		IF CFLAG:111:無自覚妊娠
+			PRINTFORML 「…………」
+			PRINTFORMW 克労恩皮絲は不安げな表情を浮かべている
+		ELSE
+			IF !RAND:2
+				PRINTFORMW 「えへ%UNICODE(0x2764)% 優しく撫でてあげて%UNICODE(0x2764)%」
+			ELSE
+				PRINTFORMW 「えへ%UNICODE(0x2764)% タイキョーして%CALLNAME:MASTER%みたいな子にするの♪」
+			ENDIF
+		ENDIF
+	ELSEIF !RAND:2
+		PRINTFORMW 「別にお腹いたくないよ？」
+	ELSE
+		PRINTFORMW 「なーに？」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;307,捏臉蛋
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_307
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_307_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_307_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の頬に手を伸ばした…
+		PRINTFORMW 時間を止められた%CALLNAME:TARGET%は無抵抗のまま頬をつままれている…
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORML %CALLNAME:PLAYER%は眠っている%CALLNAME:TARGET%の頬を指でつまんだ…
+		PRINTFORMW 
+		PRINTFORMW 「んー……ごしゅじんしゃま……ごめんなひゃいぃ……くー」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%の頬に手を伸ばそうとしたがすぐさま振り払われてしまった
+		PRINTFORML 
+		PRINTFORMW 「やめてっ！」
+	ELSE
+		PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%の頬に手を伸ばし
+		;なんで琪露諾専用の地の文があるんだ……？
+		PRINTDATA
+			DATAFORM ふにふにした…
+			DATAFORM ぷにぷにした…
+			DATAFORM むにむにした…
+			DATAFORM ぐにぐにした…
+			DATAFORM ぐいぐいした…
+		ENDDATA
+		PRINTL 
+		PRINTW 
+		SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMW 「いーたーいー！！」
+		CASE 1
+			PRINTFORMW 「なによー！うゎーか！」
+		CASE 2
+			PRINTFORMW 「にゃによー！ぷう」
+		CASE 3
+			PRINTFORMW 「しょれ好きにゃにょー？」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;308,捅臉頰
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_308
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_308_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_308_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF CFLAG:111:睡眠
+		PRINTFORML %CALLNAME:PLAYER%は眠っている%CALLNAME:TARGET%の頬を指でつついた
+		PRINTW 
+		PRINTFORMW 「ん…………ん……」
+		PRINTFORMW 克労恩皮絲はつつくたびにポリポリと頬をかいている
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は陪睡%CALLNAME:TARGET%の頬を指でつついた
+		PRINTW 
+		IF !RAND:2
+			PRINTFORMW 「ぱくっ！」
+			PRINTFORMW ……唇で噛まれた
+		ELSE
+			PRINTFORMW 「なぁにー……？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;309,摸頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_309
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_309_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_309_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の頭に手を伸ばした
+		PRINTFORMW 時間を止められた%CALLNAME:TARGET%は無抵抗のまま頭を撫でられている…
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORML %CALLNAME:PLAYER%は眠っている%CALLNAME:TARGET%の頭を優しく撫でた
+		PRINTW 
+		PRINTFORMW 「くぅ……」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORML %CALLNAME:PLAYER%は心情不快な%CALLNAME:TARGET%を鎮めようと頭を撫でた
+		PRINTW 
+		PRINTFORMW 「むむむ……」
+		PRINTFORMW 克労恩皮絲は苛立ちながらもどこか満足しているようだ
+	;＞擁抱
+	ELSEIF PREVCOM == 311 && TALENT:111:恋慕
+		PRINTFORML %CALLNAME:PLAYER%はぎゅっと抱きしめながら包み込むように%CALLNAME:TARGET%の頭を優しく撫でた
+		PRINTW 
+		PRINTFORMW 「ん……好き\/\/\/」
+	;＞膝枕
+	ELSEIF PREVCOM == 336 && TALENT:111:恋慕
+		PRINTFORML %CALLNAME:PLAYER%は膝の上で気持ちよさそうにしている%CALLNAME:TARGET%の頭を優しく撫でた
+		PRINTW 
+		PRINTFORMW 「ふぁ……\/\/\/」
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は\@ CFLAG:TARGET:添い寝中 ? 陪睡 # 優しく \@%CALLNAME:TARGET%の頭を撫でた
+		PRINTW 
+		SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMW 「えへへ\/\/\/」
+		CASE 1
+			PRINTFORMW 「なーに？」
+		CASE 2
+			PRINTFORMW 「ぴょこぴょこ」
+		CASE 3
+			PRINTFORMW 「んー♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;310,摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_310
+SIF TALENT:111:心情 != -1 && !CFLAG:111:ブチギレ
+	CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_310_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_310_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;一部地の文と齟齬が生じるんですが、地の文長すぎたんで妥協,すまぬ……
+IF LOCAL
+	IF FLAG:時間停止 || CFLAG:111:睡眠
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		;ここだけ地の文カット
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の%HIP(TARGET)%に手を伸ばそうとしたが、その手を叩き落された
+		PRINTW 
+		PRINTFORMW 「やめろ！ ヘンタイ！！」
+	ELSEIF TALENT:111:恋慕
+		IF !RAND:2
+			PRINTFORML 「あぁ……\/\/\/」
+			PRINTFORMW 「だめだよ……」
+		ELSE
+			PRINTFORML 「んー！\/\/\/」
+			PRINTFORMW 「すけべ！\/\/\/」
+		ENDIF
+	ELSEIF TALENT:111:思慕
+		IF !RAND:2
+			PRINTFORMW 「うー……」
+		ELSE
+			PRINTFORMW 「へ、へんたい！」
+		ENDIF
+	ELSE
+		IF !RAND:2
+			PRINTFORMW 「きゃっ！ ち、チカン！！」
+		ELSE
+			PRINTFORMW 「やめてよ！ 気持ち悪い！」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;311,擁抱
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_311
+SIF TALENT:111:心情 != -1 && !CFLAG:111:ブチギレ
+	CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_311_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_311_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+	;押し倒され中, 地の文を参考に、全パターンあるわけではない模様
+	ELSEIF CFLAG:111:うふふ == 2
+		SELECTCASE TCVAR:111:カウンター行動
+		;前から抱きつく
+		CASE 32
+			PRINTFORMW 「ん……優しい%CALLNAME:MASTER%好き……温かい……もうちょっとこのままでいさせて……」
+		;ディープキス
+		CASE 60
+			PRINTFORMW 「んちゅっ、じゅるる……%UNICODE(0x2764)% あぁん、がっつかないのぉ～%UNICODE(0x2764)%」
+		;ぱふぱふ
+		CASE 73
+			PRINTFORMW 「んふっ%UNICODE(0x2764)% おっぱいしゅきぃ？ いいよっ♪ いくらでも味わって%UNICODE(0x2764)%」
+		;乳合わせ
+		CASE 74
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% 先っちょがこすれてっ%UNICODE(0x2764)% んいいっ%UNICODE(0x2764)%」
+		;乳を吸わせる
+		CASE 77
+			PRINTFORMW 「はわぁっ%UNICODE(0x2764)% %CALLNAME:MASTER%赤ちゃんみたい♪ あんっ%UNICODE(0x2764)% もっと%UNICODE(0x2764)% もっと%UNICODE(0x2764)%」
+		;Ｖ挿入,Ａ挿入
+		CASE 85, 87, 
+			PRINTFORMW 「あっ%UNICODE(0x2764)% だっこ%UNICODE(0x2764)% だっこ%UNICODE(0x2764)% %CALLNAME:MASTER%%UNICODE(0x2764)% だっこ%UNICODE(0x2764)%」
+		;だいしゅきホールド
+		CASE 86
+			PRINTFORMW 「はぁっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)% くるっ%UNICODE(0x2764)% %ONEDARI_MASTER_TINKO()%みるく奥までくりゅうう～～っっ%UNICODE(0x2764)%」
+		;Ｖ腰振り,Ａ腰振り
+		CASE 88, 89
+			PRINTFORMW 「はぁんっ%UNICODE(0x2764)% %CALLNAME:MASTER%っ%UNICODE(0x2764)% ひとつになろっ%UNICODE(0x2764)% とろけあおっ%UNICODE(0x2764)%」
+		;それ以外
+		CASEELSE
+			PRINTFORMW 「んっ%UNICODE(0x2764)% %CALLNAME:MASTER%のだっこ、優しい%UNICODE(0x2764)% しゅきっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORMW 「すぅ……すぅ……ん……ママ……」
+	ELSEIF CFLAG:111:添い寝中
+		PRINTFORMW 「ぎゅー…………%UNICODE(0x2764)%」
+		PRINTFORMW 「ねえ%CALLNAME:MASTER%、このまま寝よ……」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		;ここだけ地の文カット
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に抱きつこうとしたが振り払われてしまった
+		PRINTW 
+		IF TALENT:111:恋慕
+			PRINTFORMW 「やだっ！ そんな気分じゃないの……ごめん……」
+		ELSE
+			PRINTFORMW 「やだっ！」
+		ENDIF
+	ELSEIF TALENT:111:思慕 || TALENT:111:恋慕
+		SELECTCASE RAND:4
+		CASE 0
+			PRINTFORMW 「ぎゅっぎゅー！」
+		CASE 1
+			PRINTFORMW 「ん……あったかい\/\/\/」
+		CASE 2
+			PRINTFORMW 「これ、安心する……」
+		CASE 3
+			PRINTFORML 「えへ%UNICODE(0x2764)%」
+			PRINTFORMW 「もっと強く抱きしめて%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「わっ！」
+			PRINTFORMW 「急になによ！」
+		CASE 1
+			PRINTFORMW 「%CALLNAME:MASTER%って意外と大きいのね」
+		CASE 2
+			PRINTFORMW 「うー……」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;312,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_312
+SIF CFLAG:111:うふふ == 2 || FLAG:時間停止
+	CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_312_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_312_1
+#DIM キス分岐
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		;地の文表示
+	ELSEIF CFLAG:111:うふふ == 2 && FIRSTTIME("キス")
+		;地の文表示
+		PRINTFORMW 「んっ！！」
+		PRINTFORMW 「初めてのキスはあたいからしようと思ったのに……逆にされちゃった%UNICODE(0x2764)%」
+	ELSEIF CFLAG:111:うふふ == 2
+		;地の文表示
+		SELECTCASE TCVAR:111:カウンター行動
+		;前から抱きつく
+		CASE 32
+			PRINTFORML 「ちゅうー…んー……%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%とぎゅっぎゅしながらのきしゅ……好き%UNICODE(0x2764)%」
+		;手淫
+		CASE 50
+			PRINTFORML 「んふ%UNICODE(0x2764)% 寂しそうにしないのー♪」
+			PRINTFORMW 「シコシコしながらキスしてあげる♪ ちゅっちゅ%UNICODE(0x2764)%」
+			SIF NOWEX:MASTER:11
+				PRINTFORMW 「んっ%UNICODE(0x2764)% イっちゃえイっちゃえ%UNICODE(0x2764)%」
+		;ディープキス
+		CASE 60
+			PRINTFORMW 「あんっ、%CALLNAME:MASTER%……%UNICODE(0x2764)% もっとぉ、くちゅ、れろ……%UNICODE(0x2764)%」
+		;Ｖ挿入,Ａ挿入,Ｖ腰振り,Ａ腰振り
+		CASE 85, 87, 88, 89
+			IF NOWEX:MASTER:11
+				PRINTFORML 「はぁっ、はぁっ%UNICODE(0x2764)% んちゅーっ%UNICODE(0x2764)%」
+				PRINTFORMW 「んっ%UNICODE(0x2764)% このまま、ちゅーしながら出して%UNICODE(0x2764)% いっぱい出してっ%UNICODE(0x2764)%」
+			ELSE
+				PRINTFORMW 「はぁっ、はぁっ%UNICODE(0x2764)% んちゅっ%UNICODE(0x2764)% んっ、んっ%UNICODE(0x2764)% れろれろっ%UNICODE(0x2764)%」
+			ENDIF
+		;だいしゅきホールド
+		CASE 86
+			PRINTFORMW 「はぁっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)% んちゅっ%UNICODE(0x2764)% 出して%UNICODE(0x2764)% このままイって%UNICODE(0x2764)% %ONEDARI_MASTER_TINKO()%みるくたっぷりだーしてっ%UNICODE(0x2764) * 2%」
+		;それ以外
+		CASEELSE
+			PRINTFORMW 「んっ%UNICODE(0x2764)% ちゅーっ%UNICODE(0x2764)% れろ、あむ、ぺろ……%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORML %CALLNAME:PLAYER%は眠っている%CALLNAME:TARGET%の口を、自分の口で塞いだ…
+		PRINTW 
+		PRINTFORMW 「んみゅ……くぅ……」
+	ELSEIF CFLAG:111:添い寝中
+		PRINTFORML %CALLNAME:PLAYER%は陪睡%CALLNAME:TARGET%の口を、自分の口で塞いだ…
+		PRINTW 
+		IF FIRSTTIME("キス")
+			PRINTFORMW 「はわゎぁぁ……\/\/\/」
+			PRINTFORMW 「きしゅ……\/\/\/ あたい、初めて……%UNICODE(0x2764)%」
+		ELSE
+			PRINTFORMW 「んっ%UNICODE(0x2764)% おやすみのキス%UNICODE(0x2764)% ちゅっ%UNICODE(0x2764)%」
+		ENDIF
+	;拒絶,見たこと無いけど発生するの？
+	ELSEIF TFLAG:SELECTCOMの分岐 == 99
+		PRINTFORML %CALLNAME:PLAYER%がキスをしようとすると%CALLNAME:TARGET%は身を引いた…
+		PRINTW 
+		PRINTFORMW 「やだっ！」
+	ELSEIF (TALENT:111:心情 == -1 || CFLAG:111:ブチギレ) && FIRSTTIME("キス")
+		;本当はしてほしくないけど、地の文は変えられても経験は誤魔化せないからなぁ
+		;もしかしたら舞茄子経験で打ち消せるかもしれないがやめておこう
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の口を、自分の口で塞いだ…
+		PRINTW 
+		IF TALENT:111:恋慕
+			PRINTFORMW 「ふぇぇっ！？ にゃ、いきなりそんな、%CALLNAME:MASTER%じゅるい……」
+		ELSE
+			PRINTFORMW 「んんっっ！？ そんな、こんなときに……うぅ……」
+		ENDIF
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の口を、自分の口で塞いだ…
+		PRINTW 
+		IF TALENT:111:恋慕
+			PRINTFORMW 「むぁっ……、もー！」
+		ELSE
+			PRINTFORMW 「んむ…………」
+		ENDIF
+		PRINTFORMW 克労恩皮絲は鋭い視線で睨んでいる……
+	;ファーストキス
+	ELSEIF FIRSTTIME("キス")
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の唇を、そっと自分の唇と重ねた…
+		PRINTW 
+		PRINTFORMW 「あっ……\/\/\/」
+		PRINTFORMW 「キス……初めて……\/\/\/」
+		PRINTFORMW 「うれしい……\/\/\/」
+	;＞擁抱
+	ELSEIF PREVCOM == 311 && TALENT:111:恋慕
+		PRINTFORML %CALLNAME:PLAYER%は克労恩皮絲を抱きしめながら熱いキスを交わした…
+		PRINTW 
+		PRINTFORML 「んぁ…ちゅっ……れろ、あむ……%UNICODE(0x2764)%」
+		PRINTFORMW 「%CALLNAME:MASTER%……好き……%UNICODE(0x2764)%」
+	;＞索求膝枕
+	ELSEIF PREVCOM == 305 && TALENT:111:恋慕
+		PRINTFORML %CALLNAME:PLAYER%は頭を少し上げ、克労恩皮絲の顔を近づけさせてそっと口づけした…
+		PRINTW 
+		PRINTFORMW 「んー…ちゅっ%UNICODE(0x2764)% きゃはっ♪」
+	;＞膝枕
+	ELSEIF PREVCOM == 336 && TALENT:111:恋慕
+		PRINTFORML %CALLNAME:PLAYER%は膝の上の克労恩皮絲の顔を掴んで優しく口づけした……
+		PRINTW 
+		PRINTFORMW 「んぁっ%UNICODE(0x2764)% えへ%UNICODE(0x2764)%」
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の口を、自分の口で塞いだ…
+		キス分岐 = RAND:6
+		SIF (キス分岐 == 3 || キス分岐 == 4) && EXP:111:接吻経験 >= 20
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%の口唇をこじ開けて舌を絡めてきた…
+		PRINTW 
+		SELECTCASE キス分岐
+		CASE 0
+			$KISS_ZERO
+			PRINTFORMW 「ちゅー%UNICODE(0x2764)%」
+		CASE 1
+			$KISS_ONE
+			PRINTFORMW 「ちゅっちゅ%UNICODE(0x2764)%」
+		CASE 2
+			$KISS_TWO
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)% あむっ%UNICODE(0x2764)%」
+		CASE 3
+			SIF EXP:111:接吻経験 < 20
+				GOTO KISS_ZERO
+			PRINTFORMW 「はむ…れろ……ん…んぁ%UNICODE(0x2764)%」
+		CASE 4
+			SIF EXP:111:接吻経験 < 20
+				GOTO KISS_ONE
+			PRINTFORMW 「ちゅ…ちゅぅぅ……あぅ…れろ……ぁむ%UNICODE(0x2764)%」
+		CASE 5
+			SIF !TALENT:111:恋慕
+				GOTO KISS_TWO
+			PRINTFORMW 「ちゅ%UNICODE(0x2764)%」
+			PRINTFORML 
+			PRINTFORMW 「ね、もっかい！」
+			PRINTFORML 
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)%」
+			SIF EXP:111:接吻経験 * 2 < RAND:100
+				RETURN 1
+			PRINTFORML 
+			PRINTFORMW 「もっかいもっかい♪」
+			PRINTFORML 
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)% ちゅ%UNICODE(0x2764)%」
+			PRINTFORML 
+			PRINTFORMW 「えへ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;313,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_313
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_313_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_313_1
+#DIM 分岐数
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;恋慕に0,1以外の数字が入った時のために一応
+IF TALENT:111:恋慕
+	分岐数 = 7
+ELSE
+	分岐数 = 4
+ENDIF
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		;地の文表示
+	;押し倒され中, 地の文を参考に、全パターンあるわけではない模様
+	ELSEIF CFLAG:111:うふふ == 2
+		SELECTCASE TCVAR:111:カウンター行動
+		;胸を揉ませる
+		CASE 33
+			PRINTFORMW 「はぁん\/\/\/ そう……もっとはげしくしてぇ%UNICODE(0x2764)%」
+		;乳交
+		CASE 53
+			IF NOWEX:MASTER:11
+				PRINTFORMW 「えっ、あっ、イくのね？ %CALLNAME:MASTER%、いいよ♪ 出して%UNICODE(0x2764)%」
+			ELSE
+				PRINTFORMW 「あっ、んっ、いじっちゃやぁ%UNICODE(0x2764)% あたいがいじるのぉ～%UNICODE(0x2764)%」
+			ENDIF
+		;ぱふぱふ
+		CASE 73
+			PRINTFORMW 「んもうっ%UNICODE(0x2764)% %CALLNAME:MASTER%、どんだけおっぱい好きなのよっ%UNICODE(0x2764)% えいっ%UNICODE(0x2764)% えいっ%UNICODE(0x2764)%」
+		;乳合わせ
+		CASE 74
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% %CALLNAME:MASTER%温かい%UNICODE(0x2764)%」
+		;乳を吸わせる
+		CASE 77
+			PRINTFORMW 「んぁぁ～～っ%UNICODE(0x2764)% しゅってしゅってぇ～～っ%UNICODE(0x2764)% ぺろちゅっちゅしてぇ～～っ%UNICODE(0x2764)%」
+		;Ｖ挿入,Ａ挿入,Ｖ腰振り,Ａ腰振り
+		CASE 85, 87, 88, 89
+			IF NOWEX:MASTER:11
+				PRINTFORMW 「はぁっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% そんなっ、おっぱいイイぃッ%UNICODE(0x2764)% きてっ%UNICODE(0x2764)% そのままイってぇ%UNICODE(0x2764) * 2%」
+			ELSE
+				PRINTFORMW 「はぁっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% いいよぉっ%UNICODE(0x2764)% おっぱい、もっとっ、あんっ%UNICODE(0x2764) * 2%」
+			ENDIF
+		;だいしゅきホールド
+		CASE 86
+			PRINTFORMW 「はぁぁ～～っっ%UNICODE(0x2764)% もみもみいいよぉ～っ%UNICODE(0x2764)% %CALLNAME:MASTER%～っ%UNICODE(0x2764)% んにゃぁ～～%UNICODE(0x2764)%」
+		;それ以外
+		CASEELSE
+			PRINTFORMW 「%CALLNAME:MASTER%、おっぱい好きだね%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% あたいも好きだよっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORMW 「んみゃぁ……くしゅぐったいよぉ……」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		IF TALENT:111:恋慕
+			PRINTFORMW 「んん！ やめてよ…気分じゃないー……」
+		ELSE
+			PRINTFORMW 「やめてっ！」
+		ENDIF
+	ELSE
+		SELECTCASE RAND:分岐数
+		CASE 0
+			PRINTFORMW 「あっ……\/\/\/」
+		CASE 1
+			PRINTFORMW 「やぁ……だめだよ\/\/\/」
+		CASE 2
+			PRINTFORMW 「なによ……\/\/\/」
+		CASE 3
+			PRINTFORMW 「え、えっちぃ……\/\/\/」
+		CASE 4
+			PRINTFORMW 「ふぁぁ、きもちい……\/\/\/」
+		CASE 5
+			PRINTFORMW 「んにゃあ……%UNICODE(0x2764)%」
+		CASE 6
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% くすぐったいよぉ♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;314,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_314
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_314_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_314_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;315,陰蒂愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_315
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_315_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_315_1
+#DIM 分岐数
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;恋慕に0,1以外の数字が入った時のために一応
+IF TALENT:111:恋慕
+	分岐数 = 7
+ELSE
+	分岐数 = 4
+ENDIF
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		;地の文表示
+	;押し倒され中, 地の文を参考に、全パターンあるわけではない模様
+	ELSEIF CFLAG:111:うふふ == 2
+		SELECTCASE TCVAR:111:カウンター行動
+		;裙子の中を見せる
+		CASE 35
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% えっち%UNICODE(0x2764)%」
+		;強制舐陰
+		CASE 70
+			PRINTFORMW 「んみゃぁあっ%UNICODE(0x2764)% そ、そんなっ%UNICODE(0x2764)% クリクリしないでぇっ%UNICODE(0x2764)%」
+		;Ｖ挿入,Ａ挿入,Ｖ腰振り,Ａ腰振り
+		CASE 85, 87, 88, 89
+			PRINTFORMW 「あんっ%UNICODE(0x2764)%  そんなっ、クリいじっちゃらめぇ%UNICODE(0x2764)% あたまおかしくなっちゃうぅ～～っ%UNICODE(0x2764) * 2%」
+		;だいしゅきホールド
+		CASE 86
+			PRINTFORMW 「ああんっ%UNICODE(0x2764)% イイっ%UNICODE(0x2764)% クリちゃんイイっ%UNICODE(0x2764)% ちょーだいっ%UNICODE(0x2764)% そのままちょーだいっ%UNICODE(0x2764)%」
+		;それ以外
+		CASEELSE
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% もうっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORMW 「んみゅ……しょこはだめだよぉ……」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		IF TALENT:111:恋慕
+			PRINTFORMW 「んん！ やめてよ…気分じゃないー……」
+		ELSE
+			PRINTFORMW 「やめてっ！」
+		ENDIF
+	ELSE
+		SELECTCASE RAND:分岐数
+		CASE 0
+			PRINTFORMW 「あっ……\/\/\/」
+		CASE 1
+			PRINTFORMW 「やぁ……だめだよ\/\/\/」
+		CASE 2
+			PRINTFORMW 「なによ……\/\/\/」
+		CASE 3
+			PRINTFORMW 「え、えっちぃ……\/\/\/」
+		CASE 4
+			PRINTFORMW 「ふぁぁ、きもちい……\/\/\/」
+		CASE 5
+			PRINTFORMW 「んにゃあ……%UNICODE(0x2764)%」
+		CASE 6
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% くすぐったいよぉ♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;316,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_316
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_316_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_316_1
+#DIM 分岐数
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;恋慕に0,1以外の数字が入った時のために一応
+IF TALENT:111:恋慕
+	分岐数 = 7
+ELSE
+	分岐数 = 4
+ENDIF
+;地の文改変型
+IF LOCAL
+	IF FLAG:時間停止
+		;地の文表示
+	ELSEIF TALENT:111:処女 == 1
+		PRINTFORMW 「あっ……\/\/\/ そこはだめ……\/\/\/」
+	;押し倒され中, 地の文を参考に、全パターンあるわけではない模様
+	ELSEIF CFLAG:111:うふふ == 2
+		SELECTCASE TCVAR:111:カウンター行動
+		;裙子の中を見せる
+		CASE 35
+			PRINTFORMW 「ああっ%UNICODE(0x2764)% そう、そこっ%UNICODE(0x2764)% くちゅくちゅきもちいい%UNICODE(0x2764)%」
+		;強制舐陰
+		CASE 70
+			PRINTFORMW 「んみゃぁあっ%UNICODE(0x2764)% ゆびいれちゃやだぁっ%UNICODE(0x2764)%」
+		;それ以外
+		CASEELSE
+			PRINTFORMW 「ああっ%UNICODE(0x2764)% いきなりずるいよぉっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		IF TALENT:111:恋慕
+			PRINTFORMW 「んん！ やめてよ…気分じゃないー……」
+		ELSE
+			PRINTFORMW 「やめてっ！」
+		ENDIF
+	ELSE
+		SELECTCASE RAND:分岐数
+		CASE 0
+			PRINTFORMW 「あっ……\/\/\/」
+		CASE 1
+			PRINTFORMW 「やぁ……だめだよ\/\/\/」
+		CASE 2
+			PRINTFORMW 「なによ……\/\/\/」
+		CASE 3
+			PRINTFORMW 「え、えっちぃ……\/\/\/」
+		CASE 4
+			PRINTFORMW 「ふぁぁ、きもちい……\/\/\/」
+		CASE 5
+			PRINTFORMW 「んにゃあ……%UNICODE(0x2764)%」
+		CASE 6
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% くすぐったいよぉ♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;317,Ｖ腰を振る
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_317
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_317_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_317_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF NOWEX:MASTER:11
+		PRINTFORML 「ふぁっ%UNICODE(0x2764)% あっ、あっ、あっ、あんっ%UNICODE(0x2764)% 来てっ%UNICODE(0x2764)% %CALLNAME:MASTER%、来てっ%UNICODE(0x2764)%」
+		PRINTFORMW 「んっ、んっ、あんっ、いっぱいっ、だしてっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% 一気にだしてっ%UNICODE(0x2764)%」
+	ELSEIF ABL:111:Ｖ感覚 < 2
+		PRINTFORMW 「あっ、いっ、いたいっ%UNICODE(0x2764)% もっ、もっとやさしくっ%UNICODE(0x2764)% あんっ、あっ%UNICODE(0x2764)%」
+	ELSEIF ABL:111:Ｖ感覚 < 5
+		PRINTFORMW 「あっ、あっ、あっ、あんっ%UNICODE(0x2764)% はげしっ%UNICODE(0x2764)% っしいよぉ%UNICODE(0x2764)% もっとっ、ゆっ、ゆっくりっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)%」
+	ELSE
+		PRINTFORMW 「あっ、あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% もおっ、%CALLNAME:MASTER%っ%UNICODE(0x2764)% はげしすぎっ%UNICODE(0x2764)% あぁんっ%UNICODE(0x2764)%」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;318,Ａ腰を振る
+;==================================================
+;@M_KOJO_MESSAGE_COM_K111_318
+;CALL TRAIN_MESSAGE
+;CALL M_KOJO_MESSAGE_COM_K111_318_1
+;RETURN RESULT
+
+;@M_KOJO_MESSAGE_COM_K111_318_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+;LOCAL = 0
+;-------------------------------------------------
+;IF LOCAL
+
+;ENDIF
+;RETURN 1
+;==================================================
+;330,掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_330
+SIF TALENT:111:心情 != -1 && !CFLAG:111:ブチギレ
+	CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_330_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_330_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		;ここだけ地の文カット
+		PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%の%SHOW_BOTTOM(TARGET,1)%に手をかけた…
+		PRINTW 
+		PRINTFORMW 「やめてっ！！」
+		PRINTFORMW 思いっきりビンタされた……
+	ELSEIF TALENT:111:恋慕
+		PRINTFORMW 「もー、すぐそういうことするー！」
+	ELSEIF TALENT:111:思慕
+		PRINTFORMW 「ちょっと！ やめてよ！」
+	ELSE
+		PRINTFORMW 「わっ！ なにするの！！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;331,泡茶（下薬）
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_331
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_331_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_331_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193 == 1
+		PRINTFORMW 「わあ！ なにこれ！？ すごく美味しい！ %CALLNAME:MASTER%、泡茶の上手だね～」
+	ELSEIF TFLAG:193 == -1
+		PRINTFORMW 「ん……、なんか、くさい……」
+		PRINTFORMW 「あ、あたいはいいよ…の、喉乾いてないし！」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「ん……どーも」
+	ELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「ずずず……ぷはー！」
+		CASE 1
+			PRINTFORMW 「お茶もいいけどコーラはないの？」
+		CASE 2
+			PRINTFORML 「ありがとー！」
+			PRINTFORMW 「ずず……あちちっ！」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;332,勧酒
+;TFLAG:193(0=成功 -1=失敗 -2=大失敗 -5=ひじりん)
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_332
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_332_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_332_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;デフォルト（ぼくのかんがえた克労恩皮絲ちゃん…もとい自前CSV（受け入れてくれた作者さんには大感謝））
+	;では[擅于喝酒]のでまずい＞濁酒,おいしい＞清酒
+	;口上が出る時点で既に酒気は加算されてる,ぐでぐで口上は果たして表示できるのか
+	IF ALCOHOL_FACE(111) == "ぐでぐで"
+		PRINTFORMW 「きゃははは♪ おしゃけだ～いしゅき♪♪♪」
+	ELSEIF ALCOHOL_FACE(111) == "酔いどれ"
+		PRINTFORMW 「もっともっとぉ～～♪」
+	ELSEIF ALCOHOL_FACE(111) == "ほろ酔い"
+		PRINTFORMW 「えへへ～♪ まだまだぁ～～♪」
+	ELSE
+		PRINTFORMW 「わー！ おさけおさけー♪」
+	ENDIF
+	;濁酒
+	IF ALCOHOL_TASTE(TFLAG:194) < 10
+		IF ALCOHOL_FACE(111) == "ぐでぐで"
+			PRINTFORMW 「なぁんだぁこのさけはぁー！！ 淹れた奴をよんでくぉーい！！」
+		ELSEIF ALCOHOL_FACE(111) == "酔いどれ"
+			PRINTFORMW 「んぁ～♪ こんなんじゃ、じぇんじぇん酔えないよぉ～～」
+		ELSE
+			PRINTFORMW 「んー♪ ちょっと物足りないかな～」
+		ENDIF
+	;清酒
+	ELSEIF ALCOHOL_TASTE(TFLAG:194) >= 15
+		IF ALCOHOL_FACE(111) == "ぐでぐで"
+			PRINTFORMW 「こりぇ～～♪ こりぇあたいしゅきなのぉ～♪ こりぇしゅきな%CALLNAME:MASTER%もしゅきぃ%UNICODE(0x2764)%」
+		ELSEIF ALCOHOL_FACE(111) == "酔いどれ"
+			PRINTFORMW 「おひゃけおいひ～ね～♪ %CALLNAME:MASTER%はこんなおいひぃもにょをどこにかくしてりゅのかにゃ～～？？」
+		ELSE
+			PRINTFORMW 「これおいしい～♪ まだあるんでしょ？ あけよっ♪ ねっ♪」
+		ENDIF
+	;鬼殺酒
+	ELSE
+		IF ALCOHOL_FACE(111) == "ぐでぐで"
+			PRINTFORMW 「～～ッ！！＠＃！＄％！？＊＊＊＊ッ！！」
+		ELSEIF ALCOHOL_FACE(111) == "酔いどれ"
+			PRINTFORMW 「きっちゅい～～！ こんなことして%CALLNAME:MASTER%はぁ～なにをしゅるきだぁ～～！？」
+		ELSE
+			PRINTFORMW 「きゃー！ これきついわー！ テンションあがってきたよー！！」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;333,聽牢騷
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_333
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_333_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_333_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+PRINTFORML %CALLNAME:TARGET%の愚痴を聞いてやった
+PRINTW 
+SELECTCASE TFLAG:SELECTCOMの分岐
+	CASE 1
+		PRINTFORML 「そう、それでね……ちがう！ そうじゃないの！！」
+		PRINTFORMW 「もういい！ %CALLNAME:MASTER%の分からず屋！」
+		PRINTL 
+		PRINTFORMW 反対に怒らせてしまった…
+	CASE 2
+		PRINTFORML 「そう、それでね……ひどいでしょ？」
+		PRINTFORMW 「でもご主人様はね、こうだって言うから……」
+		PRINTFORMW 「ふう……なんかもうどうでもよくなっちゃった♪」
+		PRINTL 
+		PRINTFORMW 言いたいことを言って落ち着いたようだ
+	CASE 3
+		PRINTFORML 「そう、それでね……ひどいでしょ？」
+		PRINTFORMW 「だからあたいはご主人様にね……」
+		PRINTFORMW 「あー、なんか%CALLNAME:MASTER%に話したらすっきりしたわ♪ ありがとっ♪」
+		PRINTL 
+		PRINTFORMW 一街道吐き出して落ち着いたようだ
+	CASE 4
+		PRINTFORMW 「え～～？ ひどいでしょぉ～～？ しょんなんの、じゅ～る～い～～っ！」
+		PRINTL 
+		PRINTFORMW %CALLNAME:TARGET%はますます理不尽な絡み方をしてきた…
+	CASE 5
+		PRINTFORML 「だぁ～～から、あたいがぁ～～、ど～～んて、ぽぁ～～～～！」
+		PRINTFORMW 「だぁ～め！ しょれじゃあ、だぁ～んめぇ～～！」
+		PRINTL 
+		PRINTFORML 自分で何を言っているかわかっているのかも怪しい…
+		PRINTFORMW 酔っ払いの話を真面目に聞いても無駄のようだ
+	CASE 6
+		PRINTFORML 「しょぉ～～～！！！ しょれで、あたいがっ、あっ、ひゃ～～！！！」
+		PRINTFORMW 「%CALLNAME:MASTER%、おもしりょ～～～い♪」
+		PRINTL 
+		PRINTFORML %CALLNAME:MASTER%が適当に相槌を打っていると、なにかツボにはまったのか%CALLNAME:TARGET%は急に笑い出した
+		PRINTFORMW よく分からないが楽しそうなので良しとしよう
+ENDSELECT
+RETURN 1
+;====================================================================================================
+;336,膝枕
+;====================================================================================================
+@M_KOJO_MESSAGE_COM_K111_336
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_336_1
+PRINTW
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_336_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	IF TALENT:111:恋慕 && TALENT:111:心情 != -1 && !CFLAG:111:ブチギレ
+		PRINTFORML %CALLNAME:PLAYER%は正座して膝をぽんぽんと叩くと、克労恩皮絲は嬉しそうに甘えてきた
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に膝枕してあげた
+	ENDIF
+	PRINTW 
+	;寝ちゃう
+	IF TFLAG:SELECTCOMの分岐 > 0
+		PRINTFORML 気持ちよかったのか、%CALLNAME:TARGET%はそのままうたた寝してしまった
+		PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:TARGET%が起きるまで寝顔を眺めて過ごした
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「ふぁ……すぅ……すぅ……」
+		CASE 1
+			PRINTFORMW 「あ……%CALLNAME:MASTER%、あたい寝ちゃった……ごめんね」
+		CASE 2
+			PRINTFORMW 「んぁ……んへぇ～……」
+			PRINTFORMW 克労恩皮絲は幸せそうによだれを垂らしてるので拭いてあげた
+		ENDSELECT
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「ん……、よし、ここで落ち着こうかな」
+	ELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「いいの？ わーい！」
+		CASE 1
+			PRINTFORMW 「んー、安らぐ♪」
+		CASE 2
+			PRINTFORMW 「寝てるだけなのに楽しいね♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;350,推倒（時姦時猥褻
+;TFLAG:194 (0=成功 1=人目がある　2=野外は嫌でござりまする　3=多人数プレイは勘弁　4=合意があっても情緒が足りぬ）
+;TCVAR:抱き寄せ初回　1=普通に合意ゲット　2=先にキスぐらいしろよ　3=媚薬or発情には勝てなかったよお…　4=悔しい…刻印さえなければﾋﾞｸﾋﾞｸﾝ
+;5=強引に迫られると断れぬ(素質胆怯持ち専用) 6=まんざらでもない　7=駄目　8=論外
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_350
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_350_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_350_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;地の文改変型
+IF LOCAL
+	;押し倒され値	ENDURE(111) >= RAND:300 + 300で真,しかしRANDの値は変化するのでここでは400を超えたら押し倒されることにする
+	IF FLAG:時間停止 == 1
+	;野外失敗
+	ELSEIF TFLAG:194 == 2
+		IF ENDURE(111) > 400
+			PRINTFORML 「えっ\/\/\/ そんな……\/\/\/」
+			PRINTFORMW 「こ、ここはお外だよ……\/\/\/」
+		ELSE
+			PRINTFORML 「わっ！ なにっ！？」
+			PRINTFORMW 「こ、ここはお外だよ……？」
+		ENDIF
+	;人目失敗
+	ELSEIF TFLAG:194 == 1
+		IF ENDURE(111) > 400
+			PRINTFORML 「えっ\/\/\/ そんな……\/\/\/」
+			PRINTFORMW 「人が見てるよ……\/\/\/」
+		ELSE
+			PRINTFORML 「わっ！ なにっ！？」
+			PRINTFORMW 「人が見てるよ……？」
+		ENDIF
+	;乱交失敗
+	ELSEIF TFLAG:194 == 3
+		PRINTFORMW 「えっ、いや……%CALLNAME:MASTER%と二人きりがいい……」
+	;情緒失敗
+	ELSEIF TFLAG:194 == 4
+		PRINTFORML 「うわっ！ やめてっ！」
+		PRINTFORMW 「もう！ 情緒ってのを考えてよね」
+	;泥酔失敗
+	ELSEIF TFLAG:194 == 5
+		PRINTFORMW 「んん～～？ %CALLNAME:MASTER%、どうひたのぉ～～？？」
+		PRINTFORMW 素面の目撃者がいるのに酔姦するわけにいかない
+	;泥酔
+	ELSEIF TCVAR:111:泥酔 == 1
+		PRINTFORMW 「ふわぁ～～にゃ～～にぃ～～？ おねんねぇ～～？？」
+	;乱交
+	ELSEIF GET_TARGETNUM() > 1
+		IF FIRSTTIME("乱交")
+			PRINTFORMW 「えっ！ ほ、他の子と一緒にするの……？」
+			PRINTFORMW 「ま、まぁいっか……」
+		ELSE
+			PRINTFORML 「%TOFULL(TOSTR(GET_TARGETNUM()))%ぴーってやつ？」
+			PRINTFORMW 「ちゃんとびょーどーに相手してよ？」
+		ENDIF
+	;お泊り
+	ELSEIF (CFLAG:111:現在位置 == 情人用宿屋 || CFLAG:111:現在位置 == OMANEKIBEYA()) && CFLAG:TARGET:うふふ != 2
+		PRINTFORMW 「きゃっ\/\/\/」
+	;それ以外
+	ELSE
+		PRINTFORMW 「あっ\/\/\/」
+	ENDIF
+	;先に押し倒された
+	;うふふフラグは押し倒した時点で変更されるんでした
+	;押し倒し返しは小傘口上さんを参考にして専用TCVARを作ることに
+;	IF !FLAG:70 && !TFLAG:194 && CFLAG:111:うふふ == 2
+	IF TCVAR:351
+		PRINTFORML 
+		PRINTFORMW 「きゃはっ♪ その気になってくれた？」
+		PRINTFORMW 「うれしいっ%UNICODE(0x2764)% 好きにしていいよ%UNICODE(0x2764)%」
+	ELSEIF !FLAG:70 && !TFLAG:194
+		PRINTFORML 
+		SELECTCASE TCVAR:111:抱き寄せ初回
+		;普通の初回,キスがまだ,克労恩皮絲はキスが先だとか後だとか大して気にしてない
+		CASE 1, 2
+			PRINTFORML 「え……%CALLNAME:MASTER%……？」
+			PRINTFORMW （こ、これってひょっとして、そういうこと、だよね……？）
+			PRINTFORML 「うん%UNICODE(0x2764)% いいよ、%CALLNAME:MASTER%%UNICODE(0x2764)%」
+			PRINTFORMW 「やさしくしてね%UNICODE(0x2764)%」
+		;媚薬or発情
+		CASE 3
+			PRINTFORML 「ふわぁ……%CALLNAME:MASTER%、なんだかあたい、頭がぼうっとして……」
+			PRINTFORMW 「はぁ……もう、好きにして……」
+		;時姦
+		CASE 4
+			PRINTFORML 「なにするの！ いや！」
+			PRINTFORMW 口ではそういいつつも克労恩皮絲は%CALLNAME:MASTER%に抱きついてきた
+			PRINTFORMW 「えっ！？ なんで……どうして……？」
+;		CASE 5
+;			PRINTFORML 押しの弱い%CALLNAME:TARGET%は、%CALLNAME:MASTER%を拒むことができなかった…
+		;もうちょっと
+		CASE 6
+			PRINTFORML 「ふぇ……そんな……」
+			PRINTFORMW 「いやだ……ごめんね%CALLNAME:MASTER%……」
+		;ダメ
+		CASE 7
+			PRINTFORML 「んわぁっ！ なにするんだよう！」
+			PRINTFORMW 「そーゆーのいけないんだよ？」
+		;早すぎ
+		CASE 8
+			PRINTFORML 「きゃぁあっ！！！ なにするの！ ヘンタイ！ ヘンタイ！」
+			PRINTFORMW 「ご主人様ーーっ！！ こいつ地獄に堕としてくださーい！！」
+		;初回じゃない
+		CASEELSE
+			SELECTCASE RAND:6
+			CASE 0
+				PRINTFORML 「んもうっ♪ %CALLNAME:MASTER%のえっち%UNICODE(0x2764)%」
+				PRINTFORMW 「ふふ%UNICODE(0x2764)% 好きにしていいよ%UNICODE(0x2764)%」
+			CASE 1
+				PRINTFORMW 「きゃはっ♪ もう、しょうがないにゃぁ♪」
+			CASE 2
+				PRINTFORMW 「ふふっ♪ いいよ%UNICODE(0x2764)% 一緒にえっちな遊びしよっ%UNICODE(0x2764)%」
+			CASE 3
+				PRINTFORMW 「いやー%UNICODE(0x2764)% %CALLNAME:MASTER%のケダモノー！」
+			CASE 4
+				PRINTFORMW 「ん……、%CALLNAME:MASTER%、今日は甘えてもいーい？」
+			CASEELSE
+				IF TALENT:111:妊娠
+					PRINTFORMW 「きょ、今日はちょっと、ゆっくりして……%UNICODE(0x2764)%」
+				ELSE
+					PRINTFORMW 「きょ、今日はちょっと、激しくして……%UNICODE(0x2764)%」
+				ENDIF
+			ENDSELECT
+			;妊娠中
+			IF TALENT:111:妊娠 && CFLAG:111:妊娠自覚状態 == 1
+				PRINTFORML 
+				PRINTFORMW 「あ！ お腹の子もいるんだから、やさしくしてよ？」
+			;危険日
+			ELSEIF CFLAG:111:生理周期 == 6 && !TALENT:111:妊娠 && !TALENT:111:処女
+				PRINTFORML 
+				PRINTFORMW （今日はひょっとして……チャンスだわ♪）
+			ENDIF
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;351,帯出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_351
+;連れ出しにはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K111_351_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_351_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;352,告白
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_352
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_352_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_352_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;した
+	IF TFLAG:SELECTCOMの分岐
+		PRINTFORMW 「えっ……ほんと！？」
+		;初めて
+		IF FIRSTTIME("告白")
+			PRINTFORMW 「うれしい！ あたいも%CALLNAME:MASTER%のこと好き！ 大好き！」
+			PRINTFORMW 「あっ！ これってつまりコイビトってこと？」
+			PRINTFORMW 「そっかー、%CALLNAME:MASTER%が恋人かー♪」
+			PRINTFORMW 「むふふ%UNICODE(0x2764)% しあわせ～%UNICODE(0x2764)%」
+		;一度フった,都合のいい奴じゃ！
+		ELSE
+			PRINTFORMW 「やったぁ！ うれしい%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%、好き好き%UNICODE(0x2764)% 大好きっ%UNICODE(0x2764)%」
+		ENDIF
+	;言葉に詰まる
+	ELSE
+		PRINTFORML 「？」
+		PRINTFORMW 「どしたの%CALLNAME:MASTER%、元気ない？」
+		PRINTFORMW 「……変なのー」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;353,猥褻
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_353
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_353_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_353_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;354,陪睡（相手は起きて布団に招く感じ）
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_354
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_354_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_354_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML 「ん、%CALLNAME:MASTER%……」
+	PRINTFORMW 「一緒に寝よ……ん、あったかい……」
+ENDIF
+RETURN 1
+;==================================================
+;355,時止め（地の文の改変程度に留めるべき
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_355
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_355_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_355_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;360,任憑擺佈
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_360
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_360_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_360_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;華扇口上さんを参考にさせていただきました。ありがとうございます。
+IF LOCAL
+	SELECTCASE TCVAR:111:カウンター行動
+	;キス
+	CASE 30
+		PRINTFORMW 「はぁっ……ちゅぅぅ～～%UNICODE(0x2764 * 2)%」
+	;後ろから抱きつく
+	CASE 31
+		PRINTFORMW 「んー……、ここ落ち着く……%CALLNAME:MASTER%、お父さんみたい……」
+	;前から抱きつく
+	CASE 32
+		PRINTFORMW 「ん……%CALLNAME:MASTER%の温もり……ずっとこうしてたい……」
+	;胸を揉ませる
+	CASE 33
+		PRINTFORMW 「ごめんね……おムネちっちゃくて……」
+	;股間をまさぐる
+	CASE 34
+		PRINTFORMW 「きゃはっ♪ムクムクしてきたっ♪かわいっ♪」
+	;裙子の中を見せる
+	CASE 35
+		PRINTFORMW 「どお？興奮してくれた……？」
+	;挿入おねだり
+	CASE 41 TO 44
+		;おあずけ？
+		PRINTFORMW 「むっ……いいもんいいもん！いっぱいいじめてあげるんだからっ♪」
+	;手淫
+	CASE 50
+		IF NOWEX:MASTER:11
+			PRINTFORMW 「ほらっ%UNICODE(0x2764)% イっちゃえイっちゃえ%UNICODE(0x2764)%」
+		ELSE
+			PRINTFORMW 「きゃははっ♪ おっきくなった%UNICODE(0x2764)% 気持ちいいのね%UNICODE(0x2764)%」
+		ENDIF
+	;口淫
+	CASE 51
+		IF NOWEX:MASTER:11
+			IF FIRSTTIME("精液の味")
+				PRINTFORMW 「んっ、んっ、ん～～～っ%UNICODE(0x2764) * 2%」
+			ELSE
+				PRINTFORMW 「んっ、んっ、ん～～～っ%UNICODE(0x2764) * 2%」
+			ENDIF
+		ELSE
+			PRINTFORMW 「んー、ぷはっ……ぺろぺろ、ん、おいし%UNICODE(0x2764)%」
+		ENDIF
+	;素股
+	CASE 52
+		IF NOWEX:MASTER:11
+			PRINTFORMW 「はっ%UNICODE(0x2764)% はっ%UNICODE(0x2764)% はやくっ%UNICODE(0x2764)% はやくっ%UNICODE(0x2764)%」
+		ELSE
+			PRINTFORMW 「いやぁ%UNICODE(0x2764)% これ止まらない～っ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+		ENDIF
+	;乳交
+	CASE 53
+		IF NOWEX:MASTER:11
+			PRINTFORMW 「えへ%UNICODE(0x2764)% きもちよかったのね%UNICODE(0x2764)% うれしい♪」
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% これ、あたいもちょっときもちいい%UNICODE(0x2764)%」
+		ENDIF
+	;足交
+	CASE 54
+		PRINTFORMW 「うふふ……%UNICODE(0x2764)% きもちよくなってる～%UNICODE(0x2764)% %CALLNAME:MASTER%、変態なんだね♪」
+	;肛門愛撫
+	CASE 55
+		PRINTFORMW 「うっわ、きもちいいんだ～%UNICODE(0x2764)% まったく%CALLNAME:MASTER%はヘンタイさんだなぁ♪」
+	;舐肛
+	CASE 56
+		PRINTFORMW 「もっとしてほしい？ぺろぺろっ%UNICODE(0x2764)% ぺろぺろっ%UNICODE(0x2764)%」
+	;乳首舐め
+	CASE 59
+		PRINTFORMW 「れろれろれろれろれろ%UNICODE(0x2764)%ちゅっちゅぱっ%UNICODE(0x2764)%」
+	;ディープキス
+	CASE 60
+		PRINTFORMW 「はぁ……もっとぉ%UNICODE(0x2764)% んちゅっ、じゅるる……%UNICODE(0x2764)%」
+	;強制舐陰
+	CASE 70
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML 「はわわぁっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% あああっ%UNICODE(0x2764) * 2%」
+			PRINTFORMW 「きもちい～～っ%UNICODE(0x2764) * 2%」
+		CASE 1
+			PRINTFORML 「あっ%UNICODE(0x2764)% もっと%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+			PRINTFORMW 「もっとっ%UNICODE(0x2764)% はげしく%UNICODE(0x2764)% ぺろぺろしてっ%UNICODE(0x2764) * 2%」
+		CASE 2
+			PRINTFORML 「%CALLNAME:MASTER%っ%UNICODE(0x2764)% どーお？ おいしい？」
+			PRINTFORMW 「あたいのおまんこおいしーい？%UNICODE(0x2764)%」
+		ENDSELECT
+	;舐肛強制
+	CASE 72
+		PRINTFORML 「はわぁっ%UNICODE(0x2764)% おしりイイっ%UNICODE(0x2764)%」
+		PRINTFORMW 「%CALLNAME:MASTER%にぺろぺろされてきもちいい～～っ%UNICODE(0x2764)%」
+	;ぱふぱふ
+	CASE 73
+		PRINTFORMW 「あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% %CALLNAME:MASTER%かわいっ%UNICODE(0x2764)%」
+	;乳合わせ
+	CASE 74
+		PRINTFORMW 「あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% %CALLNAME:MASTER%温かい%UNICODE(0x2764)%」
+	;タワシ洗い
+	CASE 75
+		PRINTFORML 「はぁっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)% ごめんね%CALLNAME:MASTER%、あたいばっかきもちよくなって%UNICODE(0x2764)%」
+		PRINTFORMW 「でもこれきもいいのっ%UNICODE(0x2764)% やめられないのおっ%UNICODE(0x2764)%」
+	;強制アソコ愛撫
+	CASE 76
+		PRINTFORMW 「あっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% きもちいっ%UNICODE(0x2764)% くちゅくちゅ鳴ってりゅっ%UNICODE(0x2764)% きもちいいっ%UNICODE(0x2764)%」
+	;乳を吸わせる
+	CASE 77
+		PRINTFORMW 「はわぁっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% もっと%UNICODE(0x2764)% もっと%UNICODE(0x2764)%」
+	;Ｖ挿入,Ａ挿入
+	CASE 85, 87
+		PRINTFORMW 「あぁぁ～～っ%UNICODE(0x2764)% 挿入ってきたぁ～～っっ%UNICODE(0x2764) * 2%」
+	;だいしゅきホールド
+	CASE 86
+		;一緒にイく
+		IF NOWEX:111:1
+			PRINTFORML 「はぁっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)% イこっ%UNICODE(0x2764)% 一緒にイこっ%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%っ%UNICODE(0x2764)% しゅきぃっ%UNICODE(0x2764)%」
+		ELSE
+			PRINTFORMW 「はぁっ%UNICODE(0x2764)% はぁっ%UNICODE(0x2764)% くるっ%UNICODE(0x2764)% %ONEDARI_MASTER_TINKO()%みるくくりゅうう～～っっ%UNICODE(0x2764)%」
+		ENDIF
+	;Ｖ腰振り,Ａ腰振り
+	CASE 88, 89
+		PRINTFORMW 「あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% これっ%UNICODE(0x2764)% 止まらないっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+	ENDSELECT
+ENDIF
+RETURN 1
+;==================================================
+;363,朗読（[幼稚]持ち）
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_363
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_363_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_363_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;364,撒豆子(萃香、勇儀、斯喀雷特姉妹用
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_364
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_364_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_364_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;365,向守矢神社移動(早苗、神奈子、諏訪子用
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_365
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_365_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_365_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;402,就寝（添い寝時）
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_402
+;就寝にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K111_402_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_402_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;	SIF !CFLAG:111:睡眠
+		PRINTFORMW 「……おやすみ%CALLNAME:MASTER%……」
+	SIF EX:111:Ｃ絶頂 + EX:111:Ｖ絶頂 + EX:111:Ａ絶頂 + EX:111:Ｂ絶頂 + EX:111:Ｍ絶頂 > 10 && CFLAG:111:現在位置 == OMANEKIBEYA()
+		CFLAG:111:1001 = DAY
+ENDIF
+RETURN 1
+;==================================================
+;403,休憩
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_403
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_403_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_403_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:111:睡眠
+		PRINTFORMW 「すぅ……」
+	ELSE
+		PRINTFORML 「%CALLNAME:MASTER%疲れちゃったの？」
+		PRINTFORMW 「つまんなーい……」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;405,外出(同行時デートに外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_405
+;外出にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K111_405_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_405_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTL 
+	IF !CFLAG:111:同行
+	ELSE
+		IF TALENT:111:恋慕
+			PRINTFORMW 「デート♪ デート♪」
+			IF DATENAME_PLACE() == "夢之世界～月"
+				PRINTFORMW 「およ？ うちにくる？ 寧静海はとっても広くて楽しいところだよ」
+			ELSEIF DATENAME_PLACE() == "人間之里"
+				PRINTFORMW 「お買い物しよ♪ あとおだんごも食べたいな～」
+			ELSEIF DATENAME_PLACE() == "三途之川～冥界"
+				PRINTFORMW 「%CALLNAME:MASTER%となら一緒に渡ってもいいよ♪」
+			ELSEIF DATENAME_PLACE() == "地底"
+				PRINTFORMW 「%CALLNAME:MASTER%と旧地獄参りなんて楽しみ～♪」
+			ENDIF
+		ELSE
+			PRINTFORMW 「おでかけ♪ おでかけ♪」
+			IF DATENAME_PLACE() == "夢之世界～月"
+				PRINTFORMW 「およ？ 月に行くなんて%CALLNAME:MASTER%大胆だね」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;410,掃除
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_410
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_410_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_410_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止 || CFLAG:111:睡眠
+	ELSEIF CFLAG:111:うふふ
+		PRINTFORMW 「は？ 掃除？ 意味分かんなーい！」
+	ELSE
+		IF OUTROOF(CFLAG:MASTER:現在位置) && DAY:2 == 4
+			PRINTFORMW 「雪かきするの？」
+		ELSE
+			PRINTFORMW 「掃除の？」
+		ENDIF
+		;地位が低いのでほぼ手伝う
+		IF TFLAG:193
+			PRINTFORMW 「えらいのね、手伝ってあげるよ」
+		ELSE
+			PRINTFORMW 「えらいのねー」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;411,戦闘訓練
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_411
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_411_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_411_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:111:恋慕
+		PRINTFORML 「わーい♪%CALLNAME:MASTER%と弾幕ごっこ♪」
+		PRINTFORML 「それじゃあいくよっ！」
+	ELSE
+		PRINTFORML 「あたいの狂気の弾幕を避けきれるかな！？」
+	ENDIF
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMW 「くらえ！『獄符「フラッシュアンドストライプ」』！！」
+	CASE 1
+		PRINTFORMW 「堕ちろ！『地獄「ストライプドアビス」』！！」
+	CASE 2
+		PRINTFORMW 「いでよ！『獄符「ヘルエクリプス」』！！」
+	ENDSELECT
+ENDIF
+RETURN 1
+;==================================================
+;412,学習
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_412
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_412_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_412_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:111:睡眠
+	ELSE
+		PRINTFORML 「えー、学習なんてつまんないよー」
+		PRINTFORMW 「外で遊ぼうよー」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;413,料理
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_413
+;料理にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K111_413_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_413_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTL 
+	PRINTFORML 「料理するの？」
+	PRINTFORMW 「あたいもやるー！」
+	PRINTL 
+	;禁断のメニュー
+	IF TFLAG:194 >= 100
+		PRINTFORMW 「…………なにこれ？」
+;	;軽食
+;	ELSEIF TFLAG:194 == 1
+;		PRINTFORMW 「」
+;	;主食
+;	ELSEIF TFLAG:194 == 2
+;		PRINTFORMW 「」
+;	;デザート
+;	ELSEIF TFLAG:194 == 3
+;		PRINTFORMW 「」
+	ELSE
+		PRINTFORMW 「わー！ おいしそー！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;414,吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_414
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_414_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_414_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW 「ん～♪ おいしい♪」
+	ELSEIF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORMW 「んー……これ嫌い」
+	ELSE
+		PRINTFORMW 「おいしい！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;415,招待吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_415
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_415_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_415_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW 「ん～♪ おいしい♪」
+	ELSEIF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORMW 「んー……これ嫌い」
+	ELSE
+		PRINTFORMW 「おいしい！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;416,演奏(凍結中？
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_416
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_416_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_416_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;417,昼寝をする
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_417
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_417_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_417_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;421,祈願する
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_421
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_421_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_421_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;431,在浴室里放鬆
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_431
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_431_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_431_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF BATHCHECK(CFLAG:MASTER:現在位置)
+		PRINTFORML 「地上のお浴室は本当に極楽ね～～」
+		PRINTFORMW 「地獄のはとてもじゃないけど入りたくないよ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;440,等待
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_440
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_440_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_440_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTDATAL
+		DATAFORM 「なにしてるのー？」
+		DATAFORM 「%CALLNAME:MASTER%ー？」
+		DATAFORM 「♪～」
+		DATAFORM 「ふわぁ～ぁ……」
+	ENDDATA
+	WAIT
+ENDIF
+RETURN 1
+;==================================================
+;441,聽課(慧音専用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_441
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_441_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_441_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;442,伐採
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_442
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_442_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_442_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+[SKIPSTART]
+;現状未実装
+;==================================================
+;600,デート会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_600
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_600_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_600_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;601,デート身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_601
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_601_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_601_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;602,デートキス
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_602
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_602_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_602_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;603,牽手
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_603
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_603_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_603_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「手つなご♪」
+ENDIF
+RETURN 1
+
+;==================================================
+;604,散步
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_604
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K111_604_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_604_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;605,繞道
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_605
+;繞道にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K111_605_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_605_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTL 
+	PRINTFORMW 「なになに？ なんかあった？」
+ENDIF
+RETURN 1
+
+;==================================================
+;610,請吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_610
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_610_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_610_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「わーい♪ ごはんごはん～♪」
+ENDIF
+RETURN 1
+
+;==================================================
+;613,賺錢
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_613
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_613_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_613_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;614,採購食材
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_614
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_614_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_614_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「ほぇー、これが地上のお店かー」
+	ELSE
+		PRINTDATAL
+			DATAFORM 「お買い物♪ お買い物♪」
+			DATAFORM 「ねえねえ、これも買ってー！」
+		ENDDATA
+		WAIT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;615,吃便当
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_615
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_615_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_615_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML 「じゃ～ん！ お弁当作ってきたの！」
+	PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%が作ってきてくれたお弁当を頂くことにした
+	PRINTW 
+	IF TFLAG:SELECTCOMの分岐 == -1
+		PRINTFORMW コメントに困る味だ…
+	ELSEIF ABL:料理技能 < 2
+		PRINTFORMW 正直なところ微妙な出来だったが、%CALLNAME:MASTER%はそんなことをおくびにも出さずお弁当を綺麗に平らげた
+	ELSEIF ABL:料理技能 < 4
+		PRINTFORMW なかなか美味しかった
+	ELSE
+		PRINTFORMW %CALLNAME:TARGET%の料理はとても美味しい
+	ENDIF
+	PRINTFORMW 「その、お味はいかがでしたか……\/\/\/」
+	PRINTL 
+	SIF TFLAG:SELECTCOMの分岐 == 1
+		PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:TARGET%と談笑しながら楽しいひと時を過ごした
+ENDIF
+RETURN 1
+;==================================================
+;617,甘味処に誘う
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_617
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_617_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_617_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「わーい♪ おだんごおだんご～♪」
+ENDIF
+RETURN 1
+;==================================================
+;618,花屋
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_618
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_618_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_618_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「%CALLNAME:MASTER%、畑仕事してるの？」
+ENDIF
+RETURN 1
+;==================================================
+;620,鈴奈庵
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_620
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_620_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_620_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	DRAWLINE
+	PRINTFORMW 「なにここ、本ばっかでつまんない」
+ENDIF
+RETURN 1
+;==================================================
+;660,読書
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_660
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_660_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_660_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「本？ あたいよく分かんないから、%CALLNAME:MASTER%読んで」
+ENDIF
+RETURN 1
+;==================================================
+;698,進入房間
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_698
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_698_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_698_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「はい、どーぞ♪」
+	SIF FIRSTTIME("お招き")
+		PRINTFORMW 「ちょっと散らかってるかもしれないけど、きっと%CALLNAME:MASTER%なら気に入るわ♪」
+	PRINTFORM 克労恩皮絲的房間は
+	;どんな部屋なんだろう……少なくともまともではなさそう
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMW 目がチカチカするほどのビビッドカラーにまみれていてまるで落ち着かない世界になっていた
+	CASE 1
+		PRINTFORMW 得体の知れない道具とも分からない物体がそこらじゅうに落ちていて精神が萎縮しそうだ
+	CASE 2
+		PRINTFORMW おもちゃ箱をひっくり返したような摩訶不思議で異様な空間が広がっていた
+	ENDSELECT
+ENDIF
+RETURN 1
+;==================================================
+;699,外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_699
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_699_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_699_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,掏耳朵
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K111_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K111_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K111_60_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML 「痛かったら言ってね……」
+	PRINTFORMW 「あ、これちょっと楽しいかも♪」
+	IF TFLAG:193 == 1
+		PRINTFORMW 「どお？ 気持ちいい？」
+	ELSEIF TFLAG:193 == -1
+		PRINTFORMW 「あ！ ごめんなさい……！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;61,抱枕
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K111_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K111_61_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K111_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;	IF !CFLAG:111:睡眠
+		PRINTFORMW ぎゅっ
+		PRINTFORMW 「%CALLNAME:MASTER%あったかくて気持ちいい……おやすみ……」
+;	ENDIF
+	SIF EX:111:Ｃ絶頂 + EX:111:Ｖ絶頂 + EX:111:Ａ絶頂 + EX:111:Ｂ絶頂 + EX:111:Ｍ絶頂 > 10 && CFLAG:111:現在位置 == OMANEKIBEYA()
+		CFLAG:111:1001 = DAY
+ENDIF
+RETURN 1
+;==================================================
+;62,亲額頭
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K111_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K111_62_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K111_62_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORMW 「くかー……」
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		PRINTFORMW 「わっ……！」
+	;キスまだ
+	ELSEIF FIRSTTIME("キス", 1)
+		PRINTFORMW 「きゃっ\/\/\/ もー、びっくりさせないでよね\/\/\/」
+	ELSE
+		PRINTFORMW 「きゃっ%UNICODE(0x2764)% えへへ%UNICODE(0x2764)%」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;63,更多的接吻
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K111_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K111_63_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K111_63_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;ほぼキスと同じ
+IF LOCAL
+	IF FLAG:時間停止
+	ELSEIF CFLAG:111:睡眠
+		PRINTFORMW 「んみゅ……くぅ……」
+	ELSEIF (TALENT:111:心情 == -1 || CFLAG:111:ブチギレ) && FIRSTTIME("キス")
+		IF TALENT:111:恋慕
+			PRINTFORMW 「ふぇぇっ！？ にゃ、そんなやり方、%CALLNAME:MASTER%じゅるい……」
+		ELSE
+			PRINTFORMW 「んんっっ！？ そんな、こんなときに……うぅ……」
+		ENDIF
+	ELSEIF TALENT:111:心情 == -1 || CFLAG:111:ブチギレ
+		IF TALENT:111:恋慕
+			PRINTFORMW 「むぁっ……、もー！」
+		ELSE
+			PRINTFORMW 「んむ…………」
+		ENDIF
+	;ファーストキス
+	ELSEIF FIRSTTIME("キス")
+		PRINTFORMW 「あっ……\/\/\/」
+		PRINTFORMW 「キス……初めて……\/\/\/」
+		PRINTFORMW 「うれしい……\/\/\/」
+	ELSE
+		SELECTCASE RAND:6
+		CASE 0
+			$KISS_ZERO
+			PRINTFORMW 「ちゅーちゅっ%UNICODE(0x2764)%」
+		CASE 1
+			$KISS_ONE
+			PRINTFORMW 「ちゅっちゅ%UNICODE(0x2764)% ちゅっちゅ%UNICODE(0x2764)%」
+		CASE 2
+			$KISS_TWO
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)% あむっ%UNICODE(0x2764)% ぺろっ%UNICODE(0x2764)%」
+		CASE 3
+			SIF EXP:111:接吻経験 < 20
+				GOTO KISS_ZERO
+			PRINTFORMW 「はむ…れろ……ん…んぁ%UNICODE(0x2764)% もっとぉ……%UNICODE(0x2764)% んぁ、あむっ%UNICODE(0x2764)%」
+		CASE 4
+			SIF EXP:111:接吻経験 < 20
+				GOTO KISS_ONE
+			PRINTFORMW 「ちゅ…ちゅぅぅ……あぅ…れろ……ぁむ%UNICODE(0x2764)% れろ…もっと……ちゅるっ%UNICODE(0x2764)%」
+		CASE 5
+			SIF !TALENT:111:恋慕
+				GOTO KISS_TWO
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)%」
+			PRINTFORML 
+			PRINTFORMW 「んふ%UNICODE(0x2764)% ね、もっかい！」
+			PRINTFORML 
+			PRINTFORMW 「ちゅっちゅ%UNICODE(0x2764)%」
+			SIF EXP:111:接吻経験 * 2 < RAND:100
+				RETURN 1
+			PRINTFORML 
+			PRINTFORMW 「もっかいもっかい♪」
+			PRINTFORML 
+			PRINTFORMW 「ちゅっちゅ%UNICODE(0x2764)% ちゅっちゅ%UNICODE(0x2764)%」
+			PRINTFORML 
+			PRINTFORMW 「えへ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;80,拉手
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K111_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K111_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K111_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「わわっ、待ってよ%CALLNAME:MASTER%、いたいよー」
+ENDIF
+RETURN 1

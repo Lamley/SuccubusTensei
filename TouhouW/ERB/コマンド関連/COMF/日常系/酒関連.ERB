@@ -1,0 +1,206 @@
+﻿@醸造日数(ARG)
+#FUNCTION
+SELECTCASE ARG
+;普通的水
+	CASE 1
+		RETURNF 5
+;湖
+	CASE 2
+		RETURNF 5
+;温泉
+	CASE 3
+		RETURNF 5
+;葡萄酒
+	CASE 4
+		RETURNF 5
+;神酒
+	CASE 5
+		RETURNF 5
+;甜酒
+	CASE 6
+		RETURNF 5
+;梅酒
+	CASE 7
+		RETURNF 5
+ENDSELECT
+
+@醸造できた量(ARG)
+#FUNCTION
+#DIM 醸造数
+SELECTCASE FLAG:酒虫
+;濁酒
+	CASE 51
+		醸造数 = 10
+;清酒
+	CASE 52
+		醸造数 = 10
+;鬼殺酒
+	CASE 53
+		醸造数 = 5
+;葡萄酒
+;	CASE 54
+;		醸造数 = 5
+;神酒
+;	CASE 55
+;		醸造数 = 5
+;甜酒
+;	CASE 56
+;		醸造数 = 5
+;梅酒
+;	CASE 57
+;		醸造数 = 5
+ENDSELECT
+
+;濁酒清酒の場合
+IF FLAG:酒虫 == 51 || FLAG:酒虫 == 52
+	;MASTERの教養の値によってRANDで増加
+	醸造数 += RAND:(ABL:MASTER:教養 * 2 + 1)
+;鬼殺酒の場合
+ELSEIF FLAG:酒虫 == 53
+	;MASTERの教養の値によってRANDで増加
+	醸造数 += RAND:(ABL:MASTER:教養 + 1)
+;他未設定
+;ELSEIF FLAG:酒虫 == 54 || FLAG:酒虫 == 55 || FLAG:酒虫 == 56 || FLAG:酒虫 == 57
+	;MASTERの教養の値によってRANDで増加
+;	醸造数 += RAND:(ABL:MASTER:教養 + 1)
+ELSE
+ENDIF
+RETURNF 醸造数
+
+@酒造
+DAY:10 ++
+IF 醸造日数(FLAG:酒虫) <= DAY:10 && FLAG:酒虫 < 50
+	PRINTFORMW 酒虫之瓶里的%STR:(7000 + FLAG:酒虫)%変成了%STR:(7050 + FLAG:酒虫)%
+	FLAG:酒虫 += 50
+	DAY:10 = 0
+ELSEIF FLAG:酒虫 == 51 && DAY:10 >= 5
+	PRINTFORMW 酒虫之瓶里的浊酒変成了清酒
+	FLAG:酒虫 = 52
+	DAY:10 = 0
+ENDIF
+
+@DRUNKEN(ARG,ARG:1)
+#DIM 酒気増加量
+SELECTCASE ARG:1
+;濁酒
+	CASE 51
+		酒気増加量 = 300 + RAND:100
+;清酒
+	CASE 52
+		酒気増加量 = 400 + RAND:300
+;鬼殺酒
+	CASE 53
+		酒気増加量 = 500 + RAND:300
+	;未設定
+;	CASE 54
+;		酒気増加量 = 200 + RAND:300
+;	CASE 55
+;		酒気増加量 = 200 + RAND:300
+;	CASE 56
+;		酒気増加量 = 20 + RAND:30
+;	CASE 57
+;		酒気増加量 = 200 + RAND:300
+ENDSELECT
+IF TALENT:ARG:酒耐性 == -1
+	TIMES 酒気増加量, 1.2
+ELSEIF TALENT:ARG:酒耐性 == 1
+	TIMES 酒気増加量, 0.9
+ELSEIF TALENT:ARG:酒耐性 == 2
+	TIMES 酒気増加量, 0.75
+ELSEIF TALENT:ARG:酒耐性 == 3
+	TIMES 酒気増加量, 0.5
+ELSEIF TALENT:ARG:酒耐性 == -2
+	IF CFLAG:ARG:不会喝酒飲み >= 5
+		TIMES 酒気増加量, 2.0
+	ELSEIF CFLAG:ARG:不会喝酒飲み >= 2
+		TIMES 酒気増加量, 1.5
+	ELSE
+		TIMES 酒気増加量, 1.0
+	ENDIF
+ENDIF
+SIF ARG:1 == 53 && (TALENT:ARG:鬼 || TALENT:ARG:吸血鬼)
+	TIMES 酒気増加量, 3.0
+SIF ARG == MASTER
+	酒気増加量 = 酒気増加量 / (1 + TFLAG:酔い止め)
+BASE:ARG:酒気 = MIN(BASE:ARG:酒気 + 酒気増加量 ,MAXBASE:ARG:酒気)
+
+@ALCOHOL_TASTE(ARG)
+#FUNCTION
+SELECTCASE ARG
+	CASE 51
+	;酒好きには物足りない
+		IF TALENT:TARGET:酒耐性 > 0
+			LOCAL = 7
+		ELSE
+			LOCAL = 10
+		ENDIF
+	CASE 52
+	;不会喝酒にはきつい
+		IF TALENT:TARGET:酒耐性 < 0
+			LOCAL = 8
+		ELSE
+			LOCAL = 15
+		ENDIF
+	CASE 53
+		IF TALENT:TARGET:鬼 || TALENT:TARGET:吸血鬼
+			LOCAL = 30
+		ELSEIF TALENT:TARGET:酒耐性 <= 0
+			LOCAL = 5
+		ELSE
+			LOCAL = 12
+		ENDIF
+;	CASE 54
+;		IF TALENT:TARGET:酒耐性 > 0
+;			LOCAL = 7
+;		ELSE
+;			LOCAL = 10
+;		ENDIF
+;	CASE 55
+;		IF TALENT:TARGET:酒耐性 > 0
+;			LOCAL = 7
+;		ELSE
+;			LOCAL = 10
+;		ENDIF
+;	CASE 56
+;		IF TALENT:TARGET:酒耐性 > 0
+;			LOCAL = 7
+;		ELSE
+;			LOCAL = 10
+;		ENDIF
+;	CASE 57
+;		IF TALENT:TARGET:酒耐性 > 0
+;			LOCAL = 7
+;		ELSE
+;			LOCAL = 10
+;		ENDIF
+ENDSELECT
+RETURNF LOCAL
+
+@酒一覧表示(ARG)
+;所持数がARG未満だと非表示、ARG以上所有してる酒を選択するとその道具番号をRETURNする
+$LOOP
+FOR LOCAL,51,56 ;58
+	;効果が定まるまでは神酒スキップ
+	SIF !STRLENS(ITEMNAME:LOCAL)
+		CONTINUE
+	SIF ITEM:LOCAL >= ARG
+		PRINTFORML [{LOCAL}] %ITEMNAME:LOCAL%　所持数{ITEM:LOCAL}
+NEXT
+DRAWLINE 
+PRINTL [100] 中止
+INPUT
+IF RESULT >= 51 && RESULT < 56 && ITEM:RESULT >= ARG && STRLENS(ITEMNAME:RESULT)
+	RETURN RESULT
+ELSEIF RESULT == 100
+	RETURN 0
+ELSE
+	GOTO LOOP
+ENDIF
+
+@CAN_DRINK(ARG)
+#FUNCTION
+SIF TALENT:ARG:酒耐性 == -2
+	RETURNF 0
+SIF BASE:ARG:酒気 >= MAXBASE:ARG:酒気 * 2 / 3
+	RETURNF 0
+RETURNF 1

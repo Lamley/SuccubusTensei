@@ -1,0 +1,93 @@
+﻿;-----------------------------------------------------------
+;マップ描画処理
+;2文字セットの半角数字(01とか)は自動でボタン化、全角数字は認識しない
+;-----------------------------------------------------------
+@DRAW_MAP(ARGS)
+#DIMS AA, 40
+#DIM SPOT
+#DIM MODE
+#DIM LOCATION
+
+#DIM LINENUM
+#DIM X_POINT
+#DIM FOUND_INT
+;AAを取得、なければそのまま帰る
+VARSET AA
+;お出かけマップかどうかの分岐
+IF ARGS == "ODEKAKE"
+	TRYCCALLFORM ODEKAKEMAP_{CFLAG:MASTER:デート中}(AA)
+	CATCH
+		RETURN 0
+	ENDCATCH
+ELSE
+	TRYCCALLFORM MAP_VIEWING_{MAIN_MAP}(AA)
+	CATCH
+		RETURN 0
+	ENDCATCH
+ENDIF	
+
+;-----------------------------------------------------------
+;描画処理
+;-----------------------------------------------------------
+FOR LINENUM, 0, VARSIZE("AA")
+	SIF AA:LINENUM == ""
+		CONTINUE
+	;行ごとに初期化
+	X_POINT = 0
+	RESULTS = I
+	;行の終端までループ
+	WHILE RESULTS != "" && STRLENSU(RESULTS) < 3
+		;1文字取り出す
+		SUBSTRINGU AA:LINENUM, X_POINT, 1
+		;数字ならボタンにする
+		IF ISNUMERIC(RESULTS)
+			;分岐めんどいから必ず2ケタ取る
+			SUBSTRINGU AA:LINENUM, X_POINT, 2
+			FOUND_INT = TOINT(RESULTS)
+			;お出かけマップかどうかの分岐
+			IF ARGS == "ODEKAKE"
+				SPOT = FOUND_INT
+				CALL GETMAP2(SPOT)
+			ELSE
+				SPOT = MAIN_MAP * 100 + FOUND_INT
+				CALL GETMAP(SPOT)
+			ENDIF
+			X_POINT += 2
+		;記号に意味を持たせる例、これだと#は普通には使えなくなるけどまあいいか
+		ELSEIF RESULTS == "#"
+			;必ず二文字取る
+			SUBSTRINGU AA:LINENUM, X_POINT, 2
+			TRYCALLFORM DRAW_MAP_BG_{CFLAG:MASTER:現在位置 / 100}(RESULTS)
+			X_POINT += 2
+		;ふつうの文字
+		ELSE
+			;CALL DRAW_MAP_BG(RESULTS)
+			TRYCALLFORM DRAW_MAP_BG_{CFLAG:MASTER:現在位置 / 100}(RESULTS)
+			X_POINT ++
+		ENDIF
+	WEND
+	PRINTL
+NEXT
+
+RESETCOLOR
+
+
+;===========================================================
+;場所名表示
+;===========================================================
+@PRINT_SPOT
+#DIMS SPOTNAME, 100
+
+VARSET SPOTNAME
+CALLFORM MAP_SPOTNAME_{MAIN_MAP}(SPOTNAME)
+FOR  LOCAL, 0, VARSIZE("SPOTNAME")
+	IF SPOTNAME:LOCAL != ""
+		IF MAIN_MAP * 100 + LOCAL != CFLAG:MASTER:現在位置
+			PRINTBUTTON TOSTR(LOCAL, "00") + "." + SPOTNAME:LOCAL + "　", MAIN_MAP * 100 + LOCAL
+		ELSE
+			SETCOLOR 0x00FF00
+			PRINTS TOSTR(LOCAL, "00") + "." + SPOTNAME:LOCAL + "　"
+			RESETCOLOR
+		ENDIF
+	ENDIF
+NEXT

@@ -1,0 +1,4342 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;日常系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;300,会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_300
+;コマンド共通メッセージ(TRAIN_MESSAGE) 
+;削除すると「～話をした。」とかが消えます
+CALL TRAIN_MESSAGE
+;口上メイン呼出
+CALL M_KOJO_MESSAGE_COM_K97_300_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:5 == 0
+			PRINTFORMW 「あ？」
+			PRINTFORMW 「何だ、話しかけてくるんじゃねぇよ」
+			PRINTFORMW 「鬱陶しい」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…チッ」
+			PRINTFORMW 「うぜぇ」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 正邪は鬱陶しそうにこちらを向いた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「馬鹿じゃねぇの」
+			PRINTFORMW 「この野郎」
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 「口効くつもりはねぇぞ」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:5 == 0
+			PRINTFORMW 「なんで姫殿下を担ぎ上げたかって？」
+			PRINTFORMW 「単純な話、一族の復讐の為に立ち上がった弱者ってのはマスコミが食いつくだろ？」
+			PRINTFORMW 「作為的な話でも多かれ少なかれマスコミはこういった話に弱い」
+			PRINTFORMW 「反乱蜂起に必要なのは大義名分、大衆の支持を得さえすれば錦の御旗はこちらに転がり込んでくる」
+			PRINTFORMW 「…はずだったんだが失敗したわけだ」
+			PRINTFORMW 「何、生きていれば、もう一回くらいやれるさ」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 
+			PRINTFORMW 「お前の能力って結局時間停止で良いのかね？」
+			PRINTFORMW 「いやまぁなんとなくそんな気がするって言うか」
+			PRINTFORMW 「無意識ならこっち側の違和感は突然来ないしな」
+			PRINTFORMW 「まぁどっちでもやれることは多いけど」
+			PRINTFORMW 正邪は嬉々としてこちらの能力に対して感想を述べている。
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「妖怪之山とかさ、ああいう軍備の整っているところって」
+			PRINTFORMW 「下士官が反乱でも起こしてくれたら面白いんだけどねぇ」
+			PRINTFORMW 「白狼天狗とかさ、なんで猿山の大将祭りあげてんのかね」
+			PRINTFORMW 正邪はなにやら楽しそうに扇動計画を立てている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「猿山の大将が妖怪でも人間でも構わんけどね」
+			PRINTFORMW 「どの道天下を取るなら自分がってさ」
+			PRINTFORMW 「そう思うわけよ」
+			PRINTFORMW 「私たちが平等の意味をふん反り返って見下している連中に教えてやるのさ」
+		ELSE
+			PRINTFORMW 「どの道さ、人間でも妖怪でも死ぬわけだが」
+			PRINTFORMW 「そのとき誰かの理想やイデオロギーで殺されるぐらいなら」
+			PRINTFORMW 「私は私の理想で死にたい、と思うんだよ」
+			PRINTFORMW 「まぁ辛気臭い話だな、それに」
+			PRINTFORMW 「死ぬつもりは毛頭無いぞ、安心しろ」
+			PRINTFORMW 「ただどの道死ぬなら歴史の最後の一ページになってやるさ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:5 == 0
+			PRINTFORMW 「あ…？なんだ？」
+			PRINTFORMW 「今日は何したいかって？」
+			PRINTFORMW 「…お前と一緒に居たい」
+			PRINTFORMW 「それだけでいいんだ、それだけで…」
+			PRINTFORMW 「なぁ、お前は」
+			PRINTFORMW 「お前は何したい？」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 
+			PRINTFORMW 「お前って好きな食べ物とかあるのか？」
+			PRINTFORMW 「いや無いなら無いでいいし」
+			PRINTFORMW 「やっぱ嫌いな食べ物教えろ」
+			PRINTFORMW 「どんなもんでも無理やり食える体にしてやるからさ」
+			PRINTFORMW 正邪は悪戯っぽく笑みを浮かべた。
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「どうした？顔になんか付いてるか？」
+			PRINTFORMW 「全く…私の顔を見たって面白くも無いだろ」
+			PRINTFORMW 「自信とか…無いし…お前は私なんかより整ってるし…」
+			PRINTFORMW 正邪はぶつくさと文句を言ってきている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「むぅ…なんか暇だな」
+			PRINTFORMW 「まぁこうしているだけでも幸せだけどな」
+			PRINTFORMW 「なんていうか、こんなこと今までなかったからさ」
+			PRINTFORMW 「ん…愛してるよ、%CALLNAME:MASTER%」
+		ELSE
+			PRINTFORMW 「なぁなぁ」
+			PRINTFORMW 「%CALLNAME:MASTER%、何処に行きたい？」
+			PRINTFORMW 「私はお前についてくよ」
+			PRINTFORMW 「どうせ根無し草だし居場所も無い独り身だからな」
+			PRINTFORMW 「お前に付き合ってやれる時間はたっぷりとあるわけさ」
+			PRINTFORMW 「死ぬまで一緒に居てもらうぞ、悪いけどな」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:5 == 0
+			PRINTFORMW 「おう、あんまりじろじろ見ないでくれよ」
+			PRINTFORMW 「お前、目線がいやらしいんだよ」
+			PRINTFORMW 「気づいてないのか？」
+			PRINTFORMW 「女物色してる目だぞそれ」
+			PRINTFORMW 「…お前は私だけ見てればいいんだ」
+			PRINTFORMW 「何、好きなことの一つぐらいしてやるよ」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 
+			PRINTFORMW 「お前も家族が居たりするのか？」
+			PRINTFORMW 「いや、なんとなく気になってな」
+			PRINTFORMW 「私？私か」
+			PRINTFORMW 「…私は親父もお袋も許さないだろうな、居たとしたらだけど」
+			PRINTFORMW 正邪はどこか寂しそうにそう言い放った。
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「それにしてもお前普段何やってんだ？」
+			PRINTFORMW 「ぶらぶら幻想郷散歩したりしてんのか？」
+			PRINTFORMW 「もしかしたらお前は私よりも幻想郷に詳しいのかも知れんな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…どうした？」
+			PRINTFORMW 「私の目的？」
+			PRINTFORMW 「聞いてどうするか分からんけど…」
+			PRINTFORMW 「まぁ人様の上に乗っかっているような連中を引きずり降ろしたいってとこかね」
+		ELSE
+			PRINTFORMW 「どの道さ、人間でも妖怪でも死ぬわけだが」
+			PRINTFORMW 「そのとき誰かの理想やイデオロギーで殺されるぐらいなら」
+			PRINTFORMW 「私は私の理想で死にたい、と思うんだよ」
+			PRINTFORMW 「まぁ辛気臭い話だな、それに」
+			PRINTFORMW 「死ぬつもりは毛頭無いぞ、安心しろ」
+			PRINTFORMW 「ただどの道死ぬなら歴史の最後の一ページになってやる」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:5 == 0
+			PRINTFORMW 「なんだよ馴れ馴れしく話しかけんじゃねぇよ」
+			PRINTFORMW 「あ？」
+			PRINTFORMW 「だからなんで一々お前は私に構うんだよ！」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「何だってんだよ」
+			PRINTFORMW 「お前なんかと誰が話したがるんだ」
+			PRINTFORMW 「うざったいんだよ、お前！」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「何？」
+			PRINTFORMW 「ばーか」
+			PRINTFORMW 「何の用も無いのに話しかけんじゃねぇよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「なぁ%CALLNAME:MASTER%…」
+			PRINTFORMW 「いや、なんでもないよ」
+			PRINTFORMW 「そう、なんでもないんだ…」
+		ELSE
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「い、いきなり話しかけてくんなよ！バカ！」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:5 == 0
+			PRINTFORMW 「なんだ？今日の飯の予定か？」
+			PRINTFORMW 「今日はだな―――」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 
+			PRINTFORMW 「私の仕事？」
+			PRINTFORMW 「まぁあるようで無いようなもんだ」
+			PRINTFORMW 「今は根無し草さ、残念ながらな」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「結局のところ弱い奴ってのは強い奴には勝てないのかね」
+			PRINTFORMW 「弱い奴が強い奴に勝つって事はそいつは紛れもなく強者だろ？」
+			PRINTFORMW 「延々と終わらないかもな、この戦いは」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前って強いのか？」
+			PRINTFORMW 「いや腕っ節とかじゃなくて立場とか含めてさ」
+			PRINTFORMW 「もしかしたら敵になるかもしれないだろ？」
+		ELSE
+			PRINTFORMW 「『高きによって低きを視るは勢い既に破竹』ねぇ…」
+			PRINTFORMW 「要はさ弱者ってのはそれだけで不利なんだよな」
+			PRINTFORMW 「まぁそれを何とかするのが私の仕事だがな」
+			PRINTFORMW その言葉の意味はそういう意味ではなかった気がするが…
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:5 == 0
+			PRINTFORMW 「お前の話、微妙だな」
+			PRINTFORMW 「うん、まぁあまり面白くは無いな」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 
+			PRINTFORMW 「ふ～ん」
+			PRINTFORMW 「まぁお前の身の丈話、もう少し聞かせてくれるか？」
+			PRINTFORMW 「何、少し面白かったってだけさ」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「うん、うん」
+			PRINTFORMW 「なるほど、詳しい話を聞かせてもらおうか」
+			PRINTFORMW 「まぁ色々とな、情報は集めとくもんだ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前さん今後の予定は？」
+			PRINTFORMW 「いや、暇なら付き合ってやろうかと思ってな」
+			PRINTFORMW 「いいじゃないか、それともダメか？」
+		ELSE
+			PRINTFORMW 「うーん、しかしお前さん何者なんだ？」
+			PRINTFORMW 「まぁ私の勘だが」
+			PRINTFORMW 「お前相当強いんじゃないか？」
+		ENDIF
+	ELSE
+		IF RAND:5 == 0
+			PRINTFORMW 「なんだ？」
+			PRINTFORMW 「私と話してもつまんないぞ」
+			PRINTFORMW 「嫌われ者と話することなんて無いだろ」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「お前話下手だって言われたことないか？」
+			PRINTFORMW 「まぁそういうことだ」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…なんだって話しかけてくるんだ？」
+			PRINTFORMW 「お前何か企んでるだろ」
+			PRINTFORMW 「そういうの、私鼻が利くからな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あのさ、人と話すならもう少し面白い話仕入れとけ」
+			PRINTFORMW 「老婆心って奴だよまったく…」
+		ELSE
+			PRINTFORMW 「もう少し気を使ったほうがいいぞ、人と話す時はさ」
+			PRINTFORMW 「まぁ盛り上がる話題ぐらい選べって事さ」
+		ENDIF
+	ENDIF
+	RETURN 0
+ENDIF
+RETURN 1
+;==================================================
+;301,泡茶
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_301
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_301_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_301_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「相変わらず不味いな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「………」
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 「…ずず…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ありがと…」
+			PRINTFORMW 「ふぅ…うまいな…お茶…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「むぅ…お茶ね…」
+			PRINTFORMW 「んく…どうもありがと、美味かったよ」
+		ELSE
+			PRINTFORMW 「ごく…ごく…ん…」
+			PRINTFORMW 「%CALLNAME:MASTER%、お茶入れるの上手いなお前」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んく…んく…」
+			PRINTFORMW 「はぁ…ん…悪くは無い味だな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ごく…ん…」
+			PRINTFORMW 「うん、美味いお茶だな」
+		ELSE
+			PRINTFORMW 「ん…ふぅ…」
+			PRINTFORMW 「ああ、美味いなこれ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「茶か？」
+			PRINTFORMW 「…まぁいいよ、もらうさ」
+			PRINTFORMW 「お前の腕には期待してないけどな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%」
+			PRINTFORMW 「お茶入れてもらって悪いけどさ」
+			PRINTFORMW 「まずいなこれ」
+		ELSE
+			PRINTFORMW 「うん、お茶…ね…」
+			PRINTFORMW 「まずいお茶入れるのが好きなのかお前？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ごく…ん…」
+			PRINTFORMW 「ん…悪くは無いな、こういうのも」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んくんく…」
+			PRINTFORMW 「どうも、美味かったぞ」
+		ELSE
+			PRINTFORMW 「ん…悪いな、入れてもらって」
+			PRINTFORMW 「ずず…ん…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「お茶…？」
+			PRINTFORMW 「まぁいいけど…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「茶…？貰えるなら貰っとくが」
+		ELSE
+			PRINTFORMW 「ん…茶か…悪くないな」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…茶か、貰うよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「なんか変なもん入れてないよな？」
+		ELSE
+			PRINTFORMW 「ああ、悪いな気を使わせて」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;302,身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_302
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_302_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_302_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…なんだよ」
+			PRINTFORMW 「気色悪いな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前」
+			PRINTFORMW 「…馴れ馴れしくすんなよ」
+		ELSE
+			PRINTFORMW 「…触るんじゃねぇよ」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…どうした？肩なんか揉んできて」
+			PRINTFORMW 「ふぉおお…上手いな、お前」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「な、何だいきなり…？」
+			PRINTFORMW 「よせやい、くすぐったいぞ」
+		ELSE
+			PRINTFORMW 「ん～お前の背中でっかいな」
+			PRINTFORMW 「考え事するにはこのまんまでもいいかな」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 正邪は後ろから抱きついてきた。
+			PRINTFORMW 「こういうのも、悪くは無いな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ちょ…っと」
+			PRINTFORMW 「いきなり触られても困るぞ…本当…」
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「%CALLNAME:MASTER%、耳掃除ぐらいしてやるぞ」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ちょっと…」
+			PRINTFORMW 「あんまり体弄らないでくれよ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あん…ん…」
+			PRINTFORMW 「こういうのは一言断ってだな…まぁいいか…」
+		ELSE
+			PRINTFORMW 「うりうり」
+			PRINTFORMW 正邪は肘で突っついてくる。
+			PRINTFORMW 「ほれほれ、お前腹に肉付きすぎじゃね？」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「なんだよいきなり触ってくんなよ」
+			PRINTFORMW 「気持ち悪い…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%！」
+			PRINTFORMW 「…やっぱなんでもない」
+		ELSE
+			PRINTFORMW 「何だ？抱いて欲しいのか？」
+			PRINTFORMW そういうと正邪は後ろから抱きしめてきた。
+			PRINTFORMW 「ん…別にお前のためじゃないんだからな」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…お前の手、温かいな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どうだ、肩ぐらい揉んでやろうか？」
+			PRINTFORMW 「ほれ、大人しくしてろ、動くと揉み辛い」
+		ELSE
+			PRINTFORMW 「…お前の体、意外とがっしりしてんな」
+			PRINTFORMW 「筋肉付いてるし見かけよりかは…な」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な、何だ急にベタベタと…」
+			PRINTFORMW 「止めろよ…気色悪い…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…どうした？」
+		ELSE
+			PRINTFORMW 「甘えん坊だな…」
+			PRINTFORMW 「まぁ好きにしてくれや」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…あんまり気軽に触ってくれるな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「変なことすんなよ？」
+		ELSE
+			PRINTFORMW 「そうベタベタといつもやっているのかい？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;303,道歉
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_303
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_303_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_303_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	SELECTCASE TFLAG:193
+	CASE 0,1,2
+		IF CFLAG:1304 == 1 && TALENT:恋人
+			PRINTFORMW 「あ？」
+			PRINTFORMW 「ああ、まぁ許して欲しいってのならいいぞ」
+			PRINTFORMW 「こっちも大人気なくて悪かったよ」
+			PRINTFORMW 「相棒を嫌いになるわけが無いだろう？」
+			PRINTFORMW 「すまなかった、意地になって」
+			PRINTFORMW 「でもあんまり怒らせるようなことするなよ？」
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「いいよ、許すよ」
+			PRINTFORMW 「魔が差すってのもあるだろうよ」
+			PRINTFORMW 「ただまぁ…」
+			PRINTFORMW 「お前のこと嫌いになりたくないから」
+			PRINTFORMW 「あんまり変な事はしないでくれ」
+			PRINTFORMW 「…頼む」
+		ELSEIF TALENT:恋人
+			PRINTFORMW 「許して欲しいって…」
+			PRINTFORMW 「まぁ構わんけどね」
+			PRINTFORMW 「人のこと怒らせるようなことするからだよ」
+			PRINTFORMW 「ちょっとは反省してもらいたいね」
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			PRINTFORMW 「わ、分かった」
+			PRINTFORMW 「今回は許すよ」
+			PRINTFORMW 「ただ、人を怒らせるような真似は謹んでくれ」
+			PRINTFORMW 「…理解したか？」
+			PRINTFORMW 「口先だけで人を騙し通せると思わないでくれよ」
+		ELSEIF CFLAG:1302 == 1 && TALENT:恋慕
+			PRINTFORMW 「ん…まぁ…」
+			PRINTFORMW 「別にお前がスケベな事は知ってるわけだしな」
+			PRINTFORMW 「いいよ、許してやる」
+			PRINTFORMW 「次はすんなよ」
+		ELSEIF CFLAG:1302 == 1 && TALENT:思慕
+			PRINTFORMW 「今回は許してやるが」
+			PRINTFORMW 「次はどうするか知らんぞ」
+			PRINTFORMW 「覚悟しとけよ内袴ドロ」
+		ELSEIF CFLAG:1302 == 1
+			PRINTFORMW 「まあいいけどもな」
+			PRINTFORMW 「次やったらわかってるよな？」
+			PRINTFORMW 「内袴ドロさんよぉ」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「別に許してやるけどさ」
+			PRINTFORMW 「お前本当に反省してるのか？」
+			PRINTFORMW 「腹に一物抱えてそうだしな」
+			PRINTFORMW 「まぁ今は良いよ」
+			PRINTFORMW 「許してやるが覚えとけよ」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「まあ今回は許してやらんでもない」
+			PRINTFORMW 「ただ二度も三度も怒らせるようならどうなるか」
+			PRINTFORMW 「肝に銘じておけ」
+			PRINTFORMW 「分かったな」
+		ELSE
+			PRINTFORMW 「…ああ、いいよ」
+			PRINTFORMW 「そこまで根に持つタイプでもないしな」
+			PRINTFORMW 「今回は許してやる」
+		ENDIF
+	CASEELSE
+		IF CFLAG:1304 == 1 && TALENT:恋人
+			PRINTFORMW 「…どうしても許して欲しいか？」
+			PRINTFORMW 「ダメだな」
+			PRINTFORMW 「もう少し反省しとけ」
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「許してやらないよ」
+			PRINTFORMW 「お前のこと許してもまた繰り返すだろ？」
+			PRINTFORMW 「…もうちょっと反省しておけ」
+		ELSEIF TALENT:恋人
+			PRINTFORMW 「まぁおまえがどうしてもというのであれば分からんでもないけどな」
+			PRINTFORMW 「そういうのは口先だってのも感じるんだよ」
+			PRINTFORMW 「私だって馬鹿じゃないよ」
+			PRINTFORMW 「だからしばらくお前を許さないよ、私は」
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			PRINTFORMW 「は？なんでお前許さないといけないの？」
+			PRINTFORMW 「馬鹿じゃねえのか」
+			PRINTFORMW 「反省してるとか口で言われても困るな」
+			PRINTFORMW 「悪いことやったんだから許す権利はこちらにあるだろ」
+			PRINTFORMW 「お前が何言ったって許してやんねぇよ」
+		ELSEIF CFLAG:1302 == 1 && TALENT:恋慕
+			PRINTFORMW 「いや冷静に考えると全く許す理由ねぇよな」
+			PRINTFORMW 「内袴ドロさんよ」
+			PRINTFORMW 「まぁ女の敵が私の敵かどうかはともかくとしてだな」
+			PRINTFORMW 「変態のお前を許すわけないし」
+			PRINTFORMW 「まぁどうしてもってなら考えてやるけどな」
+		ELSEIF CFLAG:1302 == 1 && TALENT:思慕
+			PRINTFORMW 「…馬鹿じゃねぇのお前」
+			PRINTFORMW 「何を持って許されるんだ」
+			PRINTFORMW 「内袴ドロが偉そうによぉ」
+		ELSEIF CFLAG:1302 == 1
+			PRINTFORMW 「はあ！？」
+			PRINTFORMW 「いやいやいや」
+			PRINTFORMW 「まず内袴ドロが私を怒らせたってだけで許される理由ねぇよな」
+			PRINTFORMW 「…少しは頭使えよな」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「はっはっは、中々面白いこと言うなお前」
+			PRINTFORMW 「許してくださいってさ」
+			PRINTFORMW 「許すか許さないか私が決めることだからな」
+			PRINTFORMW 「今はダメだよ今はな」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「謝れば許してもらえるってのはどこで教わった？」
+			PRINTFORMW 「ダメだ、許してやれんよ」
+		ELSE
+			PRINTFORMW 「あ？」
+			PRINTFORMW 「許さないよ、ダメだ」
+		ENDIF
+	ENDSELECT
+ENDIF
+RETURN 1
+;==================================================
+;304,幇忙干活
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_304
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_304_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_304_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の仕事を手伝おうとした。
+		PRINTFORMW %CALLNAME:MASTER%は聴衆の時も止まっていることに気がついた！
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…勝手にしろ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「好きにすればいいだろ」
+		ELSE
+			PRINTFORMW 「………」
+		ENDIF
+	ELSEIF CFLAG:300 == 霧之湖
+		IF RAND:3 == 0
+			PRINTFORMW 「ああ、手伝ってくれるのならありがたい」
+			PRINTFORMW 「私のしゃべってる間に合いの手入れてくれ」
+			
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おう、暇なら手伝ってくれ」
+			PRINTFORMW 「何、サクラをやってくれればいい、適当にそうだそうだ言ってくれればな」
+		ELSE
+			PRINTFORMW 「仕事？」
+			PRINTFORMW 「ああじゃあそこで野次入れてくれ」
+		ENDIF
+	ELSEIF CFLAG:300 == 古木的大樹
+		IF RAND:3 == 0
+			PRINTFORMW 「ん？じゃぁそこの弁当配ってくれ」
+			PRINTFORMW 「まぁよくある手だ…お前は食うなよ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「じゃあ野次をやってくれ」
+			PRINTFORMW 「こういうので重要なのは優秀な観客なんだ、わかるだろ？」
+		ELSE
+			PRINTFORMW 「仕事？じゃあビラ配ってくれ」
+			PRINTFORMW 「宣伝用に夜鍋して作ったからな、自信作だ」
+		ENDIF
+	ELSEIF CFLAG:300 == 九天瀑布
+		IF RAND:3 == 0
+			PRINTFORMW 「おお、じゃあそこの弁当配ってくれよ」
+			PRINTFORMW 「夜警の皆様方も喜ぶだろ、手作りなんだぞ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「じゃあ野次やってくれよ」
+			PRINTFORMW 「こういうのは観客が盛り上がらんとな」
+		ELSE
+			PRINTFORMW 「んじゃあビラ配ってくれよ」
+			PRINTFORMW 「こういうののテンプレっちゃテンプレだがやらん理由もないしな」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;305,索求膝枕
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_305
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_305_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_305_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…大人しくしてけよ」
+			PRINTFORMW 「動かれると気味悪いからな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前な…」
+			PRINTFORMW 「…人が怒ってるって分かってんのか？」
+		ELSE
+			PRINTFORMW 「…何だお前」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…どうした？膝枕？」
+			PRINTFORMW 「構わんが…変なことすんなよ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「膝枕？」
+			PRINTFORMW 「ほれ、好きにしろ」
+		ELSE
+			PRINTFORMW 「膝枕ならしてやるが」
+			PRINTFORMW 「よく分からんな、何がいいのか」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…膝枕？」
+			PRINTFORMW 正邪はポンポンと膝を叩いている。
+			PRINTFORMW 「…かわいいな、お前」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「膝枕ぐらいならいいが…」
+			PRINTFORMW 「…変なことはするなよ？」
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「%CALLNAME:MASTER%、膝枕、したいんだろ？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「おう、膝枕か」
+			PRINTFORMW 「いいぞ、してやるよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「膝枕ねぇ」
+			PRINTFORMW 「いいけど、あまり動くなよ」
+		ELSE
+			PRINTFORMW 「膝枕？」
+			PRINTFORMW 正邪は膝を手で叩いてアピールしてくる。
+			PRINTFORMW 「ほら、どうぞ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「は？膝枕？」
+			PRINTFORMW 「…勝手にしろ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「膝枕？そういうのは…」
+			PRINTFORMW 「…やっぱなんでもない、好きにしてくれ」
+		ELSE
+			PRINTFORMW 「膝枕…？」
+			PRINTFORMW そういうと正邪は自分の膝に%CALLNAME:MASTER%の頭を押し付けてきた。
+			PRINTFORMW 「どうだ、これで満足か？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「膝枕？いいけども…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「まぁ膝枕ぐらいならいいけども」
+			PRINTFORMW 「ほれ、具合はどうだ？」
+		ELSE
+			PRINTFORMW 「…膝枕ねぇ…」
+			PRINTFORMW 「いや、別に嫌とかではなく…恥ずかしいというか…いいけど」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な、何だ膝枕って…」
+			PRINTFORMW 「いいけどさ…暴れるなよ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「膝枕って…いいけどさ…」
+		ELSE
+			PRINTFORMW 「ほれ、膝枕だろ」
+			PRINTFORMW 「そういうの好きなんだろ、好きにしろ」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…勝手にしろよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…膝は空いてるからまぁいいけどさ」
+		ELSE
+			PRINTFORMW 「膝枕ぐらいなら…構わないけどさ」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;306,撫摸肚子
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_306
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_306_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_306_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:TARGET:妊娠
+		IF FLAG:時間停止
+			PRINTFORMW 凍てついた時の中で正邪の腹を撫でる。
+			PRINTFORMW %CALLNAME:MASTER%は正邪の膨らんだお腹を撫でた。
+		ELSEIF CFLAG:318 == 1
+			PRINTFORMW 「…お前もいい加減まともになれよ」
+			PRINTFORMW 「分かるだろ？そういうの」
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			PRINTFORMW 「元気な子…産まれるといいなぁ」
+			PRINTFORMW 「…そう思うだろ？お前もさ」
+		ELSEIF TALENT:恋人
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「今…お腹蹴った…」
+			PRINTFORMW 「分かった？今の…」
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			PRINTFORMW 「………」
+			PRINTFORMW 「分かるだろ？この子の鼓動がさ」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「…おまえも兒童は好きなのか？」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「…構わんが」
+			PRINTFORMW 「気をつけろよ…」
+		ELSE
+			PRINTFORMW 「…ああ…」
+			PRINTFORMW 「優しく…しろよ…」
+		ENDIF
+	ELSEIF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の腹を撫でる。
+		PRINTFORMW %CALLNAME:MASTER%は正邪の痩せ型のお腹を擦った。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…セクハラか」
+		PRINTFORMW 「いい加減にしとけよ」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「…なんだどうした急に」
+		PRINTFORMW 「別に減るもんじゃないけどさぁ」
+		PRINTFORMW 「いやいいよ、続けてくれ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「あ…」
+		PRINTFORMW 「い、いきなりなんだよ…」
+		PRINTFORMW 「…太って…無いよな？」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「どうした？」
+		PRINTFORMW 「いや、別におかしいことではないかもしれんが」
+		PRINTFORMW 「あまり驚かせないでくれよ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「おう！？」
+		PRINTFORMW 「な、なんだいきなり乙女の腹を擦って…」
+		PRINTFORMW 「変態かお前は！変態だな！」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「どうした急にお腹さすり始めて」
+		PRINTFORMW 「そんなに肉も脂も付いてないと思うんだけどなぁ」
+		PRINTFORMW 「いや私も女だからな」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「？」
+		PRINTFORMW 「生憎と太ってはいないつもりだったが」
+	ELSE
+		PRINTFORMW 「何だお前」
+		PRINTFORMW 「いきなり気色悪いな」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;307,捏臉蛋
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_307
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_307_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_307_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の捏臉蛋。
+		PRINTFORMW %CALLNAME:MASTER%は意外ともっちりとした頬の感触を楽しんだ。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…ん？」
+		PRINTFORMW 「何だってんだ？」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「…う～」
+		PRINTFORMW 「なんだよ、面白いことでもあったのか？」
+		PRINTFORMW 「あんまり人のもち肌を痛めつけてくれるなよ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…んあ？」
+		PRINTFORMW 「なんだ？何か用か？」
+		PRINTFORMW 「あんまり引っ張るなよ、痛いんだから」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「むぅ…」
+		PRINTFORMW 「そんなに私の顔って面白いか？」
+		PRINTFORMW 「あんまり弄らないでくれよ…」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「あぎゃ！？」
+		PRINTFORMW 「痛てててて…」
+		PRINTFORMW 「何しやがんだてめえ…！」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「ふにゃ！？」
+		PRINTFORMW 「…痛ってえ！！」
+		PRINTFORMW 「お前…そういうのは手加減しろ…」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ほえ？」
+		PRINTFORMW 「いひゃいいひゃいひゃめへふへ…」
+	ELSE
+		PRINTFORMW 「んあ？」
+		PRINTFORMW 「おい、なにしやがるんだ！」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;308,捅臉頰
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_308
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_308_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_308_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の捅臉頰。
+		PRINTFORMW %CALLNAME:MASTER%は柔肌の感触を楽しんだ。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…んぁ…すぅ…」
+		PRINTFORMW 正邪はぐっすりと寝ている
+		PRINTFORMW その頬は餅の様に柔らかく弾力があった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 正邪は心情不快そうにこちらを見ている。
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「…うん？」
+		PRINTFORMW 「なんだ、どうかしたのか？」
+		PRINTFORMW 「そんなにつつくなよ、いてててて」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん？」
+		PRINTFORMW 「どうかしたのか？」
+		PRINTFORMW 「…まぁ続けてくれて構わないよ、面白いかは知らないけど」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「ふん…そんなにつついて面白いか？」
+		PRINTFORMW 「まぁ面白いなら続けてくれて構わんよ」
+		PRINTFORMW 「そんなに楽しいとも思わないけど」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「ん！？」
+		PRINTFORMW 「痛…」
+		PRINTFORMW 「なんだよ…全く…」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「ふぎ！？」
+		PRINTFORMW 「…突き指しそうな勢いでほっぺたつつくなって…」
+		PRINTFORMW 「まぁお前が楽しいならいいけどさ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ほい？」
+		PRINTFORMW 「なんだ？どうかしたのか？」
+	ELSE
+		PRINTFORMW 「ん？」
+		PRINTFORMW 「おい、なんだ？」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;309,摸頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_309
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_309_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_309_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の髪を撫でた。
+		PRINTFORMW %CALLNAME:MASTER%は正邪のキューティクルの感触を楽しんだ。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…くぅ…すぅ…」
+		PRINTFORMW 正邪はぐっすりと寝ている
+		PRINTFORMW その髪は意外と手入れされているようだ。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 「そうやって心情を取ろうとしても無駄だぞ」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「…うおお！？」
+		PRINTFORMW 「なんだ、どうした！？」
+		PRINTFORMW 「全く…髪の毛ボサボサになっちまったじゃないか…」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん？」
+		PRINTFORMW 「…」
+		PRINTFORMW 「…続けてくれ」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「なんだよいきなり」
+		PRINTFORMW 「私なんかしたっけか？」
+		PRINTFORMW 「…気持ちいいから続けてくれよ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「んん！？」
+		PRINTFORMW 「な、なんだ急に髪の毛を…ボサボサになるだろうが…」
+		PRINTFORMW 「別にやってもいいけどさ、直してくれよ」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「む！？」
+		PRINTFORMW 「…いきなり頭撫でて何だよ…」
+		PRINTFORMW 「いいけどさ…」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「んー」
+		PRINTFORMW 「なんだ？どうした？」
+	ELSE
+		PRINTFORMW 「？」
+		PRINTFORMW 「おい、どうした？」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;310,摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_310
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_310_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_310_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の尻を撫でた。
+		PRINTFORMW %CALLNAME:MASTER%は正邪の桃尻の感触を楽しんだ。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前な」
+			PRINTFORMW 「痴漢も大概にしとけよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…死ねよ」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「こういうのが好きなのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひゃん！？」
+			PRINTFORMW 「全く…好きなだけ撫でればいいけどさ」
+		ELSE
+			PRINTFORMW 「ひっ…！」
+			PRINTFORMW 「お前はもう…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…そこっ…！！」
+			PRINTFORMW 正邪はそわそわと体を動かしながらされるがままである。
+			PRINTFORMW 「…お前の趣味も悪くは無いな…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…もっと撫でてくれてもいいんだぞ？」
+		ELSE
+			PRINTFORMW 「…ん…あっ…」
+			PRINTFORMW 「%CALLNAME:MASTER%、こういうの好きなのか？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んん！？」
+			PRINTFORMW 「あ…好きにしてくれていいぞ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ひんっ…！」
+			PRINTFORMW 「…好きにしてくれ…」
+		ELSE
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 正邪は驚きながらも手のひらの感触を尻で味わっている。
+			PRINTFORMW 「まぁ好きにしてくれよ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「は？え？ちょ…」
+			PRINTFORMW 「てめぇ人のケツ勝手に触ってんじゃねぇよ！！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…おい人のケツ何触ってんだよ！」
+		ELSE
+			PRINTFORMW 「お前…！」
+			PRINTFORMW そういいながらも正邪は抵抗せずに尻を撫でられている。
+			PRINTFORMW 「こういう趣味してるんだな、お前」
+		ENDIF
+	ELSEIF CFLAG:1302 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…お前なぁ…」
+			PRINTFORMW 「何？パンツ欲しいの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「女のケツの温かみが欲しいのか、お前」
+		ELSE
+			PRINTFORMW 「あのなぁ」
+			PRINTFORMW 「まあ減るもんでもないけどさ…」
+		ENDIF
+	ELSEIF CFLAG:1302 == 1 && TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「なんだよ…」
+			PRINTFORMW 「そうやってパンツもらおうってか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…はぁ…」
+			PRINTFORMW 「内袴ドロが何やってんだか…」
+		ELSE
+			PRINTFORMW 「お前な…」
+			PRINTFORMW 「内袴ドロに…痴漢ってもう…」
+		ENDIF
+	ELSEIF CFLAG:1302 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…内袴ドロに痴漢か…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「！？」
+			PRINTFORMW 「次は痴漢かよ…」
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 「…変態のやることはよくわからん」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あんっ…！…お前…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひゃん！？」
+			PRINTFORMW 「全く…好きだね…お前さんも…」
+		ELSE
+			PRINTFORMW 「…裙子越しに触るのが好きか？」
+			PRINTFORMW 「…勝手にしな…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な、何だ！？」
+			PRINTFORMW 「ってお前…ケツ触って楽しかったか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…恥ずかしいからさ、こういうのはあんまり…」
+		ELSE
+			PRINTFORMW 「なに人の尻好き勝手して…ひゃん！？」
+			PRINTFORMW 「おまえ…もう…馬鹿…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…何してんだお前」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…馬鹿…止めろよ…」
+		ELSE
+			PRINTFORMW 「尻ぐらい…構わないけどさ」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;311,擁抱
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_311
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_311_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_311_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪に抱きついた。
+		PRINTFORMW %CALLNAME:MASTER%は正邪の痩せ型の体格を楽しんだ。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…くぅ…すぅ…かぁ…ぴぃ…」
+		PRINTFORMW 正邪はぐっすりと寝ている
+		PRINTFORMW その体は少し痩せており逃亡生活の影響が窺える。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「………！？」
+			PRINTFORMW 「出口ろってんだよ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「只で済むと思うなよ…」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…鬱陶しいんだけど」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…もう…」
+			PRINTFORMW 「お前、温かいな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おう！？」
+			PRINTFORMW 「全く…寂しいのか？私でよければ抱いてやるよ」
+		ELSE
+			PRINTFORMW 「何だ突然抱きついてきて」
+			PRINTFORMW 「私でよければ相手になるよ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「！？」
+			PRINTFORMW 正邪は抱き付かれるとそわそわと体を動かしながら腕を回してきた。
+			PRINTFORMW 「…好きだよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…こういうのが好きか？ならもっとしてやる」
+		ELSE
+			PRINTFORMW 「お？」
+			PRINTFORMW 「%CALLNAME:MASTER%、お前寂しがりやなんだな」
+			PRINTFORMW 「いいよ、好きにしてくれ」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んん！？」
+			PRINTFORMW 「あ…好きにしてくれていいぞ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ひんっ…！」
+			PRINTFORMW 「…好きにしてくれ…」
+		ELSE
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 正邪は驚きながらも手のひらの感触を尻で味わっている。
+			PRINTFORMW 「まぁ好きにしてくれよ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「おい！…おい！抱きつくなって…」
+			PRINTFORMW 「…ったく…しゃあねえな…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「出口ろ馬鹿！」
+		ELSE
+			PRINTFORMW 「おい！何いきなり抱きついて…」
+			PRINTFORMW 正邪は抱き付かれると恐る恐るといった様子で腕を回してきた。
+			PRINTFORMW 「今回だけだぞ…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…！…お前…いきなり擁抱なって」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前、こういうの好きなのか？」
+			PRINTFORMW 「そりゃ私だって…いや、忘れてくれ」
+		ELSE
+			PRINTFORMW 「…いきなり抱きつくなよ…」
+			PRINTFORMW 「…まぁ…いいけどさ…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な…」
+			PRINTFORMW 「お前…人に抱きつく趣味でもあるのかよ…？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…恥ずかしくなってくるな…これ」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「おまえ…もう…勝手にしろよ…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…なんだよ急に…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…熱いんだけど…」
+		ELSE
+			PRINTFORMW 「…ちゃんと体洗ってんのか？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;312,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_312
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_312_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_312_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪にキスした
+		PRINTFORMW %CALLNAME:MASTER%は正邪の柔らかい唇を堪能した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…くぅ…すぅ…ん…」
+		PRINTFORMW 正邪はぐっすりと寝ている。
+		PRINTFORMW その唇はとても柔らかかった。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん！？」
+			PRINTFORMW 「…こうやって女の心情を取っているのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…死ねよ」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ちゅ…」
+			PRINTFORMW 「どうした？キスだけでいいのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「キス？構わないけども」
+			PRINTFORMW 「ん…これで…いいのか？」
+		ELSE
+			PRINTFORMW 「何だ…ん！？」
+			PRINTFORMW 「ん…はぁ…こういうのはもう少し情緒ぐらい作ってからさ…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 正邪は突然口を塞がれると少し驚いた様子で背中に手を回してきた。
+			PRINTFORMW 「……もう少し…このまま…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…ちゅっ…」
+			PRINTFORMW 「…甘いな、色々と…」
+		ELSE
+			PRINTFORMW 「おう？」
+			PRINTFORMW 「ああ、分かった、目、瞑ってろ」
+			PRINTFORMW 「…ん…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んふ！？」
+			PRINTFORMW 「あ…ちゅ…ん…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…んっ…！」
+			PRINTFORMW 「……こういうので良かったか？」
+		ELSE
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 「…ぷはっ！？…いきなりはやめろって…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…！？」
+			PRINTFORMW 「…この…糞野郎が…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「………」
+			PRINTFORMW 「ぷはっ…長すぎだ馬鹿！」
+		ELSE
+			PRINTFORMW 「おい！何…ん！？」
+			PRINTFORMW 「………」
+			PRINTFORMW 「ん…あ…終わりか？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「！」
+			PRINTFORMW 正邪は唇を塞がれると大人しく身を委ねている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「目、瞑ってくれ」
+			PRINTFORMW 「ん…ちゅ…」
+		ELSE
+			PRINTFORMW 「…分かったから大人しくしてろよ…」
+			PRINTFORMW 「…後、舌は入れるな、分かったな？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な…」
+			PRINTFORMW 「お前…ここで…ん…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「……ちゅ…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「…ん…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…別にいいけどさ…」
+		ELSE
+			PRINTFORMW 「…只とはいかないぞ…」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;313,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_313
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_313_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_313_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の胸に触れた。
+		PRINTFORMW %CALLNAME:MASTER%は正邪の胸の膨らみを味わった。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…ん…あ…」
+		PRINTFORMW 正邪はぐっすりと寝ている。
+		PRINTFORMW その胸はとても柔らかかった。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前…！」
+			PRINTFORMW 「何だ急に…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…お前ホントに死ねよ」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…この…変態…！」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…おい…」
+			PRINTFORMW 「別に構わないけどそういう趣味か？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「胸なんざ触ったって…」
+			PRINTFORMW 「まぁ好きにしろ」
+		ELSE
+			PRINTFORMW 「何だ…ん！？」
+			PRINTFORMW 「ん…あ…全く…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 「…構わないけど…さ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「…優しくしてくれ…」
+		ELSE
+			PRINTFORMW 「おう？」
+			PRINTFORMW 「…ん…楽しいか？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 「あ…お前…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…っ…！」
+			PRINTFORMW 「…この…！」
+		ELSE
+			PRINTFORMW 「んお！？」
+			PRINTFORMW 「…いきなり…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…！？」
+			PRINTFORMW 「…この…糞野郎が…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…変態！」
+		ELSE
+			PRINTFORMW 「おい！…あっ…」
+			PRINTFORMW 「ん…あ…この…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ん…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「胸…」
+			PRINTFORMW 「ん…あっ…」
+		ELSE
+			PRINTFORMW 「…分かったから優しくしてくれよ」
+			PRINTFORMW 「…んあっ！…全く…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な…この…」
+			PRINTFORMW 「…ん…あ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あ…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「…ん…この…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…んは！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…別にいいけどさ…あんまり…」
+		ELSE
+			PRINTFORMW 「…胸…ねぇ…」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;314,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_314
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_314_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_314_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪のアナルに触れた。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…ん…あ…く…」
+		PRINTFORMW 正邪はぐっすりと寝ている。が、少し感じているようだ。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前な…」
+			PRINTFORMW 「…その内痛い目見せてやるからな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………っ！」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…度し難いな」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んひ！？」
+			PRINTFORMW 「…いや、敏感だからな…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「はぅ！？」
+			PRINTFORMW 「………お前な…」
+		ELSE
+			PRINTFORMW 「な！？」
+			PRINTFORMW 「…どこ触ってんだよ…全く…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んな！？」
+			PRINTFORMW 正邪は唐突にアナルを愛撫されたことに戸惑っている。
+			PRINTFORMW 「…い、いや…別にいいけど…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひんっ！？」
+			PRINTFORMW 「……こういうのは流石に…」
+		ELSE
+			PRINTFORMW 「おう？何―」
+			PRINTFORMW 「ひゃん！？」
+			PRINTFORMW 「…ん…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んは！？」
+			PRINTFORMW 「あ…お前…そこ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…っ…！」
+			PRINTFORMW 「……そこ弱いからやめてくれ…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「…っ…困るな…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ！？」
+			PRINTFORMW 「…この…馬鹿…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…いっ！？」
+			PRINTFORMW 「っ…痴漢野郎…！」
+		ELSE
+			PRINTFORMW 「あひぃ！？」
+			PRINTFORMW 「………お前…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「！？」
+			PRINTFORMW 正邪は一瞬身を震わせた後睨みつけてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「うお！？」
+			PRINTFORMW 「ん…お前な…」
+		ELSE
+			PRINTFORMW 「…ひあ！？」
+			PRINTFORMW 「…気の済むまでやればいいよ…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な！？」
+			PRINTFORMW 「お前…ひん！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひゃん！？」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「……止めてくれって…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…んあ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…くひ！？」
+		ELSE
+			PRINTFORMW 「…ひあ！？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;315,陰蒂愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_315
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_315_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_315_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪のクリトリスに触れた。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…く…」
+		PRINTFORMW 正邪はぐっすりと寝ている。が、少し感じているようだ。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…っ」
+			PRINTFORMW 「…こいつ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…お前な…」
+			PRINTFORMW 正邪は怒った様子でこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…セクハラどころじゃねぇぞ」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ひ！？」
+			PRINTFORMW 「…どこ触ってんだよ…全く」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あぅ！？」
+			PRINTFORMW 「…ヤりたいなら言えっての…」
+		ELSE
+			PRINTFORMW 「な！？」
+			PRINTFORMW 「…どこ触ってんだよ…全く…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 「…シたくなったら言えよ…してやるんだからさ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひぁっ！？」
+			PRINTFORMW 「…気持ちいいけどさ…」
+		ELSE
+			PRINTFORMW 「おふ！？」
+			PRINTFORMW 「………」
+			PRINTFORMW 「…ん…しないのか？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「！？」
+			PRINTFORMW 「…お前…そういうのはな…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…！」
+			PRINTFORMW 「…このまま…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「…っ…恥ずかしいだろ…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ！？」
+			PRINTFORMW 「…お前な…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…いひっ！？」
+			PRINTFORMW 「っ…変態野郎…！」
+		ELSE
+			PRINTFORMW 「ふぇ！？」
+			PRINTFORMW 「…この…変態…！」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ！？」
+			PRINTFORMW 正邪は一瞬身を震わせた後睨みつけてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひぁんっ！？」
+			PRINTFORMW 「ん…あ…」
+		ELSE
+			PRINTFORMW 「…ひっ！？」
+			PRINTFORMW 「…まぁ…別に…気持よくなかったぞ…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ひぁ！？」
+			PRINTFORMW 「お前！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…お前…！」
+		ELSE
+			PRINTFORMW 「っ！？」
+			PRINTFORMW 「……止めろって…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひん！？」
+		ELSE
+			PRINTFORMW 「…あ！？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;316,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_316
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_316_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_316_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の秘所に指を挿れた。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…く…んあ…」
+		PRINTFORMW 正邪はぐっすりと寝ている。が、少し感じているようだ。
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ひゃん！？」
+			PRINTFORMW 「…ん…気持よくしてくれるのはいいけどさ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あふぅ！？」
+			PRINTFORMW 「…テクはあるんだよな…」
+		ELSE
+			PRINTFORMW 「ふぁ！？」
+			PRINTFORMW 「…濡らして…どうするんだよ…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んほぉ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひっ！？」
+			PRINTFORMW 「…全く…」
+		ELSE
+			PRINTFORMW 「ん…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前…もう…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…！」
+		ELSE
+			PRINTFORMW 「…っ…この…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前な…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…いっ！？」
+		ELSE
+			PRINTFORMW 「ふぇ！？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…くっ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…あ…」
+		ELSE
+			PRINTFORMW 「…ひっ！？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ひぁ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…！」
+		ELSE
+			PRINTFORMW 「っ！？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…んひ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひぁん！？」
+		ELSE
+			PRINTFORMW 「…あふん！？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;317,Ｖ腰を振る
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_317
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_317_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_317_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…んあっうぅぁあっんんっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぁあっ…ん…くぅあ！」
+		ELSE
+			PRINTFORMW 「あひっんっああ…もっと…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んはっ♪あっ♪くっ…ひん♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひっ…あんっ♪ひぁっ♪」
+		ELSE
+			PRINTFORMW 「んあっ♪ふぇっ♪あんっ♪」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ、くっ、ひぁん♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…んあ…ふぅ…」
+		ELSE
+			PRINTFORMW 「ひぁっ…ん…別に気持ちよくないぞ…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあっ、あんっ…ひぁっ♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…くっ、ひっ、や…」
+		ELSE
+			PRINTFORMW 「んく…別に…気持よく…ひんっ！」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…くっ…はぅっ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…あ…ひんっ！」
+		ELSE
+			PRINTFORMW 「…ひぁっ…！？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ふぁっ！…んぁ…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…はっ…！」
+		ELSE
+			PRINTFORMW 「っ！？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…んひ…くっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひぁん！ぁあっんんっ！」
+		ELSE
+			PRINTFORMW 「あぁあっあ……ん！」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;318,Ａ腰を振る
+;==================================================
+;@M_KOJO_MESSAGE_COM_K97_318
+;CALL TRAIN_MESSAGE
+;CALL M_KOJO_MESSAGE_COM_K97_318_1
+;RETURN RESULT
+
+;@M_KOJO_MESSAGE_COM_K97_318_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+;LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…あっひあっんあんっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぁあっ…ん…ぐぁ！」
+		ELSE
+			PRINTFORMW 「あひっんっあ…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「はっ♪ひあっ♪っ…ん♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っあっ♪ひぁっ♪」
+		ELSE
+			PRINTFORMW 「んあっ♪くっ♪あっ♪」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん、あっ、ん♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…あ…くっ…」
+		ELSE
+			PRINTFORMW 「ひぁっ…ん…尻なんて…」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあっ、あんっ…くっ♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…くっ、あっ、や…」
+		ELSE
+			PRINTFORMW 「んく…尻なんかで…んっ！」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…くっ…うぅっ！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…く…んっ！」
+		ELSE
+			PRINTFORMW 「…ひぁっ！？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「くぁっ！…ん…！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…あっ…！」
+		ELSE
+			PRINTFORMW 「ひゃっ！？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ぐ…くっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひぁん！っんんっ！」
+		ELSE
+			PRINTFORMW 「あぐっあ……ん！」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;330,掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_330
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_330_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_330_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪の裙子をめくった。
+		PRINTFORMW %CALLNAME:MASTER%は正邪の桃尻を眺めて楽しんだ。
+	ELSEIF ABL:露出癖 > 3
+		PRINTFORMW 「…なんだぁ？見たいのかぁ？」
+		PRINTFORMW 正邪はそういうと裙子をめくって見せた。
+		PRINTFORMW 「どうした？お望みだろ？」
+		PRINTFORMW 正邪は少し顔を赤らめながら裙子の中を見せ付けてきた。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前さ」
+			PRINTFORMW 「いい加減にしろって」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「変態ここに極まれりだな」
+			PRINTFORMW 「…どういう根性してるんだか」
+		ELSE
+			PRINTFORMW 「…どうあっても人を怒らせたいようだな」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人 && ABL:露出癖 > 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…こういう趣味だったな、お前」
+			PRINTFORMW 正邪は平然と裙子の中を見せ付けてきた。
+			PRINTFORMW 「どうした？見たかったんだろ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おう！？」
+			PRINTFORMW 正邪は驚きから立ち直ると意地悪く笑っている。
+			PRINTFORMW 「全く…したいならすればいいじゃないか」
+		ELSE
+			PRINTFORMW 「何だ突然裙子捲りあげて」
+			PRINTFORMW 正邪は平然としている。
+			PRINTFORMW 「私の見て楽しいなら好きにしたらいい」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人 && ABL:露出癖 > 3
+		IF RAND:3 == 0
+			PRINTFORMW 「！？」
+			PRINTFORMW 正邪は裙子を捲られたまま意地悪そうにこちらを見てくる。
+			PRINTFORMW 「…そんなに見たいのなら言えば見せてやるよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…全くお前は…」
+			PRINTFORMW 正邪は少し顔を赤らめながら裙子の中を見せ付けてきた。
+			PRINTFORMW 「…裙子の中見たいのか？ならもっと見せてやるよ」
+		ELSE
+			PRINTFORMW 「お？」
+			PRINTFORMW 「%CALLNAME:MASTER%、お前中が気になるのか？」
+			PRINTFORMW 「ほら、見たければ見ればいいだろ」
+			PRINTFORMW 正邪は顔を赤らめながら裙子の中を見せ付けてきた。
+		ENDIF
+	ELSEIF TALENT:恋人 && ABL:露出癖 > 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 正邪は少し顔を赤らめながらされるがままである。
+			PRINTFORMW 「お前、こういうの恥ずかしいからさ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 正邪は顔を赤らめながらされるがままである。
+			PRINTFORMW 「見たいんだろ？好きにしてくれ」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 正邪は驚きながらも裙子を捲られたまま意地悪そうな顔をしている。
+			PRINTFORMW 「…どうした？見たいんだろ？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 正邪は少し顔を赤らめながら裙子を押さえつける。
+			PRINTFORMW 「お前、こういうの恥ずかしいからさ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おいっ！？」
+			PRINTFORMW 正邪は顔を赤らめながらされるがままである。
+			PRINTFORMW 「見るんじゃないよ、こんなもん…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 正邪は驚きながらも裙子を捲られたまま意地悪そうな顔をしている。
+			PRINTFORMW 「…どうした？趣味なんだろ？こういうの」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「おい！…おい！馬鹿！なにやってんだ！？」
+			PRINTFORMW 正邪は顔を赤らめながら裙子の端を押さえつけている。
+			PRINTFORMW 「…ったく…見てもつまんないだろうが…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 正邪は顔を赤らめながら捲られた裙子を必死に押さえつけている。
+			PRINTFORMW 「この！変態！痴漢！」
+		ELSE
+			PRINTFORMW 「！？！？！？」
+			PRINTFORMW 正邪は捲られた裙子を動揺しながらも押さえつけている。
+			PRINTFORMW 「お、お前…何でこんなこと…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「おいこら、何断りも無く裙子めくってんだ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前、こんなことしてると碌な目にあわんぞ」
+			PRINTFORMW 「見たきゃ見せてやるってのに」
+		ELSE
+			PRINTFORMW 「…おう！？」
+			PRINTFORMW 「…お前こんなとこで…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「な…お前…」
+			PRINTFORMW 「馬鹿かお前は…！？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「何裙子めくってんだてめぇ…」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 「おまえ…何やって…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…アホかお前は…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…何ガキみたいな事やってんだよ…」
+		ELSE
+			PRINTFORMW 「…お前、痴漢趣味かよ」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;331,泡茶（下薬）
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_331
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_331_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_331_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;334,料理を勧める/碰杯
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_334
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_334_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_334_1
+IF !FLAG:70
+IF CFLAG:318 == 1
+	IF RAND:3 == 0
+		PRINTFORMW 「…お前の酒ね」
+		PRINTFORMW 「まあ飲ませてもらうがな」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「………」
+		PRINTFORMW 「飲めばいいんだろ？」
+	ELSE
+		PRINTFORMW 「…ほら、飲めよ」
+	ENDIF
+ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+	IF RAND:3 == 0
+		PRINTFORMW 「ん…乾杯！」
+		PRINTFORMW 「…不味いな！これ」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「んく…ん…」
+		PRINTFORMW 「どうした？飲まないのか？」
+	ELSE
+		PRINTFORMW 「注いでやる、飲め飲め」
+		PRINTFORMW 「ん…乾杯！」
+	ENDIF
+ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+	IF RAND:3 == 0
+		PRINTFORMW 「ん…飲まないのか？」
+		PRINTFORMW 「まぁ…無理に飲むこともないがな」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「あ…ちょ…こぼれてるぞ…」
+		PRINTFORMW 「…ん…美味いな、これ」
+	ELSE
+		PRINTFORMW 「…ん…んく…」
+		PRINTFORMW 「%CALLNAME:MASTER%、好きだよ」
+	ENDIF
+ELSEIF TALENT:恋人
+	IF RAND:3 == 0
+		PRINTFORMW 「ごく…ん…」
+		PRINTFORMW 「案外いい酒だな、これ」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「ん…」
+		PRINTFORMW 「美味いな、この酒」
+	ELSE
+		PRINTFORMW 「ほら、乾杯！」
+		PRINTFORMW 「ん…どうした？」
+	ENDIF
+ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+	IF RAND:3 == 0
+		PRINTFORMW 「なんだよ…飲むんだろ？」
+		PRINTFORMW 「…乾杯」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「%CALLNAME:MASTER%」
+		PRINTFORMW 「飲めよ、ほら」
+	ELSE
+		PRINTFORMW 「何だ？」
+		PRINTFORMW そう言いながら正邪は盃に酒を注いできた。
+		PRINTFORMW 「ん…乾杯」
+	ENDIF
+ELSEIF TALENT:恋慕
+	IF RAND:3 == 0
+		PRINTFORMW 「乾杯」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「どうだ、注いでやるよ」
+		PRINTFORMW 「…美味いか？」
+	ELSE
+		PRINTFORMW 「…ん…く…」
+		PRINTFORMW 「ふぅ…」
+	ENDIF
+ELSEIF TALENT:思慕
+	IF RAND:3 == 0
+		PRINTFORMW 「ふぅ…」
+		PRINTFORMW 「注いでやるよ、ほら」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「ん…どうした？飲もうぜ」
+	ELSE
+		PRINTFORMW 「ほら、私の酒が飲めないのか？」
+		PRINTFORMW 「飲め飲め、飲んで潰れろ」
+	ENDIF
+ELSE
+	IF RAND:3 == 0
+		PRINTFORMW 「…注いでやるから盃出しな」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「…乾杯」
+	ELSE
+		PRINTFORMW 「ほら、飲めよ」
+	ENDIF
+ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;350,推倒（時姦時猥褻
+;TFLAG:194 (0=成功 1=人目がある　2=野外は嫌でござりまする　3=多人数プレイは勘弁　4=合意があっても情緒が足りぬ）
+;TCVAR:抱き寄せ初回　1=普通に合意ゲット　2=先にキスぐらいしろよ　3=媚薬or発情には勝てなかったよお…　4=悔しい…刻印さえなければﾋﾞｸﾋﾞｸﾝ
+;5=強引に迫られると断れぬ(素質胆怯持ち専用) 6=まんざらでもない　7=駄目　8=論外
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_350
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_350_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_350_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた世界の中で正邪の体を推倒ことにした。
+		PRINTFORMW あまり肉の付いてないか細い体はどこか儚げだった。
+		PRINTFORMW %CALLNAME:MASTER%はじっくりと楽しむことにした。
+	;憤怒時には押し倒せなかった気がする…
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…見下げ果てた人間っていうのもいるもんなんだな」
+			PRINTFORMW 「なるほどこれは度し難い」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「お前…」
+			PRINTFORMW 「…私が言うのも何だが最低だな」
+		ELSE
+			PRINTFORMW 「…まぁこういった状況には慣れてるよ」
+		ENDIF
+	ELSEIF TFLAG:194
+		SELECTCASE TFLAG:194
+			CASE 1
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…ここは人目があるだろ？」
+					PRINTFORMW 「私達、一心同体だけどさ、まずいだろここは」
+					PRINTFORMW 「こういうのはそういう場所でさ、しようよ」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「…流石にここはまずいんじゃないか…？」
+					PRINTFORMW 「人目あるし…」
+					PRINTFORMW 「…するなら二人っきりで…しよう…」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「…あまり断りたくも無いけどここはまずいんじゃないか？」
+					PRINTFORMW 「人目あるしな」
+					PRINTFORMW 「…別の場所でならやってやるよ」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「こ、こんなところでしろって…馬鹿かお前は！？」
+					PRINTFORMW 「…別のところに行こう、そうしよう」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「お前さ…こういうのは」
+					PRINTFORMW 「人目につかないとこでするもんだろ」
+					PRINTFORMW 「場所を移そうや」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん？」
+					PRINTFORMW 「ここは…まずいだろ…」
+				ELSE
+					PRINTFORMW 「どういう根性してるんだお前…」
+					PRINTFORMW 「人目があるだろ、人目が」
+				ENDIF
+			CASE 2
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…ん？」
+					PRINTFORMW 「お前がしたいのは分かったけどさ」
+					PRINTFORMW 「外でやるのはちょっと…」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「や、別に…するのはいいけど…」
+					PRINTFORMW 「外でするのは…な…」
+					PRINTFORMW 「…勘弁してくれ」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「ここは…ちょっと…」
+					PRINTFORMW 「いや、人来るかもしれないじゃんか」
+					PRINTFORMW 「…場所移そう」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「ここで…って…それは…さすがに…いや、お前となら…」
+					PRINTFORMW 「ってダメだダメだ！他行こう！」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「あーここでするのか？」
+					PRINTFORMW 「…悪いが外でするのは嫌でな」
+					PRINTFORMW 「場所変えようぜ」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…ここは人が来る」
+					PRINTFORMW 「だから他へ行こう、な」
+				ELSE
+					PRINTFORMW 「野外PLAYはあまりしたくないねぇ」
+					PRINTFORMW 「あまり良くないよ、こういうの」
+				ENDIF
+			CASE 3
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…いやお前が乱交したいのは分かるけどさ」
+					PRINTFORMW 「勘弁してくれよ、顔が割れると面倒だろ」
+					PRINTFORMW 「全く…私一人じゃそんなに不満かね…」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「いや…その…」
+					PRINTFORMW 「やっぱりそういうのはさ…」
+					PRINTFORMW 「…私だけじゃ不満か？」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「ん…ああ、乱交？したいって？」
+					PRINTFORMW 「いや、勘弁してくれ」
+					PRINTFORMW 「その…お前とだけしたい…ダメか？」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「悪いけどさ」
+					PRINTFORMW 「複数人でヤるつもりはないよ」
+					PRINTFORMW 「…二人っきりでなら…別だけどさ」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「ああ？みんなでヤりたい？」
+					PRINTFORMW 「…いきなり何を言うかと思えば…」
+					PRINTFORMW 「いや、勘弁してくれ、面倒ごとはごめんだ」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「いやいやいや」
+					PRINTFORMW 「多人数ってのは勘弁してくれ」
+				ELSE
+					PRINTFORMW 「はぁ？」
+					PRINTFORMW 「いや、なんでお前らと…」
+				ENDIF
+			CASE 4
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「いや、こういうのはさ」
+					PRINTFORMW 「共犯者って言っても情緒ってあるじゃないか」
+					PRINTFORMW 「…もうちょっとさ…」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「ん？」
+					PRINTFORMW 「…そうだな」
+					PRINTFORMW 「もう少し雰囲気整えること覚えようか」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「は？」
+					PRINTFORMW 「お前…するならするでそういう雰囲気あるだろ」
+					PRINTFORMW 「だからダメなんだよお前はさ」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「お前…こういうのは…もうちょっと…雰囲気とか…さ…」
+					PRINTFORMW 「…情緒気にしろって言ってんだよ馬鹿！」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「うお！？」
+					PRINTFORMW 「…もうちょっと過程を大事にしろや」
+					PRINTFORMW 「分かるだろ、こういうの」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん」
+					PRINTFORMW 「もうちょっとその気になってからで頼むわ」
+				ELSE
+					PRINTFORMW 「おい！」
+					PRINTFORMW 「もうちょっと雰囲気整えろって…」
+				ENDIF
+		ENDSELECT
+	ELSEIF TCVAR:抱き寄せ初回
+		SELECTCASE TCVAR:抱き寄せ初回
+			CASE 1
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…ん…」
+					PRINTFORMW 「そうか、好きにしてくれ」
+					PRINTFORMW 「何、共犯者だろ？私を好きに使っていいと言ったんだ」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「そういう気分か」
+					PRINTFORMW 「…いいよ、お前となら何処までも」
+					PRINTFORMW 「墜ちていって構わないさ」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「ん…そうか、分かった」
+					PRINTFORMW 「じゃあ、優しくしてくれよ？」
+					PRINTFORMW 「…冗談じゃないからな！痛くしたら怒るからな！」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「な、なんだ…急に迫ってきて…」
+					PRINTFORMW 「…分かったよ…好きにしてくれ」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「むぅ…いきなりだなお前は」
+					PRINTFORMW 「…まあいいか、好きにしろよ」
+					PRINTFORMW 「あまり痛くするなよ」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん？」
+					PRINTFORMW 「お前、私とシたいのか？」
+				ELSE
+					PRINTFORMW 「！？」
+					PRINTFORMW 「おい、全く…お前は…！」
+				ENDIF
+			CASE 2
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…お互いこういう関係だけどさ」
+					PRINTFORMW 「キスの一つも無く、ってのはな」
+					PRINTFORMW 「まぁ…好きにしてくれ、お前のことは嫌いじゃないからな」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「…」
+					PRINTFORMW 「まだキスだってしたこと無いのにな、私達」
+					PRINTFORMW 「お前も数奇者だよ、全く…」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「なんだよ…お前」
+					PRINTFORMW 「こういうのはキスから順番だろ？」
+					PRINTFORMW 「…まあ順序なんてのもどうでもいいか」
+					PRINTFORMW 「教科書街道のセックスなんてつまらないものな」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「お、お前な…まだキスとかしてないし…だから…」
+					PRINTFORMW 「ああ、もう好きにしろよ…馬鹿…」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「ん…こういうのはさ」
+					PRINTFORMW 「順序ってあると思うんだよ」
+					PRINTFORMW 「ま、そういう反骨心好きだけどな」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「お前はキスもしてない奴と寝るってのか？」
+					PRINTFORMW 「まぁ、構わんがね、そういうの」
+				ELSE
+					PRINTFORMW 「…おい！？」
+					PRINTFORMW 「私達こういう関係じゃ…」
+				ENDIF
+			CASE 3
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…ん…はぁ…あっ…」
+					PRINTFORMW 「お前、こういうこと…するんだな…」
+					PRINTFORMW 「いいぜ、お前が果てるか私が果てるか…勝負だ…！」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「ん？…あっ…♪」
+					PRINTFORMW 「何盛ったよ…お前…」
+					PRINTFORMW 「…何もしなくたってお前にされるならさ…そんなに濡れてないか私…？」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「何だってお前…何したんだよ…ん…♪」
+					PRINTFORMW 「…お前盛ったか？」
+					PRINTFORMW 「まぁ続けてくれよ…いいさ、お前なら…」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「んあ♪…くっ…なんだこれ…」
+					PRINTFORMW 「あ…♪…そんなに近づくな…ん…♪」
+					PRINTFORMW 「わ…分かったから…好きにすればいいだろ！？」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「なんだよ…押し倒したりしてきて…ん…♪」
+					PRINTFORMW 「…何したかしんないけどさ」
+					PRINTFORMW 「気持ちよくしてくれよ…♪」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん…♪」
+					PRINTFORMW 「てめぇ…何しやがった…」
+				ELSE
+					PRINTFORMW 「んあ！？」
+					PRINTFORMW 「な！？なにして…ん…♪」
+				ENDIF
+			CASE 4
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…んあ…」
+					PRINTFORMW 「ああ、手も足も出ないって分かるか？」
+					PRINTFORMW 「お前の調教の賜物だよ」
+					PRINTFORMW 「まあ任せるよ…楽しませてくれよ…？」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「ん…おかしいな」
+					PRINTFORMW 「…こういうの、お前…」
+					PRINTFORMW 「…いいさ、続けてくれよ」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「なんだよ…ってお前…」
+					PRINTFORMW 「変な気分だな、色々と」
+					PRINTFORMW 「…体が火照って仕方ないんだ、鎮めてくれよ」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「ん！？」
+					PRINTFORMW 「お、お前…こういうのは…」
+					PRINTFORMW （抵抗できない…！？）
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「お、お前…こういうのは…な…」
+					PRINTFORMW 「…変なことしたら…分かってるな…？」
+					PRINTFORMW 「普通にしろ、普通にな…」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「んああ！？」
+					PRINTFORMW 「お前…何して…」
+				ELSE
+					PRINTFORMW 「！？」
+					PRINTFORMW 「おい、何…いきなり…」
+					PRINTFORMW （抵抗…できない！？）
+				ENDIF
+			CASE 5
+			CASE 6
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…なにするも自由だとは思うけどさ」
+					PRINTFORMW 「こういうことするまでに至ってないだろう？」
+					PRINTFORMW 「ま、また迫ってきてくれても構わないからさ、今は無しだ」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「ん？」
+					PRINTFORMW 「…悪いけどさ、そういうの好きじゃないんだ」
+					PRINTFORMW 「今は…な…」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「…そういうのは私じゃなくても出来るだろ？」
+					PRINTFORMW 「選んでくれるのは嬉しいけどさ」
+					PRINTFORMW 「…余り好きじゃ無いんだよ、セックス、怖くてさ」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「はぁ！？」
+					PRINTFORMW 「お…お前…そういうのは…」
+					PRINTFORMW 「ダメだ…悪いけどもさ」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「あん？」
+					PRINTFORMW 「…娼婦の真似事はやっていないんだけどね」
+					PRINTFORMW 「そのうちさ、そのうちしてやるから我慢しな」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「んーあー」
+					PRINTFORMW 「止めとけ、私とヤっても面白くは無いよ」
+				ELSE
+					PRINTFORMW 「は！？」
+					PRINTFORMW 「お前みたいなのに抱かれるのはさぞかし気分いいんだろうけどさ」
+				ENDIF
+			CASE 7
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…お前の性欲にはホトホト呆れるよ」
+					PRINTFORMW 「そういうの、信用失うから止めといた方がいいぞ」
+					PRINTFORMW 「尻尾捕まれて弱みに付け込まれるってのも嫌だろ？」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「…今そんな気分じゃないんだ」
+					PRINTFORMW 「分かるだろ、そういう時なんだ」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「ああ、駄目だな、今は」
+					PRINTFORMW 「そういう気分じゃないんだ」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「あー…」
+					PRINTFORMW 「駄目だ、悪いな」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「悪いが他当たってくれ」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「んー駄目だな」
+				ELSE
+					PRINTFORMW 「…駄目だ」
+				ENDIF
+			CASE 8
+				IF CFLAG:1304 == 1 && TALENT:恋人
+					PRINTFORMW 「…だからさ」
+					PRINTFORMW 「駄目だってば」
+					PRINTFORMW 「分からないのか？そういうの」
+				ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+					PRINTFORMW 「………」
+					PRINTFORMW 「ダメだ」
+				ELSEIF TALENT:恋人
+					PRINTFORMW 「あ？」
+					PRINTFORMW 「嫌だね」
+				ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+					PRINTFORMW 「…」
+					PRINTFORMW 「煩いな、あっち行けよ」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「…何だってんだよ」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「何言っても無駄だよ」
+				ELSE
+					PRINTFORMW 「いくら言っても駄目だね」
+				ENDIF
+		ENDSELECT
+	ELSE
+		IF CFLAG:1304 == 1 && TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORMW 「ああ、分かった」
+				PRINTFORMW 「イカせてやるよ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「お前も男だもんな」
+				PRINTFORMW 「まぁ…ギブ・アンド・テイクだ」
+			ELSE
+				PRINTFORMW 「気持よくしてくれよ？」
+			ENDIF
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…分かった…」
+				PRINTFORMW 「優しく…しろよ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「いいけど」
+				PRINTFORMW 「気持よく、頼む、な？」
+			ELSE
+				PRINTFORMW 「…好きにしてくれ」
+			ENDIF
+		ELSEIF TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORMW 「ああ、勝手にしろ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「気持よくしてくれるんだろ？」
+			ELSE
+				PRINTFORMW 「痛いのはやめろよな」
+			ENDIF
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORMW 「おい！？いきなり推倒なって…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…！？」
+				PRINTFORMW 「分かったから…優しくしろ…」
+			ELSE
+				PRINTFORMW 「…こういうのがいいのか？」
+			ENDIF
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORMW 「…全くお前は…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あーあ、そんなにがっついちゃって」
+			ELSE
+				PRINTFORMW 「何？溜まってんの？」
+			ENDIF
+		ELSEIF TALENT:思慕
+			IF RAND:3 == 0
+				PRINTFORMW 「何？ってやることは決まってるか」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「どうした？急に押し倒して」
+			ELSE
+				PRINTFORMW 「まぁ冗談ではないってのはわかるけどさ…」
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…痛！？」
+				PRINTFORMW 「頭打った…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ああ、シたいのか、いいよ」
+			ELSE
+				PRINTFORMW 「別に、構わないよ」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;351,帯出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_351
+;連れ出しにはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K97_351_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_351_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「どうした？なにか思いついたか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どこへ行くんだ？」
+		ELSE
+			PRINTFORMW 「面白いことでもあったか？」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「分かった、今行く」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どうした？」
+		ELSE
+			PRINTFORMW 「…いいよ」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あ？何かあるのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「いいけどさ、何するんだ？」
+		ELSE
+			PRINTFORMW 「分かった、行こうか」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「は？お前と…って手引っ張んなよ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…いいよ、変なことすんなよ」
+		ELSE
+			PRINTFORMW 「分かった分かった、行くって…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…どこに行くんだ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「構わないがね、何するのさ」
+		ELSE
+			PRINTFORMW 「はいはい今行きますよ…っと」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「何さ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どうした？」
+		ELSE
+			PRINTFORMW 「ん？何だ？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…何だ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「まぁいいけど」
+		ELSE
+			PRINTFORMW 「？」
+			PRINTFORMW 「今行く」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;352,告白
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_352
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_352_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_352_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193
+		PRINTFORMW 「どうした急に真面目な顔して」
+		PRINTFORMW 「お前のそういう顔は似合わんな」
+		PRINTFORMW 「で、どうしたってんだ？」
+		PRINTFORMW 正邪はニヤニヤしながら尋ねて来る。
+		PRINTFORMW 「ほう、なるほど」
+		PRINTFORMW 「この私のことが好きになったと」
+		PRINTFORMW 「で、付き合って欲しいのな」
+		PRINTFORMW そこから少し間が空いて彼女の口が開いた。
+		PRINTFORMW 「別に構わないよ、私はな」
+		PRINTFORMW 「お前といるのは楽しいし、別に悪くもない」
+		PRINTFORMW 「それにまあ、これから何があるにしても」
+		PRINTFORMW 「味方は一人でも多いほうがいい」
+		PRINTFORMW 「…弱みのあるやつは人に優しくなれるものな」
+		PRINTFORMW 「それじゃあこれからもよろしくな、%CALLNAME:MASTER%」
+		PRINTFORMW そうして彼女は微笑んでいた。
+	ELSE
+		PRINTFORMW 想いを伝える前に%CALLNAME:MASTER%は緊張してしまった。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;353,猥褻
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_353
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_353_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_353_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;354,陪睡（相手は起きて布団に招く感じ）
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_354
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_354_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_354_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「…」
+		PRINTFORMW 「あまり、変なことはするなよ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…ん？」
+		PRINTFORMW 「…一緒に寝よう…な？」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「むぅ…ん…」
+		PRINTFORMW 「一緒に寝るか？」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「…一緒に寝るか？」
+		PRINTFORMW 「まあ、いいけど…」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「ふああああ…」
+		PRINTFORMW 「…寝よう」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「………ん」
+		PRINTFORMW 「もう寝ようぜ…疲れた」
+	ELSE
+		PRINTFORMW 「ん？」
+		PRINTFORMW 「ああ、寝るか」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;355,時止め（地の文の改変程度に留めるべき
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_355
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_355_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_355_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;360,任憑擺佈
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_360
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_360_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_360_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;363,朗読（[幼稚]持ち）
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_363
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_363_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_363_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;364,撒豆子(萃香、勇儀、斯喀雷特姉妹用
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_364
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_364_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_364_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;365,向守矢神社移動(早苗、神奈子、諏訪子用
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_365
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_365_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_365_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;402,就寝（添い寝時）
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_402
+;就寝にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K97_402_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_402_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 「ん…すぅ…くぅ…」
+	PRINTFORMW 正邪は惰眠を貪っている。
+	PRINTFORMW ここで寝るのも悪くはないだろう。
+ENDIF
+RETURN 1
+;==================================================
+;403,休憩
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_403
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_403_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_403_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;405,外出(同行時デートに外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_405
+;外出にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K97_405_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_405_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:TARGET:同行
+		IF CFLAG:1304 == 1 && TALENT:恋人
+			PRINTFORMW 「ああ、いいぜ」
+			PRINTFORMW 「それで…何するんだ？」
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			PRINTFORMW 「ああ、行こうか」
+			PRINTFORMW 「どこへでも付いて行くよ」
+		ELSEIF TALENT:恋人
+			PRINTFORMW 「はいはい行きますよ…っと」
+			PRINTFORMW 「それでどこへ行くんだ？」
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			PRINTFORMW 「は？何でお前と出かけないといけないんだ？」
+			PRINTFORMW 「ま、まぁどうしてもというなら付いて行ってやらんでもないがな…」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「どこへ行くってんだか…」
+			PRINTFORMW 「退屈はしなさそうだけどな」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「何か面白い物でもあるのか？」
+		ELSE
+			PRINTFORMW 「構わないけど、退屈させてくれるなよ」
+		ENDIF
+	ELSE
+		IF CFLAG:1304 == 1 && TALENT:恋人
+			PRINTFORMW 「…何するのか知らないけど」
+			PRINTFORMW 「戦果を楽しみにしてるよ」
+		ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+			PRINTFORMW 「ん…いってらっしゃい」
+			PRINTFORMW 「…迷子になるなよ」
+		ELSEIF TALENT:恋人
+			PRINTFORMW 「ああ、行ってきな」
+		ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+			PRINTFORMW 「…まぁ別にお前がどこに行こうが勝手だよ」
+			PRINTFORMW 「別に気にしてないからな！」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「行ってらっしゃい」
+			PRINTFORMW 「…つれないねぇ」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「ああ、行ってこいよ」
+		ELSE
+			PRINTFORMW 「ん？」
+			PRINTFORMW 「ああ、行ってきな」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;410,掃除
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_410
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_410_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_410_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		RETURN 0
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…ふん、点数稼ぎか」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…よくやるもんだ」
+		ELSE
+			PRINTFORMW 「………」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「熱心なことで…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「別に点数稼ぎにもならんと思うけど」
+		ELSE
+			PRINTFORMW 「悪いけど整理整頓は苦手でね」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「手伝おうか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こういうの、好きなのか？」
+		ELSE
+			PRINTFORMW 「随分と熱心だな」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「掃除なんて面白いものかねぇ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「綺麗好きってのも程度はあると思うがね」
+		ELSE
+			PRINTFORMW 「頑張って片付けてくれよ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「私より掃除が大切か？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…一生掃除してろ…」
+		ELSE
+			PRINTFORMW 「どこまで綺麗にするんだか…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ああ、熱心だね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「掃除もほどほどにな」
+		ELSE
+			PRINTFORMW 「綺麗にするのも悪くはないわな」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ご苦労さん」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「頑張ってくれや」
+		ELSE
+			PRINTFORMW 「よくやるねぇ」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「掃除か？手伝わんぞ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「大変そうだな」
+		ELSE
+			PRINTFORMW 「綺麗好きなのか？お前」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;411,戦闘訓練
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_411
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_411_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_411_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF RAND:10 == 0
+		PRINTFORMW 「生憎だがお前の動きを封じさせてもらう！」
+		PRINTFORMW 「逆符「鏡の国の弾幕」！」
+	ELSEIF RAND:9 == 0
+		PRINTFORMW 「この鏡の世界の中でのお前の自由は許可しないィィィィィィィ───ッ！！」
+		PRINTFORMW 「逆符「イビルインザミラー」！」
+	ELSEIF RAND:8 == 0
+		PRINTFORMW 「退避などさせん！」
+		PRINTFORMW 「欺符「逆針撃」！」
+	ELSEIF RAND:7 == 0
+		PRINTFORMW 「お前と私、どちらが上になるかね」
+		PRINTFORMW 「逆符「天地有用」！」
+	ELSEIF RAND:6 == 0
+		PRINTFORMW 「謙るつもりは無い！」
+		PRINTFORMW 「逆符「天下転覆」！」
+	ELSEIF RAND:5 == 0
+		PRINTFORMW 「残念だが『お前が上』だよ！」
+		PRINTFORMW 「逆転「リバースヒエラルキー」！」
+	ELSEIF RAND:4 == 0
+		PRINTFORMW 「お前、どこにいる？場所は確認しとけよ」
+		PRINTFORMW 「逆転「チェンジエアブレイブ」！」
+	ELSEIF RAND:3 == 0
+		PRINTFORMW 「鳴女は射たれたんだよ！」
+		PRINTFORMW 「逆弓「天壌夢弓の詔勅」！」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「雉と鳴女はなんとやらだな」
+		PRINTFORMW 「逆弓「天壌夢弓」！」
+	ELSE
+		PRINTFORMW 「さて、うまく出来るのか？お前」
+		PRINTFORMW 「避けるのはうまそうだがね」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;412,学習
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_412
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_412_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_412_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…何してるんだか」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ガリ勉だな」
+		ELSE
+			PRINTFORMW 「………」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「一般的な革命家っていうのはまぁ独裁者と同義なのかね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ゲッベルスだっけか？外の演説家、ああいった扇動は好きじゃないね」
+		ELSE
+			PRINTFORMW 「人心をつかむってのは天性の物だな、私には無いよ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「学習か…生憎と数字は嫌いだね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あんまり熱を上げるなよ、体を壊したら元も子もない」
+		ELSE
+			PRINTFORMW 「論語でも読むのか？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あまり経済だの何だのは得意じゃないな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「総需要曲線…何やってるのかよくわからん」
+		ELSE
+			PRINTFORMW 「まぁた難しいことやってるね」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ふーん、そんな学習してるんだな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…そんなに学習好きなのか？」
+		ELSE
+			PRINTFORMW 「何が面白いんだか」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「好きだね、作業でも出たのかい？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「古事記読むたびに思うんだが天探女って天若日子とデキてたんじゃねぇかな」
+		ELSE
+			PRINTFORMW 「祭政一致の時代は天邪鬼だってそれなりに崇められたものさ、祟り神としてだがね」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「クーデターの教科書って無いものかね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「外には天津神の末裔にクーデターを起こした連中がいたらしいな」
+			PRINTFORMW 「まぁ本人らは天に弓を引いたつもりはないといったらしいが、間抜けだね」
+		ELSE
+			PRINTFORMW 「現状に不満を持たない奴などいないさ、気づいていないだけで生者は欲深い」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「学習熱心だね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「面白い事あるか？」
+		ELSE
+			PRINTFORMW 「革命論とかってあるのかね」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;413,料理
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_413
+;料理にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K97_413_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_413_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「料理か、手伝うよ」
+		PRINTFORMW 「何、見た目は悪いがうまいぞ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…手伝おう」
+		PRINTFORMW 「…一人暮らし長いからな、料理くらい作れるよ」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「…手伝ってやるぞ」
+		PRINTFORMW 「下手でも食わせてやるから安心しろ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「お前の料理なんて食えるかよ」
+		PRINTFORMW 「どうしてもというなら手伝ってやらんでもないけどな」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…飯作るのか」
+		PRINTFORMW 「私も手伝おうか？食えないもの作られても困るし」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「お？飯作ってくれるのか？」
+	ELSE
+		PRINTFORMW 「こういうの得意なのか？」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;414,吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_414
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_414_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_414_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「飯か、美味そうだな」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「吃飯？…楽しそうだな」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「ん…吃飯か、美味ければいいな」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「飯…美味いのか？」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…飯ね、」
+		PRINTFORMW 「まぁ美味ければいいよ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「そのうち奢ってもらうよ」
+	ELSE
+		PRINTFORMW 「ん…まぁ頂けるならありがたいがね」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;415,招待吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_415
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_415_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_415_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…美味そうだな」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ああ、ありがとう」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「うまいもの食わせてくれよ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「どうしても…って言うなら食ってやるよ」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…まぁ」
+		PRINTFORMW 「美味そうじゃない？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「見た目はいいな、これ」
+	ELSE
+		PRINTFORMW 「ありがたく頂戴するよ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;416,演奏(凍結中？
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_416
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_416_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_416_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;417,昼寝をする
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_417
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_417_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_417_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…いや、もう少し寝たそうな顔していると思ってな」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「…おはよう」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「…よく眠れたか？」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「お前、寝顔が意外とかわいいな」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「………」
+		PRINTFORMW 「さて、どうする？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「これから何するんだ？」
+	ELSE
+		PRINTFORMW 「暇そうだねぇ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;421,祈願する
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_421
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_421_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_421_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「下克上が成功しますように…っと」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「………」
+		PRINTFORMW 「何願ったかって？秘密だよ」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「…しばらくは平穏を頂きたいね」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「………」
+		PRINTFORMW 「べ、別にお前にまで言う必要は無いだろ！？」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「……我々が勝利しますように…」
+		PRINTFORMW 「…出来ることなら、な」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「強者共が引きずり降ろされますように」
+	ELSE
+		PRINTFORMW 「次の異変で勝てますように」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;431,在浴室里放鬆
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_431
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_431_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_431_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ふぅ…ん…いい湯だな」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「…ん……」
+		PRINTFORMW 「背中ぐらいは…流してやるぞ？」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「…こっち見んなよ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「……ん…」
+		PRINTFORMW 「見るなよ変態！」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…はぁ…」
+		PRINTFORMW 「湯加減はいいな、これ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「あ…ふぅ…」
+	ELSE
+		PRINTFORMW 「く…ぅ…」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;440,等待
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_440
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_440_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_440_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;441,聽課(慧音専用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_441
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_441_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_441_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;442,伐採
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_442
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_442_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_442_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+[SKIPSTART]
+;現状未実装
+;==================================================
+;600,デート会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_600
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_600_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_600_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;601,デート身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_601
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_601_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_601_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;602,デートキス
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_602
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_602_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_602_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;603,牽手
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_603
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_603_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_603_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前良くもまぁ抜け抜けと…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「何？」
+		ELSE
+			PRINTFORMW 「あまり触れるなって…」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ああ、はぐれるなよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「別にどこにも行きやしないよ」
+		ELSE
+			PRINTFORMW 「あんまり強く握るなよ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…お前の手、大きいな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…温かい…」
+		ELSE
+			PRINTFORMW 「好東西だな、こういうの」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「迷子になるなよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「繋いでやるから変なことはするなよ」
+		ELSE
+			PRINTFORMW 「はいはい、ほら、手ぇ出せよ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…いいよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「分かったから変なことすんなよ！」
+		ELSE
+			PRINTFORMW 「世話焼かすなよ」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ベタベタとするのは好きじゃないが…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…」
+		ELSE
+			PRINTFORMW 「引っ張るなよ」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「はいはい、迷子になるほど私は間抜けかっての」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「構わんが変なことするなよ」
+		ELSE
+			PRINTFORMW 「美少女に繋いでもらって嬉しいのか？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「お前と？別にいいけどさ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「女の手ぇ握って何するんだか」
+		ELSE
+			PRINTFORMW 「気持ち悪いなぁお前」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;604,散步
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_604
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K97_604_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_604_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		RETURN 0
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…お前と一緒になんか行ってやらねえよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…好きにしろや」
+		ELSE
+			PRINTFORMW 「………」
+		ENDIF
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「そっちに何かありそうだな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「面白い物でもあったか？」
+		ELSE
+			PRINTFORMW 「ふむ…あっちに行ってみるか」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…お前とならどこへでも行くぞ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…どっちに行くんだ？」
+		ELSE
+			PRINTFORMW 「あっちに行ってみるか」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「お前はどこへ行きたい？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こういうのも良いかもな」
+		ELSE
+			PRINTFORMW 「面白い物でも落ちてないかね」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「はん！お前の行きたいところになんて行ってやるか！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「迷子になるんじゃねぇよ！」
+		ELSE
+			PRINTFORMW 「兒童みたいにキョロキョロするなって」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あっちに行こうか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あそこ、気になるのか？」
+		ELSE
+			PRINTFORMW 「楽しそうだな、お前」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「お前だけ捨ててきてやろうか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ていうかここ何処だ？」
+		ELSE
+			PRINTFORMW 「どこへ行くんだよ…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「全くつまらんね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こっち？ならあっちだな」
+		ELSE
+			PRINTFORMW 「あっちへ行きたい？ならこっち行こうか」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;605,繞道
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_605
+;繞道にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K97_605_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_605_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「寄り道？構わないが」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「寄り道ね」
+		PRINTFORMW 「いいよ、好きにしな」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「どこ行くんだ？」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「さっさと用事済ませろよ」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「寄り道ぐらいなら構わんが」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「分かった、好きにしろ」
+	ELSE
+		PRINTFORMW 「…さっさとしろよ」
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;610,請吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_610
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_610_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_610_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「分かった腹ごしらえしよう」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「飯か」
+		PRINTFORMW 「分かった何か食べよう」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「じゃあ何か食べるか」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「別にお前となら何だって…いや、何でもない、何か食おう」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「この辺に店あるのか？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「何食べるんだ？」
+	ELSE
+		PRINTFORMW 「…全額奢れよ」
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;613,賺錢
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_613
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_613_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_613_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「…ふん…」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「資金稼ぎ、頼むよ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「何もお前がしなくたって…」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「まぁ…好きにしろ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「私が代わりにやっても…ってお尋ね者か、私」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「おう、頑張ってくれ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「頑張って稼いでくれよ」
+	ELSE
+		PRINTFORMW 「三割よこせよ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;614,採購食材
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_614
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_614_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_614_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「人参…豚…鍋にするのもいいな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「保存が効く方がいいな、私としては」
+		ELSE
+			PRINTFORMW 「干物を買い足したいな」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…何が食いたいよ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…蛸…烏賊…何でこんなもんが…」
+		ELSE
+			PRINTFORMW 「醤油切らしてたな、買っておこうか」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「人参…大根…何でもいいか」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あーイトウだ、こっちじゃ増えてるらしいな」
+		ELSE
+			PRINTFORMW 「ほうれん草、あまり灰汁が強いのは嫌いなんだけどな」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ピーマンとか食えるのか？お前」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「椎茸ね、まあ不味くはないか」
+		ELSE
+			PRINTFORMW 「捲心菜が安いな、粉物作って入れるか」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「味噌と醤油、お前豚汁どっちだ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おや、河ふぐだ」
+		ELSE
+			PRINTFORMW 「羊肉って美味いのかね」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「紅薯、山芋…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「葱の買い足しもしたいな」
+		ELSE
+			PRINTFORMW 「玉ねぎか、カレーでも作るか？」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「何買うんだ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「野菜嫌いとかじゃないよな」
+		ELSE
+			PRINTFORMW 「この胡瓜…河童産かね」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;615,吃便当
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_615
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_615_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_615_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「…よく食えるな…」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「食べさせてやろうか？ほれ、あーんしろ」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…どうだ？美味いか？」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「ほれ、食え食え」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「というわけで弁当を持ってきたんだが」
+		PRINTFORMW 「このおかずのどれかにタバスコが入っている、残さず食えよ？」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「ほれ、私のでよければくれてやる」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「くれてやるが味の保証はせんぞ」
+	ELSE
+		PRINTFORMW 「お前の分もあるにはあるが、激辛だぞ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;617,甘味処に誘う
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_617
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_617_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_617_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「甘いものか、何食べる？」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「…お汁粉とか…食べたい…」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「団子、美味そうだな」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「別に甘いものなんて好きじゃないし…」
+		PRINTFORMW 「お前が食べたいってなら付き合ってやるけどな」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「何でもいいよ、美味ければな」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ん…餡蜜、いいな」
+	ELSE
+		PRINTFORMW 「お前そういう趣味なのか」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;618,花屋
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_618
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_618_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_618_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「柄じゃないよ、私」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「見ているだけでも楽しいけどもね、団子の方が好きだな」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「団子、美味そうだな」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「別に甘いものなんて好きじゃないし…」
+		PRINTFORMW 「お前が食べたいってなら付き合ってやるけどな」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「何でもいいよ、美味ければな」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ん…餡蜜、いいな」
+	ELSE
+		PRINTFORMW 「お前の分もあるにはあるが、激辛だぞ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;620,鈴奈庵
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_620
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_620_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_620_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「怪しい物ばかりだな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ネクロノミコン…ナコト写本…」
+		ELSE
+			PRINTFORMW 「『Mein Kampf』…面白そうではあるな、読めないけど」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…何借りるんだ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「借りたいものでもあるのか？」
+		ELSE
+			PRINTFORMW 「何か借りていくか？」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「延滞金でも払うのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「何借りるんだ？」
+		ELSE
+			PRINTFORMW 「面白い本があるかね」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ここの娘に用なのか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「なんでもいいがね、早く借りてこいよ」
+		ELSE
+			PRINTFORMW 「…妖魔本とかあったりするのかね」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「早く借りてこいよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「講談本でも借りてくるか」
+		ELSE
+			PRINTFORMW 「春画でも借りるのか？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「本とインクの匂いだな、これ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「延滞金もあるのか？」
+		ELSE
+			PRINTFORMW 「…妖怪が利用してるってのはいいのかね」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「貸本屋ねぇ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「何か本でも借りるとするか」
+		ELSE
+			PRINTFORMW 「燃えそうだな、この建物」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;660,読書
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_660
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_660_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_660_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「…邪魔すんなよ…」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「何読んでるんだ？」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「…面白そうだな、それ」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「次、貸してくれよ」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「………」
+		PRINTFORMW 「ん？いや、面白そうだなと思ってな」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「それ、面白いのか？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「早く読んでくれよ」
+	ELSE
+		PRINTFORMW 「読書ねぇ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;698,進入房間
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_698
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_698_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_698_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「…入るのか」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん、入るのか」
+			PRINTFORMW 「…あまり家探しはしないでくれよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こっちで作戦会議ねぇ」
+			PRINTFORMW 「構わないよ、ほら、入れよ」
+		ELSE
+			PRINTFORMW 「部屋に？」
+			PRINTFORMW 「構わないけど変な事すんなよ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「分かった」
+			PRINTFORMW 「ゆっくりしていけ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あんまり探るなよ」
+			PRINTFORMW 「見られて困るもんもあるからな」
+		ELSE
+			PRINTFORMW 「…面白いものは置いてないぞ」
+			PRINTFORMW 「それでいいなら、どうぞ」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「まぁ構わんがね」
+			PRINTFORMW 「何するんだか…ね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「部屋にねぇ」
+			PRINTFORMW 「いいよ、好きにしな」
+		ELSE
+			PRINTFORMW 「？」
+			PRINTFORMW 「進入房間のに私の許可なんていらんだろ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ふん、好きにしろ」
+			PRINTFORMW 「…変なことすんじゃねぇぞ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…いいよ、好きにすればいい」
+		ELSE
+			PRINTFORMW 「何するんだか…」
+			PRINTFORMW 「家探しは止めてくれよ」
+		ENDIF
+	ELSEIF CFLAG:1302 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「内袴漁るつもりか？」
+			PRINTFORMW 「…ふん、好きにしな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…内袴ドロを部屋にねぇ」
+		ELSE
+			PRINTFORMW 「何する気か知らないがね」
+			PRINTFORMW 「大人しくしろよ？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「入れば？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どうした？」
+			PRINTFORMW 「部屋、入るんだろ？」
+		ELSE
+			PRINTFORMW 「散らかってるが気にしてくれるなよ」
+			PRINTFORMW 「性分なんでな」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「あんまり散らかすなよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「別に構わないけどね」
+		ELSE
+			PRINTFORMW 「入るのは勝手だけどね」
+			PRINTFORMW 「荒らすなよ」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…好きにすれば？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あまり詮索してくれるなよ」
+		ELSE
+			PRINTFORMW 「物動かすなよ」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;699,外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_699
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_699_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_699_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,掏耳朵
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K97_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K97_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K97_60_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ほら、掏耳朵してやる」
+			PRINTFORMW 「…動くなよ、手元が狂うからな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「掏耳朵してやるから動くなよ」
+			PRINTFORMW 「このまま突っ込んで殺したほうが世のためかね」
+		ELSE
+			PRINTFORMW 「はいはい、聞こえませんでしたは通らんからな」
+			PRINTFORMW 「でかいの取ってやるよ」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…掏耳朵ね」
+			PRINTFORMW 「うまく出来るように祈っとけ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ほれ、掏耳朵してやるよ」
+			PRINTFORMW 「突っ込まないとは思うが気をつけろよ」
+		ELSE
+			PRINTFORMW 「…いいけどさ」
+			PRINTFORMW 「経験ないから用心しろよ、出来るかしらんけど」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「掏耳朵してやるからおとなしくしとけ」
+			PRINTFORMW 「あんまりしない方がいいって聞くけどどうなんだろうね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あんまり動くなよ」
+			PRINTFORMW 「溜まってるんじゃねぇのか？」
+		ELSE
+			PRINTFORMW 「掏耳朵ね」
+			PRINTFORMW 「いいけどうまくないぞ」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「こういうのお前好きなのか？」
+			PRINTFORMW 「どうでもいいけどさ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「脳味噌ごと掻きだしてやるから大人しくしてろよ」
+		ELSE
+			PRINTFORMW 「このまま突っ込んでやろうか？」
+			PRINTFORMW 「挿したり挿されるの好きなんだろ？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「はいはい大人しくしてなって」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「まぁ構わないけどさ」
+			PRINTFORMW 「色々掻きだしてやろうか？」
+		ELSE
+			PRINTFORMW 「全く普段から清潔にしてないとこうなるって」
+			PRINTFORMW 「ほら、大人しくしてろ」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「大人しくしてろよ」
+			PRINTFORMW 「汚え耳かっぽじってやる」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「この耳綺麗にすれば、多少は物分りが良くなるのかね」
+		ELSE
+			PRINTFORMW 「安心しろ」
+			PRINTFORMW 「風通しを良くするだけだ」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「風穴開けてやろうか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「耳垢ぐらい自分で何とかしなよ」
+		ELSE
+			PRINTFORMW 「耳掃除ねぇ…面倒だな」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;61,抱き枕
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K97_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K97_61_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K97_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…あ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「すぅ…くぅ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「ん…すぅ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「あ…っ…すぅ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「くぅ…すぴぃ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ん…くぅ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ELSE
+		PRINTFORMW 「すぅ…ふぁ…」
+		PRINTFORMW 眠っている正邪は抱き寄せられると少しだけ微笑んだ。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;62,亲額頭
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K97_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K97_62_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K97_62_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…何だよ…」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「あ…ん…」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「ん…どうかしたのか？」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「あ…っ…馬鹿…」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…変な奴…」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「……馬鹿か…」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 正邪は額にキスをされると少し頬を染めた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;63,更多的接吻
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K97_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K97_63_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K97_63_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で正邪にキスした
+		PRINTFORMW %CALLNAME:MASTER%は再び正邪の柔らかい唇を堪能した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…くぅ…んん…」
+		PRINTFORMW 正邪はぐっすりと寝ている。
+		PRINTFORMW その唇はとても柔らかかった。
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…ちゅ…」
+			PRINTFORMW 「…舌まで入れるなって…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くちゅ…ん…あ…」
+			PRINTFORMW 「意外と…好東西だな…」
+		ELSE
+			PRINTFORMW 「んあ…ちゅ…れろ…」
+			PRINTFORMW 「いいな、これ…」
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ちゅ…れろ…」
+			PRINTFORMW 「…好きだよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…れろ…ちゅ…」
+			PRINTFORMW 「…こういうの、いいな」
+		ELSE
+			PRINTFORMW 「んあ…ちゅ…」
+			PRINTFORMW 「…長すぎだ…馬鹿…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ちゅ…」
+			PRINTFORMW 「あ…ん…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ…！」
+			PRINTFORMW 「…長い」
+		ELSE
+			PRINTFORMW 「んちゅ…れろ…」
+			PRINTFORMW 「…ぷはっ！？」
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…くちゅ…れろ…」
+			PRINTFORMW 「…長いんだよ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あ…ちゅ…っ！？」
+			PRINTFORMW 「…長すぎだ！」
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「ちゅ…あ…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 正邪は唇を塞がれると大人しく身を委ねている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ちゅ…ん…」
+			PRINTFORMW 「ん…あ…」
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…ぷは！？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…ちゅ…」
+			PRINTFORMW 「…あ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ん…あ…」
+		ELSE
+			PRINTFORMW 「…ん…」
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…れろ…ん…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あ…ちゅ…」
+		ELSE
+			PRINTFORMW 「…ん…あ…」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;80,拉手
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K97_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K97_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K97_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		PRINTFORMW 「ん…強引だな、お前…」
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		PRINTFORMW 「ああ、連れて行ってくれ…」
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「お前はどこへ行きたい？」
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		PRINTFORMW 「おい、引っ張るな…！」
+		PRINTFORMW 「行きたいところがあるなら言えって…行ってやるから…」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「どこへ行くんだ？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「意外と強引だな、お前」
+	ELSE
+		PRINTFORMW 「…どこへ連れてくんだよ」
+	ENDIF
+ENDIF
+RETURN 1

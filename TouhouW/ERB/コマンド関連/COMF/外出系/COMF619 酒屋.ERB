@@ -1,0 +1,337 @@
+﻿@COM619
+#DIM 濁酒販売個数
+#DIM 清酒販売個数
+#DIM 鬼殺酒販売個数
+#DIM 在庫増加数
+;RANDをかけるのは一日一回
+IF FLAG:最後に酒屋に訪れた日 != DAY
+	;宴会当日は酒が品薄に
+	IF FLAG:開始日 == DAY
+		濁酒販売個数 = RAND:(4 + FLAG:酒屋の売却率フラグ * 4)
+		清酒販売個数     = RAND:(3 + FLAG:酒屋の売却率フラグ * 3)
+		鬼殺酒販売個数   = RAND:(2 + FLAG:酒屋の売却率フラグ * 2)
+	ELSE
+		濁酒販売個数 = RAND:(6 + FLAG:酒屋の売却率フラグ * 8)
+		清酒販売個数     = RAND:(5 + FLAG:酒屋の売却率フラグ * 6)
+		鬼殺酒販売個数   = RAND:(4 + FLAG:酒屋の売却率フラグ * 4)
+	ENDIF
+	;累積購入額に応じても在庫が増加
+	IF FLAG:酒屋での累積購入額
+		在庫増加数 = MAX(FLAG:酒屋での累積購入額 / 100000 - 2, 0) + 1
+		濁酒販売個数 += RAND:在庫増加数
+		清酒販売個数     += RAND:在庫増加数
+		鬼殺酒販売個数   += RAND:在庫増加数
+	ENDIF
+ENDIF
+
+IF FLAG:最後に酒屋に訪れた日 == 0
+	PRINTL 「第一次来的客人吗？这是特别赠品哦」
+ELSEIF DAY - FLAG:最後に酒屋に訪れた日 > 7
+	PRINTL 「好久不见了呢ー、請慢用」
+ELSEIF FLAG:最後に酒屋に訪れた日 == DAY
+	PRINTL 「欢迎光、诶呀？有事吗？」
+ELSEIF FLAG:酒屋での累積購入額 > 1000000 && FLAG:開始日 != DAY
+	PRINTL 「欢迎光临、我可是专门為%CALLNAME:MASTER%准备了好多东西呢」
+ELSEIF FLAG:開始日 == DAY
+	PRINTL 「真不凑巧、全被刚才的客人买光了」
+ELSEIF 濁酒販売個数 + 清酒販売個数 + 鬼殺酒販売個数 > 30
+	PRINTL 「欢迎光临、本店有许多美酒哦ー」
+ELSE
+	PRINTL 「欢迎光临ー」
+ENDIF
+SIF FLAG:酒屋買取強化
+	PRINTFORML 「現在正在舉行推銷活動中　買的越多優惠越多」
+$INPUT_LOOP2
+PRINTL [0] - 買酒
+PRINTL [1] - 卖酒
+PRINTL [100] - 返回
+$INPUT_LOOP
+INPUT
+
+IF RESULT == 0
+	CALL 酒購入(濁酒販売個数,清酒販売個数,鬼殺酒販売個数)
+	GOTO INPUT_LOOP2
+ELSEIF RESULT == 1
+	CALL 酒卸売(濁酒販売個数,清酒販売個数,鬼殺酒販売個数)
+	GOTO INPUT_LOOP2
+ELSEIF RESULT != 100
+	GOTO INPUT_LOOP
+ENDIF
+
+FLAG:最後に酒屋に訪れた日 = DAY
+IF FLAG:酒屋の累積転売利益 > 3000000 && FLAG:酒屋の売却率フラグ == 2
+	FLAG:酒屋の売却率フラグ = 3
+	PRINTL 
+	PRINTL 一走出店就被叫住了
+	PRINTL 「卖了这么多酒过来真是幇了大忙了呢～、从今以后会提高一点收购价的」
+ELSEIF FLAG:酒屋の累積転売利益 > 1000000 && FLAG:酒屋の売却率フラグ == 1
+	FLAG:酒屋の売却率フラグ = 2
+	PRINTL 
+	PRINTL 一走出店就被叫住了
+	PRINTL 「卖了这么多酒过来真是幇上忙了呢ー、要是提高收购价的话能不能多卖一点？」
+ELSEIF FLAG:酒屋の累積転売利益 > 100000 && FLAG:酒屋の売却率フラグ == 0
+	FLAG:酒屋の売却率フラグ = 1
+	PRINTL 
+	PRINTL 一走出店就被叫住了
+	PRINTL 「一直以来到这卖酒真是太感谢了、作為礼物从下次開始收购价会提高哦ー」
+ELSE
+	PRINTL 「下次再来哦ー」
+ENDIF
+TIME += 10
+RETURN -1
+
+@酒購入(濁酒販売個数,清酒販売個数,鬼殺酒販売個数)
+#DIM REF 濁酒販売個数
+#DIM REF 清酒販売個数
+#DIM REF 鬼殺酒販売個数
+#DIM 販売個数
+#DIM 所持可能個数
+#DIM 値引率
+#DIM 選択した商品
+#DIM 購入個数
+#DIM ちゃんと買った
+
+;値引率を20％に設定(定価の80％で販売)
+値引率 = 20
+
+;それぞれのお酒の最大所持可能数を80に設定(80個以上持ってるとそのお酒は買えません)
+所持可能個数 = 80
+
+PRINTL 
+IF FLAG:最後に酒屋に訪れた日 == 0
+	PRINTL 「第一次来吧这是特别赠品ー」
+	;値引率を40％に設定(定価の60％で販売)
+	値引率 = 40
+ELSE
+	PRINTL 「买哪种都很划算哦ー」
+ENDIF
+$INPUT_LOOP2
+PRINTFORML 所持金:\\%TOSTR(MONEY,"#,###")%
+FOR LOCAL,51,54
+	SELECTCASE LOCAL
+		CASE 51
+			販売個数 = 濁酒販売個数
+		CASE 52
+			販売個数 = 清酒販売個数
+		CASE 53
+			販売個数 = 鬼殺酒販売個数
+	ENDSELECT
+	LOCALS = [{LOCAL}]%ITEMNAME:(LOCAL),8,LEFT%	(\\%TOSTR(ITEMPRICE:(LOCAL) * (100 - 値引率) / 100),5,RIGHT%) 
+	IF ITEMPRICE:LOCAL
+		PRINTFORM %LOCALS% 
+		IF 販売個数 == 0
+			SETCOLOR C_RED
+			PRINT 	(卖完了) 
+			RESETCOLOR
+		ELSE
+			PRINTFORM 	(在庫:{販売個数}) 
+		ENDIF
+		IF ITEM:LOCAL >= 所持可能個数
+			SETCOLOR C_YELLOW
+			PRINTFORM \t所持:{ITEM:LOCAL,2,RIGHT} 
+			FONTSTYLE 1
+			PRINTL 購入不可
+			RESETCOLOR
+			FONTREGULAR
+		ELSE
+			PRINTFORML \t所持:{ITEM:LOCAL,2,RIGHT}
+		ENDIF
+	ENDIF
+NEXT
+PRINT [100] - 返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN -1
+ELSEIF RESULT >= 51 && RESULT <= 53
+	
+	;あとでもう一回INPUTを使うため今の値を退避
+	選択した商品 = RESULT
+	
+	;選んだ番号にしたがって販売個数を格納
+	SELECTCASE 選択した商品
+		CASE 51
+			販売個数 = 濁酒販売個数
+		CASE 52
+			販売個数 = 清酒販売個数
+		CASE 53
+			販売個数 = 鬼殺酒販売個数
+	ENDSELECT
+	
+	;品切れの場合
+	IF 販売個数 == 0
+		PRINTL 
+		PRINTL 「対不起、卖完了呢」
+		
+	;最大所持可能数以上のお酒を所持している場合
+	ELSEIF ITEM:選択した商品 >= 所持可能個数
+		PRINTL 「客人、那個已経拿着很多了吧？　倒不如賣給我一点ー」
+	
+	;それ以外の場合個数を尋ねる
+	ELSE
+		PRINTFORML 要买多少呢… (数値を入力 1-{MIN(所持可能個数 - ITEM:選択した商品,販売個数)})
+		INPUT
+		購入個数 = RESULT
+		;0以下の値を入力した場合
+		IF 購入個数 <= 0
+			PRINTL 
+			PRINTW 果然还是不买了吧
+			GOTO INPUT_LOOP2
+		;在庫の数より多く購入しようとした場合
+		ELSEIF 販売個数 < 購入個数
+			PRINTW 没有这么多库存
+			GOTO INPUT_LOOP2
+		;最大所持可能数より多く購入しようとした場合
+		ELSEIF 所持可能個数 < ITEM:選択した商品 + 購入個数
+			PRINTW 沒辦法拿那麼多
+			GOTO INPUT_LOOP2
+		ENDIF
+		CALL BUY_ABLE(選択した商品,0,購入個数,値引率)
+		ちゃんと買った = RESULT
+		IF FLAG:酒屋での累積購入額 > 100000 && !RAND:9 && ちゃんと買った
+			PRINTL 
+			PRINTL 「一直光顾本店真是太感谢了、这是赠品」
+			PRINTFORMW ―得到作為赠品的%ITEMNAME:510%―
+			ITEM:510 ++
+		ELSE
+			PRINTL 
+			PRINTW 「多谢惠顾ー」
+		ENDIF
+		IF ちゃんと買った
+			FLAG:酒屋での累積購入額 += ITEMPRICE:選択した商品 * (100 - 値引率) / 100 * 購入個数
+			;販売個数を減少させる処理
+			SELECTCASE 選択した商品
+				CASE 51
+					濁酒販売個数 -= 購入個数
+				CASE 52
+					清酒販売個数     -= 購入個数
+				CASE 53
+					鬼殺酒販売個数   -= 購入個数
+			ENDSELECT
+		ENDIF
+	ENDIF
+	GOTO INPUT_LOOP2
+ELSE
+	GOTO INPUT_LOOP2
+ENDIF
+RETURN
+
+@酒卸売(濁酒販売個数,清酒販売個数,鬼殺酒販売個数)
+#DIM REF 濁酒販売個数
+#DIM REF 清酒販売個数
+#DIM REF 鬼殺酒販売個数
+#DIM 値引率
+#DIM 所持数
+#DIM 選択した商品
+#DIM 売却個数
+#DIM 売却額
+
+SELECTCASE FLAG:酒屋の売却率フラグ
+	CASE 0
+		;値引率を90％に設定(定価の10％で購入してくれる)
+		値引率 = 90
+	CASE 1
+		;値引率を85％に設定(定価の15％で購入してくれる)
+		値引率 = 85
+	CASE 2
+		;値引率を80％に設定(定価の20％で購入してくれる)
+		値引率 = 80
+	CASE 3
+		;値引率を70％に設定(定価の30％で購入してくれる)
+		値引率 = 70
+ENDSELECT
+SIF FLAG:酒屋買取強化
+	値引率 -= 20
+PRINTL 
+PRINT 「
+IF FLAG:酒屋買取強化
+	PRINT 因為是推銷活動所以特別的
+ELSEIF FLAG:酒屋の売却率フラグ
+	PRINT 因為是大客戶所以特别
+ENDIF
+PRINTFORML 优惠原价的{100 - 値引率}％」
+PRINTL 要卖什么呢…
+$INPUT_LOOP2
+PRINTFORML 所持金:\\%TOSTR(MONEY,"#,###")%
+FOR LOCAL,51,54
+	LOCALS = [{LOCAL}]%ITEMNAME:(LOCAL)%
+	IF ITEMPRICE:LOCAL
+		PRINTFORML %LOCALS%	(\\{ITEMPRICE:(LOCAL) * (100 - 値引率) / 100})  	(所持:{ITEM:LOCAL})
+	ENDIF
+NEXT
+PRINT [100] - 返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN -1
+ELSEIF RESULT >= 51 && RESULT <= 53
+	;選んだ番号にしたがって所持数を格納
+	所持数 = ITEM:RESULT
+	
+	;所持0の場合
+	IF 所持数 == 0
+		PRINTL 
+		PRINTL 因為没有现货了想卖也卖不了
+	;所持0で無い場合個数を尋ねる
+	ELSE
+		;もう一回INPUTを使うため今の値を退避
+		選択した商品 = RESULT
+		PRINTFORML 要卖多少呢… (数値を入力 1-{所持数})
+		INPUT
+		売却個数 = RESULT
+		IF 売却個数 <= 0
+			PRINTL 
+			PRINTL 果然还是不卖了
+			GOTO INPUT_LOOP2
+		ENDIF
+		IF 売却個数 > 所持数
+			PRINTL 
+			PRINTL 没有那么多
+			GOTO INPUT_LOOP2
+		ENDIF
+		
+		;一つあたりの売却額を算出
+		売却額 = ITEMPRICE:選択した商品 * (100 - 値引率) / 100
+		ITEM:選択した商品 -= 売却個数
+		MONEY += 売却額 * 売却個数
+		;お店は定価の80％で販売
+		FLAG:酒屋の累積転売利益 += ITEMPRICE:選択した商品 * (値引率 - 20) / 100 * 売却個数
+		PRINTFORMW 以￥{売却額*売却個数}的价格卖掉了{売却個数}個%ITEMNAME:選択した商品%
+		;販売個数を増加させる処理
+		SELECTCASE 選択した商品
+		CASE 51
+			濁酒販売個数 += 売却個数
+		CASE 52
+			清酒販売個数     += 売却個数
+		CASE 53
+			鬼殺酒販売個数   += 売却個数
+		ENDSELECT
+	ENDIF
+	GOTO INPUT_LOOP2
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+;-------------------------------------------------
+;実行可能判定
+;-------------------------------------------------
+;酒屋
+@COM_ABLE619
+;一括管理
+SIF GLOBAL_COMABLE(619)
+	RETURN RESULT
+IF !AT_HOME(MASTER)
+	SIF CFLAG:MASTER:現在位置 != 呑屋小道
+		RETURN 0
+ELSE
+	SIF CFLAG:MASTER:現在位置 != 211
+		RETURN 0
+ENDIF
+;睡眠中
+SIF CFLAG:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
+
+

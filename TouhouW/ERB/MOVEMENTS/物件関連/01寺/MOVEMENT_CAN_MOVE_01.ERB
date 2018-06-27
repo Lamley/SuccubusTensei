@@ -1,0 +1,332 @@
+﻿
+;地点関連性応答処理
+;-----------------------------------------------------------
+@CAN_MOVE_1(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;山門
+	CASE 101
+		;境内直通
+		SIF ARG:1 == 102
+			RETURNF 3
+		;霊廟大門移動可
+		SIF ARG:1 == 123
+			RETURNF 1
+		SIF ARG:1 == MAXROOM
+			RETURNF 2
+	;境内
+	CASE 102
+		;山門直通
+		SIF ARG:1 == 101
+			RETURNF 3
+		;講堂移動可
+		SIF ARG:1 == 104
+			RETURNF 1
+		;経蔵移動可
+		SIF ARG:1 == 105
+			RETURNF 1
+		;後院移動可
+		SIF ARG:1 == 106
+			RETURNF 1
+		;起居室移動可
+		SIF ARG:1 == 107
+			RETURNF 1
+		;墓地移動可
+		SIF ARG:1 == 121
+			RETURNF 1
+		;梵鐘堂直通
+		SIF ARG:1 == 122
+			RETURNF 3
+	;本堂
+	CASE 103
+		;講堂移動可
+		SIF ARG:1 == 104
+			RETURNF 1
+		;後院移動不可
+		SIF ARG:1 == 106
+			RETURNF 2
+	;講堂
+	CASE 104
+		;境内移動可
+		SIF ARG:1 == 102
+			RETURNF 1
+		;本堂移動可
+		SIF ARG:1 == 103
+			RETURNF 1
+		;梵鐘堂移動可
+		SIF ARG:1 == 122
+			RETURNF 1
+	;経蔵
+	CASE 105
+		;境内移動可
+		SIF ARG:1 == 102
+			RETURNF 1
+;		;起居室移動可
+;		SIF ARG:1 == 107
+;			RETURNF 1
+	;後院
+	CASE 106
+		;境内移動可
+		SIF ARG:1 == 102
+			RETURNF 1
+		;走廊直通
+		SIF ARG:1 == 110
+			RETURNF 3
+		;MASTER私室移動可
+		SIF ARG:1 == 119
+			RETURNF 1
+		;庫房移動可
+		SIF ARG:1 == 120
+			RETURNF 1
+		;墓地直通
+		SIF ARG:1 == 121
+			RETURNF 3
+	;起居室
+	CASE 107
+		;境内移動可
+		SIF ARG:1 == 102
+			RETURNF 1
+;		;講堂移動可
+;		SIF ARG:1 == 104
+;			RETURNF 1
+;		;経蔵移動可
+;		SIF ARG:1 == 105
+;			RETURNF 1
+		;居間直通
+		SIF ARG:1 == 108
+			RETURNF 3
+		;廚房移動可
+		SIF ARG:1 == 111
+			RETURNF 1
+		;浴室場移動可
+		SIF ARG:1 == 112
+			RETURNF 1
+	;居間
+	CASE 108
+		;客間移動可
+		SIF ARG:1 == 109
+			RETURNF 1
+		;起居室直通
+		SIF ARG:1 == 107
+			RETURNF 3
+		;廚房直通
+		SIF ARG:1 == 111
+			RETURNF 3
+		;村紗私室移動可
+		SIF ARG:1 == 114
+			RETURNF 1
+		;星私室移動可
+		SIF ARG:1 == 115
+			RETURNF 1
+		;鵺私室移動可
+		SIF ARG:1 == 117
+			RETURNF 1
+		;白蓮私室移動可
+		SIF ARG:1 == 118
+			RETURNF 1
+	;客間
+	CASE 109
+		;境内移動不可
+		SIF ARG:1 == 102
+			RETURNF 1
+		;居間移動可
+		SIF ARG:1 == 108
+			RETURNF 1
+		;走廊移動可
+		SIF ARG:1 == 110
+			RETURNF 1
+	;走廊
+	CASE 110
+		;後院直通
+		SIF ARG:1 == 106
+			RETURNF 3
+		;客間移動可
+		SIF ARG:1 == 109
+			RETURNF 1
+		;納茲琳私室移動可
+		SIF ARG:1 == 113
+			RETURNF 1
+		;一輪私室移動可
+		SIF ARG:1 == 116
+			RETURNF 1
+	;廚房
+	CASE 111
+		;起居室直通
+		SIF ARG:1 == 107
+			RETURNF 3
+		;居間直通
+		SIF ARG:1 == 108
+			RETURNF 3
+	;浴場
+	CASE 112
+		;起居室移動可
+		SIF ARG:1 == 107
+			RETURNF 1
+	;納茲琳私室
+	CASE 113
+		;走廊移動可
+		SIF ARG:1 == 110
+			RETURNF 1
+		;一輪私室移動可
+		SIF ARG:1 == 116
+			RETURNF 1
+	;村紗私室
+	CASE 114
+		;居間移動可
+		SIF ARG:1 == 108
+			RETURNF 1
+		;鵺私室移動可
+		SIF ARG:1 == 117
+			RETURNF 1
+	;星私室
+	CASE 115
+		;居間移動可
+		SIF ARG:1 == 108
+			RETURNF 1
+		;白蓮私室移動可
+		SIF ARG:1 == 118
+			RETURNF 1
+	;一輪私室
+	CASE 116
+		;走廊移動可
+		SIF ARG:1 == 110
+			RETURNF 1
+		;納茲琳私室移動可
+		SIF ARG:1 == 113
+			RETURNF 1
+	;鵺私室
+	CASE 117
+		;居間移動可
+		SIF ARG:1 == 108
+			RETURNF 1
+		;村紗私室移動可
+		SIF ARG:1 == 114
+			RETURNF 1
+	;白蓮私室
+	CASE 118
+		;居間移動可
+		SIF ARG:1 == 108
+			RETURNF 1
+		;星私室移動可
+		SIF ARG:1 == 115
+			RETURNF 1
+	;出口（主人公私室）
+	CASE 119
+		;後院移動可
+		SIF ARG:1 == 106
+			RETURNF 1
+
+		;庫房移動可
+		SIF ARG:1 == 120
+			RETURNF 1
+	;庫房き
+	CASE 120
+		;後院移動可
+		SIF ARG:1 == 106
+			RETURNF 1
+		;出口移動可
+		SIF ARG:1 == 119
+			RETURNF 1
+	;墓地
+	CASE 121
+		;境内移動可
+		SIF ARG:1 == 102
+			RETURNF 1
+		;後院直通
+		SIF ARG:1 == 106
+			RETURNF 3
+		;梵鐘堂直通
+		SIF ARG:1 == 122
+			RETURNF 3
+	;梵鐘堂
+	CASE 122
+		;境内直通
+		SIF ARG:1 == 102
+			RETURNF 3
+		;講堂移動可
+		SIF ARG:1 == 104
+			RETURNF 1
+		;墓場直通
+		SIF ARG:1 == 121
+			RETURNF 3
+	;霊廟大門
+	CASE 123
+		;山門移動可
+		SIF ARG:1 == 101
+			RETURNF 1
+		;霊廟広場直通
+		SIF ARG:1 == 124
+			RETURNF 3
+	;霊廟広場
+	CASE 124
+		;霊廟大門直通
+		SIF ARG:1 == 123
+			RETURNF 3
+		;道場直通
+		SIF ARG:1 == 126
+			RETURNF 3
+		SIF ARG:1 == 133
+			RETURNF 1
+	CASE 125
+		SIF ARG:1 == 130
+			RETURNF 1
+	;道場
+	CASE 126
+		SIF ARG:1 == 124
+			RETURNF 3
+		SIF ARG:1 == 130
+			RETURNF 1
+	CASE 127
+		SIF ARG:1 == 130
+			RETURNF 1
+		SIF ARG:1 == 131
+			RETURNF 3
+	;神子部屋
+	CASE 128
+		SIF ARG:1 == 130
+			RETURNF 3
+	;客間
+	CASE 129
+		SIF ARG:1 == 130
+			RETURNF 3
+		SIF ARG:1 == 131
+			RETURNF 3
+	;廊下
+	CASE 130
+		SIF ARG:1 == 126
+			RETURNF 1
+		SIF ARG:1 == 125
+			RETURNF 1
+		SIF ARG:1 == 127
+			RETURNF 1
+		SIF ARG:1 == 128
+			RETURNF 3
+		SIF ARG:1 == 129
+			RETURNF 3
+		SIF ARG:1 == 131
+			RETURNF 1
+		SIF ARG:1 == 132
+			RETURNF 1
+	;枯山水
+	CASE 131		
+		SIF ARG:1 == 127
+			RETURNF 3
+		SIF ARG:1 == 129
+			RETURNF 3
+		SIF ARG:1 == 130
+			RETURNF 1
+	;調薬室
+	CASE 132
+		SIF ARG:1 == 130
+			RETURNF 1
+	;湯殿
+	CASE 133
+		SIF ARG:1 == 124
+			RETURNF 1
+	;参道的正前方
+	;参道へのみ一方通行、EXキャラ待機用
+	CASE MAXROOM
+		SIF ARG:1 == 101
+			RETURNF 1
+ENDSELECT
+RETURNF 0

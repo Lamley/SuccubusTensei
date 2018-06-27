@@ -1,0 +1,133 @@
+﻿@来訪フラグ
+#DIM 来訪者数
+#DIM 参照フラグ
+#DIM 参照ビット
+#DIM 来訪確率
+#DIM 基本来訪確率
+;LOCAL = FLAG:50の各キャラのbit
+;FLAG:50～59 各訪問者の訪問フラグ
+;FLAG:51:bit表記:
+;LOCAL = 各キャラのNO 
+来訪者数 = 0
+参照フラグ = 0
+参照ビット = 0
+来訪確率 = 0
+基本来訪確率 = 0
+;出禁人数に応じて基本来訪率の調整。実数でなく割合計算に変更しています
+SELECTCASE FLAG:出禁人数 * 100 / CHARANUM
+CASE IS >= 60
+	基本来訪確率 = 15 - TALENT:MASTER:千客万来
+CASE IS >= 40
+	基本来訪確率 = 16 - TALENT:MASTER:千客万来
+CASE IS >= 20
+	基本来訪確率 = 17 - TALENT:MASTER:千客万来
+CASEELSE
+	基本来訪確率 = 18 - TALENT:MASTER:千客万来
+ENDSELECT
+
+FOR LOCAL , 1 , CHARANUM
+	;参照するフラグとビットのセット
+	参照フラグ = (LOCAL) / 64
+	参照ビット = (LOCAL) % 64
+	;自宅在住キャラなら遭遇しない
+	SIF CFLAG:LOCAL:神社在住 > 0
+		CONTINUE
+	;出禁の人は除外
+	IF CFLAG:LOCAL:出禁
+		CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+	;宴会参加者は確定で訪問する
+	ELSEIF CFLAG:LOCAL:宴会参加
+		IF IN_HOME(FLAG:32)
+			SETBIT FLAG:(50 + 参照フラグ),参照ビット
+			来訪者数 ++
+		;ただし神社外なら確実に来ない（酒>>（越えられない壁）>>恋人のあなた）
+		ELSE
+			CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+		ENDIF
+	;願掛け対象／依頼実行中及び達成者は来訪する
+	; // 自宅メンバーは願掛けフラグがONでも来訪しないように from願掛けパッチ.ERB//
+	ELSEIF (GETBIT(FLAG:(550 + 参照フラグ),参照ビット) && !CFLAG:LOCAL:神社在住) || CFLAG:LOCAL:依頼状況 == 3
+		SETBIT FLAG:(50 + 参照フラグ),参照ビット
+		来訪者数 ++
+	;出禁人数＋各素質による修正から来訪率を算出し、判定
+	;一部キャラには追加で条件や確率変動が存在
+	ELSE
+		来訪確率 = 基本来訪確率 - TALENT:LOCAL:恋慕 * 2 - TALENT:LOCAL:思慕 - CFLAG:LOCAL:(420 + MAIN_MAP)
+		SIF CFLAG:LOCAL:オナバレ
+			来訪確率 += 5
+		SELECTCASE LOCAL
+			;フラン、ゆゆ様
+			CASE 50, 66
+				IF !RAND:(2 + 来訪確率)
+					SETBIT FLAG:(50 + 参照フラグ),参照ビット
+					来訪者数 ++
+				ELSE
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ENDIF
+			;ぱっちぇ
+			CASE 54
+				IF !RAND:(10 + 来訪確率)
+					SETBIT FLAG:(50 + 参照フラグ),参照ビット
+					来訪者数 ++
+				ELSE
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ENDIF
+			;もこたん&ぐや
+			CASE 61, 62
+				IF !RAND:(来訪確率) && CFLAG:LOCAL:好感度 > 500
+					SETBIT FLAG:(50 + 参照フラグ),参照ビット
+					来訪者数 ++
+				ELSE
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ENDIF
+			;綿月、サグメは穢れた地上には行きたがらない
+			CASE 98,99,110
+				IF !TALENT:LOCAL:恋慕 && !TALENT:LOCAL:思慕
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ELSEIF !RAND:(5 + 来訪確率)
+					SETBIT FLAG:(50 + 参照フラグ),参照ビット
+					来訪者数 ++
+				ELSE
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ENDIF
+			CASEELSE
+				IF !RAND:来訪確率
+					SETBIT FLAG:(50 + 参照フラグ),参照ビット
+					来訪者数 ++
+				ELSE
+					CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+				ENDIF
+		ENDSELECT
+	ENDIF
+	;わかさぎ姫の来訪フラグはプールがなければ折れる
+	IF LOCAL == 93 && GETBIT(FLAG:(50 + 参照フラグ),参照ビット) && FLAG:プール < 8
+		CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+		来訪者数 --
+	;交流モードでフラグ折り
+	ELSEIF FLAG:交流来訪モード == 1 && CFLAG:LOCAL:好感度 <= 0
+		CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+		来訪者数 --
+	ELSEIF FLAG:交流来訪モード == 2
+		CLEARBIT FLAG:(50 + 参照フラグ),参照ビット
+		来訪者数 --
+	ENDIF
+NEXT
+
+;外泊中は非表示
+IF 来訪者数 > 0 && AT_HOME(MASTER)
+	PRINTFORMW %GET_MAPNAME(MAIN_MAP)%に来訪者があったようだ。
+	PRINTL
+ENDIF
+
+@来訪フラグ確認(ARG)
+#FUNCTION
+SIF CFLAG:ARG:神社在住
+	RETURNF 0
+GETBIT FLAG:(50 + (ARG) / 64),(ARG) % 64
+;SELECTCASE ARG
+;	CASE 11 TO 74
+;		GETBIT FLAG:50,(ARG)
+;	CASE IS > 74
+;		GETBIT FLAG:51,(ARG - 75)
+;ENDSELECT
+RETURNF RESULT

@@ -1,0 +1,44 @@
+﻿;-------------------------------------------------
+;600番台,デート
+;-------------------------------------------------
+
+;対応コマンド不明
+;買東西
+@COM_ABLE611
+;一括管理
+SIF GLOBAL_COMABLE(611)
+	RETURN RESULT
+;お出掛け道中
+SIF (CFLAG:MASTER:現在位置 % 100) % 10
+	RETURN 0
+;睡眠中
+SIF CFLAG:MASTER:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
+
+;対応コマンド不明
+;送禮
+@COM_ABLE612
+;一括管理
+SIF GLOBAL_COMABLE(612)
+	RETURN RESULT
+;相手が居ない
+SIF !TARGET
+	RETURN 0
+;デート中以外
+SIF !CHK_DATENOW(CFLAG:12)
+	RETURN 0
+;デート道中
+SIF (CFLAG:現在位置 % 100) % 10
+	RETURN 0
+;睡眠中
+SIF CFLAG:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
+

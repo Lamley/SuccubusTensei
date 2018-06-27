@@ -1,0 +1,4807 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;奉仕系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,手淫
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_80_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;初めてチンコを間近で観察
+		IF CFLAG:1209 == 0
+			IF TALENT:恋慕
+				PRINTFORMW 「…コレが、%MASTERNAME:39%の…」
+			ELSE
+				PRINTFORMW 「うわ…っ　な、なかなか立派なものをお持ちで」
+			ENDIF
+			PRINTFORM （というか…
+			;性交まだ
+			IF CFLAG:1208 == 0
+				PRINTFORMW こんなの入るのか…？）
+			;性交済み
+			ELSE
+				PRINTFORMW これ、入ったんだよな…）
+			ENDIF
+			PRINTFORMW 納茲琳は大きく勃起した主人公の男性器を目の当たりにし、息を飲んでいる
+			PRINTFORMW 「じゃあ、触るよ…？うわ、あっつい…」
+			PRINTFORMW 遠慮がちに陰茎を握った納茲琳は、おずおずと手で扱き始めた…
+			CFLAG:1209 = 1
+		ELSE
+			PRINTFORMW 「ふ、ふふ…改めて見ても圧巻だねぇ…ま、私が小さいだけなのかもしれないが」
+			PRINTFORMW 「でも、こんな小さい私の小さな手で気持ちよくなっちゃうんだな、君の%UNICODE(0x2665)%」
+		ENDIF
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			;技巧3以上
+			IF ABL:技巧 >= 3
+				;精液中毒3以上
+				IF ABL:精液中毒 >= 3
+					IF RAND:2 == 0
+						PRINTFORML 「はあっ、はあっ、もう出るんだね…？私の顔にぶっかけるぐらい、たくさん頼むよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は陰茎の性臭に陶然となりながら、亀頭に鼻先を近づけて射精を心待ちにしている…
+					ELSE
+						PRINTFORML 「はあっ、もうすぐ、%MASTERNAME:39%の子種が、あっ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳はほとんど吐息がかかるくらいの姿勢で陰茎を扱きたてている…
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORML 「ふ、ふっ…ここ、すごく苦しそうだよ？」
+						PRINTFORMW 「たっぷり出して、私の手をベトベトにしちゃいなよ…%UNICODE(0x2665)%」
+					ELSE
+						PRINTFORML 「クスッ…♪　あ、びくってした%UNICODE(0x2665)%　もう限界なんだね」
+						PRINTFORMW 「いいよ、私の手で、イッちゃえ…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			ELSE
+				PRINTFORML 「お…イくんだね…？」
+				PRINTFORMW 「クスッ、私にもできるってことだね…%UNICODE(0x2665)%」
+			ENDIF
+		;射精しない
+		ELSE
+			DRAWLINE
+			PRINTFORML 納茲琳は手を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+			PRINTFORML 　
+			;勃起しきっていない
+			IF BASE:MASTER:勃起 < 1000
+				IF RAND:2 == 0
+					PRINTFORMW 「なんだ、まだ元気じゃないじゃないか」
+					PRINTFORMW 「これは口も使ってシてあげないといけないかもな…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 納茲琳は完全には勃起していない陰茎をふにふにと弄っている
+					PRINTFORMW 「んふ%UNICODE(0x2665)%　硬くなってきた♪」
+					PRINTFORMW 「私の小さい手で、興奮しちゃったんだね%UNICODE(0x2665)%」
+				ENDIF
+			;普通の
+			ELSE
+				;指のLv2以上か技巧4以上
+				;精液中毒3以上でランダム分岐4つ追加
+				IF ABL:指 >= 2 || ABL:技巧 >= 4
+					IF RAND:8 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「ふ、ふう、早く、溜まってるもの出しちゃえよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私の手も、顔も、精液で汚していいんだよ…%UNICODE(0x2665)%」
+					ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「はあ、はあ、まだまだ、出しちゃだめだよ？」
+						PRINTFORMW 「焦らせば焦らすほど、たっぷり出るの知ってるんだ…%UNICODE(0x2665)%」
+					ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「ふふ…ほら…先走りが、にちゃっにちゃって、私の手を汚してるよ…」
+						PRINTFORMW 「は、はあっ%UNICODE(0x2665)%　この臭い、たまんない…%UNICODE(0x2665)%」
+					ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「はあっ、はあっ、ああ…%UNICODE(0x2665)%　この臭い、興奮するっ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私のおクチの中で可愛がってあげたいんだけど、だめかなあ…？」
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「クスッ…♪ほら、私の小さな手でこんなに大きくなってるよ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳はうっとりとした目で陰茎を扱きたてている…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「…ぁ、熱いのが、ビクッビクッってしてる…%UNICODE(0x2665)%」
+						PRINTFORMW 「ほらぁ、情けなくイッちゃっていいんだよ…？」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふふ…っ%UNICODE(0x2665)%　がっちがちになってる」
+						PRINTFORMW 「ほら、兒童みたいな手で擦られるの、気持ちいい？」
+					ELSE
+						PRINTFORMW 「あはっ…♪　すごく可愛い顔になってるよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「とっても切なそうで、『出したい、出したいっ』しか考えてないカオ…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	;恋慕なし
+	ELSE
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			;技巧3以上
+			IF ABL:技巧 >= 3
+				;精液中毒3以上
+				IF ABL:精液中毒 >= 3
+					IF RAND:2 == 0
+						PRINTFORML 「はあっ、はあっ、もう出るんだね…？私の顔にぶっかけるぐらい、たくさん頼むよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は陰茎の性臭に陶然となりながら、亀頭に鼻先を近づけて射精を心待ちにしている…
+					ELSE
+						PRINTFORML 「はあっ、もうすぐ、オスの精が、あっ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳はほとんど吐息がかかるくらいの姿勢で陰茎を扱きたてている…
+					ENDIF
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORML 「ふ、ふっ…ここ、すごく苦しそうだよ？」
+						PRINTFORMW 「たっぷり出して、私の手をベトベトにしちゃいなよ…%UNICODE(0x2665)%」
+					ELSE
+						PRINTFORML 「クスッ…♪　あ、びくってした%UNICODE(0x2665)%　もう限界なんだね」
+						PRINTFORMW 「いいよ、私の手で、イッちゃえ…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			ELSE
+				PRINTFORML 「お…イくんだね…？」
+				PRINTFORMW 「クスッ、オスをイかせるのって意外と簡単なんだ…%UNICODE(0x2665)%」
+			ENDIF
+		;射精しない
+		ELSE
+			DRAWLINE
+			PRINTFORML 納茲琳は手を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+			PRINTFORML 　
+			;勃起しきっていない
+			IF BASE:MASTER:勃起 < 1000
+				IF RAND:2 == 0
+					PRINTFORMW 「なんだ、まだ元気じゃないじゃないか」
+					PRINTFORMW 「これは口も使ってシてあげないといけないかもな…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 納茲琳は完全には勃起していない陰茎をふにふにと弄っている
+					PRINTFORMW 「んふ%UNICODE(0x2665)%　硬くなってきた♪」
+					PRINTFORMW 「私の小さい手で、興奮しちゃったんだね%UNICODE(0x2665)%」
+				ENDIF
+			;普通の
+			ELSE
+				;指のLv2以上か技巧4以上
+				;精液中毒3以上でランダム分岐4つ追加
+				IF ABL:指 >= 2 || ABL:技巧 >= 4
+					IF RAND:8 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「ふ、ふう、早く、溜まってるもの出しちゃえよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私の手も、顔も、精液で汚していいんだよ…%UNICODE(0x2665)%」
+					ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「はあ、はあ、まだまだ、出しちゃだめだよ？」
+						PRINTFORMW 「焦らせば焦らすほど、たっぷり出るの知ってるんだ…%UNICODE(0x2665)%」
+					ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「ふふ…ほら…先走りが、にちゃっにちゃって、私の手を汚してるよ…」
+						PRINTFORMW 「は、はあっ%UNICODE(0x2665)%　この臭い、たまんない…%UNICODE(0x2665)%」
+					ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+						PRINTFORMW 「はあっ、はあっ、ああ…%UNICODE(0x2665)%　この臭い、興奮するっ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私のおクチの中で可愛がってあげたいんだけど、だめかなあ…？」
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「クスッ…♪ほら、私の小さな手でこんなに大きくなってるよ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳はうっとりとした目で陰茎を扱きたてている…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「…ぁ、熱いのが、ビクッビクッってしてる…%UNICODE(0x2665)%」
+						PRINTFORMW 「ほらぁ、情けなくイッちゃっていいんだよ…？」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふふ…っ%UNICODE(0x2665)%　がっちがちになってる」
+						PRINTFORMW 「ほら、兒童みたいな手で擦られるの、気持ちいい？」
+					ELSE
+						PRINTFORMW 「あはっ…♪　すごく可愛い顔になってるよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「とっても切なそうで、『出したい、出したいっ』しか考えてないカオ…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;81,口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_81
+;※MASTERが射精する時だけ元の地の文を呼ぶように変更
+SIF NOWEX:MASTER:11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_81_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:3 == 0 
+				PRINTFORMW 安らかな納茲琳の寝顔を汚すべく、滾った肉棒を薄い唇に押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 限界が近づいた肉槍を扱きながら、納茲琳の唇にねじ込んだ…
+			ELSE
+				PRINTFORMW 我慢汁を垂れ流すペニスで、眠る納茲琳の唇をなぞった…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ちゅ…ん…ちゅ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んく…ちゅ…」
+			ELSE
+				PRINTFORMW 「むぅ…ちゅ、ぷ…」
+			ENDIF
+		ELSE
+			IF RAND:3 == 0 
+				PRINTFORMW 眠る納茲琳の薄い唇に亀頭を押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 寝息を立てる納茲琳の唇に、我慢汁を塗りつけた…
+			ELSE
+				PRINTFORMW 眠る納茲琳とペニスをキスさせた…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ちゅ…ん…ちゅ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んく…ちゅ…」
+			ELSE
+				PRINTFORMW 「むぅ…ちゅ、ぷ…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;初めてチンコを間近で観察
+		IF CFLAG:1209 == 0
+			IF TALENT:恋慕
+				PRINTFORMW 「…コレが、%MASTERNAME:39%の…」
+				PRINTFORM （というか…
+				;性交まだ
+				IF CFLAG:1208 == 0
+					PRINTFORMW こんなの入るのか…？）
+				;性交済み
+				ELSE
+					PRINTFORMW これ、入ったんだよな…）
+				ENDIF
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「これを、舐めて欲しいの…？」
+				PRINTFORMW 「…いいよ。それで君が喜ぶんなら、してあげる…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…ちょっとしょっぱい。これが、%MASTERNAME:39%の味…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こ、こんな感じかな…」
+				PRINTFORML 
+				PRINTFORMW まるでキスのようなたどたどしい愛撫はしばらく続いた…
+			ELSE
+				PRINTFORMW 「うわ…っ　な、なかなか立派なものをお持ちで」
+				PRINTFORM （というか…
+				;性交まだ
+				IF CFLAG:1208 == 0
+					PRINTFORMW こんなの入るのか…？）
+				;性交済み
+				ELSE
+					PRINTFORMW これ、入ったんだよな…）
+				ENDIF
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「これを、舐めろって…？」
+				PRINTFORMW 「オスって舐めさせるのが好きなんだってね…わかったよ。ま、これもお互いのためってことで…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…まあ…そんなに嫌な味はしないね…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こんな感じかい…？」
+				PRINTFORML 
+				PRINTFORMW たどたどしい愛撫はしばらく続いた…
+			ENDIF
+			CFLAG:1209 = 1
+		ELSE
+			IF TALENT:恋慕
+				PRINTFORMW 「…舐め、るの？」
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「…ううん、いいよ。舐めてあげたい。それで君が喜ぶんなら、してあげる」
+				PRINTFORMW 「君も私を気持ちよくしてくれたしね。お返しさ…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…ちょっとしょっぱい。これが、%MASTERNAME:39%の味…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こ、こんな感じかな…」
+				PRINTFORML 
+				PRINTFORMW まるでキスのようなたどたどしい愛撫はしばらく続いた…
+			ELSE
+				PRINTFORMW 「ふ、ふふ…改めて見ても圧巻だねぇ…ま、私が小さいだけなのかもしれないが」
+				PRINTFORMW 「これを、舐めろって…？あまり口に入れたくない場所なんだが…」
+				PRINTFORMW 「オスって舐めさせるのが好きなんだってね…わかったよ。ま、これもお互いのためってことで…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…まあ…そんなに嫌な味はしないね…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こんな感じかい…？」
+				PRINTFORML 
+				PRINTFORMW たどたどしい愛撫はしばらく続いた…
+			ENDIF
+			CFLAG:1209 = 1
+		ENDIF
+		RETURN 1
+	ENDIF
+	;お掃除フェラ
+	IF TCVAR:MASTER:112 == 1 || TCVAR:MASTER:112 == 2
+	;「%CALLNAME:LOCAL%の中にたっぷりと射精してからペニスを抜き、ペニスに付着した精液を%CALLNAME:TARGET%に舐め取らせた…」
+		;お掃除用のLOCAL取得
+		IF TCVAR:MASTER:112 == 1
+			LOCAL = MASTER_POSE(SET_V,SET_P,1)
+		ELSEIF TCVAR:MASTER:112 == 2
+			LOCAL = MASTER_POSE(SET_A,SET_P,1)
+		ENDIF
+		DRAWLINE
+		PRINTFORM %CALLNAME:LOCAL%から
+		PRINTFORML 引き抜いたペニスに付着した精液を%CALLNAME:TARGET%に舐め取らせた…
+		PRINTFORML 　
+		;恋慕
+		IF TALENT:恋慕
+			IF ABL:精液中毒 >= 5
+				IF RAND:6 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口の中に射精しちゃう？」
+					PRINTFORM 「それとも
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML またこっちで愛してくれるのかな？私はどっちでもいいよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:102 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 今度は私を愛してくれるのかな？私はどっちでもいいよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「ちゅるっ、ちゅうっ…じゅちゅううっ…」
+					PRINTFORMW 納茲琳はうっとりとした顔でペニスに付着した精液と愛液を舐め取っている…
+				ELSEIF RAND:4 == 0
+					PRINTFORML 「はっ、はっ、あ…%UNICODE(0x2665)%　あ、むうっ…じゅるっ…」
+					PRINTFORMW 納茲琳は引き抜かれたペニスに自ら吸い付き、滴る精液を愛液ごと舐め取っている…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「次は、私のクチの中で出してもらいたいなぁ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…あはぁ、精液、おいし…%UNICODE(0x2665)%」
+				ENDIF
+			ELSEIF ABL:精液中毒 >= 3
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口でして欲しい？」
+					PRINTFORM 「それとも
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML またこっちで愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:102 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 今度はこっちを愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE 
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「ふふ…%UNICODE(0x2665)%　とてもエロい味だったよ…」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…君の子種の味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML 「またこっちで愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:102 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 「今度はこっちを愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…」
+					PRINTFORM 「精液と
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私のが混ざって、すごい味だったよ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM 「ふふ…%MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW のが混ざって、すごい味だったよ…%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…君の子種の味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ENDIF
+		;恋慕なし
+		ELSE
+			IF ABL:精液中毒 >= 5
+				IF RAND:6 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「このまま口の中に射精してくれてもいいんだけど…%UNICODE(0x2665)%」
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「ちゅるっ、ちゅうっ…じゅちゅううっ…」
+					PRINTFORMW 納茲琳はうっとりとした顔でペニスに付着した精液と愛液を舐め取っている…
+				ELSEIF RAND:4 == 0
+					PRINTFORML 「はっ、はっ、あ…%UNICODE(0x2665)%　あ、むうっ…じゅるっ…」
+					PRINTFORMW 納茲琳は引き抜かれたペニスに自ら吸い付き、滴る精液を愛液ごと舐め取っている…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「次は、私のクチの中で出してもらいたいなぁ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…あはぁ、精液、おいし…%UNICODE(0x2665)%」
+				ENDIF
+			ELSEIF ABL:精液中毒 >= 3
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口でして、飲んであげようか？」
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「ふふ…とてもエロい味だったよ…」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…オスの味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORMW 「ぷぁっ…ん、綺麗になったね…」
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…　ん…」
+					PRINTFORM 「ふう…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM 君と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW %MASTERNAME:39%のと私のが混ざって、すごい味だったよ…」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW のが混ざって、すごい味だったよ…」
+					ENDIF
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…オスの味がする…」
+				ENDIF
+			ENDIF
+		ENDIF
+	;普通のフェラ
+	ELSE
+		IF TALENT:恋慕
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				;精液中毒5以上かつ技巧3以上
+				IF ABL:精液中毒 >= 5 && ABL:技巧 >= 3
+					IF RAND:5 == 0
+						PRINTFORML 「じゅちゅううっ、！むぐっ%UNICODE(0x2665)%　は、むう%UNICODE(0x2665)%　んくっ、んん～～じゅるるるるるっ」
+						PRINTFORMW 奉仕ではなくもはやご褒美となった口交を蕩けた顔で続ける納茲琳…
+						PRINTFORMW その動きは、ペニスが射精を始めるといっそう激しくなった…
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「だひてっ…%UNICODE(0x2665)%　%MASTERNAME:39%の子種、ナカにいっぱい…%UNICODE(0x2665)%」
+						PRINTFORMW トロけきった顔で口交をする納茲琳は、射精の気配を読み取っておねだりを始めた
+						PRINTFORMW その普段の彼女とはかけ出口た痴態に限界まで膨らんだペニスを、納茲琳の頭を掴んで喉奥まで押し込んだ…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「んふっ…%UNICODE(0x2665)%　いーよ、好きなだけ、おもいっきり出して…%UNICODE(0x2665)%」
+						PRINTFORML 小さな口腔いっぱいに頬張ったペニスに舌を絡みつかせ、射精を待ち望む納茲琳…
+						PRINTFORMW あどけない童顔と、その淫靡過ぎる行為のギャップを目の当たりにし、主人公のペニスは限界を迎える…
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んくっ、ちゅるちゅるっ、ぷちゅっ、ちゅううううっ、ちゅぴ、ちゅぷ、ちゅうううう～～っ！」
+						PRINTFORML （欲しい…っ　%MASTERNAME:39%の子種、口の中でびゅくびゅくって出して欲しいよおっ…）
+						PRINTFORMW 射精の予兆を感じ取った納茲琳は、一段と口の動きを早めた
+						PRINTFORMW その射精させることに特化した強烈な快感に、主人公は耐え切れず屈服の証を吐き出した…
+					ELSE
+						PRINTFORML 「ずちゅぅ、れりゅ、じゅるじゅる、ちゅぽっぢゅぽっぢゅずずっ、ずずーっ…%UNICODE(0x2665)%」
+						PRINTFORMW 主人公の絶頂を悟った納茲琳が、わざと淫らな水音を立ててペニスを吸い、追い打ちをかける
+						PRINTFORML （おいひいのでるっ%UNICODE(0x2665)%　%MASTERNAME:39%のせーし、くちのなかおかひて、ニオイしみこんじゃうっ%UNICODE(0x2665)%）
+						PRINTFORMW 口内射精を待ち望むその顔には、いつものシニカルな彼女の姿はどこにもなかった…
+					ENDIF
+				;精液中毒3以上
+				ELSEIF ABL:精液中毒 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…出したいのかい？いいよ…%UNICODE(0x2665)%　ちゅっ、んむ、ちゅぷっちゅぷっちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW ぽーっとした表情で射精寸前のペニスを咥える納茲琳。口内射精に全く抵抗がなくなったようだ…
+						PRINTFORMW 「ちゅっ、ちゅっ、らひてっ、%MASTERNAME:39%の、いっぱい…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふむう、はぷ、ん、ちゅるっ、ちゅううっ」
+						PRINTFORML （ああ…%MASTERNAME:39%の、中でビクビクしてる…口に、射精されちゃう…%UNICODE(0x2665)%）
+						PRINTFORMW 射精の気配を察しても納茲琳は口交を止めず、むしろ舌の動きを速めていく…
+					ELSE
+						PRINTFORMW 「ちゅぷ、ぺろ…ふふ…そろそろだね？いいよ…%MASTERNAME:39%の精液、全部出してよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「じゅぷ、じゅぷぅ、ぢゅぅぅぅ、んく、ちゅぷ、ちゅぷ、じゅぷ、ん～～ちゅぅぅぅ！」
+						PRINTFORMW 淫靡な目つきで見上げたまま口交を再開する納茲琳。幼い顔が、オスを搾り取る牝の色に染まっていく…
+					ENDIF
+				;精飲経験19以下
+				ELSEIF TCVAR:精飲経験 <= 19
+					IF RAND:3 == 0 
+						PRINTFORML 「んふぅ、ぴちゅ、ん…ビクって…」
+						PRINTFORMW 「いいよ…ぴちゃ、はぷ、このまま出してっ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORML 「んちゅ、ぺろ、うむぅ、ちゅ…ん、出そう？」
+						PRINTFORMW 「ん…このまま、出して…私、飲んであげるからっ…」
+					ELSE
+						PRINTFORML 「はむ、ん…れろ……ん…んん…」
+						PRINTFORMW （出そう、なんだな…飲んであげられれば、いいんだけど…）
+					ENDIF
+				ELSE
+					IF RAND:3 == 0 
+						PRINTFORML 「んちゅう、はむ、ちろちろ、ちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW （ん%UNICODE(0x2665)%　また、%MASTERNAME:39%を気持よくしてあげられた…%UNICODE(0x2665)%）
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んふ…%UNICODE(0x2665)%　いーよ、出して。結構慣れたし、今度はぜんぶ飲んであげよう%UNICODE(0x2665)%」
+						PRINTFORMW 「んちゅ…ん、んん、…んんんんんんっ」
+						PRINTFORMW 納茲琳は小さい口腔の奥までペニスを飲み込み、その健気な姿に主人公はどうしようもなく興奮する…
+					ELSE
+						PRINTFORML 「ちゅぷ、ちゅぴ、ずぢゅううっ…あ…出そうなのかい？」
+						PRINTFORMW 「いいよ…君の精、全部受けとめてあげる…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			;MASTER射精せず
+			ELSE
+				DRAWLINE
+				PRINTFORML 納茲琳は口を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+				PRINTFORML 　
+				;勃起しきっていない
+				IF BASE:MASTER:勃起 < 1000
+					IF RAND:3 == 0
+						PRINTFORMW 「なんだ…まだふにゃふにゃじゃないか。しょうがないなあ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は少し嬉しそうに自らペニスに吸い付いた…
+						PRINTFORMW （ふふ…%UNICODE(0x2665)%　口の中でどんどん大きくなっていくこの感じ…、楽し…%UNICODE(0x2665)%)
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふふ…まだ小さい…%UNICODE(0x2665)%　あむ…」
+						PRINTFORMW 「んん…ちゅく、ちゅるっ、ちゅぱ…っ、クスッ♪　この柔らかいのをイジるのも、結構楽しいんだ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳の小さな口で弄ばれ、急速にペニスに血液が集まってくるのを感じる…
+					ELSE
+						PRINTFORML 「…ふふ、ちゅぴ、レロ…ちゅ、ちゅ、ちゅぷ、んん…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は柔らかいペニスを愛しむように、たっぷりと時間を掛けて口の中で優しく舐る
+						PRINTFORMW その淫靡で可愛らしい奉仕に主人公のペニスは反応し、硬さを取り戻してゆく…
+					ENDIF
+				;普通に勃起
+				ELSE
+					;舌のLv2以上か技巧4以上
+					IF ABL:舌 >= 2 || ABL:技巧 >= 4
+						;精液中毒Lv.3以上でランダム分岐3つ追加、Lv.5以上でさらに5つ追加
+						IF RAND:11 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅっ%UNICODE(0x2665)%　ちゅぷ、にゅぷにゅぷ、ん～～♪」
+							PRINTFORMW こみ上げる射精欲に身を焦がす主人公を嬲るかのように、射精に至れない奉仕を続ける納茲琳
+							PRINTFORML 「ふふふ、まだダメ%UNICODE(0x2665)%　もっともっと我慢してれば、いつもよりいっぱい出せるしもっと気持ちいいよ%UNICODE(0x2665)%」
+							PRINTFORML 「だから…まだお預け%UNICODE(0x2665)%　くふふ…っ♪」
+							PRINTFORMW 射精させて欲しい、という敗北宣言に似たお願いをしてみるものの、納茲琳の嗜虐を煽るだけだった…
+						ELSEIF RAND:10 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ねえっ…！　もう、舐めて、舐めていいんだろうっ…！？」
+							PRINTFORMW 納茲琳の眼前にペニスを突きつけ、ペニスの匂いを鼻先に漂わせたまま焦らす
+							PRINTFORMW たっぷり焦らしてから口交を許可すると、納茲琳は歓喜に顔を緩ませながら男根を咥え込んでいく…
+							PRINTFORMW 「はぁ、ぐうっ%UNICODE(0x2665)%　ん、んっく、じゅるるるぅ…っぷあっ%UNICODE(0x2665)%　あ、おい、ひぃ…♪」
+						ELSEIF RAND:9 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅぷぅ、ちゅぱ、はあ、すごいぃ%UNICODE(0x2665)%　%MASTERNAME:39%おちんちん、おいひぃ%UNICODE(0x2665)%」
+							PRINTFORML （はあ%UNICODE(0x2665)%　今、私%MASTERNAME:39%のおちんちん、しゃぶってるよお%UNICODE(0x2665)%）
+							PRINTFORMW 愛しい人の性器を味わうことに夢中になった納茲琳は、ペニスのあらゆる箇所を唾液まみれにさせながら舌を這わせる
+							PRINTFORMW 「せーえきも、このまま、くひのなはにれんふ、らひて…%UNICODE(0x2665)%　きみのこだね、のまへて%UNICODE(0x2665)%」
+						ELSEIF RAND:8 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ぢゅっちゅうううっ、ずるるるう、じゅっぷ、じゅっぷ、んふぅ～～…♪」
+							PRINTFORMW 納茲琳は口腔に男のモノを咥え込む背徳的な快楽に恍惚とした顔を浮かべている
+							PRINTFORML 「ねえ…きもひいいよね？じゅる、こぉんなにかひかひにひて、ひくひくさへてるもんね%UNICODE(0x2665)%」
+							PRINTFORMW 「ちゅぷ…んん…にゅぷぅ、いーよ？しゃせーするとき、ちゅうってしてあげる%UNICODE(0x2665)%」
+						ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ずっ…ぢゅるるるぅっ、ん～…%UNICODE(0x2665)%、んふぅんっ…」
+							PRINTFORMW 納茲琳の薄い唇が、小さな口腔が、牡の子種を求めて主人公のペニスを飲み込んでゆく…
+							PRINTFORMW 「ずちゅっ、ずるちゅうっ、んっ%UNICODE(0x2665)%、ぐちゅんっ、ふーっ%UNICODE(0x2665)%、ふーっ%UNICODE(0x2665)%」
+							PRINTFORMW （ああ…%MASTERNAME:39%のおちんぽ、せーし出したくてビクビクしてる…）
+							PRINTFORMW （またクチのナカにいっぱい、出されちゃう…%UNICODE(0x2665)%）
+						ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「はぁ、はぁ、もう、我慢出来ないよ…」
+							PRINTFORMW 納茲琳の熱い吐息が主人公の欲望にかかり、更に固く勃起を促す
+							PRINTFORMW 「は、む…んっ%UNICODE(0x2665)%　ちゅ、ちゅっぷ、じゅっぷ、んふぅ、はぁ…っ%UNICODE(0x2665)%　おいひ…」
+							PRINTFORMW 「じゅぷ、んちゅ、んむんむぅ、あぁ%UNICODE(0x2665)%　%MASTERNAME:39%の子種、たっぷり出しておくれ…%UNICODE(0x2665)%」
+						ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「ちゅ、ちゅぅ、ぺろ、はあ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳はペニスの先端にキスを繰り返しながら、ペニスの放つ牡の匂いに陶然となっている
+							PRINTFORMW 「ふふ…ちゅ、すごい臭い…♪たまらないよ…%UNICODE(0x2665)%　ちゅ、ん、ちゅううううっ」
+						ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+							PRINTFORMW 「んん、んふ、んん～…ちゅ、ふふ、君のココ、私の口の中ですごく固くなってる%UNICODE(0x2665)%｣
+							PRINTFORMW 「出したいんだろ？君、とっても切ない顔になってるよ？その顔がたまらなく可愛いから、舐めるのは結構好きさ%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳は心底嬉しそうにゆるゆるとペニスを頬張り、射精しないギリギリの快楽を与えて楽しんでいる…
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「ふふ、分かった…%UNICODE(0x2665)%　じゃあ、今回はすこし時間をかけてしてあげよう…♪」
+							PRINTFORMW ペニスの先端に納茲琳の色素の薄い唇が触れ、ゆっくりとゆっくりと、その熱く潤った肉の間に飲み込まれていく…
+							PRINTFORMW その間、大量に分泌された唾液が主人公のペニスを伝い、睾丸や肛門までたらたらと垂れていった…
+							
+						ELSEIF RAND:2 == 0 
+							PRINTFORML 「ちゅぷ、にゅぷにゅぷ…んふ%UNICODE(0x2665)%　ちゅっぷ、ちゅっぷ、んん～…%UNICODE(0x2665)%」
+							PRINTFORMW 自分の淫らな行為が主人公を悦ばせていることに納茲琳は満足し、慈しむような口交は続く…
+							PRINTFORMW 「ん、ん、はぷ、ちゅううっ、……ぷぁ、はぁ%UNICODE(0x2665)%　どう？気持ちいいかい？」
+						ELSE
+							PRINTFORML 「んちゅうう、じゅる、んく、ん～～、じゅぷ、じゅぷじゅぷ、こく…ん…」
+							PRINTFORMW 大量に分泌された唾液が飲み込まれた肉棒に塗り付けられ、先走りと混じり合い、嚥下されていく…
+							PRINTFORMW 「ん…♪おふひのなひゃ、きみのにおいで、いっひゃい…%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF RAND:3 == 0
+							PRINTFORML 「んふ、んん、…ちゅ、ぷあ、はあっ、あ、むぅ…」
+							PRINTFORMW （…うまくできてるとは思えないが、%MASTERNAME:39%は気持よくなれてるのだろうか…）
+						ELSEIF RAND:2 == 0
+							PRINTFORML 納茲琳は主人公を見上げながら、懸命に舌でペニスに刺激を与えている…
+							PRINTFORMW 「れる、ちゅぷ、むぅ…こんな感じだろうか…？」
+						ELSE
+							PRINTFORML 「はふ、む……ちゅ、ちゅぷ…」
+							PRINTFORMW 拙いながらも主人公を悦ばせようという意志が篭った動きに、主人公のペニスは昂ぶってゆく…
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		RETURN 1
+		;恋慕なし
+		ELSE
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				;精液中毒5以上かつ技巧3以上
+				IF ABL:精液中毒 >= 5 && ABL:技巧 >= 3
+					IF RAND:5 == 0
+						PRINTFORML 「じゅちゅううっ、！むぐっ%UNICODE(0x2665)%　は、むう%UNICODE(0x2665)%　んくっ、んん～～じゅるるるるるっ」
+						PRINTFORMW 奉仕ではなくもはやご褒美となった口交を蕩けた顔で続ける納茲琳…
+						PRINTFORMW その動きは、ペニスが射精を始めるといっそう激しくなった…
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「だひてっ…%UNICODE(0x2665)%　君の子種、ナカにいっぱい…%UNICODE(0x2665)%」
+						PRINTFORMW トロけきった顔で口交をする納茲琳は、射精の気配を読み取っておねだりを始めた
+						PRINTFORMW その普段の彼女とはかけ出口た痴態に限界まで膨らんだペニスを、納茲琳の頭を掴んで喉奥まで押し込んだ…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「んふっ…%UNICODE(0x2665)%　いーよ、好きなだけ、おもいっきり出して…%UNICODE(0x2665)%」
+						PRINTFORML 小さな口腔いっぱいに頬張ったペニスに舌を絡みつかせ、射精を待ち望む納茲琳…
+						PRINTFORMW あどけない童顔と、その淫靡過ぎる行為のギャップを目の当たりにし、主人公のペニスは限界を迎える…
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んくっ、ちゅるちゅるっ、ぷちゅっ、ちゅううううっ、ちゅぴ、ちゅぷ、ちゅうううう～～っ！」
+						PRINTFORML （欲しい…っ　オスの子種、口の中でびゅくびゅくって出して欲しいよおっ…）
+						PRINTFORMW 射精の予兆を感じ取った納茲琳は、一段と口の動きを早めた
+						PRINTFORMW その射精させることに特化した強烈な快感に、主人公は耐え切れず屈服の証を吐き出した…
+					ELSE
+						PRINTFORML 「ずちゅぅ、れりゅ、じゅるじゅる、ちゅぽっぢゅぽっぢゅずずっ、ずずーっ…%UNICODE(0x2665)%」
+						PRINTFORMW 主人公の絶頂を悟った納茲琳が、わざと淫らな水音を立ててペニスを吸い、追い打ちをかける
+						PRINTFORML （おいひいのでるっ%UNICODE(0x2665)%　せーし、くちのなかおかひて、ニオイしみこんじゃうっ%UNICODE(0x2665)%）
+						PRINTFORMW 口内射精を待ち望むその顔には、いつものシニカルな彼女の姿はどこにもなかった…
+					ENDIF
+				;精液中毒3以上
+				ELSEIF ABL:精液中毒 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…出したいのかい？いいよ…%UNICODE(0x2665)%　ちゅっ、んむ、ちゅぷっちゅぷっちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW ぽーっとした表情で射精寸前のペニスを咥える納茲琳。口内射精に全く抵抗がなくなったようだ…
+						PRINTFORMW 「ちゅっ、ちゅっ、らひてっ、いっぱい…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふむう、はぷ、ん、ちゅるっ、ちゅううっ」
+						PRINTFORML （ああ…オスのペニスが、中でビクビクしてる…口に、射精されちゃう…%UNICODE(0x2665)%）
+						PRINTFORMW 射精の気配を察しても納茲琳は口交を止めず、むしろ舌の動きを速めていく…
+					ELSE
+						PRINTFORMW 「ちゅぷ、ぺろ…ふふ…そろそろだね？いいよ…君の精液、全部出してよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「じゅぷ、じゅぷぅ、ぢゅぅぅぅ、んく、ちゅぷ、ちゅぷ、じゅぷ、ん～～ちゅぅぅぅ！」
+						PRINTFORMW 淫靡な目つきで見上げたまま口交を再開する納茲琳。幼い顔が、オスを搾り取る牝の色に染まっていく…
+					ENDIF
+				;精飲経験19以下
+				;恋慕なし、精飲経験19以下だと吐き出す
+				ELSEIF TCVAR:精飲経験 <= 19
+				;「突然の射精に%CALLNAME:TARGET%はむせ返り、精液を吐き出してしまった…」
+					IF RAND:3 == 0 
+						PRINTFORML 「んふぅ、ぴちゅ、ん…ビクって…」
+						PRINTFORMW 「出すときは、ちゅぷ、言えよっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORML 「んちゅ、ぺろ、うむぅ、ちゅ…ん、出そうかい？」
+						PRINTFORMW 「口の中で出されるのはゴメンだよ…」
+					ELSE
+						PRINTFORML 「はむ、ん…れろ……ん…んん…」
+						PRINTFORMW （出そう、なんだな…適当に吐き出すか…）
+					ENDIF
+				ELSE
+					IF RAND:3 == 0 
+						PRINTFORML 「んちゅう、はむ、ちろちろ、ちゅうううっ」
+						PRINTFORMW 「…どうだい？なかなか上手くなったと自負してるんだが」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んふ…　いーよ、出して。結構慣れたし、今度はぜんぶ飲んであげよう」
+						PRINTFORMW 「んちゅ…ん、んん、…んんんんんんっ」
+					ELSE
+						PRINTFORML 「ちゅぷ、ちゅぴ、ずぢゅううっ…あ…出そうなのかい？」
+						PRINTFORMW 「いいよ…結構慣れたし。そのまま出しな…」
+					ENDIF
+				ENDIF
+			;MASTER射精せず
+			ELSE
+				DRAWLINE
+				PRINTFORML 納茲琳は口を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+				PRINTFORML 　
+				;勃起しきっていない
+				IF BASE:MASTER:勃起 < 1000
+					IF RAND:3 == 0
+						PRINTFORMW 「なんだ…まだふにゃふにゃじゃないか。しょうがないなあ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は少し嬉しそうに自らペニスに吸い付いた…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふふ…まだ小さい…%UNICODE(0x2665)%　あむ…」
+						PRINTFORMW 「んん…ちゅく、ちゅるっ、ちゅぱ…っ、クスッ♪　この柔らかいのをイジるのも、結構楽しいんだ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳の小さな口で弄ばれ、急速にペニスに血液が集まってくるのを感じる…
+					ELSE
+						PRINTFORML 「…ふふ、ちゅぴ、レロ…ちゅ、ちゅ、ちゅぷ、んん…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は柔らかいペニスを、たっぷりと時間を掛けて口の中で舐る
+						PRINTFORMW その奉仕に主人公のペニスは反応し、硬さを取り戻してゆく…
+					ENDIF
+				;普通に勃起
+				ELSE
+					;舌のLv2以上か技巧4以上
+					IF ABL:舌 >= 2 || ABL:技巧 >= 4
+						;精液中毒Lv.3以上でランダム分岐3つ追加、Lv.5以上でさらに5つ追加
+						IF RAND:11 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅっ%UNICODE(0x2665)%　ちゅぷ、にゅぷにゅぷ、ん～～♪」
+							PRINTFORMW こみ上げる射精欲に身を焦がす主人公を嬲るかのように、射精に至れない奉仕を続ける納茲琳
+							PRINTFORML 「ふふふ、まだダメ%UNICODE(0x2665)%　もっともっと我慢してれば、いつもよりいっぱい出せるしもっと気持ちいいよ%UNICODE(0x2665)%」
+							PRINTFORML 「だから…まだお預け%UNICODE(0x2665)%　くふふ…っ♪」
+							PRINTFORMW 射精させて欲しい、という敗北宣言に似たお願いをしてみるものの、納茲琳の嗜虐を煽るだけだった…
+						ELSEIF RAND:10 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ねえっ…！　もう、舐めて、舐めていいんだろうっ…！？」
+							PRINTFORMW 納茲琳の眼前にペニスを突きつけ、ペニスの匂いを鼻先に漂わせたまま焦らす
+							PRINTFORMW たっぷり焦らしてから口交を許可すると、納茲琳は歓喜に顔を緩ませながら男根を咥え込んでいく…
+							PRINTFORMW 「はぁ、ぐうっ%UNICODE(0x2665)%　ん、んっく、じゅるるるぅ…っぷあっ%UNICODE(0x2665)%　あ、おい、ひぃ…♪」
+						ELSEIF RAND:9 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅぷぅ、ちゅぱ、はあ、すごいぃ%UNICODE(0x2665)%　おちんちん、おいひぃ%UNICODE(0x2665)%」
+							PRINTFORMW 「せーえきも、このまま、くひのなはにれんふ、らひて…%UNICODE(0x2665)%　きみのこだね、のまへて%UNICODE(0x2665)%」
+						ELSEIF RAND:8 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ぢゅっちゅうううっ、ずるるるう、じゅっぷ、じゅっぷ、んふぅ～～…♪」
+							PRINTFORMW 納茲琳は口腔に男のモノを咥え込む背徳的な快楽に恍惚とした顔を浮かべている
+							PRINTFORML 「ねえ…きもひいいよね？じゅる、こぉんなにかひかひにひて、ひくひくさへてるもんね%UNICODE(0x2665)%」
+							PRINTFORMW 「ちゅぷ…んん…にゅぷぅ、いーよ？しゃせーするとき、ちゅうってしてあげる%UNICODE(0x2665)%」
+						ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 5
+							PRINTFORMW 「ね、私さ…どうも、精液が大好きになってしまったみたいなんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「匂いがね…%UNICODE(0x2665)%　どうしようもなく、アソコが疼くんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「だから…ね？口の中に、出して？もっと私を、おかしくしておくれよ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳の薄い唇が、小さな口腔が、牡の子種を求めて主人公のペニスを飲み込んでゆく…
+						ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「はぁ、はぁ、もう、我慢出来ないよ…」
+							PRINTFORMW 納茲琳の熱い吐息が主人公の欲望にかかり、更に固く勃起を促す
+							PRINTFORMW 「は、む…んっ%UNICODE(0x2665)%　ちゅ、ちゅっぷ、じゅっぷ、んふぅ、はぁ…っ%UNICODE(0x2665)%　おいひ…」
+							PRINTFORMW 「じゅぷ、んちゅ、んむんむぅ、あぁ%UNICODE(0x2665)%　君の子種、たっぷり出しておくれ…%UNICODE(0x2665)%」
+						ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「ちゅ、ちゅぅ、ぺろ、はあ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳はペニスの先端にキスを繰り返しながら、ペニスの放つ牡の匂いに陶然となっている
+							PRINTFORMW 「ふふ…ちゅ、すごい臭い…♪たまらないよ…%UNICODE(0x2665)%　ちゅ、ん、ちゅううううっ」
+						ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+							PRINTFORMW 「んん、んふ、んん～…ちゅ、ふふ、君のココ、私の口の中ですごく固くなってる%UNICODE(0x2665)%｣
+							PRINTFORMW 「出したいんだろ？君、とっても切ない顔になってるよ？その顔がたまらなく可愛いから、舐めるのは結構好きさ%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳は心底嬉しそうにゆるゆるとペニスを頬張り、射精しないギリギリの快楽を与えて楽しんでいる…
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「ふふ、分かった…%UNICODE(0x2665)%　じゃあ、今回はすこし時間をかけてしてあげよう…♪」
+							PRINTFORMW ペニスの先端に納茲琳の色素の薄い唇が触れ、ゆっくりとゆっくりと、その熱く潤った肉の間に飲み込まれていく…
+							PRINTFORMW その間、大量に分泌された唾液が主人公のペニスを伝い、睾丸や肛門までたらたらと垂れていった…
+						ELSEIF RAND:2 == 0 
+							PRINTFORML 「ちゅぷ、にゅぷにゅぷ…んふ%UNICODE(0x2665)%　ちゅっぷ、ちゅっぷ、んん～…」
+							PRINTFORMW 「ん、ん、はぷ、ちゅううっ、……ぷぁ、はぁ…どう？気持ちいいかい？」
+						ELSE
+							PRINTFORML 「んちゅうう、じゅる、んく、ん～～、じゅぷ、じゅぷじゅぷ、こく…ん…」
+							PRINTFORMW 大量に分泌された唾液が飲み込まれた肉棒に塗り付けられ、先走りと混じり合い、嚥下されていく…
+							PRINTFORMW 「ん…♪おふひのなひゃ、オスのにおいで、いっひゃい…%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF RAND:3 == 0
+							PRINTFORML 「んふ、んん、…ちゅ、ぷあ、はあっ、あ、むぅ…」
+							PRINTFORMW （…うまくできてるとは思えないが…）
+						ELSEIF RAND:2 == 0
+							PRINTFORML 納茲琳は主人公を見上げながら、拙い動きでペニスに刺激を与えている…
+							PRINTFORMW 「れる、ちゅぷ、むぅ…こんな感じだろうか…？」
+						ELSE
+							PRINTFORMW 「はふ、む……ちゅ、ちゅぷ…」
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;82,乳交
+;納茲琳はB敏感！
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_82
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_82_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_82_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:3 == 0 
+				PRINTFORMW 白く浮かび上がった納茲琳の裸身を穢すべく、滾る肉棒を薄い乳肉に押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORM 限界が近づいた肉槍を扱きながら、鈴口を納茲琳の
+				SIF PALAM:欲情 >= PALAMLV:4
+					PRINTFORM 固く凝った
+				PRINTFORMW 色素の薄い乳首に押し当てた…
+			ELSE
+				PRINTFORMW 眠る納茲琳の薄い乳肉を寄せて谷間を作り、我慢汁を垂れ流すペニスを扱いた……
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ん…んふ…んんっ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んぅ……ん…ふうっ…」
+			ELSE
+				PRINTFORMW 「んん……んっ…ぁ…」
+			ENDIF
+		ELSE
+			IF RAND:3 == 0 
+				PRINTFORMW 眠る納茲琳の薄い胸に亀頭を押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 規則正しく上下する、露出させた控えめな膨らみに我慢汁を塗りつけた…
+			ELSE
+				PRINTFORM 亀頭を納茲琳の
+				SIF PALAM:欲情 >= PALAMLV:4
+					PRINTFORM 固く凝った
+				PRINTFORMW 色素の薄い乳首に押し付け、乳首ごと柔らかな乳肉の中に押し込んだ…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ん…んふ…ん…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んぅ……ん…」
+			ELSE
+				PRINTFORMW 「んん……んっ…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;初めてチンコを間近で観察
+		IF CFLAG:1209 == 0
+			IF TALENT:恋慕
+				PRINTFORMW 「…コレが、%MASTERNAME:39%の…」
+			ELSE
+				PRINTFORMW 「うわ…っ　な、なかなか立派なものをお持ちで」
+			ENDIF
+			PRINTFORM （というか…
+			;性交まだ
+			IF CFLAG:1208 == 0
+				PRINTFORMW こんなの入るのか…？）
+			;性交済み
+			ELSE
+				PRINTFORMW これ、入ったんだよな…）
+			ENDIF
+			PRINTFORMW 「…ふ、ふふ…これを私の胸で擦って欲しい、と？」
+			IF TALENT:恋慕
+				PRINTFORMW 「見ての街道、私の胸はこんなだが…それでもして欲しいのかい？…ふふっ、ちょっと嬉しいよ」
+				PRINTFORMW 「しかしなあ、挟むのはちょっと無理が…え？押し付けたい？…そんなのでいいのか？まあ、君がそう言うなら…」
+				PRINTFORMW 「じゃあ始めるよ……んっ、ふ、ん、…」
+				PRINTFORMW 「…ふふ、これ、まるで君の匂いを擦り付けられてるみたいだな…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「私の胸を見ておいてそれを頼むのかい？なかなかいい性格をしてるじゃないか、君は。
+				PRINTFORMW 　それとも特殊な趣味をお持ちなのかな」
+				;/両方です、ハイ
+				PRINTFORML 「しかし、実際挟むのはちょっと無理が…え？押し付けたい？ただの変態じゃ…
+				PRINTFORMW 　…ああ、いや、そういえば君は変態だったな」
+				PRINTFORML 「だってそうだろう？こんな貧相な体を好き好む奴が変態じゃなくて何だと言うんだい。
+				PRINTFORMW 　ま、いいか。じゃあ始めるよ……んっ、ふ、ん、…」
+				PRINTFORMW 「…ふふ、これ、君の匂いを擦り付けられてるみたいだな…」
+			ENDIF
+			CFLAG:1209 = 1
+		ELSE
+			PRINTFORMW 「…ふ、ふふ…これを私の胸で擦って欲しい、と？」
+			IF TALENT:恋慕
+				PRINTFORMW 「見ての街道、私の胸はこんなだが…それでもして欲しいのかい？…ふふっ、ちょっと嬉しいよ」
+				PRINTFORMW 「しかしなあ、挟むのはちょっと無理が…え？押し付けたい？…そんなのでいいのか？まあ、君がそう言うなら…」
+				PRINTFORMW 「じゃあ始めるよ……んっ、ふ、ん、…」
+				PRINTFORMW 「…ふふ、これ、まるで君の匂いを擦り付けられてるみたいだな…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「私の胸を見ておいてそれを頼むのかい？なかなかいい性格をしてるじゃないか、君は。
+				PRINTFORMW 　それとも特殊な趣味をお持ちなのかな」
+				;/両方です、ハイ
+				PRINTFORML 「しかし、実際挟むのはちょっと無理が…え？押し付けたい？ただの変態じゃ…
+				PRINTFORMW 　…ああ、いや、そういえば君は変態だったな」
+				PRINTFORML 「だってそうだろう？こんな貧相な体を好き好む奴が変態じゃなくて何だと言うんだい。
+				PRINTFORMW 　ま、いいか。じゃあ始めるよ……んっ、ふ、ん、…」
+				PRINTFORMW 「…ふふ、これ、君の匂いを擦り付けられてるみたいだな…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;恋慕
+	IF TALENT:恋慕
+	;「うっとりとした表情をしながら」
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			;精液中毒3以上でランダム分岐3つ追加
+			IF RAND:6 == 0 && ABL:精液中毒 >= 3
+				PRINTFORML 「はぁ、はぁ、イイ…よっ…%UNICODE(0x2665)%　私、の、胸にかけて…っ！」
+				PRINTFORMW 「君の匂いつけて、すり込んでぇっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+				PRINTFORMW 「で…出そうなんだねッ…そのまま…先っぽに乳首当てて出してよおっ…！」
+				PRINTFORMW 射精の気配を察した納茲琳が、自らペニスに胸を擦りつけてきた…
+			ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+				PRINTFORMW 「い…いいよぉ…%UNICODE(0x2665)%　そのまま、私に、いっぱいかけて…ぇっ%UNICODE(0x2665)%」
+				PRINTFORMW 「君の匂いが染み付いちゃうぐらい…いっぱい…%UNICODE(0x2665)%」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「はぁ、はぁ、出そう、なのかい…？」
+				PRINTFORMW 「いいよ…っ%UNICODE(0x2665)%　私を君ので染めるつもりで…出しちゃいな…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふふ…もうすぐだねぇ…%UNICODE(0x2665)%　そんなに私を子種で汚したいのかい…？」
+				PRINTFORMW 「クスッ…いいよ%UNICODE(0x2665)%　君の大切な精、私にかけて…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「あ…出そうなんだね…？」
+				PRINTFORMW 「いいよ…っ　そのまま、私の胸に…%UNICODE(0x2665)%」
+			ENDIF
+		;射精しない
+		ELSE
+			IF ABL:Ｂ感覚 >= 3
+				;精液中毒Lv.3以上でランダム分岐4つ追加
+				IF RAND:8 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「フフ…また私の胸でしたくなったのかい？いいよ…ん…っ%UNICODE(0x2665)%」
+					PRINTFORMW 「はぁ…%UNICODE(0x2665)%　君のムレムレで、凄く臭うよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「この上、精液までかけられたらっ…ふふ、酷いことになりそうだ…%UNICODE(0x2665)%」
+				ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 3
+					PRINTFORMW 「ふふ♪また私の胸に出したいんだね…%UNICODE(0x2665)%　いいよ…君の臭い、付けてほしいな…%UNICODE(0x2665)%」
+					PRINTFORML 「んっ…%UNICODE(0x2665)%　ふふ…君の精液、臭いが酷くてね…頭がクラクラするんだよ%UNICODE(0x2665)%」
+					PRINTFORMW 「はあんっ…そのニオイを、っは、嗅ぎながらする、とっ…はうんっ%UNICODE(0x2665)%　す、すごくきもちよっ、は、はぅんっ%UNICODE(0x2665)%」
+				ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「ん♪いいよ…私の小さいおっぱいで搾ってあげよう%UNICODE(0x2665)%」
+					PRINTFORMW 汗ばんだ納茲琳の柔らかい乳肉が竿に吸い付き、しかし射精させない絶妙な加減で擦り上げる
+					PRINTFORMW 「ふふ…このまま焦らしてあげるから、君の精をたっぷり出しておくれ…%UNICODE(0x2665)%」
+				ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「はあ、ちゅ、ん、んんぅ、た、たくさん出して、ちゅっ、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 小さい体と未発達な双丘を擦りつけ、納茲琳が亀頭にキスをする度に先走りが唾液と混じり、ねちゃねちゃと淫靡な音を立てる…
+					PRINTFORMW 「君、が、悦んで、んっ、くれると、はあっ%UNICODE(0x2665)%　わ、私も、うれし、あはあっ%UNICODE(0x2665)%」
+					PRINTFORMW 「だ、からぁ、う、ううんっ%UNICODE(0x2665)%　ちゅぷ、い、いっひゃい、ぺちゃ、らひてぇ…%UNICODE(0x2665)%」
+				ELSEIF RAND:4 == 0 
+					PRINTFORML 「ふふ…また擦って欲しいのかい？こんな薄い胸を随分とお気に入りだねぇ…%UNICODE(0x2665)%」
+					PRINTFORMW 乳交を頼むと納茲琳は主人公を優しく押し倒し、胸全体を使ってペニスを愛撫し始めた
+					PRINTFORMW ぴったりと密着した肉同士が先走りでにちゃにちゃと擦れ合い、新たな快楽が生まれる…
+					PRINTFORMW 「ふうっ、あう%UNICODE(0x2665)%　こ、れぇ、乳首も潰れて、ふあうっ%UNICODE(0x2665)%」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 「は、はぁっ、君、のっ、ニオイ、が、強くてぇ、ん、ぱく、ちゅ…%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は控えめな双丘をペニスに擦りつけながら、先端にキスして男性器の臭いに陶然となっている…
+					PRINTFORMW 「ふぅ…んっ、はっ、ちゅぴ、はぅ、コレのことしか、考えられな…あっ、あ、ああっ%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ひ、ひぃんっ%UNICODE(0x2665)%　ソレで乳首いじるの、反則、ぃんっ%UNICODE(0x2665)%」
+					PRINTFORMW 「熱くてぇっ、そん、な、よわいとこ、だからぁっ%UNICODE(0x2665)%　あ、あん、はうっ%UNICODE(0x2665)%」
+					PRINTFORM 乳首を
+					IF TALENT:恋人
+						PRINTFORM 愛する人の
+					ELSE
+						PRINTFORM 想い人の
+					ENDIF
+					PRINTFORMW 男性器でこねられている事実に納茲琳は一層興奮し、びくびくと体を震わせた…
+				ELSE
+					PRINTFORML 「あんっ、は、はぁ、んっ%UNICODE(0x2665)%　ふう、ふう、ん、んっ…」
+					PRINTFORMW 納茲琳はうっとりとした表情でペニスを薄い乳肉に擦りつけ、主人公を悦ばせようとしている…
+					PRINTFORMW 「君の、熱くて、固くて…%UNICODE(0x2665)%　あ、あんっ、び、びりびりってくるぅっ…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0 
+					PRINTFORML 「ふふ…また擦って欲しいのかい？こんな薄い胸を随分とお気に入りだねぇ…%UNICODE(0x2665)%」
+					PRINTFORMW 乳交を頼むと納茲琳は主人公の腰に抱きつき、胸全体を使ってペニスを愛撫し始めた
+					PRINTFORMW 「ふうっ、んん、こ、こんな感じ、だろうか…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 「は、はぁっ、君、のっ、熱くってぇ…%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は控えめな双丘をペニスに擦りつけながら、懸命に奉仕を続けている…
+					PRINTFORMW 「ふぅ…んっ、はっ、乳首、擦れて、はぅっ%UNICODE(0x2665)%　集中出来な、ん、んっ%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「あ、あうっ%UNICODE(0x2665)%　ソレで乳首いじるの、反則、ぃんっ%UNICODE(0x2665)%」
+					PRINTFORMW 乳首をペニスでこねると、納茲琳は敏感に反応した…
+				ELSE
+					PRINTFORML 「あんっ、は、はぁ、んっ%UNICODE(0x2665)%　ふう、ふう、ん、んっ…」
+					PRINTFORMW 納茲琳はうっとりとした表情でペニスを薄い乳肉に擦りつけ、主人公を悦ばせようとしている…
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	;恋慕なし
+	ELSE
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			;精液中毒3以上でランダム分岐3つ追加
+			IF RAND:6 == 0 && ABL:精液中毒 >= 3
+				PRINTFORML 「はぁ、はぁ、イイ…よっ…%UNICODE(0x2665)%　私、の、胸にかけて…っ！」
+				PRINTFORMW 「匂いつけて、すり込んでぇっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+				PRINTFORMW 「で…出そうなんだねッ…そのまま…先っぽに乳首当てて出してよおっ…！」
+				PRINTFORMW 射精の気配を察した納茲琳が、自らペニスに胸を擦りつけてきた…
+			ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+				PRINTFORMW 「い…いいよぉ…%UNICODE(0x2665)%　そのまま、私に、いっぱいかけて…ぇっ%UNICODE(0x2665)%」
+				PRINTFORMW 「匂いが染み付いちゃうぐらい…いっぱい…%UNICODE(0x2665)%」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「はぁ、はぁ、出そう、なのかい…？」
+				PRINTFORMW 「いいよ…っ%UNICODE(0x2665)%　出しちゃいな…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふふ…もうすぐだねぇ…%UNICODE(0x2665)%　そんなに私を子種で汚したいのかい…？」
+				PRINTFORMW 「クスッ…いいよ%UNICODE(0x2665)%　私にかけて…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「あ…出そうなんだね…？」
+				PRINTFORMW 「いいよ…っ　そのまま、私の胸に…%UNICODE(0x2665)%」
+			ENDIF
+		;射精しない
+		ELSE
+			IF ABL:Ｂ感覚 >= 3
+				;精液中毒Lv.3以上でランダム分岐4つ追加
+				IF RAND:8 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「フフ…また私の胸でしたくなったのかい？いいよ…ん…っ%UNICODE(0x2665)%」
+					PRINTFORMW 「はぁ…%UNICODE(0x2665)%　君のムレムレで、凄く臭うよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「この上、精液までかけられたらっ…ふふ、酷いことになりそうだ…%UNICODE(0x2665)%」
+				ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 3
+					PRINTFORMW 「ふふ♪また私の胸に出したいんだね…%UNICODE(0x2665)%　いいよ…%UNICODE(0x2665)%」
+					PRINTFORML 「んっ…%UNICODE(0x2665)%　ふふ…君の精液、臭いが酷くてね…頭がクラクラするんだよ%UNICODE(0x2665)%」
+					PRINTFORMW 「はあんっ…そのニオイを、っは、嗅ぎながらする、とっ…はうんっ%UNICODE(0x2665)%　す、すごくきもちよっ、は、はぅんっ%UNICODE(0x2665)%」
+				ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「ん♪いいよ…私の小さいおっぱいで搾ってあげよう%UNICODE(0x2665)%」
+					PRINTFORMW 汗ばんだ納茲琳の柔らかい乳肉が竿に吸い付き、しかし射精させない絶妙な加減で擦り上げる
+					PRINTFORMW 「ふふ…このまま焦らしてあげるから、精をたっぷり出しておくれ…%UNICODE(0x2665)%」
+				ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+					PRINTFORML 「はあ、ちゅ、ん、んんぅ、た、たくさん出して、ちゅっ、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 小さい体と未発達な双丘を擦りつけ、納茲琳が亀頭にキスをする度に先走りが唾液と混じり、ねちゃねちゃと淫靡な音を立てる…
+					PRINTFORMW 「う、ううんっ%UNICODE(0x2665)%　ちゅぷ、い、いっひゃい、ぺちゃ、らひてぇ…%UNICODE(0x2665)%」
+				ELSEIF RAND:4 == 0 
+					PRINTFORML 「ふふ…また擦って欲しいのかい？こんな薄い胸を随分とお気に入りだねぇ…」
+					PRINTFORMW 乳交を頼むと納茲琳は主人公を押し倒し、胸全体を使ってペニスを愛撫し始めた
+					PRINTFORMW ぴったりと密着した肉同士が先走りでにちゃにちゃと擦れ合い、新たな快楽が生まれる…
+					PRINTFORMW 「ふうっ、あう%UNICODE(0x2665)%　こ、れぇ、乳首も潰れて、ふあうっ%UNICODE(0x2665)%」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 「は、はぁっ、君、のっ、ニオイ、が、強くてぇ、ん、ぱく、ちゅ…%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は控えめな双丘をペニスに擦りつけながら、先端にキスして男性器の臭いに陶然となっている…
+					PRINTFORMW 「ふぅ…んっ、はっ、ちゅぴ、はぅ、コレのことしか、考えられな…あっ、あ、ああっ%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ひ、ひぃんっ%UNICODE(0x2665)%　ソレで乳首いじるの、反則、ぃんっ%UNICODE(0x2665)%」
+					PRINTFORMW 「熱くてぇっ、そん、な、よわいとこ、だからぁっ%UNICODE(0x2665)%　あ、あん、はうっ%UNICODE(0x2665)%」
+					PRINTFORMW 乳首を男性器でこねられている事実に納茲琳は一層興奮し、びくびくと体を震わせた…
+				ELSE
+					PRINTFORML 「あんっ、は、はぁ、んっ%UNICODE(0x2665)%　ふう、ふう、ん、んっ…」
+					PRINTFORMW 納茲琳はうっとりとした表情でペニスを薄い乳肉に擦りつけ、主人公を悦ばせようとしている…
+					PRINTFORMW 「君の、熱くて、固くて…%UNICODE(0x2665)%　あ、あんっ、び、びりびりってくるぅっ…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0 
+					PRINTFORML 「ふふ…また擦って欲しいのかい？こんな薄い胸を随分とお気に入りだねぇ…」
+					PRINTFORMW 乳交を頼むと納茲琳は主人公の腰に抱きつき、胸全体を使ってペニスを愛撫し始めた
+					PRINTFORMW 「ふうっ、んん、こんなもんかね…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 「はぁ、君の、熱い…%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は控えめな双丘をペニスに擦りつけながら、主人公の様子をうかがっている…
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「あ、あうっ！ソレで乳首いじるの、反則、ぃんっ%UNICODE(0x2665)%」
+					PRINTFORMW 乳首をペニスでこねると、納茲琳は敏感に反応した…
+				ELSE
+					PRINTFORML 「は、はぁ、んっ　ふう、ふう、ん、んっ…」
+					PRINTFORMW 納茲琳はペニスを薄い乳肉に擦りつけている…
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;83,素股
+;納茲琳はC敏感！
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_83
+;正常位、後背位から抜いて素股で射精のときは地の文を呼ばない
+SIF !(TEQUIP:体位２ == 1 || TEQUIP:体位２ == 2) && NOWEX:MASTER:11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_83_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_83_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:3 == 0 
+				PRINTFORMW 眠る納茲琳の縦スジを割り開き、滾った肉棒の先端を膣口にあてがった…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 限界が近づいた怒張を扱きながら、納茲琳の幼いワレメに押し付けた…
+			ELSE
+				PRINTFORMW 我慢汁を垂れ流すペニスを、眠る納茲琳の未熟な性器に擦りつけた…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「んっ…ふう…っ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ふ…うう…っ」
+			ELSE
+				PRINTFORMW 「はっ…ふ…う…」
+			ENDIF
+		ELSE
+				IF RAND:3 == 0 
+				PRINTFORMW 眠る納茲琳の縦スジに肉棒を押し当て、ゆっくりと擦った…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 怒張を納茲琳の幼いワレメに押し付けた…
+			ELSE
+				PRINTFORMW ペニスを眠る納茲琳の未熟な性器に擦りつけ、クリトリスに我慢汁を塗りつけた…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ん…ふ……」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ふ…う…う…」
+			ELSE
+				PRINTFORMW 「…ふ…う…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;うふふ2時の素股の経験どうしよう
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 「…コレに擦り付けるのかい…？ふふ、これまたわかりやすくエロいねえ…」
+			;性交まだ
+			IF CFLAG:1208 == 0
+				PRINTFORMW 「…と言っても、本番はもっとエロいんだがねぇ%UNICODE(0x2665)%　ま、これはこれで…ね…♪」
+			;性交済み
+			ELSE
+				PRINTFORMW 「…と言っても本番はもうやってるんだがね♪これはこれでいやらしいんだよ…」
+			ENDIF
+			PRINTFORMW 「…じゃあ、始めるよ…？」
+		;恋慕なし
+		ELSE
+			PRINTFORMW 「…コレに擦り付けるのかい…？ふふ、これまたわかりやすくエロいねえ…」
+			;性交まだ
+			IF CFLAG:1208 == 0
+				PRINTFORMW 「…と言っても、本番はもっとエロいんだがねぇ%UNICODE(0x2665)%　ま、これはこれで…ね…♪」
+			;性交済み
+			ELSE
+				PRINTFORMW 「…と言っても本番はもうやってるんだがね♪これはこれでいやらしいんだよ…」
+			ENDIF
+			PRINTFORMW 「…じゃあ、始めるよ…？」
+		ENDIF
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+	;恋慕か親愛＋欲情のPALAMLV5以上
+	;「今にもとろけそうな表情を浮かべながら」
+	;恋慕か親愛
+	;「陶酔しきった瞳で%CALLNAME:PLAYER%を見つめながら」
+		;正常位または後背位から抜いて素股で射精
+		IF (TEQUIP:体位２ == 1 || TEQUIP:体位２ == 2) && NOWEX:MASTER:11
+			DRAWLINE
+			PRINTFORML 膣から射精寸前のペニスを引き抜いて、先程まで挿入していた縦スジへと擦りつけた…
+			PRINTFORML 　
+			PRINTFORMW 「ふあっ！あ、あうっ、…あ…？ど、うして抜くんだい…？」
+			PRINTFORML 「ソコにかけたい…？つくづく君は変態だねぇ…
+			IF TALENT:恋人
+				PRINTFORMW 私としては、ナカに出して欲しかったんだがね…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORMW 私は、その、ナカで君の射精を感じられる方が…」
+			ENDIF
+		;これでMASTERが射精する
+		ELSEIF NOWEX:MASTER:11
+			IF RAND:2 == 0
+				PRINTFORMW 「っ…で、そう、なのかい…？」
+				PRINTFORMW 「いい…よっ、はうんっ%UNICODE(0x2665)%　…君、の、たくさんかけてえっ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORMW 「あ…この、まま、出すんだねっ…」
+				PRINTFORMW 「くうんっ、は、いいよ…っ、き、きみの、あんっ%UNICODE(0x2665)%　いっぱいかけてっ…」
+			ENDIF
+		;腰のLv2以上か技巧4以上
+		ELSEIF ABL:腰 >= 2 || ABL:技巧 >= 4
+			IF RAND:4 == 0
+				PRINTFORML 「ん…いくよ…っふ、ん、んんっ、は…っ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は主人公の腰に跨り、ゆっくりと腰をグラインドさせ始めた…
+				PRINTFORMW 愛液に塗れた淫肉が陰茎に絡みついてゆく…
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 納茲琳は時々大きく腰を引いては、クリトリスを肉棒に擦りつけた…
+				PRINTFORML 「はあっ…%UNICODE(0x2665)%　ふ、んっ、これ、イイっ…%UNICODE(0x2665)%」
+				PRINTFORMW 「きみの、が、わたしの、と、こすれてるっ…%UNICODE(0x2665)%　は、はんっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「んっ…く、くぅんっ…は、%MASTERNAME:39%…%MASTERNAME:39%…っ」
+				PRINTFORMW 「わた…しっ…%MASTERNAME:39%の、で、気持ちよくなってるよおっ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は目を閉じたまま腰を振り、愛しい人を使ってのオナニーに耽っている…
+			ELSE
+				PRINTFORML 「はぁ…%MASTERNAME:39%…っ%UNICODE(0x2665)%　あ…んっ…ああ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は主人公に覆いかぶさるようにして腰を動かしている
+				PRINTFORMW その口からあふれた唾液で、主人公の胸はベタベタになっている…
+			ENDIF
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORMW 「あんっ…こ、これ、敏感なとこ、擦れてぇっ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「あうっ…、き、君は動かなくていい…んだっ…%UNICODE(0x2665)%」
+				PRINTFORMW もどかしい動きに我慢できず動起腰身と、納茲琳は驚いて嬌声を上げた
+			ENDIF
+		ENDIF
+		RETURN 1
+	;それ以外
+	ELSE
+	;欲情のPALAMLV4以上
+	;「口の端からよだれをこぼしながら」
+	;それ以外
+	;「恥ずかしそうに」
+		;正常位または後背位から抜いて素股で射精
+		IF (TEQUIP:体位２ == 1 || TEQUIP:体位２ == 2) && NOWEX:MASTER:11
+			DRAWLINE
+			PRINTFORML 膣から射精寸前のペニスを引き抜いて、先程まで挿入していた縦スジへと擦りつけた…
+			PRINTFORML 　
+			PRINTFORMW 「ふあっ！あ、あうっ、…？」
+			PRINTFORMW ペニスを引き抜かれた納茲琳は怪訝な顔をした
+			PRINTFORML 「ソコにかけたい…？避妊は結構だが、つくづく君は変態だねぇ…」
+		;これでMASTERが射精する
+		ELSEIF NOWEX:MASTER:11
+			IF RAND:2 == 0
+				PRINTFORMW 「っ…で、そう、なのかい…？」
+			ELSE
+				PRINTFORMW 「あ…この、まま、出すんだねっ…」
+			ENDIF
+		;腰のLv2以上か技巧4以上
+		ELSEIF ABL:腰 >= 2 || ABL:技巧 >= 4
+			IF RAND:3 == 0
+				PRINTFORMW 納茲琳は時々大きく腰を引いては、クリトリスを肉棒に擦りつけた…
+				PRINTFORMW 「はあっ…%UNICODE(0x2665)%　ふ、んっ、これ、イイっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「んっ…く、くぅんっ…は…っ%UNICODE(0x2665)%」
+				PRINTFORMW 「やはり、本物を使ってするのは興奮するねえ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は目を閉じたまま腰を振り、実物のペニスを使ってのオナニーに耽っている…
+			ELSE
+				PRINTFORML 「ん…いくよ…っふ、ん、んんっ、は…っ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は主人公の腰に跨り、ゆっくりと腰をグラインドさせ始めた…
+				PRINTFORMW 愛液に塗れた淫肉が陰茎に絡みついてゆく…
+			ENDIF
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORMW 「あんっ…こ、これ、敏感なとこ、擦れてぇっ…」
+			ELSE
+				PRINTFORML 「あうっ…、き、君は動かなくていい…んだっ…%UNICODE(0x2665)%」
+				PRINTFORMW もどかしい動きに我慢できず動起腰身と、納茲琳は驚いて嬌声を上げた
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+
+;==================================================
+;84,泡泡浴
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_84
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_84_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_84_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;85,足扱き
+;S気味っぽく。恋慕・非恋慕で書き分けできなかったので、現状では完全にデータの水増しになってる
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_85
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_85_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_85_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORML 「足で…？理解できないのだが、そんなのがいいのか…？」
+		PRINTFORMW 「…\@ BASE:MASTER:勃起 < 1000 ? 硬くなってき # びくびくし \@てるし…」
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:2 == 0
+				PRINTFORML 「ふふ…本当にこんなのでイってしまうんだね…%UNICODE(0x2665)%」
+				PRINTFORMW 「いいよ…君が足で擦られて果てるの、全部見ててあげるよ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「んん…もう限界みたいだねぇ…」
+				PRINTFORMW 「こんな私の足でされるのがそんなにいいんだね…%UNICODE(0x2665)%　変態…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳はニヤニヤと笑いながら足で優しく陰茎を擦り、主人公を射精へと導いていった…
+			ENDIF
+		;勃起しきっていない
+		ELSEIF BASE:MASTER:勃起 < 1000
+			IF RAND:2 == 0
+				PRINTFORML 「ふふ…やわらかーい…君の好きなコレですぐにカチカチにしてあげるよ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳はクスクスと笑いながら、土踏まずでペニスを挟み、擦り始めた…
+			ELSE
+				PRINTFORML 「ふふ…本当にこれが好きなんだねぇ…%UNICODE(0x2665)%　どんどん硬くなってきてるよ…」
+				PRINTFORMW 「君の…あっつい…%UNICODE(0x2665)%」
+			ENDIF
+		ELSE
+			;襪子履いてない
+			;※後半は「全部脱がす」で脱がした時も反応させるため。もっといい方法があるかもしれない
+			;/星ちゃん口上では襪子のあるなしで分岐していたがぼくにはとてもできない。のでコメントアウト
+			;/襪子で中出し直後のちんこフキフキとかレベル高ぇなオイ
+;			IF EQUIP:4 == 0 || (!TEQUIP:0 && !TEQUIP:1)
+				;技巧3以上
+				IF ABL:技巧 >= 3
+					IF RAND:3 == 0
+						PRINTFORML てしっ…てしっ…
+						PRINTFORMW 「ほらぁ…こーんな風に蹴られても興奮しちゃうんだね、%MASTERNAME:39%は%UNICODE(0x2665)%」
+						PRINTFORMW 「ちゃーんと優しくしてるから痛くはないだろうけど、どう見ても変態だねぇ…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 納茲琳は片足を陰茎に乗せ、そのまま土踏まずで優しく踏みつけた…
+						PRINTFORML 「ふふ…っ、こうやって踏まれながら擦るのがいいんだよねぇ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私は軽いから、全体重かけても平気かもね…」
+						PRINTFORMW きつめの、しかし絶妙に加減された刺激に、%CALLNAME:MASTER%の陰茎は納茲琳の足の下でびくびくと痙攣している…
+					ELSE
+						PRINTFORMW 納茲琳は両足で挟むようにして愛撫をかけてくる
+						PRINTFORML 「ふ、ふっ…くにゅ、くにゅって皮が滑って、中、かちかちだね…」
+						PRINTFORMW 「先からこんなに先走りが垂れてるし…♪　あはっ、くすぐったい…%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORMW 納茲琳は足裏でペニスを弄り始めた…
+						PRINTFORML 「んー…こうかねぇ…」
+						PRINTFORMW 「ほんとにこんなのが気持ちいいのか…？　むぅ…」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「足でと言われても、要領がわからないんだよね…」
+						PRINTFORML 「ん、んっ……こ、こう…？」
+						PRINTFORMW 加減がよくわからないのかしきりに主人公に目をやっている…
+					ELSE
+						PRINTFORML 「手とか口とか…とかの方が絶対気持ちいいと思うんだが…」
+						PRINTFORMW 納茲琳は手間取りながらも一生懸命に足を動かしている…
+					ENDIF
+				ENDIF
+			;襪子を履いている
+;			ELSE
+				;Ｖ、Ａ中出しの直後
+				;/普通来ないだろうけど後悔はしない
+;				IF TCVAR:102 || TCVAR:104
+;				ELSE
+;				ENDIF
+;			ENDIF
+		ENDIF
+		RETURN 1
+	;恋慕なし
+	ELSE
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:2 == 0
+				PRINTFORML 「ふふ…本当にこんなのでイってしまうんだね…%UNICODE(0x2665)%」
+				PRINTFORMW 「いいよ…君が足で擦られて果てるの、全部見ててあげるよ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「んん…もう限界みたいだねぇ…」
+				PRINTFORMW 「こんな私の足でされるのがそんなにいいんだね…%UNICODE(0x2665)%　変態…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳はニヤニヤと笑いながら足で優しく陰茎を擦り、主人公を射精へと導いていった…
+			ENDIF
+		;勃起しきっていない
+		ELSEIF BASE:MASTER:勃起 < 1000
+			IF RAND:2 == 0
+				PRINTFORML 「ふふ…やわらかーい…君の好きなコレですぐにカチカチにしてあげるよ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳はクスクスと笑いながら、土踏まずでペニスを挟み、擦り始めた…
+			ELSE
+				PRINTFORML 「ふふ…本当にこれが好きなんだねぇ…%UNICODE(0x2665)%　どんどん硬くなってきてるよ…」
+				PRINTFORMW 「君の…あっつい…%UNICODE(0x2665)%」
+			ENDIF
+		ELSE
+			;襪子履いてない
+			;※後半は「全部脱がす」で脱がした時も反応させるため。もっといい方法があるかもしれない
+			;/星ちゃん口上では襪子のあるなしで分岐していたがぼくにはとてもできない。のでコメントアウト
+			;/襪子で中出し直後のちんこフキフキとかレベル高ぇなオイ
+			;IF EQUIP:4 == 0 || (!TEQUIP:0 && !TEQUIP:1)
+				;技巧3以上
+				IF ABL:技巧 >= 3
+					IF RAND:3 == 0
+						PRINTFORML てしっ…てしっ…
+						PRINTFORMW 「ほらぁ…こーんな風に蹴られても興奮しちゃうんだね、%MASTERNAME:39%は%UNICODE(0x2665)%」
+						PRINTFORMW 「ちゃーんと優しくしてるから痛くはないだろうけど、どう見ても変態だねぇ…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 納茲琳は片足を陰茎に乗せ、そのまま土踏まずで優しく踏みつけた…
+						PRINTFORML 「ふふ…っ、こうやって踏まれながら擦るのがいいんだよねぇ…%UNICODE(0x2665)%」
+						PRINTFORMW 「私は軽いから、全体重かけても平気かもね…」
+						PRINTFORMW きつめの、しかし絶妙に加減された刺激に、%CALLNAME:MASTER%の陰茎は納茲琳の足の下でびくびくと痙攣している…
+					ELSE
+						PRINTFORMW 納茲琳は両足で挟むようにして愛撫をかけてくる
+						PRINTFORML 「ふ、ふっ…くにゅ、くにゅって皮が滑って、中、かちかちだね…」
+						PRINTFORMW 「先からこんなに先走りが垂れてるし…♪　あはっ、くすぐったい…%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORMW 納茲琳は足裏でペニスを弄り始めた…
+						PRINTFORML 「んー…こうかねぇ…」
+						PRINTFORMW 「ほんとにこんなのが気持ちいいのか…？　むぅ…」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「足でと言われても、要領がわからないんだよね…」
+						PRINTFORML 「ん、んっ……こ、こう…？」
+						PRINTFORMW 加減がよくわからないのかしきりに主人公に目をやっている…
+					ELSE
+						PRINTFORML 「手とか口とか…とかの方が絶対気持ちいいと思うんだが…」
+						PRINTFORMW 納茲琳は手間取りながらも一生懸命に足を動かしている…
+					ENDIF
+				ENDIF
+			;襪子を履いている
+			;ELSE
+				;Ｖ、Ａ中出しの直後
+				;/普通来ないだろうけど後悔はしない
+				;IF TCVAR:102 || TCVAR:104
+				;ELSE
+				;ENDIF
+			;ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;加虐系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;100,打屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_100
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_100_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_100_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;101,鞭
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_101
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_101_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_101_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;102,蝋燭
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_102
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_102_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_102_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;103,針
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_103
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_103_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_103_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;104,眼罩
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_104
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_104_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_104_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;装着
+	IF TEQUIP:眼罩
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;105,縄
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_105
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_105_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_105_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;装着
+	IF TEQUIP:縄
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;106,口枷
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_106
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_106_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_106_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;装着
+	IF TEQUIP:口枷
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;助手によるコマンド、及びレズプレイ
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;120,強制舐陰
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_120
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_120_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_120_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;121,貝あわせ
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_121
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_121_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_121_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;123,足交
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_123
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_123_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_123_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;126,互揉胸部
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_126
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_126_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_126_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;ハードな調教コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;140,強制口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_140
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_140_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_140_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;141,拳交
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_141
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_141_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_141_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;142,肛門拳交
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_142
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_142_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_142_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;143,両穴フィスト
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_143
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_143_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_143_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;144,放尿
+;好きなコマンドだが持ちネタの少なさに絶望。間違いなく手抜き口上No.1
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_144
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_144_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_144_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		IF RAND:3 == 0 
+			PRINTFORMW 「は…ふ……」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「ふ…う…う…」
+		ELSE
+			PRINTFORMW 「…ん…はぁ…」
+		ENDIF
+		IF RAND:3 == 0 
+			PRINTFORMW 眠る納茲琳の縦スジからチョロチョロと黄金色の液体が流れだした…
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 漏れだした液体が布団を汚し、大きな染みを作った…
+		ELSE
+			PRINTFORMW 愛撫を受けた尿道口から温かい液体が迸り、ツンとした匂いが充満した…
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		IF TALENT:恋人
+			PRINTFORMW 「…すまないが、もっかい言ってくれないか？」
+			PRINTFORMW 主人公は、再度納茲琳の放尿が見たいと伝えた。
+			PRINTFORML 「…はぁ。何というか、人の業は深いねぇ。
+			PRINTFORMW 　ちなみに、コレも君の愛情表現の一つと解釈していいのかい？」
+			PRINTFORMW もちろん、と答えると、納茲琳は再度溜息をついた
+			PRINTFORMW 「…ま、別に痛くないからいいけどさ。…やれやれ、なんでこんなのの恋人になっちゃったんだか…」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…すまないが、もっかい言ってくれないか？」
+			PRINTFORMW 主人公は、再度納茲琳の放尿が見たいと伝えた。
+			PRINTFORML 「…はぁ。もちろん理解できると思うんだが、私が死ぬほど恥ずかしい思いをするのを承知で？」
+			;/むしろそれが目的ですが？
+			PRINTFORMW 肯定すると、納茲琳は涙目で睨んできた…
+			PRINTFORMW 「うー…あとで覚えてろよ…」
+		ELSE
+			PRINTFORMW 「…すまないが、もっかい言ってくれないか？」
+			PRINTFORMW 主人公は、再度納茲琳の放尿が見たいと伝えた。
+			PRINTFORMW 「…はぁ。君がそこまでの変態だったとはね…そこまで行くといっそ清々しいね」
+			PRINTFORMW 「いいよ、やっても。今、すごく投げやりな気分になったからね…」
+		ENDIF
+		RETURN 1
+	ENDIF
+	;浴室場　というか、浴室場しか書けそうにない。そしてネタ切れ、恋慕と露出癖高い時の分岐誰か書いてー
+	IF BATHROOM()
+		;恋慕
+		IF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORMW 「ま、またぁ？うー…」
+				PRINTFORMW 納茲琳は渋々といった表情で、排水口に向けてしゃがんだ…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…く…～～～っ！」
+				PRINTFORMW 納茲琳の声なき悲鳴とともに尿道口から黄金色の液体が飛び出し、排水口までの小さな川が出来上がった…
+			ELSE
+				PRINTFORMW 「ううっ…絶対悪趣味だって…」
+				PRINTFORMW 「やっぱりやるの…？んー…　ん、く、～～～～っ」
+			ENDIF
+			RETURN 1
+		;それ以外
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ま、またぁ？うー…」
+				PRINTFORMW 納茲琳は渋々といった表情で、排水口に向けてしゃがんだ…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…く…～～～っ！」
+				PRINTFORMW 納茲琳の声なき悲鳴とともに尿道口から黄金色の液体が飛び出し、排水口までの小さな川が出来上がった…
+			ELSE
+				PRINTFORMW 「ううっ…絶対悪趣味だって…」
+				PRINTFORMW 「やっぱりやるの…？んー…　ん、く、～～～～っ」
+			ENDIF
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;145,肛門奉仕強制
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_145
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_145_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_145_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;146,浣腸器＋肛塞
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_146
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_146_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_146_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;浣腸液注入
+	IF TEQUIP:浣腸
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;147,拡張気球
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_147
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_147_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_147_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;装着
+	IF TEQUIP:拡張気球
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;148,肛門電極
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_148
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_148_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_148_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;装着
+	IF TEQUIP:肛門電極
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;解除
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;=================================================
+;特殊コマンド
+;=================================================
+;-------------------------------------------------
+;180,潤滑液
+;-------------------------------------------------
+@M_KOJO_MESSAGE_COM_K39_180
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_180_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_180_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;181,媚薬,
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_181
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_181_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_181_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		CFLAG:1181 = 1
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;182,利尿剤,
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_182
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_182_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_182_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;183,攝像機,
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_183
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_183_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_183_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;開始
+	IF TEQUIP:ビデオ撮影
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;終了
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;187,浴室PLAY
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_187
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_187_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_187_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;開始
+	IF TEQUIP:浴室PLAY
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;終了
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;188,淋浴
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_188
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_188_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_188_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;開始
+	IF TEQUIP:淋浴
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;終了
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;189,新妻PLAY
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_189
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_189_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_189_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;開始
+	IF TEQUIP:新妻PLAY
+		;恋慕
+		IF TALENT:恋慕
+			PRINTFORMW 
+			RETURN 1
+		;不埒3
+		ELSEIF MARK:不埒刻印 == 3
+			PRINTFORMW 
+			RETURN 1
+		;それ以外
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;終了
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;1,六九式
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_1_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		;初めてチンコを間近で観察。必然的に舐陰→フェラの流れで発生することになる（先にフェラしてしまうとその時点で初めてチンコ観察フラグが立ってしまうため）
+		IF CFLAG:1209 == 0
+			PRINTFORMW 「ふううっ、あぅ、あん、は、あ…これ…」
+			PRINTFORMW 敏感なクリトリスへの愛撫に翻弄される納茲琳は、目の前で揺れる男性器に気がつく
+			PRINTFORMW 納茲琳は夢見心地な表情でそれに手を伸ばし、ほとんど無意識に口に含み、しゃぶり始めた…
+			PRINTFORMW 「ん…ちゅ、あむ、ちゅぷぷ、んふう…んん…！　ふ、あ、むっ、ちゅ、ちゅぷ、はぁ…%UNICODE(0x2665)%」
+			CFLAG:1209 = 1
+		ELSE
+			;フェラを選択して発生　舐陰してるところにナズが自発的にフェラ
+			IF SELECTCOM == 81
+				PRINTFORMW 「んふっ、はぁ、は、君、のも、舐めたげる…%UNICODE(0x2665)%　ふふ、相変わらず大きいな」
+				PRINTFORMW 納茲琳は奉仕を続ける主人公の勃起したペニスに手を伸ばした…
+				PRINTFORMW 「お返し、してあげる…%UNICODE(0x2665)%　ちゅ、はぁ、はむ、ちゅぷ…」
+			;舐陰を選択して発生　フェラしてもらってるところにMASTERが自発的に舐陰
+			ELSE
+				PRINTFORMW 「ちゅぷ、んちゅ、んん、あむ、ちゅぷ…」
+				PRINTFORMW 精一杯主人公を悦ばせようとしている納茲琳の、幼いワレメに舌を伸ばした…
+				PRINTFORMW 「あうっ%UNICODE(0x2665)%　や、やあっ、してあげられないよおっ…%UNICODE(0x2665)%」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;フェラを選択して発生
+	IF SELECTCOM == 81
+		IF TALENT:恋慕
+			PRINTFORMW 納茲琳の可愛らしいワレメを味わっていると、お返しとばかりに納茲琳もペニスをついばみ始めた…
+			IF RAND:3 == 0
+				PRINTFORMW 「んふっ、はぁ、は、君、のも、舐めたげる…%UNICODE(0x2665)%　ちゅ、はぁ、はむ、ちゅぷ…」
+				PRINTFORMW 「はぁ、これ、シてあげながらされるの、好きぃ…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ぱく…んっ…ちゅうっ…は、あうっ%UNICODE(0x2665)%　き、きもちいいよおっ、わたしも、はむ…っちゅうううっ…」
+				PRINTFORMW 時々主人公の愛撫にたまらず口を離しながらも、懸命に主人公を悦ばせようとしている…
+			ELSE
+				PRINTFORMW 「はーっ%UNICODE(0x2665)%　はーっ%UNICODE(0x2665)%　はむ…っ、ちゅ、ちゅぷ、ああっ%UNICODE(0x2665)%」
+				PRINTFORMW 「これだめだよ…っ　エロいことしか、かんがえられなくなる…%UNICODE(0x2665)%」
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「はぁ、あ、はんっ、は…ちゅ、ちゅぷ、ちゅる…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふふ、私もしてあげるよ…」
+			ELSE
+				PRINTFORMW 「あ…あむ、ちゅ…ちゅっ、んん…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	;舐陰を選択して発生
+	ELSE
+		;「慈しむように懸命に奉仕する納茲琳の幼いワレメを舌で愛撫してやった…」
+		IF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORML 「あうっ%UNICODE(0x2665)%　や、やあっ、してあげられないよおっ…%UNICODE(0x2665)%」
+				PRINTFORMW 刺激にたまらずペニスから口を離した納茲琳は、主人公の愛撫に体を震わせた…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「んふうっ%UNICODE(0x2665)%　ん、んちゅ、んぷ、ふ、ふううんんっ%UNICODE(0x2665)%」
+				PRINTFORMW 主人公の奉仕に応えるように、納茲琳は積極的にペニスを咥え込んだ…
+			ELSE
+				PRINTFORML 「んんぅ%UNICODE(0x2665)%　んふぅんっ、ぢゅぷ、ちゅっぷ、んんっ…！ぷあっ、はーっ%UNICODE(0x2665)%　はーっ%UNICODE(0x2665)%」
+				PRINTFORMW 主人公の愛撫に耐えられなくなった納茲琳は、ペニスを咥え込んだまま荒い息を吐いている…
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ふ、ふあっ！は、んん、君も、舐めたくなったのかい…？」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん、くぅんっ、お、おとなしく、は、やあっ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORMW 「こ、こらあっ、今は私がっ、う、うああっ…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+;RETURN RESULT
+
+;==================================================
+;2,岩清水
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_2_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;3,Gスポット刺激
+;※tntn挿入時のGスポ刺激はまた別に下にある
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_3_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		;Ｖ経験30以下
+		IF EXP:Ｖ経験 <= 30
+			IF RAND:3 == 0
+				PRINTFORMW 「そこ、刺激…強すぎてっ……」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あうっ…！？い、いま、ゾクってした…」
+			ELSE
+				PRINTFORMW 「な、なに、へんなとこ、あうっ…」
+			ENDIF
+		ELSEIF TEQUIP:振動棒
+			PRINTFORML 「や、ああっ%UNICODE(0x2665)%　そこ、よわ、ひいいっ%UNICODE(0x2665)%」
+			PRINTFORMW 振動棒に性感帯を擦り上げられ、納茲琳はたまらず腰を浮かせた……
+		ELSE
+			IF RAND:4 == 0
+				PRINTFORML 「あううっ%UNICODE(0x2665)%　そこ、びんかん、だからあっ……うあっ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は涙を浮かべながらGスポットへの刺激に身体を震わせている
+				SIF EXP:Ｖ経験 > 120
+				PRINTFORMW その腰は艶かしく動き、Gスポットを擦り上げ快楽を貪っている…
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あっ！？、そこっ%UNICODE(0x2665)%　はうう、あっ、ひ、ぃいっん%UNICODE(0x2665)%」
+				PRINTFORMW 「ゆびぃ、あたって、はうぅ%UNICODE(0x2665)%」
+				PRINTFORMW すっかり性快楽を覚えてしまった納茲琳は、Gスポットへの刺激に歓喜の声を上げている…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「あぁーっ%UNICODE(0x2665)%　そこ、よわい、ああっ%UNICODE(0x2665)%」
+				PRINTFORMW 撫で上げるようにぐりぐりとGスポットを刺激してやると、納茲琳はひときわ高い嬌声を上げた…
+			ELSE
+				PRINTFORML 「ひぃんっ…%UNICODE(0x2665)%　そこだめぇ、ちから、ぬけちゃっ…はうぅっ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は腰をガクガクと揺らしながら雌の喜びを享受している…
+			ENDIF
+		ENDIF
+		RETURN 1
+	;それ以外
+	ELSE
+		;Ｖ経験30以下
+		IF EXP:Ｖ経験 <= 30
+			IF RAND:3 == 0
+				PRINTFORMW 「はうっ！ちょ、ちょっと強すぎ…あんっ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「も、もうちょっと、優しく、ううっ」
+			ELSE
+				PRINTFORMW 「な、なに、へんなとこ、あうっ…」
+			ENDIF
+		ELSEIF TEQUIP:振動棒
+			PRINTFORML 「や、ああっ%UNICODE(0x2665)%　そこ、よわ、ひいいっ%UNICODE(0x2665)%」
+			PRINTFORMW 振動棒に性感帯を擦り上げられ、納茲琳はたまらず腰を浮かせた……
+		ELSE
+			IF RAND:4 == 0
+				PRINTFORML 「あううっ%UNICODE(0x2665)%　そこ、びんかん、だからあっ……うあっ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は涙を浮かべながらGスポットへの刺激に身体を震わせている
+				SIF EXP:Ｖ経験 > 120
+				PRINTFORMW その腰は艶かしく動き、Gスポットを擦り上げ快楽を貪っている…
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あっ！？、そこっ%UNICODE(0x2665)%　はうう、あっ、ひ、ぃいっん%UNICODE(0x2665)%」
+				PRINTFORMW 「ゆびぃ、あたって、はうぅ%UNICODE(0x2665)%」
+				PRINTFORMW すっかり性快楽を覚えてしまった納茲琳は、Gスポットへの刺激に歓喜の声を上げている…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「あぁーっ%UNICODE(0x2665)%　そこ、よわい、ああっ%UNICODE(0x2665)%」
+				PRINTFORMW 撫で上げるようにぐりぐりとGスポットを刺激してやると、納茲琳はひときわ高い嬌声を上げた…
+			ELSE
+				PRINTFORML 「ひぃんっ…%UNICODE(0x2665)%　そこだめぇ、ちから、ぬけちゃっ…はうぅっ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は腰をガクガクと揺らしながら雌の喜びを享受している…
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+;==================================================
+;4,乱牡丹
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_4_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;5,手淫口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_5_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;これでMASTERが射精する
+		IF NOWEX:MASTER:11
+			IF RAND:3 == 0 
+				PRINTFORMW 安らかな納茲琳の寝顔を汚すべく、滾った肉棒を薄い唇に押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 限界が近づいた肉槍を扱きながら、納茲琳の唇にねじ込んだ…
+			ELSE
+				PRINTFORMW 我慢汁を垂れ流すペニスで、眠る納茲琳の唇をなぞった…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ちゅ…ん…ちゅ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んく…ちゅ…」
+			ELSE
+				PRINTFORMW 「むぅ…ちゅ、ぷ…」
+			ENDIF
+		ELSE
+			IF RAND:3 == 0 
+				PRINTFORMW 眠る納茲琳の薄い唇に亀頭を押し付けた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 寝息を立てる納茲琳の唇に、我慢汁を塗りつけた…
+			ELSE
+				PRINTFORMW 眠る納茲琳とペニスをキスさせた…
+			ENDIF
+			IF RAND:3 == 0 
+				PRINTFORMW 「ちゅ…ん…ちゅ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「んく…ちゅ…」
+			ELSE
+				PRINTFORMW 「むぅ…ちゅ、ぷ…」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;初めてチンコを間近で観察
+		IF CFLAG:1209 == 0
+			IF TALENT:恋慕
+				PRINTFORMW 「…コレが、%MASTERNAME:39%の…」
+				PRINTFORM （というか…
+				;性交まだ
+				IF CFLAG:1208 == 0
+					PRINTFORMW こんなの入るのか…？）
+				;性交済み
+				ELSE
+					PRINTFORMW これ、入ったんだよな…）
+				ENDIF
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「これを、舐めて欲しいの…？」
+				PRINTFORMW 「…いいよ。それで君が喜ぶんなら、してあげる…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…ちょっとしょっぱい。これが、%MASTERNAME:39%の味…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こ、こんな感じかな…」
+				PRINTFORML 
+				PRINTFORMW まるでキスのようなたどたどしい愛撫はしばらく続いた…
+			ELSE
+				PRINTFORMW 「うわ…っ　な、なかなか立派なものをお持ちで」
+				PRINTFORM （というか…
+				;性交まだ
+				IF CFLAG:1208 == 0
+					PRINTFORMW こんなの入るのか…？）
+				;性交済み
+				ELSE
+					PRINTFORMW これ、入ったんだよな…）
+				ENDIF
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「これを、舐めろって…？」
+				PRINTFORMW 「オスって舐めさせるのが好きなんだってね…わかったよ。ま、これもお互いのためってことで…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…まあ…そんなに嫌な味はしないね…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こんな感じかい…？」
+				PRINTFORML 
+				PRINTFORMW たどたどしい愛撫はしばらく続いた…
+			ENDIF
+			CFLAG:1209 = 1
+		ELSE
+			IF TALENT:恋慕
+				PRINTFORMW 「…舐め、るの？」
+				PRINTFORMW 大きく勃起した主人公の男性器を目の当たりにして、しばし固まる納茲琳
+				PRINTFORML 
+				PRINTFORMW 「…ううん、いいよ。舐めてあげたい。それで君が喜ぶんなら、してあげる」
+				PRINTFORMW 「君も私を気持ちよくしてくれたしね。お返しさ…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…ちょっとしょっぱい。これが、%MASTERNAME:39%の味…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こ、こんな感じかな…」
+				PRINTFORML 
+				PRINTFORMW まるでキスのようなたどたどしい愛撫はしばらく続いた…
+			ELSE
+				PRINTFORMW 「ふ、ふふ…改めて見ても圧巻だねぇ…ま、私が小さいだけなのかもしれないが」
+				PRINTFORMW 「これを、舐めろって…？あまり口に入れたくない場所なんだが…」
+				PRINTFORMW 「オスって舐めさせるのが好きなんだってね…わかったよ。ま、これもお互いのためってことで…」
+				PRINTFORML 
+				PRINTFORMW 薄い唇をゆっくりと近づける納茲琳…
+				PRINTFORMW 遠慮がちに伸ばされた舌が、納茲琳の吐息が、主人公の肉槍に近づく…
+				PRINTFORMW やがて…ついに納茲琳の舌がペニスの先端に触れる…
+				PRINTFORML 
+				PRINTFORMW 「…まあ…そんなに嫌な味はしないね…」
+				PRINTFORMW 次は少し大胆に、唇をペニスに押し付け亀頭に舌を這わせる納茲琳
+				PRINTFORMW 「ちゅ…ぴちゃ…はむ、ちゅう…こんな感じかい…？」
+				PRINTFORML 
+				PRINTFORMW たどたどしい愛撫はしばらく続いた…
+			ENDIF
+			CFLAG:1209 = 1
+		ENDIF
+		RETURN 1
+	ENDIF
+	;お掃除フェラ
+	IF TCVAR:MASTER:112 == 1 || TCVAR:MASTER:112 == 2
+	;「%CALLNAME:LOCAL%の中にたっぷりと射精してからペニスを抜き、ペニスに付着した精液を%CALLNAME:TARGET%に舐め取らせた…」
+		;お掃除用のLOCAL取得
+		IF TCVAR:MASTER:112 == 1
+			LOCAL = MASTER_POSE(SET_V,SET_P,1)
+		ELSEIF TCVAR:MASTER:112 == 2
+			LOCAL = MASTER_POSE(SET_A,SET_P,1)
+		ENDIF
+		DRAWLINE
+		PRINTFORML 愛液と精液にまみれたペニスを%CALLNAME:TARGET%に舐め取らせた…
+		PRINTFORML 　
+		;恋慕
+		IF TALENT:恋慕
+			IF ABL:精液中毒 >= 5
+				IF RAND:6 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口の中に射精しちゃう？」
+					PRINTFORM 「それとも
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML またこっちで愛してくれるのかな？私はどっちでもいいよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:112 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 今度は私を愛してくれるのかな？私はどっちでもいいよ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「ちゅるっ、ちゅうっ…じゅちゅううっ…」
+					PRINTFORMW 納茲琳はうっとりとした顔でペニスに付着した精液と愛液を舐め取っている…
+				ELSEIF RAND:4 == 0
+					PRINTFORML 「はっ、はっ、あ…%UNICODE(0x2665)%　あ、むうっ…じゅるっ…」
+					PRINTFORMW 納茲琳は引き抜かれたペニスに自ら吸い付き、滴る精液を愛液ごと舐め取っている…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「次は、私のクチの中で出してもらいたいなぁ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…あはぁ、精液、おいし…%UNICODE(0x2665)%」
+				ENDIF
+			ELSEIF ABL:精液中毒 >= 3
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口でして欲しい？」
+					PRINTFORM 「それとも
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML またこっちで愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:112 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 今度はこっちを愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE 
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「ふふ…%UNICODE(0x2665)%　とてもエロい味だったよ…」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…君の子種の味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORML 「またこっちで愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は未だ精液が滴る\@ TCVAR:112 == 1 ? 秘所 # アヌス \@を指で広げ、主人公に見せつけた…
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORML 「今度はこっちを愛してくれるのかな？ふふ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は期待を込めた目で体を主人公のペニスに擦りつけてきた…
+					ENDIF
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…」
+					PRINTFORM 「精液と
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私のが混ざって、すごい味だったよ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM 「ふふ…%MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW のが混ざって、すごい味だったよ…%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…君の子種の味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ENDIF
+		;恋慕なし
+		ELSE
+			IF ABL:精液中毒 >= 5
+				IF RAND:6 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「このまま口の中に射精してくれてもいいんだけど…%UNICODE(0x2665)%」
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「ちゅるっ、ちゅうっ…じゅちゅううっ…」
+					PRINTFORMW 納茲琳はうっとりとした顔でペニスに付着した精液と愛液を舐め取っている…
+				ELSEIF RAND:4 == 0
+					PRINTFORML 「はっ、はっ、あ…%UNICODE(0x2665)%　あ、むうっ…じゅるっ…」
+					PRINTFORMW 納茲琳は引き抜かれたペニスに自ら吸い付き、滴る精液を愛液ごと舐め取っている…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「次は、私のクチの中で出してもらいたいなぁ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…あはぁ、精液、おいし…%UNICODE(0x2665)%」
+				ENDIF
+			ELSEIF ABL:精液中毒 >= 3
+				IF RAND:4 == 0
+					PRINTFORML 「ぷぁっ…ん、綺麗になったね…」
+					PRINTFORMW 「どうする？　このまま口でして、飲んであげようか？」
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…%UNICODE(0x2665)%　ん…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…%UNICODE(0x2665)%」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…%UNICODE(0x2665)%」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…%UNICODE(0x2665)%」
+					PRINTFORMW 「ふふ…とてもエロい味だったよ…」
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ…%UNICODE(0x2665)%」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…オスの味がする…%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORMW 「ぷぁっ…ん、綺麗になったね…」
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「ちゅ、じゅるる、ちゅるっ…んくっ、はぁ…　ん…」
+					PRINTFORM 「ふう…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 私らの味だ…」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM 君と
+							;呼称変。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW の味がする…」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん、んふ、んん～～…ちゅっ、ぷは、はぁ…」
+					PRINTFORM 「ふふ…
+					;中出しされたのはTARGET
+					IF TCVAR:102 || TCVAR:104
+						PRINTFORMW 精液と私のが混ざって、すごい味だったよ…」
+					;中出しされたのは他の人
+					ELSE
+						PRINTFORM %MASTERNAME:39%と
+							;呼称。星ちゃんなら「ご主人」
+							IF NO:LOCAL == 4
+								PRINT ご主人
+							ELSE
+								PRINT %CALLNAME:LOCAL%
+							ENDIF
+						PRINTFORMW のが混ざって、すごい味だったよ…」
+					ENDIF
+				ELSE
+					PRINTFORML 「あ…萎んじゃってるじゃないか。しょうがないなぁ、私が元気にしてあげるよ」
+					PRINTFORMW 「んふ…ちゅぷ…れろ、じゅちゅう…オスの味がする…」
+				ENDIF
+			ENDIF
+		ENDIF
+	;普通のフェラ
+	ELSE
+		IF TALENT:恋慕
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				;精液中毒5以上かつ技巧3以上
+				IF ABL:精液中毒 >= 5 && ABL:技巧 >= 3
+					IF RAND:5 == 0
+						PRINTFORML 「じゅちゅううっ、！むぐっ%UNICODE(0x2665)%　は、むう%UNICODE(0x2665)%　んくっ、んん～～じゅるるるるるっ」
+						PRINTFORMW 奉仕ではなくもはやご褒美となった口交を蕩けた顔で続ける納茲琳…
+						PRINTFORMW その動きは、ペニスが射精を始めるといっそう激しくなった…
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「だひてっ…%UNICODE(0x2665)%　%MASTERNAME:39%の子種、ナカにいっぱい…%UNICODE(0x2665)%」
+						PRINTFORMW トロけきった顔で口交をする納茲琳は、射精の気配を読み取っておねだりを始めた
+						PRINTFORMW その普段の彼女とはかけ出口た痴態に限界まで膨らんだペニスを、納茲琳の頭を掴んで喉奥まで押し込んだ…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「んふっ…%UNICODE(0x2665)%　いーよ、好きなだけ、おもいっきり出して…%UNICODE(0x2665)%」
+						PRINTFORML 小さな口腔いっぱいに頬張ったペニスに舌を絡みつかせ、射精を待ち望む納茲琳…
+						PRINTFORMW あどけない童顔と、その淫靡過ぎる行為のギャップを目の当たりにし、主人公のペニスは限界を迎える…
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んくっ、ちゅるちゅるっ、ぷちゅっ、ちゅううううっ、ちゅぴ、ちゅぷ、ちゅうううう～～っ！」
+						PRINTFORML （欲しい…っ　%MASTERNAME:39%の子種、口の中でびゅくびゅくって出して欲しいよおっ…）
+						PRINTFORMW 射精の予兆を感じ取った納茲琳は、一段と口の動きを早めた
+						PRINTFORMW その射精させることに特化した強烈な快感に、主人公は耐え切れず屈服の証を吐き出した…
+					ELSE
+						PRINTFORML 「ずちゅぅ、れりゅ、じゅるじゅる、ちゅぽっぢゅぽっぢゅずずっ、ずずーっ…%UNICODE(0x2665)%」
+						PRINTFORMW 主人公の絶頂を悟った納茲琳が、わざと淫らな水音を立ててペニスを吸い、追い打ちをかける
+						PRINTFORML （おいひいのでるっ%UNICODE(0x2665)%　%MASTERNAME:39%のせーし、くちのなかおかひて、ニオイしみこんじゃうっ%UNICODE(0x2665)%）
+						PRINTFORMW 口内射精を待ち望むその顔には、いつものシニカルな彼女の姿はどこにもなかった…
+					ENDIF
+				;精液中毒3以上
+				ELSEIF ABL:精液中毒 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…出したいのかい？いいよ…%UNICODE(0x2665)%　ちゅっ、んむ、ちゅぷっちゅぷっちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW ぽーっとした表情で射精寸前のペニスを咥える納茲琳。口内射精に全く抵抗がなくなったようだ…
+						PRINTFORMW 「ちゅっ、ちゅっ、らひてっ、%MASTERNAME:39%の、いっぱい…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふむう、はぷ、ん、ちゅるっ、ちゅううっ」
+						PRINTFORML （ああ…%MASTERNAME:39%の、中でビクビクしてる…口に、射精されちゃう…%UNICODE(0x2665)%）
+						PRINTFORMW 射精の気配を察しても納茲琳は口交を止めず、むしろ舌の動きを速めていく…
+					ELSE
+						PRINTFORMW 「ちゅぷ、ぺろ…ふふ…そろそろだね？いいよ…%MASTERNAME:39%の精液、全部出してよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「じゅぷ、じゅぷぅ、ぢゅぅぅぅ、んく、ちゅぷ、ちゅぷ、じゅぷ、ん～～ちゅぅぅぅ！」
+						PRINTFORMW 淫靡な目つきで見上げたまま口交を再開する納茲琳。幼い顔が、オスを搾り取る牝の色に染まっていく…
+					ENDIF
+				;精飲経験19以下
+				ELSEIF TCVAR:精飲経験 <= 19
+					IF RAND:3 == 0 
+						PRINTFORML 「んふぅ、ぴちゅ、ん…ビクって…」
+						PRINTFORMW 「いいよ…ぴちゃ、はぷ、このまま出してっ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORML 「んちゅ、ぺろ、うむぅ、ちゅ…ん、出そう？」
+						PRINTFORMW 「ん…このまま、出して…私、飲んであげるからっ…」
+					ELSE
+						PRINTFORML 「はむ、ん…れろ……ん…んん…」
+						PRINTFORMW （出そう、なんだな…飲んであげられれば、いいんだけど…）
+					ENDIF
+				ELSE
+					IF RAND:3 == 0 
+						PRINTFORML 「んちゅう、はむ、ちろちろ、ちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW （ん%UNICODE(0x2665)%　また、%MASTERNAME:39%を気持よくしてあげられた…%UNICODE(0x2665)%）
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んふ…%UNICODE(0x2665)%　いーよ、出して。結構慣れたし、今度はぜんぶ飲んであげよう%UNICODE(0x2665)%」
+						PRINTFORMW 「んちゅ…ん、んん、…んんんんんんっ」
+						PRINTFORMW 納茲琳は小さい口腔の奥までペニスを飲み込み、その健気な姿に主人公はどうしようもなく興奮する…
+					ELSE
+						PRINTFORML 「ちゅぷ、ちゅぴ、ずぢゅううっ…あ…出そうなのかい？」
+						PRINTFORMW 「いいよ…君の精、全部受けとめてあげる…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			;MASTER射精せず
+			ELSE
+				DRAWLINE
+				PRINTFORML 納茲琳は口を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+				PRINTFORML 　
+				;勃起しきっていない
+				IF BASE:MASTER:勃起 < 1000
+					IF RAND:3 == 0
+						PRINTFORMW 「なんだ…まだふにゃふにゃじゃないか。しょうがないなあ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は少し嬉しそうに自らペニスに吸い付いた…
+						PRINTFORMW （ふふ…%UNICODE(0x2665)%　口の中でどんどん大きくなっていくこの感じ…、楽し…%UNICODE(0x2665)%)
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふふ…まだ小さい…%UNICODE(0x2665)%　あむ…」
+						PRINTFORMW 「んん…ちゅく、ちゅるっ、ちゅぱ…っ、クスッ♪　この柔らかいのをイジるのも、結構楽しいんだ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳の小さな口で弄ばれ、急速にペニスに血液が集まってくるのを感じる…
+					ELSE
+						PRINTFORML 「…ふふ、ちゅぴ、レロ…ちゅ、ちゅ、ちゅぷ、んん…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は柔らかいペニスを愛しむように、たっぷりと時間を掛けて口の中で優しく舐る
+						PRINTFORMW その淫靡で可愛らしい奉仕に主人公のペニスは反応し、硬さを取り戻してゆく…
+					ENDIF
+				;普通に勃起
+				ELSE
+					;舌のLv2以上か技巧4以上
+					IF ABL:舌 >= 2 || ABL:技巧 >= 4
+						;精液中毒Lv.3以上でランダム分岐3つ追加、Lv.5以上でさらに5つ追加
+						IF RAND:11 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅっ%UNICODE(0x2665)%　ちゅぷ、にゅぷにゅぷ、ん～～♪」
+							PRINTFORMW こみ上げる射精欲に身を焦がす主人公を嬲るかのように、射精に至れない奉仕を続ける納茲琳
+							PRINTFORML 「ふふふ、まだダメ%UNICODE(0x2665)%　もっともっと我慢してれば、いつもよりいっぱい出せるしもっと気持ちいいよ%UNICODE(0x2665)%」
+							PRINTFORML 「だから…まだお預け%UNICODE(0x2665)%　くふふ…っ♪」
+							PRINTFORMW 射精させて欲しい、という敗北宣言に似たお願いをしてみるものの、納茲琳の嗜虐を煽るだけだった…
+						ELSEIF RAND:10 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ねえっ…！　もう、舐めて、舐めていいんだろうっ…！？」
+							PRINTFORMW 納茲琳の眼前にペニスを突きつけ、ペニスの匂いを鼻先に漂わせたまま焦らす
+							PRINTFORMW たっぷり焦らしてから口交を許可すると、納茲琳は歓喜に顔を緩ませながら男根を咥え込んでいく…
+							PRINTFORMW 「はぁ、ぐうっ%UNICODE(0x2665)%　ん、んっく、じゅるるるぅ…っぷあっ%UNICODE(0x2665)%　あ、おい、ひぃ…♪」
+						ELSEIF RAND:9 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅぷぅ、ちゅぱ、はあ、すごいぃ%UNICODE(0x2665)%　%MASTERNAME:39%おちんちん、おいひぃ%UNICODE(0x2665)%」
+							PRINTFORML （はあ%UNICODE(0x2665)%　今、私%MASTERNAME:39%のおちんちん、しゃぶってるよお%UNICODE(0x2665)%）
+							PRINTFORMW 愛しい人の性器を味わうことに夢中になった納茲琳は、ペニスのあらゆる箇所を唾液まみれにさせながら舌を這わせる
+							PRINTFORMW 「せーえきも、このまま、くひのなはにれんふ、らひて…%UNICODE(0x2665)%　きみのこだね、のまへて%UNICODE(0x2665)%」
+						ELSEIF RAND:8 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ぢゅっちゅうううっ、ずるるるう、じゅっぷ、じゅっぷ、んふぅ～～…♪」
+							PRINTFORMW 納茲琳は口腔に男のモノを咥え込む背徳的な快楽に恍惚とした顔を浮かべている
+							PRINTFORML 「ねえ…きもひいいよね？じゅる、こぉんなにかひかひにひて、ひくひくさへてるもんね%UNICODE(0x2665)%」
+							PRINTFORMW 「ちゅぷ…んん…にゅぷぅ、いーよ？しゃせーするとき、ちゅうってしてあげる%UNICODE(0x2665)%」
+						ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 5
+							PRINTFORMW 「ね、私さ…どうも、君の精液が大好きになってしまったみたいなんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「君の子種ってだけでも興奮するんだけど、何より匂いがね…%UNICODE(0x2665)%　どうしようもなく、アソコが疼くんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「だから…ね？口の中に、出して？もっと私を、おかしくしておくれよ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳の薄い唇が、小さな口腔が、牡の子種を求めて主人公のペニスを飲み込んでゆく…
+						ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「はぁ、はぁ、もう、我慢出来ないよ…」
+							PRINTFORMW 納茲琳の熱い吐息が主人公の欲望にかかり、更に固く勃起を促す
+							PRINTFORMW 「は、む…んっ%UNICODE(0x2665)%　ちゅ、ちゅっぷ、じゅっぷ、んふぅ、はぁ…っ%UNICODE(0x2665)%　おいひ…」
+							PRINTFORMW 「じゅぷ、んちゅ、んむんむぅ、あぁ%UNICODE(0x2665)%　%MASTERNAME:39%の子種、たっぷり出しておくれ…%UNICODE(0x2665)%」
+						ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「ちゅ、ちゅぅ、ぺろ、はあ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳はペニスの先端にキスを繰り返しながら、ペニスの放つ牡の匂いに陶然となっている
+							PRINTFORMW 「ふふ…ちゅ、すごい臭い…♪たまらないよ…%UNICODE(0x2665)%　ちゅ、ん、ちゅううううっ」
+						ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+							PRINTFORMW 「んん、んふ、んん～…ちゅ、ふふ、君のココ、私の口の中ですごく固くなってる%UNICODE(0x2665)%｣
+							PRINTFORMW 「出したいんだろ？君、とっても切ない顔になってるよ？その顔がたまらなく可愛いから、舐めるのは結構好きさ%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳は心底嬉しそうにゆるゆるとペニスを頬張り、射精しないギリギリの快楽を与えて楽しんでいる…
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「ふふ、分かった…%UNICODE(0x2665)%　じゃあ、今回はすこし時間をかけてしてあげよう…♪」
+							PRINTFORMW ペニスの先端に納茲琳の色素の薄い唇が触れ、ゆっくりとゆっくりと、その熱く潤った肉の間に飲み込まれていく…
+							PRINTFORMW その間、大量に分泌された唾液が主人公のペニスを伝い、睾丸や肛門までたらたらと垂れていった…
+							
+						ELSEIF RAND:2 == 0 
+							PRINTFORML 「ちゅぷ、にゅぷにゅぷ…んふ%UNICODE(0x2665)%　ちゅっぷ、ちゅっぷ、んん～…%UNICODE(0x2665)%」
+							PRINTFORMW 自分の淫らな行為が主人公を悦ばせていることに納茲琳は満足し、慈しむような口交は続く…
+							PRINTFORMW 「ん、ん、はぷ、ちゅううっ、……ぷぁ、はぁ%UNICODE(0x2665)%　どう？気持ちいいかい？」
+						ELSE
+							PRINTFORML 「んちゅうう、じゅる、んく、ん～～、じゅぷ、じゅぷじゅぷ、こく…ん…」
+							PRINTFORMW 大量に分泌された唾液が飲み込まれた肉棒に塗り付けられ、先走りと混じり合い、嚥下されていく…
+							PRINTFORMW 「ん…♪おふひのなひゃ、きみのにおいで、いっひゃい…%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF RAND:3 == 0
+							PRINTFORML 「んふ、んん、…ちゅ、ぷあ、はあっ、あ、むぅ…」
+							PRINTFORMW （…うまくできてるとは思えないが、%MASTERNAME:39%は気持よくなれてるのだろうか…）
+						ELSEIF RAND:2 == 0
+							PRINTFORML 納茲琳は主人公を見上げながら、懸命に舌でペニスに刺激を与えている…
+							PRINTFORMW 「れる、ちゅぷ、むぅ…こんな感じだろうか…？」
+						ELSE
+							PRINTFORML 「はふ、む……ちゅ、ちゅぷ…」
+							PRINTFORMW 拙いながらも主人公を悦ばせようという意志が篭った動きに、主人公のペニスは昂ぶってゆく…
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		RETURN 1
+		;恋慕なし
+		ELSE
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				;精液中毒5以上かつ技巧3以上
+				IF ABL:精液中毒 >= 5 && ABL:技巧 >= 3
+					IF RAND:5 == 0
+						PRINTFORML 「じゅちゅううっ、！むぐっ%UNICODE(0x2665)%　は、むう%UNICODE(0x2665)%　んくっ、んん～～じゅるるるるるっ」
+						PRINTFORMW 奉仕ではなくもはやご褒美となった口交を蕩けた顔で続ける納茲琳…
+						PRINTFORMW その動きは、ペニスが射精を始めるといっそう激しくなった…
+					ELSEIF RAND:4 == 0
+						PRINTFORML 「だひてっ…%UNICODE(0x2665)%　君の子種、ナカにいっぱい…%UNICODE(0x2665)%」
+						PRINTFORMW トロけきった顔で口交をする納茲琳は、射精の気配を読み取っておねだりを始めた
+						PRINTFORMW その普段の彼女とはかけ出口た痴態に限界まで膨らんだペニスを、納茲琳の頭を掴んで喉奥まで押し込んだ…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW 「んふっ…%UNICODE(0x2665)%　いーよ、好きなだけ、おもいっきり出して…%UNICODE(0x2665)%」
+						PRINTFORML 小さな口腔いっぱいに頬張ったペニスに舌を絡みつかせ、射精を待ち望む納茲琳…
+						PRINTFORMW あどけない童顔と、その淫靡過ぎる行為のギャップを目の当たりにし、主人公のペニスは限界を迎える…
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んくっ、ちゅるちゅるっ、ぷちゅっ、ちゅううううっ、ちゅぴ、ちゅぷ、ちゅうううう～～っ！」
+						PRINTFORML （欲しい…っ　オスの子種、口の中でびゅくびゅくって出して欲しいよおっ…）
+						PRINTFORMW 射精の予兆を感じ取った納茲琳は、一段と口の動きを早めた
+						PRINTFORMW その射精させることに特化した強烈な快感に、主人公は耐え切れず屈服の証を吐き出した…
+					ELSE
+						PRINTFORML 「ずちゅぅ、れりゅ、じゅるじゅる、ちゅぽっぢゅぽっぢゅずずっ、ずずーっ…%UNICODE(0x2665)%」
+						PRINTFORMW 主人公の絶頂を悟った納茲琳が、わざと淫らな水音を立ててペニスを吸い、追い打ちをかける
+						PRINTFORML （おいひいのでるっ%UNICODE(0x2665)%　せーし、くちのなかおかひて、ニオイしみこんじゃうっ%UNICODE(0x2665)%）
+						PRINTFORMW 口内射精を待ち望むその顔には、いつものシニカルな彼女の姿はどこにもなかった…
+					ENDIF
+				;精液中毒3以上
+				ELSEIF ABL:精液中毒 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…出したいのかい？いいよ…%UNICODE(0x2665)%　ちゅっ、んむ、ちゅぷっちゅぷっちゅうううっ%UNICODE(0x2665)%」
+						PRINTFORMW ぽーっとした表情で射精寸前のペニスを咥える納茲琳。口内射精に全く抵抗がなくなったようだ…
+						PRINTFORMW 「ちゅっ、ちゅっ、らひてっ、いっぱい…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふむう、はぷ、ん、ちゅるっ、ちゅううっ」
+						PRINTFORML （ああ…オスのペニスが、中でビクビクしてる…口に、射精されちゃう…%UNICODE(0x2665)%）
+						PRINTFORMW 射精の気配を察しても納茲琳は口交を止めず、むしろ舌の動きを速めていく…
+					ELSE
+						PRINTFORMW 「ちゅぷ、ぺろ…ふふ…そろそろだね？いいよ…君の精液、全部出してよ…%UNICODE(0x2665)%」
+						PRINTFORMW 「じゅぷ、じゅぷぅ、ぢゅぅぅぅ、んく、ちゅぷ、ちゅぷ、じゅぷ、ん～～ちゅぅぅぅ！」
+						PRINTFORMW 淫靡な目つきで見上げたまま口交を再開する納茲琳。幼い顔が、オスを搾り取る牝の色に染まっていく…
+					ENDIF
+				;精飲経験19以下
+				;恋慕なし、精飲経験19以下だと吐き出す
+				ELSEIF TCVAR:精飲経験 <= 19
+				;「突然の射精に%CALLNAME:TARGET%はむせ返り、精液を吐き出してしまった…」
+					IF RAND:3 == 0 
+						PRINTFORML 「んふぅ、ぴちゅ、ん…ビクって…」
+						PRINTFORMW 「出すときは、ちゅぷ、言えよっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORML 「んちゅ、ぺろ、うむぅ、ちゅ…ん、出そうかい？」
+						PRINTFORMW 「口の中で出されるのはゴメンだよ…」
+					ELSE
+						PRINTFORML 「はむ、ん…れろ……ん…んん…」
+						PRINTFORMW （出そう、なんだな…適当に吐き出すか…）
+					ENDIF
+				ELSE
+					IF RAND:3 == 0 
+						PRINTFORML 「んちゅう、はむ、ちろちろ、ちゅうううっ」
+						PRINTFORMW 「…どうだい？なかなか上手くなったと自負してるんだが」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「んふ…　いーよ、出して。結構慣れたし、今度はぜんぶ飲んであげよう」
+						PRINTFORMW 「んちゅ…ん、んん、…んんんんんんっ」
+					ELSE
+						PRINTFORML 「ちゅぷ、ちゅぴ、ずぢゅううっ…あ…出そうなのかい？」
+						PRINTFORMW 「いいよ…結構慣れたし。そのまま出しな…」
+					ENDIF
+				ENDIF
+			;MASTER射精せず
+			ELSE
+				DRAWLINE
+				PRINTFORML 納茲琳は口を使っ\@ PREVCOM == SELECTCOM ? た奉仕を続けている # て主人公に奉仕を始めた \@…
+				PRINTFORML 　
+				;勃起しきっていない
+				IF BASE:MASTER:勃起 < 1000
+					IF RAND:3 == 0
+						PRINTFORMW 「なんだ…まだふにゃふにゃじゃないか。しょうがないなあ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は少し嬉しそうに自らペニスに吸い付いた…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふふ…まだ小さい…%UNICODE(0x2665)%　あむ…」
+						PRINTFORMW 「んん…ちゅく、ちゅるっ、ちゅぱ…っ、クスッ♪　この柔らかいのをイジるのも、結構楽しいんだ%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳の小さな口で弄ばれ、急速にペニスに血液が集まってくるのを感じる…
+					ELSE
+						PRINTFORML 「…ふふ、ちゅぴ、レロ…ちゅ、ちゅ、ちゅぷ、んん…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は柔らかいペニスを、たっぷりと時間を掛けて口の中で舐る
+						PRINTFORMW その奉仕に主人公のペニスは反応し、硬さを取り戻してゆく…
+					ENDIF
+				;普通に勃起
+				ELSE
+					;舌のLv2以上か技巧4以上
+					IF ABL:舌 >= 2 || ABL:技巧 >= 4
+						;精液中毒Lv.3以上でランダム分岐3つ追加、Lv.5以上でさらに5つ追加
+						IF RAND:11 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅっ%UNICODE(0x2665)%　ちゅぷ、にゅぷにゅぷ、ん～～♪」
+							PRINTFORMW こみ上げる射精欲に身を焦がす主人公を嬲るかのように、射精に至れない奉仕を続ける納茲琳
+							PRINTFORML 「ふふふ、まだダメ%UNICODE(0x2665)%　もっともっと我慢してれば、いつもよりいっぱい出せるしもっと気持ちいいよ%UNICODE(0x2665)%」
+							PRINTFORML 「だから…まだお預け%UNICODE(0x2665)%　くふふ…っ♪」
+							PRINTFORMW 射精させて欲しい、という敗北宣言に似たお願いをしてみるものの、納茲琳の嗜虐を煽るだけだった…
+						ELSEIF RAND:10 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ねえっ…！　もう、舐めて、舐めていいんだろうっ…！？」
+							PRINTFORMW 納茲琳の眼前にペニスを突きつけ、ペニスの匂いを鼻先に漂わせたまま焦らす
+							PRINTFORMW たっぷり焦らしてから口交を許可すると、納茲琳は歓喜に顔を緩ませながら男根を咥え込んでいく…
+							PRINTFORMW 「はぁ、ぐうっ%UNICODE(0x2665)%　ん、んっく、じゅるるるぅ…っぷあっ%UNICODE(0x2665)%　あ、おい、ひぃ…♪」
+						ELSEIF RAND:9 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ちゅぷぅ、ちゅぱ、はあ、すごいぃ%UNICODE(0x2665)%　おちんちん、おいひぃ%UNICODE(0x2665)%」
+							PRINTFORMW 「せーえきも、このまま、くひのなはにれんふ、らひて…%UNICODE(0x2665)%　きみのこだね、のまへて%UNICODE(0x2665)%」
+						ELSEIF RAND:8 == 0 && ABL:精液中毒 >= 5
+							PRINTFORML 「ぢゅっちゅうううっ、ずるるるう、じゅっぷ、じゅっぷ、んふぅ～～…♪」
+							PRINTFORMW 納茲琳は口腔に男のモノを咥え込む背徳的な快楽に恍惚とした顔を浮かべている
+							PRINTFORML 「ねえ…きもひいいよね？じゅる、こぉんなにかひかひにひて、ひくひくさへてるもんね%UNICODE(0x2665)%」
+							PRINTFORMW 「ちゅぷ…んん…にゅぷぅ、いーよ？しゃせーするとき、ちゅうってしてあげる%UNICODE(0x2665)%」
+						ELSEIF RAND:7 == 0 && ABL:精液中毒 >= 5
+							PRINTFORMW 「ね、私さ…どうも、精液が大好きになってしまったみたいなんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「匂いがね…%UNICODE(0x2665)%　どうしようもなく、アソコが疼くんだ…%UNICODE(0x2665)%」
+							PRINTFORMW 「だから…ね？口の中に、出して？もっと私を、おかしくしておくれよ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳の薄い唇が、小さな口腔が、牡の子種を求めて主人公のペニスを飲み込んでゆく…
+						ELSEIF RAND:6 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「はぁ、はぁ、もう、我慢出来ないよ…」
+							PRINTFORMW 納茲琳の熱い吐息が主人公の欲望にかかり、更に固く勃起を促す
+							PRINTFORMW 「は、む…んっ%UNICODE(0x2665)%　ちゅ、ちゅっぷ、じゅっぷ、んふぅ、はぁ…っ%UNICODE(0x2665)%　おいひ…」
+							PRINTFORMW 「じゅぷ、んちゅ、んむんむぅ、あぁ%UNICODE(0x2665)%　君の子種、たっぷり出しておくれ…%UNICODE(0x2665)%」
+						ELSEIF RAND:5 == 0 && ABL:精液中毒 >= 3
+							PRINTFORML 「ちゅ、ちゅぅ、ぺろ、はあ…%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳はペニスの先端にキスを繰り返しながら、ペニスの放つ牡の匂いに陶然となっている
+							PRINTFORMW 「ふふ…ちゅ、すごい臭い…♪たまらないよ…%UNICODE(0x2665)%　ちゅ、ん、ちゅううううっ」
+						ELSEIF RAND:4 == 0 && ABL:精液中毒 >= 3
+							PRINTFORMW 「んん、んふ、んん～…ちゅ、ふふ、君のココ、私の口の中ですごく固くなってる%UNICODE(0x2665)%｣
+							PRINTFORMW 「出したいんだろ？君、とっても切ない顔になってるよ？その顔がたまらなく可愛いから、舐めるのは結構好きさ%UNICODE(0x2665)%」
+							PRINTFORMW 納茲琳は心底嬉しそうにゆるゆるとペニスを頬張り、射精しないギリギリの快楽を与えて楽しんでいる…
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「ふふ、分かった…%UNICODE(0x2665)%　じゃあ、今回はすこし時間をかけてしてあげよう…♪」
+							PRINTFORMW ペニスの先端に納茲琳の色素の薄い唇が触れ、ゆっくりとゆっくりと、その熱く潤った肉の間に飲み込まれていく…
+							PRINTFORMW その間、大量に分泌された唾液が主人公のペニスを伝い、睾丸や肛門までたらたらと垂れていった…
+						ELSEIF RAND:2 == 0 
+							PRINTFORML 「ちゅぷ、にゅぷにゅぷ…んふ%UNICODE(0x2665)%　ちゅっぷ、ちゅっぷ、んん～…」
+							PRINTFORMW 「ん、ん、はぷ、ちゅううっ、……ぷぁ、はぁ…どう？気持ちいいかい？」
+						ELSE
+							PRINTFORML 「んちゅうう、じゅる、んく、ん～～、じゅぷ、じゅぷじゅぷ、こく…ん…」
+							PRINTFORMW 大量に分泌された唾液が飲み込まれた肉棒に塗り付けられ、先走りと混じり合い、嚥下されていく…
+							PRINTFORMW 「ん…♪おふひのなひゃ、オスのにおいで、いっひゃい…%UNICODE(0x2665)%」
+						ENDIF
+					ELSE
+						IF RAND:3 == 0
+							PRINTFORML 「んふ、んん、…ちゅ、ぷあ、はあっ、あ、むぅ…」
+							PRINTFORMW （…うまくできてるとは思えないが…）
+						ELSEIF RAND:2 == 0
+							PRINTFORML 納茲琳は主人公を見上げながら、拙い動きでペニスに刺激を与えている…
+							PRINTFORMW 「れる、ちゅぷ、むぅ…こんな感じだろうか…？」
+						ELSE
+							PRINTFORMW 「はふ、む……ちゅ、ちゅぷ…」
+						ENDIF
+					ENDIF
+				ENDIF
+			ENDIF
+		RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+;未記入
+;TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+;RETURN RESULT
+
+;==================================================
+;6,挿入Ｇスポ責め
+;※挿入子宮口玩弄になるかはランダム
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_6
+;口上分岐
+IF RAND:2 == 0
+	CFLAG:1501 = 1
+ELSE
+	CFLAG:1501 = 0
+ENDIF
+;※早い話が1/2でＧスポ責めの地の文を呼ばない
+SIF CFLAG:1501 == 1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_6_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;挿入Ｇスポ責め
+		IF CFLAG:1501 == 1
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				PRINTFORMW 天井をペニスで擦り上げながら、眠る納茲琳の中に精液を吐き出した…
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…んんっ…%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「はーっ%UNICODE(0x2665)%　はー…っ%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORMW 納茲琳はビクビクと体を震わせている…
+				ENDIF
+			ELSE
+				PRINTFORMW 眠る納茲琳のザラついた性感帯をペニスの先で擦り上げた…
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…ん…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んぅ……ん…」
+				ELSE
+					PRINTFORMW 「んん……んっ…」
+				ENDIF
+			ENDIF
+		;連続
+		ELSE
+			DRAWLINE
+			;正常位、対面立位
+			IF TEQUIP:体位 == 1
+				;MASTERについている
+				IF TALENT:PLAYER:2 & 2
+					PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+				ELSE
+					PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+				ENDIF
+				PRINTFORML 　
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…ん…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んぅ……ん…」
+				ELSE
+					PRINTFORMW 「んん……んっ…」
+				ENDIF
+			;後背位、背面立位
+			ELSEIF TEQUIP:体位 == 2
+				;MASTERについている
+				IF TALENT:PLAYER:2 & 2
+					PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+				ELSE
+					PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+				ENDIF
+				PRINTFORML 　
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…ん…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んぅ……ん…」
+				ELSE
+					PRINTFORMW 「んん……んっ…」
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		SIF CFLAG:1501 == 0
+		DRAWLINE
+		PRINTFORMW まだきつい納茲琳の膣内の、少し膨らんだ場所を擦り上げた…
+		IF ABL:Ｖ感覚 >= 3
+			PRINTFORMW 「あうっ…%UNICODE(0x2665)%　そ、そこはぁ…%UNICODE(0x2665)%」
+		ELSE
+			PRINTFORMW 「ひぅっ…！？な、なんかいま、ぞくって…」
+		ENDIF
+		RETURN 1
+	ENDIF
+	;基本セット
+	;※CFLAG:1501 == 1でＧスポ責めしている時、0で選んだコマンドで継続して突いている時の口上
+	;挿入Ｇスポ責め
+	IF CFLAG:1501 == 1
+		CFLAG:1501 = 0
+		;Ｖ感覚1以下
+		IF ABL:Ｖ感覚 <= 1
+			PRINTFORMW 「ふ、うう…く、ああっ…」
+			PRINTFORMW 納茲琳はその小さな性器で主人公を受け入れるのに精一杯で、性感を味わう余裕は無さそうだ…
+		;恋慕
+		ELSEIF TALENT:恋慕
+			;これでMASTERが射精
+			IF NOWEX:PLAYER:11
+				;TARGETがＶ絶頂する場合、ランダム分岐2つ追加
+				IF RAND:4 == 0 && NOWEX:Ｖ絶頂
+					PRINTFORML 「あうっ%UNICODE(0x2665)%　そ、そこされたらイくよおっ%UNICODE(0x2665)%」
+					PRINTFORMW 「…っは…っ、%MASTERNAME:39%、も…っ、一緒にっ…%UNICODE(0x2665)%」
+				ELSEIF RAND:3 == 0 && NOWEX:Ｖ絶頂
+					PRINTFORML 「そ、そこ今されたらあっ%UNICODE(0x2665)%　もっ…むりぃっ…%UNICODE(0x2665)%」
+					PRINTFORMW 性感帯を責められ急激に昂ぶる納茲琳と同時に絶頂を迎えるべく、限界まで膨らんだペニスをそこに擦りつけた…
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ひ、いんっ、っ！？き、君の、膨らんでる…っ%UNICODE(0x2665)%」
+					PRINTFORMW 「今…そこっ、精子かけられた、らあっ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あうっ%UNICODE(0x2665)%　ああっ%UNICODE(0x2665)%　だ、出しちゃうの…っ？」
+					PRINTFORMW 「私のナカ、一番敏感なとこ、君の子種がかかっちゃう…っ%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORML 「あううっ%UNICODE(0x2665)%　そこ、びんかん、だからあっ……うあっ%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は涙を浮かべながらGスポットへの刺激に身体を震わせている
+					SIF EXP:Ｖ経験 > 120
+					PRINTFORMW その腰は艶かしく動き、自らペニスでGスポットを擦り上げ快楽を貪っている…
+				ELSEIF RAND:3 == 0
+					PRINTFORMW 「あっ！？そこっ%UNICODE(0x2665)%　はうう、あっ、ひ、ぃいっん%UNICODE(0x2665)%」
+					PRINTFORMW 「きみの、さきっぽが、あたって、はうぅ%UNICODE(0x2665)%」
+					PRINTFORMW すっかり性快楽を覚えてしまった納茲琳は、Gスポットへの刺激に歓喜の声を上げている…
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「あぁーっ%UNICODE(0x2665)%　そこ、よわい、ああっ%UNICODE(0x2665)%」
+					PRINTFORMW 亀頭で撫で上げるようにGスポットを刺激してやると、納茲琳はひときわ高い嬌声を上げた…
+				ELSE
+					PRINTFORML 「ひぃんっ…%UNICODE(0x2665)%　そこだめぇ、ちから、ぬけちゃっ…はうぅっ%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は腰をガクガクと揺らしながら雌の喜びを享受している…
+				ENDIF
+			ENDIF
+		;それ以外
+		ELSE
+			IF RAND:4 == 0
+				PRINTFORML 「あううっ…　そこ、びんかん、だからあっ……うあっ」
+				PRINTFORMW 納茲琳は涙を浮かべながらGスポットへの刺激に身体を震わせている
+				SIF EXP:Ｖ経験 > 120
+				PRINTFORMW その腰は艶かしく動き、自らペニスでGスポットを擦り上げ快楽を貪っている…
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あっ！？そ、そこっ　はうう、あっ、ひ、ぃいっん%UNICODE(0x2665)%」
+				PRINTFORMW すっかり性快楽を覚えてしまった納茲琳は、Gスポットへの刺激に歓喜の声を上げている…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「あぁーっ%UNICODE(0x2665)%　そこ、よわい、ああっ%UNICODE(0x2665)%」
+				PRINTFORMW 亀頭で撫で上げるようにGスポットを刺激してやると、納茲琳はひときわ高い嬌声を上げた…
+			ELSE
+				PRINTFORML 「ひぃんっ…　そこだめぇ、ちから、ぬけちゃっ…はうぅっ%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は腰をガクガクと揺らしながら雌の喜びを享受している…
+			ENDIF
+		ENDIF
+	;連続
+	ELSE
+		DRAWLINE
+		;正常位、対面立位
+		IF TEQUIP:体位 == 1
+			;MASTERについている
+			IF TALENT:PLAYER:2 & 2
+				PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+			ENDIF
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_60_1
+		;後背位、背面立位
+		ELSEIF TEQUIP:体位 == 2
+			;MASTERについている
+			IF TALENT:PLAYER:2 & 2
+				PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+			ENDIF
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_61_1
+		;騎乗位
+		ELSEIF TEQUIP:体位 == 3
+			PRINTFORMW %CALLNAME:TARGET%は挿入されたままのペニスを締め付け、再び腰を動かし始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_65_1
+		;対面座位
+		ELSEIF TEQUIP:体位 == 4
+			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%とキスをし、舌を絡めながら再び腰を揺すり始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_67_1
+		;背面座位
+		ELSE
+			PRINTFORMW %CALLNAME:TARGET%を背後から抱きしめ、再び%CALLNAME:TARGET%の身体を揺らし始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_68_1
+		ENDIF
+	ENDIF
+	RETURN 1
+ENDIF
+;未記入
+;TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+;RETURN RESULT
+
+;==================================================
+;7,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_7
+;口上分岐
+IF RAND:2 == 0
+	CFLAG:1501 = 1
+ELSE
+	CFLAG:1501 = 0
+ENDIF
+SIF CFLAG:1501 == 1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_7_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;過激なイタズラ中
+	;※CFLAG:1501 == 1で挿入子宮口玩弄している時、0で選んだコマンドで継続して突いている時の口上
+	IF CFLAG:イタズラ && CFLAG:睡眠
+		;挿入Ｇスポ責め
+		IF CFLAG:1501 == 1
+			;これでMASTERが射精する
+			IF NOWEX:MASTER:11
+				PRINTFORMW 子宮口にペニスを押し付け、眠る納茲琳の中に精液を吐き出した…
+				IF ABL:Ｖ感覚 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…んふ…んんっ…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「はーっ%UNICODE(0x2665)%　はー…っ%UNICODE(0x2665)%」
+					ELSE
+						PRINTFORMW 納茲琳はビクビクと体を震わせている…
+					ENDIF
+				ELSE
+					PRINTFORMW 「ん…く…っ」
+				ENDIF
+			ELSE
+				PRINTFORMW 眠る納茲琳の最奥まで挿入し、子宮口をペニスの先で擦り上げた…
+				IF ABL:Ｖ感覚 >= 3
+					IF RAND:3 == 0 
+						PRINTFORMW 「ん…んふ…ん…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「んぅ……ん…」
+					ELSE
+						PRINTFORMW 「んん……んっ…」
+					ENDIF
+				ELSE
+					PRINTFORMW 「ん…っ」
+				ENDIF
+			ENDIF
+		;連続
+		ELSE
+			DRAWLINE
+			;正常位、対面立位
+			IF TEQUIP:体位 == 1
+				;MASTERについている
+				IF TALENT:PLAYER:2 & 2
+					PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+				ELSE
+					PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+				ENDIF
+				PRINTFORML 　
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…ん…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んぅ……ん…」
+				ELSE
+					PRINTFORMW 「んん……んっ…」
+				ENDIF
+			;後背位、背面立位
+			ELSEIF TEQUIP:体位 == 2
+				;MASTERについている
+				IF TALENT:PLAYER:2 & 2
+					PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+				ELSE
+					PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+				ENDIF
+				PRINTFORML 　
+				IF RAND:3 == 0 
+					PRINTFORMW 「ん…んふ…ん…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んぅ……ん…」
+				ELSE
+					PRINTFORMW 「んん……んっ…」
+				ENDIF
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;※CFLAG:1501 == 1で挿入子宮口玩弄している時、0で選んだコマンドで継続して突いている時の口上
+	;挿入子宮口玩弄
+	IF CFLAG:1501 == 1
+		;Ｖ感覚1以下
+		IF ABL:Ｖ感覚 <= 1
+			IF RAND:2 == 0
+				PRINTFORMW 「も、無理だって…」
+			ELSE
+				PRINTFORMW 「く、ううっ、そんなに押し込んでも、入らないって…」
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			;前回射精した
+			IF TCVAR:112 == 1  && NOWEX:MASTER:11 == 0
+				IF RAND:2 == 0
+					PRINTFORML 先ほど注ぎ込んだ精液まみれのペニスで、最奥を刺激した…
+					PRINTFORMW 「うあっ…出した、ばっかりなのに、そこいじったらあっ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「うああ…っ%UNICODE(0x2665)%　そんな、出したばっかりなのにぃっ…%UNICODE(0x2665)%」
+					PRINTFORMW 「精液ごと、いちばん奥、こすられてるっ%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				;これでMASTERが射精する
+				IF NOWEX:PLAYER:11
+					IF RAND:5 == 0 && TALENT:恋人
+						PRINTFORML 「はっ%UNICODE(0x2665)%　はっ%UNICODE(0x2665)%　はぁっ%UNICODE(0x2665)%　いちばんおくで、だしてっ…%UNICODE(0x2665)%」
+						PRINTFORMW 「あうっ…%UNICODE(0x2665)%　%MASTERNAME:39%の子種、いっぱいぃ…%UNICODE(0x2665)%
+					ELSEIF RAND:4 == 0 && TALENT:恋人
+						PRINTFORML 「そ、うっ、そこ…っ、で、全部出してっ…！」
+						PRINTFORMW 「君の兒童、孕ませて…っ%UNICODE(0x2665)%」
+					ELSEIF RAND:3 == 0
+						PRINTFORML 「…！そ、んなとこで出したら、ほんとに君の兒童、孕んじゃう…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は最奥での射精を察して、嬉しそうに呟いた…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「あ、あ、いちばんおくで、びくびくってしてるっ…%UNICODE(0x2665)%」
+						PRINTFORMW 「にんげんのせーしで、種付け、されちゃう…%UNICODE(0x2665)%」
+					ELSE
+						PRINTFORML 「ふ、んんっ、あ、そんなとこ、出しちゃっ…%UNICODE(0x2665)%」
+						PRINTFORMW 「子宮、の、ナカまで、君のになっちゃう…%UNICODE(0x2665)%」
+					ENDIF
+				ELSE
+					;正常位から、または対面座位からでランダム分岐2つ追加
+					IF RAND:5 == 0 && (PREVCOM == 60 || PREVCOM == 60)
+						PRINTFORML 「あう…っ、っは、奥、ぐりぐりきてるよ…っ%UNICODE(0x2665)%」
+						PRINTFORML 「もっとっ…ぎゅって、私、を、抱い、てぇっ…ああ、%MASTERNAME:39%っ…%UNICODE(0x2665)%」
+						PRINTFORMW 納茲琳は主人公にのしかかられながら、一生懸命主人公を抱きしめ返してきた…
+					ELSEIF RAND:4 == 0 && (PREVCOM == 60 || PREVCOM == 60)
+						PRINTFORML 「あ%UNICODE(0x2665)%　あうっ、は%UNICODE(0x2665)%　すごいとこまで来てる…%UNICODE(0x2665)%」
+						PRINTFORML 「きもち、いいっ、よっ%UNICODE(0x2665)%　きみ、のが、おなか、奥まで来てぇ…%UNICODE(0x2665)%」
+						PRINTFORMW 抱きしめながら最奥をぐりぐりと擦ると、納茲琳は雌の本能で蕩けた甘い声を上げた…
+					ELSEIF RAND:3 == 0
+						PRINTFORMW \@ TALENT:PLAYER:2 & 2 ? 陰茎 # 穿戴式假陰茎 \@が奥の入り口を擦り上げる度、納茲琳は嬌声を上げた…
+						PRINTFORML 「うぅ%UNICODE(0x2665)%　うやっ%UNICODE(0x2665)%　来て、るよう、おくに、こつこつってぇ%UNICODE(0x2665)%」
+						PRINTFORMW 「すき、それすき、%MASTERNAME:39%の、すき…%UNICODE(0x2665)%」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「ふっ、あ…あぁ…%UNICODE(0x2665)%　あ、%MASTERNAME:39%…%MASTERNAME:39%…っ%UNICODE(0x2665)%」
+						PRINTFORMW 「%MASTERNAME:39%ので、いっぱい、奥まで来てる……%UNICODE(0x2665)%」
+					ELSE
+						PRINTFORML 「奥で…%MASTERNAME:39%のさきっぽが、とんとんってしてる……%UNICODE(0x2665)%」
+						PRINTFORMW 「そ…うっ、ゆっくりぃ、たっぷり時間かけて…して…%UNICODE(0x2665)%」
+					ENDIF
+				ENDIF
+			ENDIF
+		;それ以外
+		ELSE
+			;前回射精した
+			IF TCVAR:112 == 1  && NOWEX:MASTER:11 == 0
+				IF RAND:2 == 0
+					PRINTFORML 先ほど注ぎ込んだ精液まみれのペニスで、最奥を刺激した…
+					PRINTFORMW 「うあっ…出した、ばっかりなのに、そこいじったらあっ…」
+				ELSE
+					PRINTFORML 「うああ…っ　そんな、出したばっかりなのにぃっ…」
+					PRINTFORMW 「精液ごと、いちばん奥、こすられてるっ…」
+				ENDIF
+			ELSE
+				;これでMASTERが射精する
+				IF NOWEX:PLAYER:11
+					IF RAND:2 == 0
+						PRINTFORMW 「…！そ、んなとこで出す気かい…？」
+					ELSE
+						PRINTFORMW 「！ふ、ふふ、本当に妖怪を孕ませる気かい…？」
+					ENDIF
+				ELSE
+					;正常位から、または対面座位からでランダム分岐2つ追加
+					IF RAND:5 == 0 && (PREVCOM == 60 || PREVCOM == 60)
+						PRINTFORMW 「あう…っ、っは、奥、ぐりぐりきてるよ…っ」
+					ELSEIF RAND:4 == 0 && (PREVCOM == 60 || PREVCOM == 60)
+						PRINTFORMW 「あ　あうっ、すごいとこまで来てる…」
+					ELSEIF RAND:3 == 0
+						PRINTFORMW \@ TALENT:PLAYER:2 & 2 ? 陰茎 # 穿戴式假陰茎 \@が奥の入り口を擦り上げる度、納茲琳は嬌声を上げた…
+						PRINTFORMW 「うぅ　うやっ、来て、るよう、おくに、こつこつってぇ…」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「いっぱい、奥まで来てる……っ」
+					ELSE
+						PRINTFORMW 「奥で…さきっぽが、とんとんってしてる……っ」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	;連続
+	ELSE
+		DRAWLINE
+		;正常位、対面立位
+		IF TEQUIP:体位 == 1
+			;MASTERについている
+			IF TALENT:PLAYER:2 & 2
+				PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+			ENDIF
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_60_1
+		;後背位、背面立位
+		ELSEIF TEQUIP:体位 == 2
+			;MASTERについている
+			IF TALENT:PLAYER:2 & 2
+				PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%の膣内から抜かずに、再び腰を動かし始めた…
+			ENDIF
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_61_1
+		;騎乗位
+		ELSEIF TEQUIP:体位 == 3
+			PRINTFORMW %CALLNAME:TARGET%は挿入されたままのペニスを締め付け、再び腰を動かし始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_65_1
+		;対面座位
+		ELSEIF TEQUIP:体位 == 4
+			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%とキスをし、舌を絡めながら再び腰を揺すり始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_67_1
+		;背面座位
+		ELSE
+			PRINTFORMW %CALLNAME:TARGET%を背後から抱きしめ、再び%CALLNAME:TARGET%の身体を揺らし始めた…
+			PRINTFORML 　
+			CALL M_KOJO_MESSAGE_COM_K39_68_1
+		ENDIF
+	ENDIF
+	RETURN 1
+ENDIF
+;未記入
+;TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+;RETURN RESULT
+
+;==================================================
+;8,６９乳交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_8_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;509,双重口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_9_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(SET_M,SET_P,1)
+RESULT = LOCAL:1
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_9_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+;一人目口上
+@M_KOJO_MESSAGE_SCOM_K39_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;二人目口上
+@M_KOJO_MESSAGE_SCOM_K39_9_2
+VARSET LOCAL
+;一人目
+LOCAL:101 = MASTER_POSE(SET_M,SET_P)
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+
+;==================================================
+;10,双重素股
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_10_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(SET_C,SET_P,1)
+RESULT = LOCAL:1
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_10_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K39_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_SCOM_K39_10_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+
+;==================================================
+;11,双重乳交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_11_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(SET_B,SET_P,1)
+RESULT = LOCAL:1
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_11_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K39_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_SCOM_K39_11_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+
+;==================================================
+;12,乳夾口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_12
+CALL TRAIN_MESSAGE
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;13,交互挿入
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_13_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(SET_V,SET_P,1)
+RESULT = LOCAL:1
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_13_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K39_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+TRYCALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_SCOM_K39_13_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;不埒3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+
+
+;SOURCEやNOWEXを使ってSELECTCOMに依存しない口上があってもいいんじゃない
+@M_KOJO_MESSAGE_COM_K39_00
+;性交処女喪失をRETURN 100して
+;IF RESULT == 100 でまとめるとか
+;苦痛や快楽のSOURCEをトリガーとして汎用あえぎ口上を作るとか
+;いろいろ利用方法は考えられますが適当にやってください

@@ -1,0 +1,103 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	命蓮寺MAP用関数
+;--------------------------------------------------
+@MAP_PLACENAME_7(ARG)
+#FUNCTIONS
+
+IF GET_MAPID(ARG) == MAIN_MAP
+	SELECTCASE ARG
+		CASE 1 TO (MAXROOM - 1)
+			RETURNF STR:(ARG + 8000)
+		CASE 798
+			RETURNF OMANEKI_PLACE()
+		CASE 799
+			RETURNF "隙間空間"
+		CASE MAXROOM
+			RETURNF "道路正前方"
+		CASEELSE
+			RETURNF "不明"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_7(AA)
+#DIMS REF AA, 0
+IF !TFLAG:マップ切り替え
+	SELECTCASE CFLAG:MASTER:現在位置
+		CASE 720 TO 725,729,730
+			TFLAG:マップ切り替え = 3
+		CASE 715 TO 719
+			TFLAG:マップ切り替え = 2
+		CASE 726,727,728
+			TFLAG:マップ切り替え = 4
+		CASEELSE
+			TFLAG:マップ切り替え = 1
+	ENDSELECT
+ENDIF
+CALL DRAW_INFORMATIONLINE(@"%MAPNAME:(TFLAG:マップ切り替え)%")
+PRINTFORML 
+TRYCALLFORM MAP_SANROKU_{TFLAG:マップ切り替え}(AA)
+
+@MAP_CAN_MOVE_7(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;華扇ハウス
+	CASE 720 TO 730
+		;本人は除外
+		SIF ARG:1 == 43
+			RETURNF 1
+		IF !INRANGE(CFLAG:(ARG:1):現在位置,720,730)
+			;恋慕か住み込み
+			IF ARG:1 == MASTER && (INRANGE(CFLAG:MASTER:初期位置,720,730) || TALENT:43:恋慕)
+				RETURNF 1
+			;教養が足りないとたどり着けない
+			ELSEIF ABL:(ARG:1):教養 < 3
+				TFLAG:移動不能メッセージ = 1
+				TIME += 30
+				RETURNF 0
+			ELSE
+				;それ以外は戦闘力5以上必要
+				IF ABL:(ARG:1):戦闘能力 < 4 && !FLAG:70
+					TFLAG:移動不能メッセージ = 2
+					;CFLAG:(ARG:1):現在位置 = 731
+					TIME += 15
+					RETURNF 0
+				ELSE
+					RETURNF 1
+				ENDIF
+			ENDIF
+		;中からは動ける
+		ELSE
+			RETURNF 1
+		ENDIF
+	;正邪ハウス
+	CASE 733
+		;主人公は恋慕があれば入れてもらえる
+		IF TALENT:97:恋慕 && ARG:1 == MASTER
+			RETURNF 1
+		;本人は入れる
+		ELSEIF ARG:1 == 97
+			RETURNF 1
+		ELSE
+			TFLAG:移動不能メッセージ = ARG
+			RETURNF 0
+		ENDIF
+	CASEELSE
+		RETURNF 1
+ENDSELECT
+
+@MAP_CANNOT_WORD_7(ARG)
+SELECTCASE TFLAG:移動不能メッセージ
+	CASE 1
+		PRINTFORMW 從剛才開始和屋子的距離就完全沒有減少……
+		PRINTFORMW 好像在同一個地方一直転着圈
+		;CALL TARGETSET_CHACK
+	CASE 2
+		PRINTFORMW 有危険的老虎蹲在在庭院中、看到%CALLNAME:MASTER%的樣子後提高了嗚嗚的吼声
+		PRINTFORMW 看来不要靠近比較好
+		;CALL TARGETSET_CHACK
+	CASE 733
+		PRINTFORMW 不知道現在在哪了…
+ENDSELECT

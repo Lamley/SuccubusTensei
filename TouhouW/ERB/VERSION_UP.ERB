@@ -1,0 +1,18 @@
+﻿;変数の書き換えなどを伴なうバージョンアップ用
+@VERSION_UP
+SIF !GETBIT(FLAG:1000, 1)
+	CALL KAISYONASI
+SIF !GETBIT(FLAG:1000, 2) && FLAG:地主
+	CALL MODE_NOUMIN
+
+@KAISYONASI
+SETBIT FLAG:1000, 1
+PRINTFORML 有能向対方告白的胆量嗎？
+CALL ASK_YN("那是当然","不行")
+IF !RESULT
+	PRINTFORMW 沒有使用無志気模式
+	FLAG:甲斐性無 = 0
+ELSE
+	PRINTFORMW 開啓了無志気模式（部分命令不能使用・被推到機率強化）
+	FLAG:甲斐性無 = 1
+ENDIF

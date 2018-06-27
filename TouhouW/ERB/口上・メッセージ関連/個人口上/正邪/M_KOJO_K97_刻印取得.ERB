@@ -1,0 +1,71 @@
+﻿;-------------------------------------------
+;刻印取得
+;-------------------------------------------
+@M_KOJO_MESSAGE_MARKCNG_K97
+;このままだと地の文が表示されません
+;地の文を表示したい方は、下記のコメントアウトを削除して下さい
+CALL MARK_MESSAGE
+;苦痛刻印
+IF FLAG:時間停止
+	RETURN 0
+ELSEIF TFLAG:苦痛刻印取得 == 1
+	PRINTFORMW 「ぐぁ…ん…やめ…」
+ELSEIF TFLAG:苦痛刻印取得 == 2
+	PRINTFORMW 「あぐ…この…」
+ELSEIF TFLAG:苦痛刻印取得 == 3
+	PRINTFORMW 「ひぎぃ…！？あ…が…」
+ENDIF
+
+;時姦刻印
+IF TFLAG:時姦刻印取得 == 1
+	PRINTFORMW 
+ELSEIF TFLAG:時姦刻印取得 == 2
+	PRINTFORMW 
+ELSEIF TFLAG:時姦刻印取得 == 3
+	PRINTFORMW 
+ENDIF
+
+;快楽刻印
+IF FLAG:時間停止
+	RETURN 0
+ELSEIF TFLAG:23 == 1
+	PRINTFORMW 「ん…ふぅ…」
+ELSEIF TFLAG:23 == 2
+	PRINTFORMW 「あ…んあ…」
+ELSEIF TFLAG:23 == 3
+	PRINTFORMW 「ん…くぅ…」
+ENDIF
+
+;不埒刻印
+IF FLAG:時間停止
+	RETURN 0
+;快楽による刻印
+;LV1
+ELSEIF TFLAG:24 == 11
+	PRINTFORMW 「ん…もっと…」
+;LV2
+ELSEIF TFLAG:24 == 12
+	PRINTFORMW 「っ…こういうの…よくわからんな」
+;LV3
+ELSEIF TFLAG:24 == 13
+	PRINTFORMW 「あ…やだな…ん…」
+;屈服、恭順による刻印
+;LV1
+ELSEIF TFLAG:24 == 31
+	PRINTFORMW 「…」
+;LV2
+ELSEIF TFLAG:24 == 32
+	PRINTFORMW 「…%CALLNAME:MASTER%…いや、何でもない」
+;LV3
+ELSEIF TFLAG:24 == 33
+	PRINTFORMW 「%CALLNAME:MASTER%、お前、何がしたい？」
+ENDIF
+
+;反発刻印
+IF TFLAG:反発刻印取得 == 1
+	PRINTFORMW 「チッ…」
+ELSEIF TFLAG:反発刻印取得 == 2
+	PRINTFORMW 「喧嘩売ってんのか？」
+ELSEIF TFLAG:反発刻印取得 == 3
+	PRINTFORMW 「ああ！？てめぇいい加減にしろよ！？」
+ENDIF

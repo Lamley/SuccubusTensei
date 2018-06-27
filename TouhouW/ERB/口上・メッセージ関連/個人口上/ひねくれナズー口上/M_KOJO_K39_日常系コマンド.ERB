@@ -1,0 +1,6388 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;日常系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;300,会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_300
+;コマンド共通メッセージ(TRAIN_MESSAGE) 
+;削除すると「～話をした。」とかが消えます
+	SIF !(TCVAR:302 && !TALENT:恋慕 || CHK_DATENOW(CFLAG:TARGET:デート中)) 
+		CALL TRAIN_MESSAGE
+	;※会話累積値が閾値を超えての失敗、デート中のとき表示しないように変更
+;口上メイン呼出
+CALL M_KOJO_MESSAGE_COM_K39_300_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;うふふが解除されたのを念押しする処理
+	CFLAG:1211 = 0
+	;◆
+	IF CFLAG:LOCAL:ブチギレ
+		PRINTFORMW 「……少し、黙れ」
+	;一回きりの特殊会話 ※CFLAG:1001を使用(対象bitは各タイトル部分に)
+	;神霊廟キャラ解放(猯藏解放まで) 0bit
+	ELSEIF FLAG:14 == 1 && !GETBIT(CFLAG:1001,0)
+		PRINTFORML 納茲琳に自分が見たふわふわについて尋ねてみた
+		PRINTFORMW 　
+		PRINTFORMW 「ああ…私にはよくわからないが、ご主人に聞いたところ、人間の欲望が視覚化したようなものだそうだ」
+		PRINTFORMW 「特に害はないそうだし、そのうち消滅するらしいから放っておいても良いらしい。ただ…」
+		PRINTFORML 
+		PRINTFORMW 「何故突然見えるようになったのかはまだ原因不明らしい。何やらキナ臭いね」
+		PRINTFORML 「まぁ万が一、何か危害を加えるようなものだった場合は、守ってやるよ」
+		PRINTFORMW 「一応君も、うちのメンツの一員だからね…」
+	SETBIT CFLAG:1001,0
+	;猯藏解放 (20日目まで) 1bit
+	ELSEIF FLAG:14 == 2 && DAY:0 <= 20 && !GETBIT(CFLAG:1001,1)
+		PRINTFORML 納茲琳と猯藏について話した
+		PRINTFORMW 　
+		PRINTFORML 「聖にいきなり一人増えます、と言われた時にはどうなるかと思ったが、割と話の分かる奴だね。
+		PRINTFORMW 　何でも、鵺に呼ばれてわざわざ外の世界からやってきたそうだ」
+		PRINTFORMW 「この間突然湧いた連中も敵対勢力、というわけでは無さそうだし。聖ならうまくやってくれるさ」
+		PRINTFORMW 「…あー、それと」
+		PRINTFORMW 「こないだ言った、守ってやるっての」
+		PRINTFORMW 「…一応アレまだ生きてるから。安心していいよ」
+		SETBIT CFLAG:1001,1
+	;45日経過 (65日目まで) 2bit
+	;※ネタを思いつかなかったので封印
+	;ELSEIF DAY:0 >= 45 && DAY:0 <= 65 && !GETBIT(CFLAG:1001,2)
+	;	PRINTFORML 
+	;SETBIT CFLAG:1001,2
+	
+	;恋慕後初会話、一回のみ
+	ELSEIF TALENT:恋慕 && CFLAG:1204 == 0
+		PRINTFORMW 「あ、ああ…そうだな…」
+		PRINTFORMW （ついこないだまで平気で会話してたはずなんだがねぇ…）
+		PRINTFORMW （どうやって話してたのか…もう、思い出せないな…）
+		CFLAG:1204 = 1
+	;◆デート中
+	;1/2で通常会話も呼び出す
+	ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中) && RAND:2 == 0
+;		SELECTCASE CFLAG:MASTER:現在位置
+;		;人間之里
+;		;博麗神社
+;			;神社走廊
+;			CASE 340
+;				
+;		;迷途竹林
+;			;小雀の宿
+;			CASE 460
+;			
+;		;魔法之森
+;			;香霖堂
+;			CASE 520
+;				
+;			;人偶的洋館
+;			CASE 550
+;				
+;		ENDSELECT
+		IF TALENT:恋人
+			A = RAND:7
+			IF A == 0
+				PRINTFORMW 「……恥ずかしながら、少しはしゃいでしまっている」
+				PRINTFORMW 「寺の中じゃなかなか２人きり、というのは難しいからね」
+				PRINTFORMW 「ま、暇な連中がたまたま来てる可能性は無きにしも非ずだが」
+			ELSEIF A == 1
+				PRINTFORMW 「……少しくだらないことを考えていた。なに、大したことじゃない」
+				PRINTFORMW 「他者から見て私たちはどういう関係に見えるのかとか、そんなことだよ」
+				PRINTFORMW 「まあ、どう思われていようが私たちには関係ないことさ」
+			ELSEIF A == 2
+				PRINTFORMW 「寺でも普段から話をしているのにね」
+				PRINTFORMW 「いつもより楽しいと感じている」
+				PRINTFORMW 「やはり、少し興奮しているのかな…？ふふっ」
+			ELSEIF A == 3
+				PRINTFORMW 「何か話のタネはあったかな……」
+				PRINTFORMW 「まぁ、無理に話題を探さなくてもいいか」
+				PRINTFORMW 「せっかくの逢引だ。楽しまないとねぇ…」
+			;/時々平気でクサいセリフを吐く納茲琳とか素敵だと思わないか。
+			ELSEIF A == 4
+				PRINTFORMW 「……どうかしたか？」
+				PRINTFORMW 「なんでこっちを見ているのかって？……別に、特に意識して何かを見ていたわけじゃないさ」
+				PRINTFORMW 「だって、私の視界には君しか映らないんだ」
+			ELSEIF A == 5
+				PRINTFORMW 「ふふっ……ん？何がおかしいのかって？」
+				PRINTFORMW 「別に何もおかしくはないさ。なにもね」
+				PRINTFORMW 「ただ、君とこうして……いや、なんでもない」
+			ELSE
+				PRINTFORMW 「……見知った景色も君がいれば変わって見える」
+				PRINTFORMW 「んん、ただのネズミだった頃の名残かな。妖怪になってもこんな気分を味わえるとはね」
+				PRINTFORMW 「……ふふ、楽しいねぇ…」
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			A = RAND:7
+			IF A == 0
+				PRINTFORMW 「……情報は子ネズミたちや参拝客から聞けるが」
+				PRINTFORMW 「こうして自分で歩いて集めるのも大切さ」
+			ELSEIF A == 1
+				PRINTFORMW 「さて、何か変わったものはあるかな？」
+				PRINTFORMW 「せっかく外に出たんだ。寺じゃ手に入らないものがほしいね」
+			ELSEIF A == 2
+				PRINTFORMW 「帰ったら子ネズミたちに何か土産を用意しなきゃね。一緒に連れてきてないんだ」
+				PRINTFORMW 「…ああいや、なんて言うか、あの子たちを連れているとうるさいだろう？」
+			ELSEIF A == 3
+				PRINTFORMW 「こういうときぐらいは、寺のことは忘れてもいいかな？」
+				PRINTFORMW 「まぁ、羽目を外し過ぎてはいけないと思うが」
+			ELSEIF A == 4
+				PRINTFORMW 「周囲から見て私たちはどういう関係に見えるのかな？」
+				PRINTFORMW 「なに、ふとそんなことを考えただけだ。他意はない」
+			ELSEIF A == 5
+				PRINTFORMW 「おや、ペンデュラムに反応が……ほう、意外にもこの近くだ」
+				PRINTFORMW しかし、主人公に反応しているのに気づいた納茲琳は、気まずそうにペンデュラムを仕舞った…
+			ELSE
+				PRINTFORMW 「寺でも君と話しているのに、寺にいる時とはやはり何かが違う」
+				PRINTFORMW 「解放感、とでもいうのかな？ああ、寺が狭苦しいという意味じゃないよ」
+			ENDIF
+		ELSE
+			A = RAND:7
+			IF A == 0
+				PRINTFORMW 「子ネズミたちは置いてきたよ。万が一があった時に困るから」
+			ELSEIF A == 1
+				PRINTFORMW 「さて、何か面白いものはあるかな？」
+			ELSEIF A == 2
+				PRINTFORMW 「たまには外の空気を吸いたくなるからね。誘ってくれてありがとう」
+			ELSEIF A == 3
+				PRINTFORMW 「ペンデュラムに反応は特になし、か。まぁ、宝探しに来たわけじゃないからね」
+			ELSEIF A == 4
+				PRINTFORMW 「ついでに日用品でも買おうかな……」
+			ELSEIF A == 5
+				PRINTFORMW 「どんな探し物も最終的にはこうやって足で尋找ものさ」
+			ELSE
+				PRINTFORMW 「なんだろうね？普段から君と話をしているのに、何かがいつもと違う気がする」
+			ENDIF
+		ENDIF
+	;通常会話
+		;悪天候で外(山門、境内、後院、墓地)にいる
+		;吹雪
+		ELSEIF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121) && TIME:5 == 9
+			IF RAND:3 == 0 
+				PRINTFORML 「さっさと中に入ろう」
+				PRINTFORMW 「こう吹雪いてちゃ何もできやしない」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「おおい！さっさと中に入るぞ！」
+				PRINTFORMW 「死にたいのか君は！」 
+			ELSE 
+				PRINTFORMW 「なんでこんな天気なのに外にいるんだよ！」
+			ENDIF 
+		;冰雹
+		ELSEIF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121) && TIME:5 == 13
+			;傘を持っている
+			IF ITEM:561 > 0
+				PRINTFORML 広げた傘に冰雹が当たり、派手な音を立てている
+				PRINTFORMW 「なかなか楽しいね、これ」
+			ELSE
+				PRINTFORML 「結構粒が大きいねぇ」
+				PRINTFORMW 「皿に盛って黒蜜でもかければ美味いかな」
+			ENDIF
+		;成功
+		ELSEIF TFLAG:193 == 1
+			IF RAND:3 == 0
+				PRINTFORML 「ふうん…偶にはまともなこと言うじゃないか」
+				PRINTFORMW 「普段からそのレベルを発揮出来ればいいんだがね」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「くくっ…」
+				PRINTFORMW どうやらこの冗談は正解だったようだ
+			ELSE
+				PRINTFORMW 「珍しく意見が一致したね」
+				PRINTFORMW 「ま、そこについては私からも言っておくよ」
+			ENDIF
+		;失敗
+		ELSEIF TFLAG:193 == -1
+			IF RAND:7 == 0 
+				PRINTFORML 「…特に用が無いなら、話しかけないでくれるかい？」
+			ELSEIF RAND:6 == 0 
+				PRINTFORMW 「…ほら、私と話したって面白くも無いだろう？」
+			ELSEIF RAND:5 == 0 
+				PRINTFORMW 納茲琳はこちらを気にした様子も無く、足元のネズミたちを眺めている。
+			ELSEIF RAND:4 == 0
+				PRINTFORML 「………ハッ」
+				PRINTFORMW 鼻で笑われてしまった…
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「うわ、そこでその台詞が出るか普通…信じられない」
+				PRINTFORMW 冗談のつもりだったのだが…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…馬鹿か君は」
+			ELSE
+				PRINTFORML 「…興味ない」
+				PRINTFORMW あまり触れるべき話題ではなかったようだ…
+			ENDIF
+		;会話累積値が閾値を超えての失敗
+		ELSEIF TCVAR:302 && !TALENT:恋慕
+			;◆
+			IF RAND:3 == 0
+				PRINTFORMW 「……あー、無理に話を振ろうとしなくてもいいよ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…そろそろ掃除に回ったら？」
+			ELSE
+				PRINTFORMW 「私にかまけてる時間があるのか、君」
+			ENDIF
+		;普通
+		ELSE
+			;添い寝中
+			IF CFLAG:添い寝中
+				IF RAND:4 == 0
+					PRINTFORMW 「…私みたいなのに構うなんて、君も奇特なヤツだな…」
+				ELSEIF RAND:3 == 0
+					PRINTFORM 「ふふ…その話、
+						IF RAND:3 == 0 
+							PRINTFORM ご主人に
+						ELSEIF RAND:2 == 0 
+							PRINTFORM 聖に
+						ELSE
+							PRINTFORM 鵺に
+						ENDIF
+						PRINTFORMW 話してあげなよ…」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「実はな、一輪の髪型って…」
+				ELSE
+					;季節の話
+					SELECTCASE DAY:2
+					;春
+					CASE 1
+						IF RAND:3 == 0 
+							PRINTFORML 「今晩はあんまり寒くないね…」
+							PRINTFORMW 「これからどんどん暑くなるんだろうなぁ」
+						ELSEIF RAND:2 == 0 
+							PRINTFORMW 「ふう…夜はまだ冷えこむね」
+							SIF TALENT:恋慕
+								PRINTFORMW 「…もうちょっとこっちに来なよ」
+						ELSE 
+							PRINTFORML 「そろそろうちの子たちの繁殖シーズンだな…」
+							PRINTFORMW 「…う、や、すまん。独り言だ…」
+							SIF TALENT:恋人
+								PRINTFORMW そう言いつつも、納茲琳はじっとこちらを見つめている…
+						ENDIF 
+					;夏
+					CASE 2
+						IF RAND:4 == 0 
+							PRINTFORML 「げろげろげろげろ、飽きもせずに良く鳴くね…」
+							PRINTFORMW 「ま、彼らにとっちゃパートナーの獲得のためだから、当たり前か」
+							SIF TALENT:恋人
+								PRINTFORMW 「…私にはもういるけどねー」
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「うー…暑いなぁ…」
+							PRINTFORMW 「せめて夜のうちはもうちょっと涼しくならんかね」
+							SIF TALENT:恋人
+								PRINTFORMW 「いっそ…運動してもっと暑くなるかい…？」
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「ヒトガタになって、体温管理は楽になったんだけど」
+							PRINTFORMW 「暑いもんは暑いんだよね…」
+						ELSE
+							PRINTFORML 「ん…結構汗かいてるね。着替えようかな」
+							PRINTFORMW 「ちょっと向こう向いてておくれよ…」
+						ENDIF
+					;秋
+					CASE 3
+						IF RAND:3 == 0 
+							PRINTFORML 「ふう…今日は冷えるね」
+							PRINTFORMW 「そろそろ冬用布団を用意しないとな…」
+						ELSEIF RAND:2 == 0 
+							PRINTFORML 「この季節は食べ物が美味しくて困る」
+							PRINTFORMW 「ほらこのお腹…触ってみるかい？ふふっ」
+						ELSE 
+							PRINTFORML 外からは虫の音が静かに聞こえてくる
+							PRINTFORMW 「これはエンマコオロギだね」
+							PRINTFORMW 「この季節のは肥えてて特に旨いんだよ」
+							;/ネズミは昆虫を好むbyWikipedia
+						ENDIF 
+					;冬
+					CASE 4
+						IF RAND:3 == 0 
+							PRINTFORML 「ヒトガタで不便な点の一つが、毛皮がないことだね…」
+							PRINTFORMW 「ま…今日は湯たんぽが居るけどね」
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「今夜は特に冷えるな…」
+							PRINTFORMW 「…」
+							SIF TALENT:恋人
+								PRINTFORMW 「…温まる運動、する？」
+						ELSE
+							PRINTFORML 「朝になると、よくご主人がすごく楽しそうに本堂の周りを散歩なさってるんだ」
+							PRINTFORMW 「多分霜柱を踏んでるんだと思う。あの時のご主人の可愛さったらないね」
+						ENDIF
+					ENDSELECT
+				ENDIF 
+			;浴場にいる
+			ELSEIF CFLAG:現在位置 == 112
+				;在浴室里放鬆の後
+				IF PREVCOM == 403
+					IF RAND:3 == 0 && (!TALENT:恋慕 || (TALENT:恋慕 && TALENT:恋人))
+					;恋慕状態(not恋人)の時はこんな余裕かませない
+					;季節の話
+						;夏
+						IF DAY:2 == 2
+							PRINTFORML 「あー…暑い時の浴室は効くねぇ…」
+						;冬
+						ELSEIF DAY:2 == 4
+							PRINTFORMW 「冬の浴室はまた格別だね」
+						ELSE
+							PRINTFORML 「私らって冬に弱いんだよね」
+							PRINTFORMW 「ヒトガタになって、浴室に初めて入った時の感動は忘れられない」
+						ENDIF
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふう…」
+						PRINTFORMW 「…あんまりこっちは見ないでくれよ」
+					ELSE
+						PRINTFORML 「あ、ああ…そうだな…」
+						PRINTFORMW 納茲琳の受け答えは、なぜか少しぎこちない…
+					ENDIF
+				ELSE
+					;朝
+					IF TIME:2 == 1 || TIME:2 == 2
+						IF TALENT:恋人
+							PRINTFORML 「やあ、朝浴室とは贅沢だねぇ」
+							PRINTFORMW 「…ねぇ、このあと、どう？」
+						ELSEIF TALENT:恋慕
+							PRINTFORML 「…なんで君がいるのさ」
+							PRINTFORMW 何故かものすごく距離を取られた…
+						ELSE
+							PRINTFORMW 「朝浴室とは贅沢だねぇ…」
+						ENDIF
+					ELSE
+						IF TALENT:恋人
+							IF RAND:3 == 0 
+								PRINTFORMW 「縮んだところはあんまり見ないから新鮮だな…」
+							ELSEIF RAND:2 == 0 
+								PRINTFORMW 「なんだい？お誘いかい？」
+							ELSE
+								PRINTFORMW 「…触りたかったら、触ってもいいよ？」
+							ENDIF
+						ELSEIF TALENT:恋慕
+							IF RAND:3 == 0 
+								PRINTFORMW 「…」
+								PRINTFORMW 「なんだよ…」
+							ELSEIF RAND:2 == 0 
+								PRINTFORML 話しかけても、まともな返事が返ってこない…
+								PRINTFORMW （ったく、察してくれたっていいじゃないか）
+							ELSE
+								PRINTFORML 「…どうしてこっちに来るのさ」
+								PRINTFORMW 「あんまり見られたく、ないんだよ…」
+							ENDIF
+						ELSE
+							IF RAND:3 == 0 
+								PRINTFORMW 「そんなにジロジロ見ないでくれるかな」
+							ELSEIF RAND:2 == 0 
+								PRINTFORMW 「私はもうすぐ上がるから、お構いなく」
+							ELSE
+								PRINTFORML 「ありゃ、被っちゃったか」
+							ENDIF
+						ENDIF
+					ENDIF
+				ENDIF
+			;境内、好感度1000以上、かつ一回こっきり
+			ELSEIF CFLAG:現在位置 == 102 && CFLAG:2 >= 1000 && CFLAG:1210 == 0
+				;◆添削予定
+				;他キャラに触りすぎ
+				PRINTFORMW 納茲琳は何やら低い柵に囲まれた木の下で、数人の人間らしき兒童たちにもみくちゃにされている…。
+				PRINTFORML 
+				PRINTFORMW 「耳を引っ張るな！ちょ、裙子に潜るな！…いたっ、いたた、千切れる！尻尾千切れるっ！い、いい加減怒るぞ君たち！」
+				PRINTFORML 兒童たちはきゃいきゃいと騒ぎながら、蜘蛛の子を散らすように納茲琳から逃げ出した。
+				PRINTFORMW 一体何をしているのか聞くと、納茲琳は肩で息をしながら柵の端に立てられた看板を指差す。
+				PRINTFORML 
+				PRINTFORMW …『命蓮寺納茲琳ランド』。
+				PRINTFORML 
+				PRINTFORML 「ふぅ、はぁー…。
+				PRINTFORML 　…妖怪と触れ合おう！企画第ニ弾、可愛い子ネズミや物知りネズミ妖怪と遊べる『命蓮寺納茲琳ランド』…だとさ。
+				PRINTFORMW 　聖企画の、ご主人発案命名実行委員」
+				PRINTFORML 「…人喰いネズミと人間の兒童を引き合わせるなんて正気の沙汰じゃないと思っていたが…。
+				PRINTFORML 　恐れを知らない兒童ってものは怖いものだね。我が精鋭ネズミたちが一匹残らず敵前逃亡だ。
+				PRINTFORMW 　私も正直もう…というか最初から…逃げ出したい気分だよ…」
+				PRINTFORML 
+				PRINTFORML グロッキーな様子で木に背を預けてへたり込む納茲琳に、お茶を差し出す。
+				PRINTFORML 
+				PRINTFORML 「ああ、有り難い。…というかお茶とか常備してるのか君は。
+				PRINTFORMW 　…ああいや、説明はいいよ…」
+				PRINTFORML 
+				PRINTFORML 唇を湿らせて、一息。
+				PRINTFORML 兒童たちの騒ぐ声が遠くなっていく。
+				PRINTFORML 「飽きたんだろう。…もう今日は閉めてしまおう。そうしよう。それがいい」
+				PRINTFORML 
+				PRINTFORMW 言うなり物凄い勢いで柵と看板をまとめ、どこからか現れたネズミの大群がそれらを庫房へ運んでいく。
+				PRINTFORML 
+				PRINTFORML 「…どうも、聖はここに孤児院…というか託児所を作りたいらしいね。人里の寺子屋や里長宅に相談しに行ってるのをよく見掛ける。
+				PRINTFORMW 　恐らくは、これもその取っ掛かりなんだろうが…正直人選が悪いとしか言いようが無いな」
+				PRINTFORML 
+				PRINTFORML そういえば、第二弾とあったが…。
+				PRINTFORML 
+				PRINTFORML 「…第一弾は一輪と雲山だったが、雲山の顔を見ただけで泣き出す兒童が多くて断念したそうだ。
+				PRINTFORMW 　しばらくは雲山が雨雲になっていたよ。ああ見えて兒童好きだったのかな」
+				PRINTFORML 
+				PRINTFORML 「第三弾は…性格的にはアレだが、このまま行ったら鵺だろうな。
+				PRINTFORMW 　ご主人は多忙だし、幽谷に頼む訳にも行かないだろうし、ムラサは妖怪って感じがしないというか幽霊だし」
+				PRINTFORML 
+				PRINTFORML 「ああ、二ツ岩だったか、あの人なら上手くやってくれそうだが…高く付きそうだな。
+				PRINTFORML 　…まあ、ご主人のゴリ押しがあったから私に回っては来たが、聖はこの企画は一端取り止める気だろうね。
+				PRINTFORML 　本格的にやるには流石に問題が多すぎる」
+				PRINTFORML 
+				PRINTFORMW その方が有り難いが、と呟き、納茲琳は再び木の下にへたり込んだ。
+				CFLAG:1210 = 1
+			;添い寝中でも現在地が浴場でも納茲琳ランドでもない、普通の会話
+			ELSE
+				IF RAND:7 == 0
+				;季節の話
+					SELECTCASE DAY:2
+					;春
+					CASE 1
+						IF RAND:4 == 0
+							PRINTFORML 「春だねぇ…」
+							PRINTFORMW 「うちの子たちにも、やっとまともなものを食べさせられるよ」 
+						ELSEIF RAND:3 == 0 
+							PRINTFORMW 「この時期になると、聖が復活したときのことを思い出すねぇ」
+							PRINTFORML 「あの人間たち、ことごとくネズミを舐めてたね…
+							PRINTFORMW 　機を見て、博麗神社の食料を根こそぎいただくとするか。うちの子たちを連れてね」
+							;/やめたげてよお！
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「そろそろ花見の季節だな…博麗神社に行けば、なにかおこぼれに与れるかも」
+							PRINTFORMW 「一度うちの子たちを連れて行ってみようかね」
+						ELSE
+							PRINTFORML 「春告精…私は見たことがないんだが」
+							PRINTFORMW 「春告精が来るから春になるのか、春が来たから春告精が来るのか、どっちなんだろうね」
+						ENDIF
+					;夏
+					CASE 2
+						IF RAND:3 == 0 
+							PRINTFORML 「こう暑いとやってられんね」
+							PRINTFORMW 「本堂の床は気持ちよさそうだ」
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「人魂を飼うと涼しくなるらしい」
+							PRINTFORMW 「墓場にでも行ってみる？」
+						ELSE
+							PRINTFORML 「昔、吸血鬼が霧を出して日を遮ったらしいけど」
+							PRINTFORMW 「こう暑いと、たまにやる分には歓迎されると思うね」
+						ENDIF
+					;秋
+					CASE 3
+						IF RAND:4 == 0 
+							PRINTFORML 「収穫の秋、食欲の秋」
+							PRINTFORMW 「ネズミの本領発揮だな」
+						ELSEIF RAND:3 == 0 
+							PRINTFORML 「山の上の方、色づいてきたね」
+							PRINTFORMW 「あれ、山の神様が手塗りしてるらしいよ。なんかの本で読んだ」
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「紅葉狩りにでも行きたいところだが」
+							PRINTFORMW 「あそこに近づくと天狗がうるさいんだよね…」
+						ELSE
+							PRINTFORML 「秋に採れる物はいろいろあるけど」
+							PRINTFORMW 「私は芋が一番好きだな…」
+						ENDIF
+					;冬
+					CASE 4
+						IF RAND:4 == 0 
+							PRINTFORML 「ネズミというか、小動物全般は寒さに弱いんだよ…」
+							PRINTFORMW 「ヒトガタになってだいぶマシになったが、毛皮がなくなったのは痛いね」
+						ELSEIF RAND:3 == 0
+							PRINTFORML 「耳がね。特に冷たくなるんだ」
+							PRINTFORMW 「この季節は大きな耳が恨めしいよ」 
+						ELSEIF RAND:2 == 0
+							PRINTFORML 「この間から特に寒いね…」
+								;炬燵を持っている
+								IF ITEM:562 > 0
+									PRINTFORMW 「まだ香霖堂から炬燵の火鉢は届かないのかい？」
+									;※実装されたら修正せねば
+								ELSE
+									PRINTFORMW 「炬燵が欲しくなるな…」
+								ENDIF
+						ELSE
+							PRINTFORML 「うー…寒…」
+							PRINTFORMW 「ネズミにゃ厳しい季節だよ…」
+						ENDIF
+					ENDSELECT
+				;天気の話
+				;/死にやすいが仕方ない
+				ELSEIF RAND:6 == 0
+					SELECTCASE TIME:5
+					 ;晴天、晴天
+					CASE 0,1
+						;夜
+						IF TIME:2 >= 5 && TIME:2 <= 7
+							PRINTFORMW 「今日の夜空は澄んでるね」
+						;春、秋
+						ELSEIF GROUPMATCH(DAY:2, 1, 3)
+							PRINTFORMW 「一年がずっとこんな気候だといいんだが」
+						;夏
+						ELSEIF DAY:2 == 2
+							PRINTFORMW 「こうカンカン照りだと干乾びてしまいそうだよ」
+						;冬
+						ELSE
+							PRINTFORMW 「日差しがあるだけまだマシだな」
+						ENDIF
+					;多雲
+					CASE 2
+						;夜
+						IF TIME:2 >= 5 && TIME:2 <= 7
+							PRINTFORML 「薄雲がかかってるけど…こういう月も風情があるね」
+						;夏
+						ELSEIF DAY:2 == 2
+							PRINTFORML 「日差しがない分楽だが、こう蒸し暑いとね…」
+						ELSE
+							PRINTFORML 「今日はちょっと曇ってるね…」
+						ENDIF
+					;曇
+					CASE 3
+						;夜
+						IF TIME:2 >= 5 && TIME:2 <= 7
+							PRINTFORMW 「これだけ雲が厚いと何も見えないな。真っ暗だ」
+						ELSE
+							PRINTFORMW 「こんな時間なのにかなり暗いな。そろそろ降るのかね…」
+						ENDIF
+					;雨、大雨、霧雨
+					CASE 4,5,6
+						;外(山門、境内、後院、墓地)
+						IF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121)
+							;傘を持っている
+							IF ITEM:561 > 0
+								PRINTFORML 「身体が小さいと、こういう時は便利だな」
+								PRINTFORMW 傘を持った納茲琳が自嘲気味に笑った…
+							ELSE
+								PRINTFORML 「文字街道濡れ鼠ってか」
+								PRINTFORMW 「馬鹿なこと言ってないでさっさと中に入ろうか。風邪を引きそうだ」
+							ENDIF
+						ELSE
+							PRINTFORMW 「降るねー…」
+						ENDIF
+					;霧
+					CASE 7
+						;外(山門、境内、後院、墓地)
+						IF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121)
+							PRINTFORML 「今日は霧が深いねー…」
+							PRINTFORMW 「地味に濡れるから気をつけろよ。足元も注意だ」
+						ELSE
+							PRINTFORMW 「それにしても霧とは…道理で冷えるわけだ」
+						ENDIF
+					;雪、細雪、霧雪
+					CASE 8,10,11
+						;外(山門、境内、後院、墓地)
+						IF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121)
+							PRINTFORML 「うわ、冷たっ」
+							PRINTFORMW 納茲琳は耳に雪が付着するたびに小さな悲鳴を上げた
+						ELSE
+							PRINTFORML 「窓の外をご覧。今日は真っ白だ」
+							PRINTFORMW 目をやると、雪でいつもの風景がすっかり変わっていた…
+						ENDIF
+					;吹雪
+					CASE 9
+					;※この天候で外でのんびり話すのもおかしいので外で話すのは上に移動
+						PRINTFORML 「うわあ…ひどい天気だな」
+						PRINTFORMW 「うちの子達、ちゃんと中に入ってるかなぁ…」
+					;雨雪交加
+					CASE 12
+						;外(山門、境内、後院、墓地)
+						IF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121)
+							PRINTFORML 「雨雪交加…　実質ただの冷たい雨だな」
+							PRINTFORMW 「そろそろ中に入ろうよ」
+						ELSE
+							PRINTFORML 「溶けた雪ってとこだね。冷たそうだ」
+							PRINTFORMW 「夜には雪かね」
+						ENDIF
+					;冰雹
+					CASE 13
+					;※吹雪に同じ
+						PRINTFORML 冰雹が屋根を叩いている
+						PRINTFORMW 「すごい音だね…当たったら痛そうだ」
+					ENDSELECT
+				;◆前コマンドがお茶淹れ＆1/2
+				ELSEIF PREVCOM == 301 && RAND:2 == 0 
+						PRINTFORML 「どちらかというと私はコーヒー派なんだが、幻想郷ではあまり手に入らなくてね。
+						PRINTFORMW 　まあ和茶も悪くは無いが…『イメージに合わない』とはよく言われるよ」
+				;走廊かナズ部屋なら＆好感度1000以上＆1/4
+				ELSEIF (CFLAG:現在位置 == 110 || CFLAG:現在位置 == 113) && RAND:4 == 0 
+					;◆
+					IF CFLAG:2 >= 1000
+						PRINTFORML 「鼠を触りたい？ペットじゃないんだぞ、全く…」
+						PRINTFORMW 「…一応君を齧らないようには言ってあるが、余り撫でくり回さないでくれよ。保証しかねる」
+					ELSE
+						PRINTFORML 「鼠を触りたい？ご自由にどうぞ」
+						PRINTFORMW 「うちの子たちも、随分豪勢な吃飯だと喜ぶだろうよ…」
+						PRINTFORMW 急いで手を引っ込めた…
+					ENDIF
+				;ここから汎用の普通会話
+				;◆
+				ELSEIF RAND:17 == 0 && CFLAG:2 >= 1000
+					IF TALENT:恋慕
+						PRINTFORMW 「何か話のタネはあったかな……」
+						PRINTFORMW 「まぁ、無理に話題を探さなくてもいいか」
+						PRINTFORMW 「何をするでもなくぼんやり過ごす時間も好東西さ」
+					ELSE
+						PRINTFORMW 「……実は私はまだ君のことをあまり知らない」
+						PRINTFORMW 「今回は君の話をしてくれないか？」
+					ENDIF
+				;◆
+				ELSEIF RAND:16 == 0 && CFLAG:2 >= 1000
+					PRINTFORML 「私はどこの妖怪なのかって？
+					PRINTFORMW 　…秘密だ。レディの過去は詮索するものじゃないよ」
+					PRINTFORML 「でもまあ確かに、一人だけ名前が横文字というのは目立つだろうね。
+					PRINTFORMW 　当て字して改名でもしようか」
+				;◆
+				ELSEIF RAND:15 == 0 && CFLAG:2 >= 1000
+					PRINTFORML 「しかし…なんというか、地味な服だね。
+					PRINTFORMW 　私が言えた義理じゃないかも知れないが、もう少し気を使ったらどうだい？」
+					PRINTFORML 「四十八茶百鼠とも言うだろう？
+					PRINTFORMW 　例え地味な色合いでも創意工夫で埋没しないような個性を…」
+					PRINTFORML 
+					PRINTFORMW 「…しまむら？誰だいそれは」
+				;◆
+				ELSEIF RAND:14 == 0 && CFLAG:2 >= 1000
+					PRINTFORMW 納茲琳の視線の先では、棒切れに群がってがりがりと歯を立てる無数の鼠がいた。
+					PRINTFORML 
+					PRINTFORML 「ん、ああ…
+					PRINTFORMW 　定期的に堅いものを与えて前歯を削らせてやらないといけないんだ」
+					PRINTFORML 「流石にここの柱を噛ませてやる訳にはいかないからね。
+					PRINTFORMW 　大きな骨でも手に入ればそれがいいんだが」
+					PRINTFORML 
+					PRINTFORMW 納茲琳は齧らなくて平気なのだろうか。
+					PRINTFORML 
+					PRINTFORMW 「…もし私の前歯が伸びたら、君の脛をかじらせてもらうとするよ」
+				;◆
+				ELSEIF RAND:13 == 0 && CFLAG:2 <= 1000
+					PRINTFORML 「呼び方？
+					PRINTFORMW 　…ああ、確かに、私はあまり…他の皆のことを下の名前では呼ばないな」
+					PRINTFORMW 「名前で呼び合うのはなんというか…こっ恥ずかしいだろう？」
+					PRINTFORML 
+					PRINTFORMW 「その、…やはり名前で呼び合うべきなのかな。
+					PRINTFORML 　聖は気にしていないようだが、幽谷やムラサ船長にはよく言われるよ」
+					PRINTFORMW 「雲居…っと、一輪に至っては部屋が隣だからか毎日ゴリ押ししてきてね。押し切られてしまった。
+					PRINTFORMW 　ご主人も、前はご主人『様』付けだったんだが、不満だったらしいね。今でも若干不満そうだが」
+					PRINTFORML 
+					PRINTFORMW 「え、君？
+					PRINTFORMW 　…すまない、名前なんだっけ、君の」
+					PRINTFORMW 納茲琳は意地悪そうに笑った
+				;◆
+				ELSEIF RAND:12 == 0 && CFLAG:2 >= 1000
+					PRINTFORMW 「欲しいもの？特には無いよ。
+					PRINTFORMW 　強いて言うなら…葡萄酒かな。軽めの赤の」
+					PRINTFORMW 「そう、チーズに…
+					PRINTFORMW 　…あのね、ネズミがチーズ好きっていうのはただの人間の思い込みだ」
+					PRINTFORML 「大体、チーズによって合う葡萄酒も違うから一概に赤が合うとは限らない。常識だろう。
+					PRINTFORMW 　例えば白カビ、俗に言うカマンベールは確かに赤が合うとされるが、一方で青カビ、俗に言うゴルゴンゾーラなどは甘口の…」
+					PRINTFORML 
+					PRINTFORMW 「ちょっと待ちたまえ君、こら！話はまだ終わってないぞ！」
+				;◆
+				ELSEIF RAND:11 == 0 && CFLAG:2 >= 1000
+					PRINTFORMW 「あの御方の失せ物癖にも困ったものだ。
+					PRINTFORMW 　内袴を無くしたと言われてもねえ…」
+				;◆
+				ELSEIF RAND:10 == 0 
+					PRINTFORMW 「おや、暇なのかい？
+					PRINTFORML 　ああいや、嫌味で言った訳じゃないんだが。
+					PRINTFORMW 　…私と話しても面白くないだろう？」
+				ELSEIF RAND:9 == 0
+					IF TALENT:恋人
+						PRINTFORML 「あー、なんか失せ物があれば探してきてあげるよ」
+						PRINTFORMW 「それぐらいならお安いご用さ」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「なんか失せ物があれば探してあげるよ」
+						PRINTFORMW 「…身内のよしみでね」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「なんか失せ物があれば探してあげるよ」
+						PRINTFORMW 「もっとも、食べ物以外に限るが」 
+					ELSE
+						PRINTFORML 「箒がない？それぐらい自分で探しなよ」
+						PRINTFORMW 「君、私を便利屋か何かだと思ってないか？」
+					ENDIF
+				ELSEIF RAND:8 == 0
+					IF TALENT:恋人
+						PRINTFORML 「ご主人は優秀な方だよ。たまに抜けてるけど」
+						PRINTFORMW 「今の私達を知ったら、なんて言うやら…」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「ご主人は優秀な方だよ。それに良い人だ」
+						PRINTFORMW 「…私と違ってね」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「ご主人は優秀な方だよ。たまに抜けてるけど」
+						PRINTFORMW 「そこが可愛くもあるんだけどね…」
+					ELSE
+						PRINTFORML 「ご主人は優秀な方だよ。それに対外的にはこの寺のトップだ」
+						PRINTFORMW 「ちゃんと従った方がいい」
+					ENDIF
+				ELSEIF RAND:7 == 0 
+					IF TALENT:恋人
+						PRINTFORML 「私の髪、なんかハネてない？」
+						PRINTFORMW 「やっぱり…ちょちょっと直しておくれよ」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「…やっぱりハネてる？」
+						PRINTFORMW 「さっき鵺が私の髪に何かしたんだよ…くそっ」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「ここ、ちょっと見てくれ。なんかハネてないか？」
+						PRINTFORMW 「あーやっぱり。さっき鵺が私の髪に何かしたんだよ…」
+					ELSE
+						PRINTFORML 髪のハネを教えてあげた
+						PRINTFORMW 「あー…後で直しておこう」
+					ENDIF
+				ELSEIF RAND:6 == 0 
+					IF TALENT:恋人
+						PRINTFORML 「聖は優しい方だけど、締めるところはしっかり締めてるよ」
+						PRINTFORMW 「普段は割とお茶目さんだけどね」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「聖は優しい方だけど、締めるところはしっかり締めてるよ」
+						PRINTFORMW 「信頼するに値するお方だね」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「聖は優しい方だけど、締めるところはしっかり締めてるよ」
+						PRINTFORMW 「信頼するに値するお方だね」
+					ELSE
+						PRINTFORMW 「聖は優しい方だけど、締めるところはしっかり締めてるよ」
+					ENDIF
+				ELSEIF RAND:5 == 0
+					IF CFLAG:2 >= 1000 && RAND:2 == 0 
+						PRINTFORM 「ご主人に小言？ああ、
+						IF RAND:3 == 0 
+							PRINTFORML ご主人が起居室で転んだ時のことかな」
+						ELSEIF RAND:2 == 0 
+							PRINTFORML ご主人の後ろ髪が派手にハネたままだったことかな」
+						ELSE
+							PRINTFORML ご主人がピーマンをまた残したことかな」
+						ENDIF
+						PRINTFORM 「それとも
+						IF RAND:3 == 0 
+							PRINTFORMW 袴子が前後逆だったことかも」
+						ELSEIF RAND:2 == 0 
+							PRINTFORMW 寝ぼけて聖的房間に潜り込んだことかも」
+						ELSE
+							PRINTFORMW 裙子が袴子に入ったままだったことかも」
+						ENDIF
+						;/ママナズ。
+					ELSEIF TALENT:恋人
+						PRINTFORML 「ご主人に小言？ああ…まあ色々言ったけどね、大したことじゃないよ」
+						PRINTFORMW 「私の方が、よっぽど不埒な事をしてるしね…ふふっ」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「ご主人に小言？ああ…まあ色々言ったけどね、大したことじゃないよ」
+						PRINTFORMW 「彼女は私の何倍も仕事をしてるし、優秀さ…」
+					ELSE
+						PRINTFORMW 「ご主人に小言？それが君に何か関係が？」
+					ENDIF
+				ELSEIF RAND:4 == 0
+					IF CFLAG:2 >= 1000
+						PRINTFORML 「弾幕ごっこにゃ負けてしまったが、信仰はウチが一番集めてるね」
+						PRINTFORMW 「博麗のは論外だとしても、守谷のは警戒すべきだな」 
+					ELSE
+						PRINTFORMW 「弾幕ごっこにゃ負けてしまったが、信仰はウチが一番集めてるね」
+					ENDIF
+				ELSEIF RAND:3 == 0
+					IF TALENT:恋人
+						PRINTFORML 「料理？ああ、私はできないよ」
+						PRINTFORMW 「期待してたのかい？残念だったね」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「ああ…君、料理も作るんだったな」
+						PRINTFORMW 「良ければ今度、食べさせておくれよ」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「君の手料理、そこそこ評判だそうじゃないか」
+						PRINTFORMW 「今度はうちの子たちを連れて行っていいかい？」
+					ELSE
+						PRINTFORML 「へえ、君、料理もできるのかい？」
+						PRINTFORMW 「響子や鵺あたりに食べさせてあげたまえ。私は結構だが」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					IF TALENT:恋人 && RAND:2 == 0
+						PRINTFORMW 「好物？　…そうだな、いろいろあるが」
+						PRINTFORM 「…君はなかなか、
+						;うふふ経験あり
+						IF CFLAG:1200 == 1 || CFLAG:1200 == 2
+							PRINTFORMW 美味だったよ」
+						ELSE
+							PRINTFORMW 美味そうだね…いろんな意味で」
+						ENDIF
+					ELSEIF TALENT:恋慕
+						PRINTFORMW 「好物？　…そうだな、いろいろあるが」
+						PRINTFORMW 「…君の淹れる茶も、そのひとつかな」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORMW 「好物？　…そうだな、肉かな」
+						PRINTFORMW 「ときに、君の脹ら脛はなかなか瑞々しいね」
+					ELSE
+						PRINTFORMW 「好物？　…そうだな、肉かな」
+						PRINTFORMW 「人肉はなかなか結構な風味なんだが、久しく食べてないねぇ…」
+					ENDIF
+				ELSE
+					IF TALENT:恋人
+						PRINTFORML 「ああ、あそこの玉露は逸品だよ」
+						PRINTFORMW 「ま、お茶の有難味は淹れる人で決まるところも大きいがね」
+					ELSEIF TALENT:恋慕
+						PRINTFORML 「ああ、あそこの玉露は逸品だよ」
+						PRINTFORMW 「…何だったら、買いに行くのに付き合ってもいいぞ」
+					ELSEIF CFLAG:2 >= 1000
+						PRINTFORML 「ああ、あそこの玉露は逸品だよ。君も学習するといい」
+						PRINTFORMW 「ウチで飲めるようになれば大変結構だ」
+					ELSE
+						PRINTFORML 「ああ、あそこの玉露は逸品だよ。君のとは段違いだね」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+
+ENDIF
+RETURN 1
+;==================================================
+;301,泡茶
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_301
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_301_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_301_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;うふふが解除されていることを念押しする処理
+CFLAG:1211 = 0
+	IF CFLAG:LOCAL:ブチギレ
+		PRINTFORMW 「……用が済んだなら消えろ」
+	;初めて
+	ELSEIF FIRSTTIME(SELECTCOM)
+		PRINTFORML 「へえ、お茶を淹れてくれたのかい？言っておくが、私はお茶にはちとうるさいよ」
+		PRINTFORM そう言って受け取ったお茶を飲んだ納茲琳は
+			;マズー
+			IF TFLAG:193 == -1
+				PRINTFORMW 一口飲んで、鼻で笑った。
+				PRINTFORMW 「少しでも期待した私が馬鹿だったよ」
+			;ウマー
+			ELSEIF TFLAG:193 == 1
+				PRINTFORMW 一口含むと、黙りこんでしまった。
+				PRINTFORML 
+				PRINTFORMW 固唾を呑んで見守る主人公の前で、納茲琳は真顔のまま二口目を含む。
+				PRINTFORML 
+				PRINTFORML 「…やるじゃないか。美味いよ、このお茶。
+				PRINTFORML 　少し苦いが、私はこのくらいが好きだ。
+				PRINTFORMW 　…もしかして、それも知ってて淹れたのかい？」
+			;フツー
+			ELSE
+				PRINTFORML 一口含むと、曖昧に頷いた。
+				PRINTFORML 
+				PRINTFORMW 「…ふむ、まあまあかな」
+			ENDIF
+	;二回目以降
+	ELSE
+		;◆睡眠薬だぜひゃっはー
+		IF TFLAG:194
+			IF TFLAG:194 < 0
+				PRINTFORMW 「……気づかれないとでも思ったかい？」
+			ELSE
+				IF TFLAG:193 == 1
+					PRINTFORMW 「ふむ、いつもより美味しかった気がするよ」
+				ELSEIF TFLAG:193 == -1
+					PRINTFORML 「……不味かった。こう、その、お茶以外の味というか」
+				ELSE
+					PRINTFORMW 「いつもと少し違う味だった気がするな」
+				ENDIF
+			ENDIF
+		;混ぜ物なし
+		ELSE
+			;不味い
+			IF TFLAG:193 == -1
+				;5～6時(寝起きと仮定)
+				IF TIME:0 >= 300 && TIME:0 <= 360
+					PRINTFORMW 「…ガツンとくるねえ。おかげで目は覚めたよ…」
+				;◆
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORML 
+						PRINTFORMW 一口含むと、納茲琳は渋い顔をした。
+						PRINTFORML 
+						PRINTFORML 「…湯冷ましはしたかい？
+						PRINTFORML 　湯の温度が高いと苦味と渋味が強く出るんだ。
+						PRINTFORMW 　特にこの茶葉は上等だから、湯気が横ゆれして上がる程度まで待ったほうがいい」
+					ELSEIF RAND:2 == 0
+						PRINTFORML 
+						PRINTFORMW 一口含むと、納茲琳は眉を寄せた。
+						PRINTFORML 
+						PRINTFORML 「これはお湯かい？全く味がしないよ。
+						PRINTFORML 　…いいかい、茶葉を入れてから浸出するまでに時間が掛かる葉もある。
+						PRINTFORMW 　この葉だと…30秒くらいかな。あと、一人分だけを淹れるときは、少し茶葉を多めにね」
+					ELSE
+						PRINTFORML 
+						PRINTFORMW 一口含むと、納茲琳はため息を付いた。
+						PRINTFORML 
+						PRINTFORML 「…急須でお茶を淹れたら、最後の一滴まで淹れないと駄目だ。
+						PRINTFORML 　それから、注ぎ切ったら急須の蓋を閉め切らないように。茶葉が蒸れてしまうからね。
+						PRINTFORMW 　これを怠ると、二煎目が不味くなってしまうんだ」
+					ENDIF
+					PRINTFORML 
+					PRINTFORML 道歉と、納茲琳は一息に飲干してから湯呑みを返した。
+					PRINTFORMW 
+				ENDIF
+			;美味しい
+			ELSEIF TFLAG:193 == 1
+				IF TALENT:恋慕
+					PRINTFORMW 「ふむ、今回は格別にいい香りと色だった」
+					PRINTFORMW 「美味かったよ。ありがとう」
+					PRINTFORMW 「これは何かお礼をしなければいけないかな？」
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORMW 「今回はいつにも増して美味かったな」
+						PRINTFORMW 「日々の精進の賜物か？」
+					ELSE
+						PRINTFORMW 「ほう、なかなか美味しいじゃないか」
+					ENDIF
+				ENDIF
+			;普通
+			ELSE
+				;5～6時(寝起きと仮定)
+				IF TIME:0 >= 300 && TIME:0 <= 360
+					PRINTFORML 「ん…やっぱり寝起きにはお茶だな」
+				;走廊で、夜(19～4時)で、満月
+				ELSEIF CFLAG:現在位置 == 110 && TIME:2 >= 5 && TIME:2 <= 7 && DAY:4 == 15
+					PRINTFORMW 走廊で満月を鑑賞する納茲琳にお茶を差し出した…
+					PRINTFORML 「ん…気が利くじゃないか。君も一緒に眺めるかい？」
+					PRINTFORMW 心情を良くした納茲琳は、自分の隣をトントンと叩いた…
+				;吃飯または招待吃飯 の直後
+				ELSEIF PREVCOM == 414 || PREVCOM == 415
+					PRINTFORML 「んん、最後までいい気配りじゃないか…」
+					PRINTFORMW 「やはり吃飯はお茶で締めるべきだな」
+				ELSE
+					;MASTERが茶淹技能3以上の分岐なんだけどTWにはないのでオミット
+					;IF ABL:MASTER:茶淹技能 >= 3
+					;	IF RAND:3 == 0
+					;		PRINTFORML 「ふうん…随分と様になったじゃないか。ここに来た頃とは見違えたな」
+					;		PRINTFORMW 「その調子で精進したまえ」
+					;	ELSEIF RAND:2 == 0
+					;		PRINTFORMW 「…随分と安定して美味くなったね。すごいじゃないか」
+					;		PRINTFORML 「それなりに練習したんだろ？私はたとえ人間だろうと
+					;		PRINTFORMW 　成果を伴った努力には敬意を払うことにしてるんだ」
+					;	ELSE
+					;		PRINTFORMW 「…うん、美味い。ありがとう」
+					;	ENDIF
+					;ELSE
+						IF TALENT:恋人 && RAND:2 == 0
+							IF RAND:3 == 0
+								PRINTFORMW 「うむ、美味い。やはり愛の力は偉大だな？」
+								PRINTFORMW 納茲琳はニヤニヤと笑いながらお茶をすすっている…
+							ELSEIF RAND:2 == 0
+								PRINTFORMW 「私を好いてくれる人が淹れる茶を飲める。貴重な時間だな」
+								PRINTFORMW 「私は幸せ者だ…」
+							ELSE
+								PRINTFORMW 「ふふっ、いつもありがと」
+								PRINTFORMW 「もう、君の淹れてくれるお茶なしの生活は考えられないな」
+							ENDIF
+						ELSEIF TALENT:恋慕 && RAND:2 == 0
+							;◆
+							IF RAND:3 == 0
+								PRINTFORMW 「うん、美味かったよ」
+								PRINTFORMW 「実はこうして君とまったりする時間が少し楽しみなんだ」
+							;◆
+							ELSEIF RAND:2 == 0
+								PRINTFORMW 「うん、いい味だった」
+								PRINTFORMW 「いつもありがとう、美味かったよ」
+							ELSE
+								PRINTFORMW 「ああ、美味かったよ。ありがとう。…」
+								PRINTFORMW 「ま、まぁ、待ちなよ。少し話でもしようじゃないか？」
+							ENDIF
+						ELSE
+							IF RAND:4 == 0
+								PRINTFORMW 「ん…まぁ及第だね」
+							ELSEIF RAND:3 == 0
+								PRINTFORMW 「ああ、頂くよ」
+							ELSEIF RAND:2 == 0
+								PRINTFORMW 「ん…ご馳走様」
+							ELSE
+								PRINTFORMW 「ふむ…まあまあだな」
+							ENDIF
+						ENDIF
+					;ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;302,身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_302
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_302_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_302_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;うふふが解除されていることを念押しする処理
+CFLAG:1211 = 0
+	;◆初めて
+	IF FIRSTTIME(SELECTCOM)
+		IF TALENT:MASTER:2
+		;/[討厭男人]だからびっくりするのは仕方ないね
+			PRINTFORMW 「……いきなり触るんじゃない。びっくりするだろう？」
+			IF TFLAG:193 == 1
+				PRINTFORMW 「まったく、次からは気を付けてくれよ？」
+			ELSEIF TFLAG:193 == -1
+				PRINTFORMW 「――――まだあの時のことが……もう、大丈夫なはずなのに」
+			ELSE
+				PRINTFORMW 「――――もう大丈夫なはずなのに。……いや、こっちの話だ」
+			ENDIF
+		ELSE
+			PRINTFORMW 「なんだ、急に触ってきたりして？身体接触？」
+		ENDIF
+	;◆憤怒
+	ELSEIF CFLAG:LOCAL:ブチギレ
+		PRINTFORMW 「……火傷したいのか？」
+	;◆デート中
+	ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中)
+		IF FIRSTTIME(SELECTCOM)
+			PRINTFORMW 「……少しは他人の目を気にしないか」
+			IF TFLAG:193 == 1
+				PRINTFORMW 「そういうのは帰ってから……今のは忘れてくれ」
+			ELSE
+				PRINTFORMW 「やれやれ、まったく……」
+			ENDIF
+		;恋人
+		ELSEIF TALENT:恋人
+			IF TFLAG:193 == 1
+				PRINTFORMW 「少しくっつきすぎじゃないかって？」
+				PRINTFORMW 「いいじゃないか、君だって満更じゃないんだろう？」
+				PRINTFORMW 「前は私が恥ずかしがっていたのに、今じゃ君の方が恥ずかしがるのかい？」
+			ELSEIF TFLAG:193 == -1
+				PRINTFORMW 「……ごめん、久々に恥ずかしさが上回ったようだ」
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORMW 「ふふっ……ねぇ、%MASTERNAME:39%？こうも甘えてこられるとね」
+					PRINTFORMW 「なんだか周りに私は君のモノだって宣言されてるみたいだよ」
+					PRINTFORMW 「……恥ずかしいけど、嬉しくもある」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「もう、しょうがないなぁ%MASTERNAME:39%は」
+					PRINTFORMW 「人前なのにベタベタと、恥ずかしくないのかい？私は嬉しいが」
+				ELSE
+					PRINTFORMW 「恥ずかしいからあまりこういうことはして欲しくなかったのに」
+					PRINTFORMW 「……今じゃ少し物足りないと感じてる自分がいる。変わるもんだね」
+				ENDIF
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			IF ABL:親密 >= 8
+				IF TFLAG:193 == 1
+					PRINTFORMW 「少しくっつきすぎ？いいじゃないか、先にやってきたのは君の方だろう？」
+					PRINTFORMW （私だって、夢を見る権利ぐらいあるはずだ）
+					PRINTFORMW 「前は私が恥ずかしがっていたのに、今じゃ君の方が恥ずかしがるのかい？」
+					PRINTFORMW （そうさ。思わせぶりなこいつが悪いんだ）
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……ごめん、久々に恥ずかしさが上回ったようだ」
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORMW 「ふふっ……ねぇ、%MASTERNAME:39%？こうも露骨に甘えらえるとさすがにちょっとね」
+						PRINTFORMW （……恥ずかしいけど、ま、何だ…悪くはないね…）
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「はあ、外に出てまでベタベタと、敵わんな%MASTERNAME:39%には」
+						PRINTFORMW 「…ま、今更か…ふふっ」
+					ELSE
+						PRINTFORMW 「人前でこんなのもどうかと思ってたけど」
+						PRINTFORMW 「……慣れって怖いねぇ。ふふ」
+					ENDIF
+				ENDIF
+			ELSE
+				IF TFLAG:193 == 1
+					PRINTFORMW 「……いいかい？今の私達、傍から見りゃ、その、なんだ…恋人同士に見えなくもないぞ？」
+					PRINTFORMW （いい加減、望みを捨てることだ）
+					PRINTFORMW 「こういうことは…好きな娘作って…その娘とやりたまえよ」
+					PRINTFORMW （違う。私は選ばれない。私はふさわしくない。こいつは私を選ばないんだ）
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……ばか」
+				ELSE
+					IF RAND:3 == 0
+						PRINTFORML 「まったく、あらぬ誤解を招いても知らんぞ？」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「なぜ、人前でベタベタしようとするんだ？」
+						PRINTFORMW 「君とこういうことをするのは、その、吝かじゃないが…何もこんなところで……」
+					ELSE
+						PRINTFORMW 「……あのな。出歩いてる時ににくっつくのはやめてくれないか」
+						PRINTFORMW （全く…こいつは何でこんなに馬鹿なんだ…）
+					ENDIF
+				ENDIF
+			ENDIF				
+		;合意
+		ELSEIF GETBIT(CFLAG:1,0)
+			IF ABL:親密 >= 8
+				IF TFLAG:193 == 1
+					PRINTFORMW 「やれやれ、しょうがない奴だな。君は」
+					PRINTFORMW （まぁ、私も満更ではないが……）
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……やはり人前では、ね」
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORMW 「まったく、人目を気にしない奴だ」
+					ELSE
+						PRINTFORMW 「イチャイチャしすぎるのは周りに毒だぞ」
+					ENDIF
+				ENDIF
+			ELSE
+				IF TFLAG:193 == 1
+					PRINTFORMW 「だから、衆人環視のこの状況でベタベタするな！」
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……いいかげんにしないか」
+				ELSE
+					IF RAND:2 == 0
+						PRINTFORMW 「君の知り合いがいるかもしれないだろう？こんなことをしていたら絶対に冷やかされるぞ？」
+					ELSE
+						PRINTFORMW 「やめろ、あんまりひっつくんじゃない」
+					ENDIF
+				ENDIF
+			ENDIF
+		ELSE
+			IF ABL:親密 >= 8
+				IF TFLAG:193 == 1
+					PRINTFORMW 「ああもう、嫌だって言ってるのに……しょうがない奴だな」
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……ちょっと、しつこいよ」
+				ELSE
+					PRINTFORMW 「もう、君って奴は」
+				ENDIF
+			ELSE
+				IF TFLAG:193 == 1
+					PRINTFORMW 「まったく、君という奴は……」
+					PRINTFORMW 「今ので満足しただろう？もうこんなことはするなよ」
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……いいかげんにしろ」
+				ELSE
+					PRINTFORMW 「ええい、あんまりひっつくな」
+				ENDIF
+			ENDIF
+		ENDIF
+	;デート中でない
+	ELSE
+		;恋人
+		IF TALENT:恋人
+			;浴場
+			IF CFLAG:現在位置 == 112
+				;◆
+				IF TFLAG:193 == 1
+					PRINTFORMW 「ありがとう、気持ちよかったよ……」
+					PRINTFORMW 「しかし、念入り且つ丁寧な手つきだったね？」
+					PRINTFORMW 「やはり自分のモノはきれいにしておきたいのかな？」
+				;◆
+				ELSEIF TFLAG:193 == -1
+					PRINTFORMW 「……もっと優しくしてくれ」
+				ELSE
+					;◆
+					IF RAND:8 == 0
+						PRINTFORMW 「ふう、いい感じだったよ…次は前の方も頼もうかな？」
+						PRINTFORMW 「どうした、今更恥ずかしがることもないだろう？ふふっ」
+						PRINTFORMW 納茲琳は悪戯っぽく笑った…
+					;◆
+					ELSEIF RAND:7 == 0
+						PRINTFORML 「耳としっぽを念入りに洗ってくれたようだね。
+						PRINTFORMW 　どちらも私にとって大事なところだからね。嬉しいよ」
+						PRINTFORMW 「……しかし、たまにしっぽで玩遊戲のはやめてくれ」
+					;◆
+					ELSEIF RAND:6 == 0
+						PRINTFORMW 「ん……ありがとう、さっぱりしたよ」
+						PRINTFORMW いつになく心情が良い。
+						PRINTFORMW 「ふふっ、暖かい浴室で傍らには君が……それだけのことさ」
+				;/ここからほとんどただの愛撫。素っ裸だからしょうがないね
+					ELSEIF RAND:5 == 0 
+						PRINTFORML 納茲琳の小柄な裸体を滑るように撫でた…
+						PRINTFORMW 「ん…こんな起伏の無い体を触って楽しいかい…？」
+						;MASTERが押し倒して初ウフフ
+						SIF CFLAG:1200 == 1
+							PRINTFORMW 「ああ…こんな体に我慢できなかった君には愚問だったな…ふふっ」
+					ELSEIF RAND:4 == 0 
+						PRINTFORML 「ふふ…いろんなところを撫でておくれ…」
+						PRINTFORMW 泡まみれの納茲琳の肢体を舐めるように撫でていると、納茲琳は振り返って囁いた…
+						PRINTFORMW 「もっと内側を撫でても…いいんだぞ…♪」
+					ELSEIF RAND:3 == 0 
+						PRINTFORML 手のひらで直接納茲琳の体を洗うと、なめらかな肌が赤みを帯びていく…
+						PRINTFORMW 「んっ…ふふ、君は盛り上げるのがなかなか上手いね…♪」
+					ELSEIF RAND:2 == 0
+						PRINTFORMW 「は、あっ、ん…なかなか、焦らすじゃないか…んんっ」
+						PRINTFORMW 「期待して…んんっ、いいんだろうね…？」
+					ELSE
+						PRINTFORML 「ふふっ…いいね、こういうの。恋人っぽくて」
+						PRINTFORMW 背中の流し合いのあと、納茲琳はイタズラっぽく笑った
+					ENDIF
+				ENDIF
+			;走廊
+			ELSEIF CFLAG:現在位置 == 110
+				;流れ星
+				IF TIME:7 == 3
+					PRINTFORML 納茲琳と一緒に流れ星を眺めた
+					PRINTFORML 「ロマンチックだねぇ…君も流れ星に願い事をするクチかい？」
+					PRINTFORMW 「私？私は女の子だから、ロマンチックでも許されるのさ」
+				;夏で晴天
+				ELSEIF DAY:2 == 2 && (TIME:5 == 0 || TIME:5 == 1)
+					;10～16時
+					IF TIME:0 >= 600 || TIME:0 <= 960
+						PRINTFORML 冷えた井戸水を詰めた瓶を渡した
+						PRINTFORMW 「おお…こいつは…なんとも…」
+					;17～19時
+					ELSEIF TIME:0 >= 1020 || TIME:0 <= 1140
+						PRINTFORML 納茲琳と夕涼みをした
+						PRINTFORML 「まだ暑いが、さすがに日差しがなければなんとかなるね」
+						PRINTFORMW 「…夜の運動にゃまだ暑いがね」
+					ENDIF
+				ELSE
+					PRINTFORML 納茲琳と外の景色をぼうっと眺めた
+					PRINTFORMW 「…やっぱり私にはただ眺めるだけなのは性に合わないな」
+					PRINTFORMW そう言いつつも、納茲琳は動こうとせずに主人公に撫でられ続けている…
+				ENDIF
+			ELSE
+				;◆成功
+				IF TFLAG:193 == 1
+					PRINTFORMW 「んん、私に甘えたいのかい？君の好きなようにするといい」
+					PRINTFORMW 「その代わり、後で私も好きにさせてもらうからね…%UNICODE(0x2665)%」
+				;失敗
+				ELSEIF TFLAG:193 == -1
+					IF RAND:2 == 0
+						PRINTFORMW 「さすがに、時と場所をわきまえたまえよ…」
+					;◆
+					ELSE
+						PRINTFORMW 「……親しき仲にも礼儀あり、だよ」
+					ENDIF
+				;◆
+				ELSEIF RAND:11 == 0
+					PRINTFORMW 「…そこまで丁寧に触れなくてもいいよ？嬉しいけど」
+					PRINTFORMW 「もうちょっと大胆でも…いいんだぞ？」
+				;◆
+				ELSEIF RAND:10 == 0
+					PRINTFORMW 「私に触れてる時、君は自分がどんな顔をしているか知っているかい？」
+					PRINTFORMW 「それはそれは幸せそうな顔をしているよ」
+					IF RAND:2 == 0
+						PRINTFORMW 「……それを見ている私も、きっとそうなんだろうね…」
+					ELSE
+						PRINTFORMW そう言う納茲琳の表情は、とても満足気だった…
+					ENDIF
+				;◆
+				ELSEIF RAND:9 == 0
+					PRINTFORMW 「やれやれ、隙あらばベタベタと…ゆっくりと語らうのも素敵なものだよ？」
+					PRINTFORMW 「ま、別に触れられながら語らってくれてもいいけどね」
+				ELSEIF RAND:8 == 0 
+					PRINTFORML なぜか衝動的に納茲琳を撫でたくなったので実行した
+					PRINTFORMW 「ん…撫でるなら、もっと近くに来なよ」
+				ELSEIF RAND:7 == 0 
+					PRINTFORMW 「…ん…」
+					PRINTFORMW 耳を撫でる手に、納茲琳は気持ちよさそうに目を閉じている…
+				ELSEIF RAND:6 == 0 
+					PRINTFORMW 納茲琳の耳を指でいじった…
+					PRINTFORMW 「こら…ぐにぐにするのはやめたまえ」
+				ELSEIF RAND:5 == 0 
+					PRINTFORMW 「ふふ…手つきに何か意図を感じるんだが？」
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「ん…なんだい、お誘いかい？」
+				ELSEIF RAND:3 == 0
+					PRINTFORMW 納茲琳をあぐらの上に座らせた
+					PRINTFORML 「しかしこれでは、恋人というより妹や娘じゃないか。
+					PRINTFORMW 　私としては、もう少し格上の扱いを希望する」
+					PRINTFORMW しかし、逃げ出そうとはしなかった
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「～～～ッッ」
+					PRINTFORMW 目の前で揺れる納茲琳の耳に息を吹きかけると、納茲琳は声にならない悲鳴を上げた…
+				ELSE
+					PRINTFORML 「肩揉みかい？ああ、じゃあたのむよ」
+					PRINTFORMW 納茲琳の小さい肩には、しかし凝りは見当たらない
+					PRINTFORMW 「馬鹿だな…揉むという行為自体に意味があるんだよ」
+					PRINTFORMW 「さあ、交代だ。身体接触ってのは一方向じゃないんだぞ」
+				ENDIF
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			;浴場
+			;/超緊張してるので、一見よそよそしくなります。
+			IF CFLAG:現在位置 == 112
+				IF RAND:2 == 0
+					PRINTFORMW 納茲琳に背中を流して欲しいと頼んだ
+					PRINTFORML 「……まあ、いいけど」
+					PRINTFORM 「わ、私？いや…
+					IF RAND:2 == 0 
+						PRINTFORMW まあ…お願いしようか…」
+					ELSE
+						PRINTFORMW け、結構だっ…！」
+					ENDIF
+				ELSE
+					PRINTFORML 「背中を流すのはまあ、いいけど」
+					PRINTFORMW 「絶対こっちを見るなよ…」
+				ENDIF
+			;走廊
+			ELSEIF CFLAG:現在位置 == 110
+				;流れ星
+				IF TIME:7 == 3
+					PRINTFORML 納茲琳と一緒に流れ星を眺めた
+					PRINTFORML 「…」
+					PRINTFORMW 「あ、いや、今の願い事は取り消し、取り消しで」
+				;夏で晴天
+				ELSEIF DAY:2 == 2 && (TIME:5 == 0 || TIME:5 == 1)
+					;10～16時
+					IF TIME:0 >= 600 || TIME:0 <= 960
+						PRINTFORML 冷えた井戸水を詰めた瓶を渡した
+						PRINTFORMW 「おお…こいつは…なんとも…」
+					;17～19時
+					ELSEIF TIME:0 >= 1020 || TIME:0 <= 1140
+						PRINTFORML 納茲琳と夕涼みをした
+						PRINTFORML 「まだ暑いが、さすがに日差しがなければなんとかなるね」
+						PRINTFORMW (…しかし、こいつの近くにいると熱くてかなわん)
+					ENDIF
+				ELSE
+					PRINTFORML 納茲琳と外の景色をぼうっと眺めた
+					PRINTFORMW しかし、納茲琳はそわそわして外の景色どころではない様子だ…
+				ENDIF
+			ELSE
+				;失敗
+				IF TFLAG:193 == -1
+					PRINTFORMW 「やんっ…」
+					PRINTFORMW なかなか珍しい声を聞けた。
+				ELSEIF RAND:8 == 0 
+					PRINTFORML なぜか衝動的に納茲琳撫でたくなったので実行した
+					PRINTFORMW 「なっ…いきなりびっくりするじゃないか」
+					PRINTFORML 嫌か？
+					PRINTFORMW 「いや……そういう、わけじゃ、ないが」
+				ELSEIF RAND:7 == 0 
+					PRINTFORMW 納茲琳は身体を緊張させながらも大人しく撫でられた…
+				ELSEIF RAND:6 == 0 
+					PRINTFORMW 「…そういうことは、恋人でも作ってその子にやりたまえよ」
+				ELSEIF RAND:5 == 0 
+					PRINTFORMW 「ちょっ、そ、そこはぁっ…」
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「…」
+					PRINTFORMW 納茲琳はさり気なくすり寄ってきた…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 納茲琳を自分のあぐらの上に座らせた…
+					PRINTFORMW 「…仮にも妖怪をペットみたいに扱うのはどうかと思うよ」
+					PRINTFORMW 妖怪ではなく納茲琳だ。
+					PRINTFORMW 「…勝手にしてくれ」
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「～～～ッッ」
+					PRINTFORMW 目の前で揺れる納茲琳の耳に息を吹きかけると、納茲琳は声にならない悲鳴を上げた…
+				ELSE
+					PRINTFORML 「肩揉み…？あー…じゃあお願いしようか…」
+					PRINTFORMW 「…」
+					PRINTFORMW 肩を揉む間、納茲琳はずっと無言だった…
+				ENDIF
+			ENDIF
+		;恋人、恋慕なし
+		ELSE
+			;浴場
+			IF CFLAG:現在位置 == 112
+				;◆好感度1000以上
+				IF CFLAG:2 >= 1000
+					;成功
+					IF TFLAG:193 == 1
+						IF RAND:2 == 0
+							PRINTFORMW 「あ……ふぅ、気持ちよかったよ」
+							PRINTFORMW 「君になら耳としっぽの手入れを任せられるかな？」
+						ELSE
+							PRINTFORMW 「今度は頭も洗ってもらおうかな？」
+						ENDIF
+					;失敗
+					ELSEIF TFLAG:193 == -1
+						PRINTFORMW 「……力が入り過ぎだったよ」
+					ELSE
+						IF RAND:3 == 0
+							PRINTFORMW 「そう、丁寧に頼むよ」
+							PRINTFORMW 「私は敏感肌なんでね」
+						ELSEIF RAND:2 == 0
+							PRINTFORMW 「ありがとう、1人じゃ洗いにくい部分もあるからね」
+						ELSE
+							PRINTFORMW 「ごしごし、というのはやめてくれ」
+							PRINTFORMW 「そう、でも少し力が弱かったな。次は今のよりもう少しだけ強くね」
+						ENDIF
+					ENDIF
+				;好感度1000未満
+				ELSE
+					;◆成功
+					IF TFLAG:193 == 1
+						PRINTFORMW 「……ありがとう、さっぱりした」
+					;◆失敗
+					ELSEIF TFLAG:193 == -1
+						PRINTFORMW 「……もう終わっただろ？出口ろ」
+					ELSE
+						;◆
+						IF RAND:3 == 0
+							PRINTFORMW 「……さっぱりした」
+						ELSEIF RAND:2 == 0
+							PRINTFORMW 「背中流し？別に構わんが、変なことしたらただじゃおかないからね？」
+							PRINTFORMW 「あと、こっちを振り向くのも禁止」
+						ELSE
+							PRINTFORML 「背中を流してあげる？結構だ」
+							PRINTFORMW 「何をされるかわかったもんじゃない。特にオスは…こら、遠慮すると言ってるだろう！」
+						ENDIF
+					ENDIF
+				ENDIF
+			;走廊
+			ELSEIF CFLAG:現在位置 == 110
+				;流れ星
+				IF TIME:7 == 3
+					PRINTFORML 納茲琳と一緒に流れ星を眺めた
+					PRINTFORMW 「君…ロマンチストなのかい？」
+				;夏で晴天
+				ELSEIF DAY:2 == 2 && (TIME:5 == 0 || TIME:5 == 1)
+					;10～16時
+					IF TIME:0 >= 600 || TIME:0 <= 960
+						PRINTFORML 冷えた井戸水を詰めた瓶を渡した
+						PRINTFORMW 「おお…こいつは…なんとも…」
+					;17～19時
+					ELSEIF TIME:0 >= 1020 || TIME:0 <= 1140
+						PRINTFORML 納茲琳と夕涼みをした
+						PRINTFORML 「まだ暑いが、さすがに日差しがなければなんとかなるね」
+					ENDIF
+				ELSE
+					PRINTFORML 納茲琳と外の景色をぼうっと眺めた
+					PRINTFORMW 「…やっぱり私にはただ眺めるだけなのは性に合わないな」
+				ENDIF
+			ELSE
+				;失敗
+				IF TFLAG:193 == -1
+					;◆
+					IF RAND:2 == 0 
+						PRINTFORML 耳触っていいですか？
+						PRINTFORML 
+						PRINTFORMW 「駄目だ。
+						PRINTFORMW 　…駄目だと言ってるだろう！こら！」
+					ELSE
+						PRINTFORMW 「…気安く触らないでくれたまえ」
+					ENDIF
+				;◆成功
+				ELSEIF TFLAG:193 == 1
+					IF RAND:2 == 0
+						PRINTFORML 耳触ります！
+						PRINTFORML 
+						PRINTFORML 「許可を取ることすらしないだと…！？
+						PRINTFORMW 　全く、ご主人にも触らせたこと無いんだがね…」
+						PRINTFORML 
+						PRINTFORMW 「……優しく、頼むよ」
+					ELSE
+						PRINTFORMW 「やれやれ、しょうがない奴だな」
+						PRINTFORMW 「……少しだけなら許してあげよう」
+					ENDIF
+				;◆
+				ELSEIF RAND:9 == 0 
+					PRINTFORML 耳触っていいですか？
+					PRINTFORML 
+					PRINTFORMW 「…仕方ないな。少しだけなら…」
+					PRINTFORMW 「…いや、なんだか雰囲気が怖いのでやっぱり駄目だ」
+				ELSEIF RAND:8 == 0 
+					PRINTFORML なぜか衝動的に納茲琳を撫でたくなったので実行した
+					PRINTFORMW 「ちょっと、なんだよ」
+				ELSEIF RAND:7 == 0 
+					PRINTFORMW 「んんっ」
+				ELSEIF RAND:6 == 0 
+					PRINTFORMW 納茲琳を撫でたが、納茲琳は我関せずといった風に反応しなかった
+				ELSEIF RAND:5 == 0 
+					PRINTFORMW 納茲琳は主人公の手から逃れるように身体を動かした…
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 納茲琳を自分のあぐらの上に載せようとしたが、するりと逃げられてしまった…
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「～～～ッッ」
+					PRINTFORMW 目の前で揺れる納茲琳の耳に息を吹きかけると、納茲琳は声にならない悲鳴を上げた…
+				ELSE
+					PRINTFORML 「肩揉み？私は見た目街道体が柔らかくてね、肩揉みなど不要だ」
+					PRINTFORMW 「それでもやるなら好きにしたまえ」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;◆303,道歉
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_303
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_303_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_303_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193 == -1
+		PRINTFORMW  「……上辺だけの謝罪なら、いっそ謝らない方がいいぞ？」
+	ELSE
+		;◆添削予定
+		;恋人を怒らせるって主にどういう状況だろう…？
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 「許さないよ」
+			PRINTFORML 
+			PRINTFORMW 平身低頭謝罪する%CALLNAME:MASTER%を前に、納茲琳はそう言い放った。
+			PRINTFORML 
+			PRINTFORMW 「当たり前だろう？頭一つ下げたくらいで溜飲が下がる程度なら、最初から怒らないさ」
+			PRINTFORML 
+			PRINTFORMW 顔を上げられない%CALLNAME:MASTER%の胸倉を、華奢な手が掴み上げ、突き飛ばされる。
+			PRINTFORMW 尻餅を付いた%CALLNAME:MASTER%へと歩み寄る足音。
+			PRINTFORML 
+			PRINTFORMW 影になった納茲琳の顔から、深く、深く、息を付く音がして、
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORMW ………次の瞬間には、何故か膝の上に納茲琳が座っていた。
+			PRINTFORML 
+			PRINTFORMW 「…罰として、私の座椅子として懲役五分の刑だ」
+			PRINTFORML 
+			PRINTFORMW %CALLNAME:MASTER%の腕を抱いて、勢いよく背中を預けると、納茲琳はすまし顔でそんなことを言った。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「別に、もう怒っちゃいないよ。
+			PRINTFORML 　ただ、これからもこういうことが続くようなら、聖に話が行くこともあるだろうね。
+			PRINTFORMW 　…馬鹿なことをせず、やるべきことだけしてればいいのさ。簡単な事だろう？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;304,幇忙干活
+;10％で大成功、10～1％で失敗、残りは成功
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_304
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_304_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_304_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;305,索求膝枕
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_305
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_305_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_305_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;うふふが解除されていることを念押しする処理
+CFLAG:1211 = 0
+	IF ABL:TARGET:親密 > 2
+		IF TALENT:恋人
+			;◆
+			IF RAND:9 == 0
+				PRINTFORMW 「こういうときは子守歌の一つでも歌った方がいいのかな？」
+				PRINTFORMW 「聞きたいかい？悪いね、披露できるほどうまいわけじゃない」
+				PRINTFORMW 「そうだな……いつか、聞かせてあげるよ。いつかね」
+			;◆
+			ELSEIF RAND:8 == 0
+				PRINTFORMW 「ふふっ、こうしている時間が結構好きなんだよ」
+				PRINTFORMW 「君がこんなにも無防備な姿を私の前で見せてくれる……」
+				PRINTFORMW 「私は君に信頼されている、そう思えるからね」
+			;◆
+			ELSEIF RAND:7 == 0
+				PRINTFORMW 「今は日々の喧騒を忘れてくつろぐといい」
+				PRINTFORMW 「ほんの少しくらいならこうしていても誰も咎めはしないさ」
+				PRINTFORMW 「まぁ、これが終わったらしっかり働いてもらうよ」
+			;◆
+			ELSEIF RAND:6 == 0
+				PRINTFORMW 「まったく、だらしない顔をして……」
+				PRINTFORMW 「私の膝枕の寝心地はどうかな、%MASTERNAME:39%？」
+				PRINTFORMW 「ま、君のその顔が如実に物語っているけどね」
+			;◆
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 「しかし……君は今の状況がどれだけ危険かわかっているかい？」
+				PRINTFORMW 「私が頭を押さえつければ君は身動きが取れなくなるんだよ？」
+				PRINTFORMW 「さて、どうしてやろうか……キス？それともそれ以上のことがいいかい？」
+			;◆
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「さぁ、母はここにいますから安心してお眠り」
+				PRINTFORMW 「なんてね。……%MASTERNAME:39%は子ども扱いされるのは嫌かな？」
+				PRINTFORMW 「まぁ、君が嫌がろうとやめる気なんかないけどね。ふふ…♪」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「ご主人が私によくやりたがるんだよ、これ」
+				PRINTFORMW 「気恥ずかしいったらありゃしないから、いつも断ってるんだが」
+				PRINTFORMW 「君かい？…まあ、今更だからな」
+				PRINTFORMW 納茲琳は苦笑しながらも頭を撫でてくれた…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 膝枕している間、納茲琳はずっと黙って頭を撫でてくれた…
+			ELSE  
+				PRINTFORMW 「次は私がやってもらおうかね」
+			ENDIF
+		;恋慕
+		;/やめたいけどやめたくない
+		ELSEIF TALENT:恋慕
+			IF RAND:7 == 0
+				PRINTFORMW 「頭を預けるなんて、相手に生殺与奪の権限を与えることだぞ？」
+				PRINTFORMW 「ましてや私は妖怪だ。自分がいかに頓狂なことをしてるのか、自覚はあるのか」
+				PRINTFORMW でも、納茲琳はそんなことしないでしょ？
+				PRINTFORMW 「っ！…ふ、ふん。どうかな…」
+			;◆
+			ELSEIF RAND:6 == 0
+				PRINTFORMW 「こうしていればいいのかい？」
+				PRINTFORMW 「……しかし、私の膝じゃ寝心地もよくないだろうに」
+				PRINTFORMW （ま、君が私にこれを望むなら別にいいんだけど……）
+			;◆
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 「物好きだね、私の膝を枕にするなんて。寝心地は保証できないよ？」
+			;◆
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「こういうことは、あまり慣れていなくて……おい、変に動くな！落ちる！」
+				PRINTFORMW 普段落ち着いている娘が慌てるのは可愛い。
+				PRINTFORMW 「……頭、落としてやろうか？」
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「…かなり恥ずかしいんだが、そろそろ…いや、まあいい…」
+			ELSEIF RAND:3 == 0
+				PRINTFORMW （くそ、落ち着け…平常心だ…）
+			ELSE
+				PRINTFORML 「…」
+				PRINTFORMW 「…何か喋ってくれないか。間が持たない…」
+			ENDIF
+		;恋慕、恋人なし
+		ELSE
+			IF RAND:5 == 0 
+				PRINTFORML 「ご主人が私によくやりたがるんだよ、これ」
+				PRINTFORMW 「気恥ずかしいったらありゃしないから、いつも断ってるんだが」
+			ELSEIF RAND:4 == 0 
+				PRINTFORMW 納茲琳の膝は、小さくて枕にちょうどいい高さだ
+			ELSEIF RAND:3 == 0 
+				PRINTFORMW 「…かなり恥ずかしいんだが、そろそろやめないか？」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…こんなところ、ご主人に見られたらかなりめんどくさい事になりそうだ」
+			ELSE
+				PRINTFORMW 「何が楽しいんだい？こんなの」
+			ENDIF
+		ENDIF
+	ELSE
+		;◆
+		IF RAND:4 == 0
+			PRINTFORMW 「……これでいいのか？」
+		;◆
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「……これでいいのかい？」
+			PRINTFORMW 「変に動いたら即刻頭を落とすからね」
+		;◆
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「頭を預けるなんて、相手に生殺与奪の権限を与えることだぞ？」
+			PRINTFORMW 「ましてや私は妖怪だ。自分がいかに頓狂なことをしてるのか、自覚はあるのか」
+		ELSE
+			PRINTFORMW 「…そろそろ気が済んだかい？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;◆332,勧酒
+;お酒の番号はFLAG:19に入ってる
+;==================================================
+
+@M_KOJO_MESSAGE_COM_K39_332
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_332_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_332_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:LOCAL:ブチギレ
+		PRINTFORMW 「……用が済んだなら消えろ」
+	;宴会
+	ELSEIF GET_TARGETNUM() > 3
+		IF TFLAG:193 == 1
+			PRINTFORMW 「ありがとう、おかげで楽しい酒が呑めたよ」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORMW 「……ここは寺なんだから、もう少し節度を持って…はぁ」
+		ELSE
+			PRINTFORMW 「ま、たまにはいいかな」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF TFLAG:193 == 1
+			PRINTFORMW 「ふむ、やはり酒はいいな。…む、少々酔っぱらってしまったかな？」
+			PRINTFORMW 「すまない、少しの間もたれさせておくれよ……」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORMW 「……どうにも合わなかったな、今のは」
+			PRINTFORMW 「やはり酒は楽しく飲めないと」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「うん、いい気分だ」
+			PRINTFORMW 「大人数での宴会より、君…少人数で飲む酒の方が私は好きだよ」
+		ELSE
+			PRINTFORMW 「……うん、少し酔ったかな」
+			PRINTFORMW 「大丈夫、前後不覚というほどじゃない」
+		ENDIF
+	;好感度高い
+	ELSEIF CFLAG:2 >= 500
+		IF TFLAG:193 == 1
+			PRINTFORMW 「今回の酒は久々にうまかったな」
+			PRINTFORMW 「やはり気心の知れた者との酒は楽しいものだ」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORMW 「……度が、少しきついな」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふむ、やはり酒は好東西だ」
+		ELSE
+			PRINTFORMW 「ふぅ……、ほんのり熱くなったな」
+		ENDIF
+	ELSE
+		IF TFLAG:193 == 1
+			PRINTFORMW 「ほう、なかなかうまい酒じゃないか」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORMW 「……アルコールが入ってればいいってものじゃない」
+		ELSE
+			PRINTFORMW 「…………けふ」
+		ENDIF
+	ENDIF
+ENDIF
+
+;==================================================
+;308,捅臉頰
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_308
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_308_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_308_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:睡眠
+		IF TFLAG:193 == 1 
+			IF RAND:2 == 0
+				PRINTFORMW 「…んん…やめたまえごしゅじん…」
+			;◆
+			ELSE
+				PRINTFORMW 「んん…ふふっ……すぅ……」
+			ENDIF
+		ELSEIF TFLAG:193 == -1
+			IF RAND:2 == 0
+				PRINTFORML 「…んんっ」
+			;◆
+			ELSE
+				PRINTFORML 「ん…やめろ……むぅ……」
+			ENDIF
+			PRINTFORMW 納茲琳は顔をしかめて寝返りを打った…
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORML 「んん…にゃにを……すぅ……」
+				PRINTFORMW 納茲琳の小さな頬は、とても柔らかかった…
+			ELSE
+				PRINTFORML 「んん…」
+				PRINTFORMW 納茲琳は寝息を立てている…
+			ENDIF
+		ENDIF
+	ELSE
+		;連続
+		IF PREVCOM == SELECTCOM
+			IF RAND:2 == 0
+				PRINTFORMW 「全く…そんなにこれが気に入ったのか？」
+			ELSE
+				PRINTFORML 「あーもう…あんまりしつこくすると怒るぞ」
+				PRINTFORMW 可愛い反応をする納茲琳が悪いのだ。
+			ENDIF
+		;成功
+		ELSEIF TFLAG:193 == 1
+			;◆
+			IF RAND:4 == 0
+				PRINTFORMW 「……やるからには自分もやられる覚悟はある、そうだろう？」
+				PRINTFORMW 納茲琳はニヤニヤしながらつつき返してきた…
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「…むー…」
+				PRINTFORMW 捅臉頰と、納茲琳もつつき返してきた
+				PRINTFORML 「しつこい奴だな、君も…」
+				PRINTFORMW そう言いながらも、納茲琳もくすくす笑いながらつつくのを止めようとしない
+				IF TALENT:恋人
+					PRINTFORMW "まるで恋人同士のような"やり取りはしばらく続いた…
+				ELSE
+					PRINTFORMW まるで恋人同士のようなやり取りはしばらく続いた…
+				ENDIF
+			ELSEIF RAND:2 == 0 
+				PRINTFORML 納茲琳の肩を叩く。
+				PRINTFORMW 「うん？どうしたん…」
+				PRINTFORML 
+				PRINTFORMW ぷに、と音がしそうな程柔らかく、頬に指が刺さった。
+				PRINTFORML 
+				PRINTFORML 「…兒童か、君は」
+				PRINTFORMW 若干悔しそう。勝った。
+			ELSE
+				PRINTFORMW ぷに。
+				PRINTFORML 「…この行為に何の意味があるのか」
+				PRINTFORMW ぷにぷに。
+				PRINTFORML 「おい、いい加減やめないか…」
+				PRINTFORMW つんつんつん。
+				PRINTFORMW 「くそ…勝手にしたまえ…」
+			ENDIF
+		;失敗
+		ELSEIF TFLAG:193 == -1
+			;◆
+			IF RAND:4 == 0
+				PRINTFORMW 「やめろ、私の安眠を邪魔するな」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 納茲琳の肩を叩き、指を突き出して等待。
+				PRINTFORML 
+				PRINTFORMW 「…その手は散々やられてるからね。引っかからないよ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…ちょっとしつこいぞ」
+			ELSE
+				PRINTFORMW 「…」
+				PRINTFORMW 何のリアクションも返してくれない。どうやら心情はあまり良くないようだ…
+			ENDIF
+		ELSE
+			;◆
+			IF RAND:6 == 0
+				PRINTFORMW 「むぅ……なにをする」
+			;◆
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 「私の頬などつついて楽しいのか？」
+			;◆
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「意図が読めない……」
+			ELSEIF RAND:3 == 0 
+				PRINTFORMW 「むー…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ペットみたいに扱うなと、何回言えば…」
+			ELSE
+				PRINTFORMW 納茲琳は、ぶすっとした顔をしながらも大人しくつつかれている…
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;309,摸頭
+;親密2以上で「照れくさそうに」親密5以上で「リラックスしたような」
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_309
+;浴場にいるときは情景カット
+SIF !BATHROOM()
+	CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_309_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_309_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;うふふが解除されていることを念押しする処理
+CFLAG:1211 = 0
+	;眠ってるナズをなでなで
+	IF CFLAG:TARGET:睡眠
+		IF ABL:親密 > 5
+			;◆
+			IF RAND:2 == 0
+				PRINTFORMW 「ん…ふふっ……すぅ……」
+			ELSE
+				PRINTFORMW 無意識にか、納茲琳は摸頭手に耳を擦り付けている…
+			ENDIF
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORMW 「んん…」
+			;◆
+			ELSE
+				PRINTFORMW 「…んん……すぅ……」
+			ENDIF
+			PRINTFORMW 納茲琳はむずがるように頭を動かした…
+		ENDIF
+	;◆初めて
+	ELSEIF FIRSTTIME(SELECTCOM)
+		IF TALENT:MASTER:2
+			PRINTFORMW 「……やめてくれ、急に触れてくるのは」
+			PRINTFORMW 「なに、諸般の事情であまり慣れていないんだ」
+		ELSE
+			PRINTFORMW 「なんだ、子どもみたいだとバカにしてるのか？」
+		ENDIF
+	;◆憤怒
+	ELSEIF CFLAG:LOCAL:ブチギレ
+		PRINTFORMW 「……命が、惜しくないようだな」
+	;◆デート中になでなで
+	ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中)
+		IF FIRSTTIME(SELECTCOM)
+			PRINTFORMW 「…何をしてるんだ君は。しかもこんなところで…」
+			PRINTFORMW 「確かにナリはこんなだが妖怪だぞ私は。…おい、聞いてるのか」
+			PRINTFORMW しかし、振りほどく素振りは見せなかった…
+		;恋人
+		ELSEIF TALENT:恋人
+			IF ABL:親密 >= 8
+				A = RAND:3
+				IF A == 0
+					PRINTFORMW 「人の目が気にならないわけじゃないよ？今だって少し恥ずかしい」
+					PRINTFORMW 「でもね、恥ずかしいからってこの貴重な時間を逃すのは余りにも勿体ない」
+					PRINTFORMW 「これから先、今この瞬間に勝るものはそう見つからないだろうから……」
+				ELSEIF A == 1
+					PRINTFORMW 「賢将とも綽名された私でさえも、恋の前では形無しということか」
+					PRINTFORMW 「まこと、恋というものは不思議なものだ。君もそう思わないかい？」
+					PRINTFORMW 「……っと、考えこむのはいいが手は休めないように」
+				ELSE
+					PRINTFORMW 「やれやれ、他人の目があるところで何をしてるんだか」
+					PRINTFORMW 「命蓮寺に戻ってからでもしてもらえるというのに」
+					PRINTFORMW 「しかし、この誘惑は耐え難い。いや、まったく」
+				ENDIF
+			ELSEIF ABL:TARGET:親密 > 5
+				A = RAND:3
+				IF A == 0
+					PRINTFORMW 「下手に抵抗や抗議をしたら、かえって周りから兒童っぽいと思われてしまう」
+					PRINTFORMW 「そういう結論が出たから、今は坦率に受け入れることにしただけのこと」
+					PRINTFORMW 「そういうことだからあんまり調子に乗らないように……聞いてるか？」
+				ELSEIF A == 1
+					PRINTFORMW 「ああもう、結局君はこうして私を子どものように扱う」
+					PRINTFORMW 「二人きりで周りに誰もいない時ならともかく、恥ずかしいし不愉快だし」
+					PRINTFORMW 「まぁ……やめろとは言ってないよ」
+				ELSE
+					PRINTFORMW 「……君は加虐趣味、サディストの気でもあるのかい？」
+					PRINTFORMW 「だってそうだろう？嫌がる私をこんな衆人環視の中で侮辱ようなんて」
+					PRINTFORMW 「そして真っ赤になった私の顔を見てかわいいとか思っているんだろう？この変態」
+				ENDIF
+			ELSEIF ABL:TARGET:親密 > 2
+				IF A == 0
+					PRINTFORMW 「いいさいいさ、今は思う存分私を侮辱るがいいさ」
+					PRINTFORMW 「帰ったらせいぜい足元に気をつけるんだね」
+				ELSEIF A == 1
+					PRINTFORMW 「……こういうことをされるならイチャイチャされた方がマシだな」
+					PRINTFORMW 「あー、でもそれはそれで周りからバカップル扱いか」
+					PRINTFORMW 「子ども扱いされるのとバカップルじゃどっちがマシなのかねぇ…」
+				ELSE
+					PRINTFORMW 「ああもう、いっそ羞恥心なんて捨てた方がいいんだろうか？」
+					PRINTFORMW 「いや、それは駄目だな……ああ、顔から火が出るとはこういうことか」
+				ENDIF
+			ELSE
+				A = RAND:3
+				IF A == 0
+					PRINTFORMW 「ああもう、そういうことするんじゃない！」
+					PRINTFORMW 「変な誤解が広まってしまうかもしれないだろう！？」
+				ELSEIF A == 1
+					PRINTFORMW 「ええい、君と私は親子じゃないんだから」
+					PRINTFORMW 「するならもっと別のことがあるだろう？」
+				ELSE
+					PRINTFORMW 「そ、そういうことをされるなら、ベタベタされた方がマシだ！」
+					PRINTFORMW 「私は君の子どもじゃないんだよ、まったく……」
+				ENDIF
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			IF ABL:親密 >= 8
+				IF RAND:2 == 0
+					PRINTFORMW 「はぁ……いいさ、君の好きなようにするといい」
+					PRINTFORMW 「周りに子どもだと思われるのもまぁ、あきらめよう」
+				ELSE	
+					PRINTFORMW 「……君に頭を撫でてもらうと心が落ち着く」
+					PRINTFORMW 「まぁ、落ち着かない原因も、撫でられる恥ずかしさなんだが」
+				ENDIF			
+			ELSEIF ABL:TARGET:親密 > 5
+				IF RAND:2 == 0
+					PRINTFORMW 「もう君の説得は諦めてるからね……」
+					PRINTFORMW 「せめて、髪をくしゃくしゃにしないようにだけお願いするよ」
+				ELSE	
+					PRINTFORMW 「……はぁ、周りからいったいどういう目で見られているのか」
+					PRINTFORMW 「それを考えてしまうと気が滅入るね……」
+				ENDIF
+			ELSEIF ABL:TARGET:親密 > 2
+				IF RAND:2 == 0
+					PRINTFORMW 「ああもう、君ってやつは。そんなに私を侮辱たいか……」
+				ELSE
+					PRINTFORMW 「ああ、穴があったら入りたい……」
+				ENDIF
+			;/恋慕で親密2以下とかあるんかいな
+			ELSE
+				IF RAND:2 == 0
+					PRINTFORMW 「や、やめろ…っ！」
+				ELSE
+					PRINTFORMW 「こ、こんなところでまでペット扱いするんじゃない！」
+				ENDIF
+			ENDIF
+		ELSE
+			IF ABL:親密 >= 8
+				PRINTFORMW 「賢将もと呼ばれたこの私が……ねぇ？」
+			ELSEIF ABL:TARGET:親密 > 5
+				PRINTFORMW 「何を言っても無駄だからね……仕方なくだよ、仕方なく」
+			ELSEIF ABL:TARGET:親密 > 2
+				PRINTFORML 「こんなところでするな、恥ずかしいだろ……」
+				PRINTFORMW 「というか、君は恥ずかしくないのか」
+			ELSE
+				PRINTFORMW 「あのな…外出中ぐらいやめたらどうだ？」
+			ENDIF
+		ENDIF
+	;添い寝中
+	;/添い寝中だと多少坦率に
+	ELSEIF CFLAG:添い寝中
+		;恋人
+		IF TALENT:恋人
+			;◆
+			IF RAND:6 == 0
+				PRINTFORMW 「…ん…今夜はゆっくり眠れそうだよ」
+				PRINTFORMW 「そうやって、悪い夢を追い出しておくれ」
+				PRINTFORMW 「…それでも悪い夢を見てしまったら、夢の中まで助けに来るように」
+			;◆
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 「……今日もそれなりに頑張ったからね、こうされるのも悪くない」
+				PRINTFORMW 「言葉はなくても、君の手から温かい気持ちが流れ込んでくるよ」
+				PRINTFORMW 「今日も一日ご苦労様、ってね……」
+			;◆
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「…ん…こうしてくれるだけで十分だ」
+				PRINTFORMW 「君がこうして隣にいてくれるなら、安心して眠れるから……」
+				PRINTFORMW 「ま、ボディーガードにしては少々頼りないけどね」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「ん…」
+				PRINTFORMW 納茲琳は安らかに目を閉じて主人公に撫でられている…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…ん…%MASTERNAME:39%…」
+				PRINTFORMW どうやら意識を手放しかかっているようだ…
+			ELSE
+				PRINTFORML 「…なんで、私にしたんだ…」
+				PRINTFORMW 「君なら私より可愛い子でも、性格がいい子でも、選べたろうに…」
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			;◆
+			IF RAND:8 == 0
+				PRINTFORMW 「……そんなことしなくても眠れるよ」
+				PRINTFORMW 「まったく、君の中で私はどういう扱いなんだ？」
+				PRINTFORMW 「やはり子どもか愛玩動物扱いか？……女としては見てくれていないのか？」
+			;◆
+			ELSEIF RAND:7 == 0
+				PRINTFORMW 「ああもう……君という奴は、君という奴は！」
+				PRINTFORMW 「こんなナリでも私は人喰い妖怪だと何回も説明したろう！」
+				PRINTFORMW 「なのに、なんで君はこういうことをするのかな！？なぁっ！？」
+			;◆
+			ELSEIF RAND:6 == 0
+				PRINTFORMW 「……まぁ、このあとはただ寝るだけだし」
+				PRINTFORMW 「声を荒げて眠気が覚めるのも馬鹿げてるし」
+				PRINTFORMW 「気が済んだらさっさと%MASTERNAME:39%も寝るんだよ？」
+			;◆
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 「……君が私の摸頭のをやめさせるのはもう諦めたが」
+				PRINTFORMW 「あまり髪をくしゃくしゃにしないでくれよ」
+				PRINTFORMW 「ひどい寝癖がついてしまったら寺の皆に笑われてしまう」
+			;◆
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「……ふん、好きでもない娘の布団に潜り込んで、こんなことして…不埒な奴だな」
+				PRINTFORMW 「まぁ、今は何より眠いから見逃してあげるよ……」
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「…ふん…」
+				PRINTFORMW 無意識にか、納茲琳は摸頭手に耳を擦り付けている…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…恋人でもないのに、布団にまで潜り込んで、こうして優しくして」
+				;他に恋人持ちがいる
+				IF TALENT:(NO:2):恋人 || TALENT:(NO:3):恋人 || TALENT:(NO:4):恋人 || TALENT:(NO:5):恋人 || TALENT:(NO:6):恋人 || TALENT:(NO:7):恋人 || TALENT:(NO:8):恋人 || TALENT:(NO:9):恋人
+					PRINTFORMW 「自分がどれだけ不義理なことしてるのか、わかってるのか？」
+				ELSE
+					PRINTFORMW 「自分がどれだけ不埒な事してるのか、わかってるのか？」
+				ENDIF
+				PRINTFORMW 嫌なら出ていくよ？
+				PRINTFORMW 「…」
+			ELSE
+				PRINTFORMW 「…私が眠るまで、もう少しだけそうしててくれ…」
+				PRINTFORMW 「そうすれば私も…夢を見られる…」
+				;他に恋人持ちがいる
+				SIF TALENT:(NO:2):恋人 || TALENT:(NO:3):恋人 || TALENT:(NO:4):恋人 || TALENT:(NO:5):恋人 || TALENT:(NO:6):恋人 || TALENT:(NO:7):恋人 || TALENT:(NO:8):恋人 || TALENT:(NO:9):恋人
+				PRINTFORMW 「…その後はちゃんと…行ってやれよ…」
+			ENDIF
+		;親密5以上
+		ELSEIF ABL:親密 > 5
+			IF RAND:2 == 0
+				PRINTFORML 「ったく、君もわからん奴だな…」
+				PRINTFORMW 「何を好き好んで、こんなとこに来るのやら…」
+			ELSE
+				PRINTFORMW 「ふふ…たまにはこんなのも、いいもんだ…」
+			ENDIF
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORMW 「ったく、ご主人と同じようなメンタルをお持ちのようだな、君は…」
+			;◆
+			ELSE
+				PRINTFORMW 「……私はね、子どもじゃないんだ」
+				PRINTFORMW 「だから、そのような行為は不要だよ」
+			ENDIF
+		ENDIF
+	;浴場にいる
+	ELSEIF CFLAG:現在位置 == 112
+		;在浴室里放鬆の直後
+		IF PREVCOM == 403
+			;恋人
+			IF TALENT:恋人
+				PRINTFORMW 納茲琳は黙って目を閉じ、主人公に身体を預けている…
+			;恋慕
+			ELSEIF TALENT:恋慕
+				IF RAND:2 == 0
+					PRINTFORML 「なんで浴室に来てまでそんなことしてるんだ…」
+					PRINTFORMW 「い、いや、別に何かしろと言ってるわけじゃないが」
+				ELSE
+					PRINTFORML 「…ひゃっ！？さ、さわった！？」
+					PRINTFORMW 耳に触れると、納茲琳はびくりと体を震わせた…
+				ENDIF
+			;親密5以上
+			ELSEIF ABL:親密 > 5
+				IF RAND:2 == 0
+					PRINTFORML 「んー？ここでもなでなでかい？」
+					PRINTFORMW 「そういうところはご主人とそっくりだな」
+				ELSE
+					PRINTFORMW 耳の細かな毛が湯を弾いているのが見えた…
+				ENDIF
+			ELSE
+				PRINTFORML 「あのね…ここお浴室だよ？」
+				PRINTFORMW 「もうちょっと距離感ってものを把握しちゃどうだい」
+			ENDIF
+		ELSE
+			PRINTFORML 納茲琳の頭を洗ってやった
+			;ランダム1/2、MASTERの技巧が5以上か霊活手指、ただし恋慕の時はこんな余裕かませない
+			IF RAND:2 == 0  && (ABL:MASTER:技巧 >= 5 || TALENT:MASTER:51 == 1) && TALENT:恋慕 == 0
+				IF RAND:2 == 0
+					PRINTFORMW 「んー…他人の身体の扱い方を心得てるね」
+				ELSE
+					PRINTFORMW 「おおお…なかなか気持ちいいぞ」
+				ENDIF
+			ELSEIF TALENT:恋人
+				IF RAND:3 == 0
+					PRINTFORMW 「ん…頭を洗ってもらえる相手がいるのがこんなに便利だとは…」 
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「そうそう…耳は丁寧にな…」
+				ELSE
+					PRINTFORMW 「コラ…髪で玩遊戲な…」
+				ENDIF
+			ELSEIF TALENT:恋慕
+				IF RAND:3 == 0 
+					PRINTFORMW 「…ん」
+					PRINTFORMW 「…くすぐったい」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「…」
+					PRINTFORMW 洗われている間も納茲琳は終始無言だった…
+				ELSE
+					PRINTFORMW 「ひああっ！？」
+					PRINTFORMW 「…こほん…失礼」
+				ENDIF
+			ELSEIF ABL:親密 > 5
+				IF RAND:3 == 0 
+					PRINTFORMW 「ちょ…耳の中はいいって！」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「んあっ！？ちょ、耳をにゅるんってするのやめろ！」
+				ELSE
+					PRINTFORMW 「そうそう…その調子だ…」
+				ENDIF
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORMW 「おいおい、耳に泡が入らないよう注意してくれよ」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ホントに任せて大丈夫なのか…？」
+				ELSE
+					PRINTFORMW 「さっさと終わらせてくれよ…」
+				ENDIF
+			ENDIF
+		ENDIF
+	ELSE
+		;擁抱の直後
+		IF PREVCOM == 311
+			PRINTFORML 抱きしめた納茲琳を優しく撫でた
+			IF TALENT:恋人
+				PRINTFORMW 「こうされて安心するのは、動物の本能なのだろうな…」
+			ELSEIF TALENT:恋慕
+				PRINTFORMW 納茲琳は真っ赤になって黙り込んでいる…
+			ELSEIF ABL:親密 > 5
+				PRINTFORMW 「んん…まあ悪くない気分だ」
+			ELSE
+				PRINTFORMW 「まるで愛玩動物だな…」
+			ENDIF
+		ELSE
+			;恋人
+			IF TALENT:恋人
+				;失敗
+				;/恋人で撫でるのに失敗ってどういう状況だ
+				IF TFLAG:193 == -1
+					PRINTFORMW 「…撫で過ぎ」
+				;欲情Lv.3以上で、強めのランダム分岐が3つ追加される
+				ELSEIF RAND:4 == 0 && PALAM:欲情 >= PALAMLV:3
+					PRINTFORMW 「…撫でるだけでいいのかい…？」
+				ELSEIF RAND:3 == 0 && PALAM:欲情 >= PALAMLV:3
+					PRINTFORMW 「…ここまで盛り上げといて、撫でるだけとか」
+					PRINTFORMW 「まったく、一体どこでそんな回りくどい意地悪を覚えてきたのかね」
+				ELSEIF RAND:2 == 0 && PALAM:欲情 >= PALAMLV:3
+					PRINTFORMW 「私がどうして欲しいかわかってるくせに」
+					PRINTFORMW 「…意地悪」
+				ELSEIF RAND:7 == 0 
+					PRINTFORMW 「あのな？私は人喰い妖怪だぞ？」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「いくらこういう関係だと言ってもだな、それなりの畏れというか、敬意を―」
+					PRINTFORMW なでなでなで。
+					PRINTFORMW 「…もういい」
+				ELSEIF RAND:6 == 0 
+					PRINTFORMW 「あのなぁ…恋人とはいえ、一応私は先輩だぞ？」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「少しは敬意を払いたまえ…おい、聞いてるのか」
+					PRINTFORMW なでなで。
+				ELSEIF RAND:5 == 0 
+					PRINTFORMW 「あぁもう鬱陶しい！私を愛玩動物扱いするなと―」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「だから、やめろって！」
+					PRINTFORMW なでなで。
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「ああもう…毛並みが乱れるじゃないか」
+					PRINTFORMW 納茲琳はクスクスと笑いながら、苦言を呈した…
+				;◆
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「…あのね、私は君より遥かに永い時を生きてきたんだ」
+					PRINTFORMW うんうん。
+					PRINTFORML 「君より間違いなく知識量は多いし、戦闘能力においては比べることもおこがましいだろう」
+					PRINTFORMW はいはい。
+					PRINTFORML 「…つまり」
+					PRINTFORMW わかったわかった。
+					PRINTFORML 
+					PRINTFORML 「その近所の兒童に接しているかのような態度を改めろと言っているんだッ…！！！」
+					PRINTFORML 
+					PRINTFORMW よーしよしよし。今チーズあげるからねー。
+					PRINTFORMW 「ぶち殺すぞヒューマン」
+				ELSEIF RAND:4 == 0 
+					PRINTFORML 「…さすがにそろそろ鬱陶しいんだが」
+					PRINTFORMW なでなで。
+					PRINTFORML 「…聞いているのか」
+					PRINTFORMW なでなでなで。
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「ん…」
+					PRINTFORMW 「きもちいい」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 納茲琳は心地よさそうに目を閉じている…
+				ELSE
+					PRINTFORMW 撫でていると、納茲琳は頭をもたれかけさせてきた…
+				ENDIF
+			;恋慕
+			ELSEIF TALENT:恋慕
+				IF TFLAG:193 == -1
+					PRINTFORMW 「…っ」
+					PRINTFORMW 撫でていると、納茲琳は顔を見せまいと後ろを向いてしまった…
+				;欲情Lv.3以上で、強めのランダム分岐が3つ追加される
+				ELSEIF RAND:4 == 0 && PALAM:欲情 >= PALAMLV:3
+					PRINTFORMW 「…もっと近くで、もっと強く…触っておくれよ…」
+				ELSEIF RAND:3 == 0
+					PRINTFORMW 「…」
+					PRINTFORMW 納茲琳を撫でると、何か言いたそうな目でこちらを見遣った…
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「…」
+					PRINTFORMW 「…もっと」
+				ELSEIF RAND:4 == 0 
+					PRINTFORML 納茲琳はぶすっとしながらも、大人しく撫でられている
+					PRINTFORMW その頬は、心なしかほんのりと染まっている…
+				ELSEIF RAND:3 == 0
+					PRINTFORML 「…」
+					PRINTFORMW 無意識にか、納茲琳は摸頭手に耳を擦り付けている…
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「…恋人でもないのに、そういう事しない方がいいぞ」
+					PRINTFORMW じゃあ止めようか？
+					PRINTFORMW 「…」
+				ELSE
+					PRINTFORMW 「…ったく、気楽に撫でてくれるよ…」
+				ENDIF
+			;親密5以上
+			ELSEIF ABL:親密 > 5
+				IF TFLAG:193 == -1
+					PRINTFORMW 「…撫で過ぎ」
+				ELSEIF RAND:6 == 0 
+					PRINTFORMW 「あのな？私は人喰い妖怪だぞ？」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「ウチの他のメンツと違って、私はあの博愛主義者の聖に従う義理はないんだ。だから―」
+					PRINTFORMW なでなでなで。
+					PRINTFORMW 「…ああもう！」
+				ELSEIF RAND:5 == 0 
+					PRINTFORMW 「あのなぁ…身内とはいえ、一応私は先輩だぞ？」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「少しは敬意を払いたまえ…おい、聞いてるのか」
+					PRINTFORMW なでなで。
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「あぁもう鬱陶しい！私を愛玩動物扱いするなと―」
+					PRINTFORMW なでなで。
+					PRINTFORMW 「だから、やめろって！」
+					PRINTFORMW なでなで。
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「ああもう…毛並みが乱れるじゃないか」
+					PRINTFORMW しかし本気で嫌がっている風ではないので、なでなでを続行した
+				;◆
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「…あのね、私は君より遥かに永い時を生きてきたんだ」
+					PRINTFORMW うんうん。
+					PRINTFORML 「君より間違いなく知識量は多いし、戦闘能力においては比べることもおこがましいだろう」
+					PRINTFORMW はいはい。
+					PRINTFORML 「…つまり」
+					PRINTFORMW わかったわかった。
+					PRINTFORML 
+					PRINTFORML 「その近所の兒童に接しているかのような態度を改めろと言っているんだッ…！！！」
+					PRINTFORML 
+					PRINTFORMW よーしよしよし。今チーズあげるからねー。
+					PRINTFORMW 「ぶち殺すぞヒューマン」
+				ELSE
+					PRINTFORML 「…さすがにそろそろ鬱陶しいんだが」
+					PRINTFORMW なでなで。
+					PRINTFORML 「…聞いているのか」
+					PRINTFORMW なでなでなで。
+				ENDIF
+			ELSE
+				IF TFLAG:193 == -1
+					PRINTFORMW 「いい加減鬱陶しいぞ」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「…君に撫でられるほど、私は優しくないぞ？」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ふん。私をここのペットか何かと勘違いしているようだね」
+				ELSE
+					PRINTFORMW 「…何のつもりだい？」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;310,摸屁股
+;PRINTFORM 顔の上にまたがった%CALLNAME:TARGET%の\@ TALENT:体型 < 0 ? 小振りな # \@尻を揉みしだいた…
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_310
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_310_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_310_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:TARGET:睡眠
+		IF ABL:親密 > 5
+		;「少し頬を染めてされるがまま」
+			PRINTFORML 「…ふ…ぅ」
+			PRINTFORMW パジャマの上から摸屁股と、納茲琳は鼻にかかった寝息を漏らした…
+		ELSE
+		;「無意識に体をよじって手を払いのける」
+			PRINTFORML 「………んぅ」
+			PRINTFORMW 尻を触られる感触が無くなると再び納茲琳は寝息を立てはじめた…
+		ENDIF
+	ELSEIF CFLAG:添い寝中
+	;押し倒された
+	ELSEIF CFLAG:うふふ == 2
+		;カウンター前から抱きつく
+		IF TCVAR:20 == 32
+			PRINTFORML 「ん…ふぁ…ん…」
+			PRINTFORMW 抱きしめたまま尻に手を這わせると、納茲琳は甘い息を吐いた…
+		;カウンター乳交
+		ELSEIF TCVAR:20 == 53
+			;六九式体勢
+			IF TEQUIP:六九式
+				PRINTFORML 目の前の尻を揉むと、奥の小さな蕾がひくひくと震えた…
+				IF RAND:2 == 0
+					PRINTFORMW 「んあっ…そこ広げないで…」
+				ELSE
+					PRINTFORMW 「そこ見るなよぉ…」
+				ENDIF
+			ELSE
+			;※非六九式時は尻は揉めるが穴は不可。　体勢は深く考えずに「尻をこちらに向けていない」程度の認識で良いか
+				IF RAND:2 == 0
+					PRINTFORMW 「んん…大人しく…擦られたまえ…」
+				ELSE
+					PRINTFORMW 「はぁ…っ、じっと、しときたまえ…」
+				ENDIF
+			ENDIF
+		;カウンター強制舐陰
+		ELSEIF TCVAR:20 == 70
+			;パンツ、あるいは袴子も履いている
+			IF TEQUIP:0 > 1
+			;「顔にまたがったナズの小振りな尻を揉みしだいた…」
+				PRINTFORMW 布越しでも彼女の小振りな尻の感触が手のひらに伝わってくる…
+			;ノーパン～ノーパン裙子
+			ELSE
+			;「尻をゆっくりと揉みながら押し付けられるワレメに舌で奉仕した…」
+				PRINTFORML ナズの尻肉を掴んで、顔の上のワレメにむしゃぶりついた…
+				IF RAND:2 == 0
+					PRINTFORMW 「ふ、ああ…%UNICODE(0x2665)%　いいよ…」
+				ELSE
+					PRINTFORML 「そんな、音立てて吸うなぁっ…」
+				ENDIF
+			ENDIF
+		;カウンター肛門奉仕
+		ELSEIF TCVAR:20 == 72
+			;パンツ、あるいは袴子も履いている
+			;「顔にまたがったナズの小振りな尻を揉みしだいた…」
+			IF TEQUIP:0 > 1
+				PRINTFORML 尻穴のあたりを舌先で突くとピクリと反応するのが分かった
+			;ノーパン～ノーパン裙子
+			ELSE
+			;「ナズの尻たぶを広げ、尖らせた舌をアヌスに侵入させた…」
+				IF RAND:2 == 0
+					PRINTFORML 「ひ…ナカ、は、はいってく、るぅ…」
+					PRINTFORMW 納茲琳は肛門内に侵入してくる熱くヌメった舌の感触に身を震わせた…
+				ELSE
+					PRINTFORML 収縮する肛門が主人公の舌を締め付けてくる…
+					PRINTFORMW 「ひ…ナカ、舐められ、ああっ…！」
+				ENDIF
+			ENDIF
+		ELSE
+		;「ナズの小振りな尻を揉みしだいた…」
+			;パンツ、あるいは袴子も履いている
+			IF TEQUIP:0 > 1
+				IF RAND:3 == 0
+					PRINTFORMW 「ん…遠慮しなくていいんだぞ…%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ふ…ん…はあぁ…」
+					PRINTFORMW 内袴越しに尻の割れ目を撫でてやると、納茲琳は鼻にかかった溜息を漏らした…
+				ELSE
+					PRINTFORML 「んっ、ふふ、焦らすね…」
+					PRINTFORMW 内袴越しに尻を愛撫すると、納茲琳は主人公の耳元で甘い声を漏らした…
+					PRINTFORMW 「私は…んんっ♪　そろそろ、直にして欲しいなって…」
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORMW 「はぁ、はぁ…君の指、熱い…」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 納茲琳の滑らかな尻の割れ目に手を這わせ、体温と感触を楽しんだ…
+				ELSE
+					PRINTFORML 尻の奥に手を滑り込ますと、ひときわ熱いすぼまりに触れた…
+					PRINTFORMW 「はっあ…そこ…」
+				ENDIF
+			ENDIF
+		ENDIF
+	;通常時（非うふふ）
+	ELSE
+		;◆失敗
+		IF TFLAG:193 == -1
+			PRINTFORML 
+			PRINTFORMW 「いきなりなんだい？流石に不躾過ぎるよ」	
+		;◆成功
+		ELSEIF TFLAG:193 == 1
+			PRINTFORMW 「…ッ…！？
+			PRINTFORML 　…し、尻尾を握るのは止めたまえ！危うく仔ネズミたちを落とすところだったじゃないか！
+			PRINTFORMW 　いや、支えてるとかそういう問題ひゃっ！？…あ、あぁぅっ！…しごく、なぁっ…！」
+		ELSEIF TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORML 「んっ…お誘いかい…？」
+				PRINTFORMW 「ふふ…私はいいよ…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「ん…ふふ…盛り上げるのが上手いね…」
+				PRINTFORMW 「おかげで…んっ、火照ってきてしまったよ…」
+			ELSE
+				PRINTFORMW 「ふふ…なかなか大胆じゃないか…」
+			ENDIF
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORML 「は、っあ…断られないのを知ってて…ん、やってるのだろう…？」
+				PRINTFORMW 「大した女たらしだよ、君は…ふ、ああ…%UNICODE(0x2665)%」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「ふ…ん、ん…ひ…」
+				PRINTFORMW 納茲琳は主人公の腕のなかで、尻に指が這うたびに悲鳴をかみ殺している…
+			ELSE
+				PRINTFORMW 「ふふ…なかなか大胆じゃないか…」
+			ENDIF
+		ELSEIF ABL:親密 > 5
+		;「%CALLNAME:TARGET%は照れくさそうな表情を浮かべながらも%CALLNAME:PLAYER%にされるがままになっている…」
+			IF RAND:3 == 0
+				PRINTFORML 「ふ、ふ…積極的だね…」
+				PRINTFORMW 「そういう事するんなら…こっちも…」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「ん…助平だね…」
+				PRINTFORMW そうは言いながらも、納茲琳は拒否する素振りは見せない…
+			ELSE
+				PRINTFORMW 「ふふ…なかなか大胆じゃないか…」
+			ENDIF
+		ELSEIF ABL:親密 > 2
+		;「%CALLNAME:TARGET%は顔を赤らめて%CALLNAME:PLAYER%の手を払いのけた…」
+			IF RAND:4 == 0 
+				PRINTFORML 「んっ…？	
+				PRINTFORMW 　…私の尻なんか触って楽しいのかい？」
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「…破廉恥だな…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ったく、これだからオスは…」
+			ELSE
+				PRINTFORMW 「油断したらこれだ…まったく」
+			ENDIF
+		ELSE
+			PRINTFORMW 「…君、強引で嫌われるタイプだろ」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;311,擁抱
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_311
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_311_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_311_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;%CALLNAME:PLAYER%は\@ CFLAG:TARGET:添い寝中 ? 陪睡 # \@%CALLNAME:TARGET%にギュッと抱きついた
+	;睡眠中
+	IF CFLAG:TARGET:睡眠
+		IF ABL:親密 >= 8
+		;「納茲琳はMASTERの胸元に頬をすり寄せて幸せそうにしている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「ん…♪」
+			ELSE
+				PRINTFORMW 「すぅ…すぅ………」
+			ENDIF
+		ELSEIF ABL:親密 >= 4
+		;「無意識に抱き返してきた…」
+			IF RAND:2 == 0 
+				PRINTFORMW 納茲琳の体温が服越しに伝わってくる…
+			ELSE
+				PRINTFORMW 納茲琳特有の少女と獣の混じった匂いが鼻をくすぐった…
+			ENDIF
+		ELSE
+		;「少し苦しそうに身をよじった…」
+			PRINTFORMW 「んー……むぅ…」
+		ENDIF
+	;添い寝中
+	;少し坦率になる
+	ELSEIF CFLAG:添い寝中
+		IF TALENT:恋人
+			IF RAND:3 == 0 
+				PRINTFORMW 「ふふ…こうしてると、その気になってくるから困るよ」
+				PRINTFORMW 「なぁ、キスしていいかい？」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「君にこうして抱かれると、この小さい体も案外悪くないと思えてしまうね…」
+				PRINTFORMW 納茲琳はクスクスと笑った…
+			ELSE
+				PRINTFORMW 「ん…いくつになっても、恋人に抱かれるってのはいいもんだね」
+				PRINTFORMW 「本当に可愛い人間だよ、君は」
+			ENDIF
+			RETURN 1
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0 
+				PRINTFORMW 「やめておくれよ…勘違いしてしまうだろう」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「どうしてこんなネズミにこんな事するんだい…」
+				PRINTFORMW 納茲琳は可愛いし、賢いよ？
+				PRINTFORMW 「…だから、そういうことを言わないでくれ…」
+			ELSE
+				PRINTFORMW 「どうしてこんな事するんだ…放って置いておくれよ、頼むから」
+				PRINTFORMW 「君は人間で、私は妖怪なんだよ…」
+			ENDIF
+			RETURN 1
+		ELSEIF ABL:親密 >= 8
+		;「嬉しそうに抱き返してきた…」
+			IF RAND:3 == 0
+				PRINTFORML 「ふふ…こんなときに抱きつかないでおくれよ」
+				PRINTFORMW 「その気になってしまうだろう？」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん…いくつになってもいいもんだな」
+			ELSE
+				PRINTFORMW 「フフ…ネズミを抱きしめるなんて、君も変わった奴だな」
+			ENDIF
+			RETURN 1
+		ELSEIF ABL:親密 >= 4
+		;「照れくさそうにしながらも、満更でもないようだ…」
+			IF RAND:3 == 0 
+				PRINTFORML 「ん…」
+				PRINTFORMW 納茲琳の頬はほんのりと染まっている
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…君にそんな胆量があったとは、少々驚かされたよ…」
+			ELSE
+				PRINTFORMW 「…ネズミを抱きしめるなんて、君も変わった奴だな」
+			ENDIF
+			RETURN 1
+		ELSE
+		;「恥ずかしそうにしている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…大して親しくもないのに、よくこんなことができるね…」
+			ELSE
+				PRINTFORMW 「…意図が図りかねるんだが」
+			ENDIF
+			RETURN 1
+		ENDIF
+	;押し倒された
+	ELSEIF CFLAG:うふふ == 2
+		;カウンターキス
+		IF TCVAR:20 == 30
+			PRINTFORML 「んっ！…んん…ちゅく…」
+			PRINTFORMW キスに合わせて抱きしめると納茲琳は驚いたが、そのまま更に深く口付けしてきた…
+		;カウンター素股
+		ELSEIF TCVAR:20 == 52
+			IF RAND:2 == 0
+				PRINTFORML 主人公が納茲琳を抱きしめることで、しこった陰核とヌメる粘膜が更に押し付けられた…
+				PRINTFORMW 「う…くぅっ、あそこ、こすれ、ぅぅぅっ%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORMW 主人公が抱きしめると、納茲琳は更に強く性器を擦りつけてきた…
+				PRINTFORML 「うう…はぁっ、これ、いいっ…！」
+			ENDIF
+		;カウンターディープキス
+		ELSEIF TCVAR:20 == 60
+			PRINTFORML 「ん…んく…はぁ、ちゅぅっ…ぴちゃ、ちゅるぅ…」
+			PRINTFORMW 口腔で深く繋がった二人は、重なり合ったまま互いの唾液を求めた…
+		;カウンター前から抱きつく
+		ELSEIF TCVAR:20 == 32
+			PRINTFORML 納茲琳を強く抱きしめ返した…
+			IF TALENT:恋慕
+				IF RAND:3 == 0
+					PRINTFORMW 「そう、そうだよ…もっとぎゅってしておくれ…%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「%MASTERNAME:39%…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORMW 「うん…もうちょっと、このままでいいかな…」
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORMW 「！…ふふ、君いいね。実にいい…」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ふふ…抱いて、抱かれて…愉しいねぇ…」
+				ELSE
+					PRINTFORMW 「そうそう…基本だけど、抱き合うだけで実に興奮するんだよねぇ…」
+				ENDIF
+			ENDIF
+		ELSE
+			IF RAND:3 == 0 
+				PRINTFORML 「ふふ…こうしてるだけでどんどん昂ぶってくる…」
+				PRINTFORMW 納茲琳は主人公にのしかかったまま、体を擦りつけてきた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ん…もっと、強く…」
+			ELSE
+				PRINTFORML 「ん…んん……気が利かないなぁ…」
+				PRINTFORMW 「こういう時は…キスもセットでしなきゃダメだぞ…？」
+			ENDIF
+		ENDIF
+	;恋人
+	ELSEIF TALENT:恋人
+		IF RAND:8 == 0 
+			PRINTFORML 「ん…君の身体、温かいな…」
+			PRINTFORMW 納茲琳は安らかに目を閉じた…
+		ELSEIF RAND:7 == 0 
+			PRINTFORML 「こうしてると、君がもっと欲しくなってしまうよ…」
+			PRINTFORMW 「フフ…ネズミは欲張りなのさ」
+		ELSEIF RAND:6 == 0 
+			PRINTFORML 「ん…もっと強く抱いておくれ…」
+			PRINTFORMW 「小さいからって遠慮はいらないさ、これでも妖怪だからね」
+		ELSEIF RAND:5 == 0 
+			PRINTFORML 「ん…♪」
+			PRINTFORMW 納茲琳も、抱きつく主人公の体に顔をすり寄せた…
+		ELSEIF RAND:4 == 0 
+			PRINTFORMW 「フフ…抱きしめながら尻を揉むとは、なかなか度し難いね…」
+			PRINTFORMW 「お仕置きが必要かな…？」
+		ELSEIF RAND:3 == 0 
+			PRINTFORMW 「ふふ…こうしてるだけで昂ぶってしまうのは…なぜだろうね…？」
+		ELSEIF RAND:2 == 0 
+			PRINTFORML 「なんだい、甘えちゃってさ…♪」
+			PRINTFORMW 納茲琳はいかにも愉快そうにクスクスと笑った…
+		ELSE
+			PRINTFORML 納茲琳は抱きしめられながら、主人公の服に顔を埋めた…
+			PRINTFORMW 「ふふ…君、私の布団と同じ匂いがするよ？」
+			PRINTFORMW 「ネズミの寝床の匂いがするなんて、ちょっと気を付けたほうがいいんじゃないかい？」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF ABL:親密 >= 8
+		;「嬉しそうに抱き返してきた…」
+			IF RAND:5 == 0 
+				PRINTFORML （こいつを私だけのものにしたい…私を選んで欲しい…でも）
+				PRINTFORMW （叶わぬ願い、ってやつなんだろうな…）
+			ELSEIF RAND:4 == 0 
+				PRINTFORML （今の関係が、誰にとっても一番幸せなんだ…）
+				PRINTFORMW （そう…こいつもきっとそう思ってる…）
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「ん…もっと強く、してくれるかい…」
+				PRINTFORMW 「ちょっとの間だけで、いいからさ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 納茲琳は主人公に抱きしめられたまま、身を任せた
+				PRINTFORMW （こいつの匂いは何回も嗅いだけど…やっぱり、落ち着く…）
+			ELSE
+				PRINTFORML （…どうして私なんかにこんなに…）
+				PRINTFORMW （なあ…答えておくれよ…）
+			ENDIF
+		ELSEIF ABL:親密 >= 4
+		;「照れくさそうにしながらも、満更でもないようだ…」
+			IF RAND:2 == 0
+				PRINTFORMW 「ん…こういうこと、あんまりやらない方がいいぞ…」
+				PRINTFORMW 「どうせ他でも、やっているのだろう…？」
+			ELSE
+				PRINTFORMW 「っ！…だから、いきなりこういう事するのはやめろって…」
+				PRINTFORMW そう言いつつも、納茲琳は拒否する素振りは見せなかった…
+			ENDIF
+		;/恋慕で親密3以下ってできるのか？
+		ELSE
+		;「恥ずかしそうにしている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「あ、あう………」
+			ELSE
+				PRINTFORMW 突然の抱擁に、納茲琳は混乱している…
+			ENDIF
+		ENDIF
+	ELSE
+		IF ABL:親密 >= 8
+		;「嬉しそうに抱き返してきた…」
+			IF RAND:3 == 0
+				PRINTFORMW 「なんだい、甘えちゃってさ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「フフ、可愛いねぇ…」
+			ELSE
+				PRINTFORMW 「ふふ、よしよし…♪」
+			ENDIF
+		;失敗
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 擁抱寸前に、納茲琳のロッドに足を払われて転倒した。
+			PRINTFORML 
+			PRINTFORMW 「…戦闘訓練か何かかい？なんなら今からたっぷり付き合ってあげるけど」
+		;大成功
+		ELSEIF TFLAG:193 == 1
+			PRINTFORMW 「…私のことをぬいぐるみか何かだと思ってるのかい？
+			PRINTFORML 　…まあいいや。ほら、膝を出したまえ。この体勢じゃ座りが悪いだろう。
+			PRINTFORMW 　全く、仕方のない奴だ」
+		ELSEIF ABL:親密 >= 4
+		;「照れくさそうにしながらも、満更でもないようだ…」
+			IF RAND:3 == 0 
+				PRINTFORML 「ちょ、止めないか！」
+				PRINTFORMW 「君はまた、ご主人のようなことを…全く」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「とと…何だい急に」
+			ELSE
+				PRINTFORMW 「…私をペットか何かだと勘違いしてないかい」
+			ENDIF
+		ELSE
+		;「恥ずかしそうにしている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「………何のつもりだい」
+			ELSE
+				PRINTFORMW 「…距離感って大事だよ？」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;312,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_312
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_312_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_312_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;睡眠
+	IF CFLAG:TARGET:睡眠
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ふ…」
+		ELSEIF RAND:2 == 0 
+			PRINTFORML 「…ん、ふぅ…っ…」
+		ELSE
+			PRINTFORMW 「んう……すー…」
+		ENDIF
+		PRINTFORML 唇を離すと、納茲琳は暖かい吐息を一つ吐いた。
+	RETURN 1
+	ENDIF
+	;うふふ
+	;押し倒された
+	IF CFLAG:うふふ == 2
+	;「MASTERは納茲琳の口を、自分の口で塞いだ…」
+		;カウンターキス
+		IF TCVAR:20 == 30
+			IF RAND:2 == 0
+				PRINTFORML 主人公のキスのお返しに火が点いた納茲琳は、更に激しいキスを求めてきた
+				PRINTFORML 「ん…ちゅ…っ……ちゅ……ちゅうっ」
+				PRINTFORMW 納茲琳の小さな唇とヌメった舌が、主人公の舌に絡み付いてくる…
+				;/ちゅっちゅ！
+			ELSE
+				PRINTFORML 「ふふ…いいよ…君、なかなかいい…」
+				PRINTFORMW キスを何回も繰り返し、納茲琳は甘い息を吐いた…
+			ENDIF
+		;カウンター手淫
+		ELSEIF TCVAR:20 == 50
+			IF RAND:2 == 0
+				PRINTFORML 手で奉仕を続ける納茲琳の唇を奪った…
+				PRINTFORMW 「ちゅ…ぷぁ、ん、ん…ふぅ、ぁむ…」
+			ELSE
+				PRINTFORML 「んぷ、あ……ちゅ……んっ」
+				PRINTFORMW 主人公の貪るような口づけに、自然と納茲琳の手の動きも激しくなった…
+			ENDIF
+		;カウンターディープキス
+		ELSEIF TCVAR:20 == 60
+		;「MASTERは自らも納茲琳の口内に舌を侵入させ互いに舌を絡め合った…」
+			IF RAND:5 == 0
+				PRINTFORML 「ふむうぅ…ん…ちゅ、はぁっ、んっ…」
+				PRINTFORMW 少女の唾液が口内に流れ込んで混じり、嚥下されてゆく…
+			ELSEIF RAND:4 == 0
+				PRINTFORML 「んっ…ちゅく…んふー…%UNICODE(0x2665)%　ちゅ…」
+				PRINTFORMW 侵入してきた小さくて熱い舌が主人公の舌に絡みつき、口内を愛撫している…
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「んん…ちゅっ…んー…ぷあっ、は、あんっ！んんん…」
+				PRINTFORMW 納茲琳は口での性交に夢中になり、全身を弛緩させている…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「じゅるる…んちゅ、ん、ん、んっ…」
+				PRINTFORMW 納茲琳の小さな口腔を舌で犯し尽くした…
+			ELSE
+				PRINTFORML 「はあ、はぁ、君のキス、ちょっと激しむぅっ…！？」
+				PRINTFORMW まだまだ足りない。
+			ENDIF
+		ELSE
+			IF ABL:欲望 >= 5
+			;「納茲琳はMASTERの口唇をこじ開けて舌を絡めてきた…」
+				IF RAND:8 == 0
+					PRINTFORML 「んふ…ちゅうっ、はぁ、んんっ…」
+					PRINTFORMW 「ふふ…重なり合って接吻だけで、こんなにも君が欲しくなるなんてね…」 
+				ELSEIF RAND:7 == 0 
+					PRINTFORML 「…ん、ちゅ、ぷは、はぁ、はむぅっ…あっ…」
+					PRINTFORMW 「足りないよ…もっとしておくれ…」
+				ELSEIF RAND:6 == 0 
+					PRINTFORML 「あむ、っふ、んん、っちゅ、ぷは、はぁ、はぷ…」
+					PRINTFORMW 「ああ…次は抱きしめながら…して欲しい…」
+				ELSEIF RAND:5 == 0
+					PRINTFORML 「んふう…ん、ちゅう…」
+					PRINTFORMW 納茲琳は負けじとこちらの口腔に舌を這わせてきた…
+				ELSEIF RAND:4 == 0
+					PRINTFORMW 「ちゅぷ、ちゅう、ん…こく…」
+					PRINTFORMW 「ふふ…君って奴は、なんて美味しいんだ…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 納茲琳は主人公の口腔を犯し、唾液を啜っている…
+					PRINTFORMW 「ふふ…君の口、美味しいよ…」
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「ん…んちゅ…ぷあ、はぁ、はぁ、あむ…」
+					PRINTFORMW 舌とともに侵入してくる納茲琳の唾液を、存分に味わった…
+				ELSE
+					PRINTFORML 「ちゅ、む…れろ…　ふふ…♪」
+					PRINTFORMW お互いに貪りあうように舌を絡めあった…
+				ENDIF
+			ELSEIF ABL:親密 >= 5
+			;「%CALLNAME:TARGET%は頬を赤く染めている…」
+				IF RAND:5 == 0
+					PRINTFORMW 「ちゅ、ぁむ、んんっ、ふふ…♪」
+				ELSEIF RAND:4 == 0
+					PRINTFORML 「ちゅ、はぁ、ちゅ、んんっ、ふぅ…」
+					PRINTFORMW 「君、なかなか積極的なんだね…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「ああ…キスの愉しさを忘れていたよ…」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ん…私からも…していいかい…？」
+				ELSE
+					PRINTFORMW 「ふふ…基本に忠実だね…」
+				ENDIF
+			ELSE
+			;「納茲琳は突然の事に驚いているようだ…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ちょっと…今は私が楽しんでるんだから、邪魔しないでおくれよ」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「…ああ、今はそういう事をしてるんだったな…」
+				ELSE
+					PRINTFORMW 「…君は大人しくされてればいいんだ…」
+				ENDIF
+			ENDIF
+		ENDIF
+	;通常
+	ELSE
+		IF ABL:欲望 >= 5
+		;「納茲琳はMASTERの口唇をこじ開けて舌を絡めてきた…」
+			;大成功
+			IF TFLAG:193 == 1
+				PRINTFORMW 「んっ…ふふ、私なんかと接吻したがるなんて…んむっ…
+				PRINTFORMW 　君も…んっ、大概物好き、んんっ…君だけ…んちゅうっ…
+				PRINTFORMW 　これからも…んぅっ…き、期待して…んぅんっ…」
+			ELSEIF RAND:5 == 0 
+				PRINTFORML 「んん…ん…ちゅ…ふう…フフ…」
+				PRINTFORMW 「私なんかで、本当にいいのかい…あ…ちゅ…」
+			ELSEIF RAND:4 == 0 
+				PRINTFORML 「ちゅる…ちゅ…ん…はぁ、ん…」
+				PRINTFORMW 「……もっとして欲しい…」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「んっ…はぁ、い、いいのかい、こんなところで…」
+				PRINTFORMW 「歯止めがかけられなくなって、んんっ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORML 「ちゅっ…じゅる、んん、ん…ぷは」
+				PRINTFORM 「…今日の君は、少し
+				;日にちを3で割って余りで見る
+				IF (DAY % 3) == 0
+					PRINTFORMW 甘いな…」
+				ELSEIF (DAY % 3) == 1 
+					PRINTFORMW 甘酸っぱいな…」
+				ELSE
+					PRINTFORMW 塩っ気があるな…」
+				ENDIF
+			ELSE
+				PRINTFORML 「ちゅ…にゅる、じゅちゅううっ、んふ…♪」
+				PRINTFORMW 納茲琳の舌が、こちらの口腔を余すところ無く犯していく…
+			ENDIF
+		ELSEIF ABL:親密 >= 5
+		;「%CALLNAME:TARGET%は頬を赤く染めている…」
+			;失敗
+			IF TFLAG:193 == -1 || TFLAG:193 == 99
+				PRINTFORML 「…君がこんな不埒者だとは思わなかったよ。
+				PRINTFORMW 　他の皆にもこんなことをしてるなら、少し対応を考えないといけないな」
+			;大成功
+			ELSEIF TFLAG:193 == 1
+				PRINTFORMW 「んっ…全く、妖怪、それもネズミと接吻したがるなんて…んむっ…
+				PRINTFORMW 　君はとんだ…んっ、物好き、んんっ…
+				PRINTFORMW 　な、何回するつもりだ！いい加減に…んぅっ…」
+			ELSEIF RAND:4 == 0
+				PRINTFORML 「はむ、ちゅ……はぁ……」
+				PRINTFORMW 「…ふふ…私なんかを相手にしていいのかい…？」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「ちゅ…ちゅ…んん…もっとしようか…」
+				PRINTFORMW 納茲琳は更なる情愛を求めて唇を近づけてきた…
+			ELSEIF RAND:2 == 0
+				PRINTFORML 唇を離した納茲琳は目をつむり、主人公の胸に耳を当てた…
+				PRINTFORMW 「ん…ふふ…興奮してるんだね…すごく鼓動が早いぞ…」
+			ELSE
+				PRINTFORMW 「んん…………ふ…」
+			ENDIF
+		ELSE
+		;「%CALLNAME:TARGET%は突然の事に驚いているようだ…」
+			;失敗
+			IF TFLAG:193 == -1 || TFLAG:193 == 99
+				PRINTFORML 「…君がこんな不埒者だとは思わなかったよ。
+				PRINTFORMW 　他の皆にもこんなことをしてるなら、少し対応を考えないといけないな」
+			;大成功
+			ELSEIF TFLAG:193 == 1
+				PRINTFORMW 「んっ…全く、妖怪、それもネズミと接吻したがるなんて…んむっ…
+				PRINTFORMW 　君はとんだ…んっ、物好き、んんっ…」
+			ELSEIF RAND:3 == 0 
+				PRINTFORML 「…鼠咬症にでもなりたいのかい君は」
+				PRINTFORMW 納茲琳は仏頂面のまま、少し早口にそう言った。
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…全く、破廉恥なオスだ…んんっ」
+			ELSE
+				PRINTFORMW 「…君、妖怪をそういう目で見られるのかい…？」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;313,胸愛撫
+;納茲琳はB敏感！
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_313
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_313_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_313_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;睡眠
+	IF CFLAG:TARGET:睡眠
+	;「%CALLNAME:PLAYER%は眠っている%CALLNAME:TARGET%の胸を服の上から
+		IF ABL:Ｂ感覚 <= 1
+		;撫でるように揉みしだいた…　%CALLNAME:TARGET%はくすぐったそうに身をよじった…」
+			IF RAND:2 == 0 
+				PRINTFORMW 納茲琳の鼓動はとても小さい…。
+			ELSE
+				PRINTFORMW 「ん…う」
+			ENDIF
+		ELSEIF ABL:Ｂ感覚 <= 3
+		;優しく揉みしだいた…　%CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…」
+			IF RAND:2 == 0 
+				PRINTFORMW 「ふ…う…」
+			ELSE
+				PRINTFORMW 「ん…ふ…」
+			ENDIF
+		ELSE
+		;じっくりと揉みしだいた…　%CALLNAME:TARGET%は頬を上気させ%CALLNAME:MASTER%のされるがままになっている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「は…ぁ……ぁ」
+			ELSE
+				PRINTFORML 「んっ……はっ…んっ…」
+				PRINTFORMW 胸の先端にあたりをつけて指先でかくと、詰まるような喘ぎが聞こえてきた
+			ENDIF
+		ENDIF
+	;うふふ
+	;押し倒された
+	ELSEIF CFLAG:うふふ == 2
+		IF ABL:Ｂ感覚 <= 1
+		;「%CALLNAME:TARGET%はくすぐったそうにしている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「ん…そこ、敏感なんだ…優しく、んっ…♪」
+			ELSE
+				PRINTFORMW 「ふ、ふふっ…くすぐったいぞ…あんっ」
+			ENDIF
+		ELSEIF ABL:Ｂ感覚 <= 3
+		;「%CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…」
+			;カウンター胸を揉ませる
+			IF TCVAR:20 == 33
+				IF RAND:3 == 0
+					PRINTFORMW 「そ、そうだ…そんな感じで、優しく…んあっ♪」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「いいぞ…そんな感じだ…ふ、あっ、そこはっ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あ、くあ……はんっ…んん…」
+					PRINTFORMW 納茲琳に導かれるままに胸を揉みこんでやると甘い声が上がった
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORMW 「あっ…そこ、弱いんだ…ああ…っ」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「あ…あ…はっ…ぁ」
+				ELSE
+					PRINTFORML 「あっはぁ……んっ」
+					PRINTFORMW 薄い胸に乗る尖りを潰すと納茲琳の声は一段と高くなり、身の震えも大きくなった
+				ENDIF
+			ENDIF
+		;「%CALLNAME:TARGET%はトロンとした表情になってされるがままになっている…」
+		ELSE
+			;カウンター胸を揉ませる
+			IF TCVAR:20 == 33
+				IF RAND:3 == 0
+					PRINTFORMW 「あ、はぁっ…♪そ、そうだ、もっと…くぅ…んっ…%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ふ、ぁあ…そこ…もっといじめて…っ　ああうっ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORML 「あうっ、はぁっ、ここ、ここ、押し潰してっ…う、あああっ%UNICODE(0x2665)%」
+					PRINTFORMW 納茲琳は主人公の手の上から押さえつけ、自分の弱点を刺激し続けた…
+				ENDIF
+			;カウンター騎乗位
+			ELSEIF TCVAR:20 == 81
+				IF RAND:3 == 0
+					PRINTFORMW 「やあ、あんっ！そ、こ、イジられたら、こっち、集中できないじゃないかあっ…%UNICODE(0x2665)%」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ひやっ！？だ、だめ、そっちも、びりびりきちゃうっ…%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORMW 「はあ、はあ、まったく、君ってやつは、んんっ%UNICODE(0x2665)%　欲張りだな…は、んんっ」
+					PRINTFORMW 「わたし、が、シてあげてるのに、満足できないの、かいっ…や、ああんっ」
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORML 「あ、はぁっ…き、君に触られるだけで、は、あぅっ…%UNICODE(0x2665)%」
+					PRINTFORMW かすかに膨らんだ胸は上気し、手のひら越しに激しい鼓動を伝えてくる…
+				ELSEIF RAND:2 == 0
+					PRINTFORML その目は、主人公の愛撫への期待で切なく揺れている…
+					PRINTFORMW 「あ…あ…はっ…ぁ」
+				ELSE
+					PRINTFORML 「あうっ、あっ、そこ、そんな、いじめないで、あ、ふうううっ…%UNICODE(0x2665)%」
+					PRINTFORMW 胸の先端を指先で転がすと納茲琳の声は一段と高くなり、身の震えも大きくなった
+				ENDIF
+			ENDIF
+		ENDIF
+	;押し倒した
+	ELSEIF CFLAG:うふふ == 1
+		IF ABL:Ｂ感覚 <= 1
+		;「%CALLNAME:TARGET%はくすぐったそうにしている…」
+			IF RAND:2 == 0
+				PRINTFORMW 「ん…そこ、敏感なんだ…優しく、んっ…♪」
+			ELSE
+				PRINTFORMW 「ふ、ふふっ…くすぐったいぞ…あんっ」
+			ENDIF
+		ELSEIF ABL:Ｂ感覚 <= 3
+		;「%CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…」
+			IF RAND:3 == 0
+				PRINTFORMW 「あっ…そこ、弱いんだ…ああ…っ」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あ…あ…はっ…ぁ」
+			ELSE
+				PRINTFORML 「あっはぁ……んっ」
+				PRINTFORMW 薄い胸に乗る尖りを潰すと納茲琳の声は一段と高くなり、身の震えも大きくなった
+			ENDIF
+		ELSE
+		;「%CALLNAME:TARGET%はトロンとした表情になってされるがままになっている…」
+			IF RAND:4 == 0 
+				PRINTFORML 「ふふ…♪そこ、凄く気持ちよくなれるように、んんっ、なったんだ……」
+				PRINTFORMW 「君が弄りまくったせいなんだから、ふあっ、ああっ、あうぅぅっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「あ、はぁっ…き、君に触られるだけで、は、あぅっ…%UNICODE(0x2665)%」
+				PRINTFORMW かすかに膨らんだ胸は上気し、手のひら越しに激しい鼓動を伝えてくる…
+			ELSEIF RAND:2 == 0
+				PRINTFORML その目は、主人公の愛撫への期待で切なく揺れている……
+				PRINTFORMW 「あ…あ…はっ…ぁ」
+			ELSE
+				PRINTFORML 「あうっ、あっ、そこ、そんな、いじめないで、あ、ふうううっ…%UNICODE(0x2665)%」
+				PRINTFORMW 薄い胸に乗る尖りを潰すと、快楽に蕩けた納茲琳は大きなよがり声を上げた…
+			ENDIF
+		ENDIF
+		
+	ELSE
+		IF ABL:Ｂ感覚 <= 1
+		;「%CALLNAME:TARGET%はくすぐったそうにしている…」
+			IF RAND:3 == 0
+				PRINTFORMW 「…自分で言うのも悲しくなるが、こんな俎板を撫でて楽しいのかい？」
+				;/大変楽しいです！
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「揉めば大きくなるって？そもそも揉めるほどの質量が無いんだが」
+			ELSE
+				PRINTFORMW 「君も好きだねえ…。自分の胸でも触ってた方が有益なんじゃないかい？」
+			ENDIF
+		ELSEIF ABL:Ｂ感覚 <= 3
+		;「%CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…」
+			IF RAND:3 == 0
+				PRINTFORMW 「ふう…こんな薄い胸を触って、んんっ！　何が楽しいんだか…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 起き上がり始めた突起を擦ると、その吐息は一層荒くなった…
+			ELSE
+				PRINTFORMW 「ふ、ふぅんっ、これだからオスは、は、それダメっ…！」
+			ENDIF
+		ELSE
+		;「%CALLNAME:TARGET%はトロンとした表情になってされるがままになっている…」
+			IF RAND:6 == 0 
+				PRINTFORMW 「駄目、やぁっ…服に、しわがっ…あ、うう…っ」
+			ELSEIF RAND:5 == 0 
+				PRINTFORMW 「んんっ…ふ、やっ…ね、直に…」
+			ELSEIF RAND:4 == 0 
+				PRINTFORMW 「や…はぁっ、あっ、あ…んんっ…」
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「はっ…あぁ、んっ…ちゃんと…からに、して…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「馬鹿…こんな、ぁう、ところで、やぅっ…！　あ、いいっ…%UNICODE(0x2665)%」
+			ELSE
+				PRINTFORML 「ふう、ふうっ、あ、馬鹿、そこつまんじゃっ…ああ…っ%UNICODE(0x2665)%」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;-------------------------------------------------
+;314,肛門愛撫
+;-------------------------------------------------
+@M_KOJO_MESSAGE_COM_K39_314
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_314_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_314_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;
+;
+;ABL:Ａ感覚 > 4 
+IF LOCAL
+	;睡眠
+	IF CFLAG:TARGET:睡眠
+		IF ABL:Ａ感覚 <= 1
+		;「指の腹で撫でるように　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+			;肛用振動棒使用orV挿入中
+			IF TEQUIP:肛用振動棒 || TEQUIP:振動棒 || TEQUIP:Ｖセックス
+				IF RAND:2 == 0 
+					PRINTFORMW 「ん…ん………」
+				ELSE
+					PRINTFORMW 「ん…う」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					PRINTFORMW 「んっ…く…ふぅ………」
+				ELSE
+					PRINTFORMW 「ふぅ…ん………ふ…」
+				ENDIF
+			ENDIF
+		ELSEIF ABL:Ｂ感覚 <= 3
+		;「解きほぐすように　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+			;肛用振動棒使用orV挿入中
+			IF TEQUIP:肛用振動棒 || TEQUIP:振動棒 || TEQUIP:Ｖセックス
+				IF RAND:2 == 0 
+					PRINTFORMW 「んっ…うう…」
+				ELSE
+					PRINTFORMW 「んふ…ん、ん…っ」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					PRINTFORMW 「はぁっ…く…ふぅんっ………」
+				ELSE
+					PRINTFORMW 「ふぅ、あ…ん………は、ふ…」
+				ENDIF
+			ENDIF
+		ELSE
+		;「指をねじ込むようにして　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+			;肛用振動棒使用orV挿入中
+			IF TEQUIP:肛用振動棒 || TEQUIP:振動棒 || TEQUIP:Ｖセックス
+				IF RAND:2 == 0 
+					PRINTFORMW 「んぅ…っ%UNICODE(0x2665)%　は、うう…」
+				ELSE
+					PRINTFORMW 「んふぅ…ん、はん…っ%UNICODE(0x2665)%」
+				ENDIF
+			ELSE
+				IF RAND:2 == 0
+					PRINTFORMW 「んあっ…%UNICODE(0x2665)%　く…ふぅっ、はーっ、はーっ………%UNICODE(0x2665)%」
+				ELSE
+					PRINTFORMW 「ふぅあ、あんっ…%UNICODE(0x2665)%　は、ふあ、ああんっ…」
+				ENDIF
+			ENDIF
+		ENDIF
+	;うふふ
+	;押し倒された
+	ELSEIF CFLAG:うふふ == 2
+		;カウンター乳交
+		IF TCVAR:20 == 53
+			PRINTFORML 「っ…！お、おとなしく、したま、えぅぅっ！」
+		;カウンター肛門奉仕または六九式体勢
+		;/要は指で弄るんじゃなくて舐める。レベル高ぇな
+		ELSEIF TCVAR:20 == 72 || TEQUIP:六九式
+			;パンツの上から
+			IF TEQUIP:0 > 1
+			;「%CALLNAME:PLAYER%は顔の上にまたがった%CALLNAME:TARGET%のアヌスを内袴越しに舌でグリグリと刺激した…」
+				IF ABL:Ａ感覚 <= 1
+				;「%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ぅやっ！？そこ違っ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「そんなとこ…いじるなぁっ…！」
+					ELSE
+						PRINTFORMW 「ひっ！？なんでそこ…あうっ！」
+					ENDIF
+				ELSEIF ABL:Ａ感覚 <= 3
+				;「%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「だ、から…そこはぁっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「やぅっ…き、君、そんなとこが好きなのかい…」
+					ELSE
+						PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+					ENDIF
+				ELSE
+				;「%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「はぅ…！そ、んな、もどかし…いよっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ、ああっ…違う、直接っ、してよっ…！」
+					ELSE
+						PRINTFORMW 「ふう、ふ、ううっ、お願い、ぬ、脱がして、直にぃっ…！」
+					ENDIF
+				ENDIF
+			;直舐め
+			ELSE
+			;「%CALLNAME:PLAYER%は顔の上にまたがった%CALLNAME:TARGET%のアヌスに舌を這わせ奉仕した…」
+				IF ABL:Ａ感覚 <= 1
+				;「%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「バカ、汚いぞ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「そんなとこ…舐めるなぁっ…！」
+					ELSE
+						PRINTFORMW 「ひっ！？なんでそこ…あうっ！」
+					ENDIF
+				ELSEIF ABL:Ａ感覚 <= 3
+				;「%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「だ、から…そこはぁっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「やぅっ…そんなとこ舐めるなんて、君もとんだスキモノだなっ…！」
+					ELSE
+						PRINTFORMW 「やぁ…そこは、ぁっ…ダメだって…っ」
+					ENDIF
+				ELSE
+				;「%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「はぅ…！そこ、そこ、もっと奥ぅっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ、ああっ…%UNICODE(0x2665)%　ヌルって、お尻が…うう…っ！」
+					ELSE
+						PRINTFORMW 「ふやあっ…%UNICODE(0x2665)%　そう、ナカ、ナカも舐めてぇっ…！」
+					ENDIF
+				ENDIF
+			ENDIF
+		ELSE
+			;パンツ越し愛撫
+			IF TEQUIP:0 > 1
+			;「%CALLNAME:PLAYER%は%CALLNAME:TARGET%のアナルを服の上から
+				IF ABL:Ａ感覚 <= 1
+				;指の腹で撫でるように愛撫した…　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ぅやっ！？そこ違っ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「そんなとこ…弄るなぁっ…！」
+					ELSE
+						PRINTFORMW 「ひっ！？そ、そんなとこに、興味が有るのかい…？」
+					ENDIF
+				ELSEIF ABL:Ａ感覚 <= 3
+				;解きほぐすように愛撫した…　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「だ、から…そこはぁっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「やぅっ…き、君も、変態だ、うぁっ…！」
+					ELSE
+						PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+					ENDIF
+				ELSE
+				;指をねじ込むようにして愛撫した…　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「はぅ…！そ、んな、内袴の上からじゃなく、直接…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ、ああっ…違う、直接っ、弄ってっ…！」
+					ELSE
+						PRINTFORMW 「ふう、ふ、ううっ、お願い、ぬ、脱がして、直にぃっ…！」
+					ENDIF
+				ENDIF
+			;直接愛撫
+			ELSE
+			;「%CALLNAME:PLAYER%は%CALLNAME:TARGET%のアナルを
+				IF ABL:Ａ感覚 <= 1
+				;指の腹で撫でるように愛撫した…　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ぅやっ！？そこ違っ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「そんなとこ…触るなぁっ…！」
+					ELSE
+						PRINTFORMW 「ひっ！？そ、そんなとこに、興味が有るのかい…？」
+					ENDIF
+				ELSEIF ABL:Ａ感覚 <= 3
+				;解きほぐすように愛撫した…　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「だ、から…そこはぁっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「やぅっ…き、君も、とんだ変態…う あっ…！」
+					ELSE
+						PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+					ENDIF
+				ELSE
+				;指をねじ込むようにして愛撫した…　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「はぅ…！そ、そう、もっと奥、にっ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ、ああっ…そこ、そこ、撫でるだけじゃヤだ、もっとぉっ…！」
+					ELSE
+						PRINTFORMW 「ふう、ふ、ああっ%UNICODE(0x2665)%もっと、おしり、ぐちゅぐちゅってぇ…！」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	;押し倒した
+	ELSEIF CFLAG:うふふ == 1
+		;パンツ越し愛撫
+		IF TEQUIP:0 > 1
+		;「%CALLNAME:PLAYER%は%CALLNAME:TARGET%のアナルを服の上から
+			IF ABL:Ａ感覚 <= 1
+			;指の腹で撫でるように愛撫した…　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ぅやっ！？そこ違っ…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「そんなとこ…弄るなぁっ…！」
+				ELSE
+					PRINTFORMW 「ひっ！？そ、そんなとこに、興味が有るのかい…？」
+				ENDIF
+			ELSEIF ABL:Ａ感覚 <= 3
+			;解きほぐすように愛撫した…　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「だ、から…そこはぁっ…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「やぅっ…き、君も、変態だ、うぁっ…！」
+				ELSE
+					PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+				ENDIF
+			ELSE
+			;指をねじ込むようにして愛撫した…　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「はぅ…！そ、んな、内袴の上からじゃなく、直接…！」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「あ、ああっ…違う、直接っ、弄ってっ…！」
+				ELSE
+					PRINTFORMW 「ふう、ふ、ううっ、お願い、ぬ、脱がして、直にぃっ…！」
+				ENDIF
+			ENDIF
+		;直接愛撫
+		ELSE
+		;「%CALLNAME:PLAYER%は%CALLNAME:TARGET%のアナルを
+			IF ABL:Ａ感覚 <= 1
+			;指の腹で撫でるように愛撫した…　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+				IF RAND:6 == 0
+					PRINTFORMW 「ど、どこを触ってるんだ君は！」
+				ELSEIF RAND:5 == 0
+					PRINTFORMW 「…不衛生だぞ。後で洗っておきたまえ」
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「いや、そっちじゃないぞ。おい、やめたまえ！ちょっと！」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「ぅやっ！？そこ違っ…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「そんなとこ…触るなぁっ…！」
+				ELSE
+					PRINTFORMW 「ひっ！？そ、そんなとこに、興味が有るのかい…？」
+				ENDIF
+			ELSEIF ABL:Ａ感覚 <= 3
+			;解きほぐすように愛撫した…　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「だ、から…そこはぁっ…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「やぅっ…き、君も、とんだ変態…う あっ…！」
+				ELSE
+					PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+				ENDIF
+			ELSE
+			;指をねじ込むようにして愛撫した…　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「はぅ…！そ、そう、もっと奥、にっ…！」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「あ、ああっ…そこ、そこ、撫でるだけじゃヤだ、もっとぉっ…！」
+				ELSE
+					PRINTFORMW 「ふう、ふ、ああっ%UNICODE(0x2665)%もっと、おしり、ぐちゅぐちゅってぇ…！」
+				ENDIF
+			ENDIF
+		ENDIF
+	;うふふ以外
+	ELSE
+	;「%CALLNAME:PLAYER%は%CALLNAME:TARGET%のアナルを服の上から
+		IF ABL:Ａ感覚 <= 1
+		;指の腹で撫でるように愛撫した…　%CALLNAME:TARGET%はまだ感触を受け入れられないようだ…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「バッ…どこ触ってるんだ君は！」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「なんでそんなとこ弄るんだ…」
+			ELSE
+				PRINTFORMW 「そ…そっちを弄るのか…？」
+			ENDIF
+		ELSEIF ABL:Ａ感覚 <= 3
+		;解きほぐすように愛撫した…　%CALLNAME:TARGET%は異物感に背筋を震わせている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「だ、から…そこはぁっ…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「やぅっ…き、君も、変態だ、うぁっ…！」
+			ELSE
+				PRINTFORMW 「やぁ…そこ、はぁっ…ダメだって…っ」
+			ENDIF
+		ELSE
+		;指をねじ込むようにして愛撫した…　%CALLNAME:TARGET%は恍惚とした表情になってされるがままになっている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「はぅ…！そ、れは今ダメだって…！」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「あ、ああっ…そこ弄られたら…！」
+			ELSE
+				PRINTFORMW 「あ、やあっ…わ、わかったから早く部屋にぃっ…顔に出てしまう…！」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;315,陰蒂愛撫
+;納茲琳はＣ敏感！
+;※普段とうふふ == 2時は「秘所愛撫」表記
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_315
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_315_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_315_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+
+IF LOCAL
+	;睡眠
+	IF CFLAG:TARGET:睡眠
+		IF ABL:Ｃ感覚 <= 1
+		;「そっと撫で回した　%CALLNAME:TARGET%はくすぐったそうにしている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「ん…ん…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…ふ…」
+			ELSE
+				PRINTFORMW 「…ん…すー…」
+			ENDIF
+		ELSEIF ABL:Ｃ感覚 <= 3
+		;「軽く摘み上げた　%CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「んふ…ふう…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ふう…ん…」
+			ELSE
+				PRINTFORMW 「ん…ふう…ん…」
+			ENDIF
+		ELSE
+		;「ゆっくりと揉みしだいた　%CALLNAME:TARGET%は頬を上気させされるがままになっている…」
+			IF RAND:3 == 0 
+				PRINTFORMW 「はあ…ん…っく…」
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「ふうっ…ん、はぁ…」
+			ELSE
+				PRINTFORMW 「はあ…っ、ん、っく…」
+			ENDIF
+		ENDIF
+	;うふふ
+	ELSEIF CFLAG:うふふ == 1 || CFLAG:うふふ == 2
+		;カウンター股間をまさぐる
+		IF TCVAR:20 == 34
+		;※TEQUIP:PLAYER:0 > 3が条件　つまり安全袴か袴子必須
+		;※ナズが当てはまるのは寝間着の時だけ？
+			IF RAND:3 == 0 
+				PRINTFORML 「んっ…ふふ…お返しかい…？」
+				PRINTFORMW 「いいよ…んはぁっ、一緒に、良くなるのも、なかなかいい…んんっ」
+			ELSEIF RAND:2 == 0 
+				PRINTFORML お互いに見えない位置をまさぐり合う事で、納茲琳の息は徐々に荒くなっていく…
+				PRINTFORMW 「はぁ…っ、なかなかこれ、興奮す…っあ、いい、はぁ、そこ、いぃ…っ」
+			ELSE
+				PRINTFORML 「お互いに…んんっ、してあげるってのが、んぅっ、重要なポイントだ…んんっ」
+				PRINTFORMW 「はぁ、睦み合いは共同作業だからね…あっ、は、ふふ、君のも、なかなか…ううんっ…」
+			ENDIF
+		;カウンター強制舐陰
+		ELSEIF TCVAR:20 == 70
+			IF RAND:3 == 0
+				PRINTFORML 「う　あっ…舌が…っ　は、入ってっ…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳は腰を浮かせてのけぞっている
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「そ、そうだ、そこ舐めて…っ　～～～ッ！…」
+				PRINTFORMW 押し付けられる陰核を舐めると、納茲琳は声のない悲鳴を上げた…
+			ELSE
+				PRINTFORML 「ひ、あぁっ、は……あくぅっ！」
+				PRINTFORMW 舌を突き出すと、納茲琳は嬌声を漏らしながら主人公の顔に性器を擦りつけた…
+			ENDIF
+		;其他
+		ELSE
+			;下半身裸またはノーパン裙子または浴室PLAY中
+			IF TEQUIP:0 == 0  ||  TEQUIP:0 == 1 || TEQUIP:31
+			;「%CALLNAME:TARGET%のワレメ
+				IF ABL:Ｃ感覚 <= 1
+				;をそっと撫で回した…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「っ！ふ　う…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「ふふ…そこは敏感だから、優しく頼むよ…？」
+					ELSE
+						PRINTFORMW 「あうっ！？も、もうちょっと優しく…」
+					ENDIF
+				ELSEIF ABL:Ｃ感覚 <= 4
+				;の肉芽を軽く摘み上げた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ひうっ！？そこ、ぐりって押すの、刺激強すぎて…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あふうっ%UNICODE(0x2665)%、そ、そんなに強くされると、く、うううんっ！」
+					ELSE
+						PRINTFORMW 「ひああっ！？き、急にされると、あううんっ！」
+					ENDIF
+				ELSE
+				;の肉をゆっくりと揉みしだいた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「そうっ…そこ、もっと弄って、クリクリってしてぇ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「はぁ、はぁっ、っくぅぅぅ～～っ！！」
+					ELSE
+						PRINTFORMW 「ダメッ、今そこ触られたら…～～～ッ！！」
+					ENDIF
+				ENDIF
+			;安全袴着用　納茲琳は安全袴を穿く機会はないはず
+			ELSEIF TEQUIP:0 == 5;
+			;潤滑Lv.3以上:ぐしょぐしょに濡れた服の上から
+			;潤滑Lv.1以上:ほんのりと湿った服の上から
+			;潤滑Lv.1未満:服の上から
+			
+			;パンツ露出
+			ELSEIF TEQUIP:0 == 2  ||  TEQUIP:0 == 3
+			;潤滑Lv.3以上:「ぐしょぐしょに濡れた内袴の上から秘所」
+			;潤滑Lv.1以上:「ほんのりと湿った内袴の上から秘所」
+			;潤滑Lv.1未満:「内袴の上から秘所」
+				IF ABL:Ｃ感覚 <= 1
+				;「をそっと撫で回した…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ふふ…エッチな手つきだね…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「んっ…ふう…内袴越しでも…んっ、なかなか効くねえ…」
+					ELSE
+						PRINTFORMW 「あ　はぁっ…ふふ…脱がさなくても、いいのかい…？」
+					ENDIF
+				ELSEIF ABL:Ｃ感覚 <= 4
+				;「の肉芽を軽く摘み上げた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ひうっ！？布越しだと、擦れてっ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ…っ　そこ、摘んだらっ…や、ああっ…」
+					ELSE
+						PRINTFORMW 「そ　んな、もどかしっ…」
+					ENDIF
+				ELSE
+				;「の肉をゆっくりと揉みしだいた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「や…あっ…内袴…汚れるっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「はぁっ…ね…直…直にぃっ…」
+					ELSE
+						PRINTFORMW 「やあっ、脱がせて、直接してっ…！」
+					ENDIF
+				ENDIF
+			;袴子着用
+			;※ナズが袴子を履いてるのは寝間着だけ？
+			;/ほぼ上のコピペ
+			ELSE
+			;潤滑Lv.3以上:「ぐしょぐしょに濡れた服の上から」
+			;潤滑Lv.1以上:「ほんのりと湿った服の上から」
+			;潤滑Lv.1未満:「服の上から」
+				IF ABL:Ｃ感覚 <= 1
+				;「をそっと撫で回した…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ふふ…エッチな手つきだね…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「んっ…ふう…服越しでも…んっ、なかなか効くねえ…」
+					ELSE
+						PRINTFORMW 「あ　はぁっ…ふふ…脱がさなくても、いいのかい…？」
+					ENDIF
+				ELSEIF ABL:Ｃ感覚 <= 4
+				;「の肉芽を軽く摘み上げた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「ひうっ！？布越しだと、擦れてっ…！」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「あ…っ　そこ、摘んだらっ…や、ああっ…」
+					ELSE
+						PRINTFORMW 「そ　んな、もどかしっ…」
+					ENDIF
+				ELSE
+				;「の肉をゆっくりと揉みしだいた…」
+					IF RAND:3 == 0 
+						PRINTFORMW 「や…あっ…服…汚れるっ…」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 「はぁっ…ね…直…直にぃっ…」
+					ELSE
+						PRINTFORMW 「やあっ、脱がせて、直接してっ…！」
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	;うふふ以外
+	ELSE
+		;パンツ+裙子
+		IF TEQUIP:0 == 3
+		;潤滑Lv.3以上:「ぐしょぐしょに濡れた内袴の上から秘所」
+		;潤滑Lv.1以上:「ほんのりと湿った内袴の上から秘所」
+		;潤滑Lv.1未満:「内袴の上から秘所」
+			IF BASE:理性 >= 400
+				IF RAND:6 == 0 && ABL:Ｃ感覚 <= 2
+					PRINTFORML 「…満足したかい？そろそろ止めて欲しいんだが…
+					PRINTFORMW 　私を満足させてやるって？ハッ！君じゃ無理だよ」
+				ELSEIF RAND:5 == 0 && ABL:Ｃ感覚 <= 2
+					PRINTFORMW 「…下手だなあ、君は。
+					PRINTFORML 　いや、上手かったらその方が困るんだが。
+					PRINTFORMW 　…どうして張り切り出してるんだ」
+				ELSEIF RAND:4 == 0 
+					PRINTFORML 「なんだい、そんなところを触って。
+					PRINTFORMW 　まさか、ネズミに欲情したのかな？」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「…情緒もへったくれもないね」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「全く…これだからオスは」
+				ELSE
+					PRINTFORMW 「…悪いが、私は君と違って万年発情期じゃないんでね」
+				ENDIF
+			ELSEIF ABL:Ｃ感覚 <= 1
+			;「をそっと撫で回した…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ふふ…したくなったのかい…？」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「こんなとこで…んんっ、するのかい？」
+				ELSE
+					PRINTFORMW 「なかなか、はぁ、積極的なんだね、君」
+				ENDIF
+			ELSEIF ABL:Ｃ感覚 <= 4
+			;「の肉芽を軽く摘み上げた…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ひうっ！き、君のおかげでなかなか敏感に、んんっ、なってしまってね…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ふ、ふふっ、そう、そこが弱いのさ…」
+				ELSE
+					PRINTFORMW 「そこばっかり、んやっ！　じゃなくて、胸も、弄って欲しいな…」
+				ENDIF
+			ELSE
+			;「の肉をゆっくりと揉みしだいた…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ふやあっ！？そこされたら、びりってくる…っ」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「駄目だ…っ　我慢、できなくなるっ…」
+				ELSE
+					PRINTFORMW 「ダメだって…そこ弄られたら、顔に出てしまうんだよ…」
+				ENDIF
+			ENDIF
+		;袴子着用
+		;※ナズが袴子を履いてるのは寝間着だけ？
+		;/ほぼ上のコピペ
+		ELSE
+		;潤滑Lv.3以上:「ぐしょぐしょに濡れた服の上から」
+		;潤滑Lv.1以上:「ほんのりと湿った服の上から」
+		;潤滑Lv.1未満:「服の上から」
+			IF BASE:理性 >= 400
+				IF RAND:3 == 0 
+					PRINTFORMW 「…情緒もへったくれもないね」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「全く…これだからオスは」
+				ELSE
+					PRINTFORMW 「…悪いが、私は君と違って万年発情期じゃないんでね」
+				ENDIF
+			ELSEIF ABL:Ｃ感覚 <= 1
+			;「をそっと撫で回した…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ふふ…したくなったのかい…？」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「こんなとこで…んんっ、するのかい？」
+				ELSE
+					PRINTFORMW 「なかなか、はぁ、積極的なんだね、君」
+				ENDIF
+			ELSEIF ABL:Ｃ感覚 <= 4
+			;「の肉芽を軽く摘み上げた…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ひうっ！そ、そこ、君のおかげでなかなか敏感に、んんっ、なってしまってね…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「ふ、ふふっ、そう、そこが弱いのさ…」
+				ELSE
+					PRINTFORMW 「そこばっかり、んやっ！　じゃなくて、胸も、弄って欲しいな…」
+				ENDIF
+			ELSE
+			;「の肉をゆっくりと揉みしだいた…」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ふやあっ！？そこされたら、びりってくる…っ」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「駄目だ…っ　我慢、できなくなるっ…」
+				ELSE
+					PRINTFORMW 「ダメだって…そこ弄られたら、顔に出てしまうんだよ…」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;316,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_316
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_316_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_316_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;処女　PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%の指を拒むかのように太ももをきゅっと閉じている…
+;ABL:Ｖ感覚 < 1　PRINTFORML %CALLNAME:TARGET%は異物感が強いのか身を強ばらせている…
+;ABL:Ｖ感覚 <= 4　PRINTFORML %CALLNAME:TARGET%は愛撫に熱い吐息を漏らし始めている…
+;ABL:Ｖ感覚 > 5　PRINTFORML %CALLNAME:TARGET%は涎をたらし、自ら腰を突き出して快楽を貪っている…
+IF LOCAL
+	IF ABL:Ｖ感覚 < 2
+		IF RAND:3 == 0 
+			PRINTFORMW 「ん…まだちょっと慣れてないから優しくな…」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「く…んん…」
+		ELSE
+			PRINTFORMW 「あ…あう…んっ…」
+		ENDIF
+	ELSE
+		;カウンター強制舐陰
+		IF TCVAR:20 == 70
+			;下半身裸またはノーパン裙子または浴室PLAY中
+			IF TEQUIP:0 == 0  ||  TEQUIP:0 == 1 || TEQUIP:31
+				;潤滑4以上
+				IF PALAM:潤滑 >= PALAMLV:4
+					IF RAND:3 == 0
+						PRINTFORML 「ううっ…うあっあっ、あうっ！…」
+						PRINTFORMW すっかりほぐれた納茲琳の膣口が、目の前で主人公の指を飲み込んでいく…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふあっ…そう、そこ、てんじょう、ぐりぐりしてっ…ひ、ひうっ」
+						PRINTFORMW 指を挿入すると、目の前の膣口から愛液が吹き出し、主人公の顔に飛び散った…
+					ELSE
+						PRINTFORML 「ひあっ！？ゆ、びも…っ、は、はいってっ…」
+						PRINTFORMW クリトリスに舌を這わせながら指を挿入すると、あふれた愛液が手を汚していった…
+					ENDIF
+				ELSE
+					IF RAND:2 == 0 
+						PRINTFORML 「あ、あうっ、ゆびぃ、入って来るっ…！」
+						PRINTFORMW 舐陰と一緒に指を挿入される感覚が堪らないのか、納茲琳の膣肉がきゅうきゅうと締まった…
+					ELSE
+						PRINTFORML 「うあうっ、それ、いい、いいっ…！」
+						PRINTFORMW 唾液を潤滑液代わりにして指をワレメを挿入すると、納茲琳の声が歓喜に震えた…
+					ENDIF
+				ENDIF
+			;パンツを穿いてる
+			ELSEIF TEQUIP:0 == 3
+				;潤滑4以上
+				IF PALAM:潤滑 >= PALAMLV:4
+					IF RAND:3 == 0
+						PRINTFORML 「ううっ…うあっあっ、あうっ！…」
+						PRINTFORMW もはや用を為していない内袴をずらして幼いワレメを露出させ、指と舌を差し入れた…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふあっ…そう、そこ、てんじょう、ぐりぐりしてっ…ひ、ひうっ」
+						PRINTFORMW 指を挿入すると、目の前の膣口から愛液が吹き出し、内袴に新たな染みを作っていった…
+					ELSE
+						PRINTFORML 「ひあっ！？ゆ、びも…っ、は、はいってっ…」
+						PRINTFORMW 内袴をずらしクリトリスに舌を這わせながら指を挿入すると、あふれた愛液が手を汚していった…
+					ENDIF
+				ELSE
+					IF RAND:2 == 0 
+						PRINTFORML 「あ、あうっ、ゆびぃ、入って来るっ…！」
+						PRINTFORMW クリトリスへの刺激と一緒に指を挿入される感覚が堪らないのか、納茲琳の膣肉がきゅうきゅうと締まった…
+					ELSE
+						PRINTFORML 「うあうっ、それ、いい、いいっ…！」
+						PRINTFORMW 押し付けられた内袴をずらし、唾液を潤滑液代わりに指をワレメを挿入すると、納茲琳の声が歓喜に震えた…
+					ENDIF
+				ENDIF
+			;袴子も穿いてる
+			ELSE
+				;潤滑4以上
+				IF PALAM:潤滑 >= PALAMLV:4
+					IF RAND:3 == 0
+						PRINTFORML 「ううっ…うあっあっ、あうっ！…」
+						PRINTFORMW 大きな染みの付いた袴子の中に手を這わせ、口と指で膣口を刺激した…
+					ELSEIF RAND:2 == 0
+						PRINTFORML 「ふあっ…そう、そこ、てんじょう、ぐりぐりしてっ…ひ、ひうっ」
+						PRINTFORMW 指を挿入すると、目の前の袴子に新たな染みを作っていった…
+					ELSE
+						PRINTFORML 「ひあっ！？ゆ、び…っ、は、はいってっ…」
+						PRINTFORMW 袴子の中に手を這わせ指を挿入すると、あふれた愛液が手を汚していった…
+					ENDIF
+				ELSE
+					IF RAND:2 == 0 
+						PRINTFORML 「あ、あうっ、ゆびぃ、入って来るっ…！」
+						PRINTFORMW クリトリスへの刺激と一緒に指を挿入される感覚が堪らないのか、納茲琳の膣肉がきゅうきゅうと締まった…
+					ELSE
+						PRINTFORML 「うあうっ、それ、いい、いいっ…！」
+						PRINTFORMW 唾液を潤滑液代わりに指をワレメを挿入すると、納茲琳の声が歓喜に震えた…
+					ENDIF
+				ENDIF
+			ENDIF
+		ELSE
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				IF RAND:3 == 0
+					PRINTFORML 膣内を指でかき回すと、あふれた愛液が卑猥な水音を立てた…
+					PRINTFORMW 「あぁっ…そんな音立てるなっ…馬鹿っ…」
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「あう、あっ、あっ……ああ～…っ%UNICODE(0x2665)%」
+					PRINTFORMW 主人公が指を動かすたび泡立った愛液が掻き出され、主人公の手を伝って白色の筋を作った…
+				ELSE
+					PRINTFORML 納茲琳の膣から指を引き抜くとねっとりとした露が絡みついて光っていた
+					PRINTFORM 「な…んで抜くんだっ…
+					;∨絶頂した
+					IF NOWEX:Ｖ絶頂 >= 1
+						PRINTFORMW イッてる途中で抜くなっ…バカ…」
+					ELSE
+						PRINTFORMW せっかくイきそうだったのにっ…バカ…」
+					ENDIF
+				ENDIF
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORML 「ううぅっ…そこっ…ぐりって…う　ああっ…%UNICODE(0x2665)%」
+					PRINTFORMW 膣内の少し膨らんだところを擦ってやる度に、納茲琳の膣がきゅうきゅうと締めあげた…
+				ELSEIF RAND:2 == 0
+					PRINTFORML 「あ…あうっ、はあ、はあ、は…あ…　い、いいぞっ…そここするの、っ、いいっ…%UNICODE(0x2665)%」
+					PRINTFORMW 中の性感帯に指の腹が触れると、納茲琳は敏感に反応した…
+				ELSE
+					PRINTFORMW 「ふ　あぅ…っ、も、っと、ゆっくりぃっ…！」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;317,舐陰
+;==================================================
+;TW未実装かつ被っているのでコメントアウト
+[SKIPSTART]
+@M_KOJO_MESSAGE_COM_K39_317
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_317_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_317_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;カウンター強制舐陰
+	IF TCVAR:20 == 70
+		;下半身裸またはノーパン裙子または浴室PLAY中
+		IF TEQUIP:0 == 0  ||  TEQUIP:0 == 1 || TEQUIP:31
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「ひああっ…%UNICODE(0x2665)%　あ…私の愛液、飲まれちゃってる…%UNICODE(0x2665)%」
+				PRINTFORMW 溢れる納茲琳の愛液は、少ししょっぱく淫らな味がした…
+			ELSE
+				PRINTFORML 「ふぅんっ%UNICODE(0x2665)%　そ、そうっ…いっぱい、舐めてえっ…%UNICODE(0x2665)%」
+				PRINTFORMW 未熟な性器に舌を這わせると、納茲琳は更にクリトリスを押し付けてきた……
+			ENDIF
+		;パンツを穿いてる
+		ELSEIF TEQUIP:0 == 3
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「そ、んなっ、内袴の上から吸うな…ぁっ%UNICODE(0x2665)%」
+				PRINTFORMW 発情した納茲琳の秘唇に内袴ごとむしゃぶりつき、内袴にたっぷり染み込んだ愛液を吸い取った…
+			ELSE
+				PRINTFORML 「そ、んなっ、内袴の上から吸うな…ぁっ%UNICODE(0x2665)%」
+				PRINTFORMW 秘唇を内袴ごと舐めると、納茲琳は予想外の刺激に身を震わせた…
+			ENDIF
+		;袴子も穿いてる
+		ELSE
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「ううっ…うあっあっ、あうっ！…」
+				PRINTFORMW 大きな染みの付いた袴子の上から、口で膣口を刺激した…
+			ELSE
+				PRINTFORML 「うあうっ、それ、恥ずかしっ…！」
+				PRINTFORMW 袴子の上から秘唇に吸い付くと、納茲琳は羞恥に震えた…
+			ENDIF
+		ENDIF
+	;カウンター口交
+	ELSEIF TCVAR:20 == 51
+		;下半身裸またはノーパン裙子または浴室PLAY中
+		IF TEQUIP:0 == 0  ||  TEQUIP:0 == 1 || TEQUIP:31
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「ひああっ…%UNICODE(0x2665)%　あ…いい、んっ…%UNICODE(0x2665)%」
+				PRINTFORMW 溢れる納茲琳の愛液は、少ししょっぱく淫らな味がした…
+			ELSE
+				PRINTFORML 「ちゅぷ、ちゅうっ、ふぅんっ%UNICODE(0x2665)%　そ、そうっ…いっぱい、舐めてえっ…%UNICODE(0x2665)%」
+				PRINTFORMW 未熟な性器に舌を這わせると、納茲琳は更に強く主人公のペニスに吸い付いた…
+			ENDIF
+		;パンツを穿いてる
+		ELSEIF TEQUIP:0 == 3
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「ちゅる、じゅちゅう、むうっ…！？そ、んなっ、内袴の上から吸うな…ぁっ%UNICODE(0x2665)%」
+				PRINTFORMW 発情した納茲琳の秘唇に内袴ごとむしゃぶりつき、内袴にたっぷり染み込んだ愛液を吸い取った…
+			ELSE
+				PRINTFORML 「ちゅる、じゅちゅう、むうっ…！？そ、んなっ、内袴の上から吸うな…ぁっ%UNICODE(0x2665)%」
+				PRINTFORMW 秘唇を内袴ごと舐めると、納茲琳は予想外の刺激に身を震わせた…
+			ENDIF
+		;袴子も穿いてる
+		ELSE
+			;潤滑4以上
+			IF PALAM:潤滑 >= PALAMLV:4
+				PRINTFORML 「ううっ…うあっあっ、あうっ！…は、じゅぷぅ、ちゅっ、ちゅうっ、ふうっ…！」
+				PRINTFORMW 大きな染みの付いた袴子の上から、口で膣口を刺激した…
+			ELSE
+				PRINTFORML 「うあうっ、それ、恥ずかしっ…！」
+				PRINTFORMW 袴子の上から秘唇に吸い付くと、納茲琳は羞恥に震えた…
+			ENDIF
+		ENDIF
+	ELSE
+		;潤滑4以上
+		IF PALAM:潤滑 >= PALAMLV:4
+			IF RAND:5 == 0
+				PRINTFORML 未熟な見かけに似合わず淫らな液体を分泌するソコを、丹念に舌で愛撫した…
+				PRINTFORMW 「そ、そうっ…ひゃあんっ！いい、よっ…%UNICODE(0x2665)%」
+			ELSEIF RAND:4 == 0
+				PRINTFORML 納茲琳の股を開かせ、未熟な肉襞に滲んだ愛液を味わった…
+				PRINTFORMW 「ふ、ふふ…私のソコ、んっ、美味しいかい…？」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 発情して緩み、粘性の液体を滲ませた納茲琳の縦スジを丁寧に舐め上げた…
+				PRINTFORMW 「ぃんっ…！あ、も、もうちょっと、ゆっくりぃ…ひゃぁんっ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 上気してうっすらと赤みがさしたワレメをじっくりと舐め上げた…
+				PRINTFORMW 「ひんっ…そ、そこ、びりって、あ、はぁんっ…」
+			ELSE
+				PRINTFORML わざと大きな音を立ててあふれた愛液を吸い取った…
+				PRINTFORMW 「あぁっ…そんな音立てるなっ…馬鹿っ…」
+			ENDIF
+		ELSE
+			PRINTFORML 「は…は…これ、興奮するっ…」
+			PRINTFORMW 裙子を捲り上げた納茲琳の股間に顔を埋めて未熟なワレメを舐め上げると、愛液がトロリと流れ出てきた…
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;350,(MASTERが)推倒
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_350
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_350_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_350_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;初めて
+	IF CFLAG:1350 == 0
+		;MASTERが押し倒された経験あり
+		IF CFLAG:1200 == 2
+			;押し倒されてた
+			IF CFLAG:1211 == 1
+				IF TALENT:恋人
+					PRINTFORML 「ふふ…やっと君から押し倒してくれたね…
+					PRINTFORMW 　こういう関係になるまでは自分からは駄目…だとでも？」
+					PRINTFORML 「私からはこうして何度も誘ってるのに？律儀なのはいいが、
+					PRINTFORMW 　それも過ぎると相手を不安にさせることは覚えておきたまえ」
+					PRINTFORMW 「…まあ、どうでもいいことだ。さあ、続きといこうじゃないか…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「…ッ！　ふ　ふん、どうぞご自由に。
+					PRINTFORMW 　私ばかり好き勝手やるのも、その、フェアじゃないからね」
+					PRINTFORML 「…そうだよ。何故私だけが君を押し倒しているんだ？
+					PRINTFORMW 　普通こういうのはオスからやるべきだろう。これではまるで、私が君を―」
+					PRINTFORMW 「…何を言ってるのかね私は。忘れてくれたまえ…」
+				ELSE
+					PRINTFORML 「ふふ…我慢できなくなったかい？いいよ、好きにしたまえ…私も君で楽しませてもらったしね」
+					PRINTFORMW 納茲琳はそう言って、容姿に似合わぬ妖艶な顔で笑った
+					PRINTFORMW 「さあ、精々私を悦ばせておくれよ…？」
+				ENDIF
+			;今回はMASTERから押し倒した
+			ELSE
+				IF TALENT:恋人
+					PRINTFORML 「ふふ…君がこんなに積極的なのは初めてだな…
+					PRINTFORMW 　こういう関係になるまでは自分からは駄目…だとでも？」
+					PRINTFORML 「私からは何度も誘ってるのに？律儀なのはいいが、
+					PRINTFORMW 　それも過ぎるとパートナーを不安にさせることは覚えておきたまえ」
+					PRINTFORMW 「…まあ、どうでもいいことだ。さあ、愛しておくれよ…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「…ッ！　ふ　ふん、どうぞご自由に。
+					PRINTFORMW 　私ばかりに押し倒させてたのは、その、フェアじゃないだろう」
+					PRINTFORML 「…正直、君は私の身体には興味が無いのだと思っていたよ。
+					PRINTFORMW 　だから、まあ、その、こういうことをしてきてくれたのは―」
+					PRINTFORMW 「…何を言ってるのかね私は。忘れてくれたまえ…」
+				ELSE
+					PRINTFORML 「ふふ…我慢できなくなったかい？いいよ、好きにしたまえ…私も君で楽しませてもらったしね」
+					PRINTFORMW 納茲琳はそう言って、容姿に似合わぬ妖艶な顔で笑った
+					PRINTFORMW 「さあ、精々私を悦ばせておくれよ…？」
+				ENDIF
+			ENDIF
+		;うふふ未経験
+		ELSE
+			IF TALENT:恋人
+				PRINTFORMW 「ふん、律儀な奴だな…こういう関係になるまでは駄目…だとでも？」
+				PRINTFORMW 納茲琳はそう言って、視線を逸らした
+				PRINTFORMW 「もっと早くにしてくれても、…良かったんだがね」
+				PRINTFORMW 「律儀すぎると相手を不安にさせることは覚えておきたまえ」
+				PRINTFORMW 「…まあ、どうでもいいことだ。さあ、楽しもうじゃないか…」
+			ELSEIF TALENT:恋慕
+				PRINTFORML 「…ッ！　ふ　ふん、どうぞご自由に。
+				PRINTFORMW 　一応、それなりには経験があるつもりだよ」
+				PRINTFORML 「…正直、君は私の身体には興味が無いのだと思っていたよ。
+				PRINTFORMW 　だから、まあ、その、こういうことをしてきてくれたのは―」
+				PRINTFORMW 「…何を言ってるのかね私は。忘れてくれたまえ…」
+			ELSE
+				PRINTFORML 「ふふ…我慢できなくなったかい？いいよ、好きにしたまえ…」
+				PRINTFORMW 納茲琳はそう言って、容姿に似合わぬ妖艶な顔で笑った
+				PRINTFORMW 「さあ、楽しませておくれよ…」
+			ENDIF
+			;MASTERが先に押し倒して初うふふを経験　フラグ
+			IF CFLAG:1200 == 0
+				CFLAG:1200 = 1
+				;同時に、初うふふを経験した日として記録
+				CFLAG:1206 = DAY:0
+			ENDIF
+		ENDIF
+		CFLAG:1350 = 1
+	;押し倒し返し。恋慕だといっぱいいっぱい、恋慕無しと恋人時は余裕とかそんな感じ
+	ELSEIF CFLAG:うふふ
+		IF TALENT:恋人
+			IF RAND:5 == 0
+				PRINTFORMW 「…私だって自分からこういうのを誘うのは結構勇気要るんだよ？」
+				PRINTFORMW 少々膨れ気味の納茲琳に、主人公は軽く謝罪した
+				PRINTFORMW 「忘れさせてくれれば別にいいさ…今日も、期待してるからね？」
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「んんっ！…ふふ、そんなにがっつかなくても逃げやしないよ…」
+				PRINTFORMW 「さ…今日も愉しもうじゃないか…%UNICODE(0x2665)%」
+			ELSEIF RAND:3 == 0 
+				PRINTFORMW 「うわっ！？　…ふふ、その気になってくれたのかい？」
+				;ナズが奉仕（手淫、口淫、素股、乳交）をしていた
+				IF GROUPMATCH(TCVAR:20,50,51,52,53)
+					PRINTFORMW 「悦んで貰えたようで嬉しいよ…さあ、愛しておくれ…」
+				;ナズが挑発（裙子捲り、股間まさぐり、裙子の中見せ、強制舐陰）していた
+				ELSEIF GROUPMATCH(TCVAR:20,13,34,35,70)
+					PRINTFORMW 「煽った甲斐があったよ…さ、存分に愛し合おうじゃないか…」
+				ELSE
+					PRINTFORMW 「こんな体に欲情してくれて嬉しいよ…さあ、愛しておくれ…」
+				ENDIF
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「っ！…ふふっ、我慢できなくなったかい？」
+				;ナズが奉仕（手淫、口淫、素股、乳交）をしていた
+				IF GROUPMATCH(TCVAR:20,50,51,52,53)
+					PRINTFORMW 「悦んで貰えたようで嬉しいよ…さあ、愛しておくれ…」
+				;ナズが挑発（裙子捲り、股間まさぐり、裙子の中見せ、強制舐陰）していた
+				ELSEIF GROUPMATCH(TCVAR:20,13,34,35,70)
+					PRINTFORMW 「煽った甲斐があったよ…さ、存分に愛し合おうじゃないか…」
+				ELSE
+					PRINTFORMW 「こんな体に欲情してくれて嬉しいよ…さあ、愛しておくれ…」
+				ENDIF
+			ELSE
+				PRINTFORM 「あっ…　ふふ…
+				;潤滑Lv.3以上
+				IF PALAM:潤滑 >= PALAMLV:3
+					PRINTFORMW もうこっちは準備はできてるよ？」
+				ELSE
+					PRINTFORMW そんなに焦らなくていいよ…まずは前戯から、な…」
+				ENDIF
+				PRINTFORMW 「いつもみたいに、何にも考えられなくぐらい愛しておくれよ…」
+			ENDIF
+		;恋慕
+		;/自分から攻めといて、いざ押し倒されたら固まる。
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0 
+				PRINTFORMW 「っ…！　あ…」
+				;ナズが奉仕（手淫、口淫、素股、乳交）をしていた
+				IF GROUPMATCH(TCVAR:20,50,51,52,53)
+					PRINTFORM 懸命に奉仕していた
+				;ナズが挑発（裙子捲り、股間まさぐり、裙子の中見せ、強制舐陰）していた
+				ELSEIF GROUPMATCH(TCVAR:20,13,34,35,70)
+					PRINTFORM 頬を上気させながら挑発していた
+				ELSE
+					PRINTFORM 淫らな行為に耽っていた
+				ENDIF
+				PRINTFORMW 納茲琳を抱きしめて、そのまま優しく横たえた…
+			ELSEIF RAND:2 == 0 
+				PRINTFORML 「あ…」
+				;ランダム1/3かつナズが奉仕（手淫、口淫、素股、乳交）をしていた
+				IF RAND:3 == 0 && GROUPMATCH(TCVAR:20,50,51,52,53)
+					PRINTFORM 懸命に奉仕していた納茲琳を優しく推倒と、
+				;ランダム1/2かつナズが挑発（裙子捲り、股間まさぐり、裙子の中見せ、強制舐陰）していた
+				ELSEIF RAND:2 == 0 && GROUPMATCH(TCVAR:20,13,34,35,70)
+					PRINTFORM 頬を上気させながら挑発していた
+				ELSE
+					PRINTFORM 淫らな行為に耽っていた納茲琳を優しく推倒と、
+				ENDIF
+				PRINTFORMW 切なげな表情でこちらを見上げてきた…
+				PRINTFORMW 「ん…今だけでいいから、優しくしておくれ…」
+			ELSE
+				PRINTFORML 「あぅ…」
+				PRINTFORMW それまで蕩けた表情だった納茲琳を推倒と、我に返ったのか真っ赤になりながら視線を逸らした…
+			ENDIF
+		;恋人、恋慕なし
+		ELSE
+			IF RAND:3 == 0 
+				PRINTFORMW 「うわっ！？　…ふふ、その気になったのかい？」
+				;ナズが奉仕or挑発（手淫、口淫、素股、乳交）をしていた
+				IF GROUPMATCH(TCVAR:20,50,51,52,53,13,34,35,70)
+					PRINTFORMW 「オスは単純でいい…さあ、楽しませておくれ…」
+				ELSE
+					PRINTFORMW 「こんな体に欲情できるんだね。なかなかいい趣味してるよ、君」
+				ENDIF
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「っ！…ふふっ、我慢できなくなったかい？」
+				PRINTFORMW 「オスは堪え性がないね…さ、存分に楽しませてもらうよ…」
+			ELSE
+				PRINTFORM 「あっ…　ふふ…
+				;潤滑Lv.4以上
+				IF PALAM:潤滑 >= PALAMLV:4
+					PRINTFORMW もうこっちは準備はできてるよ？」
+				ELSE
+					PRINTFORMW そんなに焦らなくていいよ…まずは前戯から、な…」
+				ENDIF
+				PRINTFORMW 「いつもみたいに、君の気が済むまで受け止めてやるさ…」
+			ENDIF
+		ENDIF
+	;こちらから押し倒した
+	ELSE
+		;納茲琳私室かつ1/3
+		IF CFLAG:現在位置 == 113 && RAND:3 == 0 
+			;昼（6時～19時）
+			IF TIME:2 >= 2 && TIME:2 <= 4
+				IF TALENT:恋人
+					PRINTFORML 「クスッ、わかった、わかったからちょっと待ちたまえ…
+					PRINTFORMW 　今、布団を敷くからさ…全く仕方のない奴だな、君は」
+					PRINTFORMW 文句を言いながらも、納茲琳の尻尾は左右に大きく揺れている…
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「…まだ、こんなに明るいのにしたいのかい？」
+					PRINTFORMW 「別にいいが…その代わり、終わった後も夜までいておくれよ…」
+				ELSE
+					PRINTFORML 「おいおい、まだこんなに明るいうちから始める気かい？」
+					PRINTFORMW 「そのために私的房間に来たのか…まあいいさ、相手してあげるよ」
+				ENDIF
+			;夜
+			ELSE
+				IF TALENT:恋人
+					PRINTFORML 「…ふふ、やっぱり夜這いだったんだね」
+					IF TALENT:恋慕
+						PRINTFORMW 「いいさ…君に抱かれて寝るのは、すごく心地いいからね…」
+					ELSE
+						PRINTFORMW 「いいさ…君に抱かれて寝るのは嫌いじゃないよ…」
+					ENDIF
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「…やっぱりこんな時間に私的房間に来たのは、私を求めてくれたからかい？」
+					PRINTFORMW 「だとしたら…嬉しいね」
+				ELSE
+					PRINTFORML 「やっぱりというかなんというか…しかし、こんな堂々とした夜這いは聞いたことがないねえ」
+					PRINTFORMW 「…ま、いいさ…君と一緒に寝るのも悪くはない…」
+				ENDIF
+			ENDIF
+		;外(山門、境内、後院、墓地)
+		ELSEIF GROUPMATCH(CFLAG:現在位置, 101, 102, 106, 121)
+			;露出癖4以上
+			IF ABL:露出癖 >= 4
+				PRINTFORML 「ふふ…こんなところでするのかい？変態だね…」
+				PRINTFORMW 呆れる納茲琳は、しかし息を荒くし頬を上気させている…
+			ELSE
+				PRINTFORML 「…こんなところで致そうだなんて、君、露出癖でもあるのかい？」
+				PRINTFORMW 呆れた表情の納茲琳を無視して押し倒した…
+			ENDIF
+		ELSE
+			IF RAND:5 == 0 && TIME:2 >= 2 && TIME:2 <= 4
+				IF TALENT:恋人
+					PRINTFORML 「ふふ…こんな真っ昼間から、まぐわう事しか考えられないのかい？」
+					PRINTFORMW 「…私も、さ」
+					PRINTFORMW 納茲琳はそう言って、キスを求めてきた…
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「っ…い、今からするのか…？」
+					PRINTFORMW 納茲琳は予想外のアプローチに戸惑っているようだ…
+				ELSE
+					PRINTFORML 「ふふ…こんな真っ昼間から、まぐわう事しか考えられないのかい？」
+					PRINTFORMW 「君も好きだね…」
+					PRINTFORMW 薄く笑う納茲琳を無視して押し倒した…
+				ENDIF
+			ELSEIF RAND:4 == 0 
+				IF TALENT:恋人
+					PRINTFORML 「おや、我慢できなくなったかい？
+					PRINTFORMW 　…クスッ、いいさ…目一杯可愛がってくれるならね…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「っ！？だ、だから、好きでもない娘にこんなこむっ！？」
+					PRINTFORMW 驚いて抗議する納茲琳の口を口で塞いだまま押し倒した…
+				ELSE
+					PRINTFORML 「おや、我慢できなくなったかい？
+					PRINTFORMW 　…それじゃ、お手並み拝見と行こうじゃないか」
+				ENDIF
+			ELSEIF RAND:3 == 0  
+				IF TALENT:恋人
+					PRINTFORML 「…ふふ…こんな卑近な、しかもネズミの妖怪を選ぶなんて君ぐらいさ…」
+					;/外の世界には結構いると思うよ？
+					PRINTFORMW 「また今日も…君を感じさせておくれ…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「…他にもっといい娘がいるだろうに、なんでネズミなんかを抱こうとするんだい…」
+					PRINTFORMW いつになく気弱な納茲琳を抱き寄せた…
+				ELSE
+					PRINTFORML 「ふふ…こんな妖怪鼠を抱こうだなんて、君も好きだねぇ…」
+					PRINTFORMW 「まぁ、私にとってはそれなりに都合の良い相手ではあるよ」
+				ENDIF
+			ELSEIF RAND:2 == 0
+				IF TALENT:恋人
+					PRINTFORML 「…これでも割と感謝してるんだよ？こんな身体を相手してくれるのは君だけさ…」
+					;/外の世界には結構いると思うよ？
+					PRINTFORMW 「また今日も…溺れさせておくれよ…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「こ、こんな貧相な体型で欲情できるなんて、変わってるね君」
+					PRINTFORMW 自分のセリフで軽く凹んでいる納茲琳を優しく抱きしめた
+					PRINTFORMW 「…本当に、私でいいのかい…？ふふ、嬉しいよ。ちょっとだけね」
+				ELSE
+					PRINTFORML 「ふふ…こんな妖怪鼠を抱こうだなんて、君も好きだねぇ…」
+					PRINTFORMW 「まぁ、私にとってはそれなりに都合の良い相手ではあるよ」
+				ENDIF
+			ELSE
+				IF TALENT:恋人
+					PRINTFORML 「…これでも割と感謝してるんだよ？こんな身体を相手してくれるのは君だけさ…」
+					;/外の世界には結構いると思うよ？
+					PRINTFORMW 「また今日も…溺れさせておくれよ…」
+				ELSEIF TALENT:恋慕
+					PRINTFORML 「こ、こんな貧相な体型で欲情できるなんて、変わってるね君」
+					PRINTFORMW （…ここで男らしいフォローを入れてくれたりしたら…うぅ）
+				ELSE
+					PRINTFORML 「ふふ…こんな妖怪鼠を抱こうだなんて、君も好きだねぇ…」
+					PRINTFORMW 「まぁ、私にとってはそれなりに都合の良い相手ではあるよ」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+	;リセット
+	CFLAG:1501 = 0
+	;絶頂カウントリセット
+	CFLAG:1502 = 0
+	CFLAG:1503 = 0
+	CFLAG:1504 = 0
+	CFLAG:1505 = 0
+ENDIF
+RETURN 1
+;==================================================
+;351,帯出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_351
+;連れ出しにはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K39_351_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_351_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;うふふが解除されていることを念押しする処理
+CFLAG:1211 = 0
+	;欲情5以上で発情しちゃったナズ
+	IF PALAM:欲情 >= PALAMLV:5
+		IF RAND:3 == 0
+			PRINTFORMW 「フフ…どこに連れ込まれるのかねぇ…」 
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「君的房間に行くのかい？それとも私的房間で…？」
+		ELSE
+			PRINTFORMW 「ふふ…早くしてくれないと、私が君を襲ってしまうぞ…？」
+		ENDIF 
+		PRINTFORML 上気した納茲琳の拉手と、薄く笑って主人公の後を付いてきた…
+		RETURN 1
+	;恋人
+	ELSEIF TALENT:恋人
+		PRINTFORML 小さな小さな恋人の手を掴んで連れ出した…
+		IF RAND:4 == 0 
+			PRINTFORMW 「ふふ、どこへ連れて行ってくれるのかな？」
+		ELSEIF RAND:3 == 0 
+			PRINTFORMW 「んん、何だい？」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「ん、付き合おう」
+		ELSE
+			PRINTFORMW 「何か探し物かい？」
+		ENDIF
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORML 納茲琳の手を掴んで連れだすと、突然の事に納茲琳は体を緊張させた
+		IF RAND:4 == 0 
+			PRINTFORMW 「わ、私なんかに何か用かい？ま、まぁ時間なら、偶然にも空いているけど」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「お、おい…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「な、何だよ…」
+		ELSE
+			PRINTFORMW 「…っ！」
+		ENDIF
+		RETURN 1
+	ELSE
+		IF RAND:4 == 0 
+			PRINTFORMW 「…仕方ないな。あまり長引かせないでくれよ」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「何か用かい？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「忙しいんだがね…」
+		ELSE
+			PRINTFORMW 「やれやれ…」
+		ENDIF
+		RETURN 1
+	ENDIF 
+ENDIF
+RETURN 1
+;==================================================
+;352,告白
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_352
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_352_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_352_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;成功
+	IF TFLAG:193 == 1
+		;うふふ中
+		IF CFLAG:うふふ == 1 || CFLAG:うふふ == 2
+			IF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORMW 「…ッ」
+				PRINTFORMW 愛を告白と、納茲琳の目が大きく見開かれたあと、目を逸らされた
+				PRINTFORML 
+				PRINTFORMW 「違う…違うよ…君はただ、こうやって身体を重ねてるせいで一時的に勘違いしてるだけさ」
+				PRINTFORML 「こんな卑近な、取るに足らない妖怪を愛するなんてどうかしてる。
+				;他に恋慕持ちがいる
+				SIF TALENT:(NO:2):恋慕 || TALENT:(NO:3):恋慕 || TALENT:(NO:4):恋慕 || TALENT:(NO:5):恋慕 || TALENT:(NO:6):恋慕 || TALENT:(NO:7):恋慕 || TALENT:(NO:8):恋慕 || TALENT:(NO:9):恋慕
+					PRINTFORM それでなくても…君にはもっと相応しい人がいるんだ…
+				PRINTFORMW 　撤回しておくれよ…お願いだから…」
+				PRINTFORMW 抱き合ったまま嗚咽を漏らす納茲琳に、再び愛を囁く…
+				PRINTFORML 
+				PRINTFORMW 「…なんでだよ。わけがわからない。私より魅力的な人はたくさんいるじゃないか！」
+				PRINTFORMW 「それをなんでよりにもよって、こんな魅力もない、」
+				PRINTFORMW 体型の事なら気にしないよ？むしろ好みだ
+				PRINTFORML 「意地の悪い…」
+				PRINTFORMW 最近はとってもいじらしいじゃないか。
+				PRINTFORML 「卑しい…ネズミなんかを…」
+				PRINTFORMW でも、納茲琳は納茲琳だろ？
+				PRINTFORML 
+				PRINTFORMW 「…馬鹿だよ…」
+				PRINTFORML 「私だって、君のことは遊びだったんだ。そう思うことにしたんだ。
+				PRINTFORML 　ペンデュラムが君の方向を向くのも、気がついたら走廊で君を探していたのも、
+				PRINTFORMW 　寝るときに君の体温を想うのも、全部気のせい…そう、思い込むことにしたんだ…」
+				PRINTFORML 「私はそれで全てうまく行くと思ってたのに…なのに、君はそれを全部壊してしまった…」
+				PRINTFORML 
+				PRINTFORMW 「…君は、本当に、馬鹿だよ…」
+			ELSE
+				PRINTFORMW 「…」
+				PRINTFORMW 愛を告白と、しばしの沈黙の後納茲琳は自嘲的な笑いを浮かべた
+				PRINTFORML 
+				PRINTFORMW 「違う…違うよ…君はただ、こうやって身体を重ねてるせいで一時的に勘違いしてるだけさ」
+				PRINTFORM 「
+				;他に恋慕持ちがいる
+				SIF TALENT:(NO:2):恋慕 || TALENT:(NO:3):恋慕 || TALENT:(NO:4):恋慕 || TALENT:(NO:5):恋慕 || TALENT:(NO:6):恋慕 || TALENT:(NO:7):恋慕 || TALENT:(NO:8):恋慕 || TALENT:(NO:9):恋慕
+					PRINTFORM それでなくても、君にはもっと相応しい人がいるんだ。
+				PRINTFORMW 撤回することをお勧めするよ…」
+				PRINTFORMW 抱き合ったまま黙り込む納茲琳に、再び愛を囁く…
+				PRINTFORML 
+				PRINTFORML 「予め言っておくが、私は恋愛相手としては不向きだよ。身体的にも、性格的にもね。
+				PRINTFORMW 　多分、君を満足させてあげる事はできないと思う。重ねて言うが、撤回することを勧める」
+				PRINTFORMW 「それでも…私を恋人にしたいと…？」
+				PRINTFORML 
+				PRINTFORMW 「…わかった。確かに私も、君のことは嫌いじゃない。が…
+				PRINTFORMW 　…君は、本当に、馬鹿だよ…」
+			ENDIF
+		;告白し返し　告白失敗口上から飛んでくる
+		ELSEIF CFLAG:1213 == 1
+			PRINTFORMW 「なッッ…！」
+			PRINTFORMW 目を見開いた納茲琳は絶句し、そのまま固まってしまった
+			PRINTFORMW 彫像と化してしまった納茲琳に重ねて愛を告白
+			PRINTFORMW 「…な、なん、なん、なんっだよそれは！私をからかって遊んだのかい！？」
+			PRINTFORMW 「わ、私が、私がどれだけ…！～～～～っあ～～～っもう！！」
+			PRINTFORML 
+			PRINTFORMW 頭を抱えてうずくまる納茲琳に恐る恐る声をかけると、キッと睨まれた
+			PRINTFORMW 「っ！わかってるよ！君が馬鹿みたいに律儀なことも！さっきの言葉が本心だったことも！」
+			PRINTFORML 「あぁそうさ！私だって伊達に君を見続けてきたわけじゃないんだ！
+			PRINTFORMW 　だがね、こんな時までそれを発揮するほどの唐変木だったのは計算外だったよ！」
+			PRINTFORML 
+			PRINTFORMW 「…君は！　本当に！！　馬鹿だなぁッ！！！」
+			PRINTFORML 
+			PRINTFORMW すごい剣幕でまくし立てたあと、納茲琳はヘナヘナと座り込んだ
+			PRINTFORMW 「…はぁ。で、何だったっけ？」
+			PRINTFORMW 「あぁ、告白させるのが申し訳ないから断って告白し直す、だったか」
+			PRINTFORML 
+			PRINTFORMW 「あのな？律儀なのは結構だが、一時でも私を大層傷つけるとは考えなかったのかい？」
+			PRINTFORMW 「…ま、考えなかったんだろうな。だから馬鹿だというんだ」
+			PRINTFORMW その点については、主人公は坦率に謝った
+			PRINTFORMW 「いい。もうそれはいい。というか、もう全てどうでもいい」
+			PRINTFORMW 「…はぁ。全く、君といると退屈しないな？」
+			PRINTFORMW ニヤリと笑うと、納茲琳は立ち上がった
+			PRINTFORML 
+			PRINTFORMW 「いやまあ、ね。正直、自分でも承諾してくれるはずがないと思ってたものでね…」
+			PRINTFORMW 「ん？いやほら、私から告白しといて何だけど。
+			PRINTFORMW 　人喰い鼠を大量に従えてる妖怪とお近づきになろうなんて、普通の人間なら思わないじゃないか。
+			PRINTFORMW 　ああ、一応言っておくけど、その件は何とかなる目処はついたから、もう気にしなくていいよ」
+			PRINTFORML 
+			PRINTFORMW 「それに妖怪云々を抜きにしても、私はナリも中身もこんなだしな…ご主人や聖の方が身体的にも人格的にも魅力的だろう？
+			PRINTFORMW 　愛想なんかで言えば響子やムラサ船長なんかには敵わないし。私なんか相手にもされないと、本気でそう思っていたからね」
+			PRINTFORMW 「しかし君は私を選んでくれた…本当に嬉しいよ」
+			PRINTFORMW 「…」
+			PRINTFORML 
+			PRINTFORMW 言葉を切って、こちらを真っ直ぐ見つめる納茲琳。
+			PRINTFORMW 普段は絶対に見せない、優しい微笑み。
+			PRINTFORMW 「これからもよろしく、%MASTERNAME:39%」
+			PRINTFORMW そう告げて、きゅっと主人公に抱きついた…
+			;告白失敗判定のままなので、ここで恋人にしておく
+			TALENT:恋人 = 1
+		;◆超絶添削予定
+		;告白・低信頼度の場合　とりあえず仮に750未満としておく←ついでに恋慕も足しておく
+		;一体誰と戦ってるんだ納茲琳！編　
+		;…どうしようかなあ。←晒しage。あ、ちょっと下に付け足しときました
+		ELSEIF CFLAG:2 < 750 && TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 聞き終わると、納茲琳はしばらく無言で佇んでいた。
+			PRINTFORML 
+			PRINTFORMW 「………それで？」
+			PRINTFORML 
+			PRINTFORMW ようやく聞こえた言葉の意味が分からずに、主人公は伏せていた顔を上げた。
+			PRINTFORML 
+			PRINTFORML 納茲琳は、無表情のまま周囲を見回す。
+			PRINTFORML 
+			PRINTFORMW 「オチは無いのかい？
+			PRINTFORML 　ここで『ドッキリでした！』って看板とか化け傘とか出てくるんだろう？
+			PRINTFORML 　誰だか知らないが、どこかから仕掛け人が覗いてほくそ笑んでいるんだろう？
+			PRINTFORMW 　そろそろ出てきたらどうだい？」
+			PRINTFORML 
+			PRINTFORMW …当然、何が出てくるはずもない。
+			PRINTFORML 
+			PRINTFORMW 納茲琳はおもむろにペンデュラムを握り、もう一周、辺りを見回し、
+			PRINTFORML 
+			PRINTFORMW ───閃光と爆音が轟いた。
+			PRINTFORML 
+			PRINTFORML 「…出てきたらどうだい？
+			PRINTFORMW 　いるんだろう？なあ！？燻り出されたいのかい！？
+			PRINTFORMW 　なら望み街道…！！」
+			PRINTFORML 
+			PRINTFORMW 慌てて%CALLNAME:MASTER%が抑え込もうとする間も、ペンデュラムは閃き続ける。
+			PRINTFORML 
+			PRINTFORML 「悪趣味だよ…！君も！君にこんなことをさせた奴も！ナンセンスだ…！馬鹿げているっ！！」
+			PRINTFORML 
+			PRINTFORMW 放たれた光条と呼び寄せられたネズミ達が辺りを蹂躙する間も、納茲琳は呪詛のように呟き続ける。
+			PRINTFORML 
+			PRINTFORMW 「嘘でも冗談でもない？信じてくれ？信じてくれだって？
+			PRINTFORMW 　信じられるはずないだろうッ！！！」
+			PRINTFORML 
+			PRINTFORMW 納茲琳は%CALLNAME:MASTER%を振り払い、逆に圧し掛かって胸倉を掴んだ。
+			PRINTFORML 
+			PRINTFORMW 「…私は妖怪鼠だ。人食いだ。君は人間だ。ただの人間なんだ。
+			PRINTFORML 　愛することなんて出来ない。出来る筈がない。していい筈がない！
+			PRINTFORMW 　ねえ、そんなことも分からないのかい？
+			PRINTFORML 
+			PRINTFORMW 　…君は！　本当に！！　馬鹿だなぁッ！！！」
+			PRINTFORML 
+			PRINTFORML 掴んで胸倉を揺さぶられ、
+			PRINTFORML 突き飛ばされて後頭部を打ち、
+			PRINTFORMW 朦朧とする視界の中で振り上げられたロッドが、耳を掠めてすぐ真横に、深々と突き刺さる。
+			PRINTFORML 
+			PRINTFORMW …その代わりとでもいうかのように、頬に雫が落ちてきた。
+			PRINTFORML 
+			PRINTFORML 「…ネズミたちがね、聞いてくるんだよ。
+			PRINTFORMW 　あの人間は食べてもいいのかって。
+			PRINTFORMW 　…いつ、食べてよくなるのか、って。
+			PRINTFORMW 　ずっとずっと、聞いて来るんだ。
+			PRINTFORMW 　君が寝ている間に、首筋に食らい付こうとしたネズミもいたんだよ。
+			PRINTFORMW 　『食べちゃ駄目だ』と、私に言われてたことを“覚えていた”子がいたから、大事にはならなかったけど。
+			PRINTFORMW 　たまたま。本当に、偶然に。
+			PRINTFORMW 　…今、君の顔の横にいる子が、そうさ」
+			PRINTFORML 
+			PRINTFORML 気付けば、周囲にはびっしりと、ネズミたちが集まっていた。
+			PRINTFORMW 横を向くと、鼻が触れそうなほど間近で、一匹のネズミがこちらを見ている。
+			PRINTFORML 
+			PRINTFORMW 「君と初めて会ったとき、君の指を齧ろうとした、あの子さ。
+			PRINTFORMW 　覚えてるかい？…その子はもう、君を齧ろうとしたことも、君の命を救ったことも、覚えていないんだよ。
+			PRINTFORMW 　今は、お腹が空いたから、この人間を食べようかなあって、そんなことを考えているんだ」
+			PRINTFORML 
+			PRINTFORMW 小さなネズミの、赤い赤い目が、じいっと、こちらを見つめている。
+			PRINTFORMW 慎重に、匂いを嗅いで。様子を伺いながら。口を開いて…
+			PRINTFORML 
+			PRINTFORMW 「食べちゃ駄目だ」
+			PRINTFORML 
+			PRINTFORML ぴたり、と動きを止めて。
+			PRINTFORMW 不思議そうに鼻をひくつかせて。
+			PRINTFORML 
+			PRINTFORMW 「食べちゃ、駄目だ」
+			PRINTFORML 
+			PRINTFORMW 言い聞かせるような声が響く。
+			PRINTFORML 
+			PRINTFORMW 刹那、ざあ、と波が引くように、全てのネズミが暗闇に消えていった。
+			PRINTFORML 
+			PRINTFORMW 「…分かっただろう？無理だよ。無理なんだ。
+			PRINTFORML 　私はネズミたちを捨てることは出来ないし、あの子たちを止めておくのにも限度がある。
+			PRINTFORMW 　今は君的房間にネズミ避けを置いてあるから、寝首を掻かれることはおそらく無いだろう。
+			PRINTFORMW 　…けれど、私に近づくのは、もう駄目だ」
+			PRINTFORML 
+			PRINTFORMW ぽたり。
+			PRINTFORML 
+			PRINTFORML 「君が、妖怪だったら。神仏だったら。あるいは超人だったら。
+			PRINTFORMW 　…いや、そんな君だったら、私なんかに見向きもしなかっただろうね」
+			PRINTFORML 
+			PRINTFORMW ぽたり、ぽたりと、雫が落ちる。
+			PRINTFORML 
+			PRINTFORMW 「私が、好きだって…？違うよ、君は…っ…勘違いを、している。
+			PRINTFORMW 　私とのことは、ただの遊び、だったんだ。
+			PRINTFORML 　たまたま、部屋が近かったから、話す機会が多くて、
+			PRINTFORMW 　たまたま、行く先でよく会うから、触れる機会が多くて、
+			PRINTFORMW 　少しだけ、哀れでちっぽけなネズミに、悪戯心が沸いた。
+			PRINTFORMW 　…それだけだったんだろうっ！？
+			PRINTFORML 
+			PRINTFORMW 搾り出すように、抉り出すように。
+			PRINTFORML 
+			PRINTFORMW 「…私は、そうっ！…そう、信じてたんだ…。
+			PRINTFORMW 　君のぬくもりに耐えられなくなりそうなときも、
+			PRINTFORMW 　走廊で君が来るのをじっと待っている自分に気付いたときも、
+			PRINTFORMW 　私のロッドが、ペンデュラムが、もう君しか示さなくなってしまったときにも！
+			PRINTFORMW 　そう、信じてっ…！信じて、耐えて、いつか私から興味が出口たときに、潔く君から出口ようとッ…！
+			PRINTFORMW 　そう、誓って、ここまで、来たのに…！
+			PRINTFORML
+			PRINTFORMW 　本当に…っ、君は、馬鹿だよ。ネズミに告白だって？末代までのっ…、笑い者に、なりたいのかい？
+			PRINTFORMW 　…今更、勝手なことを、言わないでくれよぉっ…！」
+			PRINTFORMW いつの間にか抱きしめていた納茲琳が、主人公の腕の中で涙とともに嗚咽を漏らす。
+			PRINTFORMW 「そんな…そんな私の葛藤や苦悩を…全部、無かった事にする気か？君は。
+			PRINTFORMW 　冗談じゃない。つまり、馬鹿だったのは全部私の方ってことになるじゃないか…！」
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORMW …が、しばらくして落ち着いた声を取り戻した納茲琳が、静かな激情とともに誓う。
+			PRINTFORML 「…ふん、上等だ。馬鹿で結構。
+			PRINTFORMW 　大馬鹿者同士、お互いがお似合いってわけだ。いいさ。やってやる」
+			PRINTFORML 「人間と妖怪？だから何だ。むしろ、うちの寺的には都合がいいじゃないか。
+			PRINTFORMW 　ネズミたち？だから何だ。私はネズミの妖怪だ。ネズミたちを制御できないでどうする」
+			PRINTFORML 「私は君を自分のものにする。もう遠慮しない。私は妖怪だ、それぐらいして何がおかしい。
+			PRINTFORMW 　本人だって承諾済みだ、何の問題もない」
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORMW 「…そういうことなので。以後よろしく」
+		;信頼度750以上かつ恋慕
+		;/主人公のことはそれなりに信用しているので弾乱射とかはしない。それ以外はだいたい同じ。
+		;/ぶっちゃけ↑の劣化コピー。
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 聞き終わると、納茲琳はしばらく無言で佇んでいた。
+			PRINTFORML 
+			PRINTFORMW 「………だめだよ」
+			PRINTFORML 
+			PRINTFORMW ポツリと呟いく。
+			PRINTFORML 
+			PRINTFORML 「…君のことはそれなりによく知ってるつもりだ。私に好意を持って接してくれていることも、
+			PRINTFORMW 　こういうことをからかいや冗談でするような人じゃないことも」
+			PRINTFORML 「君が私を見てくれている以上に、私も君を見ていたからね。それぐらいわかるさ。
+			PRINTFORMW 　…でも…だめなんだ」
+			PRINTFORML 
+			PRINTFORMW 「…私は妖怪鼠だ。人食いだ。君は人間だ。ただの人間なんだ。
+			PRINTFORML 　愛することなんて出来ない。出来る筈がない。していい筈がない。
+			PRINTFORMW 　ねえ、そんなことも分からないのかい…！
+			PRINTFORML 
+			PRINTFORMW 　…君は！　本当に！！　馬鹿だなぁッ…！！！」
+			PRINTFORML 
+			PRINTFORMW いつの間にか抱きしめていた納茲琳が、むずがるように拳で主人公の胸を叩きつける。
+			PRINTFORMW …ひとしきり暴れたあと、主人公の胸に顔を埋めたまま、納茲琳が語り出した。
+			PRINTFORML 
+			PRINTFORML 「…ネズミたちがね、聞いてくるんだよ。
+			PRINTFORMW 　あの人間は食べてもいいのかって。
+			PRINTFORMW 　…いつ、食べてよくなるのか、って。
+			PRINTFORMW 　ずっとずっと、聞いて来るんだ。
+			PRINTFORMW 　君が寝ている間に、首筋に食らい付こうとしたネズミもいたんだよ。
+			PRINTFORMW 　『食べちゃ駄目だ』と、私に言われてたことを“覚えていた”子がいたから、大事にはならなかったけど。
+			PRINTFORMW 　たまたま。本当に、偶然に。
+			PRINTFORMW 　…今、君の顔の横にいる子が、そうさ」
+			PRINTFORML 
+			PRINTFORML 気付けば、周囲にはびっしりと、ネズミたちが集まっていた。
+			PRINTFORMW 横を向くと、鼻が触れそうなほど間近で、一匹のネズミがこちらを見ている。
+			PRINTFORML 
+			PRINTFORMW 「君と初めて会ったとき、君の指を齧ろうとした、あの子さ。
+			PRINTFORMW 　覚えてるかい？…その子はもう、君を齧ろうとしたことも、君の命を救ったことも、覚えていないんだよ。
+			PRINTFORMW 　今は、お腹が空いたから、この人間を食べようかなあって、そんなことを考えているんだ」
+			PRINTFORML 
+			PRINTFORMW 小さなネズミの、赤い赤い目が、じいっと、こちらを見つめている。
+			PRINTFORMW 慎重に、匂いを嗅いで。様子を伺いながら。口を開いて…
+			PRINTFORML 
+			PRINTFORMW 「食べちゃ駄目だ」
+			PRINTFORML 
+			PRINTFORML ぴたり、と動きを止めて。
+			PRINTFORMW 不思議そうに鼻をひくつかせて。
+			PRINTFORML 
+			PRINTFORMW 「食べちゃ、駄目だ」
+			PRINTFORML 
+			PRINTFORMW 言い聞かせるような声が響く。
+			PRINTFORML 
+			PRINTFORMW 刹那、ざあ、と波が引くように、全てのネズミが暗闇に消えていった。
+			PRINTFORML 
+			PRINTFORMW 「…分かっただろう？無理だよ。無理なんだ。
+			PRINTFORML 　私はネズミたちを捨てることは出来ないし、あの子たちを止めておくのにも限度がある。
+			PRINTFORMW 　今は君的房間にネズミ避けを置いてあるから、寝首を掻かれることはおそらく無いだろう。
+			PRINTFORMW 　…けれど、私に近づくのは、もう駄目だ」
+			PRINTFORML 
+			PRINTFORMW ぽたり。
+			PRINTFORML 
+			PRINTFORML 「君が、妖怪だったら。神仏だったら。あるいは超人だったら。
+			PRINTFORMW 　…いや、そんな君だったら、私なんかに見向きもしなかっただろうね」
+			PRINTFORML 
+			PRINTFORMW ぽたり、ぽたりと、雫が落ちる。
+			PRINTFORML 
+			PRINTFORMW 「私が、好きだって…？違うよ、君は…っ…勘違いを、している。
+			PRINTFORML 　たまたま、部屋が近かったから、話す機会が多くて、
+			PRINTFORMW 　たまたま、行く先でよく会うから、触れる機会が多くて、
+			PRINTFORMW 　少しだけ、哀れでちっぽけなネズミに、情けを掛けたくなった。
+			PRINTFORMW 　…それだけの、ことさ…私を好きだなんて、ましてや愛してるだなんて、ただの、気の迷いなんだよ…！」
+			PRINTFORML 
+			PRINTFORMW 搾り出すように、抉り出すように。
+			PRINTFORML 
+			PRINTFORMW 「…私は、そうっ！…そう、信じてたんだ…。
+			PRINTFORMW 　君のぬくもりに耐えられなくなりそうなときも、
+			PRINTFORMW 　走廊で君が来るのをじっと待っている自分に気付いたときも、
+			PRINTFORMW 　私のロッドが、ペンデュラムが、もう君しか示さなくなってしまったときにも！
+			PRINTFORMW 　そう、信じてっ…！信じて、耐えて、いつか私から興味が出口たときに、潔く君から出口ようとッ…！
+			PRINTFORMW 　そう、誓って、ここまで、来たのに…！
+			PRINTFORML
+			PRINTFORMW 　本当に…っ、君は、馬鹿だよ。ネズミに告白だって？末代までのっ…、笑い者に、なりたいのかい？
+			PRINTFORMW 　…今更、勝手なことを、言わないでくれよぉっ…！」
+			PRINTFORMW 抱きしめていた納茲琳が、主人公の腕の中で涙とともに嗚咽を漏らす。
+			PRINTFORMW 「そんな…そんな私の葛藤や苦悩を…全部、無かった事にする気か？君は。
+			PRINTFORMW 　冗談じゃない。つまり、馬鹿だったのは全部私の方ってことになるじゃないか…！」
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORMW …が、しばらくして落ち着いた声を取り戻した納茲琳が、静かな激情とともに誓う。
+			PRINTFORML 「…ふん、上等だ。馬鹿で結構。
+			PRINTFORMW 　大馬鹿者同士、お互いがお似合いってわけだ。いいさ。やってやる」
+			PRINTFORML 「人間と妖怪？だから何だ。むしろ、うちの寺的には都合がいいじゃないか。
+			PRINTFORMW 　ネズミたち？だから何だ。私はネズミの妖怪だ。ネズミたちを制御できないでどうする」
+			PRINTFORML 「私は君を自分のものにする。もう遠慮しない。私は妖怪だ、それぐらいして何がおかしい。
+			PRINTFORMW 　本人だって承諾済みだ、何の問題もない」
+			PRINTFORML 
+			PRINTFORML 
+			PRINTFORMW 「…そういうことなので。以後よろしく」
+		;恋慕なし
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 愛を告白と、しばしの沈黙の後納茲琳は自嘲的な笑いを浮かべた
+			PRINTFORML 
+			;うふふ経験あり
+			IF CFLAG:1203 == 1
+				PRINTFORML 「違う…違うよ…君はただ、体を重ねたことがあるだけの相手を
+				PRINTFORML 　一時的に過大評価してるだけさ」
+			ELSE
+				PRINTFORML 「違う…違うよ…君はただ、たまたま知り合ったちっぽけなネズミに感じた愛玩的感情を、
+				PRINTFORML 　恋愛感情と勘違いしてるだけさ」
+			ENDIF
+			PRINTFORM 「
+			;他に恋慕持ちがいる
+			SIF TALENT:(NO:2):恋慕 || TALENT:(NO:3):恋慕 || TALENT:(NO:4):恋慕 || TALENT:(NO:5):恋慕 || TALENT:(NO:6):恋慕 || TALENT:(NO:7):恋慕 || TALENT:(NO:8):恋慕 || TALENT:(NO:9):恋慕
+				PRINTFORM それでなくても、君にはもっと相応しい人がいるんだ。
+			PRINTFORMW 撤回することをお勧めするよ…」
+			PRINTFORMW 黙り込む納茲琳に、再び愛を囁く…
+			PRINTFORML 
+			PRINTFORML 「予め言っておくが、私は恋愛相手としては不向きだよ。身体的にも、性格的にもね。
+			PRINTFORMW 　多分、君を満足させてあげる事はできないと思う。重ねて言うが、撤回することを勧める」
+			PRINTFORMW 「それでも…私を恋人にしたいと…？」
+			PRINTFORML 
+			PRINTFORMW 「…わかった。確かに私も、君のことは嫌いじゃない。が…
+			PRINTFORMW 　…君は、本当に、馬鹿だよ…」
+		ENDIF
+		PRINTFORML 　
+		PRINTFORMW 納茲琳が主人公の【恋人】になりました
+	;◆失敗
+	ELSE 
+		PRINTFORML 
+		PRINTFORML 聞き終わると、納茲琳は深々と溜息をついた。
+		PRINTFORML 
+		PRINTFORML 「…こんなことさせるのは…鵺かな？
+		PRINTFORMW 　ああ、皆まで言わなくていいよ。
+		PRINTFORML 
+		PRINTFORMW 　どうせ、罰ゲームだろう？
+		PRINTFORML 
+		PRINTFORML 　全く、度し難い…
+		PRINTFORML 　君も、いちいち遊びに馬鹿正直に付き合わなくていいんだよ」
+		PRINTFORML 
+		PRINTFORMW %CALLNAME:MASTER%に抗弁の間を与えずに、納茲琳は立ち去っていってしまった…。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;353,猥褻
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_353
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_353_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_353_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML 主人公は眠っている納茲琳を伺った
+	PRINTFORML 「……ん…」
+	PRINTFORMW 今のところ起きる気配はないようだ
+ENDIF
+RETURN 1
+;==================================================
+;354,陪睡（相手は起きて布団に招く感じ）
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_354
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_354_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_354_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:衰弱
+		PRINTFORML 「ああ…まだ身体がだるいんだよ。…誰かさんのせいで」
+		PRINTFORMW 「…ま、添い寝ぐらいならどうぞ」
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORML 「ん…君も物好きだな…」
+			PRINTFORMW 「まあいいさ…私は構わないよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「…なにか喋っておくれよ。間が持たない…」
+			PRINTFORMW 布団に潜り込むと、柄にもなく緊張したらしい納茲琳が少し硬い声を出した…
+		ELSE
+			PRINTFORML 「夜這い…にしちゃそんなに息が荒くないね…。まあいいさ、どうぞ」
+			PRINTFORMW 納茲琳は少し端に寄って場所を開けてくれた…
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;360,任憑擺佈
+;/恋慕とか考えずに書いてしまった。発情してるんだしいいよね
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_360
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_360_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_360_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;カウンターキス
+	IF TCVAR:20 == 30
+		IF RAND:2 == 0
+			PRINTFORML 「ちゅむ…ん…ふふ、君の唇はなかなか美味だな」
+			PRINTFORMW 「思わず端っこを齧ってしまいそうになるよ…♪」
+		ELSE
+			PRINTFORML 「ちゅ…ちゅ…ん…おいおい、なにか反応してくれないと駄目じゃないか」
+			PRINTFORMW 「せっかく私が盛り上げようと頑張ってるのに、そういう態度は女の子を不安にさせるんだぞ？」
+		ENDIF
+	;カウンター胸を揉ませる
+	ELSEIF TCVAR:20 == 33
+		IF RAND:3 == 0 
+			PRINTFORML 「…やっぱり、私の胸じゃ興奮しないかい…？」
+			PRINTFORMW 納茲琳は心持ち消沈した声で問いかけた…
+		ELSEIF RAND:2 == 0 
+			PRINTFORML 「…やはり、オスは大きな胸じゃないと愛でてくれないのかね…」
+			PRINTFORMW 目を伏せた納茲琳が寂しそうに呟いた…
+		ELSE
+			PRINTFORML 「…ああ、あんまり揉みがいが無いことはわかってるさ。
+			PRINTFORMW 　でも、少しぐらい興味を持ってくれてもいいじゃないか…」
+			PRINTFORMW 納茲琳は少し拗ねた口調でそう言った…
+		ENDIF
+	;カウンター股間をまさぐる
+	ELSEIF TCVAR:20 == 34
+		;※TEQUIP:PLAYER:0 > 3が条件
+		IF RAND:2 == 0 
+			PRINTFORML 動かない主人公の股はさらに激しく擦りあげられる
+			PRINTFORMW 「お、大人しくなったね…袴子を脱いでくれれば、もっといいコトしてあげられるぞ…%UNICODE(0x2665)%」
+		ELSE
+			PRINTFORML 動かない主人公の手に、納茲琳の股間が押し付けられる
+			PRINTFORMW 「こういう時は、お互いに相手のを弄るともっと盛り上がるんだ…覚えておきたまえ」
+		ENDIF
+	;カウンター素股
+	ELSEIF TCVAR:20 == 52
+		IF RAND:3 == 0 
+			PRINTFORML 「ふあっ…%UNICODE(0x2665)%　そ、そうだ、そうやって大人しく、くうっ、は、これ、いいっ…」
+			PRINTFORMW 「ペニスでする自慰はっ…やはり、格別だな…っ」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「ふ、うっ、私の、ぬるぬるのあそこ、気持ちいいかい…」
+			PRINTFORMW 「君も動けば…っ、もっと、気持ちよく、っんくぅ、なれるんだがね…」
+		ELSE
+			PRINTFORML 「ふふ…っ、君が動かなくても、君のはして欲しそうだね」
+			PRINTFORMW 「それじゃあ…もっと気持ちよくしてやるかね……んっは、はぁっ…%UNICODE(0x2665)%」
+		ENDIF
+	;カウンター乳交
+	ELSEIF TCVAR:20 == 53
+		IF RAND:3 == 0 
+			PRINTFORML 「そ、そうだ…大人しくしていろよ、もっと気持ちよくしてやるからな…」
+			PRINTFORMW 「…君、今ちょっと失礼なことを考えなかったかい？」
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「ふ　ううっ…君のが、乳首を押しつぶして、んんっ」
+			PRINTFORMW 「私の乳首に、オスのいやらしい匂いが付けられてると思うと、ふふっ、興奮するよ…%UNICODE(0x2665)%」
+		ELSE
+			PRINTFORML 「ふ　ふふ…っ、君の、こうして見るとなかなかの迫力だね…」
+			PRINTFORMW 「このまま出されてしまうと、顔にまでかかってしまうな…%UNICODE(0x2665)%」
+		ENDIF
+	;カウンターディープキス
+	ELSEIF TCVAR:20 == 60
+		IF RAND:3 == 0 
+			PRINTFORML 「ん…ん…ぷぁ…はぁ、はぁぷ…ん…んちゅ…じゅうぅぅ…」
+			PRINTFORMW こちらが身を任せているのをいいことに、納茲琳の熱くヌメった舌が主人公の口を犯し尽くした…
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「はあ…じゅる…ちゅ、れろ…ん…」
+			PRINTFORMW 主人公が身を任せていると、納茲琳は自分の唾液を大量に流し込んできた…
+		ELSE
+			PRINTFORML 「ん…はぷ……ちゅる…」
+			PRINTFORMW 「もっと…私の、飲んで…んちゅ、んんっ、んー…」
+		ENDIF
+	;カウンター強制舐陰
+	ELSEIF TCVAR:20 == 70
+		IF RAND:3 == 0 
+			PRINTFORML 「ね…舌…舌出しておくれ…っ　はああっ%UNICODE(0x2665)%そ、そうっ…」
+			PRINTFORMW 「君の、顔っ…こしゅれ、ひぅっ…クリが、ぞりぞりってぇ…%UNICODE(0x2665)%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORML 「はあっ、そう、もっと奥、舌を入れて、動かしてぇっ…」
+			PRINTFORMW 「そ、うっ、私の、味わって、飲んでっ…！」
+		ELSE
+			PRINTFORML 「ふひゃっ、ああ、そ、そう、私の敏感なとこ、吸ってっ…！」
+			PRINTFORMW 納茲琳は腰を動かして主人公の顔に自分の感じる場所をこすりつけ、更なる刺激を待っている…
+		ENDIF
+	;カウンター肛門奉仕
+	ELSEIF TCVAR:20 == 72
+		IF ABL:Ａ感覚 == 0
+			PRINTFORMW 「…す、すまん、調子に乗ったよ…」
+		ELSEIF ABL:Ａ感覚 <= 3
+			PRINTFORMW 「おいおい…あんなに弄っといて嫌だとは言わないだろう…？」
+		ELSE
+			PRINTFORML 「なんで何もしてくれないんだよ…！指でも舌でもいいから…早くホジッてくれよっ…」
+			PRINTFORMW 納茲琳は呼吸に合わせて開閉する柔らかなアナルを主人公の口元に押し付けている…
+		ENDIF
+	;カウンター騎乗位
+	ELSEIF TCVAR:20 == 81
+		IF RAND:3 == 0
+			PRINTFORMW 「はあっ、は、んんっ、んあっ！あ、んんんっ…！」
+			PRINTFORMW 納茲琳はぐちゃぐちゃと淫らな水音を響かせて、主人公を犯している…
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふふ…ほら、君のココ、妖怪に食べられちゃってるよ…？」
+			PRINTFORMW 納茲琳は怪しく微笑みながら、結合部を見せつけてきた…
+		ELSE
+			PRINTFORML 「あ、ああっ、はっ、すご、ここ、いい…っ%UNICODE(0x2665)%」
+			PRINTFORMW 主人公が何もせずとも納茲琳は腰を卑猥に動かし、精気を搾り取ろうとしている…
+		ENDIF
+	ELSE
+		;MASTERの気力が0
+		IF BASE:MASTER:気力 <= 0
+			PRINTFORML 「おっと…もう枯れちゃったかい？」
+			PRINTFORMW 「ふふ…じゃあ、私が一方的に楽しませてもらうとするよ…♪」
+		ELSE
+			PRINTFORML 「ん…どうしたんだい？」
+			PRINTFORMW 「睦み合いの基本はお互い気持ちよく、だぞ。君も私を愉しませておくれよ…」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;402,就寝（添い寝時）
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_402
+;就寝にTRAIN_MESSAGEは無い
+;※抱枕で眠る描写がかぶるのを防ぐため
+SIF PREVCOM != 311
+CALL M_KOJO_MESSAGE_COM_K39_402_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_402_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:睡眠
+		PRINTFORMW 納茲琳の寝顔を見ながらゆっくりと瞼を閉じた…
+	ELSE
+		IF RAND:3 == 0 && TALENT:恋人
+			PRINTFORML 「もう眠るのかい？　では私も眠るとするか…」
+			PRINTFORMW 
+			PRINTFORMW 「…」
+			PRINTFORMW 「おやすみ、%MASTERNAME:39%…」
+		ELSEIF RAND:2 == 0 && TALENT:恋慕
+			PRINTFORMW 主人公は瞼を閉じ眠りについた
+			PRINTFORMW 　
+			PRINTFORMW 　
+			PRINTFORMW 　
+			PRINTFORML 「…もう眠ってしまったかい…？」
+			PRINTFORMW ………
+			PRINTFORMW ちゅ。
+			PRINTFORMW 「ふん…これぐらいの役得は…認められてもいいだろう…」
+		ELSE
+			PRINTFORML 「…そろそろ、私は眠るよ…
+			PRINTFORMW 　あまり、寝顔は…見ないでくれないか…
+			PRINTFORML 　…恥ずかしいし…私は君のを見れない…から…
+			PRINTFORMW 　不平…等………」
+			PRINTFORML 
+			PRINTFORML 納茲琳が瞼を下ろすのを確認してから、主人公はそっと灯りを消した…
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;403,休憩（浴室場だと湯船に浸かる）
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_403
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_403_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_403_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;浴場にいる
+	IF CFLAG:現在位置 == 112
+		IF TALENT:恋人
+			PRINTFORML 「ふいーっ…」
+			PRINTFORMW 「ん…なんだい？せっかく一緒に入っているんだから、もう少し寄ってもいいんだぞ？」
+		ELSEIF TALENT:恋慕
+			PRINTFORML 「ふー…」
+			PRINTFORMW 「……のぼせそうだよ…」
+		ELSE
+			PRINTFORMW 「…なんだい？あまりこちらをジロジロ見ないでくれないか」
+		ENDIF
+	ELSE
+		;ナズの体力800以下
+		IF BASE:TARGET:体力 <= 800
+			IF TALENT:恋人
+				PRINTFORML 「ふう…私もなかなか消耗したようだ」
+				PRINTFORMW 「隣、いいかい？」
+			ELSEIF TALENT:恋慕
+				PRINTFORML 「…私も疲れていてね…ここ、いいかい？」
+				PRINTFORMW すぐ近くで休む納茲琳は、幸せそうな顔で寝入っている…
+			ELSE
+				PRINTFORML 「ふう…私もなかなか消耗したようだ」
+				PRINTFORMW 「勝手に休ませてもらうよ」
+			ENDIF
+		ELSE
+			PRINTFORMW 「ん…無理はせんようにな」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;404,轟出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_404
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_404_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_404_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;405,デート
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_405
+;デートにTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K39_405_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_405_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;デート（ナズと二人でお出かけ）
+	IF CFLAG:TARGET:同行
+		IF TALENT:恋人
+			;恋人になってからは初めて
+			IF CFLAG:1405 < 3
+				PRINTFORML 「…それなりに期待はしている。楽しみだ」
+				;恋慕時にデートしたことある
+				IF CFLAG:1405 == 2
+					PRINTFORMW 「以前の時はまあ…景色を見る余裕なんて無かったからな」
+				ELSE
+					PRINTFORMW 「やはり、こういう関係には欠かせないからな」
+					;/非恋慕時のデートはナズ的にはデートだと認められない
+					SIF CFLAG:1405 == 1
+						PRINTFORMW 「前にしたことがある？…ああ、ずっと昔のアレか？あんなの逢引のうちに入らんよ…」
+				ENDIF
+				;恋人になってから初デート済みフラグ
+				CFLAG:1405 = 3
+			ELSE
+				IF RAND:4 == 0 
+					PRINTFORML 「んん、唐突だな。いいや、迷惑ではないが」
+					PRINTFORMW 「次はどこに連れて行ってくれるのかね…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 今回は納茲琳が行き先を選んで欲しいと伝えた
+					PRINTFORML 「ううん、前回は結局君が行き先を決めたからな…」
+					PRINTFORM 「それでは
+					;※ランダムで分けてるだけなので、要望街道のデートでも特に何も変わらない
+					IF RAND:4 == 0 
+						PRINTFORMW 甘味屋はどうだ。たまには甘いモノでも食べたいからな」
+					ELSEIF RAND:3 == 0 
+						PRINTFORMW 香霖堂なんかは？なかなか楽しいぞ、あそこの店主には少し因縁があるんだがね」
+					ELSEIF RAND:2 == 0 
+						PRINTFORMW 定番で商家町かねぇ。またお茶を買っておくれよ」
+					ELSE
+						PRINTFORMW あの魔法使いのところとかどうだい？あそこの商品も奇抜で楽しいぞ」
+					ENDIF
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ん、期待しているよ…♪」
+				ELSE
+					PRINTFORML 「んん、いいとも。楽しみだ」
+					PRINTFORML ここで納茲琳は小声になった
+					PRINTFORMW 「…それとだな。行くまでに牽手の…アレ気恥ずかしいから勘弁して欲しいんだが」
+				ENDIF 
+			ENDIF
+		ELSEIF TALENT:恋慕
+		;/デートなどのイベントは恋人状態より恋慕状態のがドキドキ度が高い説
+			;恋慕ついてからは初めて
+			IF CFLAG:1405 < 2
+				PRINTFORMW 「い、いっしょに？…私と、か？」
+				PRINTFORMW 「いや、問題…ない。付き合おう」
+				;恋慕取得後の初デート済みフラグ
+				CFLAG:1405 = 2
+			ELSE
+				IF RAND:4 == 0
+					PRINTFORML 「い、一緒にか？いや、まあ…！い、いや、行くよ。別に君とは嫌ではないし」
+					PRINTFORMW 「そ、そうだな…お茶ぐらいなら…付き合ってもいいぞ？」
+				ELSEIF RAND:3 == 0 
+					PRINTFORML 「…っ、そ、そうだな、買い物ぐらいなら付き合ってもいいが…」
+					PRINTFORMW 「別に嫌ではないぞ、それに日頃何かと世話になっているしな…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「…ま、まぁ一人で出かけるのも味気ないだろうからな、付き合おうじゃないか」
+				ELSE
+					PRINTFORML 「ん、ああいいぞ…前回はなかなか楽しかったからな」
+					PRINTFORMW 「…別に君と行ったから楽しかったわけじゃないぞ」
+				ENDIF 
+			ENDIF
+		ELSE
+		;/ナズはこの程度なんとも思いません。人間が相手だし
+			;初めて
+			IF CFLAG:1405 < 1
+				PRINTFORMW 「なに、一緒に行って欲しい？別に構わんが、そんなに危険なところに行きたいのか？」
+				PRINTFORMW 「違うのか？ますます私の同行の意味がわからんが。まあいいや、付き合おう。暇だし」
+				;初デート…もとい初お出かけ済みフラグ
+				CFLAG:1405 = 1
+			ELSE
+				IF RAND:2 == 0
+					PRINTFORMW 「ん、またどこかに連れていきたいのかい？」
+					PRINTFORMW 「まぁ私としては、暇が潰せて割とありがたいがね…」
+				ELSE
+					PRINTFORML 「やれやれ…今日はご主人の失せ物探しをしようとしてたんだがね」
+					PRINTFORMW 「ああ、気にすることはない。一応目星はついてるから、夕方にはうちの子達が回収してくれてるだろう」
+				ENDIF
+			ENDIF
+		ENDIF 
+	;外出（一人で）
+	ELSE
+		PRINTFORML 　
+		PRINTFORML 外出する主人公を納茲琳が門前で見送ってくれた
+		PRINTFORML 　
+		;16時以降
+		IF TIME:0 >= 960
+			PRINTFORMW 「こんな時間からかい？幻想郷も暗くなると危険だ。用事は早めにな」
+		ELSE
+			;恋人
+			IF TALENT:恋人
+				PRINTFORML 「…一人でかい？なにか後ろめたいことでもするのかね」
+				IF RAND:3 == 0 
+					PRINTFORMW 「ま、君が別に他の娘と何かしようと、私は知ったこっちゃないがね」
+					;/やだなぁそんな事するわけ無いじゃないですかぁ
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「私に見せられないような買い物とか？」
+				ELSE
+					PRINTFORMW 「私を連れて行くという選択肢はないんだね。…別にいいが」
+				ENDIF
+			;恋慕
+			ELSEIF TALENT:恋慕
+				IF RAND:3 == 0 
+					PRINTFORMW 「あ、ああ、あんまり遅くなるなよ」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「そ、そうだな、土産に茶でも買ってきておくれよ」
+				ELSE
+					PRINTFORMW 主人公が山門を出発しても、納茲琳は暫くの間じっと無言で見つめていた…
+				ENDIF
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORML 「んん…早めに帰れよ」
+					PRINTFORMW 「…寺の中の掃除は君しかしないからね」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ああ、行ってらっしゃい」
+				ELSE
+					PRINTFORMW 「さっさと帰ってきて仕事しろよー」
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;410,掃除
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_410
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_410_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_410_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;睡眠
+	IF CFLAG:TARGET:睡眠
+		PRINTFORMW 物音に敏感な納茲琳を起こさないように掃除のは至難の業だった…
+	ELSE
+		IF RAND:2 == 0 && (CFLAG:現在位置 == 110 || CFLAG:現在位置 == 113)
+			IF RAND:4 == 0
+				PRINTFORML 
+				PRINTFORML 「よっ、と…」
+				PRINTFORML 
+				PRINTFORMW 納茲琳は雑巾を巻き付けたロッドで梁の上の埃を払っている。
+				PRINTFORML 
+				PRINTFORML 「…やはりもう少し上背が欲しいところだね」
+				PRINTFORML 
+				PRINTFORML 肩車なら任せろー！
+				PRINTFORML 
+				PRINTFORMW 「遠慮しておくよ」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 
+				PRINTFORML 「こら、ちりとりに集るんじゃない！
+				PRINTFORMW 　火鼠にでもなりたいなら火車に運んで貰いたまえ！」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 
+				PRINTFORMW 「ああ、君か。
+				PRINTFORML 　どうだい、見たまえ。小さいものばかりだが、私が育てたネズミたちがこんなに獲物をとってきたよ。
+				PRINTFORMW 　誇らしいね。これで彼らも一人前の…
+				PRINTFORML 
+				PRINTFORMW 　…あの、そんなに大きなゴミ袋を取り出して何をするつもりだい？
+				PRINTFORML 
+				PRINTFORML 　ちょ、ちょっと待ちたまえ！待って！
+				PRINTFORML 　これから戦利品の分け方と平らげ方の実習があるんだ！
+				PRINTFORMW 　お願いだ！外でやる！外でやるから！！」
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「すまない、流石にネズミ達にはテー运動短袴ナーは難しすぎてね。
+				PRINTFORMW 　どうしても散らかしてしまう」
+			ENDIF
+		ELSE
+			IF RAND:4 == 0
+				PRINTFORML 
+				PRINTFORMW 「幽谷も、参道ばかり掃いてないでこちらの方も掃除してくれれば好東西を…」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 
+				PRINTFORMW 「精が出るね。有り難いことだ。
+				PRINTFORML 
+				PRINTFORML 　…待ちたまえ、そこの縁に埃が残っているぞ。
+				PRINTFORML 　そこの影に落ち葉があるし、ほらそこの足元に紙屑が！違う！右だ！
+				PRINTFORMW 　ちょっと貸したまえ！ここだよ、この隙間に、ほら！」
+				PRINTFORML 
+			ELSEIF RAND:2 == 0
+				PRINTFORML 
+				PRINTFORMW 「ゴミは普通に捨てて大丈夫なのかって？
+				PRINTFORML 　…ああ、ネズミたちのことかい？
+				PRINTFORML 　ここのネズミたちはゴミを漁るような真似はしないよ。
+				PRINTFORML 　落ちた菓子を掠めとるくらいはするがね。
+				PRINTFORMW 　取られたくなかったら三秒以内に拾っておくことだ」
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「一体誰だ、こんな所に骨なんか捨てたのは！
+				PRINTFORML 
+				PRINTFORMW 　………ああ、うちのネズミだった。歯形が付いてる」
+				PRINTFORML 
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;411,戦闘訓練
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_411
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_411_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_411_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;MASTERの戦闘能力3以上
+	IF ABL:MASTER:戦闘能力 >= 3
+		IF RAND:3 == 0
+			PRINTFORML 「ッ…！　なかなかやるじゃないか…」
+			PRINTFORML 軽い模擬戦を行ってみたが、納茲琳の放つ弾幕の第三波に被弾してしまった
+			PRINTFORMW 「第一波と第二波にもそれなりに見えづらい弾を混ぜたんだがね…次はもっと卑怯な配置にしておこう…」
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「ふふふ…まずまずじゃないか」
+			PRINTFORML あと一歩のところで弾幕の隙間を見切れず、納茲琳のスペルカードを取得できなかった
+			PRINTFORMW 「今のでHardだ…この分じゃLunaticも夢じゃないな？ん？」
+			;/星蓮船のHard以上はマジキチ。
+		ELSE
+			PRINTFORML 「んん…なかなか楽しませてもらったよ」
+			PRINTFORMW 「少し休憩しよう。走廊に汲んできた井戸水があるから、取ってきてくれたまえ」
+		ENDIF
+	ELSE
+		IF RAND:4 == 0 
+			PRINTFORML 「馬鹿！今の隙間を見逃す奴があるか！
+			PRINTFORMW 　どう見たってジリ貧だろうが！袋のネズミだぞ！」
+		;お叱り納茲琳　ちなみに全部俺のことだがそれが何か
+		ELSEIF RAND:3 == 0
+			PRINTFORML 「いつまで低速移動してるんだ！
+			PRINTFORMW 　君は蝸牛か何かか？そんなノロノロした動きで切り返せる訳が無いだろう！」
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「ボムは飾りだ！食らいボムは保険だ！
+			PRINTFORML 　無いものとして扱え！そんなものに頼るな！」
+			;でも相手はスペカ頼りまくりじゃないですかやだー
+		ELSE
+			PRINTFORML 「ほらほら、腰が引けてるよ！
+			PRINTFORMW 　画面下に尻くっつけたままでスペカを取得出来ると思ってるのかい！？」
+			;スペカによるじゃないですかーやだー
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;412,学習
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_412
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_412_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_412_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;連続
+	IF PREVCOM == SELECTCOM
+		PRINTFORML 「らしくないねぇ、ずっと学習とは」
+		PRINTFORMW 「掃除や茶入れを頑張った方が、君には役に立つんじゃないか？」
+	ELSE
+		IF RAND:4 == 0
+			PRINTFORML 「ダウジングを教えて欲しい？別に構わんが、私のは我流だぞ」
+			PRINTFORMW 「それにしても、一体何を見つけたいのかね」
+			SIF TALENT:恋慕
+				PRINTFORMW 「…何なら私が探してやろうか？」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「いや、違う。これはそういう意味じゃなく、見つけたいもののイメージに合うものが周辺にあれば―」
+		ELSEIF RAND:2 == 0
+			PRINTFORML 「ふむ…私のは感覚やネズミたちに依るものが大きいからなあ…」
+			PRINTFORMW 「君の参考にはならないかもね」
+		ELSE
+			PRINTFORML 『これ一本でピカピカ・主人公的家に合った掃除棒の作り方』
+			PRINTFORMW 「ああ、この辺の本の方が君には役に立つんじゃないか？」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;413,料理
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_413
+;料理にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K39_413_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_413_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF RAND:3 == 0
+		PRINTFORML 「チーズは入れないのかって？
+		PRINTFORML 　…別に鼠は特別チーズが好きって訳ではないと、私はあと何度言えばいいんだ。
+		PRINTFORMW 　最近は人里のご老人までチーズ片手に舌を鳴らして呼んでくるし…全く」
+		PRINTFORML 
+		PRINTFORMW などと懐から舞チーズを取り出しながら供述しており…
+		PRINTFORML 
+		PRINTFORML 「だって君が絶対入れるべきだと言うから仕方なく…」
+		PRINTFORML 
+		PRINTFORMW そこまでは言ってない。
+	ELSEIF RAND:2 == 0
+		PRINTFORML 「この角度から…具材が見えるように…よし。
+		PRINTFORMW 　並びは…放射状がいいかな。中央には短冊切りの…」
+		PRINTFORML 
+		PRINTFORMW あの…そろそろ持って行っていいですか…？
+	ELSE
+		PRINTFORML 「具材はどうするんだい？何か捕ってこようか？
+		PRINTFORML 　今ならネズミたちが狩ってきた新鮮な…」
+		PRINTFORML 
+		PRINTFORMW いや普通に出来合いでいいんで。ほんとに。全力で遠慮させて頂きます。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;414,吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_414
+;CALL TRAIN_MESSAGE
+;※「招待吃飯」の口上を使用する関係でCALLを閉じる
+CALL M_KOJO_MESSAGE_COM_K39_414_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_414_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 達 # \@を吃飯に誘った
+	PRINTFORML 　
+	;製作料理の直後
+	IF PREVCOM == 413
+		PRINTFORML 「ん、ここで食べるのかい？」
+		IF CFLAG:2 >= 1000
+			PRINTFORMW 「ま、出来立てを食べるのが一番か。いただこう」
+			PRINTFORMW 「ついでにお茶も淹れてくれないか」
+		ELSE
+			PRINTFORMW 「…まぁ、作ってるのを見た感じ、特にまずい点はなかったしな…いただこう」
+		ENDIF
+		PRINTFORML 　
+	ELSE
+		IF CFLAG:2 >= 1000
+			IF RAND:2 == 0 
+				PRINTFORML 「ふうん…君が作ったのかい？」
+				PRINTFORMW 「じゃあ、ご相伴に預かるとしようか…」
+			ELSE
+				PRINTFORML 「ん？私に？
+				PRINTFORML 　…差し入れならご主人や聖に…
+				PRINTFORMW 　いや、うん、まあ、有り難く頂かせてもらうよ」
+			ENDIF
+		ELSE
+			PRINTFORML 「…素性の分からない食べ物は食べない主義なんだがね」
+			PRINTFORMW 「ま、少し頂こうかね」
+		ENDIF
+		PRINTFORML 　
+	ENDIF
+	;「招待吃飯」の口上呼び出し
+	CALL MESSAGE_REACTION_TASTE
+	CALL M_KOJO_MESSAGE_COM_K39_415_1
+ENDIF
+RETURN 1
+;==================================================
+;415,招待吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_415
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_415_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_415_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;味覚嗜好01111001
+;好物は濃い味　混ぜ物全耐性
+IF LOCAL
+	IF TCVAR:MASTER:308 < 8
+		;414,吃飯から呼び出された時
+		IF SELECTCOM == 414
+			SIF CFLAG:TARGET:味覚嗜好 & TCVAR:MASTER:308
+				PRINTFORML %CALLNAME:TARGET%はこの味付けを気に入ったようだ
+			IF TFLAG:193 == 1
+				PRINTFORML %CALLNAME:TARGET%と%CALLNAME:PLAYER%は%STR:(3000 + FLAG:20)%を食べながら楽しいひとときを過ごした…
+			ELSEIF TFLAG:193 == -1
+				PRINTFORML …どうやら%CALLNAME:TARGET%の口に合わなかったようだ
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%は出された%STR:(3000 + FLAG:20)%を美味しそうに平らげた
+			ENDIF
+		ENDIF
+		;成功
+		IF TFLAG:193 == 1
+			PRINTFORML 「…！　旨いじゃないか、やるね君」
+			PRINTFORMW 「火の街道加減といい、具材の大きさといい、いい塩梅だ」
+			;好みの味付け
+			SIF CFLAG:TARGET:味覚嗜好 & TCVAR:MASTER:308
+				PRINTFORMW 「それに濃厚だな。普段の吃飯は私にはちょっと薄味でね…気に入ったよ」
+		;失敗
+		ELSEIF TFLAG:193 == -1
+				PRINTFORML 納茲琳は料理を咀嚼すると、微妙な顔つきになった
+				IF RAND:5 == 0 
+					PRINTFORMW 「焼き過ぎだよ…」
+				ELSEIF RAND:4 == 0 
+					PRINTFORMW 「塩の塊が…」
+				ELSEIF RAND:3 == 0 
+					PRINTFORMW 「火が通ってないぞ…」
+				ELSEIF RAND:2 == 0 
+					PRINTFORMW 「生煮えだ…」
+				ELSE
+					PRINTFORMW 「…焦げてる…」
+				ENDIF
+				;好みの味付け
+				SIF CFLAG:TARGET:味覚嗜好 & TCVAR:MASTER:308
+				PRINTFORMW 「私の好みの味付けなんだがね…勿体無い」
+		ELSE
+			IF RAND:4 == 0 
+				PRINTFORMW 「…うむ、なかなか旨かった。ご馳走様」
+			ELSEIF RAND:3 == 0
+				PRINTFORML 「…待ちたまえ。私の分だけチーズが乗っているんだが。
+				PRINTFORMW 　いや、量が不満な訳じゃなく、なんでチーズを乗せたのかを聞いているんだ…って、どこから出したんだそのグラナ・パダーノは！？
+				PRINTFORML 　こら、削るな！かけるな！
+				PRINTFORMW 　こぼれる！勿体無いだろう！」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「…肉を入れたね？
+				PRINTFORML 　ネズミたちが期待に満ちた目でこちらを見ているよ。
+				PRINTFORMW 　やれやれ、私の分が残るだろうか…」
+			ELSE
+				PRINTFORML 「そんなにじっと見て、どうしたんだい？」
+				PRINTFORML 
+				PRINTFORML やっぱり食べ物は両手で持つようだ。
+				PRINTFORML 
+				PRINTFORMW 「…なにをしきりに頷いてるんだい？」
+			ENDIF
+		ENDIF
+	;激辛
+	ELSEIF TCVAR:MASTER:308 & 8
+		IF RAND:2 == 0
+			PRINTFORMW 「う、うむ…ピリリとくるね」
+		ELSE
+			PRINTFORML 「…少し鷹の爪が効きすぎじゃないか？私は平気だけども」
+			PRINTFORMW 「ご主人あたりなら大騒ぎするだろうね」
+		ENDIF
+	;激甘
+	ELSEIF TCVAR:MASTER:308 & 16
+		;デザート
+		IF TCVAR:MASTER:305 & 4
+			PRINTFORMW 「少々甘過ぎないか？ここらで一杯お茶が怖いね」
+		ELSE
+			PRINTFORML 「ううむ…少し甘みが強すぎるな。もう少し控えるべきだ」
+			PRINTFORMW 「ああ…丁度、ご主人の作る料理がこんな感じだな」
+		ENDIF
+	;わさび
+	ELSEIF TCVAR:MASTER:308 & 32
+		PRINTFORMW 「くう…っ　なかなか効くね、もしかしなくてもわざとだろ？」
+		PRINTFORMW 「だが残念だったね…私はこれぐらいでもイケるクチだよ」
+	;レモン
+	ELSEIF TCVAR:MASTER:308 & 64
+		PRINTFORML 「…っっ、これはレモンかい？」
+		PRINTFORMW 「香りづけだろうが…少し入れ過ぎだな、隠し味程度でいいんだよ」
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;603,牽手　CFLAG:1603
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_603
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_603_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_603_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;失敗(?)
+	IF TFLAG:193 == -1
+		PRINTFORMW どうやら少々はしゃぎすぎたようだ…
+	;成功or普通
+	ELSE
+		;恋人
+		IF TALENT:恋人
+			;恋人になってからは初めて
+			IF CFLAG:1603 < 3
+				PRINTFORML 「…ああ、私達って今そういう関係なんだね…」
+				;恋慕時に牽手をしたことがある
+				IF CFLAG:1603 == 2
+					PRINTFORML 「前まではちょっとね…平気でこんな事できる君が恨めしいぐらいだったよ」
+				ELSE
+					PRINTFORMW 「ふふ、いかにも恋人っぽいじゃないか？」
+				ENDIF
+				PRINTFORMW 納茲琳はクスリと笑った
+				PRINTFORMW 「…まあ、今でも気恥ずかしいのは変わらないんだがね」
+				CFLAG:1603 = 3
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORMW 「…なあ、前から言おうと思ってたんだが、私には少し恥ずかしいんだが。これ」
+					PRINTFORMW それならばと、腕を組んで納茲琳の体を抱き寄せた
+					PRINTFORMW 「あのな…改善どころか悪化…もういい…」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 遠慮がちに掴んでくる手に指を絡ませると、納茲琳はうつむいた
+					PRINTFORMW 「…たく、そういう恥ずかしいことが良く平気でできるよ…」
+				ELSE
+					PRINTFORML 「かなり恥ずかしいんだけどね、これ…」
+					PRINTFORMW 「…別に嫌じゃないけど」
+				ENDIF
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			;恋慕取ってからは初めて
+			IF CFLAG:1603 < 2
+				PRINTFORML 「ッ…」
+				PRINTFORMW 牽手と、納茲琳はそっぽを向いてしまった
+				PRINTFORMW 「…ったく、人の気も知らないで…」
+				CFLAG:1603 = 2
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORML 「く…これ、かなり恥ずかしいんだが。まるで―」
+					PRINTFORMW 納茲琳はそのまま黙ってしまった…
+				ELSEIF RAND:2 == 0 
+					PRINTFORML 「…」
+					PRINTFORMW 振りほどかれることはなかったものの、終始黙り込んだままだった…
+				ELSE
+					PRINTFORML 「…恋人同士じゃあるまいし」
+					PRINTFORMW そう言った納茲琳は、しかしおずおずと手を差し出してきた…
+				ENDIF
+			ENDIF
+		ELSE
+			;初めて
+			IF CFLAG:1603 < 1
+				PRINTFORMW 「…？なんだい？」
+				CFLAG:1603 = 1
+			ELSE
+				IF RAND:3 == 0 
+					PRINTFORMW 「ふん、逢引でもしてるつもりかい」
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 納茲琳の手はとても小さかった…
+				ELSE
+					PRINTFORML 「…恋人同士じゃあるまいし」
+					PRINTFORMW 呆れた声を出した納茲琳は、しかし手を差し出してきた…
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;604,散步
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_604
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K39_604_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_604_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;605,繞道
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_605
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K39_605_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_605_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+
+;==================================================
+;610,請吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_610
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K39_610_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_610_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;失敗
+	IF TFLAG:193 == -1
+	SELECTCASE CFLAG:MASTER:現在位置
+	;人里
+		;呑屋小道
+		CASE 230
+				PRINTFORML 「…オヤジ、もう一本」
+				PRINTFORMW 完全に目が据わっている。少々飲ませすぎたようだ…
+	;博麗神社
+		;神社走廊
+		CASE 40
+			IF RAND:2 == 0
+				PRINTFORML 「くそ、不覚…あのナリで、あいつ天狗なのか…卑怯だぞ…」
+				PRINTFORMW どうやら飲み相手を間違えたようだ…
+			ELSE
+				PRINTFORML 飲み過ぎた納茲琳を介抱した…
+				PRINTFORMW 「…ちょっと君は井戸水を汲んできてくれないか…」
+				PRINTFORMW 「ああ、こっちには来なくていい…こんな私でも見られたくないものはあるのさ…」
+			ENDIF
+		;妖精的大樹
+		CASE 50
+			;※光の三妖精以外もいるつもりで書いている
+			IF RAND:2 == 0
+				PRINTFORML 突然額に衝撃が走る。
+				PRINTFORMW 思わず閉じた目を再び開けると、先程まではなかった木が目の前に何故か突然出現、
+				PRINTFORMW 『へへー、やったね』『大成功』『にげろー♪』
+				PRINTFORMW …どうやら、妖精のイタズラのようだ
+			ELSE
+				PRINTFORML 『人間付き妖怪？』『いや、妖怪付き人間かも』『あー、私あのネズミ知ってるよー！』
+				PRINTFORMW 『妖怪と人間が歩いてるなんて変ー』『多分あの妖怪のお弁当だよ』『私前ネズミに齧られたー！』
+				PRINTFORMW うるさくてとてもお茶を飲める様子ではない…
+			ENDIF
+	ENDSELECT
+	;成功or普通
+	ELSE
+	SELECTCASE CFLAG:MASTER:現在位置
+	;人里
+		;呑屋小道
+		;小洒落たバーらしい
+		CASE 230
+			IF RAND:2 == 0
+				PRINTFORML 「ふー…♪やっぱり酒はいいねえ、いい気分だ」
+				PRINTFORMW 熱燗を煽る納茲琳はいつになく心情愉快だ
+				PRINTFORMW 「人間の発明したものの中でも最上級の部類だな」
+			ELSE
+				PRINTFORML 「…酒精ってのは、全く素晴らしいねえ…」
+				PRINTFORMW 納茲琳はとても楽しんでくれているようだ…
+			ENDIF
+	;博麗神社
+		;神社走廊
+		CASE 40
+			PRINTFORMW たまたまやっていた博麗神社の噂の宴会に混じることができた
+			PRINTFORML 「ふー…こわーい大妖怪たちが相手してる分にはあの巫女もまだおとなしいんだがね」
+			PRINTFORMW 「ま、そんなことは今はどうでもいい。目一杯飲もうじゃないか…♪」
+		;妖精的大樹
+		CASE 50
+			PRINTFORML 『あー！にんげんさんだ』『にんげんさんとにんげんさんみたいなもの』『おはつにおめにかかる』
+			PRINTFORMW 「…？こんなに小さい妖精はあまり見かけないが…それに喋り方が少し変わってるな」
+			PRINTFORMW 『ぼくらはようせいさんだが』『ねーねーなにしてるの？』『なんかたのしいことない？』
+			PRINTFORMW 「ふむ…妖精にもいろいろいるんだな…」
+			;/彼らが後に地球を支配することになるとは、この時誰にも予想できなかったのである…
+	;迷途竹林
+		;小雀の宿
+		CASE 460
+			;米斯蒂亜に会ってない
+			IF !GETBIT(CFLAG:1002,0)
+				PRINTFORML 途中で買ってきていた弁当を広げて食べた
+				PRINTFORML 「…！う、うむ…このおこわ、美味いぞ…こっちの沢庵もなかなか侮れん…！」
+				PRINTFORMW どうやら先程の弁当屋は贔屓にする必要がありそうだ
+			ELSE
+				
+			ENDIF
+	ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;613,賺錢
+;※1時間かかる
+;/星ちゃん口上パクリ度70
+;==================================================
+@M_KOJO_MESSAGE_COM_K39_613
+;CALL TRAIN_MESSAGE
+;※各仕事後に移動
+CALL M_KOJO_MESSAGE_COM_K39_613_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K39_613_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	SELECTCASE CFLAG:MASTER:現在位置
+	;博麗神社
+		;神社境内
+		CASE 320
+			DRAWLINE
+			PRINTFORML 『いやー、丁度あんたらが来て助かったわー！』
+			PRINTFORMW 霊夢に何か仕事が無いか尋ねると、境内に散らばった針の回収を頼まれた
+			PRINTFORMW 「…なんでよりによってここで働くんだ…私なんか、この針を投げつけられたこともあるんだぞ」
+			PRINTFORML 『ごちゃごちゃうるさいわねえ、昔のことなんか水に流しなさいよ。
+			PRINTFORMW 　別にタダ働きしろって言ってるわけじゃないんだからいいじゃない』
+		;神社本堂
+		CASE 330
+			DRAWLINE
+			PRINTFORML 『ああん？あんたの上司ならともかく、チンケな妖怪鼠と只の人間になんて…
+			PRINTFORMW 　ああ、うってつけの仕事思い出したわ！』
+			PRINTFORMW 霊夢はポンと手を打つと、去年作り溜めしたという御札の捜索を依頼してきた
+			PRINTFORML 「やれやれ…一妖怪としては、なんか利敵行為を働いている気がするね。
+			PRINTFORMW 　その御札が私に飛んでくることにならなければいいが」
+			PRINTFORML 『へえ、今すぐ御札が飛んできて欲しいのかしら？
+			PRINTFORMW 　見逃してやる上にただ働きしろってわけでもないんだから感謝しなさいよね』
+			PRINTFORMW 噂に違わず、ムチャクチャな巫女のようだ…
+			;/星蓮船本編の巫女二人の理屈はマジキチだった
+	;迷途竹林
+		;永遠亭
+		CASE 450
+			DRAWLINE
+			PRINTFORML 　
+			IF RAND:3 == 0
+				PRINTFORMW 調剤に必要な薬草を採りに永遠亭内の菜園にやって来た
+				PRINTFORML 　
+				PRINTFORML 『はい、じゃあこれ着けて。そこのフィルターから息ができるようになってるわ』
+				PRINTFORMW 永琳に何やら得体の知れないマスクを渡された。確か、仕事内容は「薬草を取ってくる」のはずだったのだが。
+				PRINTFORMW 『ええそうよ？ほら、これの中に胞子を回収してきて頂戴。2,3個もあれば十分だわ。
+				PRINTFORMW 　ああそうそう、この装備でも奥の方の瘴気は危険だから深入りしちゃ駄目よ？』
+				;/ムシゴヤシとかヒソクサリとかその辺
+				PRINTFORML 　
+				PRINTFORMW 永遠亭で調剤手伝いをして${TFLAG:200}の収入を得た
+			ELSEIF RAND:2 == 0
+				PRINTFORML 永琳に渡された、新型の筋肉増強剤だという液体を飲んだ…
+				PRINTFORMW 突然ごごごごという謎の効果音とともに身体が巨大化していく！
+				PRINTFORMW 「う、うわっ…%CALLNAME:PLAYER%が体だけレベルアップしてる…！」
+				PRINTFORML 『効果は一時的なはずよ。すぐに戻るわ』
+				PRINTFORMW 「お、おい…はずってあんた…！」
+				PRINTFORMW 再び突然ぽん、という音とともに元の体に戻った。一応何ともなってないようだ…
+				PRINTFORMW 『うん、成功ね。もうちょっと効果時間を伸ばせば背心セラー間違いなし』
+				PRINTFORML 　
+				PRINTFORMW 新薬の試験アルバイトをして${TFLAG:200}の収入を得た
+			ELSE
+				PRINTFORMW 兎たちの世話をして${TFLAG:200}の収入を得た
+			ENDIF
+		;小雀の宿
+		CASE 460
+			DRAWLINE
+		;米斯蒂亜に会ってない
+		IF CFLAG:1002 == 0
+			PRINTFORML 
+			PRINTFORMW 珍しい物を見つけて${TFLAG:200}の収入を得た
+		ELSE
+			PRINTFORMW 米斯蒂亜の屋台の手伝いをして${TFLAG:200}の収入を得た
+		ENDIF
+	;魔法之森
+		;霧雨魔法店
+		CASE 540
+			DRAWLINE
+			PRINTFORML 　
+			IF RAND:4 == 0
+				PRINTFORMW 魔法店でアルバイトして${TFLAG:200}の収入を得た
+			ELSEIF RAND:3 == 0
+				PRINTFORML 魔理沙に依頼されて魔法道具の整理をすることになった
+				PRINTFORML 　
+				PRINTFORMW 曲がりなりにも清掃を生業とする者としては腕が鳴ると言うべきか
+				PRINTFORML 「ここまで散らかってると、私でも尋找のは一苦労だよ」
+				PRINTFORMW 『お前の能力、便利でいいな。ちょっとやり方を教えてくれよ』
+				PRINTFORML 「あのな…第一、私のはネズミたちを使った捜索がメインだぞ？君には無理だ」
+				PRINTFORMW 『ちぇーっ、やっぱりこないだやめちゃった整理整頓魔法を開発する方が楽かなあ』
+				PRINTFORML 　
+				PRINTFORMW 魔法道具の整理を手伝って${TFLAG:200}の収入を得た
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 魔理沙の魔導書の整頓を手伝うことにした
+				PRINTFORML 　
+				PRINTFORMW 「○月×日、茸が煮えすぎて鍋が爆発。鍋の喪失は痛手だが、この茸の性質がまた一つ判明した」
+				PRINTFORML 「○月×日、たまには趣向を変えて波動を応用したショットを試したが、攻撃範囲が広い代わりに
+				PRINTFORMW 　威力が全く出ない。やっぱり私にはレーザーやミサイルの方が合っているようだ」
+				PRINTFORML 「○月×日、香霖に引き渡すガラクタに今度はこっそり花輪を仕込んでおいたが、
+				PRINTFORMW 　やはり今回も気づく気配がない。全く朴念仁もいい加減に―」
+				PRINTFORMW 『それ私の日記ー！？』
+				PRINTFORML 珍しく真っ赤になって慌てふためく魔理沙を、納茲琳はニヤニヤと眺めている…
+				PRINTFORML 　
+				PRINTFORMW 魔法道具の整理を手伝って${TFLAG:200}の収入を得た
+			ELSE
+				PRINTFORMW 魔理沙の実験を手伝って${TFLAG:200}の収入を得た
+			ENDIF
+	;霧之湖
+		;紅魔館
+		CASE 650
+			DRAWLINE
+			PRINTFORML 　
+			IF RAND:3 == 0
+				PRINTFORMW 美鈴と共に中庭の花の世話をすることになった
+				PRINTFORML 　
+				PRINTFORML 「んん…私にはどうも、花の価値というのがイ舞チ理解できなくてね」
+				PRINTFORML 『それはもったいない。そうですね…これなんかはどうでしょう？
+				PRINTFORMW 　香りを抽出して香油にすれば、眠い朝もすっきり起きられますよ』
+				PRINTFORML 「おお、そういう実利的な益のある花もあるのか。少し興味が湧いたよ」
+				PRINTFORML 『ふふふ、そういうところから入るのもいいと思いますよ。
+				PRINTFORMW 　さ、まずは雑草処理からいきましょうか』
+				PRINTFORML 　
+				PRINTFORMW 紅魔館でアルバイトして${TFLAG:200}の収入を得た
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 咲夜の手伝いをすることになった
+				PRINTFORML 　
+				PRINTFORML 『少しの間とはいえ紅魔の使用人として働いてもらうからには
+				PRINTFORMW 　紅魔館の制服を着用していただくわ』
+				PRINTFORML 　
+				PRINTFORML 咲夜に渡された\@ TALENT:MASTER:2 == 2 ? 執事 # メイド \@服に袖を通す
+				PRINTFORMW サイズはぴったり、あのメイド長の見立ては確かなようだ
+				PRINTFORMW 続いて、女僕服を整えた納茲琳が出てきた、が…これは…
+				PRINTFORML 　
+				PRINTFORML 「…なんだい。言いたいことを言ったらどうだ」
+				PRINTFORML 『とても良くお似合いですよ』
+				PRINTFORMW はっきり言って反則的な可愛さだ。普段の質素な彼女のイメージが反転する。
+				PRINTFORML 「ふん、世辞はいいよ」
+				PRINTFORML 『本心ですよ。妖精は幼い見た目の者も多いですからね、そのような者にも似合うようにできているのです』
+				PRINTFORMW 加えて、ネズミ耳と白色女僕髮箍の組み合わせが妙である。起伏に乏しい身体も、華やかなフリルで目立たなくなっている。
+				PRINTFORML 「幼い見た目で悪かったな」
+				PRINTFORML 『ほら、こちらの方はさっきから動きませんけど？可愛さに悶絶しているのでしょう』
+				PRINTFORMW トドメに、普段はシニカルな彼女の、羞恥に染まった表情が破壊力満点である。
+				PRINTFORML 「…ふん、大方笑いを堪えているのだろう…おい、どうした？う、うわっ！こら！擁抱な！バカ、正気に戻れ！」
+				PRINTFORMW 『ちなみにレンタル・譲渡ともに不可よ。制服はちゃんと返して頂戴』
+				PRINTFORML 　
+				PRINTFORMW 咲夜の仕事を手伝って${TFLAG:200}の収入を得た
+			ELSE
+				PRINTFORMW 琶秋莉が人手を求めているというので図書館に向かった
+				PRINTFORML 　
+				PRINTFORML 『…おおまかな説明は以上。後は小悪魔の指示に従って頂戴』
+				PRINTFORMW 一街道説明を終えると琶秋莉は部屋に戻っていった。　喘息の調子が悪いとのことだ
+				PRINTFORML 　
+				PRINTFORML 　
+				PRINTFORML 『へぇー、さすがに物探しを専門にするだけありますね。
+				PRINTFORMW 　これとこれ、だいぶ昔から行方がわからなくなってたんですよ』
+				PRINTFORML 「まあ、精度はあまり高くないし、ナマモノの類は私のところに来る前に食べられてしまうがね。
+				PRINTFORMW 　それらを見つけ出したのもたまたまだろう」
+				PRINTFORML 『琶秋莉様や蕾米莉亜様も、もう少したくさん私達を召喚してくれれば捗るんですがねぇ』
+				PRINTFORMW 小悪魔と談笑しながら作業を続けた
+				PRINTFORML 　
+				PRINTFORMW 図書館の整理を手伝って${TFLAG:200}の収入を得た
+			ENDIF
+		;其他
+		CASEELSE
+	ENDSELECT
+	CALL TRAIN_MESSAGE
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド（日常系）
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,掏耳朵
+;「索求膝枕」から「身体接触」
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_60_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	;IF TALENT:恋慕
+	;	PRINTFORMW 
+	;	RETURN 1
+	;それ以外
+	;ELSE
+		;失敗
+		IF TFLAG:193 == -1
+			PRINTFORML 「す、すまん…」
+			PRINTFORMW 突然の痛みに主人公は一瞬血の気が引いた…
+		;成功or普通
+		ELSE
+			IF RAND:2 == 0
+				PRINTFORMW 「ったく…なんで私がこんなご主人みたいなことを」
+				SIF TALENT:恋慕
+					PRINTFORMW 納茲琳は苦笑しながらも丁寧に掏耳朵をしてくれた…
+			ELSE
+				PRINTFORMW 「んん、なかなか掃除のしがいのある耳だねぇ」
+			ENDIF
+		ENDIF
+		RETURN 1
+	;ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;61,抱枕
+;※抱きつくから就寝
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_61_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;失敗
+	IF TFLAG:193 == -1
+	;成功or普通
+	ELSE
+		;恋人
+		IF TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…抱かれて眠るのも…なかなか…」 
+			ELSEIF RAND:2 == 0 
+				PRINTFORMW 「…%MASTERNAME:39%…」
+			ELSE
+				PRINTFORMW 「…ずっと…このまま…」
+			ENDIF
+		;恋慕
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORML 「あー…その、抱きつかれたまま眠られると、こちらとしては非常に困る…いや、困らないんだが…」
+				PRINTFORMW 納茲琳は当分眠れないようだ…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW （まさかコイツ、このまま寝る気じゃないだろうな…冗談じゃないぞ）
+			ELSE
+				PRINTFORML 「お、おい…いつまで抱きついてるんだ…」
+				PRINTFORMW 「こら、寝たふりするな…！怒るぞ、っこの…」
+			ENDIF
+		RETURN 1
+		;それ以外
+		ELSE
+			IF RAND:2 == 0 
+				PRINTFORMW 「いい加減、寝苦しいんだがね…」
+			ELSE
+				PRINTFORMW 「…たく、湯たんぽか何かと勘違いしてないか…」
+			ENDIF
+		RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;62,亲額頭
+;※頭をなでるから接吻
+;欲望 >= 5
+;PRINTFORML %CALLNAME:TARGET%は物足りなそうに%CALLNAME:PLAYER%を見つめている…
+;親密 >= 5
+;PRINTFORML %CALLNAME:TARGET%は顔を真っ赤にして照れている…
+;ELSE
+;PRINTFORML %CALLNAME:TARGET%は突然の事に驚いているようだ…
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_62_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_62_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		IF TALENT:恋慕
+			PRINTFORMW 「な…なっ…！」
+			PRINTFORMW 納茲琳は目を見開いて、おでこを押さえたまま後ずさった
+			PRINTFORMW 「…よくそんなこっ恥ずかしいことできるね、君」
+		ELSE
+			PRINTFORMW 「…くすぐったいぞ」
+		ENDIF
+		RETURN 1
+	ENDIF
+	;恋人
+	IF TALENT:恋人
+		IF ABL:欲望 >= 5
+			IF RAND:5 == 0
+				PRINTFORMW 「んふ…くすぐったい」
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 「次は…こっちに…」
+				PRINTFORMW 納茲琳はトロンとした目で顔を近づけてきた…
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「ふふ…焦らすね…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「そんなんじゃ足りない…ぜんぜん足りないよ…」
+			ELSE
+				PRINTFORMW 「…ッ」
+				PRINTFORMW 納茲琳はすっかり蕩けた表情で、主人公の情愛を待ちわびている…
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「んふ…くすぐったい」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふふ、おでこだけでいいのかい？」
+			ELSE
+				PRINTFORMW 「ん…♪」
+			ENDIF
+		ENDIF
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF ABL:欲望 >= 5
+			IF RAND:3 == 0
+				PRINTFORMW 「…ッ」
+				PRINTFORMW 納茲琳はすっかり蕩けた表情で、主人公の情愛を待ちわびている…
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…これで終わりってわけじゃ無いよね？」
+				PRINTFORMW 「早く…続き、しておくれよ…」
+			ELSE
+				PRINTFORMW 「ったく、気障な事するようになっちゃってまあ…」
+				PRINTFORMW 「…続き、はやく」
+				PRINTFORMW 納茲琳は憎まれ口を叩きながらも、次の行為を待ちわびている…
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…っ」
+				PRINTFORMW 「こんな恥ずかしいこと、よく平気だな君は…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っひゃっ！？」
+				PRINTFORMW おでこに唇で軽く触れると、納茲琳は赤くなって固まってしまった…
+			ELSE
+				PRINTFORMW 「こ、こらっ！どさくさ紛れにそんなコトするなあっ！」
+			ENDIF
+		ENDIF
+		RETURN 1
+	;それ以外
+	ELSE
+		IF ABL:欲望 >= 5
+			IF RAND:3 == 0
+				PRINTFORMW 「…これで終わりってわけじゃ無いんだろ？」
+				PRINTFORMW 「早く私を愉しませておくれよ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んふ…これは、そういうお誘いってことでいいのかな？」
+			ELSE
+				PRINTFORMW 「ふふ、焦らすねえ…君もなかなかわかってるじゃないか…」
+			ENDIF
+		ELSEIF ABL:親密 >= 5
+			IF RAND:3 == 0
+				PRINTFORMW 「…」
+				PRINTFORMW 額に唇で触れると納茲琳は赤面したままぶすっとした顔をしながらも、文句は言わなかった
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「うー…」
+				PRINTFORMW 納茲琳はジト目でこちらを見上げてきた…
+			ELSE
+				PRINTFORMW 「…はぁ」
+				PRINTFORMW 納茲琳は頬を染めながらも、諦めたように溜め息をついた
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「なかなか気障な真似がお好きなようだね…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…たく、かっこつけちゃって」
+			ELSE
+				PRINTFORMW 「…もうちょっと親しくなってからすることなんじゃないのかね？」
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;==================================================
+;63,一緒にお浴室
+;※CFLAG:TARGET:同行が必要なので同行が解けていたり片方が後から入ってきたときは403,休憩の方が出る
+;地の文の分岐条件は、
+;ABL:欲望 >= 5
+;	 %CALLNAME:TARGET%は%CALLNAME:PLAYER%に寄り添いながら身体を触っている…
+;ABL:親密 >= 5
+;	 %CALLNAME:TARGET%は%CALLNAME:PLAYER%に背をもたれながら恥ずかしげにうつむいている…
+;ELSE
+;	 %CALLNAME:TARGET%は目を背けながら後ろを向き小さく縮こまっている…
+;こんな感じ。
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_6300
+;CALL TRAIN_MESSAGE
+;※情景移動
+CALL M_KOJO_MESSAGE_SCOM_K39_6300_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_6300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;恋人
+	IF TALENT:恋人
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%を連れてお浴室に浸かった…
+		PRINTFORML 　
+		IF ABL:親密 >= 5
+			IF RAND:3 == 0
+				PRINTFORMW 「ふう…君と入る浴室も乙なもんだ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「なあ、上がったら一緒に少し運動しないか…%UNICODE(0x2665)%」
+				PRINTFORMW 納茲琳がぴったりと体を寄せて誘惑してきた…
+			ELSE
+				PRINTFORMW 「…そうだな、今度は浴室でするのもいいかもな…♪」
+			ENDIF
+		ELSE
+			PRINTFORML 「んん、一緒にお浴室なんていかにも恋人っぽいが、やっぱりまだ慣れないねぇ…」
+			PRINTFORMW 納茲琳は、少し気恥ずかしそうだ…
+			;うふふ経験あり
+			SIF CFLAG:1200 == 1 || CFLAG:1200 == 2
+				PRINTFORMW 「…馬鹿だなぁ、何をしてようが恥ずかしいもんは恥ずかしいんだよ。乙女心って奴だ」
+		ENDIF
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%を連れてお浴室に浸かった…
+		PRINTFORML 　
+		IF ABL:親密 >= 5
+			IF RAND:3 == 0
+				PRINTFORML 「…すぐにのぼせそうだな…」
+				PRINTFORMW 納茲琳はチラリとこちらを見遣って呟いた
+			ELSEIF RAND:2 == 0
+				PRINTFORML 「…あんまりこっちを見るなよ」
+				PRINTFORMW 納茲琳はかなり距離をとって浴槽に入った…
+			ELSE
+				PRINTFORML 「…いい湯だな…」
+				PRINTFORMW 一緒に入ったは好東西の、納茲琳はほとんど目を合わせてくれない…
+			ENDIF
+		ELSE
+			PRINTFORML 「…」
+			PRINTFORMW 一緒に入ったは好東西の、納茲琳はうつむいたままだ…
+		ENDIF
+		RETURN 1
+	;それ以外
+	;/一緒にお浴室入ろうと言われてホイホイ入っちゃう命蓮寺の住人って…まぁ連れ歩きはある程度好感度無いとできないけど
+	ELSE
+		IF RAND:3 == 0 
+			PRINTFORMW 「浴室？別にいいが」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「欲望に忠実だねえ…あんまりこっちをジロジロ見るなよ？」
+		ELSE
+			PRINTFORMW 「…なかなか大胆だねぇ君…別にいいけど…」
+		ENDIF
+		;CALL TRAIN_MESSAGE
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+;RETURN RESULT
+
+;==================================================
+;64,櫛で梳かす
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_64
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_64_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_64_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K39_{SELECTCOM}_1
+RETURN RESULT
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,拉手
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;81,送禮する
+;星ちゃん口上パクリ度90
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K39_81
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K39_81_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K39_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	SELECTCASE TFLAG:192
+		;送禮道具NOはItem.csv参照
+;		CASE ITEMナンバー
+	;人里
+		;商家町
+			;510,和菓子
+			;511,生活雑貨 香霖堂のものとは違う扱い
+			;514,和装小物
+			;517,和服
+		;呑屋小道
+			;530,鯖寿司
+			;/鯖や昆布はどうやって調達しているのだろうか…
+			CASE 530
+				IF RAND:2 == 0 
+					PRINTFORMW 「うむ…この上に乗ってる昆布がまた…」
+				ELSE
+					PRINTFORML 「ほほう…この身の厚さがいいね…」
+					PRINTFORMW 「ちょっとそこのガリを取ってくれないか」
+				ENDIF
+			;531,串おでん
+			;練り物は普通海の魚が原料。ということは、卵と大根と蒟蒻ぐらいじゃないのか？
+			CASE 531
+				IF DAY:2 == 4
+					PRINTFORML 「おでんと熱燗の組み合わせを考えた奴は天才だな…」
+					PRINTFORMW 「冬はこれに限るね」
+				ELSE
+					PRINTFORML 「ふうっ、お、熱っ……」
+					PRINTFORMW 納茲琳は熱そうにおでんを頬張っている
+				ENDIF
+	;迷途竹林
+		;永遠亭
+			;550,笹団子
+			CASE 550
+				IF RAND:2 == 0
+					PRINTFORML 「んん、いい香りだねぇ…」
+					PRINTFORMW 「濃いお茶が合いそうだ」
+				ELSE
+					PRINTFORML 「ほら…君もどうだい」
+					;恋人
+					IF TALENT:恋人
+						PRINTFORMW 「そうだ…ここはひとつ、恒例イベントをやっておくべきだな。
+						PRINTFORMW 　はい、あーん…♪」
+						PRINTFORMW 納茲琳はニヤニヤしながら団子をつまんで主人公の口元に寄せた…
+					ELSE
+						PRINTFORML 納茲琳は笹団子をひとつ手渡してきた
+						PRINTFORMW 笹の香りとあんこの甘みが口に広がった…
+					ENDIF
+				ENDIF
+			;551,うさぎ饅頭
+			CASE 551
+				PRINTFORML 「おおー…可愛らしいねぇ」
+				PRINTFORML 玉兎を模った饅頭に納茲琳は感心している
+				PRINTFORMW 「…ま、私は饅頭より兎肉の方が…」
+			;552,月見餅
+			CASE 552
+				PRINTFORML つきたての月見餅をひとつ頬張った納茲琳は驚きに目を見開いた
+				PRINTFORML 「なんと…皮の柔らかみといい、あんの舌触りといい、素晴らしいな…」
+				PRINTFORMW 「さすがに月見のプロは違うね」
+				PRINTFORMW 月見のプロ、とはなにか違うような気もするが。
+	;魔法之森
+		;香霖堂
+			;570,生活雑貨
+			;574,飾品
+			;577,洋服
+			CASE 577
+				PRINTFORMW 『これは"水手服"というらしい。女学生の着るものだそうだ、どうかな』
+				PRINTFORMW 「ふうん、女学生？…ムラサ船長のと似ているねえ、偶然かな。色は違うけど」
+				PRINTFORMW 納茲琳は黒い水手服を気に入ったようだ
+		;霧雨魔法店
+			;590,きのこ汁
+			CASE 590
+				PRINTFORML 「…この如何にもな茸は大丈夫なんだろうね？」
+				PRINTFORMW 納茲琳は毒々しい色の傘を箸でつまみ上げた
+				PRINTFORML 『フフン。このキノコハンター・魔理沙様を舐めてもらっちゃ困る。
+				PRINTFORMW 　安心しな、全て確認済みだよ』
+				PRINTFORML 「それならいいが…一体どうやって？」
+				PRINTFORML 『まあ基本は先人の知恵だな。何時の時代にも食い意地の張った奴ってのはいるもんで、
+				PRINTFORMW 　そういう尊い犠牲の上にこの茸汁は成り立ってるんだな、うん』
+				PRINTFORML 「…基本以外は？」
+				PRINTFORMW 『それはまあ、私とか香霖とか霊夢とか香霖とかで…』
+				PRINTFORMW 「…」
+	;霧之湖
+		;紅魔館
+			;610,朱色の紅茶
+				CASE 610
+					PRINTFORML 「へえ…血のように紅い紅茶だってね」
+					PRINTFORMW 「なかなかいい趣味じゃないか」
+			;611,蛋糕セット
+				CASE 611
+					PRINTFORML 「…これはまた豪勢だね…」
+					PRINTFORMW 「今回はお茶じゃなく紅茶が欲しいところだ」
+			;614,琥珀色のジャム
+				CASE 614
+					PRINTFORML 「んん…いささか甘すぎる気もするが…」
+					PRINTFORMW 「そうだ、ご主人への交渉材料にはいいかも知れないな。ああ見えて大の甘党だから」
+	;妖怪之山 山麓
+		;麓の大滝
+			;634,懐中時計
+			CASE 634
+				PRINTFORML 「こりゃまた…精巧だねえ…」
+				PRINTFORML 『へへん。それは自信作だよー？完全防水はもちろんのこと、
+				PRINTFORMW 　自動巻き、精度補正も完備！ちなみにマニュアルにない隠しコマンドもいくつか…』
+				IF TALENT:恋人
+					PRINTFORML 『…おっと、そんな事は今はどうでもいいな。大事にしなよ？』
+					PRINTFORMW 「そ、そうだな…なかなか便利そうだ…」
+					PRINTFORML 『はははっ…ご両人に言ったんだけどねぇ～？』
+					PRINTFORMW 「…」
+					PRINTFORMW ニヤつく視線を向けられて二人して黙ってしまった
+				ENDIF
+	ENDSELECT
+	PRINTFORMW 　
+ENDIF
+RETURN 1

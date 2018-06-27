@@ -1,0 +1,32 @@
+﻿@ODEKAKEMAP_6(AA)
+#DIMS REF AA, 0
+
+AA:00 = 林林林林林林林■03■∫／／／／／／／／／∫∫[彼岸]■■∫∫[冥界]　■　09　　　■
+AA:01 = ρρρρρρρ■─■∫／／／／／／／／／∫∫　　　■■∫∫　心、　■■─■■■■
+AA:02 = 　　　　　　　　　　∫／／／／／／／／／∫∫　　　■■∫∫´仆　　　　　　　　■
+AA:03 = 　　01　　　　　02　∫／／／／／／／／／∫∫　07　│　∫∫　　　08　　　　　　■
+AA:04 = ρρρρρρρ　　　∫／／／／／／／／／∫∫　　　■■∫∫■■●　●■■■■■■
+AA:05 = 林林林林林林林　　　∫／／／／／／／／／∫∫　　　■■∫∫　　│三│　　　　　　
+
+@DRAW_MAP_BG_6(SLICED)
+#DIMS SLICED
+SELECTCASE SLICED
+;色つけたいときはこんな感じ
+CASE "木","林"
+	SETCOLOR 0x90EE90
+	PRINTS SLICED
+	RESETCOLOR
+;違う文字を表示させる例
+CASE "#W"
+	SETCOLOR 0x90EE90
+	PRINT 木
+	RESETCOLOR
+CASE "#E"
+	SIF TALENT:MASTER:居場所察知 && COUNTCHARA:(MAXROOM) > 0 && FLAG:察知モード == 1
+		SETCOLOR 255,100,200
+	PRINT ↓
+	RESETCOLOR
+;ふつうの
+CASEELSE
+	PRINTS SLICED
+ENDSELECT

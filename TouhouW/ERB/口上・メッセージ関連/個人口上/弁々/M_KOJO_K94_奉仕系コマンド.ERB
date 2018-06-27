@@ -1,0 +1,519 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;奉仕系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,手淫
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_80_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;出す直前
+	ELSEIF BASE:PLAYER:2 > 8000
+		IF RAND:3 == 0
+			PRINTFORMW 「…ビクビクして…今にも射精しそう…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「ふふっこのまま出しちゃえ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「もう…勃起して硬くなってる…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「出して…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…まだ出しちゃダメよ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「我慢したほうが気持ちいいんだから…%UNICODE(0x2665) *1%」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「おっきい…男の人って…みんなこんなに大きくなるのかしら」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「熱くなって…悪いおちんちんはこうしてあげる…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「ん…気持ち良さそうな顔ね」
+			PRINTFORMW 「もっと激しく擦ってあげる…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「この辺りが
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW の弱い所なのよね♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ん…変な匂い…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「手の中でビクビクしてるの…面白いわね…%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「チンカスいっぱい付いてる…綺麗にしないと…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…こうすると気持ちいいのかしら？」
+		ELSE
+			PRINTFORMW 「…ん…こうすればいいの？」
+			PRINTFORMW 「手…ベトベトになっちゃった…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;81,口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_81
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_81_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;出す直前
+	ELSEIF BASE:PLAYER:2 > 8000
+		IF RAND:3 == 0
+			PRINTFORMW 「んむ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%ちゅっ%UNICODE(0x2665) *1%ちゅっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んぷっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「気持ちいいお汁…%UNICODE(0x2665) *1%…早く出して…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ずっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%んぷっ%UNICODE(0x2665) *1%ずずっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…我慢汁溢れてきて美味しい…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あむっ%UNICODE(0x2665) *1%んちゅ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のお汁、いっぱい飲ませて%UNICODE(0x2665) *1%」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ちゅっ%UNICODE(0x2665) *1%んふずっ%UNICODE(0x2665) *1%んぷっ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んぷっ%UNICODE(0x2665) *1%んぐっ%UNICODE(0x2665) *1%んちゅ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%んむ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「じゅぷっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「他の女に
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のザーメンは渡さないんだから…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんしゃぶらせて%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%んぐっ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%あむっ%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「じゅぷっ%UNICODE(0x2665) *1%ずずっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んむっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%変な匂い…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%れろっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「いっぱい出して…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;82,乳交
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_82
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_82_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_82_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;出す直前
+	ELSEIF BASE:PLAYER:2 > 8000
+		IF RAND:3 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%おっぱいの中で…%UNICODE(0x2665) *1%大きくなってる%UNICODE(0x2665) *1%」
+			PRINTFORMW 「精子…%UNICODE(0x2665) *1%…早く出して…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%おちんちんっ%UNICODE(0x2665) *1%おっきい%UNICODE(0x2665) *1%」
+			PRINTFORM 「んっ…%UNICODE(0x2665) *1%…出してもいいのよ？…
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%もう出ちゃいそうなの？」
+			PRINTFORM 「ふふっ…我慢できない
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんなんて…こうしてあげる…%UNICODE(0x2665) *1%」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんビクビクして…可愛いかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「おっぱい…気持ちいいの…？」
+		ELSE
+			PRINTFORM 「私のおっぱいの中で
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW …気持ちよくなってね…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちん…胸で擦れてっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%ちんちん大きくなってきたぁ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%乳首にちんちん擦れて…%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のちんちん…んっ変な匂い…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%これ…面白いかも…%UNICODE(0x2665) *1%…」
+		ELSE
+			PRINTFORMW 「ん…%UNICODE(0x2665) *1%胸…我慢汁でぬるぬるになっちゃった…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;83,素股
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_83
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_83_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_83_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「私の太もも…気持ちいい？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふふっ…興奮してるのね…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORM 「私の太ももで
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちん大きくなってる…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんが擦れて…んっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%おちんちんが股の間で…あっ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%そこっ%UNICODE(0x2665) *1%クリトリスに当たって…%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のちんちん…んっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「ん…%UNICODE(0x2665) *1%ちんちん大きくなってる…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;84,泡泡浴
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_84
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_84_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_84_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;85,足扱き
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_85
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_85_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_85_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;出す直前
+	ELSEIF BASE:PLAYER:2 > 8000
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんなんか私の足でイッちゃえばいいのよ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%これっ%UNICODE(0x2665) *1%楽しいかも…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW 私の足にえっちなお汁いっぱい出して…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORM 「ふふっ…
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちん…はちきれそうになってる…%UNICODE(0x2665) *1%」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW …このあたりを踏んでほしいの…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「私の足でイッちゃえ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORM 「あはっ%UNICODE(0x2665) *1%…
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちん…足で踏まれて大きくなってる…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちん…踏んであげるっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%こんなので興奮しちゃうんだぁ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%大きくなってきた…%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のちんちん…面白いわね…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%芋虫みたい…%UNICODE(0x2665) *1%…」
+		ELSE
+			PRINTFORMW 「ん…%UNICODE(0x2665) *1%足…ベトベトね…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;88,真空口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K94_88
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K94_88_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K94_88_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;出す直前
+	ELSEIF BASE:PLAYER:2 > 8000
+		IF RAND:3 == 0
+			PRINTFORMW 「んむ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%ちゅっ%UNICODE(0x2665) *1%ちゅっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んぷっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「気持ちいいお汁…%UNICODE(0x2665) *1%…早く出して…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ずっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%んぷっ%UNICODE(0x2665) *1%ずずっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…我慢汁溢れてきて美味しい…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「あむっ%UNICODE(0x2665) *1%んちゅ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のお汁、いっぱい飲ませて%UNICODE(0x2665) *1%」
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ちゅっ%UNICODE(0x2665) *1%んふずっ%UNICODE(0x2665) *1%んぷっ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%ずっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んぷっ%UNICODE(0x2665) *1%んぐっ%UNICODE(0x2665) *1%んちゅ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んっ%UNICODE(0x2665) *1%んむ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「じゅぷっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「他の女に
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のザーメンは渡さないんだから…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K94
+			PRINTFORMW のおちんちんしゃぶらせて%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%んぐっ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%あむっ%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「じゅぷっ%UNICODE(0x2665) *1%ずずっ%UNICODE(0x2665) *1%ずぶっ%UNICODE(0x2665) *1%んむっ%UNICODE(0x2665) *1%じゅぷっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%変な匂い…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んちゅ%UNICODE(0x2665) *1%れろっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「いっぱい出して…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1

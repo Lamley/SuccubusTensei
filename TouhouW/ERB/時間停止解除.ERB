@@ -1,0 +1,297 @@
+﻿@時間停止解除
+#DIM 追い出し
+#DIM 合計絶頂強度
+#DIM 絶頂人数
+#DIM 逸脱追加
+VARSET LOCAL
+FLAG:70 = 0
+絶頂人数 = 0
+TFLAG:運搬 = 0
+FOR LOCAL,0,CHARANUM
+	IF 睡眠時間(LOCAL)
+		;パジャマセット
+		CALL CTRL_CLOTHES_SET(LOCAL, "現在衣装の変更_パジャマ")
+		CFLAG:LOCAL:パジャマ = 1
+	ELSE
+		;普段着セット
+		CALL CTRL_CLOTHES_SET(LOCAL, "現在衣装の変更_普段着")
+		CFLAG:LOCAL:パジャマ = 0
+	ENDIF
+	CALL CLOTHES_SETTING_TRAIN(LOCAL)
+NEXT
+
+PRINTFORMW %CALLNAME:MASTER%解除了時間停止
+追い出し = 0
+
+CALL FISHER_YATES_SHAFFLE(CHARANUM - 1)
+
+FOR LOCAL:10 , 0 , CHARANUM - 1
+	LOCAL = SHAFFLE_ARRAY:(LOCAL:10) + 1
+	IF CFLAG:LOCAL:現在位置 == CFLAG:MASTER:現在位置 && !CFLAG:LOCAL:睡眠
+		合計絶頂強度 = EX:LOCAL:無自覚Ｃ絶頂 + EX:LOCAL:無自覚Ｖ絶頂 + EX:LOCAL:無自覚Ａ絶頂 + EX:LOCAL:無自覚Ｂ絶頂 + EX:LOCAL:無自覚Ｍ絶頂
+		IF 合計絶頂強度 > 30
+		;IF EX:LOCAL:Ｃ絶頂 + EX:LOCAL:Ｖ絶頂 + EX:LOCAL:Ａ絶頂 + EX:LOCAL:Ｂ絶頂 + EX:LOCAL:Ｍ絶頂 > 30
+			SETCOLOR 255,100,255
+			PRINTL 【強烈的快感】
+			RESETCOLOR
+			PRINTFORMW 突然袭来的激烈絶頂令%CALLNAME:LOCAL%発出甜美的娇喘声、当场瘫坐在地
+			IF CFLAG:LOCAL:時間停止バレ == 1
+				IF TALENT:LOCAL:恋慕
+					PRINTFORMW %CALLNAME:LOCAL%因為快感而颤抖并抱住身体、不停地小声念叨着%CALLNAME:MASTER%的名字
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:情愛 += 500 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:思慕
+					PRINTFORMW %CALLNAME:LOCAL%一辺享受着快感、一辺不満的望着%CALLNAME:MASTER%
+					SOURCE:LOCAL:欲情 += 300 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:炮友 == 2
+					PRINTFORMW %CALLNAME:LOCAL%喘着粗气、媚眼如丝地請求継续
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:炮友 == 1
+					PRINTFORMW %CALLNAME:LOCAL%一辺因為快感而甜蜜地娇喘着、一辺因為未経许可的擅自行為而投来了嫌悪的目光
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:愛欲
+					PRINTFORMW %CALLNAME:LOCAL%露出喜悦的表情、因為%CALLNAME:MASTER%给予的快感而颤抖着
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSE
+					PRINTFORMW %CALLNAME:LOCAL%一辺因為快感颤抖着、一辺用充満愤怒的眼神睨视着%CALLNAME:MASTER%
+					SOURCE:LOCAL:反感 += 10000
+				ENDIF
+			ENDIF
+			CFLAG:LOCAL:ディレイ += 20
+			絶頂人数 += 1
+			;恥情ボー茄子
+			CALL JUEL_UP_SPECIAL(LOCAL,"恥情","露出癖",2,1)
+			
+			;逸脱追加 = MAX(1000 - ABL:LOCAL:露出癖 * 200, 0)
+			;SOURCE:LOCAL:逸脱 += 逸脱追加
+			CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,2,0)
+		ELSEIF 合計絶頂強度 > 0
+		;ELSEIF EX:LOCAL:Ｃ絶頂 + EX:LOCAL:Ｖ絶頂 + EX:LOCAL:Ａ絶頂 + EX:LOCAL:Ｂ絶頂 + EX:LOCAL:Ｍ絶頂 > 0
+			SETCOLOR 255,100,255
+			PRINTL 【謎之快感】
+			RESETCOLOR
+			PRINTFORMW %CALLNAME:LOCAL%因為謎之快感身体猛地僵硬起来
+			IF CFLAG:LOCAL:時間停止バレ == 1
+				IF TALENT:LOCAL:恋慕
+					PRINTFORMW %CALLNAME:LOCAL%摇摇晃晃倒在%CALLNAME:MASTER%的胸前、小声的請求継续...
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:情愛 += 500 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:思慕
+					PRINTFORMW %CALLNAME:LOCAL%一看到%CALLNAME:MASTER%脸就変红了
+					SOURCE:LOCAL:欲情 += 300 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:炮友 == 2
+					PRINTFORMW 是因為快感还不够吗、%CALLNAME:LOCAL%有些不満的望着%CALLNAME:MASTER%
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:炮友 == 1
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:愛欲
+					PRINTFORMW %CALLNAME:LOCAL%牵起%CALLNAME:MASTER%的手、喘着粗气請求継续
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSE
+					PRINTFORMW %CALLNAME:LOCAL%向%CALLNAME:MASTER%投来了怀疑的视线
+					SOURCE:LOCAL:反感 += 1000
+				ENDIF
+			ENDIF
+			絶頂人数 += 1
+			CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,1,0)
+		ELSEIF CFLAG:LOCAL:291 == 1
+			SETCOLOR 150,150,250
+			PRINTL 【不寻常的開放感】
+			RESETCOLOR
+			PRINTFORMW 不知什么时候内袴被脱掉的%CALLNAME:LOCAL%一幅坐立不安的样子
+			;本来ならCFLAG:295は作らずCFLAG:LOCAL:291 == 3とかで対応したほうが良い
+			IF CFLAG:LOCAL:時間停止バレ == 1 && CFLAG:LOCAL:295 == 0
+				IF TALENT:LOCAL:恋慕
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:情愛 += 500 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:思慕
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 300 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:炮友 == 2
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSEIF TALENT:LOCAL:炮友 == 1
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 500 + (CFLAG:2 - 1000) / 5
+					SOURCE:LOCAL:反感 += 300
+				ELSEIF TALENT:LOCAL:愛欲
+					PRINTFORMW 
+					SOURCE:LOCAL:欲情 += 1000 + (CFLAG:2 - 1000) / 5
+				ELSE
+					PRINTFORMW 
+					SOURCE:LOCAL:反感 += 10000
+				ENDIF
+				CFLAG:LOCAL:295 = 1
+			ENDIF
+			CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,3,0)
+		ENDIF
+		;無自覚絶頂カウントをリセットしておく
+		FOR LOCAL:1,0,5
+			IF EX:LOCAL:(LOCAL:1)
+				EX:LOCAL:(LOCAL:1 + 20) = 0
+				EX:LOCAL:(LOCAL:1 + 50) = 0
+			ENDIF
+		NEXT
+		IF BATHCHECK(CFLAG:MASTER:現在位置) && AT_HOME(MASTER) && LOCAL != MASTER
+			SIF 浴室追い出し条件(LOCAL) && CFLAG:LOCAL:現在位置 == CFLAG:MASTER:現在位置
+				CALL 浴室から追い出し(LOCAL)
+			SIF RESULT
+				追い出し ++
+		ELSE
+			IF CFLAG:LOCAL:287 == 2
+				SETCOLOR 255,100,255
+				PRINTL 【無自覚肛门射精】
+				RESETCOLOR
+				;感度も10超えがあるわけだし、地の文だけでもバリエーションを足してみた
+				SELECTCASE ABL:LOCAL:2
+					CASE 0 TO 2
+						PRINTFORMW %CALLNAME:LOCAL%突然因為肛门里游走的疼痛而小声悲鳴起来
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,7,1)
+					CASE 3 TO 5
+						PRINTFORMW %CALLNAME:LOCAL%好像感到了直腸里精液帯来的強烈異物感
+						PRINTFORMW 噫～的、軽声悲鳴起来
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,7,2)
+					CASE IS >= 6
+						PRINTFORMW 是対突然注入已経変成第二性器的排泄器官里的灼熱精液感到按捺不住吗、
+						PRINTFORMW %CALLNAME:LOCAL%軽軽地喘着炽热的呼吸。
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,7,2)
+					;現在ロック中。はたしてこの反応は有りか否か？
+					CASEELSE
+						PRINTFORMW 即使是屁股里突然传来的炙熱感覚
+						PRINTFORMW 対现在的%CALLNAME:LOCAL%来説也只不过是快楽的佐料吧
+						PRINTFORMW 毫不掩饰放荡的表情、吐出了甘美的呼吸。
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,7,2)
+				ENDSELECT
+				CFLAG:LOCAL:アナル射精 = 0
+			ENDIF
+			IF EX:LOCAL:処女喪失チェック
+				SETCOLOR 250,100,100
+				IF EX:LOCAL:処女喪失チェック == 1
+					PRINTL 【無自覚処女喪失】
+				ELSE
+					PRINTL 【無自覚再生処女喪失】
+				ENDIF
+				RESETCOLOR
+				PRINTFORMW %CALLNAME:LOCAL%因為股間的鈍痛而紧皱着眉头…
+				CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,8,0)
+			ENDIF
+			IF CFLAG:LOCAL:286 == 2
+				SETCOLOR 255,100,255
+				PRINTL 【無自覚膣内射精】
+				RESETCOLOR
+				IF EX:LOCAL:処女喪失チェック != 1 
+					IF !TCVAR:LOCAL:口服避孕薬 && TALENT:LOCAL:処女 != -1
+						PRINTFORMW %CALLNAME:LOCAL%通过下腹部传来的违和感注意到自己被膣内射精了
+						PRINTFORMW 変的脸色蒼白、看起来想要掩饰似的身子扭来扭去……
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,9,1)
+					ELSEIF EX:LOCAL:処女喪失チェック == 0 && TCVAR:LOCAL:口服避孕薬 == 1 && TALENT:LOCAL:処女 != -1
+						PRINTFORMW %CALLNAME:LOCAL%通过下腹部传来的违和感注意到自己被膣内射精了
+						PRINTFORMW 因為服用过了避孕薬、虽然有些惶惑但并没有很慌张的様子……
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,9,2)
+					ENDIF
+				ELSE
+					PRINTFORML %CALLNAME:LOCAL%察覚到了陰道里的精液帯来的违和感但
+					PRINTFORMW 不知道那是什么东西的触感而显得坐立不安……
+					CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,9,3)
+				ENDIF
+				CFLAG:LOCAL:286 = 0
+			ENDIF
+			;無自覚膣内射精の処理の後で無自覚処女喪失のフラグを折る
+				EX:LOCAL:処女喪失チェック = 0
+			IF CFLAG:LOCAL:288 == 2
+				SETCOLOR 255,100,255
+				PRINTL 【無自覚口内射精】
+				RESETCOLOR
+				IF TALENT:MASTER:濃厚精液
+					PRINTFORM %CALLNAME:LOCAL%因突然出現在口中的%SAMEN_DESCRIPTION(PLAYER)%
+					IF ABL:LOCAL:精液中毒 < 3
+						PRINTFORML 激烈的咳嗽，被嗆到了
+						PRINTFORML 因爲口腔和食道沾到的精液不容易吐出来、%CALLNAME:LOCAL%流着泪不断嘔吐着
+						PRINTFORMW ……果然還是做了坏事
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,5)
+					ELSE
+						PRINTFORML 驚きながらも、何事もなかった風を装って口を閉じた
+						PRINTFORMW 然後一点点動舌頭、細細的品味了粘到的欲望的果凍…
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,6)
+					ENDIF
+				ELSEIF ABL:LOCAL:精液中毒 < 3
+					PRINTFORM %CALLNAME:LOCAL%被射到嘴里的精液呛到
+					IF !RAND:3
+						PRINTFORMW 了、不假思索的呑了下去
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,1)
+					ELSEIF !RAND:2
+						PRINTFORMW 了、想办法找机会吐了出来
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,2)
+					ELSE
+						PRINTFORMW 了、急忙捂住了嘴巴
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,3)
+					ENDIF
+					PRINTFORMW 因為突発事态一辺流泪一辺咳嗽起来…
+				ELSE
+					PRINTFORMW %CALLNAME:LOCAL%対灌到嘴里精液感到吃惊、然后装作没事一样将其呑了下去
+					PRINTFORMW %CALLNAME:LOCAL%感到了莫名奇妙的兴奋感…
+					CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,4,4)
+				ENDIF
+				CFLAG:LOCAL:288 = 0
+			ENDIF
+			IF CFLAG:LOCAL:289 == 2
+				SETCOLOR 255,100,255
+				PRINTL 【無自覚顔面射精】
+				RESETCOLOR
+				IF ABL:LOCAL:精液中毒 < 3
+					IF TALENT:LOCAL:幼稚 && EXP:LOCAL:精液経験 < 100
+						PRINTFORMW %CALLNAME:LOCAL%不快地擦掉了粘在脸上的精液
+						PRINTFORMW 看起来%CALLNAME:LOCAL%似乎并没有発现粘在脸上的精液的正体的样子
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,5,1)
+					ELSE
+						PRINTFORMW %CALLNAME:LOCAL%注意到了粘在脸上的精液、慌忙将其擦掉了
+						PRINTFORMW 虽然装作什么也没発生的样子、但表情还是显得很僵硬
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,5,2)
+					ENDIF
+				ELSE
+					PRINTFORMW 擦掉粘在脸上的精液的%CALLNAME:LOCAL%、偸偸地把一部分精液送到了嘴里
+					PRINTFORMW %CALLNAME:LOCAL%感到了莫名奇妙的兴奋感…
+					CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,5,3)
+				ENDIF
+				CFLAG:LOCAL:288 = 0
+			ENDIF
+			IF CFLAG:LOCAL:290 == 2
+				SETCOLOR 255,100,255
+				PRINTL 【無自覚手淫射精】
+				RESETCOLOR
+				IF ABL:LOCAL:精液中毒 < 3
+					PRINTFORMW %CALLNAME:LOCAL%注意到了粘在手掌上的精液、不快地擦掉了
+					CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,6,1)
+				ELSE
+					PRINTFORMW %CALLNAME:LOCAL%偸偸地舔了舔了粘在手掌上的精液并擦掉了
+					PRINTFORMW %CALLNAME:LOCAL%感到了莫名奇妙的兴奋感…
+						CALL KOJO_MESSAGE_SEND("EVENT",17,LOCAL,6,2)
+				ENDIF
+				CFLAG:LOCAL:290 = 0
+			ENDIF
+		ENDIF
+
+	ENDIF
+	CFLAG:LOCAL:288 = 0
+	CFLAG:LOCAL:289 = 0
+	CFLAG:LOCAL:290 = 0
+	CFLAG:LOCAL:344 = 0
+NEXT
+IF 絶頂人数 >= 1 && !追い出し
+	PRINTFORM %CALLNAME:MASTER%向少女
+	SIF 絶頂人数 >= 2
+		PRINT 們
+	PRINTW 表示擔心之情
+ENDIF
+FOR LOCAL,1,CHARANUM
+	CALL 寝室から追い出し(LOCAL)
+NEXT
+RESETBGCOLOR
+

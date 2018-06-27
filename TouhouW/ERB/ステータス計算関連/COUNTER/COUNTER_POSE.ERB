@@ -1,0 +1,168 @@
+﻿@EVENT_COUNTER_POSE(ARG,ARG:1)
+VARSET LOCAL
+SIF TCVAR:ARG:30 > 1
+	RETURN 0
+SELECTCASE TCVAR:ARG:カウンター行動
+	;キス
+	CASE 30
+		TFLAG:MASTERの口使用中 ++
+	;胸を揉ませる
+	CASE 33
+		TFLAG:MASTERの手使用中 ++
+	;股間をまさぐる
+	CASE 34
+		TFLAG:MASTERのＣ使用中 ++
+	;胸を揉む
+	CASE 36
+		TFLAG:MASTERのＢ使用中 ++
+	;手淫
+	CASE 50
+		TFLAG:MASTERのＣ使用中 ++
+	;口交
+	CASE 51
+		TFLAG:MASTERのＣ使用中 ++
+	;素股
+	CASE 52
+		TFLAG:MASTERのＣ使用中 ++
+	;乳交
+	CASE 53
+		TFLAG:MASTERのＣ使用中 ++
+	;足交
+	CASE 54
+		TFLAG:MASTERのＣ使用中 ++
+	;肛門愛撫
+	CASE 55
+		TFLAG:MASTERのＡ使用中 ++
+	;舐肛
+	CASE 56
+		TFLAG:MASTERのＡ使用中 ++
+	;指挿入
+	CASE 57
+		TFLAG:MASTERのＶ使用中 ++
+	;胸愛撫
+	CASE 58
+		TFLAG:MASTERのＢ使用中 ++
+	;乳首吸い
+	CASE 59
+		TFLAG:MASTERの口使用中 ++
+	;ディープキス
+	CASE 60
+		TFLAG:MASTERの口使用中 ++
+	;強制舐陰
+	CASE 70
+		TFLAG:MASTERの口使用中 ++
+	;口交強制
+	CASE 71
+		TFLAG:MASTERの口使用中 ++
+	;肛門奉仕
+	CASE 72
+		TFLAG:MASTERの口使用中 ++
+	;ぱふぱふ
+	CASE 73
+		TFLAG:MASTERのＢ使用中 ++
+	;乳合わせ
+	CASE 74
+		TFLAG:MASTERのＢ使用中 ++
+	;タワシ洗い
+	CASE 75
+		TFLAG:MASTERの手使用中 ++
+	;強制アソコ愛撫
+	CASE 76
+		TFLAG:MASTERの手使用中 ++
+	;乳を吸わせる
+	CASE 77
+		TFLAG:MASTERの口使用中 ++
+	;正常位Ｖ挿入する
+	CASE 80
+		TFLAG:MASTERのＶ使用中 ++
+	;後背位Ｖ挿入する
+	CASE 83
+		TFLAG:MASTERのＶ使用中 ++
+	;腰振りＶ受け
+	CASE 84
+		TFLAG:MASTERのＶ使用中 ++
+	;挿入させる
+	CASE 85
+		TFLAG:MASTERのＣ使用中 ++
+	;だいしゅきホールド
+	CASE 86
+		TFLAG:MASTERのＣ使用中 ++
+	;Ａ挿入させる
+	CASE 87
+		TFLAG:MASTERのＣ使用中 ++
+	;腰振りＶ
+	CASE 88
+		TFLAG:MASTERのＣ使用中 ++
+	;腰振りＡ
+	CASE 89
+		TFLAG:MASTERのＣ使用中 ++
+	;Ａ挿入する
+	CASE 90
+		TFLAG:MASTERのＡ使用中 ++
+	;強制口交強制
+	CASE 91
+		TFLAG:MASTERの口使用中 ++
+	;腰振り逆Ａ
+	CASE 93
+		TFLAG:MASTERのＡ使用中 ++
+ENDSELECT
+;69体勢
+SELECTCASE TCVAR:ARG:カウンター行動
+	CASE 50
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;口交
+	CASE 51
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;乳交
+	CASE 53
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;肛門愛撫
+	CASE 55
+		;性交中は69にならない
+		IF MASTER_POSE(SET_V,SET_P) == ARG || MASTER_POSE(SET_A,SET_P) == ARG || MASTER_POSE(SET_P,SET_V) == ARG || MASTER_POSE(SET_P,SET_A) == ARG
+			LOCAL = 0
+		ELSE
+			LOCAL = 2
+		ENDIF
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,LOCAL)
+	;指挿入
+	CASE 57
+		;性交中は69にならない
+		IF MASTER_POSE(SET_V,SET_P) == ARG || MASTER_POSE(SET_A,SET_P) == ARG || MASTER_POSE(SET_P,SET_V) == ARG || MASTER_POSE(SET_P,SET_A) == ARG
+			LOCAL = 0
+		ELSE
+			LOCAL = 2
+		ENDIF
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,LOCAL)
+	;強制舐陰
+	CASE 70
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;口交強制
+	CASE 71
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;肛門奉仕
+	CASE 72
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	;強制口交強制
+	CASE 91
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,2)
+	CASEELSE
+		CALL EVENT_COUNTER_POSE_69(ARG,ARG:1,0)
+ENDSELECT
+
+;引数1 対象のキャラ番号 2 行動順 3 六九式移行への確率
+@EVENT_COUNTER_POSE_69(ARG,ARG:1,ARG:2)
+IF ARG:2 == 0
+	TEQUIP:ARG:六九式 = 0
+	RETURN 0
+ENDIF
+IF TEQUIP:ARG:六九式
+	TFLAG:60 ++
+	RETURN 0
+ENDIF
+SIF TFLAG:60
+	RETURN 0
+IF RAND:(ARG:2) == 0
+	TEQUIP:ARG:六九式 = 1
+	TCVAR:ARG:27 = 1
+ENDIF

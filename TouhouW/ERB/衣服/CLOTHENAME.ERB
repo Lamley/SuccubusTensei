@@ -1,0 +1,1144 @@
+﻿[SKIPSTART]
+;CLOTHESに移動しました
+;ファイル丸ごと使用していません
+;-------------------------------------------------
+;関数名:SHOW_BOTTOM
+;概　要:下半身服装名取得関数
+;戻り値:服装名(文字列)
+;引数:0 参照するキャラ番号
+;引数:1裙子、2ずらし可、3ずらし不可、4下半身上衣ずらし不可の種別(省略した場合は最も露出を妨げているもの)
+;備　考:文中関数
+;TEQUIP:0に対応して一番上に着ている衣装の種類を返す
+;-------------------------------------------------
+@SHOW_BOTTOM(ARG,ARG:1)
+#FUNCTIONS
+LOCAL = 0
+IF TEQUIP:ARG:0 & 8
+	LOCAL = 4
+ELSEIF TEQUIP:ARG:0 & 4
+	LOCAL = 3
+ELSEIF TEQUIP:ARG:0 & 2
+	LOCAL = 2
+ELSEIF TEQUIP:ARG:0 & 1
+	LOCAL = 1
+ENDIF
+LOCAL = ARG:1 ? ARG:1 # LOCAL
+
+
+SELECTCASE LOCAL
+	CASE 4
+		IF EQUIP:ARG:袴子
+			SIF EQUIP:ARG:和服 == 6
+				RETURNF "袴"
+			RETURNF "着衣"
+		ELSEIF EQUIP:ARG:連体内衣
+			IF EQUIP:ARG:連体内衣 == 2
+				RETURNF "膠衣"
+			ELSEIF EQUIP:ARG:連体内衣 == 3
+				RETURNF "機車夾克"
+			ELSE
+				RETURNF "連体内衣"
+			ENDIF
+		ENDIF
+	CASE 3
+		IF EQUIP:ARG:袴子
+			RETURNF "着衣"
+		ELSEIF EQUIP:ARG:連体内衣
+			IF EQUIP:ARG:連体内衣 == 2
+				RETURNF "膠衣"
+			ELSEIF EQUIP:ARG:連体内衣 == 3
+				RETURNF "機車夾克"
+			ELSE
+				RETURNF "連体内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:緊身内衣
+			IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+				RETURNF "インナー"
+			ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+				RETURNF "兔女郎服"
+			ELSEIF EQUIP:ARG:緊身内衣 == 9
+				RETURNF "紐水着"
+			ELSEIF EQUIP:ARG:緊身内衣 >= 6
+				RETURNF "水着"
+			ELSE
+				RETURNF "緊身内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:下半身内袴１
+			IF EQUIP:ARG:下半身内袴１ == 1
+				RETURNF "兜襠布"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 2
+				RETURNF "Ｃ字袴"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 3
+				RETURNF "創口貼"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 4
+				RETURNF "安全袴"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 5
+				RETURNF "貞操帯"
+			ELSEIF (EQUIP:ARG:下半身内袴１ == 6 || EQUIP:ARG:下半身内袴１ == 7)
+				RETURNF "穿環"
+			ELSE
+			RETURNF "内袴"
+			ENDIF
+		ENDIF
+	CASE 2
+		IF EQUIP:ARG:緊身内衣
+			IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+				RETURNF "インナー"
+			ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+				RETURNF "兔女郎服"
+			ELSEIF EQUIP:ARG:緊身内衣 == 9
+				RETURNF "紐水着"
+			ELSEIF EQUIP:ARG:緊身内衣 >= 6
+				RETURNF "水着"
+			ELSE
+				RETURNF "緊身内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:下半身上衣
+			RETURNF "着衣"
+		ELSEIF EQUIP:ARG:下半身内袴２
+			IF EQUIP:ARG:下半身内袴２ == 20
+				RETURNF "比基尼"
+			ELSEIF EQUIP:ARG:下半身内袴２ == 21
+				RETURNF "微型比基尼"
+			ELSE
+				RETURNF "内袴"
+			ENDIF
+		ENDIF
+	CASE 1
+		IF EQUIP:ARG:裙子
+			IF EQUIP:ARG:裙子 == 2
+				RETURNF "長裙"
+			ELSEIF EQUIP:ARG:裙子 == 4
+				RETURNF "行灯袴"
+			ELSE
+				RETURNF "裙子"
+			ENDIF
+		ELSEIF EQUIP:ARG:連衣裙
+			RETURNF "裙子"
+		ELSEIF EQUIP:ARG:和服
+			RETURNF "和服下擺"
+		ENDIF
+ENDSELECT
+;-------------------------------------------------
+;関数名:SHOW_TOP
+;概　要:上半身服装名取得関数
+;戻り値:服装名(文字列)
+;引数:0 参照するキャラ番号
+;引数:1はだけ可、2はだけ不可(省略した場合は最も露出を妨げているもの)
+;備　考:文中関数
+;TEQUIP:0に対応して一番上に着ている衣装の種類を返す
+;-------------------------------------------------
+@SHOW_TOP(ARG,ARG:1)
+#FUNCTIONS
+LOCAL = 0
+IF TEQUIP:ARG:1 & 2
+	LOCAL = 2
+ELSEIF TEQUIP:ARG:1 & 1
+	LOCAL = 1
+ENDIF
+LOCAL = ARG:1 ? ARG:1 # LOCAL
+IF LOCAL == 2
+	IF (EQUIP:ARG:連衣裙 == 1 || EQUIP:ARG:連衣裙 == 3 || EQUIP:ARG:連衣裙 == 4 || EQUIP:ARG:連衣裙 == 5 || EQUIP:ARG:連衣裙 == 6 || EQUIP:ARG:連衣裙 == 14)
+		RETURNF "着衣"
+	ELSEIF EQUIP:ARG:連衣裙
+		IF EQUIP:ARG:連衣裙 == 7
+			RETURNF "ドレス"
+		ELSEIF EQUIP:ARG:連衣裙 == 8
+			RETURNF "睡衣"
+		ELSEIF EQUIP:ARG:連衣裙 == 9
+			RETURNF "哥特蘿莉服"
+		ELSEIF EQUIP:ARG:連衣裙 == 10
+			RETURNF "護士服"
+		ELSEIF EQUIP:ARG:連衣裙 == 11
+			RETURNF "罩衫"
+		ELSEIF EQUIP:ARG:連衣裙 == 12
+			RETURNF "布偶装"
+		ELSEIF EQUIP:ARG:連衣裙 == 13
+			RETURNF "浴衣"
+		ELSEIF EQUIP:ARG:連衣裙 == 2
+			RETURNF "情趣内衣"
+		ELSE
+			RETURNF "着衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:上半身上衣１
+		IF EQUIP:ARG:上半身上衣１ == 2
+			RETURNF "セーラー"
+		ELSEIF EQUIP:ARG:上半身上衣１ == 5
+			RETURNF "巫女服"
+		ELSE
+			RETURNF "着衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:緊身内衣
+		IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+			RETURNF "インナー"
+		ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+			RETURNF "兔女郎服"
+		ELSEIF EQUIP:ARG:緊身内衣 == 9
+			RETURNF "紐水着"
+		ELSEIF EQUIP:ARG:緊身内衣 >= 6
+			RETURNF "水着"
+		ELSE
+			RETURNF "緊身内衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:連体内衣
+		IF EQUIP:ARG:連体内衣 == 2
+			RETURNF "膠衣"
+		ELSEIF EQUIP:ARG:連体内衣 == 3
+			RETURNF "機車夾克"
+		ELSE
+			RETURNF "連体内衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:上半身内袴１
+		IF (EQUIP:ARG:上半身内袴１ == 1 || EQUIP:ARG:上半身内袴１ == 3)
+			RETURNF "文胸"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 2
+			RETURNF "裹胸"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 4
+			RETURNF "吊帯衫"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 5
+			RETURNF "創口貼"
+		ELSEIF (EQUIP:ARG:上半身内袴１ == 6 || EQUIP:ARG:上半身内袴１ == 7)
+			RETURNF "乳貼"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 8
+			RETURNF "穿環"
+		ELSE
+			RETURNF "内袴"
+		ENDIF
+	ENDIF
+ELSEIF LOCAL == 1
+	IF EQUIP:ARG:和服
+		SIF EQUIP:ARG:和服 == 2
+			RETURNF "襦袢"
+		RETURNF "和服"
+	ELSEIF EQUIP:ARG:上半身上衣２
+		IF EQUIP:ARG:上半身上衣２ == 3
+			RETURNF "パジャマ"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 4
+			RETURNF "巫女服"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 5
+			RETURNF "タートルネック"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 6
+			RETURNF "抹胸"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 7
+			RETURNF "吊帯背心"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 8
+			RETURNF "吊帯衫"
+			
+		ELSEIF EQUIP:ARG:上半身上衣２ == 9
+			RETURNF "短袖襯衫"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 10
+			RETURNF "褶辺襯衫"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 11
+			RETURNF "体操服"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 12
+			RETURNF "運動夾克衫"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 13
+			RETURNF "襯衫"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 14
+			RETURNF "道着"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 15
+			RETURNF "小紋"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 16
+			RETURNF "長着"
+		ELSEIF EQUIP:ARG:上半身上衣２ == 17
+			RETURNF "Ｔ恤"
+		ELSE
+			RETURNF "女式襯衫"
+		ENDIF
+	ELSEIF EQUIP:ARG:連体内衣 == 3
+		RETURNF "機車夾克"
+	ELSEIF EQUIP:ARG:上半身内袴２
+		IF EQUIP:ARG:上半身内袴２ == 1
+			RETURNF "比基尼"
+		ELSEIF EQUIP:ARG:上半身内袴２ == 2
+			RETURNF "微型比基尼"
+		ELSEIF EQUIP:ARG:上半身内袴２ == 3
+			RETURNF "有色襯衫"
+		ELSE
+			RETURNF "内袴"
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;関数名:SHOW_上半身内袴
+;概　要:上半身内袴名取得関数
+;戻り値:上半身内袴名(文字列)
+;引数:0 参照するキャラ番号
+;引数:1はだけ可、2はだけ不可(省略した場合は最も露出を妨げているもの)
+;備　考:文中関数
+;TEQUIP:0に対応して一番上に着ている衣装の種類を返す
+;-------------------------------------------------
+@SHOW_上半身内袴(ARG,ARG:1)
+#FUNCTIONS
+LOCAL = 0
+IF TEQUIP:ARG:1 & 2
+	LOCAL = 2
+ELSEIF TEQUIP:ARG:1 & 1
+	LOCAL = 1
+ENDIF
+LOCAL = ARG:1 ? ARG:1 # LOCAL
+IF LOCAL == 2
+	IF EQUIP:ARG:緊身内衣
+		IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+			RETURNF "インナー"
+		ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+			RETURNF "兔女郎服"
+		ELSEIF EQUIP:ARG:緊身内衣 == 9
+			RETURNF "紐水着"
+		ELSEIF EQUIP:ARG:緊身内衣 >= 6
+			RETURNF "水着"
+		ELSE
+			RETURNF "緊身内衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:連体内衣
+		IF EQUIP:ARG:連体内衣 == 2
+			RETURNF "膠衣"
+		ELSEIF EQUIP:ARG:連体内衣 == 3
+			RETURNF "機車夾克"
+		ELSE
+			RETURNF "連体内衣"
+		ENDIF
+	ELSEIF EQUIP:ARG:上半身内袴１
+		IF (EQUIP:ARG:上半身内袴１ == 1 || EQUIP:ARG:上半身内袴１ == 3)
+			RETURNF "文胸"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 2
+			RETURNF "裹胸"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 4
+			RETURNF "吊帯衫"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 5
+			RETURNF "創口貼"
+		ELSEIF (EQUIP:ARG:上半身内袴１ == 6 || EQUIP:ARG:上半身内袴１ == 7)
+			RETURNF "乳貼"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 8
+			RETURNF "穿環"
+		ELSEIF EQUIP:ARG:上半身内袴１ == 9
+			RETURNF "吊帯式文胸"
+		ELSE
+			RETURNF "内袴"
+		ENDIF
+	ENDIF
+ELSEIF LOCAL == 1
+	IF EQUIP:ARG:上半身内袴２
+		IF EQUIP:ARG:上半身内袴２ == 1
+			RETURNF "比基尼"
+		ELSEIF EQUIP:ARG:上半身内袴２ == 2
+			RETURNF "微型比基尼"
+		ELSEIF EQUIP:ARG:上半身内袴２ == 3
+			RETURNF "有色襯衫"
+		ELSE
+			RETURNF "内袴"
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;関数名:SHOW_下半身内袴
+;概　要:下半身内袴名取得関数
+;戻り値:内袴名(文字列)
+;引数:0 参照するキャラ番号
+;引数:1裙子、2ずらし可、3ずらし不可、4下半身上衣ずらし不可の種別(省略した場合は最も露出を妨げているもの)
+;備　考:文中関数
+;TEQUIP:0に対応して一番上に着ている衣装の種類を返す
+;-------------------------------------------------
+@SHOW_下半身内袴(ARG,ARG:1)
+#FUNCTIONS
+LOCAL = 0
+IF TEQUIP:ARG:0 & 8
+	LOCAL = 4
+ELSEIF TEQUIP:ARG:0 & 4
+	LOCAL = 3
+ELSEIF TEQUIP:ARG:0 & 2
+	LOCAL = 2
+ELSEIF TEQUIP:ARG:0 & 1
+	LOCAL = 1
+ENDIF
+LOCAL = ARG:1 ? ARG:1 # LOCAL
+
+
+SELECTCASE LOCAL
+	CASE 4
+		IF EQUIP:ARG:連体内衣
+			IF EQUIP:ARG:連体内衣 == 2
+				RETURNF "膠衣"
+			ELSEIF EQUIP:ARG:連体内衣 == 3
+				RETURNF "機車夾克"
+			ELSE
+				RETURNF "連体内衣"
+			ENDIF
+		ENDIF
+	CASE 3
+		IF EQUIP:ARG:連体内衣
+			IF EQUIP:ARG:連体内衣 == 2
+				RETURNF "膠衣"
+			ELSEIF EQUIP:ARG:連体内衣 == 3
+				RETURNF "機車夾克"
+			ELSE
+				RETURNF "連体内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:緊身内衣
+			IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+				RETURNF "インナー"
+			ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+				RETURNF "兔女郎服"
+			ELSEIF EQUIP:ARG:緊身内衣 == 9
+				RETURNF "紐水着"
+			ELSEIF EQUIP:ARG:緊身内衣 >= 6
+				RETURNF "水着"
+			ELSE
+				RETURNF "緊身内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:下半身内袴１
+			IF EQUIP:ARG:下半身内袴１ == 1
+				RETURNF "兜襠布"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 2
+				RETURNF "Ｃ字袴"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 3
+				RETURNF "創口貼"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 4
+				RETURNF "安全袴"
+			ELSEIF EQUIP:ARG:下半身内袴１ == 5
+				RETURNF "貞操帯"
+			ELSEIF (EQUIP:ARG:下半身内袴１ == 6 || EQUIP:ARG:下半身内袴１ == 7)
+				RETURNF "穿環"
+			ELSE
+				RETURNF "下穿き"
+			ENDIF
+		ENDIF
+	CASE 2
+		IF EQUIP:ARG:緊身内衣
+			IF (EQUIP:ARG:緊身内衣 == 2 || EQUIP:ARG:緊身内衣 == 3 || EQUIP:ARG:緊身内衣 == 10 || EQUIP:ARG:緊身内衣 == 11)
+				RETURNF "インナー"
+			ELSEIF (EQUIP:ARG:緊身内衣 == 4 || EQUIP:ARG:緊身内衣 == 5)
+				RETURNF "兔女郎服"
+			ELSEIF EQUIP:ARG:緊身内衣 == 9
+				RETURNF "紐水着"
+			ELSEIF EQUIP:ARG:緊身内衣 >= 6
+				RETURNF "水着"
+			ELSE
+				RETURNF "緊身内衣"
+			ENDIF
+		ELSEIF EQUIP:ARG:下半身内袴２
+			IF EQUIP:ARG:下半身内袴２ == 20
+				RETURNF "比基尼"
+			ELSEIF EQUIP:ARG:下半身内袴２ == 21
+				RETURNF "微型比基尼"
+			ELSE
+				RETURNF "内袴"
+			ENDIF
+		ENDIF
+ENDSELECT
+
+@CLOTHNAME(ARG,ARG:1)
+#FUNCTIONS
+SELECTCASE ARG
+	;飾品
+	CASE 1
+		IF ARG:1 == 1
+			RETURNF "眼鏡"
+		ELSEIF ARG:1 == 2
+			RETURNF "袖"
+		ELSEIF ARG:1 == 3
+			RETURNF "首飾り"
+		ELSEIF ARG:1 == 4
+			RETURNF "御札"
+		ELSEIF ARG:1 == 5
+			RETURNF "風鏡"
+		ELSEIF ARG:1 == 6
+			RETURNF "傘"
+		ELSEIF ARG:1 == 7
+			RETURNF "墨鏡"
+		ELSEIF ARG:1 == 8
+			RETURNF "鎖"
+		ENDIF
+	;帽子
+	CASE 2
+		IF ARG:1 == 1
+			RETURNF "帽子"
+		ELSEIF ARG:1 == 2
+			RETURNF "髪飾り"
+		ELSEIF ARG:1 == 3
+			RETURNF "蝴蝶結"
+		ELSEIF ARG:1 == 4
+			RETURNF "白色女僕髮箍"
+		ELSEIF ARG:1 == 5
+			RETURNF "髮箍"
+		ELSEIF ARG:1 == 6
+			RETURNF "面"
+		ELSEIF ARG:1 == 7
+			RETURNF "頭巾"
+		ELSEIF ARG:1 == 8
+			RETURNF "烏帽子"
+		ELSEIF ARG:1 == 9
+			RETURNF "兎耳髮箍"
+		ELSEIF ARG:1 == 10
+			RETURNF "鴨舌帽"
+		ELSEIF ARG:1 == 11
+			RETURNF "小碗"
+		ELSEIF ARG:1 == 12
+			RETURNF "束髪簪"
+		ELSEIF ARG:1 == 13
+			RETURNF "睡帽"
+		ELSEIF ARG:1 == 14
+;			IF NO:TARGET == 74
+;				RETURNF "头巾帽(白)"
+;			ELSE
+				RETURNF "头巾帽"
+;			ENDIF
+		ELSEIF ARG:1 == 15
+			RETURNF "兜巾"
+		ELSEIF ARG:1 == 16
+			RETURNF "頭套"
+		ELSEIF ARG:1 == 17
+			RETURNF "三角巾"
+		ELSEIF ARG:1 == 18
+			RETURNF "頭戴式受话器・耳麦"
+		ELSEIF ARG:1 == 19
+			RETURNF "頭戴式耳机"
+		ELSEIF ARG:1 == 20
+			RETURNF "護士帽"
+		ELSEIF ARG:1 == 21
+			RETURNF "聖誕帽"
+		ELSEIF ARG:1 == 22
+			RETURNF "遮陽帽"
+		ELSEIF ARG:1 == 23
+			RETURNF "麦藁帽子"
+		ELSEIF ARG:1 == 24
+			RETURNF "学帽"
+		ELSEIF ARG:1 == 25
+			RETURNF "冕冠"
+		ELSEIF ARG:1 == 26
+			RETURNF "小丑帽"
+		ELSEIF ARG:1 == 27
+			RETURNF "手ぬぐい"
+		ELSEIF ARG:1 == 28
+			RETURNF "笠"
+		ENDIF
+	;靴
+	CASE 3
+		IF ARG:1 == 1
+			RETURNF "靴"
+		ELSEIF ARG:1 == 2
+			RETURNF "木屐"
+		ELSEIF ARG:1 == 3
+			RETURNF "長靴"
+		ELSEIF ARG:1 == 4
+			RETURNF "高筒靴"
+		ELSEIF ARG:1 == 5
+			RETURNF "雪駄"
+		ELSEIF ARG:1 == 6
+			RETURNF "高跟鞋"
+		ELSEIF ARG:1 == 7
+			RETURNF "護士凉鞋"
+		ELSEIF ARG:1 == 8
+			RETURNF "草履"
+		ELSEIF ARG:1 == 9
+			RETURNF "長筒皮靴"
+		ELSEIF ARG:1 == 10
+			RETURNF "運動鞋"
+		ELSEIF ARG:1 == 11
+			RETURNF "パンプス"
+		ELSEIF ARG:1 == 12
+			RETURNF "革靴"
+		ELSEIF ARG:1 == 13
+			RETURNF "地下短布襪"
+		ENDIF
+	;襪子
+	CASE 4
+		IF ARG:1 == 1
+			RETURNF "襪子"
+		ELSEIF ARG:1 == 2
+			RETURNF "長筒襪"
+		ELSEIF ARG:1 == 3
+			RETURNF "半透明連袴襪"
+		ELSEIF ARG:1 == 4
+			RETURNF "吊帯襪"
+		ELSEIF ARG:1 == 5
+			RETURNF "高筒襪"
+		ELSEIF ARG:1 == 6
+			RETURNF "網襪"
+		ELSEIF ARG:1 == 7
+			RETURNF "短布襪"
+		ELSEIF ARG:1 == 8
+			RETURNF "袴襪"
+
+		ENDIF
+	;下半身内袴１
+	CASE 5
+		IF ARG:1 == 1
+			RETURNF "兜襠布"
+		ELSEIF ARG:1 == 2
+			RETURNF "Ｃ字袴"
+		ELSEIF ARG:1 == 3
+			RETURNF "創口貼"
+		ELSEIF ARG:1 == 4
+			RETURNF "安全袴"
+		ELSEIF ARG:1 == 5
+			RETURNF "貞操帯"
+		ELSEIF ARG:1 == 6
+			RETURNF "陰唇環"
+		ELSEIF ARG:1 == 7
+			RETURNF "陰蒂環"
+		ENDIF
+	;下半身内袴２
+	CASE 6
+		IF ARG:1 == 1
+			RETURNF "四角袴"
+		ELSEIF ARG:1 == 0
+			IF EQUIP:ARG:下半身内袴１ == 0
+				RETURNF "沒穿"
+			ELSE
+			ENDIF
+		ELSEIF ARG:1 == 20
+			RETURNF "比基尼内袴"
+		ELSEIF ARG:1 == 21
+			RETURNF "微型内袴"
+		ELSE
+			RETURNF "内袴"
+		ENDIF
+	;上半身内袴１
+	CASE 7
+		IF ARG:1 == 1
+			RETURNF "文胸"
+		ELSEIF ARG:1 == 2
+			RETURNF "裹胸"
+		ELSEIF ARG:1 == 3
+			RETURNF "運動文胸"
+		ELSEIF ARG:1 == 4
+			RETURNF "吊帯衫"
+		ELSEIF ARG:1 == 5
+			RETURNF "創口貼"
+		ELSEIF ARG:1 == 6
+			RETURNF "乳貼(星型)"
+		ELSEIF ARG:1 == 7
+			RETURNF "乳貼(心型)"
+		ELSEIF ARG:1 == 8
+			RETURNF "乳环"
+		ELSEIF ARG:1 == 9
+			RETURNF "吊帯式文胸"
+		ENDIF
+	;上半身内袴２
+	CASE 8
+		IF ARG:1 == 1
+			RETURNF "比基尼文胸"
+		ELSEIF ARG:1 == 2
+			RETURNF "微型文胸"
+		ELSEIF ARG:1 == 3
+			RETURNF "有色襯衫"
+		ENDIF
+	;緊身内衣
+	CASE 9
+		IF ARG:1 == 1
+			RETURNF "緊身内衣"
+		ELSEIF ARG:1 == 2
+			RETURNF "高開叉連体泳衣(黒)"
+		ELSEIF ARG:1 == 3
+			RETURNF "高開叉連体泳衣(赤)"
+		ELSEIF ARG:1 == 4
+			RETURNF "兔女郎服(黒)"
+		ELSEIF ARG:1 == 5
+			RETURNF "兔女郎服(赤)"
+		ELSEIF ARG:1 == 6
+			RETURNF "死库水泳衣"
+		ELSEIF ARG:1 == 7
+			RETURNF "競泳水着"
+		ELSEIF ARG:1 == 8
+			RETURNF "連体泳装"
+		ELSEIF ARG:1 == 9
+			RETURNF "Y字型内衣"
+		ELSEIF ARG:1 == 10
+			RETURNF "保暖内衣"
+		ELSEIF ARG:1 == 11
+			RETURNF "鎖帷子"
+		ENDIF
+	;連体内衣
+	CASE 10
+		IF ARG:1 == 1
+			RETURNF "連体内衣"
+		ELSEIF ARG:1 == 2
+			RETURNF "膠衣"
+		ELSEIF ARG:1 == 3
+			RETURNF "機車夾克"
+		ENDIF
+	;袴子
+	CASE 11
+		IF ARG:1 == 1
+			RETURNF "袴子"
+		ELSEIF ARG:1 == 2
+			RETURNF "短袴"
+		ELSEIF ARG:1 == 3
+			RETURNF "睡袴"
+		ELSEIF ARG:1 == 4
+			RETURNF "热袴"
+		ELSEIF ARG:1 == 5
+			RETURNF "連体工作服"
+		ELSEIF ARG:1 == 6
+			RETURNF "袴"
+		ELSEIF ARG:1 == 7
+			RETURNF "作業袴"
+		ELSEIF ARG:1 == 8
+;			IF NO:TARGET == 61
+;				RETURNF "指貫袴(赤)"
+;			ELSE
+				RETURNF "指貫袴"
+;			ENDIF
+		ELSEIF ARG:1 == 9
+			RETURNF "运動短袴"
+		ELSEIF ARG:1 == 10
+			RETURNF "五分袴"
+		ELSEIF ARG:1 == 11
+			RETURNF "南瓜袴"
+		ELSEIF ARG:1 == 21
+			RETURNF "西袴"
+		ELSEIF ARG:1 == 22
+			RETURNF "作務衣（下）"
+		ENDIF
+	;下半身上衣
+	CASE 12
+		IF ARG:1 == 1
+			RETURNF "百褶裙"
+		ENDIF
+	;裙子
+	CASE 13
+		IF ARG:1 == 1
+			RETURNF "裙子"
+		ELSEIF ARG:1 == 2
+;			IF NO:TARGET == 68
+;				RETURNF "長裙(チェック柄赤)"
+;			ELSE
+				RETURNF "長裙"
+;			ENDIF
+		ELSEIF ARG:1 == 3
+			RETURNF "睡袴"
+		ELSEIF ARG:1 == 4
+			RETURNF "行灯袴"
+		ELSEIF ARG:1 == 5
+			RETURNF "吊帯裙"
+		ELSEIF ARG:1 == 6
+			RETURNF "无袖連衣裙"
+		ELSEIF ARG:1 == 7
+			RETURNF "迷你裙"
+		ELSEIF ARG:1 == 8
+;			IF NO:TARGET == 98
+;				RETURNF "連体裙(赤)"
+;			ELSEIF NO:TARGET == 99
+;				RETURNF "連体裙(青)"
+;			ELSE
+				RETURNF "連体裙"
+;			ENDIF
+		ENDIF
+	;上半身上衣１
+	CASE 14
+		IF ARG:1 == 1
+			RETURNF "无袖上衣"
+		ELSEIF ARG:1 == 2
+			RETURNF "水手服"
+		ELSEIF ARG:1 == 3
+			RETURNF "上衣"
+		ELSEIF ARG:1 == 4
+			RETURNF "西装上衣"
+		ELSEIF ARG:1 == 5
+			RETURNF "巫女服(博麗)"
+		ELSEIF ARG:1 == 6
+			RETURNF "T恤"
+		ELSEIF ARG:1 == 7
+			RETURNF "白衣"
+		ELSEIF ARG:1 == 8
+			RETURNF "作務衣（上）"
+		ENDIF
+	;上半身上衣２
+	CASE 15
+		IF ARG:1 == 1
+			RETURNF "女式襯衫"
+		ELSEIF ARG:1 == 2
+			RETURNF "无袖襯衫"
+		ELSEIF ARG:1 == 3
+			RETURNF "上身睡衣"
+		ELSEIF ARG:1 == 4
+			RETURNF "巫女服(守矢)"
+		ELSEIF ARG:1 == 5
+			RETURNF "開胸高领毛衣"
+		ELSEIF ARG:1 == 6
+			RETURNF "抹胸"
+		ELSEIF ARG:1 == 7
+;			IF NO:TARGET == 51
+;				RETURNF "吊帯背心(黒)"
+;			ELSEIF NO:TARGET == 67
+;				RETURNF "吊帯背心(青)"
+;			ELSEIF NO:TARGET == 90
+;				RETURNF "吊帯背心(白)"
+;			ELSE
+				RETURNF "吊帯背心"
+;			ENDIF
+		ELSEIF ARG:1 == 8
+			RETURNF "吊帯衫"
+		ELSEIF ARG:1 == 9
+			RETURNF "短袖襯衫"
+		ELSEIF ARG:1 == 10
+			RETURNF "褶辺襯衫"
+		ELSEIF ARG:1 == 11
+			RETURNF "体操服"
+		ELSEIF ARG:1 == 12
+			RETURNF "運動夾克衫"
+		ELSEIF ARG:1 == 13
+			RETURNF "襯衫"
+		ELSEIF ARG:1 == 14
+			RETURNF "道着"
+		ELSEIF ARG:1 == 15
+			RETURNF "小紋"
+		ELSEIF ARG:1 == 16
+			RETURNF "長着"
+		ELSEIF ARG:1 == 17
+			RETURNF "Ｔ恤"
+		ENDIF
+	;連衣裙
+	CASE 16
+		IF ARG:1 == 1
+			RETURNF "連衣裙"
+		ELSEIF ARG:1 == 2
+			RETURNF "情趣内衣"
+		ELSEIF ARG:1 == 3
+			RETURNF "囲裙洋装"
+		ELSEIF ARG:1 == 4
+			RETURNF "旗袍"
+		ELSEIF ARG:1 == 5
+			RETURNF "法衣"
+		ELSEIF ARG:1 == 6
+			RETURNF "道士服"
+		ELSEIF ARG:1 == 7
+			RETURNF "晚禮服"
+		ELSEIF ARG:1 == 8
+			RETURNF "睡衣"
+		ELSEIF ARG:1 == 9
+			RETURNF "哥特蘿莉服"
+		ELSEIF ARG:1 == 10
+			RETURNF "護士服"
+		ELSEIF ARG:1 == 11
+			RETURNF "罩衫"
+		ELSEIF ARG:1 == 12
+			RETURNF "布偶装"
+		ELSEIF ARG:1 == 13
+			RETURNF "浴衣"
+		ELSEIF ARG:1 == 14
+			RETURNF "連衣裙（白）"
+		ENDIF
+	;和服
+	CASE 17
+		IF ARG:1 == 1
+			RETURNF "和服"
+		ELSEIF ARG:1 == 2
+			RETURNF "千早"
+		ELSEIF ARG:1 == 3
+			RETURNF "襦袢"
+		ELSEIF ARG:1 == 4
+			RETURNF "浴衣"
+		ELSEIF ARG:1 == 5
+			RETURNF "道着"
+		ELSEIF ARG:1 == 6
+			RETURNF "白装束"
+		ELSEIF ARG:1 == 7
+			RETURNF "忍装束"
+		ENDIF
+	;外衣
+	CASE 18
+		IF ARG:1 == 1
+			RETURNF "披肩"
+		ELSEIF ARG:1 == 2
+			RETURNF "斗篷"
+		ELSEIF ARG:1 == 3
+			RETURNF "披肩斗篷"
+		ELSEIF ARG:1 == 4
+			RETURNF "主妇服"
+		ELSEIF ARG:1 == 5
+			RETURNF "褞袍"
+		ELSEIF ARG:1 == 6
+			RETURNF "羽織"
+		ELSEIF ARG:1 == 7
+			RETURNF "白衣"
+		ELSEIF ARG:1 == 8
+			RETURNF "防風衣"
+		ELSEIF ARG:1 == 9
+;			IF NO:TARGET == 68
+;				RETURNF "背心(チェック柄赤)"
+;			ELSEIF NO:TARGET == 74
+;				RETURNF "背心(青)"
+;			ELSEIF NO:TARGET == 90
+;				RETURNF "背心(白)"
+;			ELSE
+				RETURNF "背心"
+;			ENDIF
+		ELSEIF ARG:1 == 10
+			RETURNF "作業服"
+		ELSEIF ARG:1 == 11
+			RETURNF "連帽風衣"
+		ELSEIF ARG:1 == 12
+			RETURNF "学生服"
+		ELSEIF ARG:1 == 13
+			RETURNF "夹克衫"
+		ELSEIF ARG:1 == 14
+			RETURNF "西装夹克"
+		ENDIF
+	;其他１
+	CASE 19
+		IF ARG:1 == 1
+			RETURNF "眼帯"
+		ELSEIF ARG:1 == 2
+			RETURNF "耳环"
+		ELSEIF ARG:1 == 3
+			RETURNF "项圈"
+		ELSEIF ARG:1 == 4
+			RETURNF "項鏈"
+		ELSEIF ARG:1 == 5
+			RETURNF "领帯"
+		ELSEIF ARG:1 == 6
+;			IF NO:TARGET == 73
+;				RETURNF "囲巾(赤)"
+;			ELSEIF NO:TARGET == 74
+;				RETURNF "囲巾(白)"
+;			ELSE
+				RETURNF "囲巾"
+;			ENDIF
+		ELSEIF ARG:1 == 7
+			RETURNF "帯"
+		ELSEIF ARG:1 == 8
+			RETURNF "吊帯"
+		ELSEIF ARG:1 == 9
+			RETURNF "荒縄"
+		ELSEIF ARG:1 == 10
+			RETURNF "拘束具"
+		ELSEIF ARG:1 == 11
+			RETURNF "双背帯书包"
+		ELSEIF ARG:1 == 12
+			RETURNF "帆布背包"
+		ELSEIF ARG:1 == 13
+			RETURNF "注連縄"
+		ELSEIF ARG:1 == 14
+			RETURNF "羽衣"
+		ELSEIF ARG:1 == 15
+			RETURNF "绷帯"
+		ELSEIF ARG:1 == 16
+			RETURNF "手镯"
+		ELSEIF ARG:1 == 17
+			RETURNF "网格吊帯"
+		ELSEIF ARG:1 == 18
+			RETURNF "丝帯项鏈"
+		ELSEIF ARG:1 == 19
+;			IF NO:TARGET == 68
+;				RETURNF "領巾(黄)"
+;			ELSE
+				RETURNF "領巾"
+;			ENDIF
+		ELSEIF ARG:1 == 20
+			RETURNF "乳紐"
+		ELSEIF ARG:1 == 21
+			RETURNF "背帯"
+		ELSEIF ARG:1 == 22
+			RETURNF "護符"
+		ELSEIF ARG:1 == 23
+		RETURNF "丝帯領巾"
+		ELSEIF ARG:1 == 24
+			RETURNF "蝴蝶結"
+		ELSEIF ARG:1 == 25
+			RETURNF "胶帯"
+		ELSEIF ARG:1 == 26
+			RETURNF "触须"
+		ELSEIF ARG:1 == 27
+			RETURNF "飯粒"
+		ELSEIF ARG:1 == 28
+			RETURNF "吐司"
+		ELSEIF ARG:1 == 29
+			RETURNF "桃"
+		ELSEIF ARG:1 == 30
+			RETURNF "生理用品"
+		ELSEIF ARG:1 == 31
+			RETURNF "惑星"
+		ELSEIF ARG:1 == 32
+			RETURNF "単肩包"
+		ELSEIF ARG:1 == 33
+			RETURNF "小型挎包"
+		ELSEIF ARG:1 == 34
+			RETURNF "葛籠"
+		ENDIF
+	;其他２
+	CASE 20
+		IF ARG:1 == 1
+			RETURNF "眼帯"
+		ELSEIF ARG:1 == 2
+			RETURNF "耳环"
+		ELSEIF ARG:1 == 3
+			RETURNF "项圈"
+		ELSEIF ARG:1 == 4
+			RETURNF "項鏈"
+		ELSEIF ARG:1 == 5
+			RETURNF "领帯"
+		ELSEIF ARG:1 == 6
+;			IF NO:TARGET == 73
+;				RETURNF "囲巾(赤)"
+;			ELSEIF NO:TARGET == 74
+;				RETURNF "囲巾(白)"
+;			ELSE
+				RETURNF "囲巾"
+;			ENDIF
+		ELSEIF ARG:1 == 7
+			RETURNF "帯"
+		ELSEIF ARG:1 == 8
+			RETURNF "吊帯"
+		ELSEIF ARG:1 == 9
+			RETURNF "荒縄"
+		ELSEIF ARG:1 == 10
+			RETURNF "拘束具"
+		ELSEIF ARG:1 == 11
+			RETURNF "双背帯书包"
+		ELSEIF ARG:1 == 12
+			RETURNF "帆布背包"
+		ELSEIF ARG:1 == 13
+			RETURNF "注連縄"
+		ELSEIF ARG:1 == 14
+			RETURNF "羽衣"
+		ELSEIF ARG:1 == 15
+			RETURNF "绷帯"
+		ELSEIF ARG:1 == 16
+			RETURNF "手镯"
+		ELSEIF ARG:1 == 17
+			RETURNF "网格吊帯"
+		ELSEIF ARG:1 == 18
+			RETURNF "丝帯项鏈"
+		ELSEIF ARG:1 == 19
+;			IF NO:TARGET == 68
+;				RETURNF "領巾(黄)"
+;			ELSE
+				RETURNF "領巾"
+;			ENDIF
+		ELSEIF ARG:1 == 20
+			RETURNF "乳紐"
+		ELSEIF ARG:1 == 21
+			RETURNF "背帯"
+		ELSEIF ARG:1 == 22
+			RETURNF "護符"
+		ELSEIF ARG:1 == 23
+			RETURNF "丝帯領巾"
+		ELSEIF ARG:1 == 24
+			RETURNF "蝴蝶結"
+		ELSEIF ARG:1 == 25
+			RETURNF "胶帯"
+		ELSEIF ARG:1 == 26
+			RETURNF "触须"
+		ELSEIF ARG:1 == 27
+			RETURNF "飯粒"
+		ELSEIF ARG:1 == 28
+			RETURNF "吐司"
+		ELSEIF ARG:1 == 29
+			RETURNF "桃"
+		ELSEIF ARG:1 == 30
+			RETURNF "生理用品"
+		ELSEIF ARG:1 == 31
+			RETURNF "惑星"
+;使ってなさそうなので埋める
+;		ELSEIF ARG:1 == 32
+;			RETURNF "ポケットチーフ"
+		ELSEIF ARG:1 == 32
+			RETURNF "単肩包"
+		ELSEIF ARG:1 == 33
+			RETURNF "小型挎包"
+		ENDIF
+	;其他３
+	CASE 21
+		IF ARG:1 == 1
+			RETURNF "眼帯"
+		ELSEIF ARG:1 == 2
+			RETURNF "耳环"
+		ELSEIF ARG:1 == 3
+			RETURNF "项圈"
+		ELSEIF ARG:1 == 4
+			RETURNF "項鏈"
+		ELSEIF ARG:1 == 5
+			RETURNF "领帯"
+		ELSEIF ARG:1 == 6
+;			IF NO:TARGET == 73
+;				RETURNF "囲巾(赤)"
+;			ELSEIF NO:TARGET == 74
+;				RETURNF "囲巾(白)"
+;			ELSE
+				RETURNF "囲巾"
+;			ENDIF
+		ELSEIF ARG:1 == 7
+			RETURNF "帯"
+		ELSEIF ARG:1 == 8
+			RETURNF "吊帯"
+		ELSEIF ARG:1 == 9
+			RETURNF "荒縄"
+		ELSEIF ARG:1 == 10
+			RETURNF "拘束具"
+		ELSEIF ARG:1 == 11
+			RETURNF "双背帯书包"
+		ELSEIF ARG:1 == 12
+			RETURNF "帆布背包"
+		ELSEIF ARG:1 == 13
+			RETURNF "注連縄"
+		ELSEIF ARG:1 == 14
+			RETURNF "羽衣"
+		ELSEIF ARG:1 == 15
+			RETURNF "绷帯"
+		ELSEIF ARG:1 == 16
+			RETURNF "手镯"
+		ELSEIF ARG:1 == 17
+			RETURNF "网格吊帯"
+		ELSEIF ARG:1 == 18
+			RETURNF "丝帯项鏈"
+		ELSEIF ARG:1 == 19
+;			IF NO:TARGET == 68
+;				RETURNF "領巾(黄)"
+;			ELSE
+				RETURNF "領巾"
+;			ENDIF
+		ELSEIF ARG:1 == 20
+			RETURNF "乳紐"
+		ELSEIF ARG:1 == 21
+			RETURNF "背帯"
+		ELSEIF ARG:1 == 22
+			RETURNF "護符"
+		ELSEIF ARG:1 == 23
+		RETURNF "丝帯領巾"
+		ELSEIF ARG:1 == 24
+			RETURNF "蝴蝶結"
+		ELSEIF ARG:1 == 25
+			RETURNF "胶帯"
+		ELSEIF ARG:1 == 26
+			RETURNF "触须"
+		ELSEIF ARG:1 == 27
+			RETURNF "飯粒"
+		ELSEIF ARG:1 == 28
+			RETURNF "吐司"
+		ELSEIF ARG:1 == 29
+			RETURNF "桃"
+		ELSEIF ARG:1 == 30
+			RETURNF "生理用品"
+		ELSEIF ARG:1 == 31
+			RETURNF "惑星"
+		ELSEIF ARG:1 == 32
+			RETURNF "単肩包"
+		ELSEIF ARG:1 == 33
+			RETURNF "小型挎包"
+		ELSEIF ARG:1 == 34
+			RETURNF "キセル"
+		ENDIF
+	;腕部装束
+	CASE 22
+		IF ARG:1 == 1
+			RETURNF "手甲"
+		ELSEIF ARG:1 == 2
+			RETURNF "皮手套"
+		ELSEIF ARG:1 == 3
+			RETURNF "作業用手袋"
+		ELSEIF ARG:1 == 4
+			RETURNF "露指手套"
+		ELSEIF ARG:1 == 5
+			RETURNF "絲綢手套"
+		ELSEIF ARG:1 == 6
+			RETURNF "金属護手"
+		ELSEIF ARG:1 == 7
+			RETURNF "袖套"
+		ELSEIF ARG:1 == 8
+			RETURNF "拇指托"
+		ENDIF
+ENDSELECT
+
+[SKIPEND]

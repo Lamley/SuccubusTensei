@@ -1,0 +1,388 @@
+﻿@SKIP_MOVE_0(ARG,ARG:1)
+;LOCAL一覧
+;0	現在の位置
+
+;現在位置取得
+LOCAL = CFLAG:MASTER:現在位置
+SIF ARG:1
+	LOCAL = ARG:1
+;暫定目的地に直接移動できる場合
+IF CAN_MOVE(LOCAL, ARG) & 1
+	;そこに移動
+	RETURN ARG
+ENDIF
+
+;袋小路から行ける場所は固定なので、そこを目指す
+SELECTCASE LOCAL
+;4本殿からは3賽銭箱のみ
+CASE 4
+	RETURN 3
+;5手水舎、21守矢神社分社からは2境内のみ
+CASE 5, 21
+	RETURN 2
+;13浴室からは12脱衣所のみ
+CASE 13
+	RETURN 12
+;17小的儲藏室（留琴寝室）、53倉庫、55和室からは9居間のみ
+CASE 17, 53, 55
+	RETURN 9
+;18壁櫥間（喀娜寝室）からは15霊夢私室のみ
+CASE 18
+	RETURN 15
+;14廁所と19大的儲藏室（萃香寝室）からは10走廊のみ
+CASE 14, 19
+	RETURN 10
+;24温泉からは23温泉・脱衣所のみ
+CASE 24
+	RETURN 23
+;29三妖精之家・廚房と30三妖精之家・浴室からは27三妖精之家・大庁のみ
+CASE 29, 30
+	RETURN 27
+;32～34三妖精各私室からは31二階廊下のみ
+CASE 32, 33, 34
+	RETURN 31
+;35三妖精之家・地下室からは28樓梯のみ
+CASE 35
+	RETURN 28
+;40夢幻遺跡・廁所、43夢美私室・44千百合私室からは37夢幻遺跡・一階通路のみ
+CASE 40, 43, 44
+	RETURN 37
+;39夢幻遺跡・浴室からは38夢幻遺跡・洗面所のみ
+CASE 39
+	RETURN 38
+;42夢幻遺跡・調理室からは41夢幻遺跡・食堂兼談話室のみ
+CASE 42
+	RETURN 41
+;二階各部屋（47～51）からは46二階通路のみ
+CASE 47 TO 51
+	RETURN 46
+;52出口からは11庭のみ
+CASE 52
+	RETURN 11
+;56参道的正前方からは22参道のみ
+CASE MAXROOM
+	RETURN 22
+ENDSELECT
+
+;直接移動できない場合、1つ近い位置を暫定目的地に設定し直してループ
+;地点追加時要フォロー（全ケース修正すること）
+SELECTCASE ARG
+	CASE 1
+		SELECTCASE LOCAL
+		;鳥居に直接行けない場合、（23～）外からならば22参道を目指す
+		CASE 23 TO 51
+			RETURN 22
+		;それ以外の(直接行けない)場所からは、2境内を目指す
+		CASEELSE
+			RETURN 2
+		ENDSELECT
+	CASE 2
+		SELECTCASE LOCAL
+		;境内を目指す場合、（22～）外からなら1鳥居を目指す
+		CASE 22 TO 51
+			RETURN 1
+		;4本殿からは3賽銭箱を目指す
+		CASE 4
+			RETURN 3
+		;それ以外の(直接行けない)場所からは、20本殿裏を目指す
+		CASEELSE
+			RETURN 20
+		ENDSELECT
+	CASE 3
+		;賽銭箱に直接行けない場合、2境内を目指す
+		RETURN 2
+	CASE 4
+		;本堂に直接行けない場合、3賽銭箱を目指す
+		RETURN 3
+	CASE 5
+		;手水舎に直接行けない場合、2境内を目指す
+		RETURN 2
+	CASE 6
+		SELECTCASE LOCAL
+		;庫房に直接行けない場合、霊夢宅側（7～19、52～55）からなら20本殿裏を目指す
+		CASE 7 TO 19, 52 TO 55
+			RETURN 20
+		;それ以外は2境内を目指す
+		CASEELSE
+			RETURN 2
+		ENDSELECT
+	CASE 7
+		SELECTCASE LOCAL
+		;起居室に直接行けない場合、霊夢宅内（10、12～15、17～19、53～55）なら9居間を目指す;11庭は本殿裏からのが早い
+		CASE 10, 12 TO 15, 17 TO 19, 53 TO 55
+			RETURN 9
+		;それ以外は20本殿裏を目指す
+		CASEELSE
+			RETURN 20
+		ENDSELECT
+	CASE 8
+		SELECTCASE LOCAL
+		;廚房に直接行けない場合、霊夢宅右側（15、17、18、53～55）なら9居間を目指す
+		CASE 15, 17, 18, 53 TO 55
+			RETURN 9
+		;霊夢宅左側（11～14、19、52）なら10走廊を目指す
+		CASE 11 TO 14, 19, 52
+			RETURN 10
+		;それ以外は7起居室を目指す
+		CASEELSE
+			RETURN 7
+		ENDSELECT
+	CASE 9
+		SELECTCASE LOCAL
+		;居間（主人公暫定寝床）に直接行けない場合、霊夢宅右側（11～14、19、52）なら10走廊を目指す
+		CASE 11 TO 14, 19, 52
+			RETURN 10
+		;18壁櫥間からなら15霊夢部屋を目指す
+		CASE 18
+			RETURN 15
+		;それ以外は7起居室を目指す
+		CASEELSE
+			RETURN 7
+		ENDSELECT
+	CASE 10
+		SELECTCASE LOCAL
+		;走廊に直接行けない場合、13浴室からなら12脱衣所を目指す
+		CASE 13
+			RETURN 12
+		;霊夢宅内からは9居間を目指す
+		CASE 7, 15, 17, 18, 53, 55
+			RETURN 9
+		;それ以外からなら11庭を目指す
+		CASEELSE
+			RETURN 11
+		ENDSELECT
+	CASE 11
+		SELECTCASE LOCAL
+		;庭に直接行けない場合、起居室を除く霊夢宅内（8、9、12～15、17～19、53～55）なら10走廊を目指す
+		CASE 8, 9, 12 TO 15, 17 TO 19, 53 TO 55
+			RETURN 10
+		;それ以外からは20本殿裏を目指す
+		CASEELSE
+			RETURN 20
+		ENDSELECT
+	CASE 12
+		;脱衣所に直接行けない場合、10走廊を目指す
+		RETURN 10
+	CASE 13
+		;浴室に直接行けない場合、12脱衣所を目指す
+		RETURN 12
+	CASE 14
+		;廁所に直接行けない場合、10走廊を目指す
+		RETURN 10
+	CASE 15
+		;霊夢私室に直接行けない場合、9居間を目指す
+		RETURN 9
+	CASE 16
+		SELECTCASE LOCAL
+		;破旧小屋に直接行けない場合、霊夢宅内（7～15、17～19、52～55）なら20本殿内部を目指す
+		CASE 7 TO 15, 17 TO 19, 52 TO 55
+			RETURN 20
+		;それ以外からは2境内を目指す
+		CASEELSE
+			RETURN 2
+		ENDSELECT
+	CASE 17
+		;小的儲藏室に直接行けない場合、9居間を目指す
+		RETURN 9
+	CASE 18
+		;壁櫥間に直接行けない場合、15霊夢私室を目指す
+		RETURN 15
+	CASE 19
+		;大的儲藏室に直接行けない場合、10走廊を目指す
+		RETURN 10
+	CASE 20
+		SELECTCASE LOCAL
+		;本殿裏に直接行けない場合、霊夢宅右側（8、9、15、17、18、53～55）なら7起居室を目指す
+		CASE 8, 9, 15, 17, 18, 53 TO 55
+			RETURN 7
+		;霊夢宅左側（10、12～14、19、52）なら11庭を目指す
+		CASE 10, 12 TO 14, 19, 52
+			RETURN 11
+		;それ以外なら2境内を目指す
+		CASEELSE
+			RETURN 2
+		ENDSELECT
+	CASE 21
+		;守矢神社分社に直接行けない場合、2境内を目指す
+		RETURN 2
+	CASE 22
+		SELECTCASE LOCAL
+		;参道へ直接行けない場合、三妖精宅（26～35）なら25鎮守之森を目指す
+		CASE 26 TO 35
+			RETURN 25
+		;温泉からなら23温泉・脱衣所を目指す
+		CASE 24
+			RETURN 23
+		;遺跡（37～51）なら36遺跡前を目指す
+		CASE 37 TO 51
+			RETURN 36
+		;神社の中からなら1鳥居を目指す
+		CASEELSE
+			RETURN 1
+		ENDSELECT
+	CASE 23
+		SELECTCASE LOCAL
+		;温泉・脱衣所を目指す場合、三妖精宅（26～35）なら25鎮守之森を目指す
+		CASE 26 TO 35
+			RETURN 25
+		;それ以外なら22参道を目指す
+		CASEELSE
+			RETURN 22
+		ENDSELECT
+	CASE 24
+		;温泉を目指す場合、23温泉・脱衣所を目指す
+		RETURN 23
+	CASE 25
+		SELECTCASE LOCAL
+		;鎮守之森を目指す場合、三妖精宅（27～35）なら26三妖精宅・入口を目指す
+		CASE 27 TO 35
+			RETURN 26
+		;温泉からなら23温泉脱衣所を目指す
+		CASE 24
+			RETURN 23
+		;それ以外なら22参道を目指す
+		CASEELSE
+			RETURN 22
+		ENDSELECT
+	CASE 26
+		SELECTCASE LOCAL
+		;三妖精宅・入口を目指す場合、三妖精宅（28～）なら27大庁を目指す
+		CASE 28 TO 35
+			RETURN 27
+		;それ以外からは25鎮守之森を目指す、教養が上達するまでは入り口を見つけられない
+		CASEELSE
+			RETURN 25
+		ENDSELECT
+	CASE 27
+		SELECTCASE LOCAL
+		;三妖精宅・大庁を目指す場合、一階以外（31～）なら28樓梯を目指す
+		CASE 31 TO 35
+			RETURN 28
+		;それ以外からなら26入り口を目指す
+		CASEELSE
+			RETURN 26
+		ENDSELECT
+	CASE 28
+		SELECTCASE LOCAL
+		;樓梯を目指す場合、二階各部屋（32～34）なら31二階廊下を目指す
+		CASE 32, 33, 34
+			RETURN 31
+		;それ以外なら27大庁を目指す
+		CASEELSE
+			RETURN 27
+		ENDSELECT
+	CASE 29
+		;三妖精宅・廚房を目指す場合、27大庁を目指す
+		RETURN 27
+	CASE 30
+		;三妖精宅・浴室も廚房と同じ
+		RETURN 27
+	CASE 31
+		;三妖精宅・二階廊下を目指す場合、28樓梯を目指す
+		RETURN 28
+	CASE 32
+		;桑尼私室を目指す場合、31二階廊下を目指す、CASE34まで同じ
+		RETURN 31
+	CASE 33
+		;露娜チャ私室を目指す場合、31二階廊下を目指す、CASE34まで同じ
+		RETURN 31
+	CASE 34
+		;斯塔私室を目指す場合、31二階廊下を目指す、CASE34まで同じ
+		RETURN 31
+	CASE 35
+		;三妖精宅・地下室を目指す場合、28樓梯を目指す
+		RETURN 28
+	CASE 36
+		SELECTCASE LOCAL
+		;遺跡前を目指す場合、遺跡内(38～51）からなら37一階通路を目指す
+		CASE 38 TO 51
+			RETURN 37
+		;それいがいなら22参道を
+		CASEELSE
+			RETURN 22
+		ENDSELECT
+	CASE 37
+		SELECTCASE LOCAL
+		;一階通路を目指す場合、39浴室からなら38洗面所
+		CASE 39
+			RETURN 38
+		;調理室からなら41食堂
+		CASE 42
+			RETURN 41
+		;二階（46～51）からなら45樓梯
+		CASE 46 TO 51
+			RETURN 45
+		;外からなら36遺跡前
+		CASEELSE
+			RETURN 36
+		ENDSELECT
+	CASE 38
+		;洗面所を目指す場合、37一階通路を目指す
+		RETURN 37
+	CASE 39
+		;遺跡浴室を目指す場合、38洗面所を目指す
+		RETURN 38
+	CASE 40
+		;遺跡廁所を目指す場合、37一階通路を目指す
+		RETURN 37
+	CASE 41
+		;遺跡食堂を目指す場合、37一階通路
+		RETURN 37
+	CASE 42
+		;調理室を目指す場合、41食堂
+		RETURN 41
+	CASE 43
+		;教授私室を目指す場合、37一階
+		RETURN 37
+	CASE 44
+		;千百合私室を目指す場合、37一階
+		RETURN 37
+	CASE 45
+		SELECTCASE LOCAL
+		;夢幻遺跡樓梯を目指す場合、二階（47～51）からなら46二階通路を目指す
+		CASE 47 TO 51
+			RETURN 46
+		;それ以外なら37一階通路
+		CASEELSE
+			RETURN 37
+		ENDSELECT
+	CASE 46
+		;二階通路を目指す場合、45樓梯を目指す
+		RETURN 45
+	CASE 47
+		;操縦室を目指す場合、46二階通路を目指す、以下CASE51まで同じ
+		RETURN 46
+	CASE 48
+		;第一資料室を目指す場合、46二階通路を目指す、以下CASE51まで同じ
+		RETURN 46
+	CASE 49
+		;研究室を目指す場合、46二階通路を目指す、以下CASE51まで同じ
+		RETURN 46
+	CASE 50
+		;第二資料室を目指す場合、46二階通路を目指す、以下CASE51まで同じ
+		RETURN 46
+	CASE 51
+		;倉庫を目指す場合、46二階通路を目指す、以下CASE51まで同じ
+		RETURN 46
+	CASE 52
+		;出口を目指す場合、11庭を目指す
+		RETURN 11
+	CASE 53
+		;倉庫に直接行けない場合、9居間を目指す
+		RETURN 9
+	CASE 54
+		;小人的虫籠に直接行けない場合、霊夢宅左側からなら10走廊を目指す
+		SELECTCASE LOCAL
+		CASE 11 TO 14, 19, 52
+			RETURN 10
+		;それ以外なら9居間を目指す
+		CASEELSE
+			RETURN 9
+		ENDSELECT
+	CASE 55
+		;和室に直接行けない場合、9居間を目指す
+		RETURN 9
+	CASE MAXROOM
+		;参道的正前方を目指す場合、22参道を目指す
+		RETURN 22
+ENDSELECT

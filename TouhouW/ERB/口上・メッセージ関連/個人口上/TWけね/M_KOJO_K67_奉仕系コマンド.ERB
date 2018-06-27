@@ -1,0 +1,522 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;奉仕系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,手淫
+;==================================================
+@M_KOJO_MESSAGE_COM_KX_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_KX_80_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_KX_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋人
+	ELSEIF TALENT:恋人
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;81,口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K67_81
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K67_81_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K67_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中(FLAG:70)
+	IF FLAG:70
+		IF MARK:反発刻印 == 3
+			;射精(ex:11)
+			IF NOWEX:PLAYER:11
+				PRINTFORMW 限界を迎える直前、慧音の喉奥にペニスを突き込む
+				PRINTFORMW 食道へ直接精液を流し込み、ゆっくり引き抜き口内もしっかり白濁で満たす
+				PRINTFORMW こちらを鋭く睨みながら口から精液を垂らす様子はなかなかに滑稽だった
+			ELSE
+				PRINTFORMW 固い表情の慧音の口にペニスを押し込んだ
+				PRINTFORMW かなりの抵抗があったが、オナホとしては丁度いい程度だ
+			ENDIF
+			RETURN 1
+		;射精(ex:11)
+		ELSEIF NOWEX:PLAYER:11
+			PRINTFORMW ぴくりとも動かない慧音の口にたっぷりと射精した
+			PRINTFORMW ペニスを引き抜くと、こぽりと小さく泡がたった
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 時間の止まった慧音の口にペニスを押し込んだ
+				PRINTFORMW 腰をゆすると、端正な顔立ちが蹂躙されていく
+			CASE 1
+				PRINTFORMW 明後日の方向を見つめている慧音の口で自慰を始めた
+				PRINTFORMW 静寂の中、かき出された唾液がじゅぷじゅぷと水音を立てる
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋人
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「んっ……っ……」
+				PRINTFORMW こくっ……こくり
+				PRINTFORMW 艶やかな慧音の喉から卑猥な音が響く
+				PRINTFORMW 「……ん……ふっ……じゅぷっじゅるる」
+				PRINTFORMW うっとりした表情で精液を嚥下すると、そのまま離さずに口淫を再開してしまった
+			CASE 1
+				PRINTFORMW 「っ……ふぅ……」
+				PRINTFORMW 「%CALLNAME:MASTER%……先生、まだ全然足りないぞ……？」
+				PRINTFORMW 「……けぷっ」
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMW 「いつもながらご立派なことだ」
+				PRINTFORMW 「『この後』に備えて、しっかり準備しておかないとな……ふふ」
+			CASE 1
+				PRINTFORMW 「匂いだけでクラクラしてくるな」
+				PRINTFORMW 「えへへ、いただきまぁす……」
+			CASE 2
+				PRINTFORMW 「ほら、『先生、咥えて下さい』ってお願いしなよ」
+				PRINTFORMW 「今ならた～～っぷりとご褒美をやるぞ……？」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+				PRINTFORMW 「ん……っ」
+				PRINTFORMW 射精と共にペニスを深く咥え、そのまま慧音の動きが止まる
+				PRINTFORMW 食道への射精が収まると、モノを咥えたまま何かを訴える様にこちらを見つめてきた
+				PRINTFORMW 彼女の伝えたいことはわからなかったが、ペニスは温かい口内で再び硬度を取り戻していた
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 目の前にペニスをもってくると、自然に奉仕を始めた
+				PRINTFORMW だいぶ積極的になった様に感じるが、気のせいだろうか
+			CASE 1
+				PRINTFORMW こちらの様子を上目遣いで伺ってくる慧音
+				PRINTFORMW 舌の動きそのものは控え目だが、しっかりと奉仕してくれている
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF MARK:不埒刻印 == 3
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「んっ……くふっ」
+				PRINTFORMW 「出すなら出すって言えよ……服が汚れるじゃないか」
+			CASE 1
+				PRINTFORMW 「うえぇ……」
+				PRINTFORMW 「確かに、前よりは慣れたけどさ……」
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「顔が赤いって？」
+				PRINTFORMW 「当たり前だろ、こんなモノ目の前に出されたら誰だって赤くなるよ」
+			CASE 1
+				PRINTFORMW 「うう……一日食欲なくなるからやりたくないんだ」
+				PRINTFORMW 「わかった、わかったから押し付けないで！」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+		RETURN 1
+	ELSE
+		PRINTFORMW 「はぁ……」
+		PRINTFORMW 「やればいいんだろ、やれば」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;82,乳交
+;==================================================
+@M_KOJO_MESSAGE_COM_KX_82
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_KX_82_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_KX_82_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;83,素股
+;==================================================
+@M_KOJO_MESSAGE_COM_KX_83
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_KX_83_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_KX_83_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;84,泡泡浴
+;==================================================
+@M_KOJO_MESSAGE_COM_KX_84
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_KX_84_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_KX_84_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;85,足扱き
+;==================================================
+@M_KOJO_MESSAGE_COM_K67_85
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K67_85_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K67_85_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中(FLAG:70)
+	IF FLAG:70
+		IF MARK:反発刻印 == 3
+			;射精(ex:11)
+			IF NOWEX:PLAYER:11
+				PRINTFORMW 動かない慧音から冷ややかな視線を浴びながら限界を迎えた%CALLNAME:MASTER%は、
+				PRINTFORMW 履物と慧音の足の間にたっぷりと精を放った
+				PRINTFORMW 彼女の体勢を元街道にすると、履物の中でぐしゅりと湿った音が響いた
+			ELSE
+				PRINTFORMW %CALLNAME:MASTER%は動かない慧音の足を使って自慰を始めた
+				PRINTFORMW 意識すらないのにも関わらず明確な敵意を孕んだ視線が心地良い
+			ENDIF
+			RETURN 1
+		;射精(ex:11)
+		ELSEIF NOWEX:PLAYER:11
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW あっという間に限界を迎えた%CALLNAME:MASTER%は、慧音の滑らかな脚に精を放った
+				PRINTFORMW ただでさえ白く美しい慧音の脚が、白濁でさらに彩られていく
+			CASE 1
+				PRINTFORMW 程なくして%CALLNAME:MASTER%は慧音の土踏まずの間に射精した
+				PRINTFORMW 射精の間も無機質かつ絶妙な圧迫感があり、腰が砕けそうだ
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW がに股にさせ、両方の土踏まずの間にペニスを挟み込んだ
+				PRINTFORMW なかなか身体が硬い様で、少々体勢作りに苦労した
+				PRINTFORMW 筋を少し痛めてしまったかもしれない
+			CASE 1
+				PRINTFORMW 履物を脱がせて、足指の間にペニスを挟み込んだ
+				PRINTFORMW 真顔なのが妙にしっくりくる
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋人
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「ん、まだイくなよ」
+				PRINTFORML 射精寸前になった途端、慧音が口を開く
+				PRINTFORML 「先生が『良し』って許可出すまで我慢だ、できるだろ？」
+				PRINTFORMW %CALLNAME:MASTER%は歯を食いしばって耐えるが、激しくなる責めに数秒で限界を迎えた
+				PRINTFORML 「おっと」
+				PRINTFORML 耐え切れず腰が跳ねた瞬間、慧音は器用に尿道口を足指で塞いでしまった
+				PRINTFORML もう片足は依然竿を扱いたままだ
+				PRINTFORML 恐怖を覚えるほどの責めに悲鳴を上げる%CALLNAME:MASTER%
+				PRINTFORML 「はぁ……どーして先生の言うことが聞けないのかなー……？」
+				PRINTFORMW 力を振り絞って許しを請うと、嗜虐に濁った瞳と目が合った
+			CASE 1
+				PRINTFORMW 「あれ？足で満足してしまったのか」
+				PRINTFORMW 「せっかく畑の準備はできていたのに……種蒔きはお預けだな、ふふ」
+			CASE 2
+				PRINTFORMW 「ほら、もっと出せるだろ？」
+				PRINTFORMW 射精の瞬間、ペニスにかかる体重が増す
+				PRINTFORMW 「どうしたどうした、あんなに孕ませたがっていた先生の子宮は目の前だぞ？」
+				PRINTFORMW 自ら入口を見せびらかしながら、巧みな足技で精を搾り取っていく
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「え？痛い？」
+				PRINTFORMW 「演技が下手だな%CALLNAME:MASTER%は……仕方ないな、もっと強くしてやる」
+			CASE 1
+				PRINTFORMW 「教師に足蹴にされたいだなんて、随分とねじ曲がった性癖を持ったものだ」
+				PRINTFORMW 「……人のことは言えないけどね、ふふ」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「……気持ち良さそうだな、良かった」
+				PRINTFORMW 指導の甲斐あって、慧音の足捌きもなかなかのものになってきた
+				PRINTFORMW 彼女も楽しんでいるのか、射精してもなかなか足を止めてくれない
+				PRINTFORMW 半ば無理矢理、すぐに勃起させられてしまう
+			CASE 1
+				PRINTFORMW 「あっ……」
+				PRINTFORMW 「……あったかい……」
+				PRINTFORMW 熱に浮かされたような表情で白濁にまみれた足を見つめている
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「ん……イきそう、なのか？」
+				PRINTFORML %CALLNAME:MASTER%の表情から限界を察した慧音は、ペニスから足を離してしまう
+				PRINTFORMW たまらず腰を浮かせて追いかけると、同じだけ逃げていく
+				PRINTFORMW 息を荒げて懇願すると、彼女の口元が緩んでいるのが見えた
+				PRINTFORMW 施虐狂の気があるのかもしれない
+			CASE 1
+				PRINTFORMW 股を広げて足での奉仕を命じられた慧音
+				PRINTFORMW とろりと秘唇から愛液が垂れたのが見えた……気がする
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF MARK:不埒刻印 == 3
+		;射精(ex:11)
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:2
+			CASE 0
+				PRINTFORMW 「……なんか複雑だな」
+				PRINTFORMW 「滅茶苦茶されるよりはマシか……」
+			CASE 1
+				PRINTFORMW 「あっ……」
+				PRINTFORMW 「踏まれてイったのか……？」
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMW 「簡単に命令するけどな、意外と難しいんだぞ」
+				PRINTFORMW 「普段こんなことしないし……」
+			CASE 1
+				PRINTFORMW 「踏んでほしいって……ここ、大事な場所なんじゃないのか」
+				PRINTFORMW 「どうなっても責任とれないからな」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+		RETURN 1
+	ELSE
+		PRINTFORMW 「足で？」
+		PRINTFORMW 「踏み潰せばいいのか？違う？」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;88,真空口交
+;==================================================
+@M_KOJO_MESSAGE_COM_KX_88
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_KX_88_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_KX_88_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

@@ -1,0 +1,35 @@
+﻿@ODEKAKEMAP_8(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　∫／／／／∫　　林／／／／／／／／林■　　　■05　∫∫　　　∫∫[天界]　　　　
+AA:01 = 　∫／ 01 ／∫　　林／／／／／／／／林■　　　■─■∫∫　　　∫∫＿～～　～～　
+AA:02 = 林∫／／／／∫林　林林～～～～～～林林■　04　　　　∫∫　　　∫∫／　　　　　　
+AA:03 = 林∫／／／／∫林　林林林　 03 　林林林■●　●■■■∫∫　　　∫∫　　＿09＿　◇
+AA:04 = 林∫／／／／∫林　　　　　　　　　　　　　　　　　　∫∫　　　∫∫　 ＼　　／ 　
+AA:05 = 林川川川川川川林　02　　林林林林林林林林林林林林林林∫∫　　　∫∫～～ ＼／ ～～
+
+SIF CFLAG:MASTER:現在位置 == 天界 && (ABL:MASTER:教養 > 1 || ABL:(FLAG:デート相手):教養 > 1)
+	AA:03 = 林∫／／／／∫林　林林林　 03 　林林林■●　●■■■∫∫　　　∫∫　　＿09＿　67
+	
+@DRAW_MAP_BG_8(SLICED)
+#DIMS SLICED
+SELECTCASE SLICED
+;色つけたいときはこんな感じ
+CASE "木","林"
+	SETCOLOR 0x90EE90
+	PRINTS SLICED
+	RESETCOLOR
+;違う文字を表示させる例
+CASE "#W"
+	SETCOLOR 0x90EE90
+	PRINT 木
+	RESETCOLOR
+CASE "#E"
+	SIF TALENT:MASTER:居場所察知 && COUNTCHARA:(MAXROOM) > 0 && FLAG:察知モード == 1
+		SETCOLOR 255,100,200
+	PRINT ↓
+	RESETCOLOR
+;ふつうの
+CASEELSE
+	PRINTS SLICED
+ENDSELECT

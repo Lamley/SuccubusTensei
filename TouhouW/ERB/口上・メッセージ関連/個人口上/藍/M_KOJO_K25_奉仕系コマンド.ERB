@@ -1,0 +1,568 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;奉仕系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,手淫
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_80_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		;今射精した
+		IF NOWEX:PLAYER:11
+			PRINTFORML 自己嚕着肉棒、在藍併攏的手掌容器裡注入精液
+			PRINTFORML 積水般的白濁精液量讓人有種成就感
+			RETURN 1
+		ELSE
+			PRINTFORML 時間停止、%CALLNAME:MASTER%用亀頭摩擦着藍的手掌
+			PRINTFORML 将滲漏出来的汁液興奮的塗抹在藍的手上
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「原来男人射精之後。会変成這樣阿……」
+				PRINTFORML 被単方面的玩弄研究着陰茎和睪丸
+			CASE 1
+				PRINTFORML 「…………嘸嘸嘸」
+				PRINTFORML 一辺被凝視着臉一辺撲滋撲滋的将精液射到手掌裡
+			CASE 2
+				PRINTFORML 「来喔、加油、加油」
+				PRINTFORML 像是慈愛母親般的話語、手上卻高速套弄着射精中的肉棒
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 藍用双手分別撫弄着陰茎的前端跟尾部
+				PRINTFORML 一臉認真的彎腰套弄着
+			CASE 1
+				PRINTFORML 藍用温柔的手法軽軽套弄着肉棒
+				PRINTFORML 「這裡、是嗎？ 像小動物似的」
+			CASE 2
+				PRINTFORML 熟練的套弄刺激着肉棒的藍淡淡的笑着
+				PRINTFORML 弱点被握住的%CALLNAME:MASTER%、被強攻着要害
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML 藍用兩手緩緩的套弄着
+		PRINTFORML 細滑的手軽巧的撫摸着男人的肉棒
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1
+
+;==================================================
+;81,口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_81
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_81_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		;主人公が射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 亀頭朝着舌頭的中間圧去、射出精液在舌頭上
+				PRINTFORML 将残留在亀頭上的精液塗抹在藍的臉上
+			CASE 1
+				PRINTFORML 亀頭朝着左右臉頰擠圧後、朝着舌頭射出精液
+				PRINTFORML 藍的口内牙縫裡都是%CALLNAME:MASTER%的精液、到処在游動着尋找卵子吧
+			CASE 2
+				PRINTFORML 用時間啟動後也不会吐出的方式朝着喉嚨深処射精
+				PRINTFORML 兩手抓着藍的頭深深埋入股間、沈浸在深喉的快感裡
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 像理所当然般的、藍伸出舌頭来讓陰茎沿着深入口内
+				PRINTFORML 覚得還缺了点什麼似得就把亀頭朝着喉嚨深処移動
+			CASE 1
+				PRINTFORML 尿道口貼着藍美艶的唇上、将滲漏出来的汁液像口紅般的塗抹着
+				PRINTFORML 慢慢的張開嘴插入的瞬間有種難以形容的興奮感
+			CASE 2
+				PRINTFORML 用手掌抓着下巴、讓藍的臉朝着往上
+				PRINTFORML 将肉棒当成牙刷般的来回摩擦着藍的口内。膨脹的臉頰覚得有趣
+			ENDSELECT
+		ENDIF
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;主人公が射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 覚得專心吸吮着肉棒的藍很可愛摸了摸頭
+				PRINTFORML 向主人対寵物餵食般、%CALLNAME:MASTER%朝藍舌頭上注入温熱的牛奶
+			CASE 1
+				PRINTFORML 看美貌的臉含着陰茎、膨脹的臉頰
+				PRINTFORML 望着淫蕩画面的同時、%CALLNAME:MASTER%将精液排泄在口内
+			CASE 2
+				PRINTFORML 藍朝着射精中的亀頭吸吮着、連最後一滴都不留般
+				PRINTFORML 被吸吮的快感讓自己只能彎着腰抱着藍的頭
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「開動囉」
+				PRINTFORML 双手合十的笑着説後、朝着%CALLNAME:MASTER%的陰茎美味的舔舐起来
+			CASE 1
+				PRINTFORML 被藍的唾液塗満的肉棒貼在藍的臉上
+				PRINTFORML 細心的舔着睪丸、巧妙的刺激着亀頭
+			CASE 2
+				PRINTFORML 女狐往上凝視%CALLNAME:MASTER%的臉
+				PRINTFORML 嚐着男根的味道、被藍被快感刺激歪曲的表情逗楽
+			ENDSELECT
+		ENDIF
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORML 藍一点抗拒也沒有的吸吮着%CALLNAME:MASTER%的肉棒
+		PRINTFORML 在觀察着這辺的反応的同時、善用舌頭来回找尋弱点刺激快感
+		RETURN 1
+	ENDIF
+	PRINTW
+ENDIF
+RETURN 1
+
+;==================================================
+;82,乳交
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_82
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_82_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_82_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 朝着平時就散発着肉欲的巨乳釋放欲望
+				PRINTFORML 用亀頭滲漏的液体潤滑肌膚、一口気射了出来
+			CASE 1
+				PRINTFORML 射精的瞬間、不由得捏着藍勃起的乳頭
+				PRINTFORML 如果有意識的話大概会痛到喊出声来吧
+			CASE 2
+				PRINTFORML 対這美乳尽情的射精
+				PRINTFORML 腦海中李只剩全力抓住那対巨乳擠圧陰茎的想法
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 即使時間停止了乳房也会跟着震動顫抖
+				PRINTFORML 從乳白的谷間伸出亀頭感到有些幽默
+			CASE 1
+				PRINTFORML 抓着那対巨乳上下晃動着
+				PRINTFORML 任意使用魅惑般的乳肉自慰
+			CASE 2
+				PRINTFORML 往上拉着藍碩大的乳房、朝着谷間埋入陰茎
+				PRINTFORML 簡直就是奢侈的人形自慰器
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 埋在谷間中的精液像噴水似的灑着
+				PRINTFORML 下巴喉嚨附近都沾満黏液、黏液順着朝双乳流下
+			CASE 1
+				PRINTFORML 「啊、出来了」
+				PRINTFORML 用朝臉面直撃的気勢朝着藍噴射
+			CASE 2
+				PRINTFORML 筆直的插入乳房之間、撲揪撲揪的射出精液
+				PRINTFORML 結束後将残留在亀頭上的精液塗抹在乳頭上
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 藍用双手将乳房緊緊擠圧着肉棒
+				PRINTFORML 驚人乳圧帯来的緊実感跟重量感、讓人感到十分的充実
+			CASE 1
+				PRINTFORML 就像被巨大的大福一樣被包容着、有種不可思議的安心感る
+				PRINTFORML 「嘸嘸、一臉幸福的樣子……我也很開心」
+			CASE 2
+				PRINTFORML 「呼、呼、不同的感覚吧」
+				PRINTFORML 左右乳房交叉扭捏着、合在一起。藍開心地欺負着陰茎
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML 藍碩大的乳房将肉棒完全包覆住
+		PRINTFORML 一句話都不説、她開使用乳房擠圧着肉棒
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1
+
+;==================================================
+;83,素股
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_83
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_83_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_83_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 可以自由的選択藍的部位、%CALLNAME:MASTER%就乾脆朝空中濺灑在藍身上
+			CASE 1
+				PRINTFORML 手指戳了戳豊満的臀部、猛烈的朝股間抽插着
+				PRINTFORML 一辺揉捏着大腿肉一辺射精
+			CASE 2
+				PRINTFORML 最後在恥丘上、陰茎押着陰部直接射精
+				PRINTFORML 噴出的白濁朝着敏感的肉芽直撃
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 在豊満的大腿内側及陰部之間的縫隙抽插着
+				PRINTFORML 肉棒来回的摩擦後、感覚得到有些愛液開始滲出
+			CASE 1
+				PRINTFORML 朝合上的豊満双腿縫隙間插入
+				PRINTFORML 被前走液原本来嫩滑的肌膚更好抽插了
+			CASE 2
+				PRINTFORML 撃中目標、陰茎沿着双腿弧線来回摩擦着
+				PRINTFORML 藍如果有意識的話大概会感到強烈的苦悶刺激
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「呼、射出来了」
+				PRINTFORML 看着自己股間四処飛濺的精液藍的嘴角微微的揚起
+			CASE 1
+				PRINTFORML 「好強的気勢……不過有点浪費啊」
+				PRINTFORML 亀頭被柔軟的手掌接裹着精液
+			CASE 2
+				PRINTFORML 在大腿之間停住腰、一股搔癢的欲望想要吐出
+				PRINTFORML 大量的白濁精液射的藍腹部都是
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 樸揪樸揪的再藍的双腿間抽動着陰茎
+				PRINTFORML 「唔、哈、哈……」
+			CASE 1
+				PRINTFORML 從背後、豊満的屁股谷間肉棒来回的戳動
+				PRINTFORML 藍用自己的脚、来増強插入感
+			CASE 2
+				PRINTFORML 抱緊筆直伸長的双腿朝着縫隙猛插着
+				PRINTFORML 二人的淫液潤滑了肌膚可以很舒適的来回摩擦
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML 「這樣夾着嗎、不過要怎麼動呢？」
+		PRINTFORML 在柔軟的三角地帯中%CALLNAME:MASTER%讓自己的陰茎前後抽動
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1
+
+;==================================================
+;84,泡泡浴
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_84
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_84_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_84_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「不管什麼時候都可以。不用客気喔」
+				PRINTFORML 無論哪辺都是藍湿滑柔軟的身体、挑戦的忍耐的界限
+				PRINTFORML %CALLNAME:MASTER%的男根被嫩滑的乳房来回滑動着、忍不住的射精
+			CASE 1
+				PRINTFORML 双腿被挪開、用嫩滑的小腹圧着睪丸、直挺挺的肉棒則被收容到乳房谷間裡
+				PRINTFORML 股間被藍的巨乳擠圧的同時、%CALLNAME:MASTER%忍不住噴出了精液
+			CASE 2
+				PRINTFORML 「想先洗哪裡？ 顔？ 胸？ 或是這裡？」
+				PRINTFORML %CALLNAME:MASTER%被藍巧妙的全身翻弄奉仕着
+				PRINTFORML 最後把漲大的陰茎狠很的朝藍的身体噴濺着、藍沒停止身上的動作継續奉仕
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「有哪裡癢呢」
+				PRINTFORML 豊満的身体塗満肥皂泡、藍貼着身体黏糊糊磨合着
+				PRINTFORML 真不知道是從哪裡学来的熟練手法
+			CASE 1
+				PRINTFORML 藍将%CALLNAME:MASTER%橫躺着的単脚抓着、用都是泡沫的巨乳擁抱摩擦着
+				PRINTFORML 光滑細嫩的肌膚、就連脚底也用乳肉塗抹着清洗
+			CASE 2
+				PRINTFORML %CALLNAME:MASTER%的手挾在股間、微微笑着的藍前後扭着腰清洗手臂
+				PRINTFORML 感受着大陰唇的触感。眼前是来回晃動的巨乳
+				PRINTFORML 藍貫徹着服務精神、最後将手指一根一根插到肉壺裡清理
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML 「嘸嘸。在那躺好。什麼都不需要做喔」
+		PRINTFORML 被那樣説後藍從上面躺了上来
+		PRINTFORML 像是豊満的肉毯似的、朝着%CALLNAME:MASTER%的乳頭舔着軽撫着陰茎
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1
+
+;==================================================
+;85,足扱き
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_85
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_85_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_85_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		;今射精した
+		IF NOWEX:PLAYER:11
+			PRINTFORML 将脚心尖端圧着亀頭射出精液
+			PRINTFORML 充分的塗抹着、連脚指之間也不放過
+			RETURN 1
+		ELSE
+			PRINTFORML 亀頭再藍的脚底摩擦、想着平時藍的表情感到刺激射精
+			RETURN 1
+		ENDIF
+	ELSEIF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「啊啊啊、射在這裡好浪費啊」
+				PRINTFORML 噴射出的白濁精液、沾黏上藍修長筆直的長腿上
+			CASE 1
+				PRINTFORML 「啊。逼U、逼U♪」
+				PRINTFORML 被双脚引導高潮、直到射精節奏都被藍掌控着
+			CASE 2
+				PRINTFORML 「啊ー啊、黏糊糊的精液」
+				PRINTFORML 「這種髒兮兮的早瀉小雞雞、我的女陰可不会讓你進去喔」
+				PRINTFORML 吊着嘴角的藍。貌似激起了她的嗜虐心
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「感覚真好踩。不知不覚就投入進去」
+				PRINTFORML 睪丸被脚根柔虐着望着藍軽視的笑容越発感到興奮
+			CASE 1
+				PRINTFORML 「這樣就能満足的話、看来連我的女陰都用不到？」
+				PRINTFORML 一辺被藍嘲弄着一辺被用脚指抓着亀頭
+				PRINTFORML 挑釁般的微微撐開陰唇軽視的看着
+			CASE 2
+				PRINTFORML 「還不出来嗎。那現在就用兩脚吧」
+				PRINTFORML 一隻脚霊巧的搔着肉棒、一隻脚戳着睪丸就這樣被隨意的玩弄着
+				PRINTFORML 這媲美手的性技讓%CALLNAME:MASTER%不知覚的撐起腰
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML 「噢。你喜歡這樣的嗎」
+		PRINTFORML 藍的脚掌踩在%CALLNAME:MASTER%的肉棒上転動着
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1
+;==================================================
+;88,真空口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K25_88
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K25_88_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K25_88_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF TALENT:恋慕 || MARK:不埒刻印 == 3
+		;今射精した
+		IF NOWEX:PLAYER:11
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 極限的%CALLNAME:MASTER%将藍的頭緊緊抱着
+				PRINTFORML 在喉嚨深処的亀頭開使猛烈的射精
+				PRINTFORML 藍完全沒有嗆到痛苦的樣子、豔然的瞇着眼睛呑食着
+			CASE 1
+				PRINTFORML 在激烈的口交後、囤積着的%CALLNAME:MASTER%将精液完全爆発
+				PRINTFORML 像是突入到子宮口般、藍的食道満是黏濁的精液
+				PRINTFORML 「…………承蒙款待。很美味、好吃」
+			CASE 2
+				PRINTFORML 就像発瘋似的%CALLNAME:MASTER%抓着藍的頭前後抽插着
+				PRINTFORML 漂亮的臉蛋每下都貼在腹部上、陰毛都伸入到鼻腔裡、最後在喉嚨深処開始猛烈的射精
+				PRINTFORML 看着哆哆嗦嗦的狐狸耳朵、讓人覚得神情逾越……
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+			CASE 0
+				PRINTFORML 「做好心理準備了嗎？」
+				PRINTFORML 抿嘴一笑宣言後、藍一口気将陰茎送入到喉嚨深処
+				PRINTFORML 一開始就被猛烈的真空吸引。腰都快軟了下来
+			CASE 1
+				PRINTFORML 口内被黏黏的舌頭纏繞、陰茎的根部緊緊挨着嘴唇
+				PRINTFORML 猛烈的抜出後又一口気含到深処、転眼間就快接近了極限
+			CASE 2
+				PRINTFORML 「開動囉」
+				PRINTFORML 藍将男根一口呑到深処
+				PRINTFORML 激烈的吸吮着、讓人有種連睪丸内的精液都快被吸出来的錯覚
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ELSE
+		PRINTFORML %CALLNAME:MASTER%拜託的話、藍就会直率的在嘴裡塞満肉棒
+		PRINTFORML 肉棒一插到喉嚨裡、口水就会順着肉竿流下
+		RETURN 1
+	ENDIF
+	PRINTW 
+ENDIF
+RETURN 1

@@ -1,0 +1,464 @@
+﻿;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;キャラ別_各種データ
+;91～100番までのキャラ
+;CALL		USER
+;ARG		0:呼出データNO, 1:移動傾向取得時的房間NO
+;RETURN		キャラ別呼出データ値
+;COMMENT	
+;-----------------------------------------------------------
+;朱鷺子
+@CHARAMOVE_DATA_101(ARG,ARG:2)
+LOCAL = 101
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;ひとんちの浴室とか廁所にはいかない
+			CASE 12, 13, 14, 18, 30, 35, 39, 40, 43, 44, 51, 52
+				RETURN -100
+			;私室には入らない
+			CASE 15, 17, 19, 53, 55
+				SIF FLAG:15 != LOCAL
+					RETURN -100
+			;魔理沙家,愛麗絲家,艾倫家,妖怪的棲息処
+			CASE 511 TO 515, 521 TO 531, 535 TO 537, 542, 543
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 3, 5, 7
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 31,34,37, 51,52,53, 71,72,73
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;神綺
+@CHARAMOVE_DATA_102(ARG,ARG:2)
+LOCAL = 102
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;魔理沙寝室,愛麗絲的房間,夢子的房間
+			CASE 512, 521, 523
+				RETURN -10
+			;自室
+			CASE 522
+				;7～22時は避ける,寝起きと寝る前は行きやすく
+				IF BETWEENTIME(420,1320)
+					RETURN -10
+				ELSE
+					RETURN 10
+				ENDIF
+			;研究室
+			CASE 524
+				RETURN -10
+			;リビング
+			CASE 525
+				;10～17時外は行きやすい
+				IF BETWEENTIME(600,1020)
+					RETURN 0
+				ELSE
+					RETURN 5
+				ENDIF
+			;空的部屋と倉庫
+			CASE 528, 531
+				RETURN -100
+			;魔理沙家,艾倫家,妖怪的棲息処
+			CASE 511 TO 515, 535, 536, 537, 541, 542, 543
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;夢子
+@CHARAMOVE_DATA_103(ARG,ARG:2)
+LOCAL = 103
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;魔理沙寝室,愛麗絲的房間,神綺的房間
+			CASE 512, 521, 522
+				RETURN -10
+			;自室
+			CASE 523
+				;7～22時は避ける,寝起きと寝る前は行きやすく
+				IF BETWEENTIME(420,1320)
+					RETURN -10
+				ELSE
+					RETURN 10
+				ENDIF
+			;研究室
+			CASE 524
+				RETURN -10
+			;リビング
+			CASE 525
+				;10～17時外は行きやすい
+				IF BETWEENTIME(600,1020)
+					RETURN 0
+				ELSE
+					RETURN 5
+				ENDIF
+			;空的部屋と倉庫
+			CASE 528, 531
+				RETURN -100
+			;魔理沙家,艾倫家,妖怪的棲息処
+			CASE 511 TO 515, 535, 536, 537, 541, 542, 543
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;雪
+@CHARAMOVE_DATA_104(ARG,ARG:2)
+LOCAL = 104
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;自室,舞的房間,広場
+			CASE 234, 235, 202
+				RETURN 5
+			;主人公的房間
+			CASE 230
+				IF TALENT:LOCAL:恋慕
+					RETURN 5
+				ELSE
+					RETURN -100
+				ENDIF
+			;行かない
+			CASE 220, 225, 221, 222, 224, 226
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23,27, 51,52,53,56,57
+				RETURN 1 
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;舞
+@CHARAMOVE_DATA_105(ARG,ARG:2)
+LOCAL = 105
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;自室,雪的房間,広場
+			CASE 234, 235, 202
+				RETURN 5
+			;主人公的房間
+			CASE 230
+				IF TALENT:LOCAL:恋慕
+					RETURN 5
+				ELSE
+					RETURN -100
+				ENDIF
+			;行かない
+			CASE 220, 225, 221, 222, 224, 226
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23,27, 51,52,53,56,57
+				RETURN 1 
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;菫子
+@CHARAMOVE_DATA_106(ARG,ARG:2)
+LOCAL = 106
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;主に境内,走廊に居る
+			CASE 2, 10
+				RETURN 5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 1, 2
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 12,13,15, 21,22,23,27
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+;清蘭
+@CHARAMOVE_DATA_107(ARG,ARG:2)
+LOCAL = 107
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;とくになし
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 4, 8, 10
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 41 TO 45, 83, 105 TO 108
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+;鈴瑚
+@CHARAMOVE_DATA_108(ARG,ARG:2)
+LOCAL = 108
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;とくになし
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 4, 8, 10
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 41 TO 45, 83, 105 TO 108
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+;多来米
+@CHARAMOVE_DATA_109(ARG,ARG:2)
+LOCAL = 109
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;とくになし
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 10
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 101
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+;探女
+@CHARAMOVE_DATA_110(ARG,ARG:2)
+LOCAL = 110
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;ひとんちの浴室とか廁所にはいかない
+			CASE 12, 13, 14, 18, 30, 35, 39, 40, 43, 44, 51, 52
+				RETURN -100
+			;私室には入らない
+			CASE 15, 17, 19, 53, 55
+				SIF FLAG:15 != LOCAL
+					RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 10
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 101, 105 TO 108
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT

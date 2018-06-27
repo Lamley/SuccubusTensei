@@ -1,0 +1,45 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	命蓮寺MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_1(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS MYORENNAME, 23 = "山門","境内","本堂","講堂","経堂","後院","起居室","居間","客間","走廊","廚房","浴室","納茲琳私室","村紗私室","星私室","一輪私室","鵺私室","白蓮私室","出口","庫房","墓地","梵鐘堂"
+#DIMS DOJONAME, 11 = "霊廟大門","霊廟広場","屠自古部屋","道場","布都私室","神子私室","客間","廊下","枯山水","調薬室","湯殿"
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 22
+			RETURNF MYORENNAME:(PLACEID - 1)
+		CASE 23 TO 33
+			RETURNF DOJONAME:(PLACEID - 23)
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "隙間空間"
+		CASEELSE
+			RETURNF "参道正前方"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_1(AA)
+#DIMS REF AA, 0
+IF !TFLAG:マップ切り替え
+	SELECTCASE CFLAG:MASTER:現在位置
+		CASE 101 TO 122
+			TFLAG:マップ切り替え = 1
+		CASEELSE
+			TFLAG:マップ切り替え = 2
+	ENDSELECT
+ENDIF
+CALL DRAW_INFORMATIONLINE(@"%MAPNAME:(TFLAG:マップ切り替え)%")
+PRINTFORML 
+TRYCALLFORM MAP_TEMPLE_{TFLAG:マップ切り替え}(AA)
+
+@MAP_CAN_MOVE_1(ARG, ARG:1)
+#FUNCTION
+RETURNF 1

@@ -1,0 +1,267 @@
+﻿@CHK_HININ_LOVE(ARG)
+#FUNCTION
+LOCAL = 0
+SIF TALENT:ARG:恋人
+	LOCAL += 300
+;愛情経験
+
+LOCAL += EXP:ARG:愛情経験 / 2
+
+;好感度
+SELECTCASE CFLAG:ARG:好感度
+CASE 0 TO 499
+	LOCAL -= 100
+CASE 500 TO 999
+	LOCAL += 30
+CASE 1000 TO 2999
+	LOCAL += 50
+CASEELSE
+	LOCAL += CFLAG:ARG:好感度 / 30
+ENDSELECT
+
+LOCAL += ABL:ARG:親密 * 20
+LOCAL += ABL:ARG:従順 * 7
+LOCAL += ABL:ARG:奉仕精神 * 7
+
+RETURNF LOCAL
+
+@CHK_HININ_REASON(ARG,ARGS)
+#FUNCTION
+#DIM 理性判定値
+VARSET LOCAL
+
+LOCAL:3 += GETPALAMLV(PALAM:欲情,15) * (10 + TALENT:ARG:快感応答 * 3)
+LOCAL:3 += GETPALAMLV(PALAM:恭順,15) * (10 + TALENT:ARG:態度 * 3)
+LOCAL:3 += GETPALAMLV(PALAM:好意,15) * 10
+
+LOCAL:5 += ABL:ARG:膣射中毒 * 15
+LOCAL:5 += ABL:ARG:欲望 * (10 + TALENT:ARG:快感応答 * 2)
+LOCAL:5 += MARK:ARG:快楽刻印 * 10
+LOCAL:5 += MARK:ARG:不埒刻印 * 10
+LOCAL:5 += MARK:ARG:苦痛刻印 * 10
+LOCAL:5 -= MARK:ARG:反発刻印 * 100
+
+
+理性判定値 = 800 - LOCAL:3 * LOCAL:5 / 300
+
+SIF ESTRUS_CYCLE(ARG) == 150
+	理性判定値 += 1000
+
+IF TCVAR:ARG:発情
+	理性判定値 -= 200
+ELSEIF TCVAR:ARG:媚薬 || TCVAR:ARG:催情薬
+	理性判定値 -= 50
+ENDIF
+
+IF TALENT:ARG:傲嬌
+	IF TALENT:ARG:恋慕
+		理性判定値 = 理性判定値 * 2 / 3
+	ELSE
+		理性判定値 = 理性判定値 * 3 / 2
+	ENDIF
+ENDIF
+
+;信頼度
+IF CFLAG:ARG:信頼度 < 100
+	理性判定値 *= 5
+ELSEIF CFLAG:ARG:信頼度 < 300
+	理性判定値 *= 5 / 2
+ELSEIF CFLAG:ARG:信頼度 < 500
+	理性判定値 *= 5 / 3
+ELSEIF CFLAG:ARG:信頼度 < 1000
+	理性判定値 *= 5 / 4
+ENDIF
+
+;カウンターだとここで素質処理しておく
+IF ARGS == "COUNTER"
+	SIF TALENT:ARG:抵抗
+		理性判定値 += 300
+	IF TALENT:ARG:自尊心 == -1
+		理性判定値  = 理性判定値 * 9 / 10
+	ELSEIF TALENT:ARG:自尊心 == 1
+		理性判定値 = 理性判定値 * 6 / 5
+	ENDIF
+	SIF OTOKOGIRAI(ARG)
+		理性判定値 = 理性判定値 * 3 / 2
+	SIF TALENT:ARG:貞操 == 1
+		理性判定値 = 理性判定値 * 6 / 5
+	SIF TALENT:MASTER:謎之魅力
+		理性判定値 = 理性判定値 * 9 / 10
+	SIF TALENT:ARG:倒錯的
+		理性判定値 = 理性判定値 * 9 / 10
+	IF TALENT:ARG:難以越過的底線
+		SELECTCASE EXP:ARG:愛情経験
+			CASE IS >= 500
+				理性判定値 = 理性判定値 / 2
+			CASE IS >= 300
+				理性判定値 = 理性判定値 * 4 / 3
+			CASE IS >= 100
+				理性判定値 = 理性判定値 * 3 / 2
+			CASEELSE
+				理性判定値 *= 2
+		ENDSELECT
+	ENDIF
+	IF TALENT:ARG:傲嬌
+		IF TALENT:ARG:恋慕
+			理性判定値 = 理性判定値 * 2 / 3
+		ELSE
+			理性判定値 = 理性判定値 * 3 / 2
+		ENDIF
+	ENDIF
+ENDIF
+
+
+理性判定値 = MAX(理性判定値,0)
+RETURNF 理性判定値
+
+@OGAMITAOSHI(ARG)
+#DIM 理性判定値
+#DIM 好意表示
+VARSET LOCAL
+
+
+PRINTFORMW %CALLNAME:ARG%的心中
+PRINTFORM 対%CALLNAME:MASTER%的好感
+
+好意表示 = MAX(CHK_HININ_LOVE(ARG) / 100,0)
+SETCOLOR 255,0,0
+REPEAT MAX((好意表示 / 10000 -1),0)
+	PRINTFORM %UNICODE(0x2665)%
+REND
+RESETCOLOR
+SETCOLOR 255,51,153
+SIF 好意表示 >=10000
+	PRINTFORM %UNICODE(0x2665) * (9999)%%UNICODE(0x2665)%
+
+PRINTFORM %UNICODE(0x2665) * (好意表示 % 10000)%
+RESETCOLOR
+SIF CHK_HININ_LOVE(ARG) % 100 > 50
+	PRINTFORML %UNICODE(0x2665)%
+PRINTL
+WAIT
+理性判定値 = CHK_HININ_REASON(ARG)
+
+CALL SHOW_REASONWALL(理性判定値)
+IF TALENT:MASTER:謎之魅力
+	CALL COLORMESSAGE(@"%CALLNAME:ARG%、因%CALLNAME:MASTER%的謎之魅力感覚理性有些蒸発……",C_PINK,1,1)
+	理性判定値 = 理性判定値 * 9 / 10
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF TALENT:ARG:自尊心 == -1
+	理性判定値  = 理性判定値 * 9 / 10
+ELSEIF TALENT:ARG:自尊心 == 1
+	理性判定値 = 理性判定値 * 6 / 5
+	CALL COLORMESSAGE(@"架子很大的%CALLNAME:ARG%、不想讓自己表現的太過廉價",C_PINK,1,1)
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF TALENT:ARG:貞操 == 1
+	理性判定値 = 理性判定値 * 6 / 5
+	CALL COLORMESSAGE(@"非常重視贞操的%CALLNAME:ARG%、在改変觀念之前沒那麼容易就接受的……",C_PINK,1,1)
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF OTOKOGIRAI(ARG)
+	理性判定値 = 理性判定値 * 3 / 2
+	IF TALENT:ARG:性別嗜好 == 3
+		CALL COLORMESSAGE(@"%CALLNAME:ARG%対他人抱有同樣的忌避感情……",C_PINK,1,1)
+	ELSEIF TALENT:ARG:性別嗜好 == 3
+		CALL COLORMESSAGE(@"%CALLNAME:ARG%対男性抱有同樣的忌避感情……",C_PINK,1,1)
+	ENDIF
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF TALENT:ARG:倒錯的
+	CALL COLORMESSAGE(@"%CALLNAME:ARG%、対真正的性交感到了倒錯的魅力……",C_PINK,1,1)
+	理性判定値 = 理性判定値 * 9 / 10
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF TALENT:ARG:難以越過的底線
+	SELECTCASE EXP:ARG:愛情経験
+		CASE IS >= 500
+			CALL COLORMESSAGE(@"%CALLNAME:ARG%、已経就快要完全接受%CALLNAME:MASTER%了……！",C_PINK,1,1)
+			理性判定値 = 理性判定値 / 2
+		CASE IS >= 300
+			CALL COLORMESSAGE(@"%CALLNAME:ARG%、雖然是面対%CALLNAME:MASTER%但還是有些抵抗……",C_PINK,1,1)
+			理性判定値 = 理性判定値 * 6 / 5
+		CASE IS >= 100
+			CALL COLORMESSAGE(@"%CALLNAME:ARG%、即使是和親密的対象也保持着一定距離……",C_PINK,1,1)
+			理性判定値 = 理性判定値 * 3 / 2
+		CASEELSE
+			CALL COLORMESSAGE(@"%CALLNAME:ARG%、不願意接受其他人……",C_PINK,1,1)
+			理性判定値 *= 2
+	ENDSELECT
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+IF TALENT:ARG:傲嬌
+	IF TALENT:ARG:恋慕
+		理性判定値 = 理性判定値 * 2 / 3
+		CALL COLORMESSAGE(@"%CALLNAME:ARG%撒嬌求歡！",C_PINK,1,1)
+	ELSE
+		理性判定値 = 理性判定値 * 3 / 2
+		CALL COLORMESSAGE(@"%CALLNAME:ARG%抱有了反感……",C_PINK,1,1)
+	ENDIF
+	CALL SHOW_REASONWALL(理性判定値)
+ENDIF
+WAIT
+IF CHK_HININ_LOVE(ARG) > 理性判定値
+	IF ESTRUS_CYCLE(ARG) != 150
+		PRINTFORMW 面対%CALLNAME:MASTER%厚颜无耻的請求、%CALLNAME:ARG%还是作出了让步
+		CFLAG:ARG:生解禁 = 1
+		CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,4,0)
+		PRINTW 可以在危険日以外不避妊就做爱了！
+	ELSE
+		PRINTFORMW %CALLNAME:ARG%表达了想要孩子的想法、%CALLNAME:ARG%红着脸同意了
+		CFLAG:ARG:生解禁 = 2
+		CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,5,0)
+		PRINTFORMW 从%CALLNAME:ARG%那里得到了一起生孩子的许可！
+	ENDIF
+ELSE
+	PRINTFORML	%CALLNAME:ARG%委婉地拒絶了
+	CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,2,0)
+	PRINTL [0]尊重她的意志
+	PRINTL [1]作最后的努力
+	$INPUT2_LOOP
+	INPUT
+	IF RESULT == 0
+		TFLAG:16 =2
+		TFLAG:17 = TARGET
+	ELSEIF RESULT == 1
+	;口のうまさと相手次第では粘ればどうにかなる
+		LOCAL = (4 - TALENT:ARG:応答 - TALENT:ARG:胆量 - TALENT:ARG:態度) * (ABL:MASTER:話術技能 + 3 * CFLAG:ARG:ダメ出し)
+		LOCAL:2 = 理性判定値 * (100 - LOCAL) / 100
+		CALL SHOW_REASONWALL(LOCAL:2)
+		IF CHK_HININ_LOVE(ARG) > LOCAL:2
+			PRINTFORMW %CALLNAME:MASTER%用三寸不烂之舌把给%CALLNAME:ARG%哄过去了
+			IF ESTRUS_CYCLE(ARG) != 150
+				CFLAG:ARG:生解禁 = 1
+				CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,4,0)
+				PRINTW 可以在危険日以外不避妊就做爱了！
+			ELSE
+				CFLAG:ARG:生解禁 = 2
+				CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,5,0)
+				PRINTFORMW 从%CALLNAME:ARG%那里得到了一起生孩子的许可！
+			ENDIF
+		ELSE
+			CALL KOJO_MESSAGE_SEND("EVENT",18,TARGET,3,0)
+			PRINTFORMW %CALLNAME:ARG%彻底被惹火了…
+			CFLAG:ARG:ダメ出し += 1
+			CALL ENDUFUFU(ARG)
+			CALL GET_ANGRY(ARG)
+			MARK:ARG:反発刻印 = MIN(MARK:ARG:反発刻印 + 1, 3)
+			TFLAG:106 = 0
+			TFLAG:16 = 2
+		ENDIF
+	ELSE
+		GOTO INPUT2_LOOP
+	ENDIF
+ENDIF
+
+@SHOW_REASONWALL(理性判定値)
+#DIM 理性判定値
+
+PRINTFORM 理性之壁
+SETCOLOR 255,255,0
+LOCAL = MAX(理性判定値 / 100,1)
+PRINTFORM %"★" * LOCAL%
+RESETCOLOR
+SIF 理性判定値 % 100 > 50
+	PRINTL ★
+PRINTL

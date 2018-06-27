@@ -1,0 +1,421 @@
+﻿@カウンター呼び出し処理
+;--------------------------------------------------------------------
+;TCVAR:相手:20　コマンド番号　内容の大筋 
+;TCVAR:相手:21　派生　内容の詳細
+;--------------------------------------------------------------------
+IF ( TFLAG:102 == 3 || TFLAG:102 == 2 ) && !CFLAG:TARGET:添い寝中
+	;カウンター
+	FOR LOCAL,1,CHARANUM
+		SIF TARGET:LOCAL <= 0
+			CONTINUE
+		CALL EVENT_COUNTER(TARGET:LOCAL,LOCAL)
+		CALL EVENT_COUNTER_POSE(TARGET:LOCAL,LOCAL)
+	NEXT
+	;CALL EVENT_COUNTER_COMBINATION
+	FOR LOCAL,1,CHARANUM
+		SIF TARGET:LOCAL <= 0
+			CONTINUE
+		CALL EVENT_COUNTER_SOURCE(TARGET:LOCAL,LOCAL)
+	NEXT
+	FOR LOCAL,1,CHARANUM
+		SIF TARGET:LOCAL <= 0
+			CONTINUE
+		IF TCVAR:(TARGET:LOCAL):20
+			;CALL KOJO_MESSAGE_COUNTER(TARGET:LOCAL)
+			CALL KOJO_MESSAGE_SEND("COUNTER",1,TARGET:LOCAL,0,0)
+			DRAWLINE
+		ENDIF
+	NEXT
+ENDIF
+
+@POSITION_OCCUPATION(ARG)
+#FUNCTION
+FOR LOCAL,1,CHARANUM
+	SIF TARGET:LOCAL <= 0
+		CONTINUE
+	SIF TCVAR:(TARGET:LOCAL):位置関係 == ARG
+		RETURNF 1
+NEXT
+
+@EVENT_COUNTER(ARG,ARG:1)
+#DIM 候補,310
+VARSET 候補
+;----------------------------------------------------
+;キャンセル
+;----------------------------------------------------
+;ARG 対象キャラ
+;ARG:1 行動順
+SIF GROUPMATCH(SELECTCOM, 350, 355, 400, 402, 404, 405, 420, 604, 699)
+	RETURN 0
+SIF ARG <= 0
+	RETURN 0
+SIF !SHIRAHU(ARG)
+	RETURN 0
+SIF FLAG:70 == 1 && CFLAG:ARG:344 == 0
+	RETURN 0
+SIF CFLAG:ARG:行動 == 5
+	RETURN 0
+SIF TCVAR:ARG:馴れ合い < 1
+	RETURN 0
+TCVAR:ARG:30 ++
+SIF TCVAR:ARG:30 > 1
+	RETURN 0
+
+VARSET LOCAL
+
+;----------------------------------------------------
+;特殊な処理
+;----------------------------------------------------
+;うふふ中
+IF CFLAG:ARG:うふふ == 1
+	DEBUGPRINT カウンターリアクション
+	CALL EVENT_COUNTER_REACTION(ARG,ARG:1)
+	RETURN 0
+ENDIF
+;把柄
+;要調整 ENDUREとRANDで茶を濁す
+IF ARG:1 == 1 && CFLAG:ARG:うふふ == 2 && CFLAG:ARG:弱み握り && (ENDURE(ARG) < (400 + RAND:400) && !RAND:3) && !TCVAR:ARG:好きにして
+	SIF CFLAG:ARG:弱み握り > 0
+		CALL EVENT_COUNTER_PUNISHMENT(ARG,ARG:1)
+	FOR LOCAL,0,CHARANUM
+		CFLAG:LOCAL:うふふ = 0
+		TFLAG:MASTERのＰ挿入中 = 0
+		;ウフフ時系装備リセット
+		FOR LOCAL:1,10,150
+			TEQUIP:LOCAL:(LOCAL:1) = 0
+		NEXT
+		TEQUIP:LOCAL:50 = -1
+		TEQUIP:LOCAL:51 = -1
+		;射精関係リセット
+		IF TFLAG:102 < 2
+			BASE:LOCAL:射精 = 0
+			TCVAR:LOCAL:イきそう = 0
+		ENDIF
+		IF LOCK:(CFLAG:LOCAL:初期位置) && AT_HOME(LOCAL)
+			CALL CTRL_CLOTHES_SET(LOCAL, "現在衣装の変更_パジャマ")
+			CFLAG:LOCAL:パジャマ = 1
+		ELSE
+			CALL CTRL_CLOTHES_SET(LOCAL, "現在衣装の変更_普段着")
+			CFLAG:LOCAL:パジャマ = 0
+		ENDIF
+		CALL CLOTHES_SETTING_TRAIN(LOCAL)
+	NEXT
+	TFLAG:102 = 1
+	RETURN 0
+ENDIF
+
+;----------------------------------------------------
+;通常
+;----------------------------------------------------
+;候補:301=ソフト 候補:302=着衣 候補:303=脱衣愛撫 候補:304=脱衣強要 候補:305=性交 候補:306=TARGETによる責め（ハードめ）
+
+;------------------------------------------
+;1～9 コミュニケーション
+;------------------------------------------
+;距離が近い
+候補:1 = 10 + CFLAG:ARG:害羞 + CFLAG:ARG:積極性
+;チラ見
+候補:2 = 10 + CFLAG:ARG:害羞 + CFLAG:ARG:積極性
+;おはなし
+候補:3 = 10 + CFLAG:ARG:タチ + CFLAG:ARG:積極性
+;いい匂い
+候補:4 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;
+候補:9 = 15 * (1 + TALENT:MASTER:濃厚精液)
+FOR LOCAL,1,10
+	候補:LOCAL *= COUNTER_TYPE("コミュ",ARG)
+NEXT
+;------------------------------------------
+;10～19 ベリーソフト
+;------------------------------------------
+;近寄ってくる
+候補:11 = 10 + CFLAG:ARG:誘惑 - CFLAG:ARG:害羞
+;笑顔を浮かべる
+候補:12 = 10 + CFLAG:ARG:害羞
+;構って欲しがる
+候補:13 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;身をすり寄せる
+候補:14 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ - CFLAG:ARG:害羞
+;見つめてくる
+候補:15 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;肩にあご乗せ
+候補:16 = 10 + CFLAG:ARG:積極性
+;差し入れ
+候補:17 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+
+FOR LOCAL,10,20
+	候補:LOCAL *= COUNTER_TYPE("ベリーソフト",ARG)
+NEXT
+;------------------------------------------
+;20～29 誘惑
+;------------------------------------------
+;色っぽい仕草
+候補:20 = 10 + CFLAG:ARG:誘惑 - CFLAG:ARG:害羞
+;見つめる
+候補:21 = 10 + CFLAG:ARG:害羞
+;体を摺り寄せる
+候補:22 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;裙子を捲る
+候補:23 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ - CFLAG:ARG:害羞
+;耳元に息を吹きかける
+候補:24 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;摸屁股
+候補:25 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ
+;腕に抱き付き
+候補:26 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;谷間を見せる
+候補:27 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性 - CFLAG:ARG:害羞
+;尻ズリ
+候補:28 = 8 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ - CFLAG:ARG:害羞 + MAX(EXP:ARG:射精経験 / 15, 8)
+
+FOR LOCAL,20,30
+	候補:LOCAL *= COUNTER_TYPE("ソフト",ARG)
+NEXT
+;------------------------------------------
+;30～39 着衣セクハラ
+;------------------------------------------
+;キス
+候補:30 = (10 + CFLAG:ARG:積極性) * !TALENT:ARG:無接吻経験
+;後ろから抱きつく
+候補:31 = 10 + CFLAG:ARG:害羞 - CFLAG:ARG:積極性
+;前から抱きつく
+候補:32 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;胸を揉ませる
+候補:33 = 10 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+;股間をまさぐる
+候補:34 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ
+;裙子の中を見せる
+候補:35 = 10 + CFLAG:ARG:害羞 + CFLAG:ARG:誘惑
+;後ろから胸もみもみ
+候補:36 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ
+;糖強奪
+候補:39 = 10 + CFLAG:ARG:積極性 + CFLAG:ARG:タチ * !TALENT:ARG:無接吻経験
+FOR LOCAL,30,40
+	候補:LOCAL *= COUNTER_TYPE("着衣",ARG)
+NEXT
+
+;------------------------------------------
+;40～49 おねだり
+;------------------------------------------
+
+;正常位Ｖおねだり
+候補:41 = 10 + ABL:ARG:Ｖ感覚 * 4 + EX:ARG:Ｖ寸止め * 10
+;正常位Ａおねだり
+;候補:42 = 10 + ABL:ARG:Ａ感覚 * 4 + EX:ARG:Ａ寸止め * 10
+;後背位Vおねだり
+候補:43 = 10 + ABL:ARG:Ｖ感覚 * 3 + EX:ARG:Ｖ寸止め * 10
+SIF TALENT:ARG:動物耳
+	候補:43 += ABL:ARG:Ｖ感覚 * 2
+;後背位Ａおねだり
+候補:44 = 10 + ABL:ARG:Ａ感覚 * 3 + EX:ARG:Ａ寸止め * 10
+SIF TALENT:ARG:動物耳
+	候補:44 += ABL:ARG:Ａ感覚 * 2
+[SKIPSTART]
+;C
+候補:45 = ABL:ARG:Ｃ感覚 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+;V
+候補:46 = ABL:ARG:Ｖ感覚 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+;A
+候補:47 = ABL:ARG:Ａ感覚 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+;B
+候補:48 = ABL:ARG:Ｂ感覚 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+;M
+候補:49 = (ABL:ARG:Ｍ感覚 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性) * !TALENT:ARG:無接吻経験
+[SKIPEND]
+FOR LOCAL,40,50
+	候補:LOCAL *= COUNTER_TYPE("おねだり",ARG)
+NEXT
+
+;------------------------------------------
+;50～69 脱衣セクハラ(愛撫)
+;------------------------------------------
+;手淫
+候補:50 = 10 + 2 * TALENT:ARG:霊活手指 + ABL:ARG:指 + BASE:MASTER:勃起 / 500
+;口交、舐陰
+候補:51 = 10 + TALENT:ARG:汚臭耐性 + 2 * TALENT:ARG:舌頭霊活 + ABL:ARG:舌 + BASE:MASTER:勃起 / 500
+;素股,磨鏡
+候補:52 = 10 + ABL:ARG:腰 + 2 * TALENT:ARG:弄湿難易 + BASE:MASTER:勃起 / 500
+;乳交
+候補:53 = 10 + TALENT:ARG:胸囲 + 2 * TALENT:ARG:淫乳 + ABL:ARG:胸 + BASE:MASTER:勃起 / 500
+;足交
+候補:54 = 10 + 2 * TALENT:ARG:施虐狂 + MIN(ABL:ARG:施虐属性 , 5) + BASE:MASTER:勃起 / 500
+;肛門愛撫
+候補:55 = (10 + 2 * TALENT:ARG:霊活手指 + ABL:ARG:指) * SIGN(EXP:ARG:Ａ経験)
+;舐肛
+候補:56 = (10 + 2 * TALENT:ARG:舌頭霊活 + ABL:ARG:舌 + MIN(TALENT:ARG:汚臭耐性, 0)) * SIGN(EXP:ARG:Ａ経験)
+;指挿入
+候補:57 = 10 + 2 * TALENT:ARG:霊活手指 + ABL:ARG:指
+;胸愛撫
+候補:58 = 10 + 2 * TALENT:ARG:霊活手指 + ABL:ARG:指
+;乳首吸い
+候補:59 = 10 + 2 * TALENT:ARG:舌頭霊活 + ABL:ARG:舌 + 1 * TALENT:ARG:幼稚 - TALENT:MASTER:2
+;ディープキス
+候補:60 = 10 + (2 * TALENT:ARG:舌頭霊活 + ABL:ARG:舌) * !TALENT:ARG:無接吻経験
+
+
+FOR LOCAL,50,70
+	候補:LOCAL = 候補:LOCAL * COUNTER_TYPE("脱衣愛撫",ARG) * (90 + RAND:21) / 100
+NEXT
+;------------------------------------------
+;70～79 脱衣セクハラ(強要)
+;------------------------------------------
+;舐陰
+候補:70 = 10 + ABL:ARG:Ｃ感覚
+;口交
+候補:71 = 10 + ABL:ARG:Ｃ感覚
+;肛門奉仕
+候補:72 = (10 + ABL:ARG:Ａ感覚) * SIGN(EXP:ARG:Ａ経験)
+;ぱふぱふ
+候補:73 = 10 + ABL:ARG:Ｂ感覚
+;乳合わせ
+候補:74 = 10 + ABL:ARG:Ｂ感覚
+;タワシ洗い
+候補:75 = 10 + ABL:ARG:Ｃ感覚
+;強制アソコ愛撫
+候補:76 = 10 + (ABL:ARG:Ｃ感覚 +  ABL:ARG:Ｖ感覚) / 2
+;乳を吸わせる
+候補:77 = 10 + ABL:ARG:Ｂ感覚
+;尻ズリ
+候補:78 = 8 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 8)
+
+FOR LOCAL,70,80
+	候補:LOCAL = 候補:LOCAL * COUNTER_TYPE("脱衣強要",ARG) * (90 + RAND:21) / 100
+NEXT
+
+;------------------------------------------
+;80～89 性交
+;------------------------------------------
+;被正常位
+候補:80 = 10 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 15)
+;正常位Ｖおねだり
+候補:81 = 10 + ABL:ARG:Ｖ感覚 * 3 + EX:ARG:Ｖ寸止め * 10
+;正常位Ａおねだり
+;候補:82 = 10 + ABL:ARG:Ｖ感覚 * 3 + EX:ARG:Ａ寸止め * 10
+;被後背位
+候補:83 = 7 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 15) + ABL:ARG:施虐属性 / 2
+;腰振りＶ受け
+候補:84 = 10 + ABL:ARG:Ｃ感覚
+;騎乗位
+候補:85 = 10 + ABL:ARG:Ｖ感覚 * 3 + EX:ARG:Ｖ寸止め * 10
+候補:86 = 10 + ABL:ARG:親密 * 3 + EX:ARG:Ｖ寸止め * 10
+;騎乗位Ａ
+候補:87 = 10 + ABL:ARG:Ａ感覚 * 3+ EX:ARG:Ａ寸止め * 10
+候補:88 = 10 + (ABL:ARG:奉仕精神 + ABL:ARG:Ｖ感覚) * 2
+候補:89 = 10 + (ABL:ARG:奉仕精神 + ABL:ARG:Ａ感覚) * 2
+
+
+FOR LOCAL,80,90
+	候補:LOCAL = 候補:LOCAL * COUNTER_TYPE("性交",ARG) * (90 + RAND:21) / 100
+NEXT
+;------------------------------------------
+;90～99 TARGETによる責め（ハードめ）
+;------------------------------------------
+
+;後背位Ａ挿入される
+候補:90 = 5 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 15) + ABL:ARG:施虐属性 / 2 - (TALENT:MASTER:2 & 1) * 4 + ABL:MASTER:肛 * 2 - ABL:MASTER:膣
+;強制口交される
+候補:91 = 10 + ABL:ARG:Ｃ感覚 + ABL:ARG:施虐属性
+;腰振り逆Ａ
+候補:93 = 10 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 15)
+;正常位Ａ挿入される
+候補:94 = 8 + ABL:ARG:Ｃ感覚 + MAX(EXP:ARG:射精経験 / 15, 15) - (TALENT:MASTER:2 & 1) * 4 + ABL:MASTER:肛 * 2 - ABL:MASTER:膣
+;アナル開発許可を求める
+FOR LOCAL,90,100
+	候補:LOCAL = 候補:LOCAL * COUNTER_TYPE("責め",ARG) * (90 + RAND:21) / 100
+NEXT
+
+;------------------------------------------
+;100～119 愛撫（セックス中）
+;------------------------------------------
+[SKIPSTART]
+;前から抱きつく;32
+候補:100 = 10 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+
+;胸を揉ませる 33
+候補:101 = 10 + CFLAG:ARG:誘惑 - CFLAG:ARG:積極性
+
+;裙子の中を見せる 35
+候補:102 = 10 + CFLAG:ARG:害羞 + CFLAG:ARG:誘惑
+
+;肛門愛撫 55
+候補:103
+
+;胸愛撫 58
+候補:104
+
+;乳首吸い 59
+候補:105
+;ソフトキス 30
+候補:106
+;ディープキス 60
+候補:107
+
+;乳を吸わせる 77
+候補:108
+
+;だいしゅきホールド 86
+候補:109
+
+;腰振りV 88
+候補:110
+
+;腰振りA 89
+候補:111
+
+;逆正常位
+候補:112
+[SKIPEND]
+;------------------------------------------
+;120～139 抱きつきモード
+;------------------------------------------
+;頭撫で
+候補:120 = 13
+;髪梳き
+候補:121 = 12 - (CFLAG:ARG:タチ + CFLAG:ARG:積極性) / 2
+;抱きつき
+候補:122 = 10 + CFLAG:ARG:誘惑 - CFLAG:ARG:タチ
+;抱きしめ
+候補:123 = 10 + CFLAG:ARG:害羞
+;頬撫で
+候補:124 = 10 + CFLAG:ARG:タチ
+;くすぐり
+候補:125 = 5 + CFLAG:ARG:タチ + CFLAG:ARG:積極性
+;膝枕させる
+候補:126 = 7 + CFLAG:ARG:誘惑 + CFLAG:ARG:積極性
+;匂いを嗅ぐ
+候補:127 = 9 + CFLAG:ARG:害羞
+;話しかける
+候補:128 = 11 - CFLAG:ARG:害羞
+;首筋舐め
+候補:129 = 3 + CFLAG:ARG:タチ + CFLAG:ARG:害羞 + GETPALAMLV(PALAM:ARG:欲情, 7)
+
+FOR LOCAL,120,140
+	候補:LOCAL *= COUNTER_TYPE("抱きつき",ARG)
+NEXT
+
+;------------------------------------------
+;------------------------------------------
+
+;ランダ舞ズ
+FOR LOCAL,1,140
+	候補:LOCAL = RAND:(MAX(候補:LOCAL,1))
+NEXT
+
+;実行判定
+FOR LOCAL,1,140
+	候補:LOCAL *= ACTABLE(ARG,LOCAL)
+NEXT
+
+;------------------------------------------
+;実行判定
+;------------------------------------------
+候補:300 = 0
+FOR LOCAL,1,140
+	IF 候補:LOCAL > 候補:300
+		候補:300 = 候補:LOCAL
+		候補:301 = LOCAL
+	ENDIF
+NEXT
+
+SIF 候補:300 > 0
+	TCVAR:ARG:20 = 候補:301

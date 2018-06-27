@@ -1,0 +1,39 @@
+﻿{
+#DIMS CONST FOOD_MAINDISH = 
+"雑燴粥","蛋澆飯","炒蔬菜","壽司糖","焼鱼","味噌汤","涼拌菜","烏冬面","素麺","蕎麦面",
+"煎蛋巻","燉菜","漢堡肉","奶汁燴菜","咖喱飯","涮涮鍋","拉麵","姜汁焼肉","牛排","油淋鶏",
+"奶酪番茄沙拉","興奮劑高湯","澳洲鴕鳥肉","有機・肥鮪魚・壽司","金吉獣料理","天婦羅","盛的満満的飯","泡菜飯"
+}
+
+#DIM CONST MENUS_MAINDISH = 27
+
+{
+#DIMS CONST FOOD_DESSERT = 
+"布丁","蛋糕","果凍","蛋撻","曲奇","餡餅","羊羹","大福","蜂蜜蛋糕","団子",
+"水果拼盘","奶油蛋糕"
+}
+
+#DIM CONST MENUS_DESSERT = 12
+
+{
+#DIMS CONST FOOD_SNACK = "","三明治","飯団","漢堡","司康餅","焼麥","肉包","炸魚＆薯条","墨西哥巻餅","章魚焼"
+}
+
+#DIM CONST MENUS_SNACK = 9
+
+{
+#DIMS CONST FOOD_FORBIDDEN = "","揚げ跳蛋","跳蛋の湯引き","跳蛋の握り","煮込み跳蛋"
+}
+
+{
+#DIMS CONST FOOD_FROG = "青蛙のから揚げ","青蛙カレー","青蛙のソテー","青蛙の塩焼き"
+}
+
+#DIM CONST MENUS_FROG = 4
+
+#DIMS DISHNAME
+#DIM DISHTYPE
+;(1=軽食　2=主食　3=デザート　4=禁断　5=祝日)
+#DIM DISHQUALITY
+#DIM DISHSPOIL
+#DIM DISHTIME

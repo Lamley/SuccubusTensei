@@ -1,0 +1,149 @@
+﻿@COM615
+#DIM 回復前体力１
+#DIM 回復前気力１
+#DIM 回復後体力１
+#DIM 回復後気力１
+#DIM 回復前体力２
+#DIM 回復前気力２
+#DIM 回復後体力２
+#DIM 回復後気力２
+
+回復前体力１ = BASE:MASTER:体力
+回復前気力１ = BASE:MASTER:気力
+回復前体力２ = BASE:TARGET:体力
+回復前気力２ = BASE:TARGET:気力
+LOCAL = RAND:3
+LOCAL:1 = RAND:10
+IF LOCAL > ABL:料理技能
+	;料理が下手だと失敗
+	TFLAG:193 = -1
+	TFLAG:98 = -1
+ELSEIF LOCAL:1 <= ABL:料理技能 - 2
+	;料理が上手いと大成功
+	EXP:MASTER:会話経験 ++
+	EXP:MASTER:約会経験 ++
+	EXP:TARGET:約会経験 ++
+	TFLAG:193 = 1
+	TFLAG:98 = 5
+ELSE
+	;残りは成功
+	TFLAG:193 = 0
+	TFLAG:98 = 3
+ENDIF
+
+DOWNBASE:気力 += 50
+
+;固定で獲得するソース
+SOURCE:歓楽 = 300
+SOURCE:情愛 = 300
+SOURCE:露出 = 100
+SOURCE:反感 = 50
+
+
+IF (ABL:親密 + ABL:奉仕精神) < 10
+	LOCAL:2 = 1
+	SOURCE:歓楽 += 1000 + (ABL:親密 * 100)
+	SOURCE:達成 += 500 + (ABL:親密 * 50)
+	SOURCE:情愛 += (ABL:親密 * 30)
+ELSEIF (ABL:親密 + ABL:奉仕精神) < 15
+	LOCAL:2 = 2
+	SOURCE:歓楽 += 2000 + (ABL:親密 * 150)
+	SOURCE:達成 += 1500 + (ABL:親密 * 80)
+	SOURCE:情愛 += 400 + (ABL:親密 * 30)
+ELSEIF (ABL:親密 + ABL:奉仕精神) < 25
+	LOCAL:2 = 3
+	SOURCE:歓楽 += 3000 + (ABL:親密 * 200)
+	SOURCE:達成 += 2000 + (ABL:親密 * 100)
+	SOURCE:情愛 += 600 + (ABL:親密 * 40)
+ELSE
+	 LOCAL:2 = 5
+	SOURCE:歓楽 += 5000 + (ABL:親密 * 250)
+	SOURCE:達成 += 3000 + (ABL:親密 * 150)
+	SOURCE:情愛 += 1800 + (ABL:親密 * 30)
+ENDIF
+
+EXP:料理経験 += LOCAL:2
+SIF TALENT:恋慕
+	EXP:愛情経験 += LOCAL:2
+
+IF ABL:料理技能 < 2
+	CALL RECOVER_PERMIL(TARGET,40,"体力")
+	CALL RECOVER_PERMIL(TARGET,100,"気力")
+	CALL RECOVER_PERMIL(MASTER,40,"体力")
+	CALL RECOVER_PERMIL(MASTER,100,"気力")
+ELSEIF ABL:料理技能 < 4
+	BASE:体力 = MIN(BASE:体力 + MAXBASE:体力 / 15 , MAXBASE:体力)
+	BASE:気力 = MIN(BASE:気力 + MAXBASE:気力 / 5 , MAXBASE:気力)
+	BASE:MASTER:体力 = MIN(BASE:MASTER:体力 + MAXBASE:MASTER:体力 / 10 , MAXBASE:MASTER:体力)
+	BASE:MASTER:気力 = MIN(BASE:MASTER:気力 + MAXBASE:MASTER:気力 / 5 , MAXBASE:MASTER:気力)
+	BASE:MASTER:精力 = MIN(BASE:MASTER:精力 + MAXBASE:MASTER:精力 / 8 , MAXBASE:MASTER:精力)
+ELSE
+	BASE:体力 = MIN(BASE:体力 + MAXBASE:体力 / 8 , MAXBASE:体力)
+	BASE:気力 = MIN(BASE:気力 + MAXBASE:気力 / 3 , MAXBASE:気力)
+	BASE:MASTER:体力 = MIN(BASE:MASTER:体力 + MAXBASE:MASTER:体力 / 8 , MAXBASE:MASTER:体力)
+	BASE:MASTER:気力 = MIN(BASE:MASTER:気力 + MAXBASE:MASTER:気力 / 3 , MAXBASE:MASTER:気力)
+	BASE:MASTER:精力 = MIN(BASE:MASTER:精力 + MAXBASE:MASTER:精力 / 4 , MAXBASE:MASTER:精力)
+ENDIF
+IF TFLAG:193 == -1
+	TIMES SOURCE:歓楽 , 0.50
+	TIMES SOURCE:達成 , 0.50
+	TIMES SOURCE:情愛 , 0.50
+ELSEIF TFLAG:193 == 0
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:達成 , 1.00
+	TIMES SOURCE:情愛 , 1.00
+ELSE
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:達成 , 2.00
+	TIMES SOURCE:情愛 , 2.00
+ENDIF
+TIME += 60
+EXP:MASTER:約会経験 ++
+EXP:TARGET:約会経験 ++
+CALL 満腹度上昇(MASTER,"主食")
+CALL 満腹度上昇(TARGET,"主食")
+
+SETBIT TFLAG:一日一回,1
+回復後体力１ = BASE:MASTER:体力
+回復後気力１ = BASE:MASTER:気力
+回復後体力２ = BASE:TARGET:体力
+回復後気力２ = BASE:TARGET:気力
+DRAWLINE
+PRINTFORML 体力+{ABS(回復後体力１ - 回復前体力１)}（%CALLNAME:MASTER%）
+PRINTFORML 気力+{ABS(回復後気力１ - 回復前気力１)}（%CALLNAME:MASTER%）
+PRINTFORML 体力+{ABS(回復後体力２ - 回復前体力２)}（%CALLNAME:TARGET%）
+PRINTFORML 気力+{ABS(回復後気力２ - 回復前気力２)}（%CALLNAME:TARGET%）
+RETURN 1
+
+;-------------------------------------------------
+;実行可能判定
+;-------------------------------------------------
+;お弁当
+@COM_ABLE615
+;一括管理
+SIF GLOBAL_COMABLE(615)
+	RETURN RESULT
+;相手が居ない
+SIF !TARGET
+	RETURN 0
+;デート中以外
+SIF !CHK_DATENOW(CFLAG:12)
+	RETURN 0
+;デート道中
+SIF (CFLAG:現在位置 % 100) % 10
+	RETURN 0
+SIF !OBENTO(CFLAG:MASTER:現在位置)
+	RETURN 0
+;食べたばかり
+SIF !TIME_PROGRESS(TCVAR:312)
+	RETURN 0
+SIF GETBIT(TFLAG:一日一回,1)
+	RETURN 0
+;睡眠中
+SIF CFLAG:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
+

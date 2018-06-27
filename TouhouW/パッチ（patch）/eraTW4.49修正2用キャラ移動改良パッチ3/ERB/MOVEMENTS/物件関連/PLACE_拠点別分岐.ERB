@@ -1,0 +1,287 @@
+﻿@GET_EXISTMAP(ARG)
+#FUNCTION
+SIF GROUPMATCH(ARG, 0, 1, 2, 3, 4, 5, 7, 9)
+	RETURNF 1
+
+;------------------------------------------
+;対象マップの呼び名文字列を返す
+;COMF410_掃除.ERB、呼び出し元
+;要参照MAP_COMM_0.ERB
+;ARG,MAPID
+;ARG:1,キャラID
+;------------------------------------------
+@GET_MAPNAME(ARG, ARG:1 = 0)
+#FUNCTIONS
+#DIMS PNAME
+SELECTCASE ARG
+	CASE 0
+		PNAME = 博麗神社
+	CASE 1
+		PNAME = 命連寺
+	CASE 2
+		PNAME = 人里
+	CASE 3
+		PNAME = 紅魔館
+	CASE 4
+		PNAME = 迷いの竹林
+	CASE 5
+		PNAME = 魔法の森
+	CASE 7
+		PNAME = 妖怪の山・山麓
+	CASE 9
+		PNAME = 地底
+	CASEELSE
+		PNAME = 謎の領域
+ENDSELECT
+RETURNF PNAME
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;風呂を追い出される先
+;CALL		USER
+;ARG		VOID
+;RETURN		脱出先の場所
+;COMMENT	場所を変更した場合、RETURNFを変更の事
+;-----------------------------------------------------------
+@KICKOUT(ARG)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(CFLAG:MASTER:現在位置)
+	SELECTCASE MAIN_MAP
+		CASE 0
+			RETURNF KICKOUT_0()
+		CASE 2
+			RETURNF KICKOUT_2()
+		CASE 3
+			RETURNF KICKOUT_3()
+		CASE 4
+			RETURNF KICKOUT_4()
+		CASE 5
+			RETURNF KICKOUT_5()
+		CASE 7
+			RETURNF KICKOUT_7()
+		CASE 9
+			RETURNF KICKOUT_9()
+	ENDSELECT
+ENDIF
+RETURNF CFLAG:MASTER:前ターン位置
+
+;------------------------------------------
+;マップごとに移動できない状況がある場合に呼び出す（温泉に人がいる、鍵を締めている　など）
+;要参照COMF400_移動.ERB
+;ARG,場所ID
+;ARG:1,キャラID,省略すると0=MASTER,現状キャラ移動以外では使いません
+;------------------------------------------
+@MAP_CAN_MOVE(ARG, ARG:1)
+#FUNCTION
+#DIM 家主
+#DIM 在宅
+IF ROOMDATA:(ARG % 100) & 場所_ワンルーム
+	家主 = PRIVATEROOM:(ARG % 100)
+	在宅 = 0
+	;あなた
+	IF ARG:1 == MASTER
+		;家主がいて起きてる
+		IF CFLAG:家主:現在位置 == ARG
+			IF SHIRAHU(家主)
+				在宅 = 1
+			ENDIF
+		;家主以外の誰かがいる,この人物は寝てたりしても良い
+		ELSEIF IN_ROOM_NUMBER(ARG)
+			在宅 = 1
+		;同行か恋慕なら入れる
+		ELSEIF CFLAG:家主:同行 || TALENT:家主:恋慕
+			在宅 = 1
+		ENDIF
+	;家主は入れる
+	ELSEIF ARG:1 == 家主
+		在宅 = 1
+	;そうでないキャラは相性が100を超えていないとダメ
+	ELSEIF RELATION:家主:(ARG:1) > 100
+		在宅 = 1
+	ENDIF
+	IF !在宅
+		TFLAG:移動不能メッセージ = 999
+		RETURNF 0
+	ENDIF
+ENDIF
+
+SELECTCASE MAIN_MAP
+	CASE 0
+		RETURNF MAP_CAN_MOVE_0(ARG, ARG:1)
+	CASE 2
+		RETURNF MAP_CAN_MOVE_2(ARG, ARG:1)
+	CASE 3
+		RETURNF MAP_CAN_MOVE_3(ARG, ARG:1)
+	CASE 4
+		RETURNF MAP_CAN_MOVE_4(ARG, ARG:1)
+	CASE 5
+		RETURNF MAP_CAN_MOVE_5(ARG, ARG:1)
+	CASE 7
+		RETURNF MAP_CAN_MOVE_7(ARG, ARG:1)
+	CASE 9
+		RETURNF MAP_CAN_MOVE_9(ARG, ARG:1)
+ENDSELECT
+RETURNF 1
+
+;------------------------------------------
+;地点関連性応答処理
+;要参照MOVEMENT_CAN_MOVE_0.ERB
+;ARG,現在地点
+;ARG:1,比較先地点
+;------------------------------------------
+@CAN_MOVE(ARG, ARG:1)
+#FUNCTION
+IF MAIN_MAP == GET_MAPID(ARG)
+SELECTCASE MAIN_MAP
+	CASE 0
+		RETURNF CAN_MOVE_0(ARG, ARG:1)
+	CASE 1
+		RETURNF CAN_MOVE_1(ARG, ARG:1)
+	CASE 2
+		RETURNF CAN_MOVE_2(ARG, ARG:1)
+	CASE 3
+		RETURNF CAN_MOVE_3(ARG, ARG:1)
+	CASE 4
+		RETURNF CAN_MOVE_4(ARG, ARG:1)
+	CASE 5
+		RETURNF CAN_MOVE_5(ARG, ARG:1)
+	CASE 7
+		RETURNF CAN_MOVE_7(ARG, ARG:1)
+	CASE 9
+		RETURNF CAN_MOVE_9(ARG, ARG:1)
+ENDSELECT
+ENDIF
+RETURNF 0
+;------------------------------------------
+;場所IDの名前文字列を返す
+;要参照ステータス表示関連/INFO.ERB、COMF400_移動.ERB、呼び出し元
+;要参照MAP_COMM_0.ERB
+;ARG,場所ID
+;------------------------------------------
+@NAME_FROM_PLACE(ARG)
+#FUNCTIONS
+#DIM MAPID
+#DIMS PNAME
+PNAME = 
+MAPID = GET_MAPID(ARG)
+IF TFLAG:妄想中 == 1
+	PNAME =素敵空間
+ELSEIF ARG == OMANEKIBEYA()
+;	お招き部屋の名前処理
+	RETURNF OMANEKI_PLACE()
+ELSEIF MAPID == MAIN_MAP
+;
+;	物件マップ内の名前処理
+;
+	SELECTCASE MAPID
+		CASE 0
+			PNAME = %MAP_PLACENAME_0(ARG)%
+		CASE 1
+			PNAME = %MAP_PLACENAME_1(ARG)%
+		CASE 2
+			PNAME = %MAP_PLACENAME_2(ARG)%
+		CASE 3
+			PNAME = %MAP_PLACENAME_3(ARG)%
+		CASE 4
+			PNAME = %MAP_PLACENAME_4(ARG)%
+		CASE 5
+			PNAME = %MAP_PLACENAME_5(ARG)%
+		CASE 7
+			PNAME = %MAP_PLACENAME_7(ARG)%
+		CASE 9
+			PNAME = %MAP_PLACENAME_9(ARG)%
+	ENDSELECT
+ELSE
+;
+;	道中他、その他範囲
+;
+	PNAME = %STR:(ARG)%
+ENDIF
+RETURNF PNAME
+
+@MAP_住人(ARG,ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	CASE 0
+		;計12人
+		SIF GROUPMATCH(ARG:1,1,2,3,4,5,6,7,8,9,10,57,71)
+			RETURNF 1
+	CASE 1
+		;計14人
+		SIF GROUPMATCH(ARG:1,39,40,41, 55, 56, 69, 85,86,87,88,89,90,91,92)
+			RETURNF 1
+	CASE 2
+		;計8人
+		SIF GROUPMATCH(ARG:1,67, 70, 73, 80, 81, 82, 104, 105)
+			RETURNF 1
+	CASE 3
+	;大妖精、チルノ、咲夜、レミリア、リリカ、メルラン、ルナサ、フラン、パチュリー、美鈴、小悪魔、レティ、わかさぎ姫
+	;計13人
+		SIF GROUPMATCH(ARG:1,13,14,15,16,20,21,22,50,54,58,59,74,93)
+			RETURNF 1
+	CASE 4
+	;ミスティア、鈴仙、てゐ、妹紅、輝夜、影狼、幽香、永琳、メディスン
+	;計9人
+		SIF GROUPMATCH(ARG:1,28,52,53,61,62,63,68,72,75)
+			RETURNF 1
+	CASE 5
+	;マリサ、アリス一家、エレン、リグル、るみゃ、朱鷺子
+	;計8人
+		SIF GROUPMATCH(ARG:1,11,12,17,27,44,101,102,103)
+			RETURNF 1
+	CASE 7
+	;華扇、にとり、秋姉妹、雛、リリーｓ
+	;計8人
+		SIF GROUPMATCH(ARG:1,18,19,43,51,77,78,79,97)
+			RETURNF 1
+	CASE 9
+	;計8人
+	;おりん、おくう、こいし、さとり、パルパル、ゆーぎ、キスメ、ヤマメ
+		SIF GROUPMATCH(ARG:1,36,37,38,49,60,64,83,84)
+			RETURNF 1
+ENDSELECT
+
+;-----------------------------------------
+;非自宅時に差し替える場所IDを返す関数
+;ARG,対象ID
+;RETURNF,差し替え済み対象ID
+;-----------------------------------------
+@GET_MAP_REPLACEMENT(ARG)
+#FUNCTION
+#DIM 対象マップ
+#DIM OUTID
+OUTID = 0
+対象マップ =  GET_MAPID(ARG)
+IF MAIN_MAP != 対象マップ
+	SELECTCASE 対象マップ
+		CASE 0
+			OUTID = MAP_SEARCH_REPLACEMENT_0(ARG)
+		CASE 1
+			OUTID = MAP_SEARCH_REPLACEMENT_1(ARG)
+		CASE 2
+			OUTID = MAP_SEARCH_REPLACEMENT_2(ARG)
+		CASE 3
+			OUTID = MAP_SEARCH_REPLACEMENT_3(ARG)
+		CASE 4
+			OUTID = MAP_SEARCH_REPLACEMENT_4(ARG)
+		CASE 5
+			OUTID = MAP_SEARCH_REPLACEMENT_5(ARG)
+		CASE 7
+			OUTID = MAP_SEARCH_REPLACEMENT_7(ARG)
+		CASE 9
+			OUTID = MAP_SEARCH_REPLACEMENT_9(ARG)
+	ENDSELECT
+ENDIF
+SIF OUTID > 0
+	RETURNF OUTID
+RETURNF ARG
+
+;FileName_COMMON.ERB ------------------------------- Rev1.00
+;スキップムーブ可否
+;-----------------------------------------------------------
+@CAN_SKIPMOVE(ARG)
+#FUNCTION
+SIF !FLAG:スキップムーブ
+	RETURNF 0
+SIF GROUPMATCH(ARG,0,1,3,4,5,7,9)
+	RETURNF 1
+RETURNF 0

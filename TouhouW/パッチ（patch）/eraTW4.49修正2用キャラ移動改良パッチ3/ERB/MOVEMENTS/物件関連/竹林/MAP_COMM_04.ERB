@@ -1,0 +1,83 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	竹林MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_4(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS EIENNAME,30 = "永遠亭入口","玄関","待合室","診察室","調剤室","来客用トイレ","廊下","中廊下","縁側","てゐ私室","鈴仙私室","空き部屋","永琳私室","輝夜私室","広間","居間","台所","厩","脱衣所","風呂","庭","裏庭","納戸","物置","二階階段","二階廊下","倉庫","二階空き部屋","地下階段","地下室"
+#DIMS BAMBOONAME,18 = "兎の洞穴","影狼の家","斜角の竹林","迷いの小道","井戸","無名の丘","メディスンの家","太陽の畑","幽香の家","廃屋","温泉","空き小屋","ミスティアの家","夜雀の屋台","妹紅の家","祠","竹林入口"
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 30
+			RETURNF EIENNAME:(PLACEID - 1)
+		CASE 31 TO 47
+			RETURNF BAMBOONAME:(PLACEID - 31)
+		CASE 48
+			RETURNF "竹林の外"
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "スキマ空間"
+		CASEELSE
+			RETURNF "竹林の外"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_4
+
+IF CHK_FOCUS(402,CFLAG:MASTER:現在位置,430)
+	CALL MAP_EIENTEI
+ELSE
+	CALL MAP_EIEN_FRONT
+	CALL MAP_BAMBOO
+ENDIF
+RETURN 1
+
+
+@MAP_CAN_MOVE_4(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;奥ノ院判定
+	CASE 407 TO 430
+		;あなた
+		IF ARG:1 == MASTER
+			IF 永遠亭侵入許可() || CFLAG:MASTER:初期位置 == 412 || CFLAG:MASTER:初期位置 == 428
+				RETURNF 1
+			ELSE
+				TFLAG:移動不能メッセージ = 401
+				RETURNF 0
+			ENDIF
+		;鈴仙、うどんげ、輝夜、永琳
+		ELSEIF GROUPMATCH(ARG:1, 52, 53, 62, 72)
+			RETURNF 1
+		ELSE
+			RETURNF 0
+		ENDIF
+	CASEELSE
+		RETURNF 1
+ENDSELECT
+
+@MAP_CANNOT_WORD_4(ARG)
+IF TFLAG:移動不能メッセージ == 401
+	PRINTW 親しい人がいないうちは永遠亭の奥には入れさせてもらえない
+	CLEARLINE 2
+	REUSELASTLINE 
+	RETURN
+ENDIF
+
+@永遠亭侵入許可()
+#FUNCTION
+SIF TALENT:52:恋慕 || TALENT:53:恋慕 || TALENT:62:恋慕 || TALENT:72:恋慕
+	RETURNF 1
+SIF GROUPMATCH(FLAG:デート相手,52,53,62,72)
+	RETURNF 1
+SIF GROUPMATCH(FLAG:なりきり,52,53,62,72)
+	RETURNF 1
+SIF CFLAG:52:同行 || CFLAG:53:同行 || CFLAG:62:同行 || CFLAG:72:同行
+	RETURNF 1
+RETURNF 0

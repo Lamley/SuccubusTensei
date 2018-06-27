@@ -1,0 +1,54 @@
+﻿;-------------------------------------------------
+;実行判定
+;-------------------------------------------------
+@COM_ABLE367
+SIF !TFLAG:100
+	RETURN 0
+SIF !SEARCH_ACTIVE_IRAI_SLOT()
+	RETURN 0
+RETURN 1
+
+@COM367
+#DIM CHK_SLOT
+CHK_SLOT  = SEARCH_ACTIVE_IRAI_SLOT()
+CALL IRAI_APPLY(CHK_SLOT)
+RETURN RESULT
+
+
+;-------------------------------------------------
+;実行委託処理をスロット指定にした
+;かならずCAN_IRAI_SLOT_DO(CHK_SLOT)を噛ませてから実行しないと素通しになります
+;@COM367はSEARCH_ACTIVE_IRAI_SLOT()で判定済みなのでよし
+;-------------------------------------------------
+@IRAI_APPLY(CHK_SLOT)
+#DIM CHK_SLOT
+#DIM IRAI_RESULT
+#DIM CLIENT_ID
+CLIENT_ID = IRAI_SLOT_TO_CLIENT(CHK_SLOT)
+CALL SHOW_IRAI_MESSAGE(TARGET, IRAI_SLOT:CHK_SLOT, "実行委託直前")
+CALL IRAI_CARRYOUT(TARGET, IRAI_SLOT:CHK_SLOT, "実行委託時")
+IRAI_RESULT = RESULT
+;ここで設定しないと実行直後のメッセージで成功失敗の判別がつかないので仕方なく
+SELECTCASE IRAI_RESULT
+CASE 0
+	CALL SET_IRAI_PROGRESS(CLIENT_ID, "依頼達成")
+CASE -1
+	CALL SET_IRAI_PROGRESS(CLIENT_ID, "依頼失敗")
+CASE -2
+	RETURN -1
+ENDSELECT
+CALL SHOW_IRAI_MESSAGE(TARGET, IRAI_SLOT:CHK_SLOT, "実行委託直後")
+
+;とりあえず時間経過
+SIF !FLAG:70
+	TIME += 10
+
+IF !GROUPMATCH(IRAI_RESULT, 0, -1)
+ELSEIF TARGET == CLIENT_ID
+	CALL COM366
+	RETURN
+ELSE
+	;依頼完了(報告しないと失敗扱い)
+	PRINTFORMW 不要忘記報告%CALLNAME:CLIENT_ID%
+ENDIF
+RETURN 1

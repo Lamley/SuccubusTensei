@@ -1,0 +1,1622 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;性交系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,正常位
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_60_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_60_1
+
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「では…優しく…お願い…」
+			PRINTFORMW そう言うと探女は%CALLNAME:MASTER%の首に手を回し体を委ねてきた
+		ELSE
+			PRINTFORMW 「…挿れ、て…」
+			PRINTFORMW 探女は少し怯えながらも%CALLNAME:MASTER%の男根を受け入れた。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を続けて正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に挿入した陰茎をストロークさせている。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「っ…んっ…%UNICODE(0x2665) *1%…出た…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…出ちゃった…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…%CALLNAME:MASTER%の…」
+				PRINTFORMW 「もっと…頂戴…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%…ふぁ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…掻き混ぜ…ないで…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「あ…もっと…出して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%…あぁ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「……あ…そこ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「や…ぁあっ…%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…んんっ…%UNICODE(0x2665) *1%…ん…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…あぁんんっ%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「…っ…%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「気持ちよく…なんて…あぁ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「…あ…やぁ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「これ…好き…%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…んっ…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は快楽に身悶えしている。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ひあっ…ぐ…んっ…！」
+			PRINTFORMW 探女は必死に口を押さえて声を出さないようにしている
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ふぁ…くっ…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…好き…♪」
+			PRINTFORMW そう言うと探女は%CALLNAME:MASTER%の首に手を回し体を委ねてきた
+		ELSE
+			PRINTFORMW 「…好き…」
+			PRINTFORMW 探女は少し怯えながらも%CALLNAME:MASTER%の男根を受け入れた。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を続けて正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に挿入した陰茎をストロークさせている。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…ああっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「っ…んっ…%UNICODE(0x2665) *1%…白いの…出てる…%UNICODE(0x2665) *1%」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…妊娠しちゃう…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「いっぱい…出して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%…あぁ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「続けるの…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「っ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…んあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んあっ…%UNICODE(0x2665) *1%…あぁ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「……あ…ダメ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「や…ぁあっ…%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…んっ…%UNICODE(0x2665) *1%…ん…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…あんっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「…っ…%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「感じて…ない…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「…やぁ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「これ…ダメになる…%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…んっ…%UNICODE(0x2665) *1%…んあっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は快楽に身悶えしている。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…あっ…んっ…！」
+			PRINTFORMW 探女は必死に口を押さえて声を出さないようにしている
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ぁ…くっ…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ELSE
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;61,後背位
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_61_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_61_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…後ろ…から…？」
+			PRINTFORMW 「いいけど…」
+			PRINTFORMW 「%CALLNAME:MASTER%の…顔見えない…」
+			PRINTFORMW そう言って探女は体を委ねてきた。
+		ELSE
+			PRINTFORMW 「なんだか犯されてる気分…」
+			PRINTFORMW 「…いいわ、滅茶苦茶にして…」
+			PRINTFORMW 探女はそう言いながら四つん這いになった。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を後ろから続けて犯し始めた。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…く…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「ふぁっ…%UNICODE(0x2665) *1%…まだ出るの…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「せーし…出し足りないの…？」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「そんなに…気持ち良い…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…ん…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…んっくっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…もっと…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「んあ…%UNICODE(0x2665) *1%…っ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…%UNICODE(0x2665) *1%…んあ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「もっと…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…%UNICODE(0x2665) *1%…ん…」
+			PRINTFORMW 「…っ…好き…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…後ろから…」
+			PRINTFORMW 「…んっ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「ん…あっ」
+			PRINTFORMW 「…こういうのが良いの？」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「…んんっ%UNICODE(0x2665) *1%…ぁんんっ…%UNICODE(0x2665) *1%…あっぁあっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「……あっあんっ…%UNICODE(0x2665) *1%…バックで…！」
+		ELSE
+			PRINTFORMW 「…んんっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…この体位…好き…%UNICODE(0x2665) *1%」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ひあっ…ぁ…！」
+			PRINTFORMW 探女は必死に口を押さえて声を出さないようにしている
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「……やぁ…ぅんんっ！…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ELSE
+			PRINTFORMW 「…ん…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…優しく…お願い…」
+			PRINTFORMW 「%CALLNAME:MASTER%の顔が見えないのはちょっと残念だけど…」
+			PRINTFORMW そう言って探女は体を委ねてきた。
+		ELSE
+			PRINTFORMW 「まるで獣みたい…」
+			PRINTFORMW 「別に嫌いではないけど」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「っ…妊娠しちゃいそう…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「白いの…まだ出てる…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…っ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「んあっ%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ん…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…まだ…っ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…んあ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「ふわっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…ひあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「もっと…して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…っぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んんっ…%UNICODE(0x2665) *1%…これ…っ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「ぁあ…%UNICODE(0x2665) *1%…んぁあっ%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…ん…ぁあっううぅ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…ぁんんっ%UNICODE(0x2665) *1%…ぁあっふわっううぅ…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふっ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んあっ…！」
+			PRINTFORMW 探女は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…ふあ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「く…ぅ…ん…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ぁぁ……んっ…」
+			PRINTFORMW 探女は必死に口を押さえて声を出さないようにしている
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…くっあ…っん…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ELSE
+			PRINTFORMW 「……ん…」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;62,正常位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_62_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_62_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;63,後背位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_63_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_63_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;64,逆強姦
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_64
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_64_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_64_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;調教者が処女
+		IF TALENT:PLAYER:処女 == 1
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:PLAYER:100 == TARGET
+		;前回射精した
+		IF TCVAR:PLAYER:102
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;65,騎乗位
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_65
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_65_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_65_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を跨がらせて犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「私の…初めてを…捧げます…」
+			PRINTFORMW 「っ…んっ」
+			PRINTFORMW そう言って探女は%CALLNAME:MASTER%の上にまたがり
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「いいわ、勃てて…」
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を跨がらせて犯し続けている。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…ふぅ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「まだ、出せるでしょ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女はそう言いながら妖艶に微笑んでみせた。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「誰にも…私以外に…出させない、から…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女はそう言いながら膣内の陰茎をより喜ばせようとしている。
+			ELSE
+				PRINTFORMW 「あっ…%CALLNAME:MASTER%…くっ…%CALLNAME:MASTER%」
+				PRINTFORMW 「もっと…出して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女はそう言いながら膣内をきゅうきゅうと締めてより%CALLNAME:MASTER%の射精を誘っている。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「出して…えっちなお汁…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「気持ちいい…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「やぁ…激し…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を跨がらせて犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「ん…気持ちよく…してあげる…%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女は愛おしく%CALLNAME:MASTER%の陰茎を擦りながら自身の秘部へ誘導した。
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「…えっちなお汁…溢れてる…%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女はそう言いながら陰茎を自身の秘部へ誘導した。
+	;それ以外
+	ELSE
+		PRINTFORMW 「ん…%UNICODE(0x2665) *1%」
+		PRINTFORMW 「こう…するの…？」
+		PRINTFORMW 探女は恐る恐ると言った風に陰茎を自身の秘部へ誘導した。
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;66,騎乗位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_66
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_66_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_66_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;67,対面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_67
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_67_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_67_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「……ん…」
+			PRINTFORMW 「%CALLNAME:MASTER%の顔…よく見える…」
+			PRINTFORMW そう言うと探女は%CALLNAME:MASTER%の首に手を回しゆっくりと体を重ねてきた。
+		ELSE
+			PRINTFORMW 「%CALLNAME:MASTER%の顔よく見ると…」
+			PRINTFORMW 「…なんでもないわ」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を続けて正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に挿入した陰茎をストロークさせている。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「あ…%UNICODE(0x2665) *1%…っく…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「っ…まだ…%UNICODE(0x2665) *1%…せーし…出して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…%UNICODE(0x2665) *1%…んあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「もっと…%UNICODE(0x2665) *1%…出し…て…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「んっ…くっ…」
+				PRINTFORMW 「…子宮の中…精で満たして…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…%UNICODE(0x2665) *1%…っ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…これ…好き…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…んあっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…こういうの…ダメっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…早く…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「出して…%UNICODE(0x2665) *1%…穢で満たして…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を正面から犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んんっ…%UNICODE(0x2665) *1%…ぁあっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…あっぁあっ…う…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あっあんっ…%UNICODE(0x2665) *1%…っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「や…%UNICODE(0x2665) *1%…っ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ううぅ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…ぁんんっ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…%UNICODE(0x2665) *1%…ん…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「っ…%UNICODE(0x2665) *1%…ダメ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んあ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…%CALLNAME:MASTER%…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…くっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「っ…ぅ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…ふぅ…くっ…ふぁっ！」
+			PRINTFORMW 探女は必死に口を押さえて声を出さないようにしている
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ぁ…えぅ…！」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 探女は口を押さえて声を出さないようにしている
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;68,背面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_68
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_68_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_68_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「…好きにして…」
+			PRINTFORMW そう言って探女は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「これ…」
+			PRINTFORMW 「変な気分…」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「っ…せーし…出して…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…あっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「ひっ…%UNICODE(0x2665) *1%…ん…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…んっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…これ…%UNICODE(0x2665) *1%…掻き混ぜられて…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ん…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…っくっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…%UNICODE(0x2665) *1%…これ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「んんっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…んあ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 「…やぁ…ああっ…%UNICODE(0x2665) *1%」
+				PRINTFORMW 探女は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で探女を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと探女の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…っぁあっふわっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んんっ…%UNICODE(0x2665) *1%…っ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0 
+			PRINTFORMW 「……んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…ぁあっ…%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…あぅ…%UNICODE(0x2665) *1%」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「後ろから…好きなの？」
+		PRINTFORMW 「…抱いて…」
+	;それ以外
+	ELSE
+		PRINTFORMW 「あっ…これ…」
+		PRINTFORMW 「っ…好きにして…！」
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;69,対面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_69
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_69_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_69_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;70,背面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_70
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_70_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_70_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;71,二穴挿入
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_71
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_71_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_71_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;考えうる分岐が多すぎるので地の文の大まかな分岐だけ
+	;連続
+	IF PREVCOM == SELECTCOM
+		PRINTFORMW 
+		RETURN 1
+	;主人V挿入→助手A挿入
+	ELSEIF TCVAR:100 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;主人A挿入→助手V挿入
+	ELSEIF TCVAR:101 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;助手V挿入→主人A挿入
+	ELSEIF TCVAR:100 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	;助手A挿入→主人V挿入
+	ELSEIF TCVAR:101 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;72,挿入Ｇ点玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_72
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_72_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_72_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;73,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_73
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_73_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_73_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;74,玩弄Ｓ状結腸
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_74
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_74_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_74_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;75,隔着刺激陰道
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_75
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_75_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_75_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;77,小人飛機杯(針妙丸用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_77
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_77_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_77_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

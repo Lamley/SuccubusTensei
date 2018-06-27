@@ -1,0 +1,319 @@
+﻿
+;IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+;PRINTBUTTON "１:鳥居 ",1
+;PRINTBUTTON "２:境内 ",2
+;PRINTBUTTON "３:賽銭箱 ",3
+;PRINTBUTTON "４:本殿 ",4
+;PRINTBUTTON "５:手水舎 ",5
+;PRINTBUTTON "６:庫房 ",6
+;PRINTBUTTON "７:起居室 ",7
+;PRINTBUTTON "８:廚房 ",8
+;PRINTBUTTON "９:居間 ",9
+;PRINTBUTTON "10:走廊 ",10
+;PRINTL 
+;PRINTBUTTON "11:庭 ",11
+;PRINTBUTTON "12:脱衣所 ",12
+;PRINTBUTTON "13:浴室 ",13
+;PRINTBUTTON "14:廁所 ",14
+;PRINTBUTTON "15:霊夢私室 ",15
+;IF FLAG:15 > 0
+;PRINTBUTTON "16:小屋 ",16
+;ELSE
+;PRINTBUTTON "16:破旧小屋 ",16
+;ENDIF
+;PRINTBUTTON "17:小的儲藏室 ",17
+;PRINTBUTTON "18:壁櫥間 ",18
+;PRINTL 
+;PRINTBUTTON "19:大的儲藏室 ",19
+;PRINTBUTTON "20:本殿内部 ",20
+;PRINTBUTTON "21:守矢神社分社 ",21
+;PRINTBUTTON "22:参道 ",22
+;PRINTBUTTON "23:温泉・脱衣所 ",23
+;PRINTBUTTON "24:温泉 ",24
+;PRINTBUTTON "52:出口 ",52
+;PRINTL
+;ENDIF
+;
+;IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+;PRINTBUTTON "１:鳥居 ",1
+;PRINTBUTTON "２:境内 ",2
+;PRINTBUTTON "３:賽銭箱 ",3
+;PRINTBUTTON "４:本殿 ",4
+;PRINTBUTTON "５:手水舎 ",5
+;PRINTBUTTON "６:庫房 ",6
+;PRINTBUTTON "７:起居室 ",7
+;PRINTBUTTON "８:廚房 ",8
+;PRINTBUTTON "９:居間 ",9
+;PRINTBUTTON "10:走廊 ",10
+;PRINTL 
+;PRINTBUTTON "11:庭 ",11
+;PRINTBUTTON "12:脱衣所 ",12
+;PRINTBUTTON "13:浴室 ",13
+;PRINTBUTTON "14:廁所 ",14
+;PRINTBUTTON "15:霊夢私室 ",15
+;IF FLAG:15 > 0
+;PRINTBUTTON "16:小屋 ",16
+;ELSE
+;PRINTBUTTON "16:破旧小屋 ",16
+;ENDIF
+;PRINTBUTTON "17:小的儲藏室 ",17
+;PRINTBUTTON "18:壁櫥間 ",18
+;PRINTL 
+;PRINTBUTTON "19:大的儲藏室 ",19
+;PRINTBUTTON "20:本殿内部 ",20
+;PRINTBUTTON "21:守矢神社分社 ",21
+;PRINTBUTTON "22:参道 ",22
+;PRINTBUTTON "23:温泉・脱衣所 ",23
+;PRINTBUTTON "24:温泉 ",24
+;PRINTBUTTON "52:出口 ",52
+;PRINTL
+;PRINTBUTTON "53:倉庫 ",53
+;PRINTBUTTON "55:和室 ",55
+;ENDIF
+@MAP_H_ALL
+
+PRINTBUTTON "26:三月精的家 ",26
+PRINTBUTTON "36:夢幻遺跡 ",36
+PRINTBUTTON "49:研究室 ",49
+PRINTL
+PRINTL
+@MAP_3FAIRY
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "26:三妖精宅・入口 ",26
+PRINTBUTTON "27:三妖精宅・大庁 ",27
+PRINTBUTTON "28:三妖精宅・樓梯 ",28
+PRINTBUTTON "29:三妖精宅・廚房 ",29
+PRINTBUTTON "30:三妖精宅・浴室 ",30
+PRINTBUTTON "31:三妖精宅・二階廊下 ",31
+PRINTL
+PRINTBUTTON "32:桑尼私室 ",32
+PRINTBUTTON "33:露娜私室 ",33
+PRINTBUTTON "34:斯塔私室 ",34
+PRINTBUTTON "35:三妖精宅・地下室",35
+PRINTL
+ENDIF
+@MAP_MUGENISEKI1
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "36:夢幻遺跡前 ",36
+PRINTBUTTON "37:夢幻遺跡・一階通路 ",37
+PRINTBUTTON "38:夢幻遺跡・洗面所 ",38
+PRINTBUTTON "39:夢幻遺跡・浴室 ",39
+PRINTBUTTON "40:夢幻遺跡・廁所 ",40
+PRINTL
+PRINTBUTTON "41:夢幻遺跡・食堂兼談話室 ",41
+PRINTBUTTON "42:夢幻遺跡・調理室 ",42
+PRINTBUTTON "43:夢美私室 ",43
+PRINTBUTTON "44:千百合私室 ",44
+PRINTBUTTON "45:夢幻遺跡・樓梯 ",45
+PRINTL
+PRINTL
+ENDIF
+@MAP_MUGENISEKI2
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "46:夢幻遺跡・二階通路 ",46
+PRINTBUTTON "47:夢幻遺跡・艦橋 ",47
+PRINTBUTTON "48:夢幻遺跡・第一資料室 ",48
+PRINTL
+PRINTBUTTON "49:夢幻遺跡・研究室 ",49
+PRINTBUTTON "50:夢幻遺跡・第二資料室 ",50
+PRINTBUTTON "51:夢幻遺跡・倉庫 ",51
+PRINTL
+PRINTL
+ENDIF
+@MAP_MUGENISEKI12
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "36:夢幻遺跡前 ",36
+PRINTBUTTON "37:夢幻遺跡・一階通路 ",37
+PRINTBUTTON "38:夢幻遺跡・洗面所 ",38
+PRINTBUTTON "39:夢幻遺跡・浴室 ",39
+PRINTBUTTON "40:夢幻遺跡・廁所 ",40
+PRINTL
+PRINTBUTTON "41:夢幻遺跡・食堂兼談話室 ",41
+PRINTBUTTON "42:夢幻遺跡・調理室 ",42
+PRINTBUTTON "43:夢美私室 ",43
+PRINTBUTTON "44:千百合私室 ",44
+PRINTBUTTON "45:夢幻遺跡・樓梯 ",45
+PRINTBUTTON "46:夢幻遺跡・二階通路 ",46
+PRINTBUTTON "47:夢幻遺跡・艦橋 ",47
+PRINTBUTTON "48:夢幻遺跡・第一資料室 ",48
+PRINTL
+PRINTBUTTON "49:夢幻遺跡・研究室 ",49
+PRINTBUTTON "50:夢幻遺跡・第二資料室 ",50
+PRINTBUTTON "51:夢幻遺跡・倉庫 ",51
+PRINTL
+ENDIF
+@MAP_MUGENISEKI21
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "36:夢幻遺跡前 ",36
+PRINTBUTTON "37:夢幻遺跡・一階通路 ",37
+PRINTBUTTON "38:夢幻遺跡・洗面所 ",38
+PRINTBUTTON "39:夢幻遺跡・浴室 ",39
+PRINTBUTTON "40:夢幻遺跡・廁所 ",40
+PRINTL
+PRINTBUTTON "41:夢幻遺跡・食堂兼談話室 ",41
+PRINTBUTTON "42:夢幻遺跡・調理室 ",42
+PRINTBUTTON "43:夢美私室 ",43
+PRINTBUTTON "44:千百合私室 ",44
+PRINTL
+PRINTBUTTON "45:夢幻遺跡・樓梯 ",45
+PRINTBUTTON "46:夢幻遺跡・二階通路 ",46
+PRINTBUTTON "47:夢幻遺跡・艦橋 ",47
+PRINTBUTTON "48:夢幻遺跡・第一資料室 ",48
+PRINTL
+PRINTBUTTON "49:夢幻遺跡・研究室 ",49
+PRINTBUTTON "50:夢幻遺跡・第二資料室 ",50
+PRINTBUTTON "51:夢幻遺跡・倉庫 ",51
+PRINTL
+ENDIF
+
+@MAP_AA_HAKUREI_1(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+AA:01 = 　■　　　　　　　　　　　　　　　　　　　　　　　　　手水舎　■　　　博
+AA:02 = 　■　　　　　　　　　　　　　　　　　■■■　　　　　┏━┓　■　　　麗
+AA:03 = 　■　　　■■■■■　　　　　　　　　■06■　　　　　　05　　■　　　神
+AA:04 = 　■　　　■13│12■　　　　　　　　　　￣　　　　　　　　　　■　　　社
+AA:05 = 　■　　　■■■─■■■■■■■　　　　　　　　　　　　　　　■
+AA:06 = 　■　　　■14│　｜08｜　　07｜　　　■■■■■■■　　　　　■
+AA:07 = 　■　　　■■■　■―■─■■■　　　■　　　　　■　　　　　■
+AA:08 = 　■　　　　　∥　￤　　　│53■　　　■　■■■　■■■　　　●■■■■■
+AA:09 = 　■#A　　　　∥　￤。　　■■■　20　■　■04｜　∥∥03　02　01∥∥22#E#E
+AA:10 = 　■#B　11　　∥10■　09　│17■　　　■　■■■　■■■　　　●■■■■■
+AA:11 = 　■#C　　　　∥　│　　　■■■　　　■　　　　　■　　　　　■
+AA:12 = 　■#D　　　　∥　│　　　│　■　　　■■■■■■■　　　　　■
+AA:13 = 　■　　　　　■―■■──■55■　　　　　　　　　　　　　　　■
+AA:14 = 　■　■―■　■萃■　　　■■■　　　　　　　　　　　 分社 　■
+AA:15 = 　■　■52■　■19■　15　│18■　　　　　■〓＼　　　■21■　■
+AA:16 = 　■　■■■　■■■■■■■■■　　　　　｜16〓　　　■☆■　■
+AA:17 = 　■　　　　　　　　　　　　　　　　　　　〓〓／　　　　　　　■　　■■■■■
+AA:18 = 　■　　　　　　　　　　　　　　　　　　　　　　　　　　　　　■　　■24│23｜
+AA:19 = 　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■　　■■■■■
+
+
+
+;破旧小屋
+IF FLAG:15
+	AA:15 = 　■　■―■　■19■　　 |　■　　　　■■■　　　　　■21■　■
+	AA:16 = 　■　■52■　■　■ 15  |18■　　　　｜16■　　　　　■☆■　■
+	AA:17 = 　■　■■■　■■■■■■■■　　　　■■■　　　　　　　　　■　　■■■■■
+ENDIF
+
+;夢幻遺跡
+@MAP_AA_HAKUREI_2(AA)
+#DIMS REF AA, 0
+AA:01 = 　　夢幻遺跡　■■■■■■■■■■
+AA:02 = 　　一階　　■　　■　45　■食堂■■　　　　二階　■■■■■■■■
+AA:03 = 　　　　　■　43　■　　　■41　■42■　　　　　■　　■45■50■　■
+AA:04 = 　　　　■　　　　■　　　■　　｜調■　　　　■■48　■　■　■　　■
+AA:05 = 　　　■■■■―Yu■　　　■―■■■■　　　■　■■―壱　弐―■　　■
+AA:06 = 　　■■■　　　　　　37　　　　　　■　　■47　｜　　　46　　｜　51■
+AA:07 = 　　　■■■■―Ti■　　　■―■WC―■　　　■　■■―■■■―■倉庫■
+AA:08 = 　　　　■　　　　■　　　■38　■40■　　　　■■　　研究室　■　　■
+AA:09 = 　　　　　■　44　■　　　■―■■　■　　　　　■　　　49　　■　■
+AA:10 = 　　　　　　■　　■　　　■39　■■　　　　　　　■■■■■■■■
+AA:11 = 　　　　　　　■■■■―■■■■■
+AA:12 = 
+AA:13 = 　　　　　　　　　　　36
+
+;三月精的家
+@MAP_AA_HAKUREI_3(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　　　■■■　　　　　■■■　　　　　■■■■■
+AA:01 = 　　■日32　■　　　■　30　■　　　■■　　　■■
+AA:02 = 　■■■―■月■　■■■―■■■　　■　　　　　■
+AA:03 = 　■＜　31｜33■　■28　27　 26￤ 　■＞　35　　■
+AA:04 = 　■■★―■　■　■■■―■■■　　■　　　　　■
+AA:05 = 　　■星34　■　　　■　29　■　　　■■　　　■■
+AA:06 = 　　　■■■　　　　　■■■　　　　　■■■■■　
+AA:07 = 
+AA:08 = 　　　 二階　　　　　　一階　　　　　　　地下
+
+
+;博麗神社周辺
+@MAP_AA_HAKUREI_4(AA)
+#DIMS REF AA, 0
+AA:00 = 　　神社の外　　　　　　■49■
+AA:01 = 　　　　　　　　　　　■■■■■
+AA:02 = 　　　　　　　　　　　　■36■
+AA:03 = 　　　　＠■■■■■
+AA:04 = Ｗ　　　　■０　01∥22∥　　　　　Ｅ
+AA:05 = 　　■　　■■■■■
+AA:06 = 　■■26　　■2423　　　
+AA:07 = 　　■　25　■■■　　
+AA:08 = 
+AA:09 = 　　　　　　　　　　　　　26:三月精的家
+AA:10 = 　　　　　　　　　　　　　36:夢幻遺跡
+AA:11 = 　　　　　　　　　　　　　49:研究室
+
+
+@ODEKAKEMAP_0(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　　　　　　　　　■■ 03 ■■　　∥　■林林//ヾi /iヾ林林■且◆　　　　◆且■■
+AA:01 = 　　　　　　02　　　■＿＿■　　　∥04■林林/|  i/ii|/林林■且◆　 06 　◆且■■
+AA:02 = 　　＿＿　　　　　　　　　　　　　∥　■林林 |  i ii| 林林■且◆　　　　◆且■■
+AA:03 = ■●ナ弋●■■■■■■■■■■■─■■■林林ノΠi iiﾊ 林林■且■◆──◆■且■■
+AA:04 = 　彳 01 彳　　　　　　　　　　　　　　　　林　05　　　林　　　　　　　　　　　　
+AA:05 = 　彳　　彳㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜㎜
+
+@DRAW_MAP_BG_0(SLICED)
+#DIMS SLICED
+SELECTCASE SLICED
+;色つけたいときはこんな感じ
+CASE "木","竹"
+	SETCOLOR 0x90EE90
+	PRINTS SLICED
+	RESETCOLOR
+;違う文字を表示させる例
+CASE "#W"
+	SETCOLOR 0x90EE90
+	PRINT 木
+	RESETCOLOR
+CASE "#E"
+	SIF TALENT:MASTER:居場所察知 && COUNTCHARA:(MAXROOM) > 0 && FLAG:察知モード == 1
+		SETCOLOR 255,100,200
+	PRINT ∥
+	RESETCOLOR
+CASE "#A"
+	IF HATAKE_NAME:0 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#B"
+	IF HATAKE_NAME:1 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#C"
+	IF HATAKE_NAME:2 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#D"
+	IF HATAKE_NAME:3 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+;ふつうの
+CASEELSE
+	PRINTS SLICED
+ENDSELECT

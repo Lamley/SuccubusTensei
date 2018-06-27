@@ -1,0 +1,543 @@
+﻿@LOOK_AT
+#DIM 装備部位
+#DIM 着衣状況
+#DIMS 挿入状況
+#DIMS 挿入状況2
+#DIMS 表示内容
+IF TARGET
+	SIF !CFLAG:うふふ
+	;DRAWLINE
+	PRINT -- 
+	;ターゲットの状態表記・シチュエーション強化？
+	PRINTFORM %CALLNAME:TARGET%的状態
+	IF !FLAG:画像表示
+		PRINTBUTTON  "[ＡＡ表示]", 816
+	ELSE
+		PRINTBUTTON  "[画像表示]", 816
+		SIF FLAG:AA表示
+			PRINTBUTTON  "[表示設定]", 3100
+	ENDIF
+	IF CFLAG:うふふ
+		IF FLAG:挿絵表示
+			PRINTBUTTON  "[動画顯示-ON-]", 817
+		ELSE
+			SETCOLOR C_L_GRAY
+			PRINTBUTTON  "[動画顯示-OFF-]", 817
+			RESETCOLOR
+		ENDIF
+	ENDIF
+	PRINTL  ---------
+	;PRINTL 
+	PRINT 【上半身】
+	IF TEQUIP:1 == 0
+		PRINT  赤裸的
+		SIF PALAM:欲情 >= PALAMLV:3
+			PRINTFORM  %NIPPLE_DESCRIPTION(TARGET)%勃起着
+	ELSE
+		;外側の服から表示
+		FOR 装備部位, 17, 6, -1
+			IF GROUPMATCH(装備部位, 13, 12, 11)
+				CONTINUE
+			ENDIF
+			IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+				表示内容 = %CSTR:(50 + 装備部位)%
+			ELSE
+				表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+			ENDIF
+			IF EQUIP:TARGET:装備部位
+				IF !(EQUIP:TARGET:和服 || EQUIP:TARGET:連衣裙 || EQUIP:TARGET:上半身上衣１)
+					PRINTFORM %表示内容%
+					BREAK
+				ELSE
+					PRINTFORM %表示内容%
+					BREAK
+				ENDIF
+			ENDIF
+		NEXT
+		IF TEQUIP:上半身はだけ状態 > 0
+			IF TALENT:胸囲 == 2
+				PRINTFORM  %OPPAI_DESCRIPTION(TARGET,1)%装不下露了出来
+				;PRINTFORM  はち切れんばかりの胸がこぼれ出ている
+			ELSEIF TALENT:胸囲 == 1
+				PRINTFORM  %OPPAI_DESCRIPTION(TARGET,1)%不時会露出来
+				;PRINTFORM  豊満な胸がこぼれ出ている
+			ELSEIF TALENT:胸囲 == 0
+				PRINTFORM  %OPPAI_DESCRIPTION(TARGET,1)%快要露出来了
+				;PRINTFORM  形のいい胸が露わになっている
+			ELSEIF TALENT:胸囲 == -1
+				PRINTFORM  %OPPAI_DESCRIPTION(TARGET,1)%快要露出来了
+				;PRINTFORM  小振りな胸が露わになっている
+			ELSEIF TALENT:胸囲 == -2
+				PRINTFORM  %OPPAI_DESCRIPTION(TARGET,1)%快要露出来了
+				;PRINTFORM  可愛らしい乳首が露わになっている
+			ENDIF
+			SIF EQUIP:TARGET:連体内衣 == 0 && PALAM:欲情 >= PALAMLV:5
+				PRINTFORM  %NIPPLE_DESCRIPTION(TARGET)%勃起着
+		ELSE
+			SIF EQUIP:TARGET:連体内衣 == 0 && PALAM:欲情 >= PALAMLV:5
+				PRINTFORM  即使隔着衣服也能看出%NIPPLE_DESCRIPTION(TARGET)%已経勃起了
+		ENDIF
+	ENDIF
+	IF TEQUIP:乳頭夾 && TEQUIP:揉胸
+		PRINTFORM  乳头夹吸附在%NIPPLE_DESCRIPTION(TARGET)%上%OPPAI_DESCRIPTION(TARGET)%也被%CALLNAME:MASTER%搓揉着
+	ELSEIF TEQUIP:乳首吸い && TEQUIP:揉胸
+		IF ABL:MASTER:舌 > 2
+			PRINTFORM  %CALLNAME:MASTER%一辺搓揉着%OPPAI_DESCRIPTION(TARGET)%一辺舔舐着%NIPPLE_DESCRIPTION(TARGET)%
+		ELSE
+			PRINTFORM  %CALLNAME:MASTER%一辺搓揉着%OPPAI_DESCRIPTION(TARGET)%一辺吸吮着%NIPPLE_DESCRIPTION(TARGET)%
+		ENDIF
+	ELSEIF TEQUIP:乳頭夾
+		PRINTFORM  乳头夹吸附在%NIPPLE_DESCRIPTION(TARGET)%上
+	ELSEIF TEQUIP:搾乳機
+		PRINT  搾乳機正在吸取母乳的样子
+	ELSEIF TEQUIP:乳首吸い
+		IF ABL:MASTER:舌 > 2
+			PRINTFORM  %CALLNAME:MASTER%舔舐着%NIPPLE_DESCRIPTION(TARGET)%
+		ELSE
+			PRINTFORM  %CALLNAME:MASTER%吮吸着%NIPPLE_DESCRIPTION(TARGET)%
+		ENDIF
+	ELSEIF TEQUIP:揉胸
+		PRINTFORM  %CALLNAME:MASTER%搓揉着%OPPAI_DESCRIPTION(TARGET)%
+	ENDIF
+	SIF CFLAG:口に精液 == 1
+		PRINT  精液垂挂在嘴角上
+	SIF CFLAG:顔に精液 == 1
+		PRINT  精液浇在了脸上
+	SIF CFLAG:手に精液 == 1
+		PRINT  手上沾満了精液
+	PRINTL
+	PRINT 【下半身】
+	;TEQUIP:下半身着衣状況 下半身着衣状況(ビット0=裙子 1=ずらし可 2=ずらし不可 3=ずらせない下半身上衣)
+	;	(ビットを使いたくない人用 0=なし 1=ノーパン裙子 2=内袴のみ 3=裙子+内袴 
+	;	4=安全袴(内袴)もしくはノーパン袴子 5=裙子+安全袴 6=袴子+内袴 7=フル装備(このバリアントでは無理)）
+	;CFLAG:パンツ パンツフラグ
+	;0 パンツはいている
+	;1 パンツ沒穿
+
+	;下半身着衣なし、もしくはパンツはいていない
+	IF TEQUIP:下半身着衣状況 == 0 || CFLAG:ノーパン > 0
+	;	下半身着衣があるがノーパンである
+		IF CFLAG:ノーパン && TEQUIP:下半身着衣状況 != 0 && PREVCOM != 330
+			着衣状況 = 0
+	;		上衣が上下つなぎになっている服を着ている場合、それを表示する
+			FOR 装備部位, 17, 8, -1
+				IF GROUPMATCH(装備部位, 15, 14)
+					CONTINUE
+				ENDIF
+				IF EQUIP:TARGET:装備部位 
+					IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+						表示内容 = %CSTR:(50 + 装備部位)%
+					ELSE
+						表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+					ENDIF
+					PRINTFORM %表示内容%
+					着衣状況 ++
+					BREAK
+				ENDIF
+			NEXT
+	;		なければ、裙子や袴子を表示する
+			IF 着衣状況 == 0
+				FOR 装備部位, 6, 4, -1
+					IF EQUIP:TARGET:装備部位
+						IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+							表示内容 = %CSTR:(50 + 装備部位)%
+						ELSE
+							表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+						ENDIF
+						PRINTFORM %表示内容%
+						BREAK
+					ENDIF
+				NEXT
+			ENDIF
+			;パンツははいていないが見えないので表示しない
+			;PRINT  （パンツ沒穿）
+			SIF 充填率(TARGET,1) >= 30 || 充填率(TARGET,2) >= 30
+				PRINTFORM  溢出的精液流経大腿垂落下来
+		ELSEIF CFLAG:ノーパン && TEQUIP:下半身着衣状況 != 0 && PREVCOM == 330
+			着衣状況 = 0
+			;上衣が上下つなぎになっている服を着ている場合、それを表示する
+			FOR 装備部位, 17, 8, -1
+				IF GROUPMATCH(装備部位, 15, 14)
+					CONTINUE
+				ENDIF
+				IF EQUIP:TARGET:装備部位 
+					IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+						表示内容 = %CSTR:(50 + 装備部位)%
+					ELSE
+						表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+					ENDIF
+					PRINTFORM %表示内容%
+					着衣状況 ++
+					BREAK
+				ENDIF
+			NEXT
+			;なければ、裙子や袴子を表示する
+			IF 着衣状況 == 0
+				FOR 装備部位, 6, 4, -1
+					IF EQUIP:TARGET:装備部位
+						IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+							表示内容 = %CSTR:(50 + 装備部位)%
+						ELSE
+							表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+						ENDIF
+						PRINTFORM %表示内容%
+						BREAK
+					ENDIF
+				NEXT
+			ENDIF
+			;パンツははいていないが見えないので表示しない
+			;PRINT  （パンツ沒穿）
+			IF 充填率(TARGET,1) >= 30 || 充填率(TARGET,2) >= 30
+				PRINTFORM  溢出的\@TALENT:MASTER:濃厚精液 ? 糊状精液黏在大腿之上 # 精液沿着大腿流了下去\@
+			ENDIF
+		;下半身着衣がない
+		ELSE
+			PRINT  赤裸的
+			SIF TEQUIP:陰蒂夾
+				PRINT  陰蒂夹吸附在陰蒂上
+			SIF TEQUIP:飛機杯
+				PRINT  飛機杯装在陰茎上
+			IF !CFLAG:うふふ
+				IF CFLAG:TARGET:膣内射精
+					IF CFLAG:TARGET:アナル射精 == 1
+						PRINT  精液从私処和肛門里流了出来
+					ELSEIF EX:処女喪失チェック
+						PRINT  混合着破瓜之血的精液從私処流了出来
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINT  精液和愛液的混合物从私処流了出来
+					ELSE
+						PRINT  精液从私処里流了出来
+					ENDIF
+				ELSEIF CFLAG:TARGET:アナル射精 == 1
+					PRINT  精液从肛門里流了出来
+				ELSEIF PALAM:潤滑 >= PALAMLV:2
+					IF PALAM:潤滑 >= PALAMLV:6
+						PRINTFORM  \@ EX:処女喪失チェック? 混合着破瓜之血的# \@愛液從私処滴落下来
+					ELSEIF EX:処女喪失チェック
+						PRINT  破瓜之血從私処流了出来
+					ELSEIF PALAM:潤滑 >= PALAMLV:4
+						PRINT  愛液流到了大腿上
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINT  私処被愛液打湿了
+					ENDIF
+				ENDIF
+			ELSEIF PALAM:潤滑 >= PALAMLV:2 && !(CFLAG:TARGET:膣内射精 == 1 || TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒)
+				IF PALAM:潤滑 >= PALAMLV:4
+					PRINTFORM  \@ EX:処女喪失チェック? 混合着破瓜之血的# \@愛液從私処滴落下来
+				ELSEIF EX:処女喪失チェック
+					PRINT  破瓜之血從私処流了出来
+				ELSEIF PALAM:潤滑 >= PALAMLV:3
+					PRINTFORM  愛液流到了大腿上
+				ELSEIF PALAM:潤滑 >= PALAMLV:2
+					PRINTFORM  私処被愛液打湿了
+				ELSEIF TALENT:処女 == 1
+					PRINTFORM 只暴露着未使用的緊緊閉合的蜜縫
+				ENDIF
+			ENDIF
+		ENDIF
+		CALL LOOK_BELLY(TARGET)
+	;下半身着を穿いている、かつ内袴も付けている
+	ELSE
+		着衣状況 = 0
+		;上下つなぎになっている服を着ている場合、それを表示する
+		FOR 装備部位, 17, 8, -1
+			IF GROUPMATCH(装備部位, 15, 14)
+				CONTINUE
+			ENDIF
+			IF EQUIP:TARGET:装備部位
+				IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+					表示内容 = %CSTR:(50 + 装備部位)%
+				ELSE
+					表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+				ENDIF
+				PRINTFORM %表示内容%
+				着衣状況 ++
+				BREAK
+			ENDIF
+		NEXT
+		;なければ、下半身着衣を表示する
+		IF 着衣状況 == 0
+			FOR 装備部位, 6, 4, -1
+				IF EQUIP:TARGET:装備部位
+					IF CSTR:(50 + 装備部位) != "" && !CFLAG:パジャマ
+						表示内容 = %CSTR:(50 + 装備部位)%
+					ELSE
+						表示内容 = %CLOTHNAME(装備部位,EQUIP:装備部位)%
+					ENDIF
+					PRINTFORM %表示内容%
+					BREAK
+				ENDIF
+			NEXT
+		ENDIF
+		IF !CFLAG:うふふ;  && PREVCOM != 330
+			;IF TEQUIP:下半身着衣状況 & 4
+			IF TEQUIP:下半身着衣状況 != 0
+				IF PALAM:潤滑 >= PALAMLV:5
+					PRINT  连腿都被弄得湿答答的
+				ELSEIF PALAM:潤滑 >= PALAMLV:3
+					PRINT  羞人的部分染上了一滴滴的汚渍
+				ENDIF
+			ELSEIF (EQUIP:下半身内袴１ || EQUIP:下半身内袴２) && CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 ||  PALAM:潤滑 >= PALAMLV:2
+				IF EQUIP:下半身内袴２
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 1 || EQUIP:下半身内袴１== 4
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 2 || EQUIP:下半身内袴１== 3
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:5
+						PRINTFORM  湿透的%PANTSNAME(EQUIP:TARGET:下半身内袴１)%累累欲坠
+					ELSEIF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 5 || EQUIP:下半身内袴１== 6
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%冒着水汽
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ENDIF
+			ENDIF
+			;小人
+			IF TALENT:TARGET:100 == -5
+				LOCAL = 200
+			;幼児体型、矮小体型
+			ELSEIF TALENT:TARGET:100 < 0
+				LOCAL = 300
+			;長身以上
+			ELSEIF TALENT:TARGET:100 >= 1
+				LOCAL = 500
+			;普通体型
+			ELSE
+				LOCAL = 400
+			ENDIF
+			SIF EX:TARGET:膣内精液 > LOCAL || EX:TARGET:アナル内精液 > LOCAL
+					PRINTFORM  溢出的\@TALENT:MASTER:濃厚精液 ? 糊状精液黏在大腿之上 # 精液沿着大腿流了下去\@
+		ELSEIF TEQUIP:下半身着衣状況 & 4
+			IF PALAM:潤滑 >= PALAMLV:5
+				PRINT  屁股下的部分被弄得湿答答的
+			ELSEIF PALAM:潤滑 >= PALAMLV:3
+				PRINT  羞人的部分染上了一滴滴的汚渍
+			ENDIF
+		ELSE
+			PRINTFORM  %HIP(TARGET)%被掀了起来里面被看得一清二楚
+			IF PALAM:潤滑 >= PALAMLV:1 || CFLAG:TARGET:アナル射精 == 1 || CFLAG:TARGET:膣内射精 == 1 && !((CFLAG:TARGET:アナル射精 == 1 && CFLAG:TARGET:膣内射精 == 1) || TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒 || TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極)
+				;これ下半身内袴１がアリで下半身内袴２がナシだとどうなるんですかね
+				;IF (EQUIP:下半身内袴１ || EQUIP:下半身内袴２)
+				;修正を試み加筆;しておいてなんですが下半身内袴１を悉皆する選択肢もありますよ
+				IF EQUIP:下半身内袴２
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 1 || EQUIP:下半身内袴１== 4
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 2 || EQUIP:下半身内袴１== 3
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:5
+						PRINTFORM  湿透的%PANTSNAME(EQUIP:TARGET:下半身内袴１)%累累欲坠
+					ELSEIF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%沾上了汚渍
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ELSEIF EQUIP:下半身内袴１== 5 || EQUIP:下半身内袴１== 6
+					IF CFLAG:TARGET:膣内射精 == 1 || CFLAG:TARGET:アナル射精 == 1 || PALAM:潤滑 >= PALAMLV:3
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%冒着水汽
+					ELSEIF PALAM:潤滑 >= PALAMLV:2
+						PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴１)%被弄湿了
+					ENDIF
+				ENDIF
+			ENDIF
+			IF (EQUIP:下半身内袴１ || EQUIP:下半身内袴２)
+				IF TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒 || TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極
+					PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%被挪開了
+				ELSEIF CFLAG:TARGET:アナル射精 == 1 && CFLAG:TARGET:膣内射精 == 1 && !(TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒 || TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極)
+					PRINTFORM  %PANTSNAME(EQUIP:TARGET:下半身内袴２)%沾満了大量汚渍
+				ENDIF
+			ENDIF
+			IF CFLAG:TARGET:膣内射精 == 1 && PALAM:潤滑 >= PALAMLV:1 && !(TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒)  && (TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極)
+				PRINT  精液和愛液的混合物从私処流了出来
+			ELSEIF CFLAG:TARGET:膣内射精 == 1 && !(TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒 || PALAM:潤滑 >= PALAMLV:1) && (TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極)
+				PRINT  精液从私処里流了出来
+			ELSEIF CFLAG:TARGET:アナル射精 == 1 && !(TEQUIP:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠 || TEQUIP:浣腸 || TEQUIP:拡張気球 || TEQUIP:肛門電極) && (TEQUIP:Ｖセックス == PLAYER || TEQUIP:振動棒)
+				PRINT  精液从肛門里流了出来
+			ENDIF
+		ENDIF
+		CALL LOOK_BELLY(TARGET)
+	ENDIF
+
+	IF (TCVAR:TARGET:V挿入管理フラグ == PLAYER || TCVAR:TARGET:A挿入管理フラグ == PLAYER) && TALENT:PLAYER:形状 == 10
+		PRINTL
+		PRINT 腹部浮现出了挿在里面的陰茎的形状…
+	ENDIF
+	;================================
+	SELECTCASE TEQUIP:TARGET:体位
+		CASE 1 
+			挿入状況 = 正常位
+		CASE 2 
+			挿入状況 = 後背位
+		CASE 3 
+			挿入状況 = 騎乗位
+		CASE 4 
+			挿入状況 = 対面座位 
+		CASE 5 
+			挿入状況 = 背面座位
+		CASE 6
+			挿入状況 = 和飛機杯一樣的待遇
+	ENDSELECT
+
+	IF TEQUIP:TARGET:Ｖセックス == PLAYER || TEQUIP:振動棒
+		PRINTL
+		PRINT 【膣内】　
+		IF TCVAR:TARGET:V挿入管理フラグ == PLAYER
+			IF TCVAR:Vに中出しされたフラグ
+				PRINTFORM 被以%挿入状況%\@ EX:処女喪失チェック? 在処女膣穴# \@注入了{NOWEX:TARGET:膣内精液}\@TALENT:MASTER:濃厚精液 ?濃厚的 # \@精液
+			ELSEIF CFLAG:TARGET:生理周期 == 7
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%在\@ EX:処女喪失チェック? 処女膣穴# \@中出
+			ELSEIF SHIRAHU(TARGET) && TALENT:TARGET:恋慕
+				IF EX:処女喪失チェック
+					PRINTFORM  用%挿入状況%把処女献給了%CALLNAME:MASTER%
+				ELSE
+					PRINTFORM  用%挿入状況%和%CALLNAME:MASTER%深情交合
+				ENDIF
+			ELSEIF CFLAG:うふふ == 2
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%侵犯着\@ EX:処女喪失チェック? 処女膣穴# \@
+			ELSE
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%侵犯着\@ EX:処女喪失チェック? 処女膣穴# \@
+			ENDIF
+		ELSEIF TEQUIP:振動棒
+			PRINT  被震動棒挿入着
+		ENDIF
+		SIF TEQUIP:子宮
+			PRINT  子宮位置下降着
+	ENDIF
+	IF TEQUIP:TARGET:Ａセックス == PLAYER || TEQUIP:肛用振動棒 || TEQUIP:後庭拉珠
+		PRINTL
+		PRINT 【アナル】
+		IF TCVAR:TARGET:A挿入管理フラグ == PLAYER
+			IF TCVAR:Aに中出しされたフラグ
+				PRINTFORM  被注入了{NOWEX:TARGET:アナル内精液}\@TALENT:MASTER:濃厚精液 ?濃厚的 # \@精液
+			ELSEIF !FLAG:時間停止 && !CFLAG:睡眠 && TALENT:TARGET:恋慕
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%插入着
+			ELSEIF CFLAG:うふふ == 2
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%侵犯着
+			ELSE
+				PRINTFORM  被%CALLNAME:MASTER%用%挿入状況%侵犯着
+			ENDIF
+		ELSEIF TEQUIP:肛用振動棒
+			PRINT  被肛用震動棒挿入着
+		ELSEIF TEQUIP:後庭拉珠
+			PRINT  被後庭拉珠挿入着
+		ELSEIF TEQUIP:浣腸
+			PRINT  被肛塞塞着
+		ELSEIF TEQUIP:拡張気球
+			PRINT  被拡張气球拡張着
+		ELSEIF TEQUIP:肛門電極
+			PRINT  被電極挿入着
+		ENDIF
+	ENDIF
+	IF FLAG:AA表示 && !FLAG:画像表示
+		PRINTL 　
+		CALL PRINT_AA(TARGET)
+	ELSEIF FLAG:AA表示 && FLAG:画像表示
+		PRINTL 　
+			CALL PRINT_TARGET_IMAGE(TARGET)
+	ENDIF
+
+	IF TEQUIP:PLAYER:Ｖセックス == TARGET || TEQUIP:PLAYER:Ａセックス == TARGET
+		SELECTCASE TEQUIP:MASTER:体位
+			CASE 1 
+				挿入状況2 = 正常位
+			CASE 2 
+				挿入状況2 = 後背位
+			CASE 3 
+				挿入状況2 = 騎乗位
+			CASE 4 
+				挿入状況2 = 対面座位
+			CASE 5 
+				挿入状況2 = 背面座位
+			CASE 6
+				挿入状況2 = 和飛機杯一樣的待遇
+			CASEELSE
+				挿入状況2 = 
+		ENDSELECT
+
+		PRINTL 
+		PRINT 【陰茎】
+		IF TEQUIP:PLAYER:Ｖセックス == TARGET
+			PRINTFORM 以%挿入状況2%被挿入%CALLNAME:PLAYER%的膣内
+		ELSE
+			PRINTFORM 以%挿入状況2%被挿入%CALLNAME:PLAYER%的肛内
+		ENDIF
+	ENDIF
+ENDIF
+
+
+;身体部位 1=V, 2=A, 3=VA 4= 子宮
+@充填率(キャラ登録番号, 身体部位)
+#FUNCTION
+#DIM キャラ登録番号
+#DIM 身体部位
+#DIM 精液量
+#DIM 身体容量
+
+VARSET 精液量
+
+;該当部位の精液量の取得
+SELECTCASE 身体部位
+	CASE 1
+		精液量 = EX:キャラ登録番号:膣内精液
+	CASE 2
+		精液量 = EX:キャラ登録番号:アナル内精液
+	CASE 3
+		精液量 = EX:キャラ登録番号:膣内精液 + EX:キャラ登録番号:アナル内精液
+	CASE 4
+		精液量 = EX:キャラ登録番号:子宮内精液
+ENDSELECT
+
+;該当部位の容量を取得
+SELECTCASE TALENT:キャラ登録番号:体型
+	CASE -5
+		身体容量 = 300
+	CASE -4 TO -2
+		身体容量 = 600
+	CASE -1
+		身体容量 = 1000
+	CASE 0
+		身体容量 = 1200
+	CASE IS > 0
+		身体容量 = 1500
+ENDSELECT
+
+;子宮ならば容量半減
+IF 身体部位 == 4
+	身体容量 /= 2
+ENDIF
+RETURNF 100 * 精液量 / 身体容量
+
+;腹描写
+@LOOK_BELLY(ARG)
+IF CFLAG:ARG:妊娠経過日数 >= 80
+		PRINT 　临近出産的腹部被装的満満的样子
+ELSEIF CFLAG:ARG:妊娠経過日数 >= 60
+		PRINT 　孕育着生命的腹部高高隆起的样子
+ELSEIF CFLAG:ARG:妊娠経過日数 >= 40
+		PRINT 　腹部膨脹的很明顯
+ELSEIF CFLAG:ARG:妊娠経過日数 >= 30
+		PRINT 　腹部開始膨脹了
+ELSEIF 充填率(ARG,3) >= 100
+		PRINT 　腹部被精液填的像妊婦般的膨胀起来
+ENDIF

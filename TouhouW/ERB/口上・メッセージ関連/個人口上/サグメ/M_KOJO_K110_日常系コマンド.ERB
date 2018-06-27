@@ -1,0 +1,3061 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;日常系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;300,会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_300
+;コマンド共通メッセージ(TRAIN_MESSAGE) 
+;削除すると「～話をした。」とかが消えます
+;CALL TRAIN_MESSAGE
+;口上メイン呼出
+CALL M_KOJO_MESSAGE_COM_K110_300_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;憤怒
+	IF CFLAG:318 == 1
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は無言で睨みつけている。
+	;会話不能
+	ELSEIF TCVAR:302
+		IF RAND:5 == 0
+			PRINTFORMW 「………？」
+			PRINTFORMW 探女は話しかけられてもよくわからないと言った表情で不満そうだ。
+			CFLAG:TARGET:溜まってる度 += 10
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 一方的にまくし立てられた探女は不満そうだ。
+			CFLAG:TARGET:溜まってる度 += 10
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…止めて」
+			PRINTFORMW 探女は会話を不満そうに遮ってきた。
+			CFLAG:TARGET:溜まってる度 += 10
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は不満そうに%CALLNAME:MASTER%の話を聞いている。
+			CFLAG:TARGET:溜まってる度 += 10
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は興味無さげに%CALLNAME:MASTER%の話を聞いている。
+			CFLAG:TARGET:溜まってる度 += 10
+		ENDIF
+	;ぐでぐで
+	ELSEIF TALENT:恋慕 && BASE:酒気 > (MAXBASE:酒気 / 10) * 8
+		IF RAND:5 == 0
+			PRINTFORMW 「ん～%CALLNAME:MASTER%～」
+			PRINTFORMW 探女は酔っ払いながら絡んでくる。
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「ねえ%CALLNAME:MASTER%…」
+			PRINTFORMW 探女は酔いながら抱きついてくる。
+			PRINTFORMW 「大好き…」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%ー」
+			PRINTFORMW 探女は顔を上気させながら呼びかけてくる。
+			PRINTFORMW 「キス…して…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%…%CALLNAME:MASTER%…」
+		ELSE
+			PRINTFORMW 「%CALLNAME:MASTER%…」
+			PRINTFORMW 「ふふっ…呼んでみただけよ」
+		ENDIF
+	;酔いどれ
+	ELSEIF TALENT:恋慕 && BASE:酒気 > (MAXBASE:酒気 / 10) * 5
+		IF RAND:5 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%…」
+			PRINTFORMW 「…ちょっと酔いすぎたみたい」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%…」
+			PRINTFORMW 探女は酔いながら絡んでくる。
+			PRINTFORMW 「…なんでもない、わ」
+			
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…何？」
+			PRINTFORMW 「酔ってない、わ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…%CALLNAME:MASTER%…は…」
+		ELSE
+			PRINTFORMW 「ふぁ…ん…」
+			PRINTFORMW 「結構呑んだ…」
+		ENDIF
+	;ほろ酔い
+	ELSEIF TALENT:恋慕 && BASE:酒気 >= 1
+		IF RAND:5 == 0
+			PRINTFORMW 「？」
+			PRINTFORMW 「…少し酔っただけよ」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…酔い潰れたりしない、大丈夫」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「ん…ふぅ…」
+			PRINTFORMW 「あんまり悪い気もしない」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…これくらいなら…」
+		ELSE
+			PRINTFORMW 「%CALLNAME:MASTER%…」
+			PRINTFORMW 「%CALLNAME:MASTER%…は…」
+		ENDIF
+	;ぐでぐで
+	ELSEIF BASE:酒気 > (MAXBASE:酒気 / 10) * 8
+		IF RAND:5 == 0
+			PRINTFORMW 「んーんー」
+			PRINTFORMW 「人の気も知らないでみんな…」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「%CALLNAME:MASTER%…」
+			PRINTFORMW 探女はかなり酔いながら絡んでくる。
+			PRINTFORMW 「もっと呑むべきよ、そうよ主人公、呑むべきよ」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「遷都なんて…面倒な…ことやったのに…誰も…」
+			PRINTFORMW 探女は酔いどれになりながら愚痴をこぼしている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「八意様…八意様…」
+		ELSE
+			PRINTFORMW 「月兎になりたい」
+			PRINTFORMW 「もふもふ…したい…」
+		ENDIF
+	;酔いどれ
+	ELSEIF BASE:酒気 > (MAXBASE:酒気 / 10) * 5
+		IF RAND:5 == 0
+			PRINTFORMW 「な…んあっ…」
+			PRINTFORMW 「ちょっと…飲み過ぎた…」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「しんどい…水…」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「地上人の酒というものは割合強いのか」
+			PRINTFORMW 「こういったのも悪くはない…けど…うぅ…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…頭痛い…」
+		ELSE
+			PRINTFORMW 「これ…」
+			PRINTFORMW 「酔ってはない」
+			PRINTFORMW 探女は少し錯乱しながら言葉を発している。
+		ENDIF
+	;ほろ酔い
+	ELSEIF BASE:酒気 >= 1
+		IF RAND:5 == 0
+			PRINTFORMW 「んっ」
+			PRINTFORMW 「…何か？」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「～♪」
+			PRINTFORMW 探女は鼻歌を小さく歌っている。
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…八重…桜…」
+			PRINTFORMW 「敷島…ね…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…こういうのも悪くはないか」
+		ELSE
+			PRINTFORMW 「何？」
+			PRINTFORMW 「私だって…酔う時ぐらいあるわよ…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:4 == 0
+			PRINTFORMW 「こうしていると…とっても幸せ」
+			PRINTFORMW 探女はそう言いながらにこやかに談笑を始めた。
+			PRINTFORMW （何があっても…この人となら…）
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「ふふっ…」
+			PRINTFORMW 「こんなにお喋りが楽しいだなんてね」
+			PRINTFORMW 「もっとお話しましょ♪」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女はこちらを見つめたまま押し黙っている。
+			PRINTFORMW 「ごめんなさい、こういう時どういう話をしたらいいのか分からないの…」
+			PRINTFORMW 少し申し訳なさ気な表情を浮かべながら探女はそう謝ってきた。
+		ELSE
+			PRINTFORMW 「地上ではそんなことが…」
+			PRINTFORMW 探女は地上で最近起きたことを聞くと驚愕の表情を浮かべた。
+			PRINTFORMW 「世の中何があるかわからないわね…」
+			PRINTFORMW 宴会芸程度にしか歌えない身でも役に立てるのだろうか。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:4 == 0
+			PRINTFORMW 「…主人公…」
+			PRINTFORMW 「お喋り好き？」
+			PRINTFORMW 探女はふと尋ねてきた。
+			PRINTFORMW 「…別にいいけど…」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「ねえ…%CALLNAME:MASTER%…」
+			PRINTFORMW 「…」
+			PRINTFORMW 「…なんでもない…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「ちゃんと聞いてる、%CALLNAME:MASTER%の声」
+		ELSE
+			PRINTFORMW 「…いろんなこと話してくれるのね私に」
+			PRINTFORMW 探女はどこか嬉しそうにそう答えた。
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:4 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は押し黙ったままこちらを見つめている。
+			PRINTFORMW 「面白い、続けて」
+			PRINTFORMW 無表情で彼女は話の続きを催促してきた。
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…なるほど」
+			PRINTFORMW 「…地上人はお喋り」
+			PRINTFORMW 「…今後の参考にするわ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「あんまり面白くはなかった」
+		ELSE
+			PRINTFORMW 「…何？」
+			PRINTFORMW 「話しかけないでと言っても無駄でしょう、だから聞いてるの」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:5 == 0
+			PRINTFORMW 「…何？」
+			PRINTFORMW 「あんまり…話しかけないほうがいい 」
+			PRINTFORMW 「何が起きてもいいというのなら別だけど」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…話しかけないで」
+			PRINTFORMW 「ろくな事にならないから…」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「そう」
+			PRINTFORMW 探女は話を聞くとそう答えた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 
+			PRINTFORMW 「？」
+			PRINTFORMW 探女は何故自分に話しかけているのだろうか？という表情をしている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に話しかけられると怪訝な表情で答えた。
+			PRINTFORMW 「…あんまり面白い話ではなかった」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無言で黙っている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;301,泡茶
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_301
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_301_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_301_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は黙ってお茶を飲んでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ずずっ…」
+			PRINTFORMW 「それで…何？」
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 「…ん…不味い…」
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…ありがと」
+			PRINTFORMW 探女は差し出されたお茶を嬉しそうな表情で受け取った。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん、ありがとう」
+			PRINTFORMW 探女は差し出されたお茶を上品に飲み始めた。
+			PRINTFORMW 「美味しいわね、このお茶っ葉」
+			PRINTFORMW クスクスと笑いながら彼女はそう言った。
+		ELSE
+			PRINTFORMW 
+			PRINTFORMW 「…ありがと」
+			PRINTFORMW 探女は差し出されたお茶を飲み干した。
+			PRINTFORMW 「美味しかったわ、ありがとう」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「美味しい…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…熱っ…」
+			PRINTFORMW 探女は差し出されたお茶を微笑みながら飲み干した。
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 探女は嬉しそうにお茶に手を出す。
+			PRINTFORMW 「温かい…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「不味くはない」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「渋い」
+		ELSE
+			PRINTFORMW 「美味しいけど」
+			PRINTFORMW 探女はお茶を飲み干すと
+			PRINTFORMW 「ちょっと…渋い」
+			PRINTFORMW そうダメ出しをした。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「ありがとう」
+			PRINTFORMW 探女は差し出されたお茶を飲み干すとそう答えた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 
+			PRINTFORMW 「…あまり好みではない」
+			PRINTFORMW 探女は差し出されたお茶を飲み干すとそう答えた。
+		ELSE
+			PRINTFORMW 「…む」
+			PRINTFORMW 探女は真剣な表情で湯のみを眺めている。
+			PRINTFORMW 「…茶柱…」
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言でお茶を飲み干した。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;302,身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_302
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_302_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_302_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…変態…」
+			PRINTFORMW 探女は身体接触に対して睨みつけている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…近付かないで…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に声を荒げて抗議した。
+		ELSE
+			PRINTFORMW 「…止めて…」
+			PRINTFORMW 探女は怒った表情で抗議してくる。
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…♪」
+			PRINTFORMW 探女は羽をパタパタさせながら何も言わずに%CALLNAME:MASTER%との身体接触を楽しんでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「馬鹿…こんなところで…」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の身体接触に顔を赤らめながら抗議した。
+			PRINTFORMW 「好きよ…%CALLNAME:MASTER%…」
+			PRINTFORMW そう言いつつも探女は%CALLNAME:MASTER%の腕に腕を絡めてきた。
+		ELSE
+			PRINTFORMW 「…ふふっ」
+			PRINTFORMW 探女はそう言いながら抱きついてきた。
+			PRINTFORMW 「いいわね、こういうのも」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…あんまり…」
+			PRINTFORMW 「こういうことは…」
+			PRINTFORMW （好きになっちゃうから…）
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は顔を赤らめながら%CALLNAME:MASTER%と身体接触を取っている。
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 探女は顔を真っ赤にしながら%CALLNAME:MASTER%と身体接触を取っている。
+			PRINTFORMW 「悪くはない…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「何か用？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…手ぐらいならいいけど」
+			PRINTFORMW 探女は%CALLNAME:MASTER%との身体接触に困惑している。
+		ELSE
+			PRINTFORMW 「別に構わないけど」
+			PRINTFORMW 「あんまりベタベタしないで」
+			PRINTFORMW 身体接触を取ろうとするとそう探女はダメ出しをした。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW （めんどうね…）
+			PRINTFORMW 探女はまんざらでも無いという感情と否定の感情で複雑な表情を浮かべている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は身体接触を取ろうとする%CALLNAME:MASTER%の意図を読み取れず少し困惑している。
+		ELSE
+			PRINTFORMW 「…はぁ」
+			PRINTFORMW 探女は%CALLNAME:MASTER%との身体接触を呆れながら受け入れている。
+			PRINTFORMW （…案外楽しいかも…）
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言で%CALLNAME:MASTER%と身体接触を取っている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;303,道歉
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_303
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_303_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_303_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	SELECTCASE TFLAG:193 
+	CASE 0,1,2
+		IF TALENT:恋慕
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って睨みつけた後に
+			PRINTFORMW 「いいわ」
+			PRINTFORMW そう言って赦してくれた。
+			PRINTFORMW 「でもあんまり怒らせないでね」
+			PRINTFORMW 「…貴方のこと、嫌いになりたくない、から」
+		ELSEIF CFLAG:2 >= 500
+			PRINTFORMW %CALLNAME:MASTER%の謝罪に対し
+			PRINTFORMW 「…別に構わないけど」
+			PRINTFORMW 探女は渋々とそれを受け入れた。
+			PRINTFORMW 「あんまり…困らせないで…」
+		ELSE
+			PRINTFORMW %CALLNAME:MASTER%は探女に対して非礼を詫びると
+			PRINTFORMW 「…分かった」
+			PRINTFORMW 探女は心底呆れた顔で赦すことを決めた。
+		ENDIF
+	CASEELSE
+		IF TALENT:恋慕
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って睨みつけた後に
+			PRINTFORMW 「駄目」
+			PRINTFORMW そう言い放った。
+			PRINTFORMW 「もう少し…反省しなさい」
+		ELSEIF CFLAG:2 >= 500
+			PRINTFORMW %CALLNAME:MASTER%の謝罪に対し
+			PRINTFORMW 「…駄目」
+			PRINTFORMW 指でバッテンを作りながら拒否の姿勢を見せた。
+			PRINTFORMW 「まだ怒ってるから、駄目」
+		ELSE
+			PRINTFORMW %CALLNAME:MASTER%が探女に対して非礼を詫びると
+			PRINTFORMW 「…」
+			PRINTFORMW 探女はゴミを見るような眼で見つめてきた。
+		ENDIF
+	ENDSELECT
+ENDIF
+RETURN 1
+;==================================================
+;304,幇忙干活
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_304
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_304_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_304_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;305,索求膝枕
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_305
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_305_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_305_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無表情で膝を貸している。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は何も言わずに膝の上の%CALLNAME:MASTER%の頭を撫でている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ほら、来て」
+			PRINTFORMW 探女は正座を正すと膝の上に%CALLNAME:MASTER%を迎え入れた。
+			PRINTFORMW 「ん…変なことしないでね」
+			PRINTFORMW そう言いつつ探女は%CALLNAME:MASTER%の頭を優しく撫でている。
+		ELSE
+			PRINTFORMW 「分かった」
+			PRINTFORMW 探女はそう言いながら膝の上に%CALLNAME:MASTER%を受け入れた。
+			PRINTFORMW 「…こういうの、いいわね」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ほら…」
+			PRINTFORMW 「膝枕、するんでしょ？」
+			PRINTFORMW （可愛い人…）
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…どうぞ」
+			PRINTFORMW 探女は顔を赤らめながら%CALLNAME:MASTER%を膝の上に迎え入れた。
+		ELSE
+			PRINTFORMW 「…ん…どうぞ」
+			PRINTFORMW 探女は顔を真っ赤にしながら%CALLNAME:MASTER%の頭を膝の上に乗せた。
+			PRINTFORMW 「よく眠れそう？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「どうぞ、膝枕ぐらいなら」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は無言で%CALLNAME:MASTER%頭を膝の上で優しく撫でている。
+		ELSE
+			PRINTFORMW 「…あんまり変なことしないで」
+			PRINTFORMW 「…そういう目をしていた」
+			PRINTFORMW 膝枕をしてくれた探女はそう言って注意をしてきた。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…これでいいの？」
+			PRINTFORMW （こういうのが良いのかしら？）
+			PRINTFORMW 探女は膝枕をするとおずおずと%CALLNAME:MASTER%の頭を撫でてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…こう？」
+			PRINTFORMW 探女は膝の上の%CALLNAME:MASTER%の頭を撫でている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の頭を無言で撫でている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言で%CALLNAME:MASTER%の頭を膝の上に乗せた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;306,撫摸肚子
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_306
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_306_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_306_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;307,捏臉蛋
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_307
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_307_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_307_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の捏臉蛋。
+		PRINTFORMW %CALLNAME:MASTER%は意外とぷにぷにとした頬の感触を楽しんだ。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無表情で睨みつけてきた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は何も言わずに頬を蹂躙されている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頬をつままれると逆に%CALLNAME:MASTER%の頬をつまんできた。
+			PRINTFORMW 「…お返し」
+			PRINTFORMW クスクスと笑いながら探女はひとしきり%CALLNAME:MASTER%の頬をつまみ倒した。
+		ELSE
+			PRINTFORMW 「むぅ…」
+			PRINTFORMW 探女は身を捩りながら弱々しく抵抗している。
+			PRINTFORMW 「…いひゃい…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…にゃに？」
+			PRINTFORMW 探女は頬をつままれたまま何事かと尋ねてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頬をつままれたまま振り返った。
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「伸びるからやめて…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「どうかしたの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は頬をつままれたまま無言でじっとこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…いひゃいんらけど」
+			PRINTFORMW 探女は頬をつままれたまま抵抗している。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頬をつままれたまま少し困惑している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひゃめて」
+			PRINTFORMW 探女は頬をつままれたままつまむのを止めるように言っている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頬をつままれたまま%CALLNAME:MASTER%の顔をじっと見つめている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頬をつままれたまま無言で%CALLNAME:MASTER%の顔を見つめている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;308,捅臉頰
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_308
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_308_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_308_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の頬をつついた。
+		PRINTFORMW %CALLNAME:MASTER%は意外とぷにぷにとした頬の感触を楽しんだ。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…ん…んー…」
+		PRINTFORMW 探女はぐっすりと寝ている
+		PRINTFORMW その頬はぷにぷにと瑞々しく弾力がある。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無表情で睨みつけてきた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…なぁに？」
+			PRINTFORMW 探女は頬を突かれると振り向いてそう尋ねてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頬を突かれると羽をピンっと伸ばしながら不思議そうな表情を浮かべている。
+		ELSE
+			PRINTFORMW 「ん…」
+			PRINTFORMW 探女は頬を突かれるとこちらに振り向いた。
+			PRINTFORMW 「…どうかしたの？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…何か用？」
+			PRINTFORMW 探女は頬を突かれると何事かと尋ねてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頬を突かれると振り返った。
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「痛い…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「何か？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は頬を突かれると無言でじっとこちらを睨みつけている。
+		ELSE
+			PRINTFORMW 「…止めて」
+			PRINTFORMW 探女は頬を突かれるとそう言って注意を促した。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頬を突かれて困惑している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…はぁ」
+			PRINTFORMW 探女は頬を突かれると呆れたようにこちらを見つめている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頬を突かれるとじっとこちらを見つめている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頬を突かれると無言で%CALLNAME:MASTER%の顔を見つめている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;309,摸頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_309
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_309_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_309_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の頭を撫でてみた。
+		PRINTFORMW %CALLNAME:MASTER%は色艶のいい白銀の髪の毛の触り心地に驚嘆した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…ん…すぅ…」
+		PRINTFORMW 探女はぐっすりと寝ている
+		PRINTFORMW その髪は絹のように柔らかかった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女はボサボサになった頭を振り向けて無表情で睨みつけてきた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…んー」
+			PRINTFORMW 探女は頭をなでられると羽をパタパタさせて喜んでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…頭撫でて…」
+			PRINTFORMW 探女はおずおずと摸頭のを要求してきた。
+			PRINTFORMW 「♪」
+		ELSE
+			PRINTFORMW 「ん…撫でて…」
+			PRINTFORMW 探女は顔を赤らめながら頭を向けてきた。
+			PRINTFORMW 「～♪」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…わしゃわしゃになった…」
+			PRINTFORMW 探女は頭を撫でられると羽をパタパタさせて喜んでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言で撫でられながらも顔を赤らめている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言で撫でられている。
+			PRINTFORMW （気持ちいい…）
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 「別にいいけど…急に何？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は無言で頭を撫でられつつこちらを見つめている。
+		ELSE
+			PRINTFORMW 「…髪の毛…ボサボサになっちゃう…」
+			PRINTFORMW 探女は頬を突かれるとそう言って注意を促した。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は頭を撫でられて困惑している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…はぁ、何？」
+			PRINTFORMW 探女は頭を撫でられるとそう返してきた。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頭を撫でられると無言で睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は頭を撫でられると無表情でそっぽを向いている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;310,摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_310
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_310_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_310_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の大きなお尻を揉みしだいた。
+		PRINTFORMW %CALLNAME:MASTER%はもっちりとしたその感触を一時楽しんだ。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬にビンタを喰らわせた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「変態…♪」
+			PRINTFORMW 探女は%CALLNAME:MASTER%にお尻を揉まれるのを喜んでいるようだ。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…えっち…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はそう言いながらもまんざらでもないという表情だ。
+		ELSE
+			PRINTFORMW 「…もっと触っても、いい」
+			PRINTFORMW 探女は顔を赤らめながらそう言って%CALLNAME:MASTER%の手に尻を押し付けてきた。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…あっ…」
+			PRINTFORMW 「…お尻…」
+			PRINTFORMW 探女はお尻を揉まれながらまんざらでもなさそうにそう呟いた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…こういうプレイ、好き？」
+			PRINTFORMW 探女は顔を赤らめながら尻を揉まれている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は無言で尻撫でられている。
+			PRINTFORMW （…変な感じ）
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「変態…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女は無言で手を振り払った。
+		ELSE
+			PRINTFORMW 「…馬鹿！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の手を振り払った。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…痴漢…！」
+			PRINTFORMW 探女は大きなお尻を揉まれるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…止めて…！」
+			PRINTFORMW 探女は頭を尻に付き纏う手を振り払った。
+		ELSE
+			PRINTFORMW 「変態…！」
+			PRINTFORMW 探女は自分の尻を蹂躙する%CALLNAME:MASTER%の手を振り払った。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の手を振り払った。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;311,擁抱
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_311
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_311_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_311_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の体に抱きついた。
+		PRINTFORMW %CALLNAME:MASTER%は一時探女の体温を感じていた。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…ん…」
+		PRINTFORMW 探女はぐっすりと寝ている
+		PRINTFORMW 肉付きのいい体は抱きついてくれと言わんばかりだった
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…止めて！」
+		PRINTFORMW 探女はドンっと抱きついてきた%CALLNAME:MASTER%突き放した。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…？」
+			PRINTFORMW 「こうして…欲しいの…？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を羽で包み抱き返してきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に抱きつかれると無言で抱きつき返した。
+		ELSE
+			PRINTFORMW 「…温かい…」
+			PRINTFORMW 探女は抱きつき返しながら顔を赤らめている。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「…こういうの、好き…」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に抱きつかれるとそう言いながら抱きつき返した。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は羽をピンっと伸ばしながら抱かれたままになっている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は抱きつかれると黙って抱きつき返してきた。
+			PRINTFORMW （…この人に抱かれてると…安心する…）
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って抱きつかれている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！？」
+			PRINTFORMW 探女は羽をパタパタさせながら抵抗している。
+		ELSE
+			PRINTFORMW 「…馬鹿…」
+			PRINTFORMW 探女はそう言いながらも%CALLNAME:MASTER%の為すがままになっている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…止めて…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に抱きつかれるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…何のつもり？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を睨みつけている。
+		ELSE
+			PRINTFORMW 「この…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%から出口ていった。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;312,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_312
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_312_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_312_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の唇を奪った。
+		PRINTFORMW 瑞々しい唇は柔らかく甘かった。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…ん…んんっ」
+		PRINTFORMW 探女はぐっすりと寝ている。
+		PRINTFORMW その唇を奪うと探女は少し唸っている。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…！」
+		PRINTFORMW 「こ、の…！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬を引っ叩いた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「ふぅ…んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「好き…キス…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の唇を奪い返してきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 「…いきなりは…駄目…んっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の唇を奪い返した。
+		ELSE
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 探女はキスをしながら羽をパタパタさせている。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んんっ…」
+			PRINTFORMW 「ぷはっ…もう…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は%CALLNAME:MASTER%にキスをされると唇に指を当てて考え事をしている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「～～～！」
+			PRINTFORMW 探女は羽をピンっと伸ばしながらキスをされるがままになっている。
+		ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女はキスをされると無言で唇を押し付けてきた。
+			PRINTFORMW （…好き…）
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「…止めてよ…もう…」
+			PRINTFORMW 探女はキスをされるとまんざらでもなさそうに顔を赤らめている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「～～～！？」
+			PRINTFORMW 探女は唇を奪われると羽をパタパタさせながら弱々しく抵抗している。
+		ELSE
+			PRINTFORMW 「ん…！？」
+			PRINTFORMW 探女は唇を奪われながら弱々しく抵抗している。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%にキスされるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…何のつもり！？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑している。
+		ELSE
+			PRINTFORMW 「…！？」
+			PRINTFORMW 探女は唇を奪った%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;313,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_313
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_313_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_313_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の胸を愛撫した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…すぅ…ん…んっ%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女はぐっすりと寝ているが嬌声を上げてしまった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…！」
+		PRINTFORMW 「変、態…！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬を引っ叩いた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%胸っ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%%CALLNAME:MASTER%の好きにして…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%私っ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「%CALLNAME:MASTER%の物よ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「胸っ…%UNICODE(0x2665) *1%…触ってっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…やぁっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「やっ%UNICODE(0x2665) *1%もうっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「胸でっ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%…やぁっ…%UNICODE(0x2665) *1%気持ちいいの…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…変態っ…っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は喘ぎながら顔を赤らめている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…馬鹿っ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はそう言いながらも欲情した目で見つめてきている。
+		ELSE
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%ふぁっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は口に手を当てて声を上げるのを我慢しているが吐息が漏れている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…止めて…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に触れられるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…何してるの！？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑している。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;314,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_314
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_314_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_314_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中でアナルを愛撫した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…くぅ…すぅ…んあっ%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女はぐっすりと寝ているが嬌声を上げてしまった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…！」
+		PRINTFORMW 「この…変態…！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬を引っ叩いた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%そこっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「弄って…%UNICODE(0x2665) *1%気持ちよくして…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%お尻っ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「好きにして…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…ああっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んぇっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW （…お尻の穴で…感じてしまう…%UNICODE(0x2665) *1%）
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「やっ%UNICODE(0x2665) *1%そこっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「不浄のっ…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%…駄目っ…%UNICODE(0x2665) *1%イッちゃう…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…そこはっ…っ…」
+			PRINTFORMW 探女は喘ぎながら顔を赤らめている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…不浄の穴…弄っちゃ駄目っ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はそう言いながらも欲情した目で見つめてきている。
+		ELSE
+			PRINTFORMW 「…んーっ%UNICODE(0x2665) *1%んーっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は口に手を当てて声を上げるのを我慢しているが吐息が漏れている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…止めなさい…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に触れられるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…地上人とはこういうものか！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑している。
+		ELSE
+			PRINTFORMW 「…この変態！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;315,陰蒂愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_315
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_315_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_315_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女のクリトリスを愛撫した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…んぅ…んんっ%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女はぐっすりと寝ているが嬌声を上げてしまった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…！」
+		PRINTFORMW 「この…馬鹿…！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬を引っ叩いた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ふっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あんっ%UNICODE(0x2665) *1%あっ%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…んあっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「……っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW （…感じちゃう…%UNICODE(0x2665) *1%）
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「やあっ%UNICODE(0x2665) *1%んんっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「もっと…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%…変態…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はそう言いながらも行為を受け入れている。
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「……っ…」
+			PRINTFORMW 探女は無言で顔を赤らめている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ひぁっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は欲情した目で見つめてきている。
+		ELSE
+			PRINTFORMW 「…んふっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は口に手を当てて声を上げるのを我慢しているが吐息が漏れている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…こんなところで…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に触れられるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…地上人のやること！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑している。
+		ELSE
+			PRINTFORMW 「…変態！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;316,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_316
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_316_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_316_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の秘部に指を挿入した。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…んぅ…あんっ%UNICODE(0x2665) *1%」
+		PRINTFORMW 探女はぐっすりと寝ているが嬌声を上げてしまった。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「…！」
+		PRINTFORMW 「馬鹿、変態…！」
+		PRINTFORMW 探女はバシッと%CALLNAME:MASTER%の頬を引っ叩いた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「ふっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「指…%UNICODE(0x2665) *1%犯されちゃう…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あんっ%UNICODE(0x2665) *1%んんっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「もっと…かき乱して…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…ああっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「……やっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW （…この人の指…太くておっきい…%UNICODE(0x2665) *1%）
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「やあっ%UNICODE(0x2665) *1%んんっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「挿入れて…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「んっ%UNICODE(0x2665) *1%…やあっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「……んっ…」
+			PRINTFORMW 探女は無言で顔を赤らめている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…もっとっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は欲情した目で見つめてきている。
+		ELSE
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は口に手を当てて声を上げるのを我慢しているが吐息が漏れている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…誰か来るかもしれないのに…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%に触れられるのを嫌がっている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…痴漢…！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑している。
+		ELSE
+			PRINTFORMW 「…止めて！」
+			PRINTFORMW 探女は%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;317,Ｖ腰を振る
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_317
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_317_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_317_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;318,Ａ腰を振る
+;==================================================
+;@M_KOJO_MESSAGE_COM_K110_318
+;CALL TRAIN_MESSAGE
+;CALL M_KOJO_MESSAGE_COM_K110_318_1
+;RETURN RESULT
+
+;@M_KOJO_MESSAGE_COM_K110_318_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+;LOCAL = 0
+;-------------------------------------------------
+;IF LOCAL
+
+;ENDIF
+;RETURN 1
+;==================================================
+;330,掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_330
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_330_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_330_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女のスケベ裙子をめくった。
+		PRINTFORMW %CALLNAME:MASTER%は探女の大きな尻を眺めて楽しんだ。
+	ELSEIF CFLAG:318 == 1
+		IF RAND:3 == 0
+			PRINTFORMW 「…止めて」
+			PRINTFORMW 「…怒ってるんだけど」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！」
+			PRINTFORMW 「変態！」
+			PRINTFORMW 探女はパシッと頬を引っ叩いた。
+		ELSE
+			PRINTFORMW 「…この…」
+			PRINTFORMW 探女は裙子の端を押さえてプルプルと肩をふるわせている。
+		ENDIF
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「今日の…パンツ…」
+			PRINTFORMW 探女は裙子を捲り上げながら恥ずかしそうに顔を赤らめている。
+			PRINTFORMW 「…あんまり…ジロジロ見ないで…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は裙子を捲りあげられると抵抗せず顔を赤らめている。
+			PRINTFORMW 「興奮…した…？」
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 探女は裙子を捲りあげられるとそのまま端を持ち上げて中を見せつけてきた。
+			PRINTFORMW 「…こういうの…好き…？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「見たいのなら…言って」
+			PRINTFORMW 「見せて、あげるから…」
+			PRINTFORMW 探女はそう言っておずおずと裙子の端を捲り上げている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こういうの、好き？」
+			PRINTFORMW 「恥ずかしいけど…どう？」
+			PRINTFORMW 探女はそう言って少しずつ裙子の端を捲り上げている。
+		ELSE
+			PRINTFORMW 「…？」
+			PRINTFORMW 「…パンツ…見たいの？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「変態…」
+			PRINTFORMW 探女は呆れた様子で%CALLNAME:MASTER%を罵った。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…裙子…好きなの？」
+			PRINTFORMW 探女は呆れた様子で%CALLNAME:MASTER%の趣向に困惑している。
+		ELSE
+			PRINTFORMW 「！？」
+			PRINTFORMW 探女は驚いた様子で口をパクパクさせている。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女は裙子の端を押さえてキッと睨みつけている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に困惑した後睨みつけてきた。
+		ELSE
+			PRINTFORMW 「…変態…」
+			PRINTFORMW 探女は裙子の中を覗かれたことに顔を真っ赤にしている。
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って裙子の端を押さえている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;331,泡茶（下薬）
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_331
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_331_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_331_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;350,推倒（時姦時猥褻
+;TFLAG:194 (0=成功 1=人目がある　2=野外は嫌でござりまする　3=多人数プレイは勘弁　4=合意があっても情緒が足りぬ）
+;TCVAR:抱き寄せ初回　1=普通に合意ゲット　2=先にキスぐらいしろよ　3=媚薬or発情には勝てなかったよお…　4=悔しい…刻印さえなければﾋﾞｸﾋﾞｸﾝ
+;5=強引に迫られると断れぬ(素質胆怯持ち専用) 6=まんざらでもない　7=駄目　8=論外
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_350
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_350_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_350_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた世界の中で探女の体を推倒ことにした。
+		PRINTFORMW 女性らしい体つきの彼女はどこか扇情的だった。
+		PRINTFORMW %CALLNAME:MASTER%はじっくりと楽しむことにした。
+	ELSEIF TFLAG:194
+		SELECTCASE TFLAG:194
+			CASE 1
+				IF TALENT:恋人
+					PRINTFORMW 「…ここで？」
+					PRINTFORMW 「周りに見られるのは嫌」
+					PRINTFORMW 「…お願い、場所、移しましょ」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「…そういう趣味？」
+					PRINTFORMW 「あんまりいいとは思わない」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「？」
+					PRINTFORMW 「ここは…見られるからダメ…」
+				ELSE
+					PRINTFORMW 「どういうこと…？」
+					PRINTFORMW 「周りに見られるのは嫌、よ」
+				ENDIF
+			CASE 2
+				IF TALENT:恋人
+					PRINTFORMW 「こ…こういう場所はちょっと…」
+					PRINTFORMW 「野外は…好きじゃない」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「外は…ダメ…」
+					PRINTFORMW 「…恥ずかしい、から」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…ここはダメ」
+				ELSE
+					PRINTFORMW 「…」
+					PRINTFORMW 探女はここでするのは嫌だと袖を引っ張って抵抗している。
+				ENDIF
+			CASE 3
+				IF TALENT:恋人
+					PRINTFORMW 「…」
+					PRINTFORMW 「%CALLNAME:MASTER%と二人っきりがいい」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「…こういうの、よくない」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「………」
+					PRINTFORMW 「乱交は嫌」
+				ELSE
+					PRINTFORMW 「！？」
+					PRINTFORMW 「そういうの、ダメ…」
+				ENDIF
+			CASE 4
+				IF TALENT:恋人
+					PRINTFORMW 「ん…」
+					PRINTFORMW 「もうちょっと…このまま…」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「…情緒、作って、から」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん」
+					PRINTFORMW 「気、早すぎ」
+				ELSE
+					PRINTFORMW 「…」
+					PRINTFORMW 探女は白けた表情を浮かべている。
+				ENDIF
+		ENDSELECT
+	ELSEIF TCVAR:抱き寄せ初回
+		SELECTCASE TCVAR:抱き寄せ初回
+			CASE 1
+				IF TALENT:恋人
+					PRINTFORMW 「…いいわよ」
+					PRINTFORMW そういうと押し倒された探女は足を絡めてきた。
+					PRINTFORMW 「私を…滅茶苦茶に穢して…%UNICODE(0x2665) *1%」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「ん…分かった」
+					PRINTFORMW 「気持よく、してね…%UNICODE(0x2665) *1%」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…いいけど」
+					PRINTFORMW 「責任取ってね…」
+				ELSE
+					PRINTFORMW 「…」
+					PRINTFORMW 探女は無表情に%CALLNAME:MASTER%の行為を見つめている。
+				ENDIF
+			CASE 2
+				IF TALENT:恋人
+					PRINTFORMW 「こういうの、キスをするものよ」
+					PRINTFORMW 「…興奮して我慢できなくなっちゃった？」
+					PRINTFORMW 「可愛い人、気持よくしてあげる…♪」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「ん…キスもまだなのに？」
+					PRINTFORMW 「少し…残念」
+					PRINTFORMW 「そういう所、好きだけど」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…こういうの、早いと思う」
+					PRINTFORMW 「まあ、いいけど」
+				ELSE
+					PRINTFORMW 「…」
+					PRINTFORMW 探女は不満そうにこちらを見つめている。
+				ENDIF
+			CASE 3
+				IF TALENT:恋人
+					PRINTFORMW 「変な気分…%UNICODE(0x2665) *1%」
+					PRINTFORMW 「…えっちなこと…するの…？」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「押し倒されちゃった…%UNICODE(0x2665) *1%」
+					PRINTFORMW 「…ちんちん…出して…%UNICODE(0x2665) *1%」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん…%UNICODE(0x2665) *1%」
+					PRINTFORMW 「来、て…♪」
+				ELSE
+					PRINTFORMW 「…！？」
+					PRINTFORMW 探女はわけもわからず発情したまま押し倒されている。
+				ENDIF
+			CASE 4
+				IF TALENT:恋人
+					PRINTFORMW 「ん…わかんないけど…」
+					PRINTFORMW 「エッチな気分…%UNICODE(0x2665) *1%」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「こういうこと…したいの？」
+					PRINTFORMW 「…私は…したい、な」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「ん…♪」
+					PRINTFORMW 「エッチなの…する…？」
+				ELSE
+					PRINTFORMW 「…！」
+					PRINTFORMW 探女はどこか待ちわびていたように押し倒されている。
+				ENDIF
+			CASE 5
+			CASE 6
+				IF TALENT:恋人
+					PRINTFORMW 「…まだ早いと思う」
+					PRINTFORMW 「%CALLNAME:MASTER%となら…いいかもしれないけど」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「こういうの、まだ早い」
+					PRINTFORMW 「…そのうち、してあげる…%UNICODE(0x2665) *1%」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「そういうの、あんまり好きじゃない」
+					PRINTFORMW 「心の…準備が、ね」
+				ELSE
+					PRINTFORMW 「…！」
+					PRINTFORMW 探女は指でバッテンを作りながらもまんざらでもなさそうに顔を赤らめている。
+				ENDIF
+			CASE 7
+				IF TALENT:恋人
+					PRINTFORMW 「…ダメ…」
+					PRINTFORMW 「今は…ダメ…」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「やだ…そういうこと、したくない」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…ダメ」
+				ELSE
+					PRINTFORMW 「…」
+					PRINTFORMW 探女は無言で拒否の姿勢を貫いている。
+				ENDIF
+			CASE 8
+				IF TALENT:恋人
+					PRINTFORMW 「！？」
+					PRINTFORMW 「駄目！」
+				ELSEIF TALENT:恋慕
+					PRINTFORMW 「…止めて！」
+				ELSEIF TALENT:思慕
+					PRINTFORMW 「…駄目！」
+				ELSE
+					PRINTFORMW 「…！」
+					PRINTFORMW 探女は押し倒そうとした%CALLNAME:MASTER%の頬をパシッと引っ叩いた。
+				ENDIF
+		ENDSELECT
+	ELSE
+		IF TALENT:恋人
+			IF RAND:3 == 0
+				PRINTFORMW 「滅茶苦茶に…穢して…%UNICODE(0x2665) *1%」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「%CALLNAME:MASTER%の精で…満たして…%UNICODE(0x2665) *1%」
+			ELSE
+				PRINTFORMW 「%CALLNAME:MASTER%…私を…満たして…%UNICODE(0x2665) *1%」
+			ENDIF
+		ELSEIF TALENT:恋慕
+			IF RAND:3 == 0
+				PRINTFORMW 「…好きよ…%CALLNAME:MASTER%…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「来、て…%UNICODE(0x2665) *1%」
+			ELSE
+				PRINTFORMW 「気持よく、して…ね…%UNICODE(0x2665) *1%」
+			ENDIF
+		ELSEIF TALENT:思慕
+			IF RAND:3 == 0
+				PRINTFORMW 「分かった…優しく、してね」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「こういうのは、あまり慣れてないから…」
+				PRINTFORMW 「リード、してね…」
+			ELSE
+				PRINTFORMW 「…好きにして」
+			ENDIF
+		ELSEIF CFLAG:2 >= 500
+			IF RAND:3 == 0
+				PRINTFORMW 「…」
+				PRINTFORMW 「別に、構わない」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「好きにすればいい」
+			ELSE
+				PRINTFORMW 「…」
+				PRINTFORMW 探女は表情を強張らせながらもなすがままに押し倒されている。
+			ENDIF
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は無表情で押し倒されている。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;351,帯出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_351
+;連れ出しにはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K110_351_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_351_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「どこへ…連れて行ってくれるのかしら…」
+			PRINTFORMW 探女は期待に満ちた眼で見つめてきている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…分かった」
+			PRINTFORMW 探女は後ろ手に組みながら期待に満ちた眼で見つめている。
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って首を立てに振り同行することに決めたことを伝えた。
+			PRINTFORMW （…どこへでも…%CALLNAME:MASTER%となら…）
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「行く場所ぐらいは…言って」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「行きたい所？今の所とくにはない」
+		ELSE
+			;秩父山中
+			PRINTFORMW 「…%CALLNAME:MASTER%はどこへ行きたいの？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…何があるの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…何するつもり？」
+		ELSE
+			PRINTFORMW 「いいけど…」
+			PRINTFORMW 探女はおずおずと付いてくる。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…分かった」
+		ELSE
+			PRINTFORMW 「…構わない…」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って連れ出されている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;352,告白
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_352
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_352_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_352_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 「私と、恋人に」
+		PRINTFORML 「……そうね」
+		PRINTFORMW 「私も、好きよ、%CALLNAME:MASTER%のこと」
+		PRINTFORMW 「女として…%CALLNAME:MASTER%のこと、愛しているわ」
+		PRINTFORML 「でもね、私の能力は人を不幸にするの」
+		PRINTFORML 「それでもいい、そんな私を大切に想ってくれていたのなら」
+		PRINTFORMW 「私の何もかもを貴方に捧げます」
+		PRINTFORML 「そしてこれからも%CALLNAME:MASTER%と―――」
+		PRINTFORMW 探女はそう告白しながら抱きついてきた。
+		PRINTFORMW 暫くの間%CALLNAME:MASTER%は探女と抱擁を交わしながらその温もりを感じ取ることにした。
+;		PRINTFORML （結局…月に居ても地上に居ても女なのね、私）
+	ELSE
+		PRINTFORML 「………？」
+		PRINTFORML %CALLNAME:MASTER%の挙動不審な態度に探女は少し困惑している。
+		PRINTFORMW （何か…あったのかしら？）
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;353,猥褻
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_353
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_353_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_353_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;354,陪睡（相手は起きて布団に招く感じ）
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_354
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_354_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_354_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:TARGET:睡眠
+		PRINTFORMW 「ん…すぅ…」
+		PRINTFORMW 探女はどこか嬉しそうに寝息を立てている。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「一緒に…夢の中へ…」
+			PRINTFORMW 探女はそう言いながら布団の中に招き入れた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…来て…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…寝ましょう…」
+			PRINTFORMW （…こういうのも…いいか…）
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「夢の中に入るの…？別に構わないけど」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「一緒に寝るの？いいわよ」
+		ELSE
+			PRINTFORMW 「…%CALLNAME:MASTER%はこういうことしたいの？」
+			PRINTFORMW 「私もしたいからいいけど」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…眠い」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………？」
+		ELSE
+			PRINTFORMW 「いいけど…」
+			PRINTFORMW 探女はそう言って布団の中に招き入れた。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…変なことしないで」
+		ELSE
+			PRINTFORMW 「…好きにして…」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って布団の中に招き入れた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;355,時止め（地の文の改変程度に留めるべき
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_355
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_355_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_355_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;360,任憑擺佈
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_360
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_360_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_360_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;363,朗読（[幼稚]持ち）
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_363
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_363_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_363_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;364,撒豆子(萃香、勇儀、斯喀雷特姉妹用
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_364
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_364_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_364_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;365,向守矢神社移動(早苗、神奈子、諏訪子用
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_365
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_365_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_365_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;402,就寝（添い寝時）
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_402
+;就寝にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K110_402_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_402_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:TARGET:睡眠
+		PRINTFORMW 「ん…んん…」
+		PRINTFORMW %CALLNAME:MASTER%はすやすやと眠っている探女にお休みと呟いて眠ることにした。
+	ELSEIF TALENT:恋人
+		PRINTFORMW 「お休みなさい、夢で逢いましょう」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…お休みなさい…」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…いい夢を」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW 「…お休み…」
+	ELSE
+		PRINTFORMW 「………」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;403,休憩
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_403
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_403_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_403_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;405,外出(同行時デートに外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_405
+;外出にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K110_405_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_405_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;デート
+	IF CFLAG:TARGET:同行
+		IF TALENT:恋人
+			PRINTFORMW 「今日はどこへ？」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「…%CALLNAME:MASTER%とならどこまでも…」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「…私と…デート？」
+			PRINTFORMW 「構わない」
+		ELSEIF CFLAG:2 >= 500
+			PRINTFORMW 「…いいけど…」
+		ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って付いて来ている。
+		ENDIF
+	ELSE
+		IF TALENT:恋人
+			PRINTFORMW 「いってらっしゃい」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は少し残念そうに見送っている。
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「………」
+			PRINTFORMW 探女はじっとこちらを見つめながら見送っている。
+		ELSEIF CFLAG:2 >= 500
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は黙って%CALLNAME:MASTER%を見送っている。
+		ELSE
+			PRINTFORMW 「………」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;410,掃除
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_410
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_410_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_410_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		RETURN 0
+	ELSEIF RAND:3 == 0
+		PRINTFORMW 「……ご苦労さま」
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「………」
+	ELSE
+		PRINTFORMW 「…綺麗好きなの？」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;411,戦闘訓練
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_411
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_411_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_411_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;412,学習
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_412
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_412_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_412_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;413,料理
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_413
+;料理にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K110_413_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_413_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「何作るの？手伝った方がいい？」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…%STR:(3000 + FLAG:20)%…？作れるんだ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…上手いの？料理」
+		PRINTFORMW 「私は、そうでもないけど」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW 「何作ってるの？」
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って調理シーンを見ている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;414,吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_414
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_414_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_414_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !CFLAG:TARGET:睡眠
+	IF TALENT:恋人
+		PRINTFORMW 「一緒に食べましょう」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…美味しそうね、頂くわ」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「ご飯？」
+		PRINTFORMW 「…頂くわ」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW 「…頂きます」
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って吃飯を取っている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;415,招待吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_415
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_415_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_415_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「ありがとう、頂きます」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…いいの？」
+		PRINTFORMW 「頂きます…」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「作ってくれたの？」
+		PRINTFORMW 「…頂きます」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW （…美味しいのかしら？）
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って吃飯を始めた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;416,演奏(凍結中？
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_416
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_416_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_416_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;417,昼寝をする
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_417
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_417_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_417_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;421,祈願する
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_421
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_421_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_421_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;431,在浴室里放鬆
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_431
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_431_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_431_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「～～～♪」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…あまり見ないで…」
+		PRINTFORMW 「恥ずかしい…から…」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「何？」
+		PRINTFORMW 「…背中ぐらい流してあげるわよ」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW （…変態…）
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って浴室に沈んでいる。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;440,等待
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_440
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_440_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_440_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;441,聽課(慧音専用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_441
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_441_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_441_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;442,伐採
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_442
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_442_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_442_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+[SKIPSTART]
+;現状未実装
+;==================================================
+;600,デート会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_600
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_600_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_600_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;601,デート身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_601
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_601_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_601_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;602,デートキス
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_602
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_602_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_602_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;603,牽手
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_603
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_603_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_603_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女はムスッとしたまま黙りこくっている。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「手…繋ぎましょう」
+			PRINTFORMW 探女はそう言いながら手を取ってきた。
+			PRINTFORMW 「…悪くはないわね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…温かい…」
+		ELSE
+			PRINTFORMW 「…好き…」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あまり、引っ張らないでね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「温かいの…伝わってくる…」
+		ELSE
+			PRINTFORMW 「…%CALLNAME:MASTER%は牽手の好き？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…何？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………？」
+		ELSE
+			PRINTFORMW 「いいけど…」
+			PRINTFORMW 「あんまり人に見られるのは…」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………好きにするといい」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は不思議そうに手を繋いでいる。
+		ELSE
+			PRINTFORMW 「…ベトベトしてる」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って手を繋いでいる。
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;604,散步
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_604
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K110_604_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_604_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;605,繞道
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_605
+;繞道にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K110_605_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_605_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女はムスッとしたまま黙りこくっている。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「どこに行くの？」
+			PRINTFORMW 「…面白い物でもありそうね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…面白そうね…」
+		ELSE
+			PRINTFORMW 「何があるのかしら？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「どこへ、行くの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「寄り道…考えたこともなかった」
+		ELSE
+			PRINTFORMW 「…こういうのも悪くはない、わね」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…無駄骨を…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「構わないけども、あまり寄り道はしたくない」
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 「時間を潰すのは…好きじゃない」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………道草は食わない主義よ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…早くして…」
+		ELSE
+			PRINTFORMW 「…早く行きましょう」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って道草を食っている。
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;610,請吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_610
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_610_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_610_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「何か奢ってくれるの？」
+			PRINTFORMW 「…楽しみね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…何を食べさせてくれるのかしら…？」
+		ELSE
+			PRINTFORMW 「ゆっくり二人っきりで吃飯がしたいわね」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「何、食べるの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「美味しいもの…食べたい」
+		ELSE
+			PRINTFORMW 「…何食べさせてくれるの？」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「美味しいの…好き」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「地上の食べ物…興味はある」
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 「地上人はそうやって口説くの？」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………オススメ？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…美味しいの？」
+		ELSE
+			PRINTFORMW 「…別にいいけど」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って吃飯の誘いにのっている。
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;613,賺錢
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_613
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_613_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_613_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;614,採購食材
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_614
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_614_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_614_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;615,吃便当
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_615
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_615_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_615_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF ABL:料理技能 < 4
+		PRINTFORMW 「%CALLNAME:MASTER%、お弁当、作ってきた」
+		PRINTFORMW 探女はそう言いながら弁当を取り出した。
+		PRINTFORMW 見た目は普通のお弁当だ。
+		PRINTFORMW …重箱に入っていなければだが。
+		PRINTFORMW 「たくさん…食べて」
+		PRINTFORMW 探女は羽をパタパタさせながらおずおずと箸でおかずをつまみ%CALLNAME:MASTER%の口元に寄せてきた。
+		PRINTFORMW 「あーん、して」
+		PRINTFORMW 探女はそう言いながら%CALLNAME:MASTER%の口に弁当を押し込んできた。
+	ELSEIF ABL:料理技能 < 2
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無言で弁当を取り出し唐揚げを一つ摘んで%CALLNAME:MASTER%の口の前に持ってきた。
+		PRINTFORMW 「お腹すいたでしょ、お弁当、作った」
+		PRINTFORMW ぐいぐいと唐揚げを押し付けられながらそれを頬張ると口いっぱいに微妙な味が広がった…
+		PRINTFORMW 「もっと、食べて」
+		PRINTFORMW …暫くの間は探女の弁当攻勢が続きそうだ。
+	ELSE
+		PRINTFORMW 「お弁当、作ってきた」
+		PRINTFORMW 探女はそう言いながら弁当を取り出し箸を渡してくる。
+		PRINTFORMW 「いっぱい、食べて」
+		PRINTFORMW 一口食べてみると見たことのない食べ物でも意外と美味しいものだと感心する。
+		PRINTFORMW …いや、料理人の腕が上手いのか。
+		PRINTFORMW %CALLNAME:MASTER%がひとしきり食べ終えるまで探女は%CALLNAME:MASTER%の顔を羽をパタパタさせながら見つめていた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;617,甘味処に誘う
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_617
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_617_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_617_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「甘いもの、好き%UNICODE(0x2665) *1%」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…甘いもの、食べさせてくれるの？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…」
+		PRINTFORMW 「こんなので絆されたりはしない…」
+		PRINTFORMW 探女はそう言いながらも期待に羽を震わせている。
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW 「…分かった」
+		PRINTFORMW 探女はそう言いながら羽をピョコピョコさせている。
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って甘味処に付いて来ている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;618,花屋
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_618
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_618_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_618_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;620,鈴奈庵
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_620
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_620_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_620_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;660,読書
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_660
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_660_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_660_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「本…面白いの、ある？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…教養を高めるのはいい」
+		ELSE
+			PRINTFORMW 「何読んでるの？」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…読みたい本があるのはいいわね」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「この本…読みたかったの」
+		ELSE
+			PRINTFORMW 「…こういうのも面白そう」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は夢中で本を読んでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふふっ…」
+			PRINTFORMW 探女は少し本を読んで笑っている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 「何を…読んでるの？」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………読書が趣味？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…面白そうな本ね…」
+		ELSE
+			PRINTFORMW 「……面白い」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って本を読んでいる。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;698,進入房間
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_698
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_698_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_698_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「入っていいわよ、片付いてるとは思う」
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…いいわよ、入って」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…」
+		PRINTFORMW 「恥ずかしいから…あんまり見ないで…」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW 「…別に…いいけど…」
+		PRINTFORMW 探女はそう言いながら羽をピョコピョコさせている。
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って部屋に招き入れた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;699,外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K110_699
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K110_699_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K110_699_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,掏耳朵
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K110_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K110_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K110_60_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「…こういうの、恋人みたいね」
+		PRINTFORMW 探女は%CALLNAME:MASTER%の耳を弄くりながらそう囁いた。
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…耳…気持ちいい？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…」
+		PRINTFORMW 「いっぱい溜まってる…」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW （楽しい…）
+		PRINTFORMW 探女はそう言いながら%CALLNAME:MASTER%の耳を掃除している。
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って%CALLNAME:MASTER%の耳を掃除している。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;61,抱き枕
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K110_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K110_61_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K110_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:恋人
+		PRINTFORMW 「…こういうの、恋人みたいね」
+		PRINTFORMW 探女は%CALLNAME:MASTER%の耳を弄くりながらそう囁いた。
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「…耳…気持ちいい？」
+	ELSEIF TALENT:思慕
+		PRINTFORMW 「…」
+		PRINTFORMW 「いっぱい溜まってる…」
+	ELSEIF CFLAG:2 >= 500
+		PRINTFORMW （楽しい…）
+		PRINTFORMW 探女はそう言いながら%CALLNAME:MASTER%の耳を掃除している。
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って%CALLNAME:MASTER%の耳を掃除している。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;62,亲額頭
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K110_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K110_62_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K110_62_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の額にキスをした。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…ん…んん…」
+		PRINTFORMW 探女はぐっすりと寝ている。
+		PRINTFORMW その額に%CALLNAME:MASTER%は優しくキスをした。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は無表情で睨みつけてきた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「…ずるい…」
+			PRINTFORMW 探女は顔を真っ赤にしながらそう呟いた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ」
+			PRINTFORMW 探女は額にキスをされると唇を奪ってきた。
+			PRINTFORMW 「…こっちの方が好き…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はクスクスと笑いながら名残惜しそうに唇を触っている。
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 探女は額にキスをされると物欲しげに瞳を見つめている。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…地上人はこういうのが好き？」
+			PRINTFORMW 探女は額を押さえながらそう尋ねてきた。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は羽をピョコピョコさせながら言葉には出さず喜んでいる。
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「もっと…して…」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「………？」
+			PRINTFORMW 探女は行為の意味をよくわかっていないという風だ。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女は額にキスをされるとビクッと羽を震わせた。
+		ELSE
+			PRINTFORMW 「…止めて…」
+			PRINTFORMW 探女は額を押さえながら弱々しく抗議している。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「…？」
+			PRINTFORMW 探女は額を押さえながら少し困惑している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…何…？」
+			PRINTFORMW 探女は額を押さえながら羽を震わせて抗議している。
+		ELSE
+			PRINTFORMW 「…！」
+			PRINTFORMW 探女は額を押さえながら%CALLNAME:MASTER%の顔をじっと見つめている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「………」
+			PRINTFORMW 探女は額にキスをされると無言で%CALLNAME:MASTER%の顔を見つめている。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;63,更多的接吻
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K110_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K110_63_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K110_63_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF FLAG:時間停止
+		PRINTFORMW 凍てついた時の中で探女の唇を更に奪った。
+	ELSEIF CFLAG:TARGET:睡眠
+		PRINTFORMW 「…ん…んん…っ…」
+		PRINTFORMW 探女はぐっすりと寝ている。
+		PRINTFORMW その唇をさらに奪った。
+	ELSEIF CFLAG:318 == 1
+		PRINTFORMW 「………！」
+		PRINTFORMW 探女は唇を奪われると無表情で睨みつけてきた。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「んんっ…%UNICODE(0x2665) *1%…っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 「ふぅ…好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 「…はぁっ…んっ…」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の唇とより深く交わろうとしている。
+		ELSE
+			PRINTFORMW 「…んんっ…」
+			PRINTFORMW 探女はより深くキスをしながら羽をパタパタさせている。
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んんっ…」
+			PRINTFORMW 「ふぁっ…んっ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女はさらに唇をなすがままに奪われている。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「～～～っ…%UNICODE(0x2665) *1%」
+			PRINTFORMW 探女は羽をピンっと伸ばしながら唇を奪われ恍惚としている。
+		ELSE
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 探女は唇を蹂躙されながら羽を震わせている。
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…んっ…」
+			PRINTFORMW 「…まだ…もう…」
+			PRINTFORMW 探女はキスされながら弱々しく抵抗している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「～～～っ！」
+			PRINTFORMW 探女は唇を奪われながらも抵抗できずにいる。
+		ELSE
+			PRINTFORMW 「ん～～～」
+			PRINTFORMW 探女は唇を奪われながらどこか嬉しそうだ。
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………！」
+			PRINTFORMW 探女はさらに唇を奪われながら抵抗している。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…！？」
+			PRINTFORMW 「…止めてって！？言ってるでしょう！？」
+			PRINTFORMW 探女は%CALLNAME:MASTER%の行為に抵抗している。
+		ELSE
+			PRINTFORMW 「～～～！」
+			PRINTFORMW 探女はさらに唇を奪った%CALLNAME:MASTER%を睨みつけている。
+		ENDIF
+	ELSE
+			PRINTFORMW 「………！？」
+			PRINTFORMW 探女は困惑しながら黙って%CALLNAME:MASTER%の頬を引っ叩いた。
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;80,拉手
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K110_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K110_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K110_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF CFLAG:318 == 1
+		PRINTFORMW 「………」
+		PRINTFORMW 探女はムスッとしたまま黙りこくっている。
+	ELSEIF TALENT:恋人
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 探女は手を引かれながら小走りに付いてくる。
+			PRINTFORMW 「…足速い…」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「～～♪」
+			PRINTFORMW 探女は心情愉快に鼻歌を歌っている。
+		ELSE
+			PRINTFORMW 「………♪」
+		ENDIF
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…一緒に、歩こう」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…こういうの、楽しいわね」
+		ELSE
+			PRINTFORMW 「…リードしてくれるの？」
+			PRINTFORMW 「…悪くはない」
+		ENDIF
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…温かい手」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………誘拐？」
+		ELSE
+			PRINTFORMW 「いいけど…」
+			PRINTFORMW 「どこへ連れていくの？」
+		ENDIF
+	ELSEIF CFLAG:2 >= 500
+		IF RAND:3 == 0
+			PRINTFORMW 「………どこへ行くの？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 探女はぶすっと手を引かれている。
+		ELSE
+			PRINTFORMW 「…緊張してるの？」
+		ENDIF
+	ELSE
+		PRINTFORMW 「………」
+		PRINTFORMW 探女は黙って手を引かれている。
+	ENDIF
+ENDIF
+RETURN 1

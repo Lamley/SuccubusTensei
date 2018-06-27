@@ -1,0 +1,1022 @@
+﻿
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;1,六九式
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_1_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+;いくらなんでも適当すぎるだろ
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		PRINTFORM 「んっ、ぁ、ぅん
+		CALL HEARTCB_K68(0xD02830)
+		PRINTFORMW ！　んんっ、ん……」
+	;それ以外
+	ELSE
+		PRINTFORMW 「んっ、うっ！？　っくう……！」
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;2,岩清水
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_2_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;3,Gスポット刺激
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_3_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		IF EXP:68:Ｖ経験 > 50
+			PRINTFORM 「ぁっ、あぁああああッ
+			CALL HEARTCB_K68(0xD02830,2)
+			PRINTFORMW ！」
+		ELSE
+			PRINTFORM 「はっ……はぁ、あ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORMW 」
+		ENDIF
+	;それ以外
+	ELSE
+		IF EXP:68:Ｖ経験 > 50
+			PRINTFORM 「や……ぁああああッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORMW ！　ダメ、そこはぁ！」
+		ELSE
+			PRINTFORML 「ひっ……あ、あぁ……！」
+			PRINTFORMDW 幽香の弱点を擦る度に、%CALLNAME:MASTER%の腕を掴む力が強くなる
+		ENDIF
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;4,乱牡丹
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_4_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;5,手淫口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_5_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		PRINTFORM 「じゅぷ、ちゅっ、れろっ
+		CALL HEARTCB_K68(0xD02830)
+		PRINTFORML 　はぁーっ、気持ちいいでしょう？」
+		PRINTFORMDW 上気した顔で熱心な奉仕をする幽香の姿に、すぐ射精感がこみあげてきた
+	;それ以外
+	ELSE
+		PRINTFORM 「ちゅっ、ちゅうう……っ
+		CALL HEARTCB_K68(0xD02830)
+		PRINTFORML 　はぁ、んっ」
+		PRINTFORMDW 興奮しているのか、幽香は取り憑かれたように夢中で%CALLNAME:MASTER%のペニスに奉仕している
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;6,挿入Ｇスポ責め
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_6
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_6_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「あっ、あぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　もっと、もっとぉッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML 」
+			CASEELSE
+				PRINTFORM 「そこ、いいぃッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　主人公っ、好きっ、大好きぃッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML 」
+		ENDSELECT
+		PRINTFORMDW %CALLNAME:MASTER%のペニスで感じているのを隠す様子もなく、幽香は髪を振り乱して悶えている
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「ひっ！？　いやっ、ぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML ！？　なに、これぇえええッ！？」
+			CASEELSE
+				PRINTFORM 「やめっ、そこは、いやぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML ！」
+		ENDSELECT
+		PRINTFORMDW 弱点への責めに声を我慢する余裕はないらしく、幽香は髪を振り乱して悶えている
+	ENDIF
+ENDIF
+
+RETURN 1
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+
+;==================================================
+;7,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_7
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_7_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		IF EXP:68:子宮口開発経験 >= 50
+			IF NOWEX:MASTER:射精
+				PRINTFORM 「出してッ、私の中に、直接注ぎ込んでぇええええッ
+				CALL HEARTCB_K68(0xD02830,3)
+				PRINTFORMW 」
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「ぅん、ぁ、あはぁッ
+						CALL HEARTCB_K68(0xD02830,2)
+						PRINTFORM 　許して、もう許してぇ、主人公ぁああッ
+						CALL HEARTCB_K68(0xD02830,2)
+						PRINTFORML 」
+					CASEELSE
+						PRINTFORM 「ぁあああッ
+						CALL HEARTCB_K68(0xD02830,2)
+						PRINTFORM ！　大好きぃッ、主人公ぁああッ
+						CALL HEARTCB_K68(0xD02830,3)
+						PRINTFORML 」
+				ENDSELECT
+				PRINTFORMDW 雌としての本能を刺激され、幽香はすっかり%CALLNAME:MASTER%に服従してしまっている
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ぅん、あぁ……ッ！　\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@、興奮しすぎよ……ぉッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「ぃ、っぐう……！　ま、待って、主人公ぁ……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！」
+			ENDSELECT
+			PRINTFORMDW 幽香は苦しそうにしているが、雌としての本能に目覚めつつある
+		ENDIF
+	;それ以外
+	ELSE
+		IF EXP:68:子宮口開発経験 >= 50
+			IF NOWEX:MASTER:射精
+				PRINTFORM 「いや、いやぁあああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML ！」
+				PRINTFORM （逆らえない……このまま、種付けされちゃう……ッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW ）
+			ELSE
+				SELECTCASE RAND:2
+					CASE 0
+						PRINTFORM 「ひぃん、ぁあ
+						CALL HEARTCB_K68(0xD02830)
+						PRINTFORM ！　いや、こんなの、いやぁあああッ
+						CALL HEARTCB_K68(0xD02830,2)
+						PRINTFORML ！」
+					CASEELSE
+						PRINTFORM 「ッはぁああ
+						CALL HEARTCB_K68(0xD02830)
+						PRINTFORM ！　ひぃッ、こんなのぉ……ッ
+						CALL HEARTCB_K68(0xD02830,2)
+						PRINTFORML 」
+				ENDSELECT
+				PRINTFORMDW 幽香は何とか流されまいとしているが、子宮を犯される度にその抵抗が弱まっていく
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「っ、ぐぅ！　ちょっと、やめなさい！」
+				CASEELSE
+					PRINTFORML 「うう……、く、ぁっ……！」
+			ENDSELECT
+			IF EXP:68:子宮口開発経験 >= 25
+				PRINTFORM 「こ、んな……きゃああッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW ！？」
+			ELSE
+				PRINTFORMW 「こ、んなの、痛いだけ、よ……！」
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;8,６９乳交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_8_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;9,双重口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_9_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(4,1,1)
+LOCAL:1 = RESULT
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_9_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+;一人目口上
+@M_KOJO_MESSAGE_SCOM_K68_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;二人目口上
+@M_KOJO_MESSAGE_SCOM_K68_9_2
+VARSET LOCAL
+;一人目
+LOCAL:101 = MASTER_POSE(4,1)
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;10,双重素股
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_10_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(2,1,1)
+LOCAL:1 = RESULT
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_10_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K68_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+@M_KOJO_MESSAGE_SCOM_K68_10_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;11,双重乳交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_11_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(5,1,1)
+LOCAL:1 = RESULT
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_11_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K68_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+@M_KOJO_MESSAGE_SCOM_K68_11_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;12,乳夾口交
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_12
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_12_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_12_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		IF ABL:68:胸 < 2
+			PRINTFORML 「……気持ちよくない？　むう、じゃあこれなら……！」
+			PRINTFORMDW 悔しいのか、幽香はいつもより熱心に舌を使って奉仕している……
+		ELSE
+			PRINTFORMW 「ちゅっ……ふふっ、\@ NOWEX:MASTER:射精 ? 我慢できるわけないでしょう……？　ほらっ、早くイきなさい……！ # 主人公を独り占めしてるみたい…… \@」
+		ENDIF
+	;それ以外
+	ELSE
+		IF ABL:68:胸 < 2
+			PRINTFORML 「ん、んんっ……ちゅっ、ん……」
+			PRINTFORMDW 幽香には舌と胸を両方動かすのはまだ難しいようだ……
+		ELSE
+			PRINTFORML 「はぁ、ほんと馬鹿みたい……ちゅっ、れろっ」
+			PRINTFORMDW 幽香は呆れたような顔をしつつも、快感に呻く%CALLNAME:MASTER%を見てニヤけている
+		ENDIF
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;13,交互挿入
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_13_1
+;戻り値とTARGETを保存、TARGETを二人目に一時的に交代して二人目口上を呼び出した後、TARGETをもどして保存した戻り値でRETURNする
+;二人目はいらない場合はここで処理
+;二人目
+LOCAL = MASTER_POSE(6,1,1)
+LOCAL:1 = RESULT
+LOCAL:2 = TARGET
+TARGET = LOCAL
+TRYCALLFORM M_KOJO_MESSAGE_SCOM_K{TARGET}_13_2
+TARGET = LOCAL:2
+RETURN LOCAL:1
+
+@M_KOJO_MESSAGE_SCOM_K68_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+@M_KOJO_MESSAGE_SCOM_K68_13_2
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;14,玩弄Ｓ状結腸
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_14
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_14_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_14_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;A感覚Lv3以下andA経験100以下
+	ELSEIF ABL:68:2 < 3 && EXP:68:Ａ経験 < 100
+		PRINTFORML 「くうっ、あぁ、はぁあ……ッ！」
+		PRINTFORMDW 幽香は尻穴を責められるのにまだ慣れていないようで、苦しそうにしている
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「あっ、あぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　もっと、もっとぉッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML 」
+			CASEELSE
+				PRINTFORM 「そこ、いいぃッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　主人公っ、好きっ、大好きぃッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML 」
+		ENDSELECT
+		PRINTFORMDW %CALLNAME:MASTER%のペニスで感じているのを隠す様子もなく、幽香は髪を振り乱して悶えている
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「ひっ！？　いやっ、ぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML ！？　なに、これぇえええッ！？」
+			CASEELSE
+				PRINTFORM 「やめっ、そこは、いやぁああああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML ！」
+		ENDSELECT
+		PRINTFORMDW 弱点への責めに声を我慢する余裕はないらしく、幽香は髪を振り乱して悶えている
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+;==================================================
+;15,隔着刺激陰道
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_15
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_15_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_15_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;A感覚Lv3以下andA経験100以下
+	ELSEIF ABL:68:2 < 3 && EXP:68:Ａ経験 < 100
+		PRINTFORML 「ひっ、くうぅ！　うう、こんな……！」
+		PRINTFORMDW 幽香は慣れない尻穴への責めに痛そうにしているが、僅かに感じているのがわかる
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「ひっ、ぁあああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　いい、とこ、当たってるぅッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORMW 」
+			CASEELSE
+				PRINTFORM 「くっ、ぁあああッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORM ！　無理、もう無理ぃッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORMW 」
+		ENDSELECT
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「っ、ぅううッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW ！？　やめ、そこは、ぁああッ！」
+			CASEELSE
+				PRINTFORM 「ひぃっ！？　うぁ、そこ、はぁああッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW ！」
+		ENDSELECT
+	ENDIF
+ENDIF
+;未記入
+;CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1
+
+;==================================================
+;17,乳首同時吸い
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K68_17
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K68_17_1
+RETURN 1
+@M_KOJO_MESSAGE_SCOM_K68_17_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(TFLAG:50 + 500)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;未記入
+CALLFORM M_KOJO_MESSAGE_COM_K68_{SELECTCOM}_1
+RETURN 1

@@ -1,0 +1,76 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	紅魔館MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_3(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS KOUMANAME,33 = "正門","庭","守衛小屋","空的小屋","納屋","後院","東陽台","西陽台","大庁","図書館","琶秋莉私室","小悪魔私室","厨房","食堂","会客庁","一層廁所","大樓梯","地下樓梯","二階廊下","咲夜私室","空的部屋","二層廁所","妖精女僕的值班室","大露台","三階樓梯","蕾米莉亜私室","小露台","地下廊下","倉庫","使用人部屋","地下室","脱衣所","大浴場",
+#DIMS HAIYOUNAME,9 = "廃洋館・入口","廃洋館・大庁","廃洋館・樓梯","廃洋館・廚房","廃洋館・浴室","廃洋館・二階廊下","露娜薩私室","梅露蘭私室","莉莉喀私室",
+#DIMS KOHANNAME,6 = "湖畔","蕾蒂的冰屋","琪露諾的冰屋","大妖精宅","霧之湖","霧之湖・湖底"
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 33
+			RETURNF KOUMANAME:(PLACEID - 1)
+		CASE 34 TO 42
+			RETURNF HAIYOUNAME:(PLACEID - 34)
+		CASE 43 TO 48
+			RETURNF KOHANNAME:(PLACEID - 43)
+		CASE 49
+			RETURNF "霧的正前方"
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "隙間空間"
+		CASEELSE
+			RETURNF "霧的正前方"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+;@MAP_VIEWING_3
+;IF CHK_ENTRANCE(CFLAG:MASTER:現在位置)
+;ENDIF
+;SIF CHK_FOCUS(301,CFLAG:MASTER:現在位置,333)
+;	CALL MAP_KOUMAKAN
+;
+;SIF CHK_FOCUS(334,CFLAG:MASTER:現在位置,347)
+;	CALL MAP_HAIYOUKAN
+;CALL MAP_KOHAN
+;RETURN 1
+
+
+@MAP_VIEWING_3(AA)
+#DIMS REF AA, 0
+IF !TFLAG:マップ切り替え
+	IF CHK_FOCUS(301,CFLAG:MASTER:現在位置,333)
+		TFLAG:マップ切り替え = 1
+	ELSEIF CHK_FOCUS(334,CFLAG:MASTER:現在位置,342)
+		TFLAG:マップ切り替え = 2
+	ELSE
+		TFLAG:マップ切り替え = 3
+	ENDIF
+ENDIF
+CALL DRAW_INFORMATIONLINE(@"%MAPNAME:(TFLAG:マップ切り替え)%")
+PRINTFORML 
+TRYCALLFORM MAP_NEW_KOUMAKAN_{TFLAG:マップ切り替え}(AA)
+
+@MAP_CAN_MOVE_3(ARG, ARG:1)
+#FUNCTION
+;湖底,水棲以外
+IF ARG == 348 && TALENT:(ARG:1):水棲
+	TFLAG:移動不能メッセージ = 348
+	RETURNF 0
+ENDIF
+RETURNF 1
+
+@MAP_CANNOT_WORD_3(ARG)
+IF TFLAG:移動不能メッセージ == 348
+	PRINTW 無理です
+	CLEARLINE 2
+	REUSELASTLINE 
+	RETURN
+ENDIF

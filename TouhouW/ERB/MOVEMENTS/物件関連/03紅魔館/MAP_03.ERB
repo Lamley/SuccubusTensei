@@ -1,0 +1,178 @@
+﻿@MAP_KOUMAKAN
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "１:正門 ",301
+PRINTBUTTON "２:庭 ",302
+PRINTBUTTON "３:守衛小屋 ",303
+PRINTBUTTON "４:空的小屋 ",304
+PRINTBUTTON "５:納屋 ",305
+PRINTBUTTON "６:後院 ",306
+PRINTBUTTON "７:東陽台 ",307
+PRINTBUTTON "８:西陽台 ",308 
+PRINTBUTTON "９:大庁 ",309
+PRINTBUTTON "10:図書館 ",310
+PRINTL
+PRINTBUTTON "11:琶秋莉私室 ",311
+PRINTBUTTON "12:小悪魔私室 ",312
+PRINTBUTTON "13:厨房 ",313
+PRINTBUTTON "14:食堂 ",314
+PRINTBUTTON "15:会客庁 ",315
+PRINTBUTTON "16:一層廁所 ",316
+PRINTBUTTON "17:大樓梯 ",317
+PRINTBUTTON "18:地下樓梯 ",318
+PRINTL 
+PRINTBUTTON "19:二階廊下 ",319
+PRINTBUTTON "20:咲夜私室 ",320
+PRINTBUTTON "21:空的部屋 ",321
+PRINTBUTTON "22:二層廁所 ",322
+PRINTBUTTON "23:妖精女僕的值班室 ",323
+PRINTBUTTON "24:大露台 ",324
+PRINTBUTTON "25:三階樓梯 ",325
+PRINTL
+PRINTBUTTON "26:蕾米莉亜私室 ",326
+PRINTBUTTON "27:小露台 ",327
+PRINTBUTTON "28:地下廊下 ",328
+PRINTBUTTON "29:倉庫 ",329
+PRINTBUTTON "30:使用人部屋 ",330
+PRINTBUTTON "31:地下室 ",331
+PRINTBUTTON "32:脱衣所 ",332
+PRINTBUTTON "33:大浴場 ",333
+ENDIF
+@MAP_KOHAN
+
+PRINTBUTTON "1:正門 ",301
+PRINTBUTTON "34:廃洋館 ",334
+PRINTBUTTON "43:湖畔 ",343
+PRINTBUTTON "44:蕾蒂的冰屋 ",344
+PRINTBUTTON "45:琪露諾的冰屋 ",345
+PRINTBUTTON "46:大妖精宅 ",346
+PRINTBUTTON "47:霧之湖 ",347
+PRINTBUTTON "48:霧之湖・湖底 ",348
+PRINTL
+@MAP_HAIYOUKAN
+
+IF FLAG:移動先表示 == 0 || FLAG:移動先表示 == 1
+PRINTBUTTON "34:廃洋館・入口 ",334
+PRINTBUTTON "35:廃洋館・大庁 ",335
+PRINTBUTTON "36:廃洋館・樓梯 ",336
+PRINTBUTTON "37:廃洋館・廚房 ",337
+PRINTBUTTON "38:廃洋館・浴室 ",338
+PRINTBUTTON "39:廃洋館・二階廊下 ",339
+PRINTL
+PRINTBUTTON "40:露娜薩私室 ",340
+PRINTBUTTON "41:梅露蘭私室 ",341
+PRINTBUTTON "42:莉莉喀私室 ",342
+PRINTL
+ENDIF
+
+@MAP_NEW_KOUMAKAN_1(AA)
+#DIMS REF AA, 0
+
+AA:00 = ■■■■■■■■■■■■■■■■■■■■■■■■■■■　二階
+AA:01 = ■#A#B　　　　　　　　　　06　　　　　　　　　　│05■　■■■■■■■■■■■■■■■■■■
+AA:02 = ■#C#D　　　　　　　　　　　　　　　　　　　　　■■■　■21■20■　 >　　 17　 　　< ■∧■
+AA:03 = ■　　　■■■■■■■■■―■■■■■■■■■　　　■　■―■―■　l￣￣】↓【￣￣l　■25■
+AA:04 = ■　　■　　　│　　13　　　■■■< 18■11■12■　　■　■　19　　　￣￣￣￣￣￣￣￣  　　■
+AA:05 = ■　　■　14　■―■■■■■■■■■　■パ■小■　　■　■―■―■■■―■ー―■―■■■■■
+AA:06 = ■　　■ 食堂 ■　l>　　　17　　　<l　■―■―■　　■　■22■23■　ll　　 24 　　ll
+AA:07 = ■　　■　　　■　￣￣￣】↑【￣￣￣　■　　　■　　■　■■■■■　ll　　　　　　ll
+AA:08 = ■　　■■―■■　　　　　　　　　　　■図書館■　　■　　　　　　　■＝＝＝＝＝＝■
+AA:09 = ■　　■　　　　　　　　　09　　　　　│　10　■　　■
+AA:10 = ■　　■―■■―■■■■■―■■■■■■　　　■　　■　三階　　　　　　　　地下
+AA:11 = ■　　■16■　15■＿＿　　　　　＿＿■　　　　■　　■　■■■■■■■■■　■■■■■■■■■■
+AA:12 = ■　　■■■　  ■　∥　　　　　∥　■　　　　■　　■　■　　　　　│25■　■31■30■29■18 <■
+AA:13 = ■　　　　■　　■08∥　　02　　∥07■　　　　■　　■　■　　26　　■∧■　■＝■―■―■　■■
+AA:14 = ■　　　　■　　■　∥　　　　　∥　■　　　　■　　■　■　　　　　■■■　■　　　28　　　　■
+AA:15 = ■　　　　■■■■￣￣　　　　　￣￣■■■■■　　　■　■■■―■■■    　■■■■■■■■―■
+AA:16 = ■■■　　　　　　　　　　　　　　　　　　　　　■■■　　ll　27　ll　      ■　　大浴場　■　■
+AA:17 = ■03│　　　　　　　　　　　　　　　　　　　　　│04■　　■＝＝＝■      　■　　　33　　│32■
+AA:18 = ■■■■■■■■■■■■●01●■■■■■■■■■■■■　　　　　　　　　　　■■■■■■■■■■
+
+@MAP_NEW_KOUMAKAN_2(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　　■■■　二階　　■■■
+AA:01 = 　■　40　■　　　■　37　■
+AA:02 = ■■■―■　■　■■■―■■■
+AA:03 = ■＜　39｜41■　■36　35　 34￤
+AA:04 = ■■■―■　■　■■■―■■■
+AA:05 = 　■　42　■　　　■　38　■
+AA:06 = 　　■■■　　　　　■■■　一階
+
+@MAP_NEW_KOUMAKAN_3(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　　　　　　■01■
+AA:01 =             ■ll■
+AA:02 = 
+AA:03 = 　　　　　　　　　　■■■  ■■■
+AA:04 = 　■■　　　　　　　■44■  ■45■　■■
+AA:05 = 　■34　　　　43　　　　　　　　　　46■
+AA:06 = 　■■　　　　　＿＿＿＿＿　　　　　■■
+AA:07 = 　　　　　　　√ 　47　
+AA:08 = 　　　　49　 /　　　 48
+
+@ODEKAKEMAP_3(AA)
+#DIMS REF AA, 0
+
+AA:00 = 　　　　　■　03　■　　　　●　　■■　　　　■　　　　■　■　■　　＼■■■■
+AA:01 = 　　　　　■■─■■　　　04│　　│　　05　　│　06　　■　■　■　■＼＼　　■
+AA:02 = 　　　　　　　　　　　　　　│　　■■　　　　■　　　　■　■　■　■　　　　■
+AA:03 = 　　01　　　　　　　　　　　●　　■■　　　　■■■■─■　　　■　■　　　　■
+AA:04 = ～～～～～～　　□□□　　　■　　■■　　　　　　　　　　　07　　　■　08　　■
+AA:05 = ／／／／／／∫　│02□　　　■　　■■■■■■■■■■■■■■■■■■■■■■■
+
+@DRAW_MAP_BG_3(SLICED)
+#DIMS SLICED
+SELECTCASE SLICED
+;色つけたいときはこんな感じ
+CASE "木"
+	SETCOLOR 0x90EE90
+	PRINTS SLICED
+	RESETCOLOR
+;違う文字を表示させる例
+CASE "#W"
+	SETCOLOR 0x90EE90
+	PRINT 木
+	RESETCOLOR
+CASE "#A"
+	IF HATAKE_NAME:0 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#B"
+	IF HATAKE_NAME:1 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#C"
+	IF HATAKE_NAME:2 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#D"
+	IF HATAKE_NAME:3 != ""
+		SETCOLOR C_P_GREEN
+		PRINT VV
+		RESETCOLOR
+	ELSE
+		PRINT 　
+	ENDIF
+CASE "#E"
+	SIF TALENT:MASTER:居場所察知 && COUNTCHARA:(MAXROOM) > 0 && FLAG:察知モード == 1
+		SETCOLOR 255,100,200
+	PRINT ←
+	RESETCOLOR
+;ふつうの
+CASEELSE
+	PRINTS SLICED
+ENDSELECT

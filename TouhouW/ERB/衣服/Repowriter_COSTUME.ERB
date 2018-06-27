@@ -1,0 +1,13 @@
+﻿@Repowriter_COSTUME
+PRINTL 文文会不会穿一副社会派的装扮？
+PRINTL [1]已経非常熟练了
+PRINTL [2]不会
+INPUT
+SELECTCASE RESULT
+	CASE 1
+		PRINTW 文文戴着鸭舌帽。
+		;文の初期衣装を鴨舌帽文に変更
+		CFLAG:29:7 = 60
+	CASE 2
+		PRINTW 文文穿着平时的衣服去采访。
+ENDSELECT

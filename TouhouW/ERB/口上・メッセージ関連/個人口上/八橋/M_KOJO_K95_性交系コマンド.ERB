@@ -1,0 +1,1705 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;性交系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,正常位
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_60_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_60_1
+
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM になら…いいよ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…ちょっと…恥ずかしいかも…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「挿れて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「いっぱいかき混ぜて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「気持ちよくしてね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM になら…いいよ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…ちょっと…恥ずかしいかも…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「挿れて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「いっぱいかき混ぜて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「気持ちよくしてね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;61,後背位
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_61_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_61_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW に…犯されちゃうんだ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういう格好ってドキドキするね…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM 「
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW のオチンチンで…いっぱい犯して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「あ…%UNICODE(0x2665) *1%…もっと…もっと犯して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「あぁん…%UNICODE(0x2665) *1%…気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW に…犯されちゃうんだ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういう格好ってドキドキするね…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM 「
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW のオチンチンで…いっぱい犯して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「あ…%UNICODE(0x2665) *1%…もっと…もっと犯して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「あぁん…%UNICODE(0x2665) *1%…気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;62,正常位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_62_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_62_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …そっちは違…あっ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういう体勢でおしりの方が好みなんだ～%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「お尻…気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「こっちがいいんだ…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「あんまり痛くしないでね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …そっちは違…あっ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういう体勢でおしりの方が好みなんだ～%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「お尻…気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「こっちがいいんだ…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「あんまり痛くしないでね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;63,後背位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_63_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_63_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORM 「あ…アナルに
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW のおちんちん挿入っちゃう…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「お尻…いっぱい気持ちよくして…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM 「
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW のおちんちんで気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「お尻にいっぱい射精して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「えっちなのお尻に挿れて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORM 「あ…アナルに
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW のおちんちん挿入っちゃう…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「お尻…いっぱい気持ちよくして…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM 「
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW のおちんちんで気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「お尻にいっぱい射精して…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「えっちなのお尻に挿れて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;64,逆強姦
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_64
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_64_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_64_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;調教者が処女
+		IF TALENT:PLAYER:処女 == 1
+			PRINTFORM 「私の初めて…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW にあげちゃうんだから…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういうのは慣れてなさそうね…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:PLAYER:100 == TARGET
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 「私が上に乗ってあげる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「私の膣内で気持ちよくしてあげる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…おちんちん気持ちいい…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;65,騎乗位
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_65
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_65_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_65_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「私の初めて…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW にあげちゃうんだから…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こういうのは慣れてなさそうね…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 「私が上に乗ってあげる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「私の膣内で気持ちよくしてあげる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「んっ…%UNICODE(0x2665) *1%…おちんちん気持ちいい…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;66,騎乗位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_66
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_66_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_66_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORM 「…んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW のがお尻に入ってきちゃう…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ちゃんとおっきくしててよ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM 「あっ…ぁんっ
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW の入ってくる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORM 「ん…アナルに
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW がいっぱい…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「お尻で気持ちよくしてあげる…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;67,対面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_67
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_67_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_67_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW のオチンチン…私だけのものなんだから…%UNICODE(0x2665) *1%」
+			PRINTFORMW そう言いながら八橋は%CALLNAME:MASTER%に抱きついている。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…大好き…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 「もう…%UNICODE(0x2665) *1%離さないんだから…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「いっぱい…%UNICODE(0x2665) *1%気持ちよくして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「これ…%UNICODE(0x2665) *1%とっても気持ちいいの…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;68,背面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_68
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_68_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_68_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW に…後ろから犯されちゃう…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「足広げるの…ちょっと興奮しちゃう…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「あっ%UNICODE(0x2665) *1%んあっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%大好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORMW 「あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「…好きだよ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んあっ%UNICODE(0x2665) *1%」
+			PRINTFORMW 「…んん…%UNICODE(0x2665) *1%あっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 「…あ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「んあっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …ん…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…あぁ…%UNICODE(0x2665) *1%…んっ%UNICODE(0x2665) *1%…あっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…っ%UNICODE(0x2665) *1%…あ…%UNICODE(0x2665) *1%…っん…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…んぁ…%UNICODE(0x2665) *1%はぁ%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 「私のおま○こ…せーしでいっぱいにして…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「いっぱいえっちしよ…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORM 「
+		CALL MASTER_CALLNAME_K95
+		PRINTFORMW のオチンチン頂戴…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;69,対面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_69
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_69_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_69_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 「こんな格好でお尻に挿れちゃうんだ…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「恥ずかしいな…この格好で…%UNICODE(0x2665) *1%」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 「ちょっと恥ずかしいかも…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「お尻…気持ちよくしてね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「こっちに挿入れるのね…%UNICODE(0x2665) *1%」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;70,背面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_70
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_70_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_70_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 「私…お尻はあんまり…」
+			PRINTFORMW 「…んあっ%UNICODE(0x2665) *1%」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…重くないかな…私…」
+			PRINTFORMW （恥っず…）
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		IF RAND:9 == 0
+			PRINTFORMW 「お尻っ…%UNICODE(0x2665) *1%…気持ちいい…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:8 == 0
+			PRINTFORMW 「…あっ…%UNICODE(0x2665) *1%」
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORM …%UNICODE(0x2665) *1%
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …大好きっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:7 == 0
+			PRINTFORMW 「…ん…%UNICODE(0x2665) *1%…ぁあっ%UNICODE(0x2665) *1%」
+			PRINTFORM 「…ぁんっ
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%っ変になるっ…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:6 == 0
+			PRINTFORM 「…これっ気持ちいいっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW %UNICODE(0x2665) *1%」
+		ELSEIF RAND:5 == 0
+			PRINTFORM 「
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …%UNICODE(0x2665) *1%…んっこっちも好きかも…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:4 == 0
+			PRINTFORM 「んっ…
+			CALL MASTER_CALLNAME_K95
+			PRINTFORMW …好き…%UNICODE(0x2665) *1%」
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「…こっちも…っ…変になっちゃうっ%UNICODE(0x2665) *1%」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んっ%UNICODE(0x2665) *1%あ…%UNICODE(0x2665) *1%っん%UNICODE(0x2665) *1%…お尻…%UNICODE(0x2665) *1%」
+		ELSE
+			PRINTFORMW 「…お尻も…%UNICODE(0x2665) *1%…好きっ…%UNICODE(0x2665) *1%」
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 「んっ…後ろからだなんて…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 「おっぱいも揉んで…%UNICODE(0x2665) *1%」
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 「お尻に挿入れるの…？」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;71,二穴挿入
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_71
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_71_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_71_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;考えうる分岐が多すぎるので地の文の大まかな分岐だけ
+	;連続
+	IF PREVCOM == SELECTCOM
+		PRINTFORMW 
+		RETURN 1
+	;主人V挿入→助手A挿入
+	ELSEIF TCVAR:100 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;主人A挿入→助手V挿入
+	ELSEIF TCVAR:101 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;助手V挿入→主人A挿入
+	ELSEIF TCVAR:100 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	;助手A挿入→主人V挿入
+	ELSEIF TCVAR:101 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;72,挿入Ｇ点玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_72
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_72_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_72_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;73,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_73
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_73_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_73_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;74,玩弄Ｓ状結腸
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_74
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_74_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_74_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;75,隔着刺激陰道
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_75
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_75_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_75_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;77,小人飛機杯(針妙丸用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K95_77
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K95_77_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K95_77_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

@@ -1,0 +1,1623 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;日常系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;300,会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_300
+;コマンド共通メッセージ(TRAIN_MESSAGE) 
+;削除すると「～話をした。」とかが消えます
+CALL TRAIN_MESSAGE
+;口上メイン呼出
+CALL M_KOJO_MESSAGE_COM_K61_300_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_300_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;ここに口上書いて下さい
+	IF TCVAR:302
+		IF 陥落状態() >= 4
+			PRINTFORMW 「ん？　何か話？　話すことがないなら、黙ってるのも良いものだよ」
+		ELSEIF 陥落状態() == 3
+			PRINTFORMW 「ん、話す必要はないんじゃないかな」
+		ELSEIF 陥落状態() == 2
+			PRINTFORMW 「ふふ、話せないなら触って欲しいな」
+		ELSEIF 陥落状態() == 1
+			PRINTFORMW 「無理に話す必要はないよ」
+		ELSE
+			PRINTFORMW 「…………」
+		ENDIF
+	ELSE
+		IF 陥落状態() >= 4
+			PRINTDATA
+				DATALIST
+					DATAFORM 「ん、ふふ、%MASTERNAME:61%もそんな失敗するんだ」
+					DATAFORM 「時間が止められるなら、失敗なんてなかったことに出来そうだけど」
+					DATAFORM 「失敗のフォローは出来ても、失敗そのものは取り消せないんだ。ふふ、なんとなく安心した」
+				ENDLIST
+				DATALIST
+					DATAFORM 「輝夜とのケンカは程ほどに？」
+					DATAFORM 「%MASTERNAME:61%まで、慧音みたいなこと言わないでよ」
+					DATAFORM 「私の場合、どうせ普通の弾幕ごっこでも、体中ボロボロになるのにさ」
+				ENDLIST
+				DATALIST
+					DATAFORM 「ふふ、%MASTERNAME:61%との会話は心地良いね」
+					DATAFORM 「長い人生で、初めての恋人だからかな」
+					DATAFORM 「そうなって欲しい人は、以前にもいたけど、ね」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 3
+			PRINTDATA
+				DATALIST
+					DATAFORM 「そう、だね。人里は見てて楽しいよ」
+					DATAFORM 「まあ、あまりいい目で見られてはいないけど、慧音が居るしね」
+				ENDLIST
+				DATALIST
+					DATAFORM 「慧音と知り合うまでは、吃飯はその辺の野草とかだったな」
+					DATAFORM 「おかげで、どんなものでも食べられる様にはなったけど」
+				ENDLIST
+				DATALIST
+					DATAFORM 「%CALLNAME:MASTER%は、本当に面白いね」
+					DATAFORM 「この私にちょっかいかけてくるんだから、当然だけど」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 2
+			PRINTDATA
+				DATAFORM 「ん、ふふ、こういうのも良いね」
+				DATAFORM 「ねえ、話しだけで良いの？　もっと良いことシたくない？」
+				DATAFORM 「まあ、会話も楽しいけど、もっと楽しいこともしたいね」
+			ENDDATA
+		ELSEIF 陥落状態() == 1
+			PRINTDATA
+				DATAFORM 「あ、うん、そうだね」
+				DATAFORM 「うん、うん、へぇ、そうなんだ」
+				DATAFORM 「あ、なるほど、そう言うこともあるのか」
+			ENDDATA
+		ELSE
+			PRINTFORMW 「……ああ、うん」
+		ENDIF
+		PRINTL 
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;301,泡茶
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_301
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_301_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_301_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF 陥落状態() >= 4
+		PRINTFORML 「はぁ、美味しい……、でも、%MASTERNAME:61%が口移しでくれたらもっと美味しいんだけどねぇ」
+		PRINTFORML 「んっ！？　ちゅぅっ、……こくこくん……こく……はぁ、おいしぃ……」
+		PRINTFORML 「これ、癖になりそう……」
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「いつも美味しいお茶淹れてくれてありがとう」
+		PRINTFORML 「でも、私なんかよりも他の人に、……あ、ごめん、淹れてくれたのに変なこといって」
+	ELSEIF 陥落状態() == 2
+		IF TFLAG:193 == 1
+			PRINTFORML 「ありがとう、ふふ、それじゃお礼、ちゅっ」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 「……えと、嬉しいんだけど、これはちょっと勘弁して」
+		ELSE
+			PRINTFORML 「ふふ、ありがとう。お礼には何がシテほしい？」
+		ENDIF
+	ELSEIF 陥落状態() == 1
+		IF TFLAG:193 == 1
+			PRINTFORML 「ありがとう、すごく美味しいよ」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 「あ、ありがたいけど、これはちょっと厳しいかな」
+		ELSE
+			PRINTFORML 「あ、ありがとう、淹れてくれて」
+		ENDIF
+	ELSE
+		IF TFLAG:193 == 1
+			PRINTFORML 「……ありがとう、美味しいよ」
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 「……っっ！？　……えと、嫌がらせ？」
+		ELSE
+			PRINTFORML 「…………ありがとう」
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+ENDIF
+RETURN 1
+;==================================================
+;302,身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_302
+;CALL TRAIN_MESSAGE
+DRAWLINE
+IF BATHROOM(CFLAG:現在位置)
+	IF 陥落状態() >= 4 && !RAND:2
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に背中を流してもらった
+		SETBIT CFLAG:1610,1
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の背中を流した
+	ENDIF
+ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%と\@ (CFLAG:TARGET:現在位置 % 100) % 10 ? 歩きながら # 軽く \@身体接触を図った
+ELSEIF CFLAG:TARGET:350 == 49
+	PRINTFORML %CALLNAME:PLAYER%は普段より大胆に%CALLNAME:TARGET%との身体接触を図った
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%との身体接触を図った
+ENDIF
+IF TFLAG:193 == 1
+	PRINTFORML %CALLNAME:TARGET%は何だか嬉しそうにしている…
+ELSEIF TFLAG:193 == -1 && !TALENT:恋慕 && !TALENT:恋人
+	PRINTFORML …どうやら、少し馴れ馴れしくしすぎたようだ…
+ENDIF
+PRINTL
+SIF FLAG:口上色
+	CALLFORM M_KOJO_COLOR_K61
+CALL M_KOJO_MESSAGE_COM_K61_302_1
+RESETCOLOR
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_302_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF BATHROOM(CFLAG:現在位置)
+		IF 陥落状態() >= 4 && GETBIT(CFLAG:1610,1)
+			PRINTDATAL
+				DATALIST
+					DATAFORM 「ふふ、%MASTERNAME:61%の体、綺麗だね」
+					DATAFORM 「こういうのはどう？　ふふ、体びくってしたね」
+					DATAFORM 「もっとしてあげるね」
+				ENDLIST
+				DATALIST
+					DATAFORM 「%MASTERNAME:61%の体、なんでこんなに素敵なんだろ」
+					DATAFORM 「はぁ、なんだか、ずっとさわっていたいな」
+					DATAFORM 「……あはは、何言ってるんだろうね」
+				ENDLIST
+				DATALIST
+					DATAFORM 「ん、はぁ……おっぱいで綺麗に洗ってあげる……」
+					DATAFORM 「これ、やりにくいね……ごめんね、貧相な体で」
+					DATAFORM 「ふふ、喜んでくれてるなら嬉しい」
+				ENDLIST
+			ENDDATA
+			CLEARBIT CFLAG:1610,1
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTDATAL
+					DATALIST
+						DATAFORM 「……んっ、ふぁ……、んく……」
+						DATAFORM 「洗い方、なんかやらしい……、まあ、いやじゃ無いけど」
+						DATAFORM 「ふぁっ、んっ……でも、くぅっ……ちょっと、恥ずかしい」
+					ENDLIST
+					DATALIST
+						DATAFORM 「んくっ、ほんとに、洗ってる？」
+						DATAFORM 「ふぁっ、んっ、そんなおっぱいばっかり、きゃんっ！？」
+						DATAFORM 「ちょ、さきっぽくりくりしないでって、んくぅ……」
+					ENDLIST
+					DATALIST
+						DATAFORM 「ふぁんっ！　や、ま、待ってんくぅ」
+						DATAFORM 「おしりのあなは自分であらうから、くぅんっ！　や、おまんこも自分でっっ、ひんっ！」
+						DATAFORM 「……はぁ、はぁ、%MASTERNAME:61%のすけべ……、はぁ」
+					ENDLIST
+				ENDDATA
+			ELSEIF 陥落状態() == 3
+				PRINTDATAL
+					DATALIST
+						DATAFORM 「ん、あふ……、背中だけなのに、声がやらしい？」
+						DATAFORM 「くっ、さわり方が、やらし、ふみゅん……、可愛い鳴き声？　……うるさい、バカ」
+					ENDLIST
+					DATALIST
+						DATAFORM 「ちょ、前は自分で、ふぁっ！　あふっ！　んくぅっ……」
+						DATAFORM 「すけべ、へんたい、いぢわる…………、バカ」
+					ENDLIST
+					DATALIST
+						DATAFORM 「あふっ、んくっ、ちょ、さわりかたやらしいってば、くぅんっ」
+						DATAFORM 「ふぅ、だから、そんなおっぱいいじるような、んくっ、ばかぁ」
+					ENDLIST
+				ENDDATA
+			ELSEIF 陥落状態() == 2
+				PRINTDATAL
+						DATAFORM 「あふん、ふぁ、自分で洗えるって、ば、このすけべ」
+						DATAFORM 「ふぁっ！　んっ、や、胸自分でするから」
+						DATAFORM 「んくっ、ちょ、そこは自分で、くぅ」
+				ENDDATA
+			ELSE
+				PRINTDATA
+						DATAFORM 「……っ！　変なことしないで、焼かれたい？」
+						DATAFORM 「は、んっ……、声が、やらしい？　洗い方が、悪い……っん」
+						DATAFORM 「はーはー、じぶんで、するから、んくっ、触らないで、ってば」
+				ENDDATA
+			ENDIF
+		ENDIF
+	ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+		IF 陥落状態() >= 4
+			PRINTDATAL
+				DATALIST
+					DATAFORM 「ふふ、こういうのもいいもんだね」
+					DATAFORM 「まあ、私の貧相な体じゃ、腕組んでも嬉しくないだろうけど」
+					DATAFORM 「………………えと、その、喜んでくれるのは嬉しいけど、恥ずかしい」
+				ENDLIST
+				DATALIST
+					DATAFORM 「%MASTERNAME:61%は温かいね。ずっとこうしていたい」
+					DATAFORM 「ふふ、周りが気になる？　私は別に良いけどね」
+					DATAFORM 「二号さんとかに見つかるのはいや？　お妾さん達に見せつけるのも良いかもね」
+				ENDLIST
+				DATALIST
+					DATAFORM 「なんだか、こうしてるとすごく安心する」
+					DATAFORM 「%MASTERNAME:61%がいなくなるまでの間は、ちゃんとこうしててほしいな」
+					DATAFORM 「ずっと私が覚えておけるようにね」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 3
+			PRINTDATAL
+				DATALIST
+					DATAFORM 「手をつなぎたい？　へぇ、わざわざ聞いてくるなんて律儀だね」
+					DATAFORM 「ま、いいよそれくらいならね」
+				ENDLIST
+				DATALIST
+					DATAFORM 「ところで、%CALLNAME:MASTER%はほんとに私なんかにこんなことして楽しい？」
+					DATAFORM 「だって、私はこんな貧相な体だしさ。……まあ、楽しんでくれてるなら嬉しいけど」
+				ENDLIST
+				DATALIST
+					DATAFORM 「んー、肩抱き寄せられるのは、ちょっと恥ずかしいな」
+					DATAFORM 「だって、私の体細くてあんまり柔らかくないし。……それが良い、って変な人だね」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 2
+			PRINTDATAL
+				DATAFORM 「ふふ、こうしてひっつくだけでいいの？」
+				DATAFORM 「ふーん、この程度で満足なんだ？　もっとしたくない？」
+				DATAFORM 「ねえ、どうせだったらもっと良いところを触ったらどうかな？」
+			ENDDATA
+		ELSEIF 陥落状態() == 1
+			PRINTDATAL
+				DATAFORM 「ん……、こんなのが楽しいんだ？　私にはよくわからないけど」
+				DATAFORM 「あんまり、べたべたしないでほしいかな」
+				DATAFORM 「こういうのはあんまり好きじゃ無いんだけど」
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM 「……何がしたいの？」
+				DATAFORM 「……こんなことして楽しい？」
+			ENDDATA
+		ENDIF
+	ELSE
+		IF 陥落状態() >= 4
+			PRINTDATAL
+				DATALIST
+					DATAFORM 「ん、あふ……、のどくすぐられるの、きもちいいかも」
+					DATAFORM 「はは、愛する%MASTERNAME:61%にされてるからかな」
+					DATAFORM 「…………そこで照れないでよ。さんざん無茶してるくせに」
+				ENDLIST
+				DATALIST
+					DATAFORM 「はふ、んく……、ねえ体をなで回すのはかまわないんだけどさ」
+					DATAFORM 「おっぱいの縁とか、おしりの付け根とか、Ｈな部分にぎりぎりで触れないってのはわざと？」
+					DATAFORM 「%MASTERNAME:61%の変態、どうせならがっつりエロいことすれば良いのに」
+				ENDLIST
+				DATALIST
+					DATAFORM 「こうやって任憑擺佈ってのも、いいもんだね」
+					DATAFORM 「……ふふ、いくらでもして良いからさ」
+					DATAFORM 「ずっと覚えていられるように、もっとしてほしいなぁ」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 3
+			PRINTDATAL
+				DATALIST
+					DATAFORM 「はぁ、ん……、%CALLNAME:MASTER%。さわり方やらしくない？」
+					DATAFORM 「どうせだったら本格的にＨする？」
+				ENDLIST
+				DATALIST
+					DATAFORM 「んくっ、ふぅ、その性感帯すれすれで止められると、ちょっとつらい」
+					DATAFORM 「もうしたいならＨなことすればいいのにさ」
+				ENDLIST
+				DATALIST
+					DATAFORM 「んっ……、ふふ、なんでだろ。すごく安心する」
+					DATAFORM 「%CALLNAME:MASTER%はこうしてて楽しい？　なら嬉しいな」
+				ENDLIST
+			ENDDATA
+		ELSEIF 陥落状態() == 2
+			IF TFLAG:193 == 1
+				PRINTDATAL
+					DATAFORM 「ん、ふふ、ねえ、もっとしよ？　%CALLNAME:MASTER%にされるのすごく嬉しいからさ」
+					DATAFORM 「ねえ、そんなに私に触れるの楽しい？　ふふ、私も触られるの嬉しいよ」
+				ENDDATA
+			ELSEIF TFLAG:193 == -1
+				PRINTFORML 「……えと、ちょっと出口てほしいんだけど」
+			ELSE
+				PRINTDATAL
+					DATAFORM 「ふぅ、ん、えと、そんなさわり方されると、その」
+					DATAFORM 「あふ、んく、さわりかたやらしい」
+					DATAFORM 「そんなに楽しい？　こうされるのは嫌いじゃ無いけど」
+				ENDDATA
+			ENDIF
+		ELSEIF 陥落状態() == 1
+			IF TFLAG:193 == 1
+				PRINTDATAL
+					DATAFORM 「んくっ、ふぁ……、ふふ、%CALLNAME:MASTER%に触られるの、なんだか楽しい」
+					DATAFORM 「あふ、んっ……、ねえ、もっといろいろなところ触ってほしいな」
+				ENDDATA
+			ELSEIF TFLAG:193 == -1
+				PRINTFORML 「気安く触らないでくれる？」
+			ELSE
+				PRINTDATAL
+					DATAFORM 「はぁ、こんなののどこが楽しいんだか……、口元が緩んでる？　うるさい」
+					DATAFORM 「まったく、何が楽しくてこんなこと、……可愛い私が見れる？　……恥ずかしい」
+					DATAFORM 「……ん、はぁ、あんまり好きになれないな、これ」
+				ENDDATA
+			ENDIF
+		ELSE
+			IF TFLAG:193 == 1
+				PRINTDATAL
+					DATAFORM 「……ふふ、いいよ。もっとしても」
+					DATAFORM 「んっ、はふ、もうちょっとだけ続けて」
+				ENDDATA
+			ELSEIF TFLAG:193 == -1
+				PRINTFORML 「触るな、いい加減にしないと燃やすよ」
+			ELSE
+				PRINTDATAL
+					DATAFORM 「んっ、はふ、くぅっ……なんか、さわりかた、やらしくない」
+					DATAFORM 「んくっ、もうちょっと、普通の、はふ」
+					DATAFORM 「はぁ、いい加減、さわりすぎぃ……んくぅっ」
+				ENDDATA
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;303,道歉
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_303
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_303_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_303_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193 == 1
+		IF 陥落状態() >= 4
+[SKIPSTART]
+「……もう、こんなことしないでよ。私だって%MASTERNAME:61%に憤怒たい訳じゃ無いんだから」
+「わかったって、返事だけは良いんだからさ」
+「……笑ってる顔が可愛いって、こんな時に言わないでよね」
+		ELSEIF 陥落状態() == 3
+「」
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+		ELSE
+[SKIPEND]
+		ENDIF
+	ELSEIF TFLAG:193 == 2
+	ELSEIF TFLAG:193 == 0
+	ELSEIF TFLAG:193 == -2
+	ELSE
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;304,幇忙干活
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_304
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_304_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_304_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;305,索求膝枕
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_305
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_305_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_305_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;306,撫摸肚子
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_306
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_306_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_306_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;307,捏臉蛋
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_307
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_307_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_307_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;308,捅臉頰
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_308
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_308_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_308_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;309,摸頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_309
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_309_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_309_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;310,摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_310
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_310_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_310_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;311,擁抱
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_311
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_311_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_311_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;312,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_312
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_312_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_312_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;313,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_313
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_313_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_313_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;314,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_314
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_314_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_314_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;315,陰蒂愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_315
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_315_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_315_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;316,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_316
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_316_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_316_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;317,Ｖ腰を振る
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_317
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_317_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_317_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;318,Ａ腰を振る
+;==================================================
+;@M_KOJO_MESSAGE_COM_K61_318
+;CALL TRAIN_MESSAGE
+;CALL M_KOJO_MESSAGE_COM_K61_318_1
+;RETURN RESULT
+
+;@M_KOJO_MESSAGE_COM_K61_318_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+;LOCAL = 0
+;-------------------------------------------------
+;IF LOCAL
+
+;ENDIF
+;RETURN 1
+;==================================================
+;330,掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_330
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_330_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_330_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;331,泡茶（下薬）
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_331
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_331_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_331_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;332,勧酒
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_332
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_332_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_332_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;333,聽牢騷
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_333
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_333_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_333_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;350,推倒（時姦時猥褻
+;TFLAG:194 (0=成功 1=人目がある　2=野外は嫌でござりまする　3=多人数プレイは勘弁　4=合意があっても情緒が足りぬ）
+;TCVAR:抱き寄せ初回　1=普通に合意ゲット　2=先にキスぐらいしろよ　3=媚薬or発情には勝てなかったよお…　4=悔しい…刻印さえなければﾋﾞｸﾋﾞｸﾝ
+;5=強引に迫られると断れぬ(素質胆怯持ち専用) 6=まんざらでもない　7=駄目　8=論外
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_350
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_350_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_350_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;351,帯出去
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_351
+;連れ出しにはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K61_351_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_351_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;352,告白
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_352
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_352_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_352_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TFLAG:193
+		IF 陥落状態() == 3
+			PRINTFORML 「…………え、あ、その…………、本気？」
+			PRINTFORML 「だって、私はこんなのだし、%CALLNAME:MASTER%をみおくることしか出来ないのに」
+			PRINTFORML 「嬉しそう？　そう、だよ。嬉しい、何十年ぶりかわからないくらい嬉しいよ」
+			PRINTFORMW 「でも、それでも、やっぱり%CALLNAME:MASTER%には私は……」
+			PRINTFORML 「んっ、だって、私は子を成せない。%CALLNAME:MASTER%的家族を作ることが出来ない」
+			PRINTFORML 「なのに、だって、でも……、それでもいいの？」
+			PRINTFORML 「……うん、わかった」
+			PRINTFORMW 「ありがとう、すごく嬉しい」
+		ELSE
+			PRINTFORML 「えと、熱でもある？」
+			PRINTFORML 「私は不老不死で、%CALLNAME:MASTER%とは相容れない時間を過ごすんだから」
+			PRINTFORML 「%CALLNAME:MASTER%にとっては、全霊をかけた思いでも、私には過ぎゆく一瞬でしかないのに」
+			PRINTFORMW 「口元が緩んでる？　そう……だね、うん」
+			PRINTFORML 「私も本当は嬉しいよ。ただ、兒童も出来ない、見送ることしか出来ない私で良いのかなって」
+			PRINTFORML 「それでもいい？　本当に？　後悔しない？」
+			PRINTFORMW 「ならいいよ。うん、私も%CALLNAME:MASTER%の最期まで、一緒にいたい」
+		ENDIF
+		PRINTFORML 「……恋人になるなら、白状しないといけないことがある？」
+		PRINTFORML 「時間を、止める？」
+		SIF EXP:60 || EXP:61 || EXP:62 || EXP:63
+			PRINTFORML 「時々感じてた違和感は、それでなんだ」
+		PRINTFORML 「どうして、その事をわざわざ口に？」
+		PRINTFORMW 「……そうだね、恋人に隠し事はしたくないし、してほしくない」
+		PRINTFORML 「ただ一つだけお願いしても良いかな」
+		PRINTFORML 「その力で私を弄るのも構わないし、他の女に手を出すなとも言わない」
+		PRINTFORMW 「でも、時間を止めていない時は、ちゃんと私の事を愛してほしい」
+		PRINTFORML 「え？　恋人なんだし、特別な呼び方をしてほしい？」
+		PRINTFORML 「っ……、は、恥ずかしいけど、%CALLNAME:MASTER%が望むなら」
+		PRINTFORMW 「それで、なんて呼べば？」
+		PRINTL
+		PRINTL [0] 『旦那様』
+		PRINTL [1] 『ご主人様』
+		PRINTL [2] 『吾主様』
+		PRINTL [3] 『背の君』
+		IF GETBIT(TALENT:MASTER:性別,1)
+			PRINTFORML [4] 『兄（あに）様』
+		ELSE
+			PRINTFORML [4] 『姉（あね）様』
+		ENDIF
+		PRINTL [5] 『やっぱりそのまま』
+		$INPUT_NAMELOOP
+		INPUT
+		SELECTCASE RESULT
+			CASE 0
+				MASTERNAME:61 = 旦那様
+				PRINTFORMW 「%MASTERNAME:61%か……、これじゃまるで夫婦だよね」
+			CASE 1
+				MASTERNAME:61 = ご主人様
+				PRINTFORMW 「%MASTERNAME:61%？　メイドプレイでもお望みなの？」
+			CASE 2
+				MASTERNAME:61 = 吾主様
+				PRINTFORMW 「%MASTERNAME:61%？　変な言葉だけど、これはこれでいいかも」
+			CASE 3
+				MASTERNAME:61 = 背の君
+				PRINTFORMW 「%MASTERNAME:61%か……、まさかそう言える相手が出来るなんてね」
+			CASE 4
+				IF GETBIT(TALENT:MASTER:性別,1)
+					MASTERNAME:61 = 兄様
+				ELSE
+					MASTERNAME:61 = 姉様
+				ENDIF
+				PRINTFORMW 「%MASTERNAME:61%？　そんな風に呼ばせたいって、シスコン？」
+			CASE 5
+				MASTERNAME:61 = %CALLNAME:MASTER%
+				PRINTFORML 「%MASTERNAME:61%って、特別な呼び方が欲しかったんじゃ？」
+				PRINTFORMW 「……そ、そうだね、特別過ぎても恥ずかしい」
+			CASEELSE
+				GOTO INPUT_NAMELOOP
+		ENDSELECT
+		PRINTFORMW 「それじゃ、これからもよろしくね、%MASTERNAME:61%」
+		CFLAG:345 = 1
+	ELSE
+		PRINTFORML 「……えと、何が言いたいのかわからないけど」
+		PRINTFORMW 「しゃべることがないなら静かにしていなよ」
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;353,猥褻
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_353
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_353_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_353_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;354,陪睡（相手は起きて布団に招く感じ）
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_354
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_354_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_354_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;355,時止め（地の文の改変程度に留めるべき
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_355
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_355_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_355_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;360,任憑擺佈
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_360
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_360_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_360_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;363,朗読（[幼稚]持ち）
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_363
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_363_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_363_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;364,撒豆子(萃香、勇儀、斯喀雷特姉妹用
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_364
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_364_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_364_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;365,向守矢神社移動(早苗、神奈子、諏訪子用
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_365
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_365_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_365_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;402,就寝（添い寝時）
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_402
+;就寝にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K61_402_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_402_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;403,休憩
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_403
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_403_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_403_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;405,外出(同行時デートに外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_405
+;外出にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K61_405_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_405_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;410,掃除
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_410
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_410_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_410_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;411,戦闘訓練
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_411
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_411_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_411_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;412,学習
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_412
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_412_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_412_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;413,料理
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_413
+;料理にTRAIN_MESSAGEは無い
+CALL M_KOJO_MESSAGE_COM_K61_413_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_413_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;414,吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_414
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_414_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_414_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;415,招待吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_415
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_415_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_415_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;416,演奏(凍結中？
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_416
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_416_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_416_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;417,昼寝をする
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_417
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_417_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_417_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;421,祈願する
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_421
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_421_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_421_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;431,在浴室里放鬆
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_431
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_431_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_431_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;440,等待
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_440
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_440_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_440_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;441,聽課(慧音専用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_441
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_441_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_441_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;442,伐採
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_442
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_442_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_442_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;デート系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+[SKIPSTART]
+;現状未実装
+;==================================================
+;600,デート会話
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_600
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_600_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_600_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;601,デート身体接触
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_601
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_601_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_601_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;602,デートキス
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_602
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_602_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_602_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;603,牽手
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_603
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_603_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_603_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;604,散步
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_604
+;散步にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K61_604_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_604_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;605,繞道
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_605
+;繞道にはTRAIN_MESSAGEが無い
+CALL M_KOJO_MESSAGE_COM_K61_605_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_605_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;610,請吃飯
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_610
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_610_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_610_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;==================================================
+;613,賺錢
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_613
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_613_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_613_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;614,採購食材
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_614
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_614_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_614_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;615,吃便当
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_615
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_615_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_615_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;617,甘味処に誘う
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_617
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_617_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_617_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;618,花屋
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_618
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_618_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_618_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;620,鈴奈庵
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_620
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_620_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_620_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;660,読書
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_660
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_660_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_660_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;698,進入房間
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_698
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_698_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_698_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;699,外出
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_699
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_699_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_699_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;派生コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,掏耳朵
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K61_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K61_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K61_60_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;61,抱き枕
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K61_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K61_61_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K61_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;62,亲額頭
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K61_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K61_62_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K61_62_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;63,更多的接吻
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K61_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K61_63_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K61_63_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1
+;==================================================
+;80,拉手
+;==================================================
+@M_KOJO_MESSAGE_SCOM_K61_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_SCOM_K61_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_SCOM_K61_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+
+ENDIF
+RETURN 1

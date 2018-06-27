@@ -1,0 +1,139 @@
+﻿
+;地点関連性応答処理
+;-----------------------------------------------------------
+@CAN_MOVE_5(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;入口
+	;2香霖堂、34軽飄飄的艾倫魔法商店に移動可能、3岔道と直通、森の外が見える
+	CASE 501
+		SIF GROUPMATCH(ARG:1,503)
+			RETURNF 3
+		SIF GROUPMATCH(ARG:1,502,534)
+			RETURNF 1
+		SIF ARG:1 == MAXROOM
+			RETURNF 2
+	;こーりんどー
+	;1魔法之森入口に移動可能
+	CASE 502
+		SIF ARG:1 == 501
+			RETURNF 1
+	;岔道
+	;11居間、8魔法之広場、15倉庫、20人偶洋館前、40古木的大樹に移動可能、1魔法之森入口と直通
+	CASE 503
+		SIF GROUPMATCH(ARG:1,501)
+			RETURNF 3
+		SIF GROUPMATCH(ARG:1,508,511,515,520,540)
+			RETURNF 1
+	;無縁塚
+	;9再思之道と直通
+	CASE 506
+		SIF ARG:1 == 509
+			RETURNF 3
+	;キノコ
+	;8魔法之広場、20人偶洋館前、40古木的大樹に移動可能
+	CASE 507
+		SIF GROUPMATCH(ARG:1,508,520,540)
+			RETURNF 1
+	;広場
+	;3岔道、7菌菇群生地、9再思之道、10霧雨魔法店に移動可能
+	CASE 508
+		SIF GROUPMATCH(ARG:1,503,507,509,510)
+			RETURNF 1
+	;再思
+	;8魔法之広場に移動可能、6無縁塚と直通
+	CASE 509
+		SIF GROUPMATCH(ARG:1,506)
+			RETURNF 3
+		SIF GROUPMATCH(ARG:1,508)
+			RETURNF 1
+;マリサハウス
+	;魔法店
+	;8魔法之広場、11居間に移動可能
+	CASE 510
+		SIF GROUPMATCH(ARG:1,508,511)
+			RETURNF 1
+	;居間
+	;3岔道、10魔法店、12寝室、13研究部屋、14浴室、15倉庫に移動可能
+	CASE 511
+		SIF GROUPMATCH(ARG:1,503,510,512,513,514,515)
+			RETURNF 1
+	;各部屋
+	;11居間に移動可能
+	CASE 512, 513, 514
+		SIF ARG:1 == 511
+			RETURNF 1
+	;souko
+	;3岔道、11居間に移動可能
+	CASE 515
+		SIF GROUPMATCH(ARG:1,503,511)
+			RETURNF 1
+;人偶洋館
+	;館前
+	;3岔道、7菌菇群生地、21愛麗絲的房間、22神綺的房間、25リビング、40古木的大樹に移動可能
+	CASE 520
+		SIF GROUPMATCH(ARG:1,503,507,521,522,525,540)
+			RETURNF 1
+	;浴室
+	;25リビングに移動可能
+	CASE 526
+		SIF ARG:1 == 525
+			RETURNF 1
+	;愛麗絲,神綺的房間
+	;20館前、25リビングに移動可能
+	CASE 521,522
+		SIF GROUPMATCH(ARG:1,525,520)
+			RETURNF 1
+	;夢子的房間,研究室,
+	;25リビングに移動可能、30二階へは一方通行
+	CASE 523,524
+		SIF GROUPMATCH(ARG:1,525,530)
+			RETURNF 1
+	;リビング
+	;20館前、21愛麗絲的房間、22神綺的房間、23夢子的房間、24研究室、26浴室、29露台、30二階に移動可能
+	CASE 525
+		SIF GROUPMATCH(ARG:1,520,521,522,523,524,526,529,530)
+			RETURNF 1
+	;倉庫,空的部屋
+	;30二階に移動可能
+	CASE 528,531
+		SIF GROUPMATCH(ARG:1,530)
+			RETURNF 1
+	;露台
+	;25リビング、30二階に移動可能
+	CASE 529
+		SIF GROUPMATCH(ARG:1,525,530)
+			RETURNF 1
+	;二階
+	;25リビング、28倉庫、29露台、31空的部屋に移動可能
+	CASE 530
+		SIF GROUPMATCH(ARG:1,525,528,529,531)
+			RETURNF 1
+;艾倫ハウス
+	;店
+	;1入り口、35艾倫私室、36倉庫、37浴室に移動可能
+	CASE 534
+		SIF GROUPMATCH(ARG:1,501,535,536,537)
+			RETURNF 1
+	;艾倫私室,倉庫,浴室
+	;34店に移動可能
+	CASE 535 TO 537
+		SIF ARG:1 == 534
+			RETURNF 1
+	;古木的大樹
+	;3岔道、7菌菇群生地、20館前、41朱鷺子、42莉格露、43露米亜的棲息処に移動可能
+	CASE 540
+		SIF GROUPMATCH(ARG:1,503,507,520,541,542,543)
+			RETURNF 1
+	;朱鷺子,莉格露,露米亜的棲息処
+	;40古木的大樹に移動可能
+	CASE 541 TO 543
+		SIF ARG:1 == 540
+			RETURNF 1
+	;森の外
+	;1入り口へ一方通行
+	CASE MAXROOM
+		SIF ARG:1 == 501
+			RETURNF 1
+ENDSELECT
+RETURNF 0

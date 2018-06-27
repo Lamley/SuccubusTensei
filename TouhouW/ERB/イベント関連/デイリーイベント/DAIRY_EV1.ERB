@@ -1,0 +1,18 @@
+﻿@DAIRY_CONDITION_EV1
+
+IF (!RAND:10 && MAIN_MAP == 4) || (!RAND:30 && MAIN_MAP != 4)
+	CALL DAIRY_EV1
+ELSE
+	RETURN -1
+ENDIF
+
+@DAIRY_EV1
+;ここにイベント内容を書こう　最後はRETURN 1してね
+IF MAIN_MAP != 4
+	PRINTFORML 永遠亭把薬劑的試用品送過来了
+ELSE
+	PRINTFORML 得到了永琳的試用薬
+ENDIF
+PRINTFORMW 栄養饮料入手了
+ITEM:501 ++
+RETURN 1

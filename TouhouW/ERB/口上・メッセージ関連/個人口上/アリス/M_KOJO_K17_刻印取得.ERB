@@ -1,0 +1,142 @@
+﻿;-------------------------------------------
+;刻印取得
+;-------------------------------------------
+@M_KOJO_MESSAGE_MARKCNG_K17
+;このままだと地の文が表示されません
+;地の文を表示したい方は、下記のコメントアウトを削除して下さい
+CALL MARK_MESSAGE
+IF !FLAG:時間停止
+
+	;苦痛刻印
+	IF TFLAG:苦痛刻印取得 == 1
+		PRINTFORMW 「いっ……つぅ……やめなさい！　私は%K17_CNAME()%の人形じゃないのよっ！」
+	ELSEIF TFLAG:苦痛刻印取得 == 2
+		PRINTFORMW 「いやああ！　やめなさいったら！　私は……人形じゃない……」
+	ELSEIF TFLAG:苦痛刻印取得 == 3
+		PRINTFORMW 「……もう……やめて……%K17_CNAME()%の……人形になるから……」
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,-2)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,2)
+	ENDIF
+	
+	;時姦刻印
+	IF TFLAG:時姦刻印取得 == 1
+		PRINTFORMW 
+	ELSEIF TFLAG:時姦刻印取得 == 2
+		PRINTFORMW 
+	ELSEIF TFLAG:時姦刻印取得 == 3
+		PRINTFORMW 
+	ENDIF
+	
+	;快楽刻印
+	IF TFLAG:快楽刻印取得 == 1
+		PRINTL
+		PRINTFORML 「はぁはぁ……こんなの……うぅ……恥ずかしい」
+		PRINTW
+	ELSEIF TFLAG:快楽刻印取得 == 2
+		PRINTL
+		PRINTFORML 「……はぁ……もっと……その……もっとして？」
+		PRINTFORML 「しよう？　ね？　いいでしょう？」
+		PRINTW
+	ELSEIF TFLAG:快楽刻印取得 == 3
+		PRINTL
+		PRINTFORML 「はぁはぁ……もう、%K17_CNAME()%なしじゃ……だめかもしれない」
+		PRINTFORML 「こんなにして……もう、もうもう！　許さないんだからぁ%K17_HEART()%」
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,-2)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,-2)
+		CALL K17_RELATION_EV(K17C_恋人)
+		SIF !RESULT
+			PRINTW
+	ENDIF
+	
+	;不埒刻印
+	;快楽による刻印
+	;LV1
+	IF TFLAG:屈服刻印取得 == 11
+		PRINTL
+		PRINTFORML 「ひゃん！」
+		PRINTFORML 「っっ……！%K17_BLUSH()%」
+		PRINTFORMDL %CALLNAME:TARGET%は自分で出した声に驚いて口を押さえていた
+		PRINTW
+	;LV2
+	ELSEIF TFLAG:屈服刻印取得 == 12
+		PRINTL
+		PRINTFORML 「はぅん……うう……ね、ねえ……その……」
+		PRINTFORML 「な、なんでもないわ……」
+		PRINTFORML 「かっ！？　可愛いって？　もう、やめなさいったら」
+		PRINTW
+	;LV3
+	ELSEIF TFLAG:屈服刻印取得 == 13
+		PRINTL
+		PRINTFORML 「はぁはぁ……ね、ねぇ？」
+		PRINTFORML 「こんな身体にした責任取ってくれるんでしょうね？」
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,-1)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,-1)
+		PRINTW
+	;屈服、恭順による刻印
+	;LV1
+	ELSEIF TFLAG:屈服刻印取得 == 31
+		PRINTL
+		PRINTFORML 「%K17_CNAME()%……ふふっ」
+		PRINTFORML 「あのね……えーと……うーん……やっぱりなんでもない」
+		PRINTFORMDL %CALLNAME:TARGET%は小首を傾げ言い淀んでしまってから、可愛らしく笑った
+		PRINTW
+	;LV2
+	ELSEIF TFLAG:屈服刻印取得 == 32
+		PRINTL
+		PRINTFORML 「%K17_CNAME()%、大丈夫？　疲れてない？　肩揉んであげようか？」
+		PRINTFORMDL 急にどうしたのだろうか？
+		PRINTW
+	;LV3
+	ELSEIF TFLAG:屈服刻印取得 == 33
+		PRINTL
+		PRINTFORML 「%K17_CNAME()%、大丈夫？　疲れてない？　おっぱい揉む？」
+		PRINTFORMDL また急にどうしたのだろう？
+		PRINTW
+		PRINTFORMDL あれ今最後変なこと言わなかったか？
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,-1)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,-1)
+		PRINTW
+	ENDIF
+	
+	;反発刻印
+	IF TFLAG:反発刻印取得 == 1
+		PRINTL
+		PRINTFORML 「%K17_CNAME()%のしてること、控えめに言って最低ね」
+		PRINTFORML 「人が嫌がることをして、気を引いているつもりなのかしら？」
+		PRINTFORML 「だとしたら%K17_CNAME()%のやっていることは間違ってるわ」
+		PRINTFORML 「いい？　注意はしたわよ？」
+		PRINTFORML 「これを機に態度を改めるべきね」
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,1)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,1)
+		PRINTW
+	ELSEIF TFLAG:反発刻印取得 == 2
+		PRINTL
+		PRINTFORML 「……もしかして、私がそこいらの小娘のようだと侮られているのかしら」
+		PRINTFORML 「私ほどの人形遣いにもなると、握力だけで頭蓋骨を握り潰すこともできるのよ」
+		PRINTFORMDL そう言って冷たい視線で%CALLNAME:MASTER%に見えるように、握りこぶしを作ってみせた
+		PRINTFORML 「これを機に態度を改めなさい」
+		PRINTFORML 「最後の通告よ」
+		PRINTW
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,2)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,2)
+		
+	ELSEIF TFLAG:反発刻印取得 == 3
+		PRINTL
+		PRINTFORML 「…………」
+		PRINTFORMDL %CALLNAME:TARGET%は虚空を見つめていた
+		PRINTFORMDL %CALLNAME:MASTER%の姿は%CALLNAME:TARGET%の目に完全に映っていない
+		PRINTFORMDL もはや冷たい視線すら向けられなくなった
+		PRINTW
+		;素質も変えちゃう
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_自尊心,2)
+		CALL K17_TALENT_UPDOWN(TARGET,K17C_TALENT_態度,2)
+		
+	ENDIF
+	
+ENDIF
+

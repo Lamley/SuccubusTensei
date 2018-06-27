@@ -1,0 +1,65 @@
+﻿@出産経過(ARG)
+SIF CFLAG:ARG:妊娠２ > 100
+	CALL BIRTH(ARG)
+SIF CFLAG:ARG:妊娠２ > 1
+	CALL PERCIEVE(ARG)
+SIF CFLAG:ARG:妊娠２ > 0
+	CFLAG:ARG:妊娠２ += 1
+SIF CFLAG:ARG:出産経過日 > 0
+	CFLAG:ARG:出産経過日 += 1
+;子離れ
+	IF CFLAG:ARG:出産経過日 > 120
+		;PRINTFORMW %CALLNAME:ARG%と%CALLNAME:MASTER%のこどもは無事に育てて、独立するようになった。
+		PRINTFORMW %CALLNAME:ARG%と%CALLNAME:MASTER%の子は無事に独り立ちの日を迎え、自立した。
+		PRINTFORML 
+		PRINTFORML たまには顔を見せにきてほしい
+		PRINTFORMW %CALLNAME:MASTER%の願望が口にされることは無かった……
+		PRINTFORML 
+		
+		CFLAG:ARG:育児人数 -= 1
+		CFLAG:MASTER:育児人数 -= 1
+		;IF CFLAG:ARG:育児人数 >= 0
+		IF CFLAG:ARG:育児人数 > 0
+			;PRINTFORML 遠くなる子の背中を見ながらまだ小さい他の子供も無事に育てようと、
+			PRINTFORML 遠くなる子の背中を見届けながら、
+			PRINTFORML まだ小さい子も無事に育てきろうと、
+			;PRINTFORML %CALLNAME:ARG%は%CALLNAME:MASTER%と静かに誓った。
+			PRINTFORML %CALLNAME:ARG%は%CALLNAME:MASTER%の手を握り、静かに誓った。
+		ELSE
+			;PRINTFORML 遠くなる子の背中を見ながら%CALLNAME:ARG%は%CALLNAME:MASTER%とこどもの無事を祈った。
+			PRINTFORML 遠くなる我が子の背中を見ながら%CALLNAME:ARG%は%CALLNAME:MASTER%と子供の無事を祈った
+		ENDIF
+
+;PRINTFORML 別れ際、子供は%CALLNAME:MASTER%が%CALLNAME:ARG%を顧みず他の女の尻を追い回していたことを口汚く罵り、
+;PRINTFORML 自分は絶対に%CALLNAME:MASTER%のようにはならないと吐き捨てて去っていった
+
+
+		IF CFLAG:ARG:育児人数 == 0
+			TALENT:ARG:育児中 = 0
+		ENDIF
+		CFLAG:ARG:出産経過日 = 0
+	ENDIF
+	
+IF CFLAG:ARG:出産経過日 == 60
+	PRINTFORMW 満面の笑顔で離乳食をほおばる幼子の姿に口元が緩む
+	PRINTFORML 
+	;PRINTFORMW %CALLNAME:ARG%と%CALLNAME:MASTER%のこどもは授乳期間を終えた。
+	PRINTFORMW %CALLNAME:ARG%と%CALLNAME:MASTER%の子供は授乳期間を終えた。
+	PRINTFORMW 役目を終えた%CALLNAME:ARG%の胸は小さくなり、母乳もとまりました。
+		SIF TALENT:ARG:母乳体質 == 1
+			TALENT:ARG:母乳体質 = 0
+;		CALL REVERSE_B_SIZE
+;乳ランクアップフラグたってて、今絶壁じゃないなら小さくなる。通常出産以外の妊娠終了なんかも考慮するとCALLで呼び出す方が良いのだろうが…
+		IF CFLAG:ARG:乳ランクアップ == 1 && TALENT:ARG:バストサイズ > -2
+			TALENT:ARG:バストサイズ -= 1
+			CFLAG:ARG:乳ランクアップ = 0
+		ENDIF
+ELSEIF CFLAG:ARG:出産経過日 == 20 && CFLAG:ARG:回復速度ダウン
+	PRINTFORMW 無事に産後の肥立ちを終え、%CALLNAME:ARG%はすっかり元気になった
+	MAXBASE:ARG:体力 += 500
+	MAXBASE:ARG:気力 += 500
+	MAXBASE:ARG:体力 = MIN(MAXBASE:ARG:体力 / 10 * 11, CSVBASE(ARG,0) * 2)
+	MAXBASE:ARG:気力 = MIN(MAXBASE:ARG:気力 / 10 * 11, CSVBASE(ARG,1) * 2)
+	TALENT:ARG:回復速度 = CFLAG:ARG:回復速度ダウン - 2
+	CFLAG:ARG:回復速度ダウン = 0
+ENDIF

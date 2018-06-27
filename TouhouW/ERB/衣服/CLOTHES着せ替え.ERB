@@ -1,0 +1,21 @@
+﻿;換装後の服装を保存します(換装たものを保存したかったんや)
+@CLOTHES_SETTING_SAVE(ARG)
+#DIM 保存部位
+FOR 保存部位,1,22
+	CFLAG:ARG:(保存部位 + 600) = EQUIP:ARG:保存部位
+	SIF EQUIP:ARG:保存部位 >= 1
+		CFlAG:ARG:600 = 1
+NEXT
+;IF CFLAG:ARG:600 >= 1
+;	CFLAG:ARG:600 = 1
+;ELSE
+;	CFLAG:ARG:600 = 0
+;ENDIF
+
+;朝の換装を保存した服装で行います(換装たものをry)
+@CLOTHES_SETTING_LOAD(ARG)
+#DIM 読み込み部位
+FOR 読み込み部位,0,22
+	EQUIP:ARG:読み込み部位 = CFLAG:ARG:(読み込み部位 + 600)
+NEXT
+

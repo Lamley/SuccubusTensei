@@ -1,0 +1,385 @@
+﻿;FileName_TRACHECK.ERB ----------------------------- Rev1.00
+;処女喪失時の処理
+;CALL		USER
+;ARG		0:キャラNO
+;RETURN		VOID
+;COMMENT	
+;-----------------------------------------------------------
+@LOST_VIRGIN(ARG)
+;-------------------------------------------------
+;処女喪失のチェック
+;-------------------------------------------------
+IF TALENT:ARG:処女 == 1 && EXP_UP(1,ARG) && !TFLAG:2
+	PRINTW 処女喪失
+	;処女喪失フラグ(今回のコマンド)
+	TCVAR:ARG:破瓜 = 1
+	SIF ARG
+		FLAG:処女喰い ++
+	IF !CFLAG:ARG:処女喪失記念日
+		CFLAG:ARG:処女喪失記念日 = DAY
+		SELECTCASE SELECTCOM
+			CASE 60,61,65,67,68,71,320,322
+				IF TALENT:PLAYER:2 & 2
+					CFLAG:ARG:処女喪失対象 |= 喪失_ペニス
+				ELSE
+					CFLAG:ARG:処女喪失対象 |= 喪失_ペニバン
+				ENDIF
+			CASE 44
+				SETBIT CFLAG:ARG:処女喪失対象, 2
+			CASEELSE
+				IF TCVAR:TARGET:カウンター行動 == 80
+					IF TALENT:TARGET:2 & 2
+						CFLAG:ARG:処女喪失対象 |= 喪失_ペニス
+					ELSE
+						CFLAG:ARG:処女喪失対象 |= 喪失_ペニバン
+					ENDIF
+				ELSEIF TCVAR:TARGET:カウンター行動 == 85
+					IF TALENT:PLAYER:2 & 2
+						CFLAG:ARG:処女喪失対象 |= 喪失_ペニス
+						CFLAG:ARG:処女喪失対象 |= 喪失_自分で
+					ELSE
+						CFLAG:ARG:処女喪失対象 |= 喪失_ペニバン
+						CFLAG:ARG:処女喪失対象 |= 喪失_自分で
+					ENDIF
+				ENDIF
+		ENDSELECT
+	ENDIF
+	IF CHK_DATENOW(CFLAG:ARG:デート中) && CFLAG:ARG:現在位置 != OMANEKIBEYA()
+		CSTR:ARG:処女喪失位置 = %DATENAME_SPOT()%
+	ELSE
+		CSTR:ARG:処女喪失位置 = %NAME_FROM_PLACE(CFLAG:ARG:現在位置)%
+	ENDIF
+	SIF FLAG:70
+		CFLAG:ARG:処女喪失対象 |= 喪失_時間停止
+	SIF TCVAR:ARG:泥酔
+		CFLAG:ARG:処女喪失対象 |= 喪失_泥酔
+	SIF CFLAG:イタズラ
+		CFLAG:ARG:処女喪失対象 |= 喪失_睡眠
+	IF ARG == MASTER
+		CFLAG:ARG:処女喪失相手 = TARGET
+	ELSE
+		CFLAG:ARG:処女喪失相手 = PLAYER
+	ENDIF
+	
+	;ビデオ撮影
+	IF TEQUIP:ARG:28
+		;性交
+		IF TEQUIP:ARG:50
+			LOCALS = LV1/
+		ELSEIF TEQUIP:13
+			LOCALS = LV3/
+		;其他
+		ELSE
+			LOCALS = LV4/
+		ENDIF
+		TSTR:1 += LOCALS
+	ENDIF
+	;貞操観念
+	IF TALENT:ARG:貞操 > 0
+		IF !TALENT:ARG:恋慕
+			TIMES SOURCE:ARG:情愛 , 0.60
+			TIMES SOURCE:ARG:反感 , 10.00
+		ENDIF
+	;不在乎貞操
+	ELSEIF TALENT:ARG:貞操 < 0
+		TIMES SOURCE:ARG:情愛 , 0.60
+		TIMES SOURCE:ARG:反感 , 0.50
+	ELSEIF TALENT:ARG:無知
+		TIMES SOURCE:ARG:情愛 , 0.30
+		TIMES SOURCE:ARG:反感 , 0.75
+		SOURCE:ARG:恐怖 += 3000
+	ENDIF
+	IF CFLAG:ARG:うふふ == 2
+		TIMES SOURCE:ARG:情愛 , 1.50
+		TIMES SOURCE:ARG:反感 , 0.25
+	ENDIF
+	SETCOLOR 247,171,166
+	PRINTFORMW 【処女喪失】
+	IF TEQUIP:ARG:50 == MASTER && GROUPMATCH(TALENT:MASTER:形状,5,6)
+		PRINTFORMW %CALLNAME:MASTER%那凶悪的肉棒、毫不留情的撕裂了%CALLNAME:ARG%的純潔……
+		CFLAG:ARG:処女喪失対象 |= 喪失_凶悪
+		TIMES SOURCE:ARG:苦痛, 3.00
+		TIMES SOURCE:ARG:恐怖, 3.00
+	ENDIF
+	SIF FLAG:70
+		PRINTFORMW %CALLNAME:ARG%在无意識的情况下被%CALLNAME:MASTER%奪走了処女……
+	;陥落素質による処理
+	;MASTERがTARGETの膣に挿入している
+	IF TEQUIP:ARG:50 == MASTER && !FLAG:70
+		IF TCVAR:ARG:泥酔
+			PRINTFORMW %CALLNAME:ARG%意識処在混沌之中時被奪走了処女……
+		;睡眠姦　良い子は眠っている間にママにしちゃおうね～
+		ELSEIF CFLAG:ARG:睡眠
+			PRINTFORMW %CALLNAME:ARG%的第一次在睡着的時候被奪走了……
+		ELSEIF TALENT:ARG:無知
+			;IF GROUPMATCH(TALENT:MASTER:形状,5,6)
+
+			PRINTFORMW 缺乏性知識的%CALLNAME:ARG%対自己被做了什么懵懂不知、因為処女喪失的痛楚而困惑并害怕着……
+			PRINTFORMW %CALLNAME:MASTER%安慰起了%CALLNAME:ARG%
+		;親愛かつ相手が主人(現在親愛がないので、恋人で代用
+		ELSEIF TALENT:ARG:恋人 || TALENT:ARG:恋慕 > 1
+			PRINTFORMW %CALLNAME:ARG%因為能让%CALLNAME:MASTER%成為第一次的対象而感到无上的幸福感的样子……
+			TFLAG:150 = 2
+			TIMES SOURCE:ARG:情愛 , 3.00
+			TIMES SOURCE:ARG:反感 , 0.10
+			 CFLAG:ARG:処女喪失対象 |= 喪失_恋慕
+		;恋慕かつ相手が主人
+		ELSEIF TALENT:ARG:恋慕
+			PRINTFORMW %CALLNAME:ARG%因為把処女献给了%CALLNAME:MASTER%而感到幸福的样子……
+			TFLAG:150 = 2
+			TIMES SOURCE:ARG:情愛 , 2.00
+			TIMES SOURCE:ARG:反感 , 0.30
+			EXP:ARG:愛情経験 += 30
+			CFLAG:ARG:処女喪失対象 |= 喪失_恋慕
+		ELSEIF TALENT:ARG:思慕
+			IF TCVAR:ARG:無理矢理 == 1
+				PRINTFORMW 被怀有好感的対象硬上了的%CALLNAME:ARG%、眼泪如雨点般開始洒落下来……
+				TIMES SOURCE:ARG:情愛 , 0.80
+				TIMES SOURCE:ARG:反感 , 1.50
+				CFLAG:ARG:処女喪失対象 |= 喪失_無理矢理
+			ELSEIF TALENT:ARG:貞操 >= 0
+				PRINTFORMW 尽管怀有好感、%CALLNAME:ARG%还是対被%CALLNAME:MASTER%夺去貞操感到不知如何是好……
+				TIMES SOURCE:ARG:情愛 , 1.30
+				TIMES SOURCE:ARG:反感 , 0.80
+			ENDIF
+			CFLAG:ARG:処女喪失対象 |= 喪失_思慕
+		ELSE
+			IF TCVAR:ARG:無理矢理 == 1
+				TIMES SOURCE:ARG:情愛 , 0.10
+				TIMES SOURCE:ARG:反感 , 3.00
+				PRINTFORMW %CALLNAME:ARG%的抵抗毫无作用、被%CALLNAME:MASTER%奪走了処女……
+				CFLAG:ARG:処女喪失対象 |= 喪失_無理矢理
+			ELSE
+				PRINTFORMW %CALLNAME:ARG%半推半就地被%CALLNAME:MASTER%奪走了処女……
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RESETCOLOR
+;-------------------------------------------------
+;再生処女喪失のチェック
+;-------------------------------------------------
+IF TALENT:ARG:処女 == 2 && EXP_UP(1,ARG)
+	TCVAR:ARG:破瓜 = 2
+	;ビデオ撮影
+	IF TEQUIP:28
+		;性交
+		IF TEQUIP:ARG:50
+			LOCALS = LV1/
+		ELSEIF TEQUIP:ARG:13
+			LOCALS = LV3/
+		;其他
+		ELSE
+			LOCALS = LV4/
+		ENDIF
+		TSTR:1 += LOCALS
+	ENDIF
+	PRINTW 再生処女喪失
+ENDIF
+;-------------------------------------------------
+;無自覚処女喪失のチェック
+;-------------------------------------------------
+IF TALENT:ARG:処女 == -1 && EXP_UP(1,ARG) && CFLAG:ARG:292 == 1 && !FLAG:70 && !TCVAR:ARG:泥酔 && !CFLAG:MASTER:イタズラ
+	TCVAR:ARG:破瓜 = -1
+	CFLAG:ARG:292 = 0
+	PRINTW 処女喪失？
+	SETCOLOR 247,171,166
+	PRINTFORMW %CALLNAME:ARG%在感到剧烈痛楚的同时困惑不已…
+	RESETCOLOR
+ENDIF
+
+@童貞無接吻経験喪失
+FONTBOLD
+SETCOLOR 255,100,255
+;童貞喪失
+IF !TALENT:PLAYER:1 && TALENT:PLAYER:2 & 2
+	SELECTCASE SELECTCOM
+		CASE 60,61,62,63,65,66,67,68,69,70
+			PRINTW 童貞喪失
+			TALENT:PLAYER:1 = 1
+	ENDSELECT
+	IF TCVAR:TARGET:カウンター行動 == 85
+			PRINTFORMW 童貞喪失(%CALLNAME:PLAYER%)
+			TALENT:PLAYER:1 = 1
+	ENDIF
+ENDIF
+IF !TALENT:TARGET:1 && TALENT:TARGET:2 & 2
+	SELECTCASE SELECTCOM
+		CASE 64,92,93,94,71,130
+			PRINTFORMW 童貞喪失(%CALLNAME:TARGET%)
+			TALENT:TARGET:1 = 1
+	ENDSELECT
+	IF TCVAR:TARGET:カウンター行動 == 80
+			PRINTFORMW 童貞喪失(%CALLNAME:TARGET%)
+			TALENT:TARGET:1 = 1
+	ENDIF
+ENDIF
+
+;無接吻経験喪失
+IF TALENT:PLAYER:6
+	SIF GROUPMATCH(SELECTCOM,20,312) || GROUPMATCH(TCVAR:TARGET:カウンター行動,60)
+		CALL SET_FIRSTKISS(MASTER)
+ENDIF
+IF TALENT:TARGET:6 && !CFLAG:TARGET:睡眠 && !FLAG:70
+	IF GROUPMATCH(SELECTCOM,20,312) || GROUPMATCH(TCVAR:TARGET:カウンター行動,60)
+		IF TFLAG:193 != 99 && PREVCOM != 309
+			EXP:TARGET:愛情経験 += 5
+			CALL SET_FIRSTKISS(TARGET)
+		ENDIF
+	ENDIF
+ENDIF
+;アナル処女喪失
+IF CFLAG:TARGET:アナル処女喪失対象 & 喪失_時間停止 || !CFLAG:TARGET:アナル処女喪失記念日
+	SELECTCASE SELECTCOM
+		CASE 45,62,63,66,69,70,71
+			;完全に初めて
+			IF !CFLAG:TARGET:アナル処女喪失記念日
+				PRINTFORMW 肛門処女喪失(%CALLNAME:TARGET%)
+				CFLAG:TARGET:アナル処女喪失記念日 = DAY
+				IF SELECTCOM == 45
+					CFLAG:TARGET:アナル処女喪失対象 |= 喪失_振動棒
+				ELSEIF TALENT:PLAYER:2 & 2
+					CFLAG:TARGET:アナル処女喪失対象 |= 喪失_ペニス
+				ELSE
+					CFLAG:TARGET:アナル処女喪失対象 |= 喪失_ペニバン
+				ENDIF
+				IF !FLAG:70
+					TCVAR:Ａ破瓜 = 1
+				ELSE
+					CFLAG:TARGET:アナル処女喪失対象 |= 喪失_時間停止
+					TCVAR:Ａ破瓜 = -2
+				ENDIF
+			;時間停止中に経験済み
+			ELSEIF !FLAG:70 && CFLAG:TARGET:アナル処女喪失対象 & 喪失_時間停止
+				SIF FIRSTTIME("Ａ破瓜",0)
+					PRINTFORMW 肛門処女喪失？(%CALLNAME:TARGET%)
+				TCVAR:Ａ破瓜 = -1
+			ENDIF
+			IF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:TARGET:現在位置 != OMANEKIBEYA()
+				CSTR:TARGET:Ａ処女喪失位置 = %DATENAME_SPOT()%
+			ELSE
+				CSTR:TARGET:Ａ処女喪失位置 = %NAME_FROM_PLACE(CFLAG:TARGET:現在位置)%
+			ENDIF
+		CASEELSE
+			IF TCVAR:TARGET:カウンター行動 == 87
+				IF !CFLAG:TARGET:アナル処女喪失記念日
+					PRINTFORMW 肛門処女喪失(%CALLNAME:TARGET%)
+					CFLAG:TARGET:アナル処女喪失記念日 = DAY
+					IF TALENT:PLAYER:2 & 2
+						CFLAG:TARGET:アナル処女喪失対象 |= 喪失_ペニス
+					ELSE
+						CFLAG:TARGET:アナル処女喪失対象 |= 喪失_ペニバン
+					ENDIF
+				ELSEIF CFLAG:TARGET:アナル処女喪失対象 & 喪失_時間停止
+				ENDIF
+			ENDIF
+			IF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:TARGET:現在位置 != OMANEKIBEYA()
+				CSTR:TARGET:Ａ処女喪失位置 = %DATENAME_SPOT()%
+			ELSE
+				CSTR:TARGET:Ａ処女喪失位置 = %NAME_FROM_PLACE(CFLAG:TARGET:現在位置)%
+			ENDIF
+	ENDSELECT
+	IF TARGET == MASTER
+		CFLAG:MASTER:アナル処女喪失相手 = PLAYER
+	ELSE
+		CFLAG:TARGET:アナル処女喪失相手 = PLAYER
+	ENDIF
+ENDIF
+FONTREGULAR
+RESETCOLOR
+@LOST_VIRGIN_STOP(ARG)
+IF !TALENT:ARG:無知 && !FLAG:70 && !TALENT:ARG:恋慕 && !TALENT:ARG:恋人 && !TCVAR:ARG:待たぬ && !TCVAR:ARG:泥酔 && !CFLAG:イタズラ
+;貞操観念持ちor貞操普通かつ思慕なし
+	IF TALENT:ARG:貞操 > 0 || (!TALENT:ARG:貞操 && !TALENT:ARG:思慕)
+		PRINTFORMW %CALLNAME:ARG%表示这种事还是等一段时间再考虑吧
+		IF (EXP:ARG:60 + EXP:ARG:61 + EXP:ARG:62 + EXP:ARG:63 + EXP:ARG:64) == 0
+			IF TALENT:ARG:貞操 > 0
+				PRINTFORMW 果然持身甚紧呢……
+			ELSE
+				PRINTFORMW 意外坚固的防线呢……
+			ENDIF
+		ELSE
+			PRINTFORMW 麻烦的臭女人……
+		ENDIF
+		PRINTL [0] 放弃
+		PRINTL [1] 有肉不吃禽獣不如
+		INPUT
+		IF RESULT == 1
+			IF TALENT:ARG:貞操 > 0 && ABL:ARG:戦闘能力 > ABL:MASTER:戦闘能力 && !TCVAR:ARG:無理矢理
+				PRINTFORMW %CALLNAME:MASTER%虽然想霸王硬上弓、但因為%CALLNAME:ARG%相当激烈的抵抗而放弃了
+					RETURN 1
+			ELSEIF TALENT:ARG:貞操 > 0
+				PRINTFORMW %CALLNAME:ARG%流着眼泪拒絶了%CALLNAME:MASTER%
+				PRINTL [0] 真的那么讨厌做就算了
+				PRINTL [1] 上吧
+				INPUT
+				IF !RESULT
+					PRINTFORMW %CALLNAME:ARG%松了一口气…
+					PRINTFORMW %CALLNAME:MASTER%有点受伤
+					RETURN 1
+				ELSE
+					PRINTFORMW %CALLNAME:MASTER%圧在了不情愿的%CALLNAME:ARG%身上…
+					TCVAR:ARG:待たぬ = 1
+					TCVAR:ARG:無理矢理 = 1
+					RETURN 0
+				ENDIF
+			ELSE
+				PRINTFORMW %CALLNAME:MASTER%强行圧了上去…
+				TCVAR:ARG:待たぬ = 1
+				RETURN 0
+			ENDIF
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%松了一口气…
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+
+@SET_FIRSTKISS(ARG, キス相手, シチュエーション)
+#DIM キス相手
+;シチュエーション	0:通常
+;					1:デート帰り
+;					2:オナバレ
+#DIM シチュエーション
+IF ARG == キス相手
+	IF ARG == MASTER
+		キス相手 = TARGET
+	ELSE
+		キス相手 = MASTER
+	ENDIF
+ENDIF
+;無接吻経験喪失
+IF TALENT:ARG:無接吻経験
+	SETCOLOR 247,171,166
+	PRINTFORMW 無接吻経験喪失(%CALLNAME:ARG%)
+	CFLAG:ARG:ファーストキス喪失記念日 = DAY
+	TALENT:ARG:無接吻経験 = 0
+	CFLAG:ARG:ファーストキス喪失相手 = キス相手
+	SELECTCASE シチュエーション
+		CASE 1
+			CSTR:ARG:ファーストキス位置 = 約会後回去的路上
+			SIF ARG != MASTER
+				CFLAG:ARG:ファーストキス喪失対象 |= 喪失_自分で
+		CASE 2
+			IF ARG != MASTER
+				CSTR:ARG:ファーストキス位置 = 自室
+				CFLAG:ARG:ファーストキス喪失対象 |= 喪失_なし崩し
+			ELSE
+				CSTR:ARG:ファーストキス位置 = %CALLNAME:ARG%宅
+				CFLAG:ARG:ファーストキス喪失対象 |= 喪失_なし崩し
+			ENDIF
+		CASEELSE
+			IF CHK_DATENOW(CFLAG:ARG:デート中) && CFLAG:ARG:現在位置 != OMANEKIBEYA()
+				CSTR:ARG:ファーストキス位置 = %DATENAME_SPOT()%
+			ELSE
+				CSTR:ARG:ファーストキス位置 = %NAME_FROM_PLACE(CFLAG:ARG:現在位置)%
+			ENDIF
+			SIF ARG == MASTER
+				CFLAG:ARG:ファーストキス喪失対象 |= 喪失_自分で
+	ENDSELECT
+	SIF TALENT:ARG:恋慕
+		CFLAG:ARG:ファーストキス喪失対象 |= 喪失_恋慕
+	SIF TALENT:ARG:思慕
+		CFLAG:ARG:ファーストキス喪失対象 |= 喪失_思慕
+	RESETCOLOR
+ENDIF

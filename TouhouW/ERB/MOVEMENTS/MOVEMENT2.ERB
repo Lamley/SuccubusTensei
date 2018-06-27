@@ -1,0 +1,230 @@
+﻿;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;時間経過処理
+;CALL		USER
+;ARG		経過時間前
+;RETURN		時間経過量
+;COMMENT	
+;-----------------------------------------------------------
+@TIME_PROGRESS(ARG)
+#FUNCTION
+SIF TIME + DAY * 1440 < ARG
+	RETURNF 0
+RETURNF TIME + DAY * 1440 - ARG
+
+;FileName_MOVEMENT.ERB ----------------------------- Rev1.01
+;キャラ帰宅処理
+;CALL		USER
+;ARG		0:キャラNO
+;RETURN		VOID
+;COMMENT	
+;-----------------------------------------------------------
+@KITAKU(ARG)
+IF CFLAG:(ARG):現在位置 == CFLAG:MASTER:現在位置 && !CFLAG:MASTER:睡眠
+	IF 睡眠時間(ARG)
+		PRINTFORMW %CALLNAME:ARG%躺到了床上。
+	;デート中
+	ELSEIF CHK_DATENOW(CFLAG:(ARG):デート中)
+		IF TIME < 420 && TIME > 180
+			PRINTFORMW 因為天就快要亮了、和%CALLNAME:ARG%的约会就到此為止了。
+		ELSEIF TIME < 1140 && TIME > 900
+			PRINTFORMW 因為太阳要落山了、和%CALLNAME:ARG%的约会就到此為止了。
+		ELSE
+			PRINTFORMW 因為夜已経深了、和%CALLNAME:ARG%的约会就到此為止了。
+		ENDIF
+		;自宅にいる時,待客室にいる時はうふふしていない時
+		IF (CFLAG:(ARG):現在位置 == CFLAG:(ARG):自宅位置 || (CFLAG:(ARG):現在位置 == OMANEKIBEYA() && !CFLAG:(ARG):うふふ))
+			CALL KOJO_MESSAGE_SEND("EVENT",20,ARG,3,0)
+		;通常のデート中
+		ELSE
+			CALL KOJO_MESSAGE_SEND("EVENT",20,ARG,2,0)
+			SIF (CFLAG:MASTER:現在位置 % 100) % 10 && CHK_DATENOW(CFLAG:MASTER:デート中) && FLAG:デート相手 == ARG && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+			CFLAG:MASTER:現在位置 = CFLAG:MASTER:デート中 * 100
+		ENDIF
+	;神社内にいるか自宅でも待客室でもない場所
+	ELSEIF AT_HOME(ARG) || (CFLAG:(ARG):現在位置 != CFLAG:(ARG):自宅位置 && CFLAG:(ARG):現在位置 != OMANEKIBEYA()) && CFLAG:ARG:行動 != 5
+		CALL KOJO_MESSAGE_SEND("EVENT",20,ARG,1,0)
+		IF TIME < 420 && TIME > 180
+			PRINTFORMW 因為天就快要亮了、%CALLNAME:ARG%回去了。
+		ELSEIF TIME < 1140 && TIME > 900
+			PRINTFORMW 因為太阳要落山了、%CALLNAME:ARG%回去了。
+		ELSE
+			PRINTFORMW 因為夜已経深了、%CALLNAME:ARG%回去了。
+		ENDIF
+		CALL SET_TOGETHER(0,ARG,1)
+		SIF (CFLAG:MASTER:現在位置 % 100) % 10 && CHK_DATENOW(CFLAG:MASTER:デート中) && FLAG:デート相手 == ARG && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+			CFLAG:MASTER:現在位置 = CFLAG:MASTER:デート中 * 100
+	ENDIF
+	IF CFLAG:(ARG):うふふ > 0 || CHK_DATENOW(CFLAG:(ARG):デート中)
+		FOR LOCAL,1,CHARANUM
+			;お招き中は継続
+			SIF CFLAG:MASTER:お招き != LOCAL && CFLAG:LOCAL:うふふ
+				CALL ENDUFUFU(LOCAL)
+			;デートは消える
+			CFLAG:LOCAL:デート中 = MAIN_MAP
+			FLAG:デート相手 = 0
+			TFLAG:デート前好感度 = 0
+		NEXT
+		;お招きうふふ中は継続
+		SIF !CFLAG:MASTER:お招き
+			CFLAG:MASTER:うふふ = 0
+		CFLAG:MASTER:同行 = 0
+	ENDIF
+ENDIF
+CFLAG:ARG:同行 = 0
+
+IF !TCVAR:ARG:休憩中 && !CFLAG:ARG:お招き
+	;活動時間外は自宅があれば寝るまで自宅にいる
+	IF CFLAG:ARG:自宅位置 && !IN_HOME(CFLAG:ARG:自宅位置) && !睡眠時間(ARG)
+		CFLAG:ARG:現在位置 = CFLAG:ARG:自宅位置
+	;自宅がないか寝ると消える
+	ELSE
+		CFLAG:ARG:現在位置 = SUKIMA()
+	ENDIF
+ENDIF
+
+
+@寝室から追い出し(ARG)
+IF ARG > 0 && CFLAG:ARG:現在位置 == CFLAG:MASTER:現在位置 && 睡眠時間(ARG) && (CFLAG:ARG:現在位置 == CFLAG:ARG:初期位置)
+	;忍び込み中
+	IF CFLAG:ARG:隠密中
+
+	;それ以外
+	ELSE
+		;恋慕か時止中なら入室を許す
+		IF (TALENT:ARG:恋慕 || FLAG:時間停止 == 1 || TEQUIP:ARG:縄 || TCVAR:ARG:睡眠薬強度 || CFLAG:うふふ == 1 || EXP:ARG:睡眠姦経験 > 300 || CFLAG:ARG:イタズラ) && !CFLAG:ARG:ブチギレ
+		;願望 睡眠欲セット
+		ELSEIF CFLAG:ARG:初期位置 == 15 && (TALENT:1:恋慕 || TALENT:57:恋慕 || TALENT:71:恋慕) && !CFLAG:ARG:ブチギレ
+		;ここは誰か一人でも恋慕ならおｋ
+		;侵入成功なら入室
+		ELSEIF GETBIT(CFLAG:ARG:42,8) && !CFLAG:ARG:ブチギレ
+		;それ以外なら追い出し
+		ELSE
+			CLEARLINE 1
+			;SIF !CFLAG:ARG:ブチギレ
+				PRINTFORMW 被犯困的%CALLNAME:ARG%赶出来了…
+			;忍び込みOFF
+			CALL SET_SNEAK(0,ARG,2)
+			;イタズラOFF
+			CALL SET_PRANK(0,ARG,2)
+			FOR LOCAL:1,0,CHARANUM
+				CALL ENDUFUFU(LOCAL:1)
+			NEXT
+			;侵入成功フラグクリア
+			CLEARBIT CFLAG:ARG:42,8
+			TFLAG:MASTERのＰ挿入中 = 0
+			;移動可能な場所へ移動
+			CALL GETOUT(MASTER)
+			;遠距離移動フラグOFF
+			TFLAG:遠距離移動 = 0
+		ENDIF
+	ENDIF
+ENDIF
+
+@浴室から追い出し(ARG)
+SETCOLOR 150,150,250
+PRINTL 【浴場的闖入者】
+RESETCOLOR
+IF TALENT:ARG:羞恥心 < 0
+	IF ABL:ARG:親密 < 5
+		PRINTFORML %CALLNAME:ARG%平静地、説道你進来了的話那我現在就出去了
+		CFLAG:ARG:好感度 -= (20 - ABL:ARG:親密 * 2)
+		CFLAG:ARG:信頼度 -= (20 - ABL:ARG:親密 * 2)
+		SOURCE:ARG:反感 += 300
+		CFLAG:MASTER:現在位置 = KICKOUT()
+	;ELSE
+	;	PRINTFORML %CALLNAME:ARG%は平然として、一緒に入りたいのかと聞いてきた
+	ENDIF
+ELSE
+	PRINTFORML %CALLNAME:ARG%察覚了自己所面対的状況、発出尖叫声飞奔出了浴場
+	CFLAG:ARG:好感度 -= (50 - ABL:ARG:親密 * 2)
+	CFLAG:ARG:信頼度 -= (50 - ABL:ARG:親密 * 2)
+	SOURCE:ARG:反感 += 1000
+	BASE:ARG:憤怒 += (1500 - ABL:ARG:親密 * 100)
+	CFLAG:ARG:現在位置 = KICKOUT()
+	;キャラを動かしたのでTARGET再設定
+ENDIF
+CFLAG:ARG:好感度 = MAX(CFLAG:ARG:好感度,0)
+CFLAG:ARG:信頼度 = MAX(CFLAG:ARG:信頼度,0)
+CALL TARGETSET_CHACK
+CFLAG:ARG:同室 = 0
+RETURN 1
+
+
+@待客室処理(ARG)
+SIF FLAG:時間停止 || !CFLAG:ARG:お招き
+	RETURN
+
+;待客室から出たら日常に戻る
+;泊まる前か後かは連泊禁止フラグを参照してます
+IF CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+	CALL 待客室から出る(ARG)
+
+;翌日仕事に行く場合
+ELSEIF 仕事中チェック(ARG) && TCVAR:ARG:連泊禁止 && CFLAG:ARG:うふふ != 1
+	CFLAG:MASTER:現在位置 = CFLAG:ARG:自宅位置
+	IF CFLAG:ARG:うふふ
+		PRINTFORMW %CALLNAME:ARG%好像要開始工作了…
+		CALL ENDUFUFU(LOCAL)
+		PRINTFORMW %CALLNAME:ARG%雖然依依不捨但還是離開了
+	ELSE
+		PRINTFORMW %CALLNAME:ARG%因為工作而離開了
+	ENDIF
+	CALL 待客室から出る(ARG)
+
+;デート中
+ELSEIF CHK_DATENOW(CFLAG:ARG:デート中)
+	IF CFLAG:ARG:神社在住
+		;住み込みキャラは睡眠時間になったらデート終了
+		IF 睡眠時間(ARG)
+			CFLAG:ARG:デート中 = MAIN_MAP
+			FLAG:デート相手 = 0
+		ENDIF
+	ELSE
+		;デート中に帰る時間が来たらメッセージ＆デートだけ消す
+		IF !VISIT(ARG)
+			CALL KITAKU(ARG)
+		ENDIF
+	ENDIF
+ENDIF
+
+
+@待客室から出る(ARG)
+;遭遇フラグを自宅位置に設定（連動してると他のキャラが駆けつけてくるのは仕様）
+CFLAG:ARG:遭遇位置 = CFLAG:ARG:自宅位置
+;初期位置を元に戻す（参道的正前方や0もいるが99でもおｋ）
+IF CFLAG:ARG:神社在住
+	CFLAG:ARG:初期位置 = CFLAG:ARG:神社在住
+ELSE
+	CFLAG:ARG:初期位置 = SUKIMA()
+ENDIF
+;活動時間ならそのままデート。住み込みキャラは起きていればデート
+;の予定だったがバランスブレイカーな気がする＆朝帰りは一人の方が雰囲気でるので住み込みキャラだけ
+;活動前も配置するようになったので起床時間なら外出ように
+IF CFLAG:ARG:神社在住
+	CFLAG:ARG:現在位置 = 97 + MAIN_MAP * 100
+	CFLAG:ARG:デート中 = MAIN_MAP
+	FLAG:デート相手 = 0
+	TFLAG:デート前好感度 = 0
+ELSE
+	IF !睡眠時間(ARG) && !CFLAG:ARG:睡眠
+		;自宅位置に移動
+		CFLAG:ARG:現在位置 = CFLAG:ARG:遭遇位置
+		;泊まる前or住み込みキャラならデート継続,ワープ移動してたらダメ
+		IF !TCVAR:ARG:連泊禁止 && CHK_DATENOW(CFLAG:ARG:デート中) && !AT_HOME(MASTER)
+			CFLAG:ARG:デート中 = (CFLAG:ARG:自宅位置) / 100
+			CFLAG:ARG:同行 = 60
+		ENDIF
+	;寝ている場合は見えないところに移動
+	;住み込みキャラは識別するために現在位置97を使ってるので要注意（MOVEMENT2のSLEEPへ続く）
+	ELSE
+		CFLAG:ARG:現在位置 = SUKIMA()
+		CFLAG:ARG:デート中 = MAIN_MAP
+		FLAG:デート相手 = 0
+		TFLAG:デート前好感度 = 0
+	ENDIF
+ENDIF
+
+;お招きフラグを消して日常に戻す
+CFLAG:ARG:お招き = 0
+CFLAG:MASTER:お招き = 0
+LOCK:(OMANEKIBEYA()) = 0

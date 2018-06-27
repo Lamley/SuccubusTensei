@@ -1,0 +1,626 @@
+﻿;-------------------------------------------------
+;300,会話
+;-------------------------------------------------
+;会話
+@MESSAGE_COM300
+IF TCVAR:会話不能
+	RETURN
+ENDIF
+
+IF TCVAR:泥酔
+	PRINTFORML %CALLNAME:PLAYER%向%CALLNAME:TARGET%搭着話、但是%CALLNAME:TARGET%那口齒不清的回答怎麼也聽不清楚
+	PRINTFORML 看起来無法対話的樣子…
+ELSE
+	PRINTFORM %CALLNAME:PLAYER%和%CALLNAME:TARGET%
+	IF CFLAG:ブチギレ > 0
+		IF TALENT:恋人
+			PRINTDATA
+				DATAFORM 拐弯抹角地
+				DATAFORM 稍微有些固执地対望着并
+				DATAFORM 把道歉的话咽回嘴里
+				DATAFORM 一辺察言观色一辺
+				DATAFORM 一辺诚心道歉一辺
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATAFORM 一辺察言观色一辺
+				DATAFORM 在僵硬的气氛下
+				DATAFORM 怀着内疚的心情
+				DATAFORM 毫不反省地
+				DATAFORM 単方面地
+			ENDDATA
+		ENDIF
+	ELSEIF CFLAG:TARGET:20 > 0 && CFLAG:TARGET:350 == 49
+		IF TALENT:恋慕
+			PRINTDATA
+				DATAFORM 在対酌的同时
+				DATAFORM 在笑脸相対的同时
+				DATAFORM 在大笑着的同时
+				DATAFORM 在軽松的氛囲下
+				DATAFORM 拿出有些大胆的話題
+			ENDDATA
+		ELSEIF ABL:親密 >= 5
+			PRINTDATA
+				DATAFORM 在対酌的同时
+				DATAFORM 互相関照着并
+				DATAFORM 海阔天空地谈笑着
+				DATAFORM 在軽松的氛囲下
+				DATAFORM 保持着一定距离
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATAFORM 在小口軽酌的同时
+				DATAFORM 稍微有点亲密的
+				DATAFORM 為了加深友情
+				DATAFORM 乘着现场的良好气氛
+				DATAFORM 在与平常不同的气氛下
+			ENDDATA
+		ENDIF
+	ELSEIF CFLAG:TARGET:添い寝中
+		PRINTDATA
+			DATAFORM 和%CALLNAME:TARGET%手指相交
+			DATAFORM 和%CALLNAME:TARGET%偎依在一起
+			DATAFORM 有一点害羞的
+			DATAFORM 抱着%CALLNAME:TARGET%
+			DATAFORM 一辺和%CALLNAME:TARGET%玩鬧一辺
+			DATAFORM 含羞的捂着臉和%CALLNAME:TARGET%
+			DATAFORM 在被窝里
+		ENDDATA
+	ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中)
+		IF TALENT:恋慕
+			PRINTDATA
+				DATAFORM 就下一个约会项目
+				DATAFORM 在附近散步的同时
+				DATAFORM 有些害羞的和%CALLNAME:TARGET%
+				DATAFORM 一辺和%CALLNAME:TARGET%玩鬧一辺
+				DATAFORM 在相対微笑着的同时
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATAFORM 客套地
+				DATAFORM 在出門之前
+				DATAFORM 没劲地
+				DATAFORM 雞毛蒜皮地
+				DATAFORM 一辺散步一辺
+			ENDDATA
+		ENDIF
+	ELSEIF TALENT:恋慕
+		PRINTDATA
+			DATAFORM 和%CALLNAME:TARGET%手指相交
+			DATAFORM 坐在一起
+			DATAFORM 有些害羞的和%CALLNAME:TARGET%
+			DATAFORM \@ TIME >= 360 && TIME <= 1080 ? 在陽光照射下 # 在寂静的夜中 \@
+			DATAFORM 一辺和%CALLNAME:TARGET%玩鬧一辺
+			DATAFORM 在相対微笑着的同时
+		ENDDATA
+	ELSE
+		PRINTDATA
+			DATAFORM 客套地
+			DATAFORM 心不在焉地
+			DATAFORM 乏味地
+			DATAFORM 没劲地
+			DATAFORM 雞毛蒜皮地
+			DATAFORM 简短地
+			DATAFORM 望着天空
+		ENDDATA
+	ENDIF
+	PRINTFORML 説着話
+	IF TFLAG:193 == 1
+		PRINTFORML 渡过了快楽的时光…
+	ELSEIF TFLAG:193 == 2
+		PRINTFORM 和%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 們 # \@熱烈交流着
+		PRINTDATA
+		;		DATAFORM 新たな異変の
+			DATAFORM 夸张的
+			DATAFORM 准备已久的
+			DATAFORM 意想不到的
+			DATAFORM 没関注过的
+		ENDDATA
+		PRINTFORML 話題…
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML 会话一停下气氛就変得尴尬起来…
+	ELSEIF TFLAG:193 == -2
+		PRINTFORML 完全聊不到一块去…
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;301,泡茶
+;-------------------------------------------------
+@MESSAGE_COM301
+PRINTFORML %CALLNAME:PLAYER%為\@ CFLAG:TARGET:行動 == 5 ? 正在休憩的 #  \@%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 們 # \@沏了壺茶…
+IF TFLAG:193 == 1
+	PRINTFORML %CALLNAME:TARGET%和%CALLNAME:PLAYER%一辺喝茶一辺\@ CFLAG:TARGET:行動 == 5 ? 享受着休憩時間 # 度過了愉快的時光 \@…
+ELSEIF TFLAG:193 == -1
+	PRINTFORML …看起来不合%CALLNAME:TARGET%口味的样子
+ENDIF
+
+;-------------------------------------------------
+;302,身体接触
+;-------------------------------------------------
+@MESSAGE_COM302
+;IF CFLAG:MASTER:現在位置 == 13 || CFLAG:MASTER:現在位置 == 24 || CFLAG:MASTER:現在位置 == 30 || CFLAG:MASTER:現在位置 == 39
+IF BATHCHECK(CFLAG:MASTER:現在位置) && IN_HOME(CFLAG:MASTER:現在位置)
+	IF TALENT:恋人 && !RAND:2
+		PRINTFORML %CALLNAME:PLAYER%让%CALLNAME:TARGET%為自己搓背
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%為%CALLNAME:TARGET%搓着背
+	ENDIF
+ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+	PRINTFORML %CALLNAME:PLAYER%\@ (CFLAG:TARGET:現在位置 % 100) % 10 ? 一辺行走一辺 #  \@図謀着与%CALLNAME:TARGET%\@ (CFLAG:TARGET:現在位置 % 100) % 10 ?  # 軽微的 \@身体接触
+ELSEIF CFLAG:TARGET:350 == 49
+	PRINTFORML %CALLNAME:PLAYER%比平常更加大胆的図谋着与%CALLNAME:TARGET%的身体接触
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%図谋着与%CALLNAME:TARGET%的身体接触
+ENDIF
+IF TFLAG:193 == 1
+	PRINTFORML %CALLNAME:TARGET%看起来挺開心的样子…
+ELSEIF TFLAG:193 == -1
+	PRINTFORML …好像、有点亲昵过头的样子…
+ENDIF
+TFLAG:400 = RAND:2
+SIF TFLAG:400 && (DATE_HITOGOMI() || WITH_MOB() == 9)
+	CALL DATE_HITOGOMI_MESSAGE(CFLAG:PLAYER:現在位置)
+
+;-------------------------------------------------
+;303,道歉
+;-------------------------------------------------
+@MESSAGE_COM303
+IF TFLAG:193 == -2 || TFLAG:193 == 2
+	PRINTFORML %CALLNAME:PLAYER%為自己的非礼行為向%CALLNAME:TARGET%道歉并送出了点心盒
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%為自己的非礼行為向%CALLNAME:TARGET%道歉
+ENDIF
+IF TFLAG:193 == 1
+	PRINTFORML %CALLNAME:TARGET%笑着给予了原谅…
+ELSEIF TFLAG:193 == 2
+	PRINTFORML %CALLNAME:TARGET%表示过去的事情就付诸流水吧…
+	PRINTFORMW %CALLNAME:TARGET%失去了反発刻印LV1
+ELSEIF TFLAG:193 == 0
+	PRINTFORML %CALLNAME:TARGET%无可奈何地原谅了%CALLNAME:PLAYER%…
+ELSEIF TFLAG:193 == -2
+	PRINTFORML %CALLNAME:TARGET%没有收下点心盒…
+	PRINTFORML %CALLNAME:TARGET%还不想原谅%CALLNAME:PLAYER%的样子…
+ELSE
+	IF TALENT:胆量 < 0
+		PRINTFORML 但是%CALLNAME:TARGET%还在哭泣着…
+	ELSE
+		PRINTFORML 但是%CALLNAME:TARGET%还是很生气…
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;304,仕事手伝い
+;-------------------------------------------------
+@MESSAGE_COM304
+IF FLAG:70
+	IF CFLAG:TARGET:350 == 46
+		PRINTFORML %CALLNAME:PLAYER%试着与丝毫動弾不得的%CALLNAME:TARGET%玩耍
+		PRINTL ……自己到底在做什么啊
+	ELSEIF CFLAG:TARGET:350 == 41 || TCVAR:手伝えない == 2
+		PRINTFORML %CALLNAME:PLAYER%想趁时间停止时去做%CALLNAME:TARGET%的工作、
+		PRINTFORML 但好好想想就会知道这并不是时间停止时能做的工作
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%趁时间停止去做%CALLNAME:TARGET%的工作
+		IF TFLAG:193 == 1
+			PRINTFORML 工作进行的相当順利…
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 工作进行的并不是很順利…
+		ENDIF
+	ENDIF
+ELSE
+	IF CFLAG:TARGET:350 == 46
+		PRINTFORML %CALLNAME:PLAYER%加入了%CALLNAME:TARGET%的遊戲
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%协助了%CALLNAME:TARGET%的工作
+		IF TFLAG:193 == 1
+			PRINTFORML 工作进展的很好的样子…
+		ELSEIF TFLAG:193 == -1
+			PRINTFORML 似乎没能幇上什么忙…
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;305,索求膝枕
+;-------------------------------------------------
+@MESSAGE_COM305
+PRINTFORML %CALLNAME:PLAYER%享用了%CALLNAME:TARGET%的膝枕
+IF TFLAG:193 == -5
+	PRINTFORML 被%CALLNAME:MASTER%的頭枕着的%CALLNAME:TARGET%発出了被踩扁的青蛙般的不満的声音
+	PRINTFORML %CALLNAME:MASTER%慌忙把頭挪開了
+ELSEIF ABL:TARGET:親密 > 5
+	SIF TALENT:TARGET:妊娠
+		PRINTFORML %CALLNAME:MASTER%把耳朵貼在了懷着自己孩子的%CALLNAME:TARGET%的小腹上……
+	PRINTFORML %CALLNAME:TARGET%一辺看着%CALLNAME:MASTER%的脸一辺温柔的抚摸起来…
+ELSEIF ABL:TARGET:親密 > 2
+	PRINTFORML %CALLNAME:TARGET%温柔地抚摸着%CALLNAME:MASTER%的头…
+ELSE
+	PRINTFORML %CALLNAME:TARGET%紧绷着身体一動不動…
+ENDIF
+TFLAG:400 = RAND:2
+SIF TFLAG:400 && (DATE_HITOGOMI() || WITH_MOB() == 9)
+	CALL DATE_HITOGOMI_MESSAGE(CFLAG:PLAYER:現在位置)
+
+;-------------------------------------------------
+;306,撫摸肚子
+;-------------------------------------------------
+@MESSAGE_COM306
+PRINTFORM %CALLNAME:PLAYER%
+IF TALENT:TARGET:妊娠
+	PRINTFORM 対孕育着%CALLNAME:PLAYER%孩子的
+ELSEIF 充填率(TARGET,1) > 30
+	PRINT 対被注入大量精子的
+ENDIF
+PRINTFORML %CALLNAME:TARGET%的小腹抚摸了起来
+IF !FLAG:70
+	IF TFLAG:193 == 1
+		PRINTFORML %CALLNAME:TARGET%充満爱意地把自己的手叠在了%CALLNAME:MASTER%的手上
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML %CALLNAME:TARGET%流露出明显的不愉快
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%好像很诧异…
+	ENDIF
+	TFLAG:400 = RAND:2
+	SIF TFLAG:400 && (DATE_HITOGOMI() || WITH_MOB() == 9)
+		CALL DATE_HITOGOMI_MESSAGE(CFLAG:PLAYER:現在位置)
+ENDIF
+
+;-------------------------------------------------
+;307,捏臉蛋
+;-------------------------------------------------
+@MESSAGE_COM307
+IF FLAG:70 == 1
+	PRINTFORML %CALLNAME:PLAYER%把手伸向了%CALLNAME:TARGET%的脸頬…
+	PRINTFORML 時停中的%CALLNAME:TARGET%毫无抵抗地被捏起了脸蛋…
+ELSEIF CFLAG:TARGET:睡眠
+	PRINTFORML %CALLNAME:PLAYER%用手指捏了捏正在睡覚的%CALLNAME:TARGET%的脸颊…
+	PRINTFORML %CALLNAME:TARGET%一脸不爽地背过脸去…
+ELSE
+	PRINTFORM %CALLNAME:PLAYER%把手伸向了\@ CFLAG:TARGET:添い寝中 ? 陪睡中的 # \@%CALLNAME:TARGET%的脸颊
+	IF TARGET == (NO:14)
+		PRINTDATA
+			DATAFORM 捏住感覚软软的…
+			DATAFORM 捏住感覚很有弾性…
+			DATAFORM 捏住感覚又软又弾…
+			DATAFORM 捏住感覚软趴趴的…
+			DATAFORM 使劲的捏了起来…
+		ENDDATA
+	ELSE
+		PRINTL 用手指捏了起来…
+	ENDIF
+	IF TALENT:恋慕
+		PRINTFORML %CALLNAME:TARGET%一辺露出害羞的表情一辺做出反撃…
+	ELSEIF ABL:親密 > 5
+		PRINTFORML %CALLNAME:TARGET%也怯生生的把手伸向了%CALLNAME:PLAYER%的脸…
+	ELSEIF ABL:従順 >= 5
+		PRINTFORML %CALLNAME:TARGET%一辺露出害羞的表情一辺任%CALLNAME:PLAYER%為所欲為…
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%嘟着脸甩開了%CALLNAME:PLAYER%的手…
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;308,捅臉頰
+;-------------------------------------------------
+@MESSAGE_COM308
+IF CFLAG:TARGET:睡眠
+	PRINTFORML %CALLNAME:PLAYER%用手指戳了正在睡覚的%CALLNAME:TARGET%的脸颊
+	IF TFLAG:193 == 1
+		PRINTFORML %CALLNAME:TARGET%露出了愉快的微笑…
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML %CALLNAME:TARGET%一脸不爽地背过脸去…
+	ENDIF
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%用手指戳了陪睡的%CALLNAME:TARGET%的脸颊
+	IF TFLAG:193 == 1
+		PRINTFORML %CALLNAME:TARGET%笑嘻嘻地予以回撃…
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML %CALLNAME:TARGET%嘟着脸甩開了%CALLNAME:PLAYER%的手…
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;309,摸頭
+;-------------------------------------------------
+@MESSAGE_COM309
+IF FLAG:70 == 1
+	PRINTFORML %CALLNAME:PLAYER%把手伸向了%CALLNAME:TARGET%的頭
+	PRINTFORML 時停中的%CALLNAME:TARGET%就这样毫无抵抗地被摸起了腦袋…
+ELSEIF CHK_DATENOW(CFLAG:TARGET:デート中) && CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+	PRINTFORML %CALLNAME:PLAYER%摸了摸\@ DATE_REMAINTIME() ? 走在旁辺 # 偎依在身辺 \@的%CALLNAME:TARGET%的腦袋
+	SELECTCASE TFLAG:193
+		CASE 1
+			PRINTFORML %CALLNAME:TARGET%露出放松的表情眯起了眼睛…
+		CASE 0
+			IF ABL:親密 > 5
+				PRINTFORML %CALLNAME:TARGET%露出害羞的表情并一動不動地任凭%CALLNAME:PLAYER%抚摸…
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%红着脸甩開了%CALLNAME:PLAYER%的手…
+			ENDIF
+		CASE -1
+			PRINTFORML …稍微有点亲昵过头的样子
+	ENDSELECT
+ELSEIF CFLAG:TARGET:睡眠
+	PRINTFORML %CALLNAME:PLAYER%温柔抚摸起了正在睡覚的%CALLNAME:TARGET%的頭
+	IF ABL:親密 > 5
+		PRINTFORML %CALLNAME:TARGET%露出了愉快的笑容…
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%毫无反応地任%CALLNAME:PLAYER%抚摸…
+	ENDIF
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%\@ CFLAG:TARGET:添い寝中 ? 撫摸着陪睡中的 # 温柔地撫摸着 \@%CALLNAME:TARGET%的頭
+	SELECTCASE TFLAG:193
+		CASE 1
+			PRINTFORML %CALLNAME:TARGET%露出放松的表情眯起了眼睛…
+		CASE 0
+			IF ABL:親密 > 5
+				PRINTFORML %CALLNAME:TARGET%露出害羞的表情并一動不動地任凭%CALLNAME:PLAYER%抚摸…
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%红着脸甩開了%CALLNAME:PLAYER%的手…
+			ENDIF
+		CASE -1
+			PRINTFORML …稍微有点亲昵过头的样子
+	ENDSELECT
+ENDIF
+;-------------------------------------------------
+;331,泡茶（下薬）
+;-------------------------------------------------
+@MESSAGE_COM331
+#DIM DYNAMIC 人数Ａ
+#DIM DYNAMIC 人数Ｂ
+#DIM DYNAMIC 加減
+VARSET LOCAL
+VARSET LOCALS
+IF TCVAR:TARGET:媚薬 == 210
+	LOCALS = 媚薬
+ELSEIF TCVAR:TARGET:利尿剤 == 210
+	LOCALS = 利尿剤
+ELSEIF TCVAR:TARGET:催情薬 == 210
+	LOCALS = 催情薬
+ELSEIF TCVAR:TARGET:睡眠薬強度 == 2
+	LOCALS = 睡眠薬
+ELSE
+	LOCALS = 薬
+ENDIF
+IF !RAND:2
+	人数Ａ = CHARANUM - 1
+	人数Ｂ = 0
+	加減 = -1
+ELSE
+	人数Ａ = 1
+	人数Ｂ = CHARANUM
+	加減 = 1
+ENDIF
+
+PRINTFORML %CALLNAME:PLAYER%為\@ CFLAG:TARGET:行動 == 5 ? 正在休憩的 #  \@%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 們 # \@沏了壺混入了%LOCALS%的茶…
+FOR LOCAL,人数Ａ,人数Ｂ,加減
+	SIF LOCAL == TARGET
+		CONTINUE
+	IF CFLAG:LOCAL:現在位置 == CFLAG:MASTER:現在位置 && (TCVAR:LOCAL:媚薬 == 210 || TCVAR:LOCAL:利尿剤 == 210 || TCVAR:LOCAL:催情薬 == 210 || (TCVAR:LOCAL:睡眠薬強度 == 2 && TFLAG:132))
+		PRINTFORML %CALLNAME:LOCAL%喝下了看起来味道很好的茶水
+		LOCAL:1 ++
+		IF LOCAL:1 > 4 && GET_TARGETNUM() > 5
+			PRINTFORML 周囲的其他人忙到沒有注意到%CALLNAME:LOCAL%喝茶時不対勁的樣子
+			BREAK
+		ENDIF
+	ENDIF
+	IF CFLAG:LOCAL:現在位置 == CFLAG:MASTER:現在位置 && (TCVAR:LOCAL:媚薬 != 210 && TCVAR:LOCAL:利尿剤 != 210 && TCVAR:LOCAL:催情薬 != 210 && !(TCVAR:LOCAL:睡眠薬強度 == 2 && TFLAG:132))
+		PRINTFORML %CALLNAME:LOCAL%覚得有些可疑、沒有喝下茶水
+		LOCAL:2 ++
+		IF LOCAL:2 > 4 && GET_TARGETNUM() > 5
+			PRINTFORML 周囲的其他人忙到沒有注意到%CALLNAME:LOCAL%喝茶時不対勁的樣子
+			BREAK
+		ENDIF
+	ENDIF
+NEXT
+PRINTL
+IF TFLAG:193 == 1
+	PRINTFORML %CALLNAME:TARGET%和%CALLNAME:PLAYER%一辺喝茶一辺\@ CFLAG:TARGET:行動 == 5 ? 度過了休憩時間 # 度過了愉快的時光 \@…
+ELSEIF TFLAG:193 == -1
+	PRINTFORML %CALLNAME:TARGET%用懷疑的視線看着這辺、沒有喝下茶水
+ELSE
+	PRINTFORML %CALLNAME:TARGET%喝下了看起来味道很好的茶水
+ENDIF
+LOCAL:1 = 0
+PRINTL 
+FOR LOCAL,人数Ａ,人数Ｂ,加減
+	IF CFLAG:LOCAL:現在位置 == CFLAG:MASTER:現在位置 && (TCVAR:LOCAL:媚薬 == 210 || TCVAR:LOCAL:利尿剤 == 210 || TCVAR:LOCAL:催情薬 == 210)
+		LOCAL:1 ++
+		IF LOCAL:1 > 4 && GET_TARGETNUM() > 5
+			PRINTFORML 其他人看起来還沒有注意到的樣子
+			BREAK
+		ENDIF
+		PRINTFORM %CALLNAME:LOCAL%
+		IF TCVAR:LOCAL:媚薬 == 210
+			PRINTFORML 臉上出現了奇怪的紅暈洩露出充満熱気的吐息
+		ELSEIF TCVAR:LOCAL:利尿剤 == 210
+			PRINTFORML 夾緊了大腿内側、扭扭捏捏的扭動着腰
+		ELSEIF TCVAR:LOCAL:催情薬 == 210
+			PRINTFORML 露出陶酔的表情凝視着這辺
+		ENDIF
+	ENDIF
+NEXT
+
+;-------------------------------------------------
+;333,聽牢騷
+;-------------------------------------------------
+@MESSAGE_COM333
+PRINTFORML 聽%CALLNAME:TARGET%発着牢騷
+SELECTCASE TFLAG:193
+	CASE 1
+		PRINTFORML 説着説着又開始生气了…
+	CASE 2
+		PRINTFORML 説完了想説的话后就沈默了
+	CASE 3
+		PRINTFORML 抱怨完的%CALLNAME:TARGET%乖乖的听%CALLNAME:MASTER%説教
+	CASE 4
+		PRINTFORML %CALLNAME:TARGET%越来越不讲理了…
+	CASE 5
+		PRINTFORML 也许连自己在説什么都不懂的样子…
+		PRINTFORML 认真的听酔话还真是傻
+	CASE 6
+		PRINTFORML %CALLNAME:MASTER%随意的応和着、不止説到了哪点%CALLNAME:TARGET%突然笑了起来
+		PRINTFORML 不是很懂不过这时候只要跟着笑就好了吧
+ENDSELECT
+
+;-------------------------------------------------
+;334,碰杯
+;-------------------------------------------------
+@MESSAGE_COM334
+IF CFLAG:TARGET:妊娠自覚状態 == 1
+	PRINTFORML %CALLNAME:PLAYER%因為怀孕不能喝酒，%CALLNAME:TARGET%用盘子装起食物，一起享受美食
+ELSEIF TALENT:TARGET:酒耐性 == -2
+	PRINTFORML %CALLNAME:PLAYER%和不擅長喝酒的%CALLNAME:TARGET%一辺吃着东西一辺聊天
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%一辺往%CALLNAME:TARGET%的杯子里倒酒、一辺共饮
+ENDIF
+SELECTCASE TFLAG:193
+	CASE 1
+		PRINTFORML %CALLNAME:TARGET%看起来很快楽…
+	CASE -1
+		PRINTFORML 対话幾乎無法進行下去…
+ENDSELECT
+
+;-------------------------------------------------
+;335,照料
+;-------------------------------------------------
+@MESSAGE_COM335
+PRINTFORML %CALLNAME:PLAYER%照料了%CALLNAME:TARGET%
+SELECTCASE TFLAG:193
+	CASE 1
+		PRINTFORML 酔醺醺的%CALLNAME:TARGET%在舒服的触感下醒来了…
+	CASE -1
+		PRINTFORML 対%CALLNAME:TARGET%幾乎沒有任何幇助…
+ENDSELECT
+
+;-------------------------------------------------
+;336,膝枕
+;-------------------------------------------------
+@MESSAGE_COM336
+PRINTFORML %CALLNAME:PLAYER%讓%CALLNAME:TARGET%枕在膝上
+
+SELECTCASE ABL:TARGET:親密
+	CASE IS < 5
+		PRINTFORML %CALLNAME:TARGET%感覚不太好…
+	CASE 5 TO 9
+		PRINTFORML %CALLNAME:TARGET%好像很害羞的样子……
+	CASEELSE
+		PRINTFORML %CALLNAME:TARGET%好像很幸福的样子……
+ENDSELECT
+
+IF TFLAG:193 > 0
+	PRINTFORML 是太舒服了麼、%CALLNAME:TARGET%就這樣睡着了
+	PRINTFORML %CALLNAME:MASTER%在%CALLNAME:TARGET%起来之前默默的看着睡颜
+ENDIF
+
+TFLAG:400 = RAND:2
+SIF TFLAG:400 && (DATE_HITOGOMI() || WITH_MOB() == 9)
+	CALL DATE_HITOGOMI_MESSAGE(CFLAG:PLAYER:現在位置)
+
+;-------------------------------------------------
+;352,告白
+;-------------------------------------------------
+@MESSAGE_COM352
+IF TFLAG:193
+	PRINTFORML %CALLNAME:PLAYER%下定决心向%CALLNAME:TARGET%表达了爱意…
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%虽然想対%CALLNAME:TARGET%告白但是怎麼也説不出口…
+ENDIF
+
+;-------------------------------------------------
+;353,猥褻
+;-------------------------------------------------
+@MESSAGE_COM353
+PRINTFORML %CALLNAME:PLAYER%為了不把%CALLNAME:TARGET%吵醒慢慢地靠了过去…
+
+;-------------------------------------------------
+;354,陪睡
+;-------------------------------------------------
+@MESSAGE_COM354
+PRINTFORML %CALLNAME:PLAYER%躺到了%CALLNAME:TARGET%旁辺…
+IF CFLAG:TARGET:衰弱 || CFLAG:TARGET:お招き
+	PRINTFORML %CALLNAME:TARGET%微微扭動着身体…
+ELSE
+	PRINTFORML %CALLNAME:TARGET%一睁開眼就開心地迎接了%CALLNAME:PLAYER%
+ENDIF
+
+;-------------------------------------------------
+;355,時間停止
+;-------------------------------------------------
+@MESSAGE_COM355
+PRINTFORML The・World！！　時间停止吧！
+
+;-------------------------------------------------
+;360,任憑擺佈
+;-------------------------------------------------
+@MESSAGE_COM360
+SELECTCASE TCVAR:20
+	;谷間を見せる
+	CASE 27
+		PRINTFORML %CALLNAME:PLAYER%目不転睛地視姦着%CALLNAME:TARGET%的乳沟……
+	;前から抱きつく
+	CASE 32
+		PRINTFORML %CALLNAME:PLAYER%把脸埋进%CALLNAME:TARGET%的乳沟、嗅起了芳甜的香味……
+	;裙子の中を見せる
+	CASE 35
+		PRINTFORML %CALLNAME:PLAYER%目不転睛地観賞着%CALLNAME:TARGET%外形上佳的臀部……
+	;乳交
+	CASE 53
+		PRINTFORML %CALLNAME:PLAYER%抚摸了正在做乳交侍奉的%CALLNAME:TARGET%的頭
+		IF TALENT:TARGET:恋慕 || TALENT:TARGET:思慕
+			PRINTFORML %CALLNAME:TARGET%開心的眯起眼睛、更加卖力地用胸部侍奉起来……
+		ELSEIF TALENT:TARGET:愛欲 || TALENT:TARGET:炮友
+			PRINTFORML %CALLNAME:TARGET%苦笑着、更加激烈地用胸部挤圧着……
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%害羞的笑着并撸起了%CALLNAME:PLAYER%的陰茎……
+		ENDIF
+	;ぱふぱふ
+	CASE 73
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORML %CALLNAME:PLAYER%被%CALLNAME:TARGET%的乳房包着度过了一段快活的时光……
+		CASE 1
+			PRINTFORML %CALLNAME:PLAYER%被挟在%CALLNAME:TARGET%的乳沟里、享受着甜蜜的香味……
+		CASEELSE
+			PRINTFORML %CALLNAME:PLAYER%用脸蹭着%CALLNAME:TARGET%的乳房撒起了娇……
+		ENDSELECT
+	;乳を吸わせる
+	CASE 77
+		PRINTFORML %CALLNAME:PLAYER%品味起了%CALLNAME:TARGET%的%NIPPLE_DESCRIPTION(TARGET)%的咯哩咯哩的触感……
+	;85=Ｖ挿入する 87=Ａ挿入する 88=腰振りＶ 89=腰振りＡ
+	CASE 85,87 TO 89
+		PRINTFORML %CALLNAME:TARGET%拼命地晃起了腰侍奉着%CALLNAME:PLAYER%……
+	;だいしゅきホールド
+	CASE 86
+		PRINTFORML %CALLNAME:PLAYER%一辺抱住%CALLNAME:TARGET%一辺享受着膣肉摩擦的触感
+		PRINTFORML 水声、肉体碰撞声与%CALLNAME:TARGET%的娇喘声响彻四周……
+	CASEELSE
+		PRINTFORML %CALLNAME:PLAYER%把身体交给%CALLNAME:TARGET%任凭摆布…
+ENDSELECT
+
+;-------------------------------------------------
+;363,朗読
+;-------------------------------------------------
+@MESSAGE_COM363
+IF CFLAG:TARGET:添い寝中
+	PRINTFORML %CALLNAME:PLAYER%在\@ INROOM(CFLAG:MASTER:現在位置) == 2 ? 床 # 鋪蓋 \@上読起了書…
+;		SIF CFLAG:TARGET:睡眠
+;			PRINTFORML %CALLNAME:TARGET%寝息をたてている…
+;ELSEIF CFLAG:MASTER:現在位置 == 9
+ELSEIF TALENT:MASTER:体型 > TALENT:TARGET:体型 && INROOM(CFLAG:MASTER:現在位置)
+	PRINTFORML %CALLNAME:PLAYER%躺在%CALLNAME:TARGET%的膝盖上読起了書…
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%為%CALLNAME:TARGET%読起了書
+ENDIF
+
+;-------------------------------------------------
+;364,撒豆子
+;-------------------------------------------------
+@MESSAGE_COM364
+SIF TFLAG:193 > 1
+	PRINT 大家
+PRINTFORML 把豆子砸向了%CALLNAME:TARGET%
+PRINTW …
+PRINTW ……
+PRINTW ………感覚福气来了！

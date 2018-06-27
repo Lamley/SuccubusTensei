@@ -1,0 +1,22 @@
+﻿;任憑擺佈
+@COM360
+TIME += 10
+RETURN 1
+
+;-------------------------------------------------
+;実行判定
+;-------------------------------------------------
+
+@COM_ABLE360
+;停止中は不可
+SIF FLAG:70
+	RETURN 0
+;なすがまま実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(360)
+	RETURN RESULT
+SIF CFLAG:うふふ != 2
+	RETURN 0
+RETURN 1

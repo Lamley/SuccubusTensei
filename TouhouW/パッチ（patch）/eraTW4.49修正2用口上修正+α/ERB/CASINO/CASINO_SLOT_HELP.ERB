@@ -1,0 +1,1417 @@
+﻿@HELP_SLOT()
+#DIM ページ数
+#DIM 全ページ数
+
+ページ数 = 0
+;仮初の全ページ数
+全ページ数 = 11
+CALL HELP_SLOT_DRAW(ページ数,全ページ数)
+RETURN
+
+@HELP_SLOT_DRAW(ページ数,全ページ数)
+#DIM ページ数
+#DIM 全ページ数
+#DIM CONST SLOT_LEFT, 20   = 7,2,4,5,3, 7,4,6,5,3, 7,6,4,5,3, 7,1,4,5,3
+#DIM CONST SLOT_CENTER, 20 = 5,2,7,3,4, 4,6,7,3,4, 1,4,7,3,6, 5,4,7,3,4
+#DIM CONST SLOT_RIGHT, 20  = 3,2,5,4,7, 3,1,5,6,7, 3,3,5,4,7, 3,6,5,4,7
+#DIM CONST 色_RED7       = 0xFF00FF
+#DIM CONST 色_BLUE7      = 0x66FFFF
+#DIM CONST 色_BELL       = 0xFFFF00
+#DIM CONST 色_CHERRY     = 0xFF0000
+#DIM CONST 色_MELON      = 0x00FF00
+#DIM CONST 色_BAR        = 0xFFFFFF
+#DIM CONST 色_REPLAY     = 0xCCFFFF
+#DIM CONST 色_NULL       = 0x404040
+;各絵柄の略称(B_A_Rのみ5文字なのに注意!!)
+#DIM CONST RD7 = 1
+#DIM CONST BL7 = 2
+#DIM CONST BEL = 3
+#DIM CONST CHE = 4
+#DIM CONST MEL = 5
+#DIM CONST B_A_R = 6
+#DIM CONST REP = 7
+#DIM CONST NUL = 8
+
+SELECTCASE ページ数
+;#######################################
+;0ページ目
+;#######################################
+CASE 0
+	PRINTL 
+	PRINTL ------------------------------------------スロット概要------------------------------------------
+	PRINTL 
+	PRINTL 1ゲームカリスマ3を消費するスロットゲームです
+	PRINTL カリスマを投入後スロットを回すと絵柄が止まります
+	PRINTL 止まった絵柄に応じてカリスマが払い出されます
+	PRINTL レア役の後は注意して回してみよう　ボーナスが当たっているかも？
+	PRINTL ボーナス当選後、運が良ければチャンスタイムに入ることも！？　カリスマ大量獲得のチャンス！
+	PRINTL 
+
+;#######################################
+;1ページ目
+;#######################################
+CASE 1
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL -----スロット配列一覧-----
+	PRINTL 
+	FONTREGULAR
+	FOR LOCAL,0,20
+		PRINTFORM %TOSTR(LOCAL,"D2")%
+		CALL スロット配列_一覧(SLOT_LEFT:LOCAL,SLOT_CENTER:LOCAL,SLOT_RIGHT:LOCAL)
+		PRINTL
+	NEXT
+	CALL スロット配列_凡例()
+	FONTREGULAR
+;#######################################
+;2ページ目
+;#######################################
+CASE 2
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL -----スロット基本情報-----
+	PRINTL 
+	PRINTL ・機械割 (100,000Ｇ実測値)
+	SETCOLOR C_PINK
+	PRINTL     設定１　 95.18％
+	PRINTL     設定２　 99.64％
+	SETCOLOR C_GREEN
+	PRINTL     設定３　101.74％
+	PRINTL     設定４　102.98％
+	SETCOLOR C_AQUA
+	PRINTL     設定５　118.15％
+	PRINTL     設定６　131.27％
+	RESETCOLOR
+	PRINTL 
+	PRINTL 
+	PRINTL ・ボーナス、ART確率 (100,000Ｇ実測値)
+	SETCOLOR C_PINK
+	PRINTL     設定１　SBIG 1/862.1  BIG 1/392.1  REG 1/268.1  ART 1/217.9  ボナ合算 1/134.4  ボナ+ART 1/83.13
+	PRINTL     設定２　SBIG 1/729.9  BIG 1/411.5  REG 1/250.0  ART 1/213.2  ボナ合算 1/128.2  ボナ+ART 1/80.06
+	SETCOLOR C_GREEN
+	PRINTL     設定３　SBIG 1/724.6  BIG 1/384.6  REG 1/242.1  ART 1/211.4  ボナ合算 1/123.3  ボナ+ART 1/77.88
+	PRINTL     設定４　SBIG 1/757.6  BIG 1/365.0  REG 1/233.1  ART 1/198.8  ボナ合算 1/119.8  ボナ+ART 1/74.74
+	SETCOLOR C_AQUA
+	PRINTL     設定５　SBIG 1/617.3  BIG 1/331.1  REG 1/199.6  ART 1/158.7  ボナ合算 1/103.6  ボナ+ART 1/62.70
+	PRINTL     設定６　SBIG 1/518.1  BIG 1/282.5  REG 1/192.3  ART 1/140.6  ボナ合算 1/93.72  ボナ+ART 1/56.24
+	RESETCOLOR
+	PRINTL 
+	PRINTL 
+	PRINTL ・小役確率
+	SETCOLOR 色_RED7
+	PRINTL   中段チェリー　 通常時 1/32768  ART時 1/32768
+	SETCOLOR 色_CHERRY
+	PRINTL   　強チェリー　 通常時 1/374.5  ART時 1/327.7
+	PRINTL   　弱チェリー　 通常時 1/124.8  ART時 1/109.2
+	SETCOLOR 色_MELON
+	PRINTL   　　強スイカ　 通常時 1/291.3  ART時 1/262.1
+	PRINTL   　　弱スイカ　 通常時 1/97.09  ART時 1/87.38
+	SETCOLOR 色_BELL
+	PRINTL   　　８枚ベル　 通常時 1/10.92  ART時 1/3.240
+	SETCOLOR 色_REPLAY
+	PRINTL   　　リプレイ　 通常時 1/9.362  ART時 1/1.515
+	RESETCOLOR
+	PRINTL 
+	PRINTL 
+	PRINTL ・フリーズ確率
+	PRINTL   　　1/131072
+	PRINTL 
+	FONTREGULAR
+;#######################################
+;3ページ目
+;#######################################
+CASE 3
+	;保通協大激怒なボーナスの面々
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その1：ボーナス)----------------------
+	PRINTL 
+	SETCOLOR 色_RED7
+	PRINTL ・スカーレットビッグボーナス(SBIG) 400枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(RD7,LOCAL,0)
+		CALL 小役_表示(RD7,LOCAL,0)
+		CALL 小役_表示(RD7,LOCAL,0)
+		PRINTL
+	NEXT
+	
+	PRINTL 
+	PRINTL 
+	FONTSTYLE 1
+	SETCOLOR 色_BLUE7
+	PRINTL ・十六夜ビッグボーナス(BIG) 200枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(BL7,LOCAL,0)
+		CALL 小役_表示(BL7,LOCAL,0)
+		CALL 小役_表示(BL7,LOCAL,0)
+		PRINTL
+	NEXT
+	
+	PRINTL 
+	PRINTL 
+	FONTSTYLE 1
+	PRINTL ・レギュラーボーナス(REG) 100枚
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(RD7,LOCAL,0)
+		CALL 小役_表示(RD7,LOCAL,0)
+		CALL 小役_表示(B_A_R,LOCAL,0)
+		PRINTL
+	NEXT
+	
+	PRINTL
+;#######################################
+;4ページ目
+;#######################################
+CASE 4
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その2：レア役１)----------------------
+	PRINTL 
+	SETCOLOR 色_CHERRY
+	PRINTL ・中段チェリー 3枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(B_A_R,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(CHE,LOCAL,0)
+		CALL 小役_表示(B_A_R,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(B_A_R,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL
+;#######################################
+;5ページ目
+;#######################################
+CASE 5
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その3：レア役２)----------------------
+	PRINTL 
+	SETCOLOR 色_CHERRY
+	PRINTL ・強チェリー 3枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(CHE,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(CHE,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(CHE,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL
+;#######################################
+;6ページ目
+;#######################################
+CASE 6
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その4：レア役３)----------------------
+	PRINTL 
+	SETCOLOR 色_CHERRY
+	PRINTL ・弱チェリー 3枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(CHE,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(CHE,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL
+;#######################################
+;7ページ目
+;#######################################
+CASE 7
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その5：レア役４)----------------------
+	PRINTL 
+	SETCOLOR 色_MELON
+	PRINTL ・強スイカ 5枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(MEL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(MEL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(MEL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL
+;#######################################
+;8ページ目
+;#######################################
+CASE 8
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その6：レア役５)----------------------
+	PRINTL 
+	SETCOLOR 色_MELON
+	PRINTL ・弱スイカ 5枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(MEL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(MEL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		PRINTL
+	NEXT
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(NUL,LOCAL,0)
+		CALL 小役_表示(MEL,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL
+;#######################################
+;9ページ目
+;#######################################
+CASE 9
+	FONTSTYLE 1
+	PRINTL 
+	PRINTL ----------------------スロット成立役 (その7：ベルリプ)----------------------
+	PRINTL 
+	SETCOLOR 色_BELL
+	PRINTL ・ベル 8枚
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(BEL,LOCAL,0)
+		CALL 小役_表示(BEL,LOCAL,0)
+		CALL 小役_表示(BEL,LOCAL,0)
+		PRINTL
+	NEXT
+	
+	PRINTL 
+	PRINTL 
+	
+	SETCOLOR 色_REPLAY
+	FONTSTYLE 1
+	PRINTL ・リプレイ
+	RESETCOLOR
+	FONTREGULAR
+	PRINTL 
+	FOR LOCAL, 1, 10
+		CALL 小役_表示(REP,LOCAL,0)
+		CALL 小役_表示(REP,LOCAL,0)
+		CALL 小役_表示(REP,LOCAL,0)
+		PRINTL
+	NEXT
+	PRINTL 
+
+
+
+;#######################################
+;10ページ目
+;#######################################
+CASE 10
+	PRINTL 
+	PRINTL ---------------------------終わり---------------------------
+	PRINTL 
+	;ブロンズ会員以上限定…と見せかけて、コマンドさえ打てば無印の会員でも続きが見れる仕様に
+	IF FLAG:会員ランク
+		;これより先は、スロットの全ての仕様を記したものとなります
+		;煩雑でヘルプとしての可読性を損なう恐れがあるため、通常は表示をさせておりません
+		;ただ遊ぶ方には特に知る必要のない情報ですが、それでも知りたい方は「666」を打ち込んで続きをどうぞ
+		PRINTL 
+		PRINTL 
+		PRINTL 
+		PRINTL …
+		PRINTL ……
+		PRINTFORML %PRINT_COLOR("以下の情報は、",C_RED) + PRINT_COLOR("『ブロンズカリスマ会員』",0xEEA517) + PRINT_COLOR("以上のカリスマ会員にのみ提供されます",C_RED)%
+		PRINTL 
+		PRINTL 
+		PRINTL 本ページ以降の隠されたページにおいて、スロットの『全て』の情報を閲覧可能です
+		PRINTFORML %PRINT_COLOR("説明書11ページ以降にアクセスする際には「",C_WHITE) + PRINT_COLOR("666",C_RED) + PRINT_COLOR("」を入力下さい",C_WHITE)%
+		
+		PRINTL 
+		PRINTL 
+		PRINTFORML [666]-秘密の合言葉
+	ENDIF
+
+
+;#######################################
+;11ページ目
+;#######################################
+CASE 11
+	PRINTL 
+	PRINTL --------------------------------------スロット完全攻略資料--------------------------------------
+	PRINTL 
+	PRINTL  -----------------------------------------ゲームフロー-----------------------------------------
+	PRINTL 
+	;ぶっちゃけて言うならこのスロットはプレイヤーの溜まりに溜まったカリスマをナイアガラさせるために作られた殺戮マシーン
+	;大袈裟に言うなら「1万回に1回101万当たる100円くじをあなたは当たるまで引き続けられますか？」
+	PRINTL ・通常
+	PRINTL 　　　通常の状態　ここからボーナス、更にはART当選に向かって行く
+	PRINTL 　　　規定ゲーム数到達、又はレア役によるボーナス抽選によってボーナスが当選する
+	PRINTFORML %PRINT_COLOR("　　　最大天井は、",C_WHITE) + PRINT_COLOR("999Ｇ",C_RED) + PRINT_COLOR("である",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　内部状態として、",C_WHITE) + PRINT_COLOR("1通常",0xFFFFFF) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("2高確",C_YELLOW) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("3超高確",C_RED) + PRINT_COLOR("の3つの状態があり",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　小役当選時に内部状態が",C_WHITE) + PRINT_COLOR("2高確",C_YELLOW) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("3超高確",C_RED) + PRINT_COLOR("だった場合、それぞれボーナス抽選を",C_WHITE) + PRINT_COLOR("2回",C_YELLOW) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("3回",C_RED) + PRINT_COLOR("行う",C_WHITE)%
+	PRINTL 　　　また、ART直撃抽選は無く、ART当選時はどのような形であってもボーナスを経由してART状態に移行する
+	PRINTL 　　　通常時のコイン(カリスマ)持ちは、理論値で、ボナ無 27.08[G/50枚]　ボナ含 31.83[G/50枚]
+	PRINTL 
+	PRINTL ↓ボーナス当選
+	PRINTL 
+	PRINTL ・ボーナス
+	PRINTL 　　　正確には、ボーナス状態は存在しない
+	PRINTL 　　　全てのボーナスにおいて、ボーナス成立ゲームにART突入抽選を行っており
+	PRINTL 　　　ART当選時にはボーナス成立ゲームでART状態に切り替わる
+	PRINTFORML %PRINT_COLOR("　　　ボーナスには3種類存在し、",C_WHITE) + PRINT_COLOR("スカーレットBB(400)　",色_RED7) + PRINT_COLOR("十六夜BB(200)　",色_BLUE7) + PRINT_COLOR("REG(100)",0xFFFFFF) + PRINT_COLOR("となっている",C_WHITE)%
+	PRINTL 　　　それぞれ、成立時のART当選確率は、
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("スカーレットBB",色_RED7) + PRINT_COLOR("　1/2(例外あり)",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("十六夜BB",     色_BLUE7) + PRINT_COLOR("　　　　1/3",    C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("REG ",         0xFFFFFF) + PRINT_COLOR("　　　　　　1/5",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　例外として、中段チェリー、フリーズによる",C_WHITE) + PRINT_COLOR("スカーレットBB",色_RED7) + PRINT_COLOR("直撃においては、必ずARTが当選する",C_WHITE)%
+	PRINTL 
+	PRINTL ↓ART当選
+	PRINTL 
+	PRINTL ・ART　『不夜城タイム』
+	PRINTFORML %PRINT_COLOR("　　　1セット最大32Ｇ",C_GREEN) + PRINT_COLOR("で、ボーナスを引くことによりセットが終了し、次のセットに突入する",C_WHITE)%
+	PRINTL 　　　これを継続抽選に漏れるまで繰り返す
+	PRINTL 　　　ARTとは付いているが、実際には天井32Ｇのボーナスループである
+	PRINTL 　　　これにより、まるで4号機のような挙動をする
+	PRINTFORML %PRINT_COLOR("　　　まず、ART突入時に",C_WHITE) + PRINT_COLOR("ARTのセット継続率",C_ORANGE) + PRINT_COLOR("が決定される",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　また、ARTのセット突入時に継続率に応じて",C_WHITE) + PRINT_COLOR("次セットへの継続抽選",C_ORANGE) + PRINT_COLOR("が行われる",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　継続に漏れた場合でも、セット中に引いた小役による",C_WHITE) + PRINT_COLOR("継続書き換え抽選",C_ORANGE) + PRINT_COLOR("が毎ゲーム行われ",C_WHITE)%
+	PRINTL 　　　32Ｇ経過時に継続失敗の状態にあった場合に、通常状態に戻る
+	PRINTFORML %PRINT_COLOR("　　　また、セット中に引いた小役による",C_WHITE) + PRINT_COLOR("継続率の変更抽選",C_ORANGE) + PRINT_COLOR("も毎ゲーム同時に行われる",C_WHITE)%
+	PRINTL 　　　これにより、基本的には継続率はセットを重ねるほど上昇していく
+	
+	;95%なんて引き当てた日には、一撃万枚どころか2万枚が基本線なんだよなぁ
+	PRINTFORML %PRINT_COLOR("　　　継続率は最大",C_WHITE) + PRINT_COLOR("95％",C_RED) + PRINT_COLOR("であるが、小役による継続抽選も含めた実質の継続率はもっと高くなる",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　継続率",C_WHITE) + PRINT_COLOR("95％",C_RED) + PRINT_COLOR("を引き当てた場合一撃万枚も現実的な話となってくる",C_WHITE)%
+	
+	
+	;ここの、純増10.3枚[/G]がキモ　機械割の大部分がここに取られているので当たらないときはかなりキツイ
+	PRINTL 　　　純増は、理論値で、セット終了時のボナ無 1.6枚[/G]、セット終了時のボナ含 10.3枚[/G]
+	PRINTL 
+;#######################################
+;12ページ目
+;#######################################
+CASE 12
+	PRINTL 
+	PRINTL  ------------------------------------通常時の抽選あれこれ =その1= ------------------------------------
+	PRINTL 
+	PRINTL ・設定振り分け
+	PRINTL 　　　着席時に台の設定が抽選されている
+	PRINTL 　　　現在全ての設定が等確率で抽選されている
+	PRINTFORML %PRINT_COLOR("　　　その代わり、",C_WHITE) + PRINT_COLOR("土曜日",C_P_BLUE) + PRINT_COLOR("と",C_WHITE) + PRINT_COLOR("日曜日",C_RED) + PRINT_COLOR("に来店すると、",C_WHITE) + PRINT_COLOR("設定2",C_ORANGE) + PRINT_COLOR("以上が確定(設定1を否定)",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　末尾が",C_WHITE) + PRINT_COLOR("7",C_RED) + PRINT_COLOR("のつく日に来店すると、",C_WHITE) + PRINT_COLOR("設定3",C_ORANGE) + PRINT_COLOR("以上が確定する(設定1、設定2を否定)",C_WHITE)%
+	PRINTL 
+	PRINTL ・規定ゲーム数振り分け
+	PRINTL 　　　着席時及びボーナス当選時には次のボーナス当選までの規定ゲーム数が抽選される
+	PRINTFORML %PRINT_COLOR("　　　規定ゲーム数の最大は",C_WHITE) + PRINT_COLOR("999Ｇ",C_RED) + PRINT_COLOR("である",C_WHITE)%
+	PRINTL 　　　1/6で333Ｇ、1/6で666Ｇ、1/3で999Ｇとなり、残りの1/3は、その他ゲーム数を等確率で抽選する
+	PRINTL 　　　レア役によってボーナスが当選することがあるので
+	PRINTL 　　　必ずしも規定ゲームまでボーナスが当選しないわけではない
+	PRINTL 
+	PRINTL ・ボーナス抽選
+	PRINTL 　　　通常時、引いた小役の種類によって毎ゲームボーナス当選抽選が行われる
+	PRINTL 　　　当選した場合、最大32Ｇの前兆を経てボーナスが当選する
+	PRINTL 　　　また、設定によってボーナス当選確率が違う小役も存在する
+	PRINTFORML %PRINT_COLOR("　　　小役当選時に内部状態が",C_WHITE) + PRINT_COLOR("2高確",C_YELLOW) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("3超高確",C_RED) + PRINT_COLOR("だった場合、それぞれボーナス抽選を",C_WHITE) + PRINT_COLOR("2回",C_YELLOW) + PRINT_COLOR("、",C_WHITE) + PRINT_COLOR("3回",C_RED) + PRINT_COLOR("行う",C_WHITE)%
+	PRINTL 　　　そのうち、1回でも当選となった場合に、ボーナスが当選する（複数回当選しても、ボーナスのストックは行われない）
+	PRINTL 
+	SETCOLOR 色_RED7
+	PRINTL 　　　中段チェリー　共通 100％
+	SETCOLOR 色_CHERRY
+	PRINTL 　　　　強チェリー　設定1 18％ 設定2 19％ 設定3 21％ 設定4 22％ 設定5 24％ 設定6 25％
+	PRINTL 　　　　弱チェリー　設定1  9％ 設定2  9％ 設定3 10％ 設定4 10％ 設定5 12％ 設定6 12％
+	SETCOLOR 色_MELON
+	PRINTL 　　　　　強スイカ　設定1 15％ 設定2 16％ 設定3 17％ 設定4 18％ 設定5 19％ 設定6 20％
+	PRINTL 　　　　　弱スイカ　設定1  7％ 設定2  8％ 設定3  8％ 設定4  9％ 設定5  9％ 設定6 10％
+	SETCOLOR 色_BELL
+	PRINTL 　　　　　　　ベル　共通   0％
+	SETCOLOR 色_REPLAY
+	PRINTL 　　　　　リプレイ　1-4  0.2％ 5-6  0.3％
+	RESETCOLOR
+	PRINTL 　　　　　　はずれ　1-4 0.02％ 5-6 0.03％
+	PRINTL 
+	PRINTL ・前兆ゲーム数抽選
+	PRINTL 　　　ボーナス抽選に当選した場合、最大32Ｇの前兆を経てボーナスが当選する
+	PRINTL 　　　その際、前兆ゲーム数抽選を行い、規定ゲーム数までの残りゲーム数と比べ少ないほうが前兆となる
+	PRINTL 
+	PRINTFORML %PRINT_COLOR("　　　 ART中　16G 20％ 32G ",C_WHITE) + PRINT_COLOR("50",C_RED) + PRINT_COLOR("％ その他 各々1％",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　通常時　16G ",C_WHITE) + PRINT_COLOR("35",C_RED) + PRINT_COLOR("％ 32G ",C_WHITE) + PRINT_COLOR("35",C_RED) + PRINT_COLOR("％ その他 各々1％",C_WHITE)%
+	PRINTL 
+;#######################################
+;13ページ目
+;#######################################
+CASE 13
+	PRINTL 
+	PRINTL  ------------------------------------通常時の抽選あれこれ =その2= ------------------------------------
+	PRINTL 
+	PRINTL ・ART終了時状態振り分け
+	PRINTL 　　　ARTが終了し通常状態になったときに内部状態が抽選される
+	PRINTL 　　　設定により、振り分け確率が異なり、高設定のほうが高状態に振り分けられやすくなる
+	PRINTL 
+	SETCOLOR C_PINK
+	PRINTL 　　　設定1 通常 80％ 高確 10％ 超高確 10％
+	PRINTL 　　　設定2 通常 68％ 高確 20％ 超高確 12％
+	SETCOLOR C_GREEN
+	PRINTL 　　　設定3 通常 65％ 高確 20％ 超高確 15％
+	PRINTL 　　　設定4 通常 50％ 高確 30％ 超高確 20％
+	SETCOLOR C_AQUA
+	PRINTL 　　　設定5 通常 45％ 高確 30％ 超高確 25％
+	PRINTL 　　　設定6 通常 30％ 高確 40％ 超高確 30％
+	RESETCOLOR
+	PRINTL 
+	PRINTL ・内部状態昇格降格抽選
+	PRINTL 　　　通常時に引いた小役の種類によって内部状態の昇格及び降格抽選が行われる
+	PRINTL 　　　当選すると、内部状態がひとつ上がる、もしくは下がる
+	PRINTL 　　　全設定共通である
+	PRINTL 
+	PRINTL 　　　昇格抽選
+	SETCOLOR 色_CHERRY
+	PRINTL 　　　　　強チェリー　50％
+	PRINTL 　　　　　弱チェリー　30％
+	SETCOLOR 色_MELON
+	PRINTL 　　　　　　強スイカ　50％
+	PRINTL 　　　　　　弱スイカ　25％
+	RESETCOLOR
+	PRINTL 
+	PRINTL 　　　降格抽選
+	PRINTL 　　　　　　　はずれ　 2％
+	PRINTL 
+	PRINTL ・プレミアフラグ恩恵
+	PRINTL 　　　通常時に引いたプレミアフラグの恩恵は以下のとおりである
+	PRINTL 
+	
+	
+	PRINTL 　　　中段チェリー
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("スカーレットBB",色_RED7) + PRINT_COLOR("確定+継続率",C_WHITE) + PRINT_COLOR("90",C_RED) + PRINT_COLOR("％でART開始",C_WHITE)%
+	PRINTL 　　　フリーズ
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("スカーレットBB",色_RED7) + PRINT_COLOR("確定+継続率",C_WHITE) + PRINT_COLOR("95",C_RED) + PRINT_COLOR("％でART開始",C_WHITE)%
+	PRINTL 
+	
+;#######################################
+;14ページ目
+;#######################################
+CASE 14
+	PRINTL 
+	PRINTL  ------------------------------------ボーナス時の抽選あれこれ------------------------------------
+	PRINTL 
+	PRINTL 
+	PRINTL ・ボーナス振り分け
+	PRINTL 　　　ボーナスは成立ゲームで以下の確率で振り分けられる
+	PRINTL 
+	PRINTL 　　　中段チェリー or フリーズ当選時
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("スカーレットBB",色_RED7) + PRINT_COLOR("　　100",C_RED) + PRINT_COLOR("％",C_WHITE)%
+	PRINTL 
+	PRINTL 　　　その他
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("スカーレットBB",   色_RED7) + PRINT_COLOR("　　1/6",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("十六夜BB　　　",  色_BLUE7) + PRINT_COLOR("　　1/3",C_WHITE)%
+	PRINTFORML %PRINT_COLOR("　　　　　",C_WHITE) + PRINT_COLOR("REG 　　　　　",  0xFFFFFF) + PRINT_COLOR("　　1/2",C_WHITE)%
+	PRINTL 
+;#######################################
+;15ページ目
+;#######################################
+CASE 15
+	PRINTL 
+	PRINTL  ------------------------------------ART『不夜城タイム』の抽選あれこれ------------------------------------
+	PRINTL 
+	PRINTL ・ART『不夜城タイム』
+	PRINTL 　　　純増 1.6枚[/G](ボナ無)のARTとなっている
+	PRINTFORML %PRINT_COLOR("　　　1セット最大",C_WHITE) + PRINT_COLOR("32Ｇ",C_RED) + PRINT_COLOR("のループARTで、次ループへの継続が確定している場合32Ｇ以内にボーナスが当選する",C_WHITE)%
+	PRINTL 　　　ボーナス当選をもってセットの終了、及び次セットの開始となる
+	PRINTL 
+	PRINTL ・はずれ確率
+	PRINTL 　　　ART中の『はずれ』役成立確率は、 1/262.1(全設定共通)である
+	PRINTL 
+	PRINTL ・ART継続率設定
+	PRINTL 　　　ART突入時、ART継続率が決定される　設定によって選択される確率が異なり、高設定ほど高継続率が選ばれる可能性が高くなる
+	PRINTL 　　　ここで選択された継続率は、ART中のレア役の獲得によって変動(増加)する
+	PRINTL 
+	PRINTL 　　　継続率   0～49％     50％     75％    80％    90％    95％   期待値
+	PRINTL 
+	SETCOLOR C_PINK
+	PRINTL  　　　設定1   40.00％  47.00％  10.00％  2.00％  0.99％  0.01％  43.30％
+	PRINTL  　　　設定2   30.00％  54.90％  11.00％  3.00％  1.08％  0.02％  46.44％
+	SETCOLOR C_GREEN
+	PRINTL  　　　設定3   25.00％  59.05％  11.50％  3.25％  1.17％  0.03％  47.96％
+	PRINTL  　　　設定4   20.00％  63.20％  12.00％  3.50％  1.26％  0.04％  49.47％
+	SETCOLOR C_AQUA
+	PRINTL  　　　設定5   19.00％  63.10％  12.75％  3.75％  1.35％  0.05％  50.03％
+	PRINTL  　　　設定6   16.00％  65.00％  13.50％  4.00％  1.44％  0.06％  51.10％
+	RESETCOLOR
+	PRINTL 
+	PRINTL ・ART継続率変更抽選
+	PRINTL 　　　ART中、レア役を引くことによってART継続率の変更抽選が行われる
+	PRINTL 　　　ART継続率の変更確率は以下のとおりである
+	PRINTL 
+	PRINTL 　　　ART継続率変更抽選
+	SETCOLOR 色_CHERRY
+	PRINTL 　　　　　強チェリー　100％
+	PRINTL 　　　　　弱チェリー　 50％
+	SETCOLOR 色_MELON
+	PRINTL 　　　　　　強スイカ　100％
+	PRINTL 　　　　　　弱スイカ　 25％
+	RESETCOLOR
+	PRINTL 　　　　　　　はずれ　 50％
+	PRINTL 
+	PRINTL 　　　また、継続率変更時にどれだけ増加するのかは、以下の表に従う
+	PRINTL 
+	PRINTL 　　　増加量       1％      2％      3％     5％    10％    20％         期待値
+	PRINTL 
+	SETCOLOR C_PINK
+	PRINTL  　　　設定1   80.00％  15.00％   4.00％  0.90％  0.09％  0.01％  1.276％の増加
+	PRINTL  　　　設定2   75.00％  16.00％   7.00％  1.80％  0.18％  0.02％  1.392％の増加
+	SETCOLOR C_GREEN
+	PRINTL  　　　設定3   70.00％  18.00％   9.00％  2.67％  0.30％  0.03％  1.500％の増加
+	PRINTL  　　　設定4   65.00％  20.00％  10.00％  4.50％  0.45％  0.05％  1.630％の増加
+	SETCOLOR C_AQUA
+	PRINTL  　　　設定5   60.00％  21.00％  11.00％  7.25％  0.67％  0.08％  1.796％の増加
+	PRINTL  　　　設定6   50.00％  25.00％  15.00％  9.00％  0.90％  0.10％  2.010％の増加
+	RESETCOLOR
+	PRINTL 
+	PRINTL 
+	PRINTL 　　　なお、ART中に中段チェリーまたはフリーズを引いた場合、ART継続率は状態に関係なく95％に書き換えられる
+	PRINTL 
+;#######################################
+;16ページ目
+;#######################################
+CASE 16
+	PRINTL 
+	PRINTL  ------------------------------------ART『不夜城タイム』の抽選あれこれ------------------------------------
+	PRINTL 
+	PRINTL ・ART継続書き換え抽選
+	PRINTL 　　　ARTのセット開始時の継続抽選に漏れた場合、そのセット中に引いた小役に応じて継続書き換え抽選が行われる
+	PRINTL 　　　書き換え抽選に当選した場合、次セットへの継続が確定する
+	PRINTL 　　　書き換え確率は、以下の表に従う
+	PRINTL 
+	SETCOLOR 色_CHERRY
+	PRINTL 　　　　強チェリー　設定1 60％ 設定2 50％ 設定3 60％ 設定4 50％ 設定5 60％ 設定6 60％
+	PRINTL 　　　　弱チェリー　設定1 20％ 設定2 22％ 設定3 25％ 設定4 28％ 設定5 30％ 設定6 35％
+	SETCOLOR 色_MELON
+	PRINTL 　　　　　強スイカ　設定1 40％ 設定2 50％ 設定3 40％ 設定4 50％ 設定5 40％ 設定6 50％
+	PRINTL 　　　　　弱スイカ　設定1 15％ 設定2 16％ 設定3 18％ 設定4 20％ 設定5 25％ 設定6 30％
+	SETCOLOR 色_BELL
+	PRINTL 　　　　　　　ベル　1-3  0.2％ 4-5  0.5％ 設定6  1％
+	SETCOLOR 色_REPLAY
+	PRINTL 　　　　　リプレイ　共通 0.1％
+	RESETCOLOR
+	PRINTL 　　　　　　はずれ　1-2   20％ 3-4   33％ 5-6   50％
+	PRINTL 
+	PRINTL 
+	PRINTL 　　　強レア役において、チェリーは偶数設定優遇(設定6をのぞく)、スイカは奇数設定優遇となっている
+	PRINTL 　　　弱レア役においては、高設定ほど確率が優遇されている
+	PRINTL 
+CASEELSE
+	;以下、スロットとかに興味ない人は意味のつかめないだろうこぼれ話
+	;
+	;作った本人がこう言うのもなんだけど、このスロット、A+ART機のくせに演出が皆無なのが致命的
+	;プレイヤーからしたら『いくら回してもうんともすんとも言わない、つまらない』みたいな感想じゃないかと思う
+	;せめて、リーチ目とかで楽しめるスロットにできればよかったけど(ジャ○ラー,Hana○i,カエルとか)
+	;そんなコアなスロット作っても誰が楽しむんだって話なんだよなぁ
+	;今後暇ができたら、演出を入れるか(ジャ○ラー,Hana○iみたいなものになるだろうけど)、思い切って出目で楽しむ方向(Aタイプ)にするかを考える
+ENDSELECT
+;-----------------------------
+;フッター部分
+;-----------------------------
+DRAWLINE
+PRINTFORM {ページ数}ページ/
+
+IF 全ページ数 != 11
+	SETCOLOR 0xFF0000
+	FONTSTYLE 1
+ENDIF
+PRINTFORML {全ページ数 - 1}ページ
+RESETCOLOR
+FONTREGULAR
+
+PRINTFORML [0]-前のページへ
+PRINTFORML [1]-次のページへ
+PRINTFORML [100]-戻る
+
+INPUT
+SELECTCASE RESULT
+CASE 0
+	ページ数 += 全ページ数 - 1
+	ページ数 %= 全ページ数
+	RESTART
+CASE 1
+	ページ数 ++
+	ページ数 %= 全ページ数
+	RESTART
+CASE 666
+	全ページ数 = 17
+	RESTART
+CASEELSE
+	RETURN
+ENDSELECT
+
+@スロット配列_一覧(左リール,中リール,右リール)
+#DIM 左リール
+#DIM 中リール
+#DIM 右リール
+
+#DIM リール, 3
+
+#DIM LOOP_NUM
+
+#DIM CONST 色_RED7       = 0xFF00FF
+#DIM CONST 色_BLUE7      = 0x66FFFF
+#DIM CONST 色_BELL       = 0xFFFF00
+#DIM CONST 色_CHERRY     = 0xFF0000
+#DIM CONST 色_MELON      = 0x00FF00
+#DIM CONST 色_BAR        = 0xFFFFFF
+#DIM CONST 色_REPLAY     = 0xCCFFFF
+#DIM CONST 色_NULL       = 0x404040
+
+リール = 左リール,中リール,右リール
+FOR LOOP_NUM, 0,3
+	FONTSTYLE 1
+	SELECTCASE リール:LOOP_NUM
+		CASE 1
+			SETCOLOR 色_RED7
+				PRINT     RD7
+			RESETCOLOR
+		CASE 2
+			SETCOLOR 色_BLUE7
+				PRINT     BL7
+			RESETCOLOR
+		CASE 3
+			SETCOLOR 色_BELL
+				PRINT     BEL
+			RESETCOLOR
+		CASE 4
+			SETCOLOR 色_CHERRY
+				PRINT     CHE
+			RESETCOLOR
+		CASE 5
+			SETCOLOR 色_MELON
+				PRINT     MEL
+			RESETCOLOR
+		CASE 6
+			SETCOLOR 色_BAR
+				PRINT     BAR
+			RESETCOLOR
+		CASE 7
+			SETCOLOR 色_REPLAY
+				PRINT     REP
+			RESETCOLOR
+		CASEELSE
+			SETCOLOR 色_NULL
+				PRINT     NUL
+			RESETCOLOR
+	ENDSELECT
+	FONTREGULAR
+NEXT
+@スロット配列_凡例()
+#DIM CONST 色_RED7       = 0xFF00FF
+#DIM CONST 色_BLUE7      = 0x66FFFF
+#DIM CONST 色_BELL       = 0xFFFF00
+#DIM CONST 色_CHERRY     = 0xFF0000
+#DIM CONST 色_MELON      = 0x00FF00
+#DIM CONST 色_BAR        = 0xFFFFFF
+#DIM CONST 色_REPLAY     = 0xCCFFFF
+#DIM CONST 色_NULL       = 0x404040
+
+SETCOLOR 色_RED7
+FONTSTYLE 1
+PRINT     RD7
+RESETCOLOR
+FONTREGULAR
+PRINT :赤7(ボーナス図柄)
+
+SETCOLOR 色_BLUE7
+FONTSTYLE 1
+PRINT     BL7
+RESETCOLOR
+FONTREGULAR
+PRINT :青7(ボーナス図柄)
+
+SETCOLOR 色_BAR
+FONTSTYLE 1
+PRINT     BAR
+RESETCOLOR
+FONTREGULAR
+PRINT :BAR(ボーナス図柄)
+
+PRINTL
+
+SETCOLOR 色_CHERRY
+FONTSTYLE 1
+PRINT     CHE
+RESETCOLOR
+FONTREGULAR
+PRINT :チェリー
+
+SETCOLOR 色_MELON
+FONTSTYLE 1
+PRINT     MEL
+RESETCOLOR
+FONTREGULAR
+PRINT :スイカ
+
+SETCOLOR 色_BELL
+FONTSTYLE 1
+PRINT     BEL
+RESETCOLOR
+FONTREGULAR
+PRINT :ベル
+
+SETCOLOR 色_REPLAY
+FONTSTYLE 1
+PRINT     REP
+RESETCOLOR
+FONTREGULAR
+PRINT :リプレイ
+PRINTL
+
+;@SLOT_DISPLAYの丸パクだけど元関数は#DIM REFのせいでこっちでは使えないので
+@小役_表示(絵柄,行数,暗転)
+#DIM 絵柄
+#DIM 行数
+#DIM 暗転
+#DIM 色_RED7
+#DIM 色_BLUE7
+#DIM 色_BELL
+#DIM 色_CHERRY茎
+#DIM 色_CHERRY果実
+#DIM 色_MELON果実
+#DIM 色_MELON皮
+#DIM 色_BAR
+#DIM 色_REPLAY
+#DIM 色_NULL
+
+IF 暗転
+	 色_RED7 = 0x404040
+	 色_BLUE7 = 0x404040
+	 色_BELL = 0x404040
+	 色_CHERRY茎 = 0x404040
+	 色_CHERRY果実 = 0x404040
+	 色_MELON果実 = 0x404040
+	 色_MELON皮 = 0x404040
+	 色_BAR = 0x404040
+	 色_REPLAY = 0x404040
+	 色_NULL = 0x000000
+ELSE
+	 色_RED7 = 0xFF0000
+	 色_BLUE7 = 0x66FFFF
+	 色_BELL = 0xFFFF00
+	 色_CHERRY茎 = 0x00FF00
+	 色_CHERRY果実 = 0xFF0000
+	 色_MELON果実 = 0xFF0000
+	 色_MELON皮 = 0x00FF00
+	 色_BAR = 0xFFFFFF
+	 色_REPLAY = 0xCCFFFF
+	 色_NULL = 0x404040
+ENDIF
+;########################################################
+;赤7(スカーレットBB)
+;ボーナス図柄
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;                   ;;;
+;3 ;;;                   ;;;
+;4 ;;;                   ;;;
+;5 ;;;;;;;;;;;;;;;      ;;;;
+;6 ;;;;;;;;;;;        ;;;;;;
+;7 ;;;;;;;;      Scarlet;;;;
+;8 ;;;;;;            ;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+IF 絵柄 == 1
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2,3,4
+		PRINT ;;;
+		SETCOLOR 色_RED7
+		PRINTFORM %UNICODE(0x2589)*19%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 5
+		PRINT ;;;;;;;;;;;;;;;
+		SETCOLOR 色_RED7
+		PRINTFORM %UNICODE(0x2589)*6%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 6
+		PRINT ;;;;;;;;;;;
+		SETCOLOR 色_RED7
+		PRINTFORM %UNICODE(0x2589)*8%
+		RESETCOLOR
+		PRINT ;;;;;;
+	CASE 7
+		PRINT ;;;;;;;;
+		SETCOLOR 色_RED7
+		PRINTFORM %UNICODE(0x2589)*6%
+		FONTSTYLE 3
+		PRINT Scarlet
+		RESETCOLOR
+		FONTSTYLE 1
+		PRINT ;;;;
+	CASE 8
+		PRINT ;;;;;;
+		SETCOLOR 色_RED7
+		PRINTFORM %UNICODE(0x2589)*12%
+		RESETCOLOR
+		PRINT ;;;;;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(RED7)
+	ENDSELECT
+	FONTREGULAR
+
+;########################################################
+;青7(十六夜BB)
+;ボーナス図柄
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;                   ;;;
+;3 ;;;                   ;;;
+;4 ;;;                   ;;;
+;5 ;;;;;;;;;;;;;;;      ;;;;
+;6 ;;;;;;;;;;;        ;;;;;;
+;7 ;;;;;;;;       Sakuya;;;;
+;8 ;;;;;;            ;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 2
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2,3,4
+		PRINT ;;;
+		SETCOLOR 色_BLUE7
+		PRINTFORM %UNICODE(0x2589)*19%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 5
+		PRINT ;;;;;;;;;;;;;;;
+		SETCOLOR 色_BLUE7
+		PRINTFORM %UNICODE(0x2589)*6%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 6
+		PRINT ;;;;;;;;;;;
+		SETCOLOR 色_BLUE7
+		PRINTFORM %UNICODE(0x2589)*8%
+		RESETCOLOR
+		PRINT ;;;;;;
+	CASE 7
+		PRINT ;;;;;;;;
+		SETCOLOR 色_BLUE7
+		PRINTFORM %UNICODE(0x2589)*7%
+		FONTSTYLE 3
+		PRINT Sakuya
+		RESETCOLOR
+		FONTSTYLE 1
+		PRINT ;;;;
+	CASE 8
+		PRINT ;;;;;;
+		SETCOLOR 色_BLUE7
+		PRINTFORM %UNICODE(0x2589)*12%
+		RESETCOLOR
+		PRINT ;;;;;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(BLUE7)
+	ENDSELECT
+	FONTREGULAR
+
+;########################################################
+;ベル(8枚役)
+;小役
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;;;;;;;;   ;;;;;;;;;;;
+;3 ;;;;;;;           ;;;;;;;
+;4 ;;;;;               ;;;;;
+;5 ;;;;                 ;;;;
+;6 ;;; ;;;;;;;;;;;;;;;;; ;;;
+;7 ;;;        ;;;        ;;;
+;8 ;;;;;;;;;;;   ;;;;;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 3
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2
+		PRINT ;;;;;;;;;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;;;;;;;;;
+	CASE 3
+		PRINT ;;;;;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*11%
+		RESETCOLOR
+		PRINT ;;;;;;;
+	CASE 4
+		PRINT ;;;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*15%
+		RESETCOLOR
+		PRINT ;;;;;
+	CASE 5
+		PRINT ;;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*17%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 6
+		PRINT ;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*1%
+		PRINT ;;;;;;;;;;;;;;;;;
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 7
+		PRINT ;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*8%
+		PRINT ;;;
+		PRINTFORM %UNICODE(0x2589)*8%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 8
+		PRINT ;;;;;;;;;;;
+		SETCOLOR 色_BELL
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;;;;;;;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(BELL)
+	ENDSELECT
+	FONTREGULAR
+
+;########################################################
+;チェリー(3枚役)
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;;;;;;1__;;;;;;;;;;;;;
+;3 ;;;;;;;;;1;;1___;;;;;;;;;
+;4 ;;;;;;;;1;;;;;;;1;;;;;;;;
+;5 ;;;;;;_1;;;;;;;;;1_;;;;;;
+;6 ;;;;;;  ;;;;;;;;;  ;;;;;;
+;7 ;;;;;    ;;;;;;;    ;;;;;
+;8 ;;;;;;  ;;;;;;;;;  ;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 4
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2
+		PRINT ;;;;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1__
+		RESETCOLOR
+		PRINT ;;;;;;;;;;;;;
+	CASE 3
+		PRINT ;;;;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1
+		RESETCOLOR
+		PRINT ;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1___
+		RESETCOLOR
+		PRINT ;;;;;;;;;
+	CASE 4
+		PRINT ;;;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1
+		RESETCOLOR
+		PRINT ;;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1
+		RESETCOLOR
+		PRINT ;;;;;;;;
+	CASE 5
+		PRINT ;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT _1
+		RESETCOLOR
+		PRINT ;;;;;;;;;
+		SETCOLOR 色_CHERRY茎
+		PRINT 1_
+		RESETCOLOR
+		PRINT ;;;;;;
+	CASE 6,8
+		PRINT ;;;;;;
+		SETCOLOR 色_CHERRY果実
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT ;;;;;;;;;
+		SETCOLOR 色_CHERRY果実
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT ;;;;;;
+	CASE 7
+		PRINT ;;;;;
+		SETCOLOR 色_CHERRY果実
+		PRINTFORM %UNICODE(0x2589)*4%
+		RESETCOLOR
+		PRINT ;;;;;;;
+		SETCOLOR 色_CHERRY果実
+		PRINTFORM %UNICODE(0x2589)*4%
+		RESETCOLOR
+		PRINT ;;;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(CHERRY)
+	ENDSELECT
+	FONTREGULAR
+;########################################################
+;スイカ(5枚役)
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;;;;;;;            ;;;
+;3 ;;;;            ______;;;
+;4 ;;;;___________/;;    ;;;
+;5 ;;;;;   ;;;     ;;   ;;;;
+;6 ;;;;;;;  ;;;   ;;  ;;;;;;
+;7 ;;;;;;;;  ;;  ;;  ;;;;;;;
+;8 ;;;;;;;;;; ;  ; ;;;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 5
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2
+		PRINT ;;;;;;;;;;
+		SETCOLOR 色_MELON果実
+		PRINTFORM %UNICODE(0x2589)*12%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 3
+		PRINT ;;;;
+		SETCOLOR 色_MELON果実
+		PRINTFORM %UNICODE(0x2589)*12%
+		SETCOLOR 色_MELON皮
+		PRINT ______
+		RESETCOLOR
+		PRINT ;;;
+	CASE 4
+		PRINT ;;;;
+		SETCOLOR 色_MELON皮
+		PRINT ___________/
+		RESETCOLOR
+		PRINT   
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*4%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 5
+		PRINT ;;;;;
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT    
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*5%
+		RESETCOLOR
+		PRINT   
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 6
+		PRINT ;;;;;;;
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT    
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT   
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT ;;;;;;
+	CASE 7
+		PRINT ;;;;;;;;
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT   
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT   
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT ;;;;;;;
+	CASE 8
+		PRINT ;;;;;;;;;;
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT  
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*2%
+		RESETCOLOR
+		PRINT  
+		SETCOLOR 色_MELON皮
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;;;;;;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(MELON)
+	ENDSELECT
+	FONTREGULAR
+;########################################################
+;BAR(REG)
+;ボーナス図柄
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;                 ;;;;
+;3 ;;; ;;             ;; ;;;
+;4 ;; ;;               ;; ;;
+;5 ;; ;;;;;;B  A  R;;;;;; ;;
+;6 ;; ;;               ;; ;;
+;7 ;;; ;;             ;; ;;;
+;8 ;;;;                 ;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 6
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 2,8
+		PRINT ;;;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*17%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 3,7
+		PRINT ;;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;             ;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 4,6
+		PRINT ;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;; 
+		PRINT              
+		PRINT  ;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;
+	CASE 5
+		PRINT ;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;;;;;
+		PRINT B  A  R
+		PRINT ;;;;;;
+		SETCOLOR 色_BAR
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(BAR)
+	ENDSELECT
+	FONTREGULAR
+;########################################################
+;REPLAY(リプレイ)
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;3 ;;;;;;;;;;      ;;;;;;;;;
+;4 ;;;;;   ;        ;   ;;;;
+;5 ;;;;   ; Re-      ;   ;;;
+;6 ;;;;   ;     play ;   ;;;
+;7 ;;;;;   ;        ;   ;;;;
+;8 ;;;;;;;;;;      ;;;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 7
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1,2,9
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+	CASE 3,8
+		PRINT ;;;;;;;;;;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*6%
+		RESETCOLOR
+		PRINT ;;;;;;;;;
+	CASE 4,7
+		PRINT ;;;;;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*8%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;;
+	CASE 5
+		PRINT ;;;;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		SETCOLOR 色_REPLAY
+		PRINT Re-
+		RESETCOLOR
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*6%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;
+	CASE 6
+		PRINT ;;;;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*5%
+		RESETCOLOR
+		SETCOLOR 色_REPLAY
+		PRINT play
+		RESETCOLOR
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*1%
+		RESETCOLOR
+		PRINT ;
+		SETCOLOR 色_REPLAY
+		PRINTFORM %UNICODE(0x2589)*3%
+		RESETCOLOR
+		PRINT ;;;
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(REPLAY)
+	ENDSELECT
+	FONTREGULAR
+;########################################################
+;NULL(未選択)
+;
+;1 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;2 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;3 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;4 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;5 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;6 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;7 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;8 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;9 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;########################################################
+ELSEIF 絵柄 == 8
+	FONTSTYLE 1
+	SELECTCASE 行数
+	CASE 1 TO 9
+		SETCOLOR 色_NULL
+		PRINTFORM ;;;;;;;;;;;;;;;;;;;;;;;;;
+		RESETCOLOR
+	CASEELSE
+		PRINTL ERROR 存在しない行数が指定されました(NULL)
+	ENDSELECT
+	FONTREGULAR
+ELSE
+	PRINTFORML ERROR 存在しない絵柄が指定されました{絵柄}
+ENDIF
+
+;COLORMESSAGEの式中関数版
+;指定した色で文章をプリントするようにしたかったものの失敗作
+;一行まるごと使わないといけないという欠陥品
+;一行を一文で表現できることでコードの可読性だけは良くなりそうなので使うことにする
+;例）「あいうえおここの文章だけ赤色ですかきくけこ」にて、「ここの文章だけ赤色です」を赤、その他をデフォルトの色(C_WHITE)で表現したい時
+;PRINTFORML %PRINT_COLOR("あいうえお",C_WHITE) + PRINT_COLOR("ここの文章だけ赤色です",0xFF0000) + PRINT_COLOR("かきくけこ",C_WHITE)%
+;と書かないといけない
+@PRINT_COLOR(文字列,色)
+#FUNCTIONS
+#DIMS 文字列
+#DIM 色
+
+SETCOLOR 色
+PRINTFORM %文字列%
+RESETCOLOR
+RETURNF

@@ -1,0 +1,1075 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;愛撫系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;0,愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_0
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_0_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_0_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			;射精した
+			IF NOWEX:PLAYER:11
+				PRINTFORM 「あ、はっ、イきそう
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM ？　私もイきたいっ、からっ、私の体、いっぱい可愛がって……ッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORML 」
+				PRINTFORM 「ああぁッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM ！　\@ NOWEX:68:Ｃ絶頂 || NOWEX:68:Ｖ絶頂 || NOWEX:68:Ａ絶頂 || NOWEX:68:Ｂ絶頂 || NOWEX:68:Ｍ絶頂 ? はぁッ、主人公と一緒に、イっちゃうぅ # イかせてぇ、私も一緒に \@……ッ
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORMW 」
+			ELSE
+				PRINTFORM 「はぁ、んッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM 　今だけはっ、私の体、好きにさせてあげる……ッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んんっ、はあぁ、あッ、もっと……してぇ……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「あぁ……んッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　キス、頂戴……お願い……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW %CALLNAME:MASTER%がキスしてやると、幽香は喘ぎ声を口内で響かせながら夢中で舌を絡めてきた
+		ENDIF
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			;射精した
+			IF NOWEX:PLAYER:11
+				PRINTFORM 「えっ、出そう、なのっ！？　待って、ちょ……んぁッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORML ！？」
+				PRINTFORMDW 愛撫の快感で幽香を抵抗できないようにしてやると、%CALLNAME:MASTER%は射精するために腰の動きを速めていった
+			ELSE
+				PRINTFORM 「ひぃ、んッ！？　まって、そこっ、一緒に弄るのはっ、反則……ッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「んっ、気持ちよくなんて……ひぃっ！」
+				CASEELSE
+					PRINTFORML 「やっ……ぁん！　ん、くぅ……っ」
+			ENDSELECT
+			PRINTFORMDW 身をよじって逃げようとする幽香を押さえつけ、その柔肌の感覚を存分に味わった
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;1,舐陰
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_1_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;挿入後
+		IF TCVAR:100 == PLAYER
+			;中出し後
+			IF TCVAR:102
+				PRINTFORM 「はぁ、ぁー……っ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM 　ぁっ、いっぱい溢れてくるわね……
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 」
+			ELSE
+				PRINTFORM 「んん……ぁっ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM 　はぁっ、まだ\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@のが入ってるみたい……
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んっ……ひぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　やぁ、もっと優しく……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「はい……気持ちよくしてね
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW 幽香の\@ (TALENT:68:2 & 3) == 3 ? ペニス # クリトリス \@を徹底的に責めてやると、可愛らしい嬌声が周りに響いた
+		ENDIF
+	;それ以外
+	ELSE
+		;挿入後
+		IF TCVAR:100 == PLAYER
+			;中出し後
+			IF TCVAR:102
+				PRINTFORM 「く、ううっ……
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 　ほんとに、中に出されちゃった……」
+			ELSE
+				PRINTFORMW 「やぁ……んっ！　ちょっと、そんなとこ舐めたら……」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「\@ ABL:MASTER:舌 >= 3 ? いっ……あぁっ、主人公の舌、気持ちい # ぅん、もっと上手くできないのかしら \@……っ」
+				CASEELSE
+					PRINTFORML 「ふん、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@には、そこを犬みたいに舐めてるのがお似合いよ……\@ ABL:MASTER:舌 >= 3 ? って、ちょっ、待って……ひぃん！？ # んっ \@」
+			ENDSELECT
+			PRINTFORMDW %CALLNAME:MASTER%の\@ ABL:MASTER:舌 >= 3 ? 巧みな舌遣いに、幽香は腰を震わせながら快楽を貪っている # 未熟な舌遣いでは、幽香は満足できないようだ…… \@
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;2,舐陰茎
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_2_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	CALL M_KOJO_MESSAGE_COM_K68_1_1
+ENDIF
+RETURN 1
+
+;==================================================
+;3,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_3_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;振動棒装着時
+		IF TEQUIP:68:振動棒
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ふうぅ……あぁっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！　や、あぁ……っ」
+				CASEELSE
+					PRINTFORM 「やっ、震えて……はあっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 　んっ、いいとこ、当たってる……」
+			ENDSELECT
+			PRINTFORMDW 振動棒での責めに喘ぎ声を上げつつも、幽香は%CALLNAME:MASTER%\@ TALENT:MASTER:性別 == 1 ?  # のペニス \@を物欲しそうに見つめている
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ぁ……ふぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　あぁっ、もっとぉ、かき回してぇッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！」
+				CASEELSE
+					PRINTFORM 「くぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 　あぁ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の指っ、深い所まできて……るうッ！
+			ENDSELECT
+			PRINTFORMDW 幽香の敏感な膣をかき回してやると、いつもの強気な彼女には似合わない、可愛らしい声を上げ\@ NOWEX:68:Ｖ絶頂 ? ながら絶頂した # た \@
+		ENDIF
+	;それ以外
+	ELSE
+		;振動棒装着時
+		IF TEQUIP:68:振動棒
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「くうう……っ！　こんな、玩具がっ、私に効くわけ……んっ！」
+				CASEELSE
+					PRINTFORML 「はぁっ、何よ、これぇ……っ！　指よりも……あぁっ！」
+			ENDSELECT
+			PRINTFORMDW 不慣れな振動棒の振動に声を我慢できないのか、幽香は%CALLNAME:MASTER%から目を背けながら嬌声を上げていた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「う……あぁっ！　くぅっ、気持ちよく、なんて……！」
+				CASEELSE
+					PRINTFORML 「はぁ……うぅっ！　やっ、こっち、見るなぁ……！」
+			ENDSELECT
+			PRINTFORMDW 敏感な膣への刺激に、幽香は顔を真っ赤にして目を伏せている
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;4,舐肛
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_4_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;A感覚Lv3以上orA経験100以上
+		IF ABL:68:2 >= 3 || EXP:68:Ａ経験 >= 100
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「……ひぃッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　はぁっ、そんな……あぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORMW ！」
+				CASEELSE
+					PRINTFORM 「あぁ、そこは……ふあッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM ！　ダメ、感じ過ぎちゃう……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORMW 」
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ひぃっ？！　ちょっと、そんなとこ……ッ！？」
+				CASEELSE
+					PRINTFORML 「ほぐせばよくなるから……って？　ううっ……」
+			ENDSELECT
+			PRINTFORMDW 幽香にアナルでの快感を教え込むため、%CALLNAME:MASTER%は丁寧に愛撫を繰り返した
+		ENDIF
+	;それ以外
+	ELSE
+		;A感覚Lv3以上orA経験100以上
+		IF ABL:68:2 >= 3 || EXP:68:Ａ経験 >= 100
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んんっ、あぁ……っ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 　こんなの、いけないことなのに……」
+				CASEELSE
+					PRINTFORM 「ううっ……ひぃッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！　だめ、そんなに舐めないでぇ……！」
+			ENDSELECT
+			PRINTFORMDW アナルを舐められて感じてしまっていることに、罪悪感を感じているようだ
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ひぃいッ！？　やっ、何してるのよ、変態変態変態ッ！！」
+				CASEELSE
+					PRINTFORML 「な、何ッ！？　あ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@、頭おかしくなったの……！？」
+			ENDSELECT
+			PRINTFORMDW 暴れる幽香の腰を抱きすくめ、舌でアナルをじっくりと堪能した
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;5,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_5_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;A感覚Lv3以上orA経験100以上
+		IF ABL:68:2 >= 3 || EXP:68:Ａ経験 >= 100
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「あ……あぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM ！　ううっ、だ……めぇっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「はぁーっ、はぁーっ……まって、ちょっと……ぉッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW %CALLNAME:MASTER%の指をすんなりと受け入れるようになった幽香のアナルを、気が済むまで弄り続けた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「あ……うぅっ！　やっぱり駄目よ、こんな……」
+				CASEELSE
+					PRINTFORML 「ううっ……こんなとこで気持ちよくなるなんて、やっぱり恥ずかしい……」
+			ENDSELECT
+			PRINTFORMDW 幽香はまだ、アナルで快感を受け入れることに抵抗があるようだ……
+		ENDIF
+	;それ以外
+	ELSE
+		;A感覚Lv3以上orA経験100以上
+		IF ABL:68:2 >= 3 || EXP:68:Ａ経験 >= 100
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ううぅっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　や……だぁッ、こんな、のぉ……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！」
+				CASEELSE
+					PRINTFORM 「こんなの、気持ちよくなんか……ないぃ……ッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！」
+			ENDSELECT
+			PRINTFORMDW アナルで感じてしまっているのが相当恥ずかしいようで、%CALLNAME:MASTER%の胸に顔を埋める形で視線から逃れている
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「やめ……なさいよ、もうっ！　こんなとこで、気持ちよくなれるわけ……！」
+				CASEELSE
+					PRINTFORML 「ううっ……\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@、普通の穴じゃ満足できないの……？」
+			ENDSELECT
+			PRINTFORMDW 幽香はまだ、アナルで快感を受け入れることに抵抗があるようだ……
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;6,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_6
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_6_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「んっ、はぁ、やぁッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORM 　ぁっ、優しく、して……
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORML 」
+			PRINTFORMDW \@ NOWEX:MASTER:射精 ? イきそうになった # 幽香と繋がった \@%CALLNAME:MASTER%は、動きに合わせてぶるんぶるんと揺れる幽香の巨乳を、\@ NOWEX:MASTER:射精 ? 精を吐き出すまで # 満足するまで \@存分に揉みしだいた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んっ……いいわよ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の気が済むまでして……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORMW 」
+				CASEELSE
+					PRINTFORMW 「ふふっ、どうかしら、触り心地は……私、胸には自信があるのよね」
+			ENDSELECT
+		ENDIF
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「んっ、あぁっ！　はぁ、厭らしい触り方……ぁんッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORML ！？」
+			PRINTFORMDW 存在を主張するように激しく揺れる巨乳を揉みしだきながら突いてやると、幽香は可愛らしい悲鳴を上げた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「はぁ……\@ TALENT:MASTER:性別 == 2 ? 男って、本当に好きよね # 貴女、自分のじゃ満足できないの \@……んっ……」
+				CASEELSE
+					PRINTFORML 「んっ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の揉み方……\@ BASE:MASTER:勃起 >= 1000 ? そんなに股間を大きくして、随分興奮してるのね # なんでそんなに激しいのよ \@……」
+			ENDSELECT
+			PRINTFORMDW 幽香は\@ BASE:MASTER:勃起 >= 1000 ? 勃起した%CALLNAME:MASTER%のモノをチラチラ見ながら # 呆れたようにため息をつきながら \@、その巨乳を揉みしだかれている
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;7,玩弄乳頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_7
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_7_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「んんッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORM ！　ぁっ、ちくび、は、あぁッ
+			CALL HEARTCB_K68(0xD02830,2)
+			PRINTFORML 」
+			PRINTFORMDW 幽香を膣で感じさせながら乳首も責めてやると、不意打ちされたように声を荒げた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んんっ、ぁ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　先、の、ほうは……あぁッ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ！」
+				CASEELSE
+					PRINTFORM 「うぅ……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 　だめ、我慢、できないぃ……ッ！」
+			ENDSELECT
+			PRINTFORMDW %CALLNAME:MASTER%の執拗な乳首への責めに耐えられず、幽香は\@ NOWEX:68:Ｂ絶頂 ? 遂に絶頂に達してしまった # 体をビクビクと反応させている \@
+		ENDIF
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「はぁ、うっ、ふぁ……きゃあッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORML ！？　ぁ、急に弄るなぁ……！」
+			PRINTFORMDW %CALLNAME:MASTER%が乳首を責めると、幽香は驚いた拍子にキュッと膣を締め付けてきた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「ぃ、～～ッ……！　はぁっ、そこばっかり、しつこいわね……！」
+				CASEELSE
+					PRINTFORML 「くぅ……！　はぁーっ、はぁー……っ！」
+			ENDSELECT
+			PRINTFORMDW \@ NOWEX:68:Ｂ絶頂 ? 執拗に乳首を愛撫した挙句、遂に絶頂してしまった幽香の姿に、%CALLNAME:MASTER%は思わずニヤリと笑みをこぼした # 幽香は不快そうに%CALLNAME:MASTER%を見やるが、確実に乳首で感じているようだ \@
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;8,張開陰唇
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_8_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;中出し後
+		IF TCVAR:102
+			PRINTFORML 「ううっ、こんなに出したのね……\@ TALENT:MASTER:濃厚精液 ? しかも、こんなに濃い精子を…… # 主人公もしかして、これ見て興奮してる……？ \@」
+			PRINTFORML 「\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@\@ BASE:MASTER:勃起 >= 1000 ? の、これだけ出して、まだまだ元気みたいね…… # はまだまだ出し足りないみたいだけど…… \@はぁ、本当に兒童できちゃうかもね……」
+			PRINTFORMDW 幽香は呆れたようなフリをしているが、内心期待しているのが丸わかりだ……
+		;露出癖2以下
+		ELSEIF ABL:68:露出癖 < 3 && !TALENT:68:淫乱
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「う、ううっ……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 　これ、恥ずかしいんだからね……？　わかってる……？」
+				CASEELSE
+					PRINTFORML 「いくら\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@でも、こんなとこの中まで見られるのは……」
+			ENDSELECT
+			PRINTFORMDW 恥ずかしそうに%CALLNAME:MASTER%から目を逸らす幽香が可愛らしくて、つい長い時間眺めてしまっていた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ほら、見てぇ……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の大好きな、しごき穴よ……うふっ、興奮した……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML ？」
+				CASEELSE
+					PRINTFORM 「はぁーっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　興奮して中がヒクヒクしてるの、わかる……？　\@ TALENT:MASTER:性別 == 1 ? 貴女の指、欲しいの # 挿れてくれれば、気持ちよくしてあげるわよ \@……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW 幽香はこの変態的な行為にひどく興奮しているようで、%CALLNAME:MASTER%を切実に誘ってくる……
+		ENDIF
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「はぁ！？　何でそんなこと……！　……一瞬、一瞬だけよ……！」
+			CASEELSE
+				PRINTFORML 「ぐ、うう……ッ！　あとで覚えておきなさいよ……！」
+		ENDSELECT
+		PRINTFORMDW 強気な幽香を侮辱ているようで、顔を真っ赤にして恥ずかしがるその姿に%CALLNAME:MASTER%は強い興奮を覚えた
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;9,自慰
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_9_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORM 「ううっ……なんでこんな、一人でやるようなことを……ふぁッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORML 」
+			CASEELSE
+				PRINTFORM 「……\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@がやれって言ったから、仕方なくしてるだけよ……はぁうッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORML 　普段はこんなに、激しくないんだから……っ」
+		ENDSELECT
+		PRINTFORMDW %CALLNAME:MASTER%に見られていることに無意識の内に興奮しているようで、幽香は夢中になって自慰をしている……
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+			CASE 0
+				PRINTFORML 「あ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の前で、普段街道に……なんて、できるわけないでしょうが！」
+				SIF BASE:MASTER:勃起 >= 1000
+					PRINTFORML （うぅ、こいつ、すごい興奮してる……\@ TALENT:MASTER:形状 == 6 ? こんなに大きいモノを見せられたら、私も変な気持ちになっちゃう…… # 私の体でこんなに大きくしてるのよね……？ \@）
+				PRINTFORMDW 幽香は%CALLNAME:MASTER%\@ BASE:MASTER:勃起 >= 1000 ? のギンギンに勃起したペニスを伏し目がちに見ながら # を涙目で睨みつけながら \@、自らの身体を控えめに愛撫している
+			CASEELSE
+				PRINTFORML 「うぅ～～……ッ！　目の前でこんなことさせるなんて……傍若無人、悪逆無道、悪漢無頼……！」
+				PRINTFORMDW 幽香は%CALLNAME:MASTER%に向けて罵声を浴びせながら、自らの愛撫に身を震わせている
+		ENDSELECT
+	ENDIF
+ENDIF
+
+RETURN 1
+[SKIPSTART]
+;別コマンド化
+;==================================================
+;10,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_10_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;11,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_11_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「はぁっ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORM 　おっぱい吸いながら、\@ NOWEX:MASTER:射精 ? イっちゃうのね # イきたい…… \@
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORML ？」
+			PRINTFORMDW 射精を催促するように、幽香は乳首に吸い付いた%CALLNAME:MASTER%の頭を撫でてきた
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「ふっ、あぁ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　もう、そんなに吸い付いて……あぁっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@、本当の赤子みたいよ……って、向こうはこんなに夢中で舐めてこないか……んっ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW 幽香は内心呆れつつも、乳首への熱心な責めに声を抑えられていない
+		ENDIF
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			PRINTFORM 「やぁっ、ふうッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORM ！？　あ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@っ、こんなときに吸い付いてくるなんて……あぁッ
+			CALL HEARTCB_K68(0xD02830)
+			PRINTFORML ！」
+			PRINTFORMDW 幽香を突きながら乳首に吸い付いてやると、彼女の嬌声が一層大きくなった
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「やぁっ……ん！　馬鹿、そんなに音立てて吸うんじゃないわよ……！」
+				CASEELSE
+					PRINTFORML 「はぁ、～～……ッ！　あ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@は、こんなことして恥ずかしくないの……！？」
+			ENDSELECT
+			PRINTFORMDW 赤子のようなプレイに頬を染める幽香に構わず、%CALLNAME:MASTER%は夢中で彼女の乳首に吸い付いた
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;12,胸もみ
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_12
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_12_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_12_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	CALL M_KOJO_MESSAGE_COM_K68_6_1
+ENDIF
+RETURN 1
+;==================================================
+;13,張開肛門
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_13_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;中出し後
+		IF TCVAR:104
+			PRINTFORML 「はぁ……こんなところに出すなんて、まったく……」
+			PRINTFORMDW 幽香はため息をつきながら、%CALLNAME:MASTER%に肛内に残った精液を残らず吐き出させた
+		;露出癖2以下
+		ELSEIF ABL:68:露出癖 < 3 && !TALENT:68:淫乱
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「っ……こんなところが見たいだなんて……どうなっても知らないわよ……」
+				CASEELSE
+					PRINTFORML 「はぁ……\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@の性嗜好には、呆れ返るわ……」
+			ENDSELECT
+			PRINTFORMDW 理解できないといった様子の幽香は放っておいて、その肛内をたっぷりと堪能した
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「あはっ、こんなところが見たいだなんて……はいっ、どうぞ、じっくり楽しんでね……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「私の恥ずかしいところも、全部\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@に進行解答……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW もはやアナルの中を見せることに抵抗は無いようで、むしろ期待に胸を躍らせているようだ
+		ENDIF
+	;それ以外
+	ELSE
+		;露出癖2以下
+		IF ABL:68:露出癖 < 3 && !TALENT:68:淫乱
+			PRINTFORML 「ひぃっ……！？　い……嫌、やっぱり無理ぃいいいッ！！」
+			PRINTFORMDW 羞恥心に耐えられなかったようで、幽香が大声を上げてしまったのでしぶしぶ中断した
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;ソフト系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;20,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_20
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_20_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_20_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	;多分表示されない
+	ELSEIF TALENT:68:無接吻経験
+		PRINTFORMW 「……んっ！？　はぁ、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@、意外と積極的なのね……」
+	;恋慕or恋人
+	ELSEIF TALENT:68:恋慕 || TALENT:68:恋人
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			;射精した
+			IF NOWEX:PLAYER:11
+				PRINTFORM 「あっ、あぁッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM 　大きくなってきた……んむっ！　ちゅ、えろ……っ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORML 」
+				PRINTFORM （出して、出してぇ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM 　\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@と、口で繋がったまま……
+				CALL HEARTCB_K68(0xD02830,2)
+				PRINTFORMW ）
+			ELSE
+				PRINTFORM 「んっ、んぅっ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW 　っはぁ、いい、すごくいいわ、主人公……」
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORM 「んんっ……ぁ……ぅ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　っはぁ、はぁ、あ……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+				CASEELSE
+					PRINTFORM 「れろっ、ちゅっ……
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORM 　……はぁ、もっと、もっとぉ……っ
+					CALL HEARTCB_K68(0xD02830)
+					PRINTFORML 」
+			ENDSELECT
+			PRINTFORMDW %CALLNAME:MASTER%との激しい口でのセックスに、幽香は魅了されている
+		ENDIF
+	;それ以外
+	ELSE
+		;V挿入orA挿入中
+		IF TEQUIP:50 == PLAYER || TEQUIP:51 == PLAYER
+			;射精した
+			IF NOWEX:PLAYER:11
+				PRINTFORM 「はぁッ、イきそう、なの？　じゃあ、外で……んむっ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORM ！？　えぁ、んーっ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORMW ！？」
+			ELSE
+				PRINTFORM 「やん、はぁっ、ふぅっ！　は、激し……んっ！？　ぁ、ん～～ッ
+				CALL HEARTCB_K68(0xD02830)
+				PRINTFORML 」
+				PRINTFORMDW 小さく嬌声を上げる幽香の口を無理やり塞いでやると、口内に響く声がより大きくなった気がする
+			ENDIF
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORML 「んっ……ぁ、う……ッ！？　……っはぁ、こんなの、キスなんて言わない……！」
+				CASEELSE
+					PRINTFORML 「んぐ……！？　はぁ、い、やぁ……っ！　……はぁっ、この変態……！」
+			ENDSELECT
+			PRINTFORMDW 侵入してくる%CALLNAME:MASTER%の舌に驚いたような表情をする幽香を尻目に、彼女の口内の隅々まで味わった
+		ENDIF
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;21,什麼也不做
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_21
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_21_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_21_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSEIF TCVAR:68:泥酔 == 1
+		RETURN 1
+	ELSE
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMW 「……放置プレイ？　あの……帰ってもいいかしら」
+			CASE 1
+				PRINTFORML 「……」
+				PRINTFORMDW 幽香は%CALLNAME:MASTER%\@ BASE:MASTER:勃起 >= 1000 ? の勃起したペニスが # が何を考えているのか \@気になるようだ
+			CASEELSE
+				PRINTFORMW 「っ、焦らしてるつもり……？」
+		ENDSELECT
+	ENDIF
+ENDIF
+
+RETURN 1
+;==================================================
+;22,承受誘惑
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_22
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_22_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_22_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;23,枕辺話
+;==================================================
+@M_KOJO_MESSAGE_COM_K68_23
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K68_23_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K68_23_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		RETURN 1
+	;睡姦中
+	ELSEIF CFLAG:MASTER:イタズラ == 2
+		RETURN 1
+	ELSE
+		IF TFLAG:193 == -1
+			PRINTFORMW 「……？　何言ってるの、\@ TALENT:MASTER:性別 == 2 ? 貴方 # 貴女 \@……」
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					
+				CASEELSE
+					
+			ENDSELECT
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1

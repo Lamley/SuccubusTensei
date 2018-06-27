@@ -1,0 +1,163 @@
+﻿@SKIP_MOVE_2(ARG:0,ARG:1)
+
+;LOCAL一覧
+;0	現在の位置
+
+;現在位置取得
+LOCAL = CFLAG:MASTER:現在位置
+SIF ARG:1
+	LOCAL = ARG:1
+
+;暫定目的地に直接移動できる場合
+IF CAN_MOVE(LOCAL, ARG) & 1
+	;そこに移動
+	RETURN ARG
+ENDIF
+
+;袋小路から行ける場所は固定なので、そこを目指す
+SELECTCASE LOCAL
+;201人里的門からは203南大街のみ
+CASE 201
+	RETURN 203
+;211居酒屋、212咖啡館、218小料理店からは203南大街のみ
+CASE 211,212,218
+	RETURN 203
+;217甜品店からは204東大街のみ
+CASE 217
+	RETURN 204
+;225情人用宿屋からは206西大街のみ
+CASE 225
+	RETURN 206
+;小鈴ルームからは鈴奈庵
+CASE 226
+	RETURN 213
+;長屋各部屋からは長屋前
+CASE 230 TO 237
+	RETURN 214
+ENDSELECT
+
+;PRINTFORML LOCALは{LOCAL}
+
+;直接移動できない場合、1つ近い位置を暫定目的地に設定し直してループ
+;地点追加時要フォロー（全ケース修正すること）
+SELECTCASE ARG
+	CASE 201,211,212,218
+		;人里的門、居酒屋、咖啡館、小料理店に直接行けない場合203南大街を目指す
+		RETURN 203
+	CASE 202
+		SELECTCASE LOCAL
+			;中央広場に直接行けない場合、里の東側なら204東大街を目指す
+			CASE 213,219,222,223
+				RETURN 204
+			CASE 224
+				RETURN 205
+			;長屋街か情人用宿屋か阿求的住宅なら206西大街を目指す
+			CASE 214,221,225
+				RETURN 206
+		ENDSELECT
+	CASE 203 TO 206
+		;○○街道に直接行けない場合202中央広場を目指す
+		RETURN 202
+	CASE 207
+		SELECTCASE LOCAL
+		;207龍神像に直接行けない場合、里の北川なら205北大街を目指す
+		CASE 219,221,222
+			RETURN 205
+		;それ以外なら202中央広場を目指す
+		CASEELSE
+			RETURN 202
+		ENDSELECT
+	CASE 217
+		;甜品店に直接行けない場合、204東大街を目指す
+		RETURN 204
+	CASE 213
+		SELECTCASE LOCAL
+		;小鈴庵に直接行けない場合、人里的門、居酒屋、咖啡館、長屋街、食料品店、小料理屋からなら南大街を目指す
+		CASE 201,211,212,214,216,218
+			RETURN 202
+		;それ以外は東大街へ
+		CASEELSE
+			RETURN 204
+		ENDSELECT
+	CASE 214
+		SELECTCASE LOCAL
+		;長屋街に直接行けない場合、人里的門、小鈴庵、食料品店、銭湯からなら南大街を目指す
+		CASE 201,213,216,223
+			RETURN 203
+		;それ以外は西大街へ
+		CASEELSE
+			RETURN 206
+		ENDSELECT
+	CASE 215
+		SELECTCASE LOCAL
+		;花屋に直接行けない場合、長屋街、阿求的住宅からなら西大街を目指す
+		CASE 214,221
+			RETURN 206
+		;それ以外は中央広場へ
+		CASEELSE
+			RETURN 202
+		ENDSELECT
+	CASE 216
+		SELECTCASE LOCAL
+		;食料品店に直接行けない場合、小鈴庵、長屋街、銭湯からなら南大街を目指す
+		CASE 213,214,223
+			RETURN 203
+		;それ以外は中央広場へ
+		CASEELSE
+			RETURN 202
+		ENDSELECT
+	CASE 219
+		SELECTCASE LOCAL
+		;集会所に直接行けない場合、小鈴庵、寺子屋、銭湯からなら東大街を目指す
+		CASE 213,222,223
+			RETURN 204
+		;それ以外は北大街へ
+		CASEELSE
+			RETURN 205
+		ENDSELECT
+	CASE 220
+		SELECTCASE LOCAL
+		;瞭望樓に直接行けない場合、長屋街、阿求的住宅からなら西大街を目指す
+		CASE 214,221
+			RETURN 206
+		;それ以外は中央広場へ
+		CASEELSE
+			RETURN 202
+		ENDSELECT
+	CASE 221
+		SELECTCASE LOCAL
+		;阿求的住宅に直接行けない場合、長屋街、花屋、瞭望樓からなら西大街を目指す
+		CASE 214,215,220
+			RETURN 206
+		;それ以外は北大街へ
+		CASEELSE
+			RETURN 205
+		ENDSELECT
+	CASE 222,224
+		SELECTCASE LOCAL
+		;寺子屋に直接行けない場合、阿求的住宅からなら北大街を目指す
+		CASE 221
+			RETURN 205
+		;それ以外は東大街へ
+		CASEELSE
+			RETURN 204
+		ENDSELECT
+	CASE 223
+		SELECTCASE LOCAL
+		;銭湯に直接行けない場合、集会所、寺子屋からなら東大街を目指す
+		CASE 221
+			RETURN 204
+		;それ以外は南大街へ
+		CASEELSE
+			RETURN 203
+		ENDSELECT
+	CASE 225
+		;情人用宿屋に直接行けない場合、206西大街を目指す
+		RETURN 206
+	CASE 226
+		RETURN 213
+	CASE 230 TO 237
+		RETURN 214
+	CASEELSE
+		RETURN 201
+ENDSELECT

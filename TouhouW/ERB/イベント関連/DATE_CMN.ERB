@@ -1,0 +1,412 @@
+﻿;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先名取得関数
+;CALL		USER
+;ARG		VOID
+;RETURN		デート先名
+;COMMENT	
+;-----------------------------------------------------------
+@DATENAME_PLACE()
+#FUNCTIONS
+SIF TFLAG:妄想中 == 1
+	RETURNF "妄想"
+SIF CHK_DATENOW(CFLAG:MASTER:デート中) == 0
+	RETURNF ""
+RETURNF STR:(CFLAG:MASTER:デート中 + 5000)
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート地点名取得関数
+;CALL		USER
+;ARG		VOID
+;RETURN		デート地点名
+;COMMENT	
+;-----------------------------------------------------------
+@DATENAME_SPOT()
+#FUNCTIONS
+SIF CHK_DATENOW(CFLAG:MASTER:デート中) == 0
+	RETURNF ""
+SIF CFLAG:MASTER:現在位置 % 100 / 10 == 0
+	RETURNF "道中"
+RETURNF NAME_FROM_PLACE(CFLAG:MASTER:現在位置 / 10 + 6000)
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート地点番号取得関数
+;CALL		USER
+;ARG		VOID
+;RETURN		デート地点NO
+;COMMENT	
+;-----------------------------------------------------------
+@DATE_SPOT()
+#FUNCTION
+RETURNF CFLAG:MASTER:現在位置 % 100 / 10
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先到着残り時間取得関数
+;CALL		USER
+;ARG		VOID
+;RETURN		デート地点NO
+;COMMENT	
+;-----------------------------------------------------------
+@DATE_REMAINTIME()
+#FUNCTION
+RETURNF ((CFLAG:MASTER:現在位置 % 100) % 10) * 10
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先アルバイト可否
+;CALL		USER
+;ARG		現在位置
+;RETURN		アルバイト先種類
+;COMMENT	
+;-----------------------------------------------------------
+@DATE_PARTTIME(ARG)
+#FUNCTION
+SELECTCASE ARG
+	;特殊バイト先
+	CASE 240,450,520,540,650,830
+		RETURNF ARG
+	;%デート先%でアルバイトして～…
+	CASE 220,230,320,330,460
+		RETURNF 2
+	;%デート先%で食材集めをして～…
+	CASE 350,410,430,440,510,530,630,710,810
+		RETURNF 1
+ENDSELECT
+RETURNF 0
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先モブ存在判定
+;CALL		USER
+;ARG		現在位置
+;RETURN		人街道が多ければ1
+;COMMENT	MASTERの目に見える範囲にモブキャラ(少女限定)が歩いてる（であろう）場所か否か
+;-----------------------------------------------------------
+@DATE_HITOGOMI(ARG)
+#FUNCTION
+SIF !ARG
+	ARG = CFLAG:PLAYER:現在位置
+IF !AT_HOME(MASTER)
+	SELECTCASE ARG
+		;モブがいる（と勝手に想像している場所
+		;地底（街道、温泉、地霊殿）妖怪之山山頂（守矢神社本殿、境内、九天瀑布）妖怪之山山麓（無し）三途之川～冥界（中有之道）魔法之森（無し）迷途竹林（永遠亭）紅魔館（大庁、食堂、大図書館）人間之里（情人用宿屋以外）命蓮寺（地蔵小路、倒垂的柳樹下、命蓮寺境内、命蓮寺本堂）
+		CASE 960,940,930,850,840,810,610,450,370,360,350,270,250,240,230,220,210,140,130,120,110
+			RETURNF 1
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先モブ種類存在判定
+;CALL		USER
+;ARG		現在位置
+;RETURN		
+;COMMENT	MASTERの目に見える範囲にモブキャラ（少女限定）が歩いてる（であろう）場所か否か、男はガン無視、ホフゴブリンは紳士なので少女が集まってキャッキャしてるところには近寄りません
+;-----------------------------------------------------------
+@DATE_HITOGOMI_SYUBETU(ARG)
+#FUNCTIONS
+VARSET LOCALS
+SIF !ARG
+	ARG = CFLAG:PLAYER:現在位置
+SELECTCASE GET_MAPID(ARG)
+	;モブの種類
+	;地底（街道、温泉、地霊殿）(街道と温泉では鬼も出てくる
+	CASE 9
+		IF ARG != 960 && !RAND:3
+			LOCALS += "鬼族"
+		ELSE
+			LOCALS += "妖怪"
+		ENDIF
+	;妖怪之山山頂（守矢神社本殿、境内、九天瀑布）（守矢神社境内のみ希に人間
+	CASE 8
+		IF !RAND:5 && ARG == 840
+			LOCALS += "人類"
+		ELSE
+			LOCALS += "妖怪"
+		ENDIF
+	;妖怪之山山麓（無し）
+	;三途之川～冥界（中有之道）(死神、妖怪、希に人間
+	CASE 6
+		IF !RAND:5
+			LOCALS += "人類"
+		ELSEIF !RAND:3
+			LOCALS += "妖怪"
+		ELSE
+			LOCALS += "死神"
+		ENDIF
+	;魔法之森（無し）
+	;迷途竹林（永遠亭）(妖怪ウサギ、希に人間(患者）
+	CASE 4
+		IF RAND:5
+			LOCALS += "妖怪兎"
+		ELSE
+			LOCALS += "人類"
+		ENDIF
+	;紅魔館（大庁、食堂、大図書館）（大庁食堂は妖精メイド、大図書館は小悪魔にしたいけど、個別キャラ化してるので妖精メイド
+	CASE 3
+		LOCALS +=  "女僕妖精"
+	;人間之里（情人用宿屋以外）（基本人間、希に妖怪
+	CASE 2
+		IF RAND:5
+			LOCALS += "人類"
+		ELSE
+			LOCALS += "妖怪"
+		ENDIF
+	;命蓮寺（地蔵小路、倒垂的柳樹下、命蓮寺境内、命蓮寺本堂）（人間と妖怪
+	CASE 1
+		IF !RAND:2
+			LOCALS += "人類"
+		ELSE
+			LOCALS += "妖怪"
+		ENDIF
+ENDSELECT
+LOCALS += "少女"
+
+RETURNF LOCALS
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.00
+;デート先吃飯可否
+;CALL		USER
+;ARG		現在位置
+;RETURN		吃飯場所種類
+;COMMENT	
+;-----------------------------------------------------------
+@DATE_PARTY(ARG)
+#FUNCTION
+IF !AT_HOME(MASTER)
+	SELECTCASE ARG
+		;特殊吃飯先
+	;	CASE 230,340,350
+	;		RETURNF ARG
+		;%デート地点%の宴会に～…
+	;	CASE 450,650,740,830
+	;		RETURNF 2
+		;%デート地点%で吃飯を～…
+		;CASE 商家町,竹林入口,永遠亭,白玉楼,旧地獄街道
+		;白玉楼or永遠亭で、デート中に吃飯って変じゃない？　ってことで、店があるところに勝手に変更
+		CASE 商家町,竹林入口,中有之道,旧地獄街道
+			IF (ARG == 竹林入口 && BASE:28:工作量 > 3000 && CFLAG:28:行動 == 5)
+				RETURNF 0
+			ELSE
+				RETURNF 1
+			ENDIF
+	ENDSELECT
+ELSE
+	SELECTCASE ARG
+		;地底酒場＝旧地獄街道
+		CASE 933
+			RETURNF 1
+		;みすちー屋台＝竹林入口
+		;CASE 444
+		;	SIF BASE:28:工作量 <= 3000 && CFLAG:28:行動 == 5
+		;		RETURNF 1
+		;まだ無し＝中有之道
+
+		;人里小料理屋＝商家町
+		CASE 218
+			RETURNF 1
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_DATE_CMN.ERB ------------------------------- Rev1.00
+;お弁当が食べられる場所
+;CALL		USER
+;ARG		現在位置
+;RETURN		食べられるなら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@OBENTO(ARG)
+#FUNCTION
+IF !AT_HOME(MASTER)
+	SELECTCASE ARG
+		CASE 地蔵小路,倒垂的柳樹下,霧之湖,玄武之澤,大蛤蟆之池,絶景之丘,山之湖,天界
+			RETURNF 1
+		CASE 無名之丘, 古木的大樹, 桃林～砂浜, 10
+			RETURNF 1
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_DATE_CMN.ERB ------------------------------- Rev1.00
+;釣りができる場所
+;CALL		USER
+;ARG		現在位置
+;RETURN		できるなら１
+;COMMENT	場所を追加した場合、CASEを変更の事
+;-----------------------------------------------------------
+@FISHING_SPOT(ARG)
+#FUNCTION
+IF !AT_HOME(MASTER)
+	SELECTCASE ARG
+		CASE 霧之湖, 三途之川, 玄武之澤, 大蛤蟆之池, 九天瀑布, 山之湖, 地獄的深道
+			RETURNF 1
+	ENDSELECT
+ENDIF
+RETURNF 0
+
+;FileName_DATE_CMN.ERB ----------------------------- Rev1.01
+;デート帰りイベント (CFLAG:13)
+;CALL		USER
+;ARG		キャラNO
+;RETURN		VOID
+;COMMENT	
+;-----------------------------------------------------------
+@DATE_EVENT(ARG)
+#DIM 珠不足
+#DIM 経験不足
+
+VARSET LOCAL
+;キャンセルフラグ（外部参照にて使用のこと 例:LOCAL@DATE_EVENT:99 = 1
+LOCAL:99 = 0
+;パラメータによる発生基礎値生成
+
+LOCAL = MARK:ARG:不埒刻印 * 10 + MARK:ARG:快楽刻印 * 10
+IF TALENT:ARG:恋慕
+	LOCAL += MIN(ABL:ARG:親密 * 10, 100) + MIN(ABL:ARG:欲望 * 10,100) + MIN(ABL:ARG:奉仕精神 * 10,100)
+	LOCAL += MIN(EXP:ARG:約会経験,100) + MIN(EXP:ARG:愛情経験,100)
+ELSEIF TALENT:ARG:思慕
+	LOCAL += MIN(ABL:ARG:親密 * 10, 50) + MIN(ABL:ARG:欲望 * 10,50) + MIN(ABL:ARG:奉仕精神 * 10,50)
+	LOCAL += MIN(EXP:ARG:約会経験,50)
+ENDIF
+LOCAL += GETPALAMLV(PALAM:ARG:欲情,10) * 5 + GETPALAMLV(PALAM:ARG:好意,10) * 5 + GETPALAMLV(PALAM:ARG:恭順,10) * 5
+;60
+LOCAL += BASE:ARG:情緒 / 50 + (1000 - BASE:ARG:理性) / 30
+LOCAL += TALENT:ARG:胆量 * 10 + TALENT:ARG:性的興味 * 10 - TALENT:ARG:自制心 * 10 - TALENT:ARG:冷漠 * 10 
+DEBUGPRINTFORML 【DATE_EVENT({ARG})】DateEvent_Checksum = {LOCAL}
+;別れ際に送禮
+CALL GIFT(ARG)
+IF RESULT == 1
+;合意無し（キス成功してない）
+ELSEIF !(CFLAG:ARG:1 & 1) && !(CFLAG:ARG:13 & 1)
+	;成功判定
+	IF (LOCAL > 220 + TALENT:ARG:難以越過的底線 * 30 + TALENT:ARG:無接吻経験 * 20) && CFLAG:ARG:合意判定 > 180 && (TALENT:ARG:思慕 || TALENT:ARG:恋慕)
+		CALL KOJO_MESSAGE_SEND("SP_EVENT",1,ARG,0)
+		;キャンセルフラグ
+		IF !TCVAR:ARG:キスキャンセル
+			IF TALENT:MASTER:無接吻経験
+				CALL SET_FIRSTKISS(MASTER, ARG, 1)
+				EXP:ARG:愛情経験 += 10
+			ENDIF
+			IF TALENT:ARG:無接吻経験
+				CALL SET_FIRSTKISS(ARG, MASTER, 1)
+				EXP:ARG:接吻経験 ++
+				EXP:MASTER:接吻経験 ++
+			EXP:ARG:愛情経験 += 10
+			ENDIF
+			SETBIT CFLAG:ARG:既成事実 , 0
+			SETBIT CFLAG:ARG:デート後イベントフラグ , 0
+		ENDIF
+	ELSEIF !MARK:ARG:反発刻印
+		CALL KOJO_MESSAGE_SEND("SP_EVENT",3,ARG,0)
+	ENDIF
+;反発刻印消去処理
+ELSEIF MARK:ARG:反発刻印 && LOCAL > 50
+	;ABL:親密LVUP処理取り込み。解読が面倒だったので要所々々取り摘んで…
+	FOR LOCAL,0,4
+		珠不足 = 0
+		経験不足 = 0
+		SIF JUEL_DEMAND(9,LOCAL,0,ARG) == -2
+			BREAK
+		SIF JUEL_DEMAND(9,LOCAL,0,ARG) < 0
+			CONTINUE
+		;必要な宝珠を尋找
+		FOR LOCAL:1,0,100
+			IF JUEL_DEMAND(9,LOCAL,LOCAL:1,ARG) > 0
+				IF JUEL:(ARG):(LOCAL:1) < JUEL_DEMAND(9,LOCAL,LOCAL:1,ARG) / 2
+					珠不足 ++
+					BREAK
+				ENDIF
+			ENDIF
+		NEXT
+		SIF 珠不足
+			CONTINUE
+		;必要な経験を尋找
+		FOR LOCAL:1,0,100
+			IF EXP_DEMAND(9,LOCAL,LOCAL:1,ARG) > 0
+				IF  EXP:(ARG):(LOCAL:1) < EXP_DEMAND(9,LOCAL,LOCAL:1,ARG) / 2
+					経験不足 ++
+					BREAK
+				ENDIF
+			ENDIF
+		NEXT
+		SIF 経験不足
+			CONTINUE
+		;ここまで来れたら反発刻印消去
+		;要するにデートでいい雰囲気＋親密LVUP水準の1/2満たしたら反発消去
+		MARK:ARG:反発刻印 --
+		CALL KOJO_MESSAGE_SEND("SP_EVENT",3,ARG,(MARK:ARG:反発刻印 + 1))
+		PRINTL
+		IF MARK:ARG:反発刻印
+			PRINTFORMW %CALLNAME:ARG%的反発刻印LV下降為{MARK:ARG:反発刻印}了
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%失去了反発刻印LV1
+		ENDIF
+		BREAK
+	NEXT
+;告白していない（MASTERに恋人が居ない）
+ELSEIF !(CFLAG:ARG:1 & 4) && !(CFLAG:ARG:13 & 2) && !TALENT:MASTER:恋人 && !FLAG:告白禁止
+	;成功判定
+	IF (LOCAL > 530 + TALENT:ARG:難以越過的底線 * 20)
+		CALL KOJO_MESSAGE_SEND("SP_EVENT",2,ARG,0)
+		PRINTFORML 対%CALLNAME:ARG%的告白…
+		PRINTFORM [1] - 接受
+		PRINTL 　- 恋人最多只能有1个 -
+		PRINTFORM [2] - 拒絶
+		$INPUT_LOOP
+		INPUT
+		IF RESULT > 2 || RESULT < 1
+			CLEARLINE 1
+			GOTO INPUT_LOOP
+		ELSEIF RESULT == 1
+			SETBIT CFLAG:ARG:既成事実 , 2
+			SETBIT CFLAG:MASTER:既成事実, 2
+			TALENT:MASTER:恋人 = NO:ARG
+			TALENT:ARG:恋人 = NO:ARG
+			SETBIT CFLAG:ARG:13 , 1
+			CALL KOJO_MESSAGE_SEND("SP_EVENT",2,ARG,RESULT)
+			PRINTL
+			PRINTFORMW 与%CALLNAME:ARG%成為了恋人
+		ELSE
+			CALL KOJO_MESSAGE_SEND("SP_EVENT",2,ARG,RESULT)
+		ENDIF
+	ELSEIF !MARK:ARG:反発刻印
+		CALL KOJO_MESSAGE_SEND("SP_EVENT",3,ARG,0)
+	ENDIF
+ELSE
+	CALL KOJO_MESSAGE_SEND("SP_EVENT",3,ARG,0)
+ENDIF
+
+@GIFT(ARG)
+#DIM 好感度上昇値
+#DIM 送禮評価
+;デート前好感度と現好感度を比較
+好感度上昇値 = CFLAG:ARG:2 - TFLAG:デート前好感度
+IF DAY:2 == 4 && DAY:3 == 24 && ITEM:94 && TFLAG:デート前好感度
+	PRINTFORML 要送出圣诞礼物吗？
+	CALL ASK_YN
+	IF !RESULT
+		PRINTFORMW 把禮物送給了%CALLNAME:ARG%
+		ITEM:94 = 0
+		IF TALENT:ARG:恋人
+			PRINTFORMW 能看見%CALLNAME:ARG%的変得一片通紅
+			PRINTFORMW ……得到了対脸颊的一吻作為回礼
+			送禮評価 = 10
+		ELSEIF TALENT:ARG:恋慕
+			PRINTFORMW 能看見%CALLNAME:ARG%的変得一片通紅
+			PRINTFORMW 受到禮物的%CALLNAME:ARG%感覚非常幸福
+			送禮評価 = 7
+		ELSEIF TALENT:ARG:思慕
+			PRINTFORML %CALLNAME:ARG%驚訝之余很開心的接受了
+			PRINTFORML %CALLNAME:ARG%面対表示好意的禮物、更加在意起%CALLNAME:MASTER%了
+			送禮評価 = 5
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%因為受到的高價禮物顯得有些不知所措、不過並沒有討厭
+			送禮評価 = 2
+		ENDIF
+		CFLAG:ARG:2 += 好感度上昇値 * 送禮評価 / 5
+		CFLAG:ARG:4 += 好感度上昇値 * 送禮評価 / 10
+		RETURN 1
+	ELSE
+		RETURN 0
+	ENDIF
+ELSE
+	RETURN 0
+ENDIF

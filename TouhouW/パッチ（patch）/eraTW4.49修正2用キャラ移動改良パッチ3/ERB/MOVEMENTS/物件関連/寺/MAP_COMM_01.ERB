@@ -1,0 +1,44 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	命蓮寺MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_1(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS MYORENNAME, 23 = "山門","境内","本堂","講堂","経堂","裏庭","土間","居間","客間","縁側","台所","風呂","ナズーリン私室","ムラサ私室","星私室","一輪私室","ぬえ私室","白蓮私室","離れ","物置","墓地","梵鐘堂"
+#DIMS DOJONAME, 11 = "霊廟大門","霊廟広場","屠自古部屋","道場","布都私室","神子私室","客間","廊下","枯山水","調薬室","湯殿"
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 22
+			RETURNF MYORENNAME:(PLACEID - 1)
+		CASE 23 TO 33
+			RETURNF DOJONAME:(PLACEID - 23)
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "スキマ空間"
+		CASEELSE
+			RETURNF "参道の向こう"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_1
+
+IF CHK_ENTRANCE(CFLAG:MASTER:現在位置)
+ENDIF
+SIF CHK_FOCUS(101,CFLAG:MASTER:現在位置,122)
+	CALL MAP_MYORENJI
+
+SIF CHK_FOCUS(123,CFLAG:MASTER:現在位置,133)
+	CALL MAP_神子廟
+CALL PETITE_命蓮寺周辺
+
+RETURN 1
+
+@MAP_CAN_MOVE_1(ARG, ARG:1)
+#FUNCTION
+RETURNF 1

@@ -1,0 +1,61 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	紅魔館MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_3(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS KOUMANAME,33 = "正門","庭","守衛小屋","空き小屋","納屋","裏庭","東テラス","西テラス","広間","図書館","パチュリー私室","小悪魔私室","厨房","食堂","応接間","一階トイレ","大階段","地下階段","二階廊下","咲夜私室","空き部屋","二階トイレ","メイド妖精詰め所","大バルコニー","三階階段","レミリア私室","小バルコニー","地下廊下","倉庫","使用人部屋","地下室","脱衣所","大浴場",
+#DIMS HAIYOUNAME,9 = "廃洋館・入口","廃洋館・広間","廃洋館・階段","廃洋館・キッチン","廃洋館・風呂","廃洋館・二階廊下","ルナサ私室","メルラン私室","リリカ私室",
+#DIMS KOHANNAME,6 = "湖畔","レティのかまくら","チルノのかまくら","大妖精宅","霧の湖","霧の湖・湖底"
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 33
+			RETURNF KOUMANAME:(PLACEID - 1)
+		CASE 34 TO 42
+			RETURNF HAIYOUNAME:(PLACEID - 34)
+		CASE 43 TO 48
+			RETURNF KOHANNAME:(PLACEID - 43)
+		CASE 49
+			RETURNF "霧の向こう"
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "スキマ空間"
+		CASEELSE
+			RETURNF "霧の向こう"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_3
+
+IF CHK_ENTRANCE(CFLAG:MASTER:現在位置)
+ENDIF
+SIF CHK_FOCUS(301,CFLAG:MASTER:現在位置,333)
+	CALL MAP_KOUMAKAN
+
+SIF CHK_FOCUS(334,CFLAG:MASTER:現在位置,347)
+	CALL MAP_HAIYOUKAN
+CALL MAP_KOHAN
+RETURN 1
+
+@MAP_CAN_MOVE_3(ARG, ARG:1)
+#FUNCTION
+;湖底,水棲以外
+IF ARG == 348 && TALENT:(ARG:1):水棲
+	TFLAG:移動不能メッセージ = 348
+	RETURNF 0
+ENDIF
+RETURNF 1
+
+@MAP_CANNOT_WORD_3(ARG)
+IF TFLAG:移動不能メッセージ == 348
+	PRINTW 無理です
+	CLEARLINE 2
+	REUSELASTLINE 
+	RETURN
+ENDIF

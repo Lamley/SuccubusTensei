@@ -1,0 +1,69 @@
+﻿;-------------------------------------------------
+;外出
+;-------------------------------------------------
+@COM699
+
+;PRINTFORMW %STR:(((CFLAG:TARGET:自宅位置) / 10) + 6000)%に出る
+
+;自宅位置の三桁目を参照
+CFLAG:MASTER:デート中 = (CFLAG:(CFLAG:MASTER:お招き):自宅位置) / 100
+;自宅位置に移動
+CFLAG:MASTER:現在位置 = CFLAG:(CFLAG:MASTER:お招き):自宅位置
+IF !CFLAG:TARGET:睡眠
+	CFLAG:TARGET:現在位置 = CFLAG:(CFLAG:TARGET:お招き):自宅位置
+ELSE
+	CFLAG:TARGET:現在位置 = SUKIMA()
+ENDIF
+;遭遇フラグを自宅位置に設定（連動してると他のキャラが駆けつけてくるのは仕様）
+CFLAG:(CFLAG:MASTER:お招き):遭遇位置 = CFLAG:(CFLAG:MASTER:お招き):自宅位置
+;部屋の汚れを保存しておく
+IF YOGORE:(OMANEKIBEYA()) > 0
+	TCVAR:(CFLAG:MASTER:お招き):待客室の汚れ = YOGORE:(OMANEKIBEYA())
+ELSE
+	;０以下にした場合は識別するために１残す
+	TCVAR:(CFLAG:MASTER:お招き):待客室の汚れ = 1
+ENDIF
+;お招きフラグに0を代入
+CFLAG:TARGET:お招き = 0
+CFLAG:MASTER:お招き = 0
+
+IF CFLAG:TARGET:神社在住
+	CFLAG:TARGET:初期位置 = CFLAG:TARGET:神社在住
+ELSE
+	CFLAG:TARGET:初期位置 = SUKIMA()
+ENDIF
+;TIME += 3
+RETURN 1
+
+
+;-------------------------------------------------
+;実行可能判定
+;-------------------------------------------------
+;外出
+@COM_ABLE699
+;一括管理
+SIF GLOBAL_COMABLE(699)
+	RETURN RESULT
+;気力0
+SIF BASE:MASTER:気力 <= 0
+	RETURN 0
+;終電…なくなっちゃったね……
+SIF NEMUKE() >= 720
+	RETURN 0
+;待客室専用
+SIF CFLAG:MASTER:現在位置 != OMANEKIBEYA()
+	RETURN 0
+;添い寝中はだめよ
+SIF CFLAG:MASTER:添い寝中
+	RETURN 0
+;イタズラ中もだめ
+SIF CFLAG:MASTER:イタズラ
+	RETURN 0
+;うふふ中もだめ
+SIF CFLAG:MASTER:うふふ
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
+

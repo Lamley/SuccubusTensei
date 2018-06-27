@@ -1,0 +1,540 @@
+﻿;オプション設定処理
+@OPTION
+PRINTL 請選択設定項目
+PRINTL [0] - 文本設定
+PRINTL [1] - 指令过滤器
+PRINT [2] - 消耗品的自動購入 
+	PRINTFORML \@ FLAG:1001 ? ON # OFF \@
+PRINT [3] - 肮脏程度表示 
+	PRINTFORML \@ FLAG:1002 ? OFF # ON \@
+;PRINT [4] - 時間停止中の信頼度低下
+;	PRINTFORML \@ FLAG:1011 ? ON # OFF \@
+PRINT [5] - 是否在移動時停下脚步 
+	SIF FLAG:立ち止まり == 0
+		PRINTL ON (無条件停下脚步)
+	SIF FLAG:立ち止まり == 1
+		PRINTL ON (只有口上存在的場合)
+	SIF FLAG:立ち止まり == 2
+		PRINTL OFF (不会停下脚步)
+PRINT [6] - 进行能力比較来决定会不会被推倒 
+	PRINTFORML \@ FLAG:押し倒し ? ON # OFF \@
+PRINT [7] - 外出時自動時停散步 
+	PRINTFORML \@ FLAG:瞬間移動 ? ON # OFF \@
+PRINT [8] - 住宿事件 
+	PRINTFORML \@ FLAG:住み込みイベント ? OFF # ON \@
+PRINTL [10] - 登場人物的切换
+PRINT [11] - 警告牌使用 
+	PRINTFORML \@ FLAG:注意札使用 ? ON # OFF \@
+PRINT [12] - 一部分人物的長筒袜穿戴 
+	PRINTFORML \@ FLAG:長筒襪着用 ? ON # OFF \@
+PRINT [13] - 宴会的発生 
+	PRINTFORML \@ FLAG:宴会の有無 ? ON # OFF \@
+PRINT [14] - 好感度０的人物不会来訪模式 
+	SIF FLAG:交流来訪モード == 0
+		PRINTL ON (会来访)
+	SIF FLAG:交流来訪モード == 1
+		PRINTL ON (好感度為0的不会来访)
+	SIF FLAG:交流来訪モード == 2
+		PRINTL OFF (不会来访)
+PRINT [15] - 妊娠的有無※默认関闭。打開的时候発生任何意外請自己负責　　
+	PRINTFORML \@ FLAG:妊娠スイッチ ? ON # OFF \@
+PRINT [16] - 脱衣選択 
+SELECTCASE FLAG:脱衣選択
+	CASE 0
+		PRINTL [毎回選択]
+	CASE 1
+		PRINTL [全裸]
+	CASE 2
+		PRINTL [半脱]
+ENDSELECT
+PRINT [17] - 時間停止脱衣時的内袴処理 
+SELECTCASE FLAG:パンツ泥棒
+	CASE 0
+		PRINTL [毎回選択]
+	CASE 1
+		PRINTL [总是占為己有]
+	CASE 2
+		PRINTL [总是単単脱掉]
+ENDSELECT
+PRINT [18] - 口上色設定 
+	PRINTFORML \@ FLAG:口上色 ? ON # OFF \@
+PRINTL [19] - 胸部関連Look表示設定
+PRINT [20] - 能力表示的按钮表記 
+	PRINTFORML \@ FLAG:能力表記 ? [数字表記] # [記号表記] \@
+PRINT [21] - counter的地文対素質的改変 
+	PRINTFORML \@ FLAG:カウンター地の文制御 ? ON # OFF \@
+PRINT [22] - 増加色色的内衣 
+	PRINTFORML \@ FLAG:セクシーパンツ追加 ? ON # OFF \@
+PRINT [23] - 從炮友系陥落向恋慕系陥落変化　
+	PRINTFORML \@ FLAG:陥落路線変化 ? ON # OFF \@
+PRINT [24] - 是否由対方告白　
+	PRINTFORML \@ FLAG:告白禁止 ? OFF # ON \@
+PRINT [25] - 每一回合的ABLUP省略 
+	PRINTFORML \@ FLAG:ABLUP省略 ? ON # OFF \@
+PRINTFORML [26]\@ FLAG:画像表示 ? ┬ # %" "%- \@ 変更AA画像的顯示 \@ FLAG:画像表示 ? ON # OFF \@
+SIF FLAG:画像表示
+	PRINTFORML [27]└ 画像詳細設定
+PRINT [28] - 因事件而無知喪失　 
+	PRINTFORML \@ FLAG:無知自動喪失禁止 ? OFF # ON \@
+SIF DAY > 120
+	PRINTL [99] 败者・食尘
+PRINTL [100]-返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	CALL OPTION_TEXT_SETTING
+ELSEIF RESULT == 1
+	CALL OPTION_COMMAND_FILTER
+ELSEIF RESULT == 2
+	FLAG:1001 = !FLAG:1001
+ELSEIF RESULT == 3
+	CALL OPTION_HOUSE_INFO
+ELSEIF RESULT == 5
+	IF FLAG:立ち止まり == 0
+		FLAG:立ち止まり = 1
+	ELSEIF FLAG:立ち止まり == 1
+		FLAG:立ち止まり = 2
+	ELSEIF FLAG:立ち止まり == 2
+		FLAG:立ち止まり = 0
+	ENDIF
+ELSEIF RESULT == 6
+	FLAG:押し倒し = !FLAG:押し倒し
+ELSEIF RESULT == 7
+	FLAG:瞬間移動 = !FLAG:瞬間移動
+ELSEIF RESULT == 8
+	FLAG:住み込みイベント = !FLAG:住み込みイベント
+ELSEIF RESULT == 16
+	IF FLAG:脱衣選択 < 2
+		FLAG:脱衣選択 ++
+	ELSE
+		FLAG:脱衣選択 = 0
+	ENDIF
+ELSEIF RESULT == 17
+	IF FLAG:パンツ泥棒 < 2
+		FLAG:パンツ泥棒 ++
+	ELSE
+		FLAG:パンツ泥棒 = 0
+	ENDIF
+ELSEIF RESULT == 10
+	CALL 登場キャラ切り替え
+ELSEIF RESULT == 11
+	FLAG:注意札使用 = !FLAG:注意札使用
+ELSEIF RESULT == 12
+	FLAG:長筒襪着用 = !FLAG:長筒襪着用
+ELSEIF RESULT == 13
+	FLAG:宴会の有無 = !FLAG:宴会の有無
+ELSEIF RESULT == 14
+	IF FLAG:交流来訪モード == 0
+		FLAG:交流来訪モード = 1
+	ELSEIF FLAG:交流来訪モード == 1
+		FLAG:交流来訪モード = 2
+	ELSEIF FLAG:交流来訪モード == 2
+		FLAG:交流来訪モード = 0
+	ENDIF
+ELSEIF RESULT == 15
+	FLAG:妊娠スイッチ = !FLAG:妊娠スイッチ
+ELSEIF RESULT == 18
+	FLAG:口上色 = !FLAG:口上色
+ELSEIF RESULT == 19
+	CALL おっぱい関連Look表示設定
+ELSEIF RESULT == 20
+	FLAG:能力表記 = !FLAG:能力表記
+ELSEIF RESULT == 21
+	FLAG:カウンター地の文制御 = !FLAG:カウンター地の文制御
+ELSEIF RESULT == 22
+	FLAG:セクシーパンツ追加 = !FLAG:セクシーパンツ追加
+	IF FLAG:セクシーパンツ追加 == 0
+		PRINTFORMW 席卷幻想郷的性感内衣热潮結束了
+		PRINTL 
+		PRINTFORML 要消除掉所拥有的性感内衣吗？
+		PRINTFORML 削除対象：超短内袴、兜裆布、T型袴、透明女式短内袴、開放型女式短内袴、创可贴、衬袴（開档）
+		PRINTL 
+		PRINTL [0] 已経不需要了
+		PRINTL [1] 珍藏起来
+		INPUT
+		IF RESULT == 0
+			CALL DELETE_SEXYPANTS
+		ELSE
+			RESTART
+		ENDIF
+	ELSE
+		PRINTL 
+		PRINTFORMW 性感内衣開始在幻想郷里流通了
+		PRINTL 
+	ENDIF
+ELSEIF RESULT == 23
+	FLAG:陥落路線変化 = !FLAG:陥落路線変化
+ELSEIF RESULT == 24
+	FLAG:告白禁止 = !FLAG:告白禁止
+ELSEIF RESULT == 25
+	FLAG:ABLUP省略 = !FLAG:ABLUP省略
+ELSEIF RESULT == 26
+	FLAG:画像表示 = !FLAG:画像表示
+ELSEIF RESULT == 27 && FLAG:画像表示
+	CALL OPTION_画像表示詳細設定
+ELSEIF RESULT == 28
+		FLAG:無知自動喪失禁止 = !FLAG:無知自動喪失禁止
+ELSEIF RESULT == 99
+	IF DAY > 120
+		PRINTFORML 要返回到第一天么？？
+		PRINTL 
+		PRINTL [0]不要按下「開関」啊ーー
+		PRINTL [1]不！到极限了、按下它！就现在！
+		INPUT
+		IF RESULT == 1
+			CALL 強くてニューゲーム
+		ELSE
+;			PRINTW 「スイッチ」を押すのは止められなかったが、幸運にもオプション選択までしか戻らなかった。
+			RESTART
+		ENDIF
+	ELSE
+		CALL SIMATTYAUOJISAN
+	ENDIF
+ELSEIF RESULT == 100
+	RETURN 0
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+RESTART
+;テキスト関連
+@OPTION_TEXT_SETTING
+PRINTL 請进行文本的設定
+PRINT 現在的設定：
+IF FLAG:6 == 1 && FLAG:7 == 2
+	PRINTL 【口上文本（总是显示）＋情景文本】
+ELSEIF FLAG:6 == 1 && FLAG:7 == -1
+	PRINTL 【只有情景文本】
+ELSEIF FLAG:6 == 0 && FLAG:7 == -1
+	PRINTL 【文本不显示】
+ENDIF
+PRINTL 　
+PRINTL [0] - 口上文本＋情景文本
+PRINTL [1] - 只有情景文本
+PRINTL [2] - 文本不显示
+PRINTL [100]-返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 0
+	PRINTL 设定為了【口上文本＋情景文本】
+	FLAG:6 = 1
+	FLAG:7 = 2
+ELSEIF RESULT == 1
+	PRINTL 设定為了【只有情景文本】
+	FLAG:6 = 1
+	FLAG:7 = -1
+ELSEIF RESULT == 2
+	PRINTL 设定為了【文本不显示】
+	FLAG:6 = 0
+	FLAG:7 = -1
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+
+
+@OPTION_HOUSE_INFO
+PRINTL 可以忽略垃圾山的信息
+PRINTL [0] 情報表示ON [1] - OFF
+INPUT
+IF RESULT == 0
+	FLAG:1002 = 0
+ELSE
+	FLAG:1002 = 1
+ENDIF
+
+;@OPTION_TIME
+;PRINTL 時間停止中の信頼度低下をオンにします
+;PRINTL [0] OFF [1] - ON
+;INPUT
+;IF RESULT == 0
+;	
+;ELSE
+;	
+;ENDIF
+
+
+
+@登場キャラ切り替え
+PRINTL 　被指定的人物将不会登場。
+DRAWLINE
+FOR LOCAL,1,CHARANUM
+	SIF CFLAG:LOCAL:出禁
+		SETCOLOR C_D_RED
+	PRINTFORMLC [{LOCAL}] %CALLNAME:LOCAL%
+	RESETCOLOR
+NEXT
+PRINTL 　
+DRAWLINE
+PRINTFORML [999] 設定終了　出禁人物：{FLAG:出禁人数}人　[998]重置
+$LOOP
+INPUT
+IF RESULT >= 1 && RESULT <= CHARANUM
+	IF CFLAG:RESULT:出禁 && FLAG:なりきり != RESULT
+		CFLAG:RESULT:出禁 = 0
+		SIF CFLAG:RESULT:現在位置 == CFLAG:RESULT:初期位置 && CFLAG:RESULT:睡眠
+			LOCK:(CFLAG:RESULT:初期位置) = 1
+		FLAG:出禁人数 --
+	ELSEIF FLAG:なりきり == RESULT
+		IF CFLAG:(FLAG:なりきり):出禁 == 1
+			PRINTFORML 要扮演現在这个人物的话、将会変成两个%CALLNAME:RESULT%同时存在的情况…
+			PRINTL 即使这样也要登場吗？
+			PRINTL [0]是 [1]否
+			INPUT
+			IF RESULT == 0
+				CFLAG:(FLAG:なりきり):出禁 = 0
+				SIF CFLAG:(FLAG:なりきり):現在位置 == CFLAG:(FLAG:なりきり):初期位置 && CFLAG:(FLAG:なりきり):睡眠
+					LOCK:(CFLAG:(FLAG:なりきり):初期位置) = 1
+				FLAG:出禁人数 --
+				PRINTFORMW %CALLNAME:(FLAG:なりきり)%将登場
+			ELSE
+				GOTO LOOP
+			ENDIF
+		ELSE
+			CFLAG:(FLAG:なりきり):出禁 = 1
+			SIF LOCK:(CFLAG:(FLAG:なりきり):初期位置) && CFLAG:(FLAG:なりきり):初期位置 < 100
+				LOCK:(CFLAG:(FLAG:なりきり):初期位置) = 0
+			FLAG:出禁人数 ++
+		ENDIF
+	ELSE
+		CFLAG:RESULT:出禁 = 1
+		SIF LOCK:(CFLAG:RESULT:初期位置) && CFLAG:RESULT:初期位置 < 100
+			LOCK:(CFLAG:RESULT:初期位置) = 0
+		FLAG:出禁人数 ++
+	ENDIF
+	RESTART
+ELSEIF RESULT == 999
+	PRINTW 設定完毕。
+ELSEIF RESULT == 998
+	FOR LOCAL,1,CHARANUM
+		SIF FLAG:なりきり == LOCAL
+			CONTINUE
+		CFLAG:LOCAL:出禁 = 0
+	NEXT
+	FLAG:出禁人数 = 0
+	RESTART
+ELSE
+	GOTO LOOP
+ENDIF
+
+@おっぱい関連Look表示設定
+PRINTL 請进行文本的設定
+PRINT 現在的設定：
+IF FLAG:Look表示用乳房 == 1 && FLAG:Look表示用乳首 == 1
+	PRINTL 【Look時固定描写胸部】
+	PRINTL （毎回不変更固定）
+ELSEIF FLAG:Look表示用乳房 == 1 && FLAG:Look表示用乳首 == 0
+	PRINTL 【Look時描写乳房固定】
+	PRINTL （毎回変更乳头描写、乳房描写固定）
+ELSEIF FLAG:Look表示用乳房 == 0 && FLAG:Look表示用乳首 == 1
+	PRINTL 【Look時描写乳头固定】
+	PRINTL （毎回変更乳房描写、乳头描写固定）
+ELSEIF FLAG:Look表示用乳房 == 0 && FLAG:Look表示用乳首 == 0
+	PRINTL 【Look時随机胸部描写】
+	PRINTL （毎回胸部描写変更）
+ENDIF
+PRINTL 　
+PRINTL [0] - Look時描写胸部関連固定
+PRINTL [1] - Look時描写乳房固定
+PRINTL [2] - Look時描写乳头固定
+PRINTL [3] - Look時描写胸部関連随机
+PRINTL [999]-返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 999
+	RETURN 0
+ELSEIF RESULT == 0
+	PRINTW 设定為【Look時固定描写胸部】了
+	FLAG:Look表示用乳房 = 1
+	FLAG:Look表示用乳首 = 1
+ELSEIF RESULT == 1
+	PRINTW 设定為【Look時固定描写乳房】了
+	FLAG:Look表示用乳房 = 1
+	FLAG:Look表示用乳首 = 0
+ELSEIF RESULT == 2
+	PRINTW 设定為【Look時固定描写乳头】了
+	FLAG:Look表示用乳房 = 0
+	FLAG:Look表示用乳首 = 1
+ELSEIF RESULT == 3
+	PRINTW 设定為【Look時随机胸部描写】了
+	FLAG:Look表示用乳房 = 0
+	FLAG:Look表示用乳首 = 0
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+;---------------------------------------------------------------
+;	画像詳細設定
+;	設定が増えたので新設
+;---------------------------------------------------------------
+@OPTION_画像表示詳細設定
+PRINTL
+PRINTFORML [*]┬ 現在的\@ FLAG:立ち絵種類 ? 顔絵 # 立絵 \@的顯示人数：{FLAG:画像表示}人
+PRINTFORML [1]├ 増加
+PRINTFORML [2]└ 减少
+PRINTFORML [3] - 角色画像的类型 \@ FLAG:立ち絵種類 ? [顔] # [立絵] \@
+PRINTFORML [4]\@ FLAG:挿絵表示 ? ┬ # %" "%- \@ 挿絵的顯示 \@ FLAG:挿絵表示 ? ON # OFF \@
+IF FLAG:挿絵表示
+	PRINT [5]└ 射精画像的种类
+	SELECTCASE FLAG:射精画像種類
+		CASE 0
+			PRINTL  [断面＋効果音]
+		CASE 1
+			PRINTL  [只有断面]
+		CASE 2
+			PRINTL  [只有効果音]
+	ENDSELECT
+ENDIF
+PRINTFORML [6]\@ FLAG:アニメーション ? ┬ # %" "%- \@動画設定 \@ FLAG:アニメーション ? 重複回数 {FLAG:アニメーション}回 # OFF \@
+SIF FLAG:アニメーション
+	;PRINTFORML [7]└アニメ個別設定 挿入：\@FLAG:挿入アニメフィルタ & アニメフィルタ_挿入 ? [×]# [〇]\@　絶頂：\@FLAG:挿入アニメフィルタ & アニメフィルタ_絶頂 ? [×]# [〇]\@　射精：\@FLAG:挿入アニメフィルタ & アニメフィルタ_射精 ? [×]# [〇]\@　溢れ：\@FLAG:挿入アニメフィルタ & アニメフィルタ_溢れ ? [×]# [〇]\@
+	PRINTFORML [7]└挿入中每回合的動画显示：\@FLAG:挿入アニメフィルタ & アニメフィルタ_挿入 ? [×]# [〇]\@
+PRINTFORML [8] - \@ FLAG:立ち絵種類 ? 顔絵 # 立絵 \@的顯示位置 [\@ FLAG:画像表示位置 ? 靠左# 在中央 \@]
+PRINTFORML [9] - 図像有辺框 \@ FLAG:画像枠表示 ? ON # OFF \@
+PRINTFORML [999] - 返回
+INPUT
+IF RESULT == 999
+	RETURN 0
+ELSEIF RESULT == 1
+	FLAG:画像表示++
+	SIF FLAG:画像表示 > 10
+		FLAG:画像表示 = 10
+ELSEIF RESULT == 2
+	FLAG:画像表示--
+	SIF FLAG:画像表示 < 1
+		FLAG:画像表示 = 1
+ELSEIF RESULT == 3
+	FLAG:立ち絵種類 = !FLAG:立ち絵種類
+ELSEIF RESULT == 4
+	FLAG:挿絵表示 = !FLAG:挿絵表示
+ELSEIF RESULT == 5 && FLAG:挿絵表示
+	FLAG:射精画像種類++
+	SIF FLAG:射精画像種類 >= 3
+		FLAG:射精画像種類 = 0
+ELSEIF RESULT == 6
+	FLAG:アニメーション++
+	SIF FLAG:アニメーション >= 6
+		FLAG:アニメーション = 0
+ELSEIF RESULT == 7
+	INVERTBIT FLAG:挿入アニメフィルタ, 0
+	;CALL ASK_M("挿入表示切替",1,"絶頂表示切替",1,"射精表示切替",1,"射精表示切替",1,"戻る",1)
+	;SIF RESULT == 4
+	;	RESTART
+	;INVERTBIT FLAG:挿入アニメフィルタ, RESULT
+	RESTART
+ELSEIF RESULT == 8
+	FLAG:画像表示位置 = !FLAG:画像表示位置
+ELSEIF RESULT == 9
+	FLAG:画像枠表示 = !FLAG:画像枠表示
+ENDIF
+RESTART
+
+@SIMATTYAUOJISAN
+;TW414_移動パッチにて右クリックやマクロによるスキップもしまっちゃうように修正
+;PRINTでのウェイトをなくすかわりにFORCEWAITでスキップ解除するように
+;
+FORCEWAIT
+PRINT 「输入画面上不可能显示的数字的孩子就在这吗？」
+FORCEWAIT
+PRINT 没收叔叔出現了！
+FORCEWAIT
+PRINT 「那么、输入画面上不可能显示的数字的孩子的钱、就这样没收了哦」
+FORCEWAIT
+PRINTFORM 洞窟叔叔把%CALLNAME:MASTER%的现金没收了
+MONEY = 0
+FORCEWAIT
+PRINT 「输入画面上不可能显示的数字的孩子的道具也、就这样没收了哦」
+FORCEWAIT
+PRINTFORM %CALLNAME:MASTER%的道具被没收了
+FOR LOCAL,0,500
+	ITEM:LOCAL = 0
+NEXT
+FORCEWAIT
+PRINT 「输入画面上不可能显示的数字的孩子的技巧也、就这样没收了哦」
+FORCEWAIT
+PRINTFORM %CALLNAME:MASTER%的技巧被没收了
+FORCEWAIT
+FOR LOCAL,0,100
+	ABL:0:LOCAL = 0
+NEXT
+PRINT 「输入画面上不可能显示的数字的孩子的経験也、就这样没收了哦」
+FORCEWAIT
+PRINTFORM %CALLNAME:MASTER%的経験被没收了
+FORCEWAIT
+FOR LOCAL,0,100
+	EXP:0:LOCAL = 0
+NEXT
+;せっかくだし收藏もしまっちゃいましょう（eraTW4.15パンツ対策パッチにて追加）
+;
+PRINT 「输入画面上不可能显示的数字的孩子的内袴藏品也、就这样没收了哦」
+FORCEWAIT
+PRINTFORM %CALLNAME:MASTER%殚精竭智収集到的宝贝般的内袴藏品被没收了
+FORCEWAIT
+FLAG:700 = 0
+FOR LOCAL,1,CHARANUM
+	FOR LOCAL:1,0,MAXPANTS
+		CFLAG:LOCAL:(LOCAL:1 + 100) = 0
+	NEXT
+NEXT
+PRINT 「输入画面上不可能显示的数字的孩子的信頼也、就这样没收了哦」
+FORCEWAIT
+PRINTFORM %CALLNAME:MASTER%获得的少女们的信頼被没收了
+FOR LOCAL,1,CHARANUM
+	CFLAG:LOCAL:信頼度 = 0
+NEXT
+FORCEWAIT
+;
+;
+;PRINT 「画面上に表示されていない数字を手打ちする子の基礎能力も、どんどんしまっちゃうからね」
+;FORCEWAIT
+;PRINTFORM %CALLNAME:MASTER%の基礎能力はしまわれてしまった
+;FOR LOCAL,0,9
+;	MAXBASE:0:LOCAL = 99
+;	BASE:0:LOCAL = min(MAXBASE:0:LOCAL,BASE:0:LOCAL)
+;NEXT
+;さすがにやり過ぎは良くないと思ったのでクリック連打で許してみた
+;作者様へ　勝手に当てたパッチですので不愉快でしたらこの部分だけパッチ前に戻してくださって構いません。
+;
+;
+FORCEWAIT
+PRINTW 不要再这样啦～～～～
+
+
+;セクシーパンツ削除
+@DELETE_SEXYPANTS
+#DIM 対象
+#DIM 種類
+#DIM 所有数
+
+VARSET RESULT
+
+FOR 対象,1,CHARANUM
+	FOR 種類,20,26
+		所有数 = CFLAG:対象:(種類 + 100)
+		IF 所有数 >= 1
+			RESULT:0 += (所有数)
+			CFLAG:対象:(種類 + 100) = 0
+		ENDIF
+	NEXT
+NEXT
+
+;振動棒胖次削除
+@DELETE_VIBEPANTS
+#DIM 対象
+#DIM 種類
+#DIM 所有数
+
+VARSET RESULT
+
+FOR 対象,1,CHARANUM
+	FOR 種類,27,30
+		所有数 = CFLAG:対象:(種類 + 100)
+		IF 所有数 >= 1
+			RESULT:0 += (所有数)
+			CFLAG:対象:(種類 + 100) = 0
+		ENDIF
+	NEXT
+NEXT
+
+

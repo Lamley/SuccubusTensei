@@ -1,0 +1,867 @@
+﻿;-------------------------------------------------
+;403休憩
+;-------------------------------------------------
+@MESSAGE_COM403
+IF TARGET > 0
+	IF CFLAG:TARGET:睡眠
+		PRINTDATAL
+			DATAFORM %CALLNAME:PLAYER%注視着%CALLNAME:TARGET%的睡臉并歇了一会儿
+			DATAFORM %CALLNAME:PLAYER%在睡着的%CALLNAME:TARGET%身辺休息了一会
+		ENDDATA
+	ELSE
+		PRINTDATAL
+			DATAFORM %CALLNAME:PLAYER%和%CALLNAME:TARGET%歇了一会儿
+			DATAFORM %CALLNAME:PLAYER%和%CALLNAME:TARGET%稍微休息了一下
+		ENDDATA
+	ENDIF
+ELSE
+	PRINTDATAL
+		DATAFORM %CALLNAME:PLAYER%歇了一会儿
+		DATAFORM %CALLNAME:PLAYER%稍微休息了一下
+		DATAFORM %CALLNAME:PLAYER%稍微考虑了下今後的計划
+		DATAFORM %CALLNAME:PLAYER%把眼睛闭上再睁開后时间就稍微流逝了一点
+
+	ENDDATA
+ENDIF
+;-------------------------------------------------
+;404轟出去
+;-------------------------------------------------
+;@MESSAGE_COM404
+;LOCAL = ABS(TFLAG:193)
+;IF TFLAG:193 > 0
+;	PRINTFORML %CALLNAME:PLAYER%は\@ TARGET ? %CALLNAME:TARGET%と協力して #  \@%STR:(200 + LOCAL)%を追い払った
+;	PRINTFORML   ― %STR:(200 + LOCAL)%は神霊廟へ帰って行きました ―
+;ELSE
+;	PRINTFORML %CALLNAME:PLAYER%は\@ TARGET ? %CALLNAME:TARGET%と協力して #  \@%STR:(200 + LOCAL)%を追い払おうとした
+;	PRINTFORML %STR:(200 + LOCAL)%は何食わぬ顔で%CALLNAME:PLAYER%\@ TARGET ? 達 #  \@を見つめている…
+;ENDIF
+
+;-------------------------------------------------
+;410,掃除
+;-------------------------------------------------
+@MESSAGE_COM410
+IF FLAG:562 == 1
+PRINTFORML 掃除大致結束后、%CALLNAME:PLAYER%把住客们都叫到起居室里进行了説教。
+PRINTFORML 这样一来她们在一段时间内応该会注意不再乱扔垃圾了吧…
+FLAG:562 = 0
+ELSE
+IF FLAG:70
+	LOCAL:3 = 0
+	FOR LOCAL,1,CHARANUM
+		SIF CFLAG:LOCAL:同室
+			LOCAL:3 ++
+	NEXT
+	IF LOCAL:3 == 1
+		LOCALS = %CALLNAME:MASTER%無視了時停中的%CALLNAME:TARGET%
+	ELSE
+		LOCALS = %CALLNAME:MASTER%
+	ENDIF
+ELSEIF TFLAG:193 && !CFLAG:睡眠 && !CFLAG:うふふ
+	LOCALS = %CALLNAME:MASTER%和%CALLNAME:TARGET%
+ELSEIF CFLAG:うふふ
+	LOCALS = %CALLNAME:MASTER%放下%CALLNAME:TARGET%
+ELSE
+	LOCALS = %CALLNAME:MASTER%
+ENDIF
+IF OUTROOF(CFLAG:MASTER:現在位置) && DAY:2 == 4
+	SELECTCASE TFLAG:194
+		CASE 0
+			PRINTFORML %LOCALS%為了不讓他人滑倒細心地掃着雪
+		CASE 1
+			PRINTFORML %LOCALS%用鏟子把雪鏟干浄了
+		CASE 2
+			PRINTFORML %LOCALS%使用除雪車做好了暂时能夠通過的道路
+			PRINTFORML 周囲還留着不少雪
+		CASE 3
+			IF TALENT:MASTER:清掃中毒
+				PRINTFORML %CALLNAME:MASTER%望着眼前堆積而成的雪山两眼放光并持续进行清扫作業
+				PRINTFORML 周囲還留着不少雪
+			ELSE
+				PRINTFORML %LOCALS%厌悪地望着堆積而成的雪山并持续进行清扫作業
+				PRINTFORML 周囲還留着不少雪
+			ENDIF
+	ENDSELECT
+ELSEIF OUTROOF(CFLAG:MASTER:現在位置)
+	SELECTCASE TFLAG:194
+		CASE 0
+			PRINTFORML %LOCALS%為了美觀打掃着細小的垃圾
+		CASE 1
+			PRINTFORML %LOCALS%用掃帚打掃着周囲的垃圾
+		CASE 2
+			PRINTFORML %LOCALS%取出垃圾袋把落下的垃圾一個個地処理了
+			PRINTFORML 周囲还是很杂乱
+		CASE 3
+			IF TALENT:MASTER:清掃中毒
+				PRINTFORML %CALLNAME:MASTER%望着眼前有着圧倒性数量的垃圾两眼放光并持续进行清扫作業
+				PRINTFORML 周囲还是很杂乱
+			ELSE
+				PRINTFORML %LOCALS%厌悪地望着眼前有着圧倒性数量的垃圾并持续进行清扫作業
+				PRINTFORML 周囲还是很杂乱
+			ENDIF
+	ENDSELECT
+ELSE
+	SELECTCASE TFLAG:194
+		CASE 0
+			IF TALENT:MASTER:汚臭耐性 < 0
+				PRINTFORML %LOCALS%対每个角落都进行了细致的打扫
+			ELSE
+				PRINTFORML %LOCALS%用抹布擦拭起了周囲的汚渍
+			ENDIF
+		CASE 1
+			PRINTFORML %LOCALS%拿起扫帚和簸箕清扫了四周
+		CASE 2
+			IF TALENT:MASTER:汚臭耐性 > 0 && CFLAG:MASTER:現在位置 == 15
+				PRINTFORML %LOCALS%把垃圾集中起来塞进壁橱
+				PRINTFORML 周囲还是很杂乱
+			ELSE
+				PRINTFORML %LOCALS%把垃圾集中起来丢到了廃纸篓里
+				PRINTFORML 周囲还是很杂乱
+			ENDIF
+		CASE 3
+			IF TALENT:MASTER:清掃中毒
+				PRINTFORML %CALLNAME:MASTER%望着眼前有着圧倒性数量的垃圾两眼放光并持续进行清扫作業
+				PRINTFORML 周囲还是很杂乱
+			ELSE
+				PRINTFORML %LOCALS%厌悪地望着眼前有着圧倒性数量的垃圾并持续进行清扫作業
+				PRINTFORML 周囲还是很杂乱
+			ENDIF
+	ENDSELECT
+ENDIF
+IF TALENT:MASTER:清掃中毒
+	PRINTFORML %CALLNAME:MASTER%因為掃除的快楽而満脸通红、冒着泪光持续地扫除着
+	PRINT 由于极度的快楽而露出一副物我两忘的荡漾神情
+	IF CFLAG:MASTER:現在位置 == 3
+		PRINTFORMW 把塞钱箱里的东西丢进了廃纸篓里
+		PRINTFORML 差点沒進
+	;食卓分岐
+	ELSEIF CFLAG:MASTER:現在位置 == 9 || CFLAG:MASTER:現在位置 == 27 || CFLAG:MASTER:現在位置 == 41
+		PRINTFORML 不停地動着擦碗布并発出潮湿的水声
+		PRINTFORML 如果置之不理就会永远需要清扫的样子
+	;倉庫、壁櫥間分岐
+	ELSEIF CFLAG:MASTER:現在位置 == 6 || CFLAG:MASTER:現在位置 == 18 || CFLAG:MASTER:現在位置 == 35 || CFLAG:MASTER:現在位置 == 51
+		PRINTFORML 持续进行着整理并発出磕磕碰碰的声音
+		PRINTFORML 如果置之不理就会永远需要清扫的样子
+	ELSE
+		PRINTFORML 不停地動着抹布并発出潮湿的水声
+		PRINTFORML 如果置之不理就会永远需要清扫的样子
+	ENDIF
+ELSEIF CFLAG:うふふ && !FLAG:70
+	PRINTL 毫不介意从背後飘来的冰冷視線
+ENDIF
+IF STRLENS(TSTR:2)
+	WAIT
+	PRINTFORML 脱下来的%TSTR:2%丢在了地上
+	PRINT [0] - 偸走 [1] - 还是算了
+	INPUT
+	IF !RESULT
+		PRINTFORML 悄悄地把%TSTR:2%偸走了
+		CALL PANTS_GETTING(FOUND_PANTS_OWNER, FOUND_PANTS_TYPE)
+	ELSE
+		TSTR:3 =
+		PRINTFORML 把%TSTR:2%放进了洗衣篮
+	ENDIF
+ENDIF
+
+SIF !TFLAG:193 && TARGET > 0 && !CFLAG:睡眠 && !FLAG:70
+	PRINTFORML %CALLNAME:TARGET%钦佩地注视着%CALLNAME:MASTER%的清扫作業
+ENDIF
+;-------------------------------------------------
+;411,戦闘訓練
+;-------------------------------------------------
+@MESSAGE_COM411
+PRINTFORM %CALLNAME:MASTER%
+IF TARGET > 0
+	IF ABL:MASTER:戦闘能力 > ABL:TARGET:戦闘能力
+		PRINTFORM 一辺対%CALLNAME:TARGET%进行指导一辺
+	ELSE
+		PRINTFORM 一辺接受%CALLNAME:TARGET%的指导一辺
+	ENDIF
+ENDIF
+IF !TFLAG:194
+	PRINTL 进行弾幕訓練
+ELSE
+	SELECTCASE TIME:5
+		CASE 4,6
+			PRINTL 进行雨中的弾幕訓練
+			PRINTL 非常的累
+		CASE 1
+			IF TFLAG:194 == 3
+				PRINTL 在強烈的直射日光下进行弾幕訓練
+				PRINTL 好像要中暑了…
+			ELSE
+				PRINTL 在万里无云的蓝天下进行弾幕訓練
+			ENDIF
+		CASE 5
+			PRINTL 在暴雨中、强行进行厳格的訓練
+			PRINTW 累得快死了
+		CASE 8,10,12,13
+			PRINTL 进行雪中的弾幕訓練
+			PRINTL 非常的累
+		CASE 9
+			PRINTL 在暴风雪中、强行进行厳格的訓練
+			PRINTW 累得快死了
+		CASEELSE
+			PRINTL 进行弾幕訓練
+	ENDSELECT
+ENDIF
+SIF ABL:MASTER:戦闘能力 > 2 && TARGET > 0
+	PRINTFORML %CALLNAME:TARGET%対%CALLNAME:MASTER%的実力感到佩服
+SIF ABL:MASTER:戦闘能力 < ABL:TARGET:戦闘能力 - 2
+	PRINTFORML %CALLNAME:TARGET%的指導非常有用
+SIF TFLAG:194
+	PRINTFORMW %CALLNAME:TARGET%通过厳格的訓練磨炼了毅力
+IF TFLAG:193
+	PRINTW
+	PRINTL 在訓練後喝了运動饮料
+	PRINTL 水分渗透进了疲惫的身体里…
+	ITEM:運動飲料 --
+ENDIF
+;-------------------------------------------------
+;412,学習
+;-------------------------------------------------
+@MESSAGE_COM412
+PRINTFORM %CALLNAME:MASTER%
+IF TARGET > 0 && !CFLAG:TARGET:睡眠 && CFLAG:行動 != 5
+	IF ABL:MASTER:教養 > ABL:TARGET:教養
+		PRINTFORM 一辺时不时教导%CALLNAME:TARGET%一辺
+	ELSE
+		PRINTFORM 一辺时不时接受%CALLNAME:TARGET%教导一辺
+	ENDIF
+ELSEIF TARGET > 0
+	PRINTFORM 在%CALLNAME:TARGET%陪伴下
+ENDIF
+PRINTL 进行学习
+SIF ABL:MASTER:教養 > 2 && TARGET > 0 && !CFLAG:TARGET:睡眠 && CFLAG:行動 != 5
+	PRINTFORML %CALLNAME:TARGET%対%CALLNAME:MASTER%的知識感到佩服
+SIF ABL:MASTER:教養 < ABL:TARGET:教養 - 2 && !CFLAG:TARGET:睡眠&& CFLAG:行動 != 5
+	PRINTFORML %CALLNAME:TARGET%的指導非常有用
+IF ITEM:214 > 0
+	PRINTFORML %CALLNAME:MASTER%把作業全做完了
+	ITEM:214 --
+ENDIF
+;-------------------------------------------------
+;413,料理
+;-------------------------------------------------
+@MESSAGE_COM413
+IF TFLAG:194 >= 100
+	LOCALS = %ITEMNAME:(TFLAG:194 - 100)%
+	PRINTFORM %CALLNAME:MASTER%
+	SELECTCASE DAY:2
+		CASE 1
+			PRINTFORML 用胡椒盐给%LOCALS%调味后裹上一层薄薄的小麦粉进行油炸
+		CASE 2
+			PRINTFORML 把処理好的%LOCALS%用開水快速烫一下后装到凉的碗里、加上梅肉
+		CASE 3
+			PRINTFORML 将%LOCALS%做成刺身后稍微烤一下、作成饭团涂上特製的佐料
+		CASE 4
+			PRINTFORML 用海帯為底料的纯粹高汤将蔬菜和%LOCALS%一起煮
+	ENDSELECT
+ENDIF
+;-------------------------------------------------
+;414,吃飯
+;-------------------------------------------------
+@MESSAGE_COM414
+IF TARGET > 0 && !CFLAG:TARGET:睡眠
+	PRINTFORML %CALLNAME:PLAYER%邀請%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 们 # \@吃饭
+;ELSEIF TARGET > 0 && CFLAG:TARGET:衰弱
+;	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に吃飯を取らせた
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%独自一人默默的吃饭…
+ENDIF
+SIF TFLAG:194 ==  1
+PRINTL 这是…　无胖次涮涮锅啊！
+SIF TFLAG:194 ==  2
+PRINTL 这看来能补足精力！
+IF TFLAG:194 ==  34
+	PRINTW 「这是什么料理？」
+	PRINTW 「金吉獣料理」
+	PRINTW 「材料是？」
+	PRINTW 「金吉獣」
+ENDIF
+IF TFLAG:194 == 30
+	PRINTL 太～美～味了！　 ……这、这是～！ 这种味道～！ 清爽的起司和番茄的多汁部分融合在一起！ 
+	PRINTL 起司和番茄！ 番茄和起司相互映衬！ 真是“融洽和谐”啊～这就是“味的調和”吗～！
+	PRINTL 就好比西蒙和加芬克尔的二重唱！　毛毛虫配金亀子！　高森朝雄的原作対千叶彻弥画的“明日之丈”！
+ENDIF
+IF TFLAG:194 == 31
+	PRINTL 用不計其数的食材・薬物精密平衡地调制成特殊的口味并煮上七天七夜！！
+	PRINTL 絶対无法从血液和尿中检験出来、并且所有薬物的効果也増為数倍…
+	PRINTL 从血管注射（比起食用）效果还会再増加数倍！！
+ENDIF
+IF TCVAR:MASTER:308 < 8
+	SIF CFLAG:TARGET:味覚嗜好 & TCVAR:MASTER:308
+		PRINTFORML %CALLNAME:TARGET%対菜的味道很中意的样子
+	IF TFLAG:193 == 1
+		PRINTFORML %CALLNAME:TARGET%和%CALLNAME:PLAYER%一辺吃%DISHNAME%一辺渡过了一段快楽的时光…
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML …看起来不合%CALLNAME:TARGET%口味的样子
+	ENDIF
+ELSE
+	IF TARGET > 0
+		CALL MESSAGE_REACTION_TASTE
+	;激辛
+	ELSEIF TCVAR:MASTER:308 & 8
+		PRINTFORML 突如其来的強烈辣味令%CALLNAME:PLAYER%不省人事了好一会儿…
+	;激甘
+	ELSEIF TCVAR:MASTER:308 & 16
+		PRINTFORML 実在太甜了令%CALLNAME:PLAYER%无法下筷…
+	;わさび
+	ELSEIF TCVAR:MASTER:308 & 32
+		PRINTFORML %CALLNAME:PLAYER%耸動着鼻子享受起了芥末的香味
+	;レモン
+	ELSEIF TCVAR:MASTER:308 & 64
+		PRINTFORML 口腔里扩散開的酸味令%CALLNAME:PLAYER%闭紧了嘴巴…
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;415,招待吃飯
+;-------------------------------------------------
+@MESSAGE_COM415
+PRINTFORML %CALLNAME:PLAYER%招待%CALLNAME:TARGET%\@ GET_TARGETNUM() > 1 ? 们 # \@吃饭
+IF TCVAR:MASTER:308 < 8
+	SIF CFLAG:TARGET:味覚嗜好 & TCVAR:MASTER:308
+		PRINTFORML %CALLNAME:TARGET%対菜的味道很中意的样子
+	IF TFLAG:193 == 1
+		PRINTFORML %CALLNAME:TARGET%把%DISHNAME%吃得干干浄浄看起来很満意…
+	ELSEIF TFLAG:193 == -1
+		PRINTFORML …看起来不合%CALLNAME:TARGET%口味的样子
+	ENDIF
+ELSE
+	CALL MESSAGE_REACTION_TASTE
+ENDIF
+
+;-------------------------------------------------
+;416,演奏
+;-------------------------------------------------
+@MESSAGE_COM416
+#DIM DYNAMIC 楽器弾き
+#DIM DYNAMIC 歌唄い
+#DIMS DYNAMIC 楽器筆頭
+#DIMS DYNAMIC 歌筆頭
+VARSET LOCAL
+LOCAL = -1
+WHILE 1
+	LOCAL = FINDCHARA(TALENT:音楽知識, 1, LOCAL + 1)
+	SIF LOCAL < 0
+		BREAK
+	SIF !LOCAL
+		CONTINUE
+	IF CFLAG:MASTER:現在位置 == CFLAG:LOCAL:現在位置
+		IF !ACCOMPANY_ABLE(LOCAL) || TARGET == LOCAL
+			CONTINUE
+		ELSE
+			IF !楽器弾き
+				楽器筆頭 = %CALLNAME:LOCAL%
+			ELSEIF !RAND:楽器弾き
+				楽器筆頭 = %CALLNAME:LOCAL%
+			ENDIF
+			楽器弾き ++
+		ENDIF
+	ENDIF
+WEND
+LOCAL:1 = -1
+WHILE 1
+	LOCAL:1 = FINDCHARA(TALENT:音楽知識, 2, LOCAL:1 + 1)
+	SIF LOCAL:1 <0
+		BREAK
+	SIF !LOCAL:1
+		CONTINUE
+	IF CFLAG:MASTER:現在位置 == CFLAG:(LOCAL:1):現在位置
+		IF !ACCOMPANY_ABLE(LOCAL:1) || TARGET == LOCAL:1
+			CONTINUE
+		ELSE
+			IF !歌唄い
+				歌筆頭 = %CALLNAME:(LOCAL:1)%
+			ELSEIF !RAND:歌唄い
+				歌筆頭 = %CALLNAME:(LOCAL:1)%
+			ENDIF
+			歌唄い ++
+		ENDIF
+	ENDIF
+WEND
+SIF 楽器弾き > 1
+	楽器筆頭 += "們"
+SIF 歌唄い > 1
+	歌筆頭 += "們"
+IF TFLAG:使用楽器 != 0
+	PRINTFORM %CALLNAME:MASTER%
+	;楽器持ちキャラ、プリリバ三姉妹と九十九姉妹と雷鼓がTARGETで彼女らの音楽技能を上回っている
+	IF TARGET > 0 && (ABL:MASTER:音楽技能 >= ABL:TARGET:音楽技能) && TALENT:TARGET:音楽知識 == 1 && ACCOMPANY_ABLE(TARGET)
+		PRINTFORM 与%CALLNAME:TARGET%並列
+	;歌唱キャラ、米斯蒂亜と響子、艾倫がTARGETで彼女らの音楽技能を上回っている
+	ELSEIF TARGET > 0 && (ABL:MASTER:音楽技能 >= ABL:TARGET:音楽技能) && TALENT:TARGET:音楽知識 == 2 && ACCOMPANY_ABLE(TARGET)
+		PRINTFORM 配合着%CALLNAME:TARGET%的歌声
+	;主人公の音楽技能がTARGETより低いかTARGETが音楽知識を持っている
+	ELSEIF TARGET > 0 && (ABL:MASTER:音楽技能 <= ABL:TARGET:音楽技能 || TALENT:TARGET:音楽知識)
+		PRINTFORM 一辺接受%CALLNAME:TARGET%的指导一辺
+	ELSEIF 楽器弾き && 歌唄い
+		PRINTFORM 与%楽器筆頭%並列、配合着%歌筆頭%的歌声
+		LOCAL:2 = 3
+	ELSEIF 楽器弾き
+		PRINTFORM 与%楽器筆頭%並列、
+		LOCAL:2 = 2
+	ELSEIF 歌唄い
+		PRINTFORM 配合着%歌筆頭%、
+		LOCAL:2 = 1
+	ENDIF
+	SELECTCASE TFLAG:使用楽器
+		CASE 1
+			PRINTL 弾着电子琴
+		CASE 2
+			PRINTL 弾着钢琴
+		CASE 3
+			PRINTL 弾着吉他
+		CASE 4
+			PRINTL 吹着小号
+		CASE 5
+			PRINTL 拉着小提琴
+	ENDSELECT
+	IF TFLAG:193 == 1
+		IF LOCAL:2
+			IF TARGET && !GROUPMATCH(TARGET,20,21,22,28,44,88,94,95,96)
+				PRINTFORM %CALLNAME:TARGET%\@ IN_ROOM_NUMBER(CFLAG:MASTER:現在位置) > 2 ? 們 #  \@、享受着%CALLNAME:MASTER%和
+				IF LOCAL:2 == 3
+					PRINTFORM %楽器筆頭%和%歌筆頭%的即興表演
+				ELSEIF LOCAL:2 == 2
+					PRINTFORM %楽器筆頭%的合奏
+				ELSEIF LOCAL:2 == 1
+					PRINTFORM %歌筆頭%的共演
+				ENDIF
+				PRINTFORML 并沈浸其中
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%、興致勃勃的享受着和%CALLNAME:MASTER%的演奏
+			ENDIF
+		ELSE
+			IF TARGET
+				IF !GROUPMATCH(TARGET,20,21,22,28,44,88,94,95,96)
+					PRINTFORML %CALLNAME:TARGET%\@ IN_ROOM_NUMBER(CFLAG:MASTER:現在位置) > 2 ? 們 #  \@聽得入迷一臉陶酔
+				ELSE
+					PRINTFORML %CALLNAME:TARGET%、興致勃勃的享受着和%CALLNAME:MASTER%的演奏
+				ENDIF
+			ELSEIF (WITH_MOB() || DATE_HITOGOMI()) && !GROUPMATCH(TIME:2,1,6,7)
+				PRINTFORML 聽得入迷的\@ (MAIN_MAP !=9 && CFLAG:MASTER:現在位置 == 960) || (IN_HOME(CFLAG:MASTER:現在位置) && !CHK_FOCUS(927,CFLAG:MASTER:現在位置,948) && (ROOMDATA:(CFLAG:MASTER:現在位置 % 100) & 場所_モブ)) ? %ANIMALNAME()% # %DATE_HITOGOMI_SYUBETU()% \@靠近了%CALLNAME:MASTER%身辺
+			ELSE
+				PRINTFORML 奏響了誰也沒有聽到的得意的演奏
+			ENDIF
+		ENDIF
+	ELSEIF TFLAG:193 == -1
+		IF LOCAL:2
+			IF TARGET && !GROUPMATCH(TARGET,20,21,22,28,44,88,94,95,96)
+				PRINTFORM %CALLNAME:TARGET%、因為%CALLNAME:MASTER%和
+				IF LOCAL:2 == 3
+					PRINTFORM %楽器筆頭%和%歌筆頭%的
+				ELSEIF LOCAL:2 == 2
+					PRINTFORM %楽器筆頭%的
+				ELSEIF LOCAL:2 == 1
+					PRINTFORM %歌筆頭%的
+				ENDIF
+				PRINTFORML 不協和音而面色不快皺起眉頭
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%、急忙離開了和%CALLNAME:MASTER%的演奏
+			ENDIF
+		ELSE
+			IF TARGET
+				PRINTFORML %CALLNAME:TARGET%用双手堵住了耳朵
+			ELSEIF WITH_MOB() || DATE_HITOGOMI()
+				PRINTFORML \@ (MAIN_MAP !=9 && CFLAG:MASTER:現在位置 == 960) || (IN_HOME(CFLAG:MASTER:現在位置) && !CHK_FOCUS(927,CFLAG:MASTER:現在位置,948) && (ROOMDATA:(CFLAG:MASTER:現在位置 % 100) & 場所_モブ)) ? %ANIMALNAME()% # %DATE_HITOGOMI_SYUBETU()% \@、急忙從%CALLNAME:MASTER%身辺離開了
+			ELSE
+				PRINTFORML 糟糕的演奏擾乱了周囲的平静
+			ENDIF
+		ENDIF
+	ELSE
+		IF LOCAL:2
+			IF TARGET && !GROUPMATCH(TARGET,20,21,22,28,44,88,94,95,96)
+				PRINTFORM %CALLNAME:TARGET%\@ IN_ROOM_NUMBER(CFLAG:MASTER:現在位置) > 2 ? 們 #  \@、享受着%CALLNAME:MASTER%和
+				IF LOCAL:2 == 3
+					PRINTFORM %楽器筆頭%和%歌筆頭%的即興演奏
+				ELSEIF LOCAL:2 == 2
+					PRINTFORM %楽器筆頭%的合奏
+				ELSEIF LOCAL:2 == 1
+					PRINTFORM %歌筆頭%的共演
+				ENDIF
+				PRINTFORML 并投去了佩服的視線
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%、開心的努力和%CALLNAME:MASTER%一起演奏
+			ENDIF
+		ELSE
+			IF TARGET
+				IF !GROUPMATCH(TARGET,20,21,22,28,44,88,94,95,96)
+					PRINTFORML %CALLNAME:TARGET%\@ IN_ROOM_NUMBER(CFLAG:MASTER:現在位置) > 2 ? 們 #  \@帯着欽佩的表情聽着
+				ELSE
+					PRINTFORML %CALLNAME:TARGET%、開心的努力和%CALLNAME:MASTER%一起演奏
+				ENDIF
+			ELSEIF WITH_MOB() || DATE_HITOGOMI()
+				PRINTFORML \@ (MAIN_MAP !=9 && CFLAG:MASTER:現在位置 == 960) || (IN_HOME(CFLAG:MASTER:現在位置) && !CHK_FOCUS(927,CFLAG:MASTER:現在位置,948) && (ROOMDATA:(CFLAG:MASTER:現在位置 % 100) & 場所_モブ)) ? %ANIMALNAME()% # %DATE_HITOGOMI_SYUBETU()% \@、靠近了%CALLNAME:MASTER%身辺
+			ELSE
+				PRINTFORML 奏響了誰也沒有聽到的演奏
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;417,午睡
+;-------------------------------------------------
+@MESSAGE_COM417
+TFLAG:193 = RAND:6
+IF TFLAG:194 == 2
+	SELECTCASE TFLAG:193
+		CASE 0,2,4
+			PRINTFORML %CALLNAME:PLAYER%刚一起身一条毛毯就从身上滑落下来
+			PRINTFORML 不知道是谁披上去的
+			PRINTFORML 在感谢関照之余%CALLNAME:PLAYER%継续展開了行動
+		CASEELSE
+			PRINTL 一醒来榻榻米硬邦邦的触感就传了过来
+	ENDSELECT
+ELSEIF TFLAG:194 == 1
+	IF CFLAG:TARGET:添い寝中
+		PRINTFORML %CALLNAME:TARGET%在%CALLNAME:PLAYER%身旁発出了平稳的鼾声…
+	ELSE
+		SELECTCASE TFLAG:193
+			CASE 0
+				PRINTFORML 总覚得身体好重……
+				PRINTFORML 怀着対身体无法動弾的疑问一睁開眼睛就発现
+				PRINTFORM %CALLNAME:TARGET%正抱着%CALLNAME:PLAYER%睡覚　
+				IF TARGET == 57 && !TALENT:恋慕
+					PRINTFORML 摇晃着笑嘻嘻的老翁面具
+				ELSE
+					PRINTFORML 她的表情很安详
+				ENDIF
+				PRINTFORML 因為这样就動不了了只好苦笑着推了推%CALLNAME:TARGET%
+			CASE 1
+				PRINTFORML 一醒来%CALLNAME:PLAYER%就感覚大腿被重物圧着
+				PRINTFORML 是%CALLNAME:TARGET%在把%CALLNAME:PLAYER%的身体当枕头睡覚
+				PRINTFORML %CALLNAME:PLAYER%一从她的腦袋下面把身体抽出来
+				PRINTFORML 枕头的使用者就発出了不満的嘟囔声睁開了眼睛
+			CASE 2
+				PRINTFORML 一醒来就発现%CALLNAME:TARGET%正坐在一旁
+				PRINTFORM 不知為什么捂住了小嘴
+				IF TARGET == 57 && !TALENT:恋慕
+					PRINTFORML 用猿猴面具把脸隠藏了起来
+				ELSE
+					PRINTFORML 満臉通紅
+				ENDIF
+				PRINTFORML 面対%CALLNAME:PLAYER%的问候%CALLNAME:TARGET%不太习惯的回以问候
+			CASE 3
+				PRINTFORML %CALLNAME:PLAYER%一醒来眼前就出现了%CALLNAME:TARGET%的脸
+				PRINTFORML 発覚到自己的脸被看着的%CALLNAME:TARGET%迅速后退
+				PRINTFORM 虽然%CALLNAME:TARGET%像什么事也没発生过似的举止自若但是
+				IF TARGET == 57 && !TALENT:恋慕
+					PRINTFORML 猿猴和獅子口面具正乱舞着
+				ELSE
+					PRINTFORML 耳朵都红透了
+				ENDIF
+				PRINTFORML %CALLNAME:PLAYER%忍不住窃笑起来
+			CASE 4
+				PRINTFORML 醒来的%CALLNAME:PLAYER%発覚%CALLNAME:TARGET%正為自己作膝枕
+				PRINTFORML 注意到%CALLNAME:PLAYER%醒了的%CALLNAME:TARGET%露出微笑 抚摸起了%CALLNAME:PLAYER%的頭
+				PRINTFORML 两人一言不発、就这样渡过了一段时间
+			CASE 5
+				PRINTFORML %CALLNAME:PLAYER%因為两腿之间被揉来揉去的感覚而睁開了眼睛
+				PRINTFORML 出现在眼前的是%CALLNAME:TARGET%的脸
+				PRINTFORML 即使被%CALLNAME:PLAYER%不満地瞟了一眼%CALLNAME:TARGET%还是満不在乎地継续着下流的按摩
+		ENDSELECT
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;420,和留琴対話
+;-------------------------------------------------
+@MESSAGE_COM420
+PRINTFORML 留琴「如上所述。\@ TFLAG:195 != 0 && TFLAG:195 != 14 ? 那么、欢迎光顾 # 还有别的疑问吗？\@」
+;-------------------------------------------------
+;421,祈願
+;-------------------------------------------------
+@MESSAGE_COM421
+SIF FLAG:祈願内容 == 0
+RETURN 0
+IF !TFLAG:193
+	PRINTFORML %CALLNAME:PLAYER%投入賽銭許願能得到内袴
+	SIF FLAG:祈願内容 <= 10 || FLAG:祈願内容 == 57 || FLAG:祈願内容 == 71 || FLAG:祈願内容 == FLAG:15
+		PRINTFORML 感覚和%CALLNAME:(FLAG:祈願内容)%的関系加深了…
+	SIF FLAG:祈願内容 >= 11 && FLAG:祈願内容 <= CHARANUM && FLAG:祈願内容 != 57 && FLAG:祈願内容 != 71 && FLAG:祈願内容 != FLAG:15
+		PRINTFORML 总覚得明天似乎能见到%CALLNAME:(FLAG:祈願内容)%…
+	SIF FLAG:祈願内容 == 200
+		PRINTL 总覚得突然心血来潮…
+	SIF FLAG:祈願内容 == 201
+		PRINTL 感覚到心態変得平和、煩悩也減弱了
+	SIF FLAG:祈願内容 == 202
+		PRINTL 感覚现在去的话不管多少内袴都能軽易到手…！
+	SIF FLAG:祈願内容 == 203
+		CALL PINK_WIND
+ELSEIF TFLAG:193 >= 101 && TFLAG:193 <= 105
+	SELECTCASE TFLAG:193
+		CASE 101
+			LOCALS = "Ｃ感度"
+		CASE 102
+			LOCALS = "Ｖ感度"
+		CASE 103
+			LOCALS = "Ａ感度"
+		CASE 104
+			LOCALS = "Ｂ感度"
+		CASE 105
+			LOCALS = "Ｍ感度"
+	ENDSELECT
+	PRINTFORML %CALLNAME:TARGET%不知為何感覚心神不宁…
+	PRINTFORML %CALLNAME:TARGET%的%LOCALS%暂时提高了。
+ELSEIF TFLAG:193 == 200
+	PRINTFORML %CALLNAME:53%下達了神罰！
+ENDIF
+;-------------------------------------------------
+;431,在浴室里放鬆
+;-------------------------------------------------
+@MESSAGE_COM431
+;番台を怒らせてしまった場合
+IF (TFLAG:209 == 4 && CFLAG:MASTER:現在位置 == 250) || (TFLAG:211 == 4 && CFLAG:MASTER:現在位置 == 940)
+		PRINTFORML 从番台的妹子那辺飘来了尖鋭的视线……
+		PRINTFORML 还是改日再来比较好吧……
+;既に入浴している
+ELSEIF TFLAG:194 == 1
+	IF (CFLAG:MASTER:現在位置 == 大衆浴場 && TFLAG:209 == 0) || (CFLAG:MASTER:現在位置 == 940 && TFLAG:211 == 0)
+		PRINTFORML 因為刚刚洗过澡还是过一段时间再来吧
+	ELSEIF TFLAG:209 == 1 && MAIN_MAP != 2 && CFLAG:MASTER:現在位置 == 大衆浴場
+		PRINTFORML 「覚得不错的话請再来哦、慢走」
+	ELSEIF TFLAG:211 == 1 && MAIN_MAP != 9 && CFLAG:MASTER:現在位置 == 940
+		PRINTFORML 「俺会等您再来光顾哦ー！」
+	ELSE
+		PRINTFORML 刚刚才进去过的
+	ENDIF
+ELSE
+	IF CFLAG:MASTER:現在位置 == 大衆浴場 || CFLAG:MASTER:現在位置 == 940
+		PRINTFORML %CALLNAME:PLAYER%恢复了精神
+;	ELSEIF CFLAG:MASTER:現在位置 == 13 || CFLAG:MASTER:現在位置 == 24 || CFLAG:MASTER:現在位置 == 30 || CFLAG:MASTER:現在位置 == 39
+	ELSEIF BATHCHECK(CFLAG:MASTER:現在位置)
+		PRINTFORML %CALLNAME:PLAYER%在浴場里放松了一会儿
+	ELSE
+		PRINTFORML %CALLNAME:PLAYER%在簡易泳池里放松了一会儿
+		SIF GETBIT (FLAG:プール, 2)
+			PRINTL 并清洗了身体
+		TFLAG:400 = RAND:2
+		IF TFLAG:400 && DATE_HITOGOMI()
+			PRINTFORML 在周囲的%DATE_HITOGOMI_SYUBETU()%、用異樣的眼光注視着把簡易泳池帯到這種場所
+			PRINTFORML 正清洗浸泡着的身体的%CALLNAME:MASTER%……
+		ENDIF
+	ENDIF
+	
+ENDIF
+
+;-------------------------------------------------
+;440,等待
+;-------------------------------------------------
+@MESSAGE_COM440
+PRINTFORM %CALLNAME:MASTER%
+IF ((!IN_HOME(CFLAG:MASTER:現在位置) && !NOSAMES(CFLAG:MASTER:現在位置, 10, 地蔵小路, 広場, 霧之湖, 竹林入口, 森林的入口, 中有之道, 山麓樹海, 九天瀑布, 幻想風穴)) || (IN_HOME(CFLAG:MASTER:現在位置) && CHK_ENTRANCE(CFLAG:MASTER:現在位置, MAIN_MAP))) && !RAND:3
+		PRINT 
+	;場所分岐、場所別に複数パターンを
+	SELECTCASE CFLAG:MASTER:現在位置
+		CASE 参道,10
+			PRINTDATAL
+				DATAFORM 一辺望着参道的正前方一辺消磨着時間…
+				DATAFORM 坐在参道的石阶上、让時間流逝着…
+				DATAFORM 一辺听着从神社传来的喧闹声一辺感受着时间的流逝…
+				DATAFORM 思考着刚才掠过参道的生物究竟是什么…
+				DATAFORM 数着每次数台階数都不一樣的石階…
+			ENDDATA
+		CASE 地蔵小路,101
+			PRINTDATAL
+				DATAFORM 参拜着各种各样的地蔵来消磨时间…
+				DATAFORM 一辺乘机观赏供奉在地蔵周囲的大量風車一辺消磨着時間…
+				DATAFORM 和来参拜地藏的老婆婆説着無聊的閒話消磨着時間…
+				DATAFORM 一辺望着命蓮寺的方向一辺享受着流逝的时光…
+				DATAFORM 為了回想起刚才通过这条路的到底是谁而陷入了思考…
+			ENDDATA
+		CASE 広場,201
+			PRINTDATAL
+				DATAFORM 一辺听着从広場传来的喧闹声一辺让时间流逝…
+				DATAFORM 在路上往来的行人侧目下消磨着時間…
+				DATAFORM 在人潮之中感到了独自一人的孤独感…
+				DATAFORM 怀着対某人将来到広場的期待安静的一个人等待着…
+				DATAFORM 想不起来刚才向自己打招呼的人是谁、渡过了段苦悩的时光…
+			ENDDATA
+		CASE 霧之湖,301
+			PRINTDATAL
+				DATAFORM 望着建在正対面的紅魔館消磨着時間…
+				DATAFORM 一辺望着湖面一辺渡过了一段平静的时光…
+				DATAFORM 趁机眺望着高耸的妖怪之山消磨着時間…
+				DATAFORM 在水面上発現了人影一樣的東西、因為不算稀奇所以不是很在意…
+				DATAFORM 感覚聽到了從霧的正前方傳来了記憶中的声音所以有些在意…
+			ENDDATA
+		CASE 竹林入口,447
+			PRINTDATAL
+				DATAFORM 一辺挖竹笋一辺消磨着时间…\@DAY:2 == 1 ? # 嗯、竹笋？ \@
+				DATAFORM 聽着茂密的草叢和竹林隨風搖曳的声音消磨着時間…
+				DATAFORM 享受着竹林深処傳来的因幡們的喧鬧声…
+				DATAFORM 观察着竹林中飘浮的霧气渡过了许久时间…
+				DATAFORM 观察着穿破菌菇而発芽的竹笋和从竹笋上長出的菌菇。连这种地方都戦火四起呢…
+			ENDDATA
+		CASE 森林的入口,501
+			PRINTDATAL
+				DATAFORM 一辺远远望着香霖堂里面一辺消磨着時間…
+				DATAFORM 一辺望着森林里耸立的大樹一辺感受時間缓慢的流逝…
+				DATAFORM 為消磨時間观察着妖気弥漫的森林的様子…
+				DATAFORM 有些煩悩在路辺生長的奇怪的菌菇到底能不能吃、等到注意的時候已経想了很長一段時間…
+				DATAFORM 观察着穿破菌菇而発芽的竹笋和从竹笋上長出的菌菇。连这种地方都戦火四起呢…
+			ENDDATA
+		CASE 中有之道
+			PRINTDATAL
+				DATAFORM 望着建在川対面的白玉楼消磨着時間…
+				DATAFORM 一辺看着三途川上的渡舟一辺让时间慢慢流逝…
+				DATAFORM 一辺听着川的流水声、一辺消磨着時間…
+				DATAFORM 細数着從渡過三途川的幽霊的数量、等察覚的時候已経度過了不短的時間…
+				DATAFORM 拒絶幽霊提出了一起過河的邀請花了一点時間…
+			ENDDATA
+		CASE 山麓樹海,701
+			PRINTDATAL
+				DATAFORM 从树木的空隙间眺望着能够看到的山頂消磨着时间…
+				DATAFORM 趁机观察着周囲的树木让时间流逝着…
+				DATAFORM 聆听着静寂中树木所発出的响声消磨着时间…
+				DATAFORM 何気なく耳をすますと、从深処的池子里传来了、蛙的歌声…竟然听到了！？（过于震惊而愣了一会儿）
+				DATAFORM 即使聽到了從樹海深処傳来的不可思議的呻吟声也完全不打算在意。
+			ENDDATA
+		CASE 九天瀑布
+			PRINTDATAL
+				DATAFORM 一辺听着瀑布的声音一辺观赏了一会儿周囲的景色…
+				DATAFORM 望着屹立在山頂的守矢神社消磨着时间…
+				DATAFORM 趁机从山上眺望山麓的景色消磨着時間…
+				DATAFORM 望向山頂的遙远上空寻找天界（嘎吱）…脖子好痛只好原地蹲坐了一会儿…
+				DATAFORM 看着瀑布水潭中飛濺的水沫消磨了一段時間…
+			ENDDATA
+		CASE 幻想風穴,948
+			PRINTDATAL
+				DATAFORM 眺望着广阔的地下世界消磨着时间…
+				DATAFORM 趁机靠近观察来往的鬼们的样子让时间流逝着…
+				DATAFORM 眺望着远処的地霊殿消磨着時間…
+				DATAFORM 被鬼和怨霊到処追趕、終於甩開的時候已経過去了一段時間…
+				DATAFORM 花費了一些時間觀察着鍾乳洞内下垂的石柱們。
+			ENDDATA
+		CASEELSE
+			PRINTL 什麼都沒做就這麼度過了一段時間…
+			;PRINTL 気が付くと時間が過ぎていた…
+	ENDSELECT
+ELSE
+	;分岐込みでちょっと追加、一部そぐわないのもあるかもしれないですがご了承を。
+	SELECTCASE RAND:3
+		CASE 0,1
+			;季節分岐
+			IF DAY:2 == 1
+					PRINT 
+				;春
+				PRINTDATAL
+					DATAFORM 為消磨時間试着去追赶蝴蝶…
+					DATAFORM 趁机眺望着路辺盛開的花朵让时间流逝着…
+					DATAFORM 真是个闲适恬静的季节啊…
+					DATAFORM 眺望着离開此地的候鳥并试着数了数天上飞着多少只…
+				ENDDATA
+			ELSEIF DAY:2 == 2
+				;夏
+				PRINTDATAL
+					DATAFORM は捕捉知了来消磨时间…
+					DATAFORM は在陰凉処擦汗并感受着平稳流逝的时间…
+					DATAFORM は听着三宝鳥与猫头鹰、杜鹃的叫声消磨着时光…
+					DATAFORM 注意到的時候、周囲突然変暗并下起了暴雨、然後剎那間雨就已経停息并恢復了之前的天気…
+				ENDDATA
+			ELSEIF DAY:2 == 3
+				;秋
+				PRINTDATAL
+					DATAFORM は趁机捕捉着蜻蜓让时间流逝着…
+					DATAFORM は望着染上秋色的远方的山消磨着时间…
+					DATAFORM が趁机望着随风飘落的枯叶让时间流逝着…
+					DATAFORM は眺望着远方河中熊捕捉鮭鱼的情景…
+				ENDDATA
+			ELSEIF DAY:2 == 4
+					PRINT 
+				;冬
+				PRINTDATAL
+					DATAFORM 呼着气温暖着冻僵的手等待着时间的流逝…
+					DATAFORM 踩着霜柱消磨着時間…
+					DATAFORM 趁机在周囲逛了逛結果踩在冰上滑倒了…
+					DATAFORM 试着寻找動物的足跡…
+				ENDDATA
+			ENDIF
+		CASE 2
+				PRINT 
+			;其他の分岐
+			;雲／雨／雪の何れかのフラグあり
+			IF GETBIT(TIME:5,3) || GETBIT(TIME:5,2) || GETBIT(TIME:5,1)
+				PRINTL 靠作诗来消磨時間…
+			;秋限定
+			ELSEIF TIME:2 >= 5 && TIME:2 <= 7
+				PRINTL 望着星星消磨着时间…
+			ELSE
+				PRINTL 望着云朵消磨着时间…
+			ENDIF
+		CASEELSE
+			;保険
+			PRINTL 什麼都沒做就這麼度過了一段時間…
+			;PRINTL 気が付くと時間が過ぎていた…
+	ENDSELECT
+ENDIF
+;-------------------------------------------------
+;441,聽課
+;-------------------------------------------------
+@MESSAGE_COM441
+PRINTFORM %CALLNAME:MASTER%
+IF TARGET > 0
+	
+ENDIF
+IF TARGET > 0
+	IF ABL:MASTER:教養 > ABL:TARGET:教養
+		PRINTFORM 一辺时不时教导%CALLNAME:TARGET%一辺
+	ELSE
+		PRINTFORM 一辺时不时接受%CALLNAME:TARGET%教导一辺
+	ENDIF
+ENDIF
+PRINTL 上衣課
+SIF ABL:MASTER:教養 > 2 && TARGET > 0
+	PRINTFORM %CALLNAME:TARGET%対%CALLNAME:MASTER%的知識感到佩服
+SIF ABL:MASTER:教養 < ABL:TARGET:教養 - 2
+	PRINTFORM %CALLNAME:TARGET%的指導非常有用
+	
+;-------------------------------------------------
+;460,意淫自慰
+;-------------------------------------------------
+@MESSAGE_COM460
+
+SELECTCASE TCVAR:194
+CASE 1
+	PRINTFORML 在时间停止下这样做対精神会造成很大負担……
+CASE 2
+	PRINTFORML 没办法在别人面前自慰
+CASE 3
+	PRINTFORML %CALLNAME:MASTER%集中精神、妄想着与意中人性交的事情
+CASE 4
+	PRINTFORML 现在可不是自慰的时候……%CALLNAME:MASTER%这样想着、停止了自慰……
+ENDSELECT
+
+;-------------------------------------------------
+;461,清醒
+;-------------------------------------------------
+@MESSAGE_COM461
+;IF (MAXBASE:MASTER:気力 / BASE:MASTER:気力) >= 10
+;一割以下
+IF BASE:MASTER:気力 <= (MAXBASE:MASTER:気力 / 10)
+	PRINTFORML 疲惫的%CALLNAME:MASTER%停止了自慰
+	SIF TALENT:MASTER:2 == 2
+		PRINTFORML %CALLNAME:MASTER%的手和陰茎沾上了精液、周囲充満了腥臊的味道……
+	SIF TALENT:MASTER:2 == 1
+		PRINTFORML %CALLNAME:MASTER%的身体涂上了愛液、周囲充満了雌性的味道……
+	SIF TALENT:MASTER:2 == 3
+		PRINTFORML %CALLNAME:MASTER%全身涂満了愛液和精液看上去一幅不知羞耻的样子……
+;ELSEIF (MAXBASE:MASTER:気力 / BASE:MASTER:気力) >= 2
+;半分以下
+ELSEIF BASE:MASTER:気力 <= (MAXBASE:MASTER:気力 / 2)
+	PRINTFORML %CALLNAME:MASTER%适可而止的停止了自慰
+	SIF TALENT:MASTER:2 == 2
+		PRINTFORML %CALLNAME:MASTER%的手和陰茎沾上了精液、周囲飘荡着腥臊的味道……
+	SIF TALENT:MASTER:2 == 1
+		PRINTFORML %CALLNAME:MASTER%的身体涂上了愛液、周囲飘荡着雌性的味道……
+	SIF TALENT:MASTER:2 == 3
+		PRINTFORML %CALLNAME:MASTER%身上到処都沾上了精液和愛液……
+ELSE
+	PRINTFORML %CALLNAME:MASTER%还有余裕但因為担心身体而停止了自慰
+	SIF TALENT:MASTER:2 == 2
+		PRINTFORML %CALLNAME:MASTER%的手和陰茎沾上了一点点前列腺液……
+	SIF TALENT:MASTER:2 == 1
+		PRINTFORML %CALLNAME:MASTER%的身体沾上了一点点愛液……
+	SIF TALENT:MASTER:2 == 3
+		PRINTFORML %CALLNAME:MASTER%的身体沾上了一点点前列腺液和愛液……
+ENDIF
+PRINTFORML %CALLNAME:MASTER%有点悲伤

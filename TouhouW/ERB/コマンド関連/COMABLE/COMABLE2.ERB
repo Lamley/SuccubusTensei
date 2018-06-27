@@ -1,0 +1,192 @@
+﻿;COMABLE一括管理
+@GLOBAL_COMABLE(ARG)
+#FUNCTION
+;コマンドフィルタ
+LOCALS = /{ARG}/
+IF STRCOUNT(SAVESTR:0,LOCALS)
+	RESULT = 0
+	RETURNF 1
+ENDIF
+;一括管理
+SELECTCASE ARG
+	;ウフフ
+	CASE IS < 300
+		IF TFLAG:102 != 2 || !TARGET
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	;実行委託はTARGETなしで実行できるように例外扱い
+	CASE 367
+		IF GROUPMATCH(TFLAG:102, 2, 3)
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	;日常コマンド
+	CASE 300 TO 303, 305 TO 310, 331 TO 336, 351 , 352 , 363 TO 399
+		IF TFLAG:102 != 1 || !TARGET
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	;ソフトなウフフ
+	CASE 310 TO 330, 350, 360
+		IF TARGET == 0
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 != 1 && FLAG:70 == 1 && CFLAG:TARGET:344 == 0
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 == 2
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+		;お浴室場ではガチエロになるので
+		IF BATHCHECK(CFLAG:MASTER:現在位置) && CFLAG:うふふ != 2
+			IF ARG != 350 && ARG != 351
+				RESULT = 0
+				RETURNF 1
+			ENDIF
+		ENDIF
+	CASE 355
+		IF FLAG:70 && CFLAG:TARGET:344 == 0 || CFLAG:MASTER:イタズラ || CFLAG:うふふ == 2
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	CASE 400 TO 499
+	;単体実行可能コマンド
+		IF TFLAG:102 == 2 && ARG != 410 && ARG != 413
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	CASE 501 TO 559
+	;ウフフ派生
+		IF TFLAG:102 != 2
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	CASE 560 TO 579
+	;日常派生
+		IF TFLAG:102 == 2
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	CASE 580 TO 699
+	;デート
+		IF !TFLAG:100
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 == 2
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	CASE 700 TO 799
+	;自慰専用コマンド
+	;	IF TFLAG:102 != 2
+	;		RESULT = 0
+	;		RETURNF 1
+	;	ENDIF
+	;	IF ARG == 751 && (!CFLAG:PLAYER:今忙しくて手が離せない)
+	;		RESULT = 0
+	;		RETURNF 1
+	;	ELSEIF ARG != 751 && ((CFLAG:今忙しくて手が離せない != 1) || (TARGET > 0 && CFLAG:今忙しくて手が離せない != 1 && !FLAG:時間停止))
+	IF !CFLAG:PLAYER:今忙しくて手が離せない
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+ENDSELECT
+
+;ビデオ処理（固定照相机ならば制限なし）
+;撮影者が調教中、ビデオ片手ではいろいろ制限される
+IF (TFLAG:105 == 1 && !ASSIPLAY) || (TFLAG:105 == 2 && ASSIPLAY)
+	IF ARG == 0 || ARG == 3 || ARG == 5 || ARG == 6 || ARG == 7 || ARG == 8 || ARG == 9 || ARG == 21 || (ARG >= 40 && ARG <= 48) || ARG == 65 || ARG == 66 || (ARG >= 80 && ARG <= 87) || (ARG >= 100 && ARG <= 105) || (ARG >= 122 && ARG <= 125) || (ARG >= 140 && ARG <= 148 && ARG != 143) || (ARG >= 180 && ARG <= 189) || ARG == 503 || ARG == 504 || ARG == 510 || ARG == 511
+		RETURNF 0
+	ELSE
+		RESULT = 0
+		RETURNF 1
+	ENDIF
+;MASTERが撮影中、助手が調教中
+ELSEIF TFLAG:105 == 1 && ASSIPLAY
+	IF ARG == 71 || ARG == 124 || ARG == 125 || ARG == 185
+		RESULT = 0
+		RETURNF 1
+	ENDIF
+;助手が撮影中、MASTERが調教中
+ELSEIF TFLAG:105 == 2 && !ASSIPLAY
+	IF ARG == 71 || ARG == 124 || ARG == 125 || ARG == 185 || ARG == 510 || ARG == 511
+		RESULT = 0
+		RETURNF 1
+	ENDIF
+ENDIF
+
+
+;COMABLE一括管理
+@GLOBAL_COMABLE2(ARG)
+#FUNCTION
+;コマンドフィルタ
+LOCALS = /{ARG}/
+SIF STRCOUNT(SAVESTR:0,LOCALS)
+	RETURNF 1
+
+;一括管理
+SELECTCASE ARG
+	;ウフフ
+	CASE IS < 300
+		SIF TFLAG:102 != 2 || !TARGET
+			RETURNF 1
+	;実行委託はTARGETなしで実行できるように例外扱い
+	CASE 367
+		IF GROUPMATCH(TFLAG:102, 2, 3)
+			RESULT = 0
+			RETURNF 1
+		ENDIF
+	;日常コマンド
+	CASE 300 TO 303, 305 TO 310, 331 TO 336, 351 , 352 , 363 TO 399
+		SIF TFLAG:102 != 1 || !TARGET
+			RETURNF 1
+	;ソフトなウフフ
+	CASE 310 TO 330, 350, 360
+		IF TARGET == 0
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 != 1 && FLAG:70 == 1 && CFLAG:TARGET:344 == 0
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 == 2
+			RETURNF 1
+		ENDIF
+		;お浴室場ではガチエロになるので
+		IF BATHCHECK(CFLAG:MASTER:現在位置) && CFLAG:うふふ != 2
+			IF ARG != 350 && ARG != 351
+				RETURNF 1
+			ENDIF
+		ENDIF
+	CASE 355
+		IF FLAG:70 && CFLAG:TARGET:344 == 0 || CFLAG:MASTER:イタズラ || CFLAG:うふふ == 2
+			RETURNF 1
+		ENDIF
+	CASE 400 TO 499
+	;単体実行可能コマンド
+		IF TFLAG:102 == 2 && ARG != 410 && ARG != 413
+			RETURNF 1
+		ENDIF
+	CASE 501 TO 559
+	;ウフフ派生
+		IF TFLAG:102 != 2
+			RETURNF 1
+		ENDIF
+	CASE 560 TO 579
+	;日常派生
+		IF TFLAG:102 == 2
+			RETURNF 1
+		ENDIF
+	CASE 580 TO 699
+	;デート
+		IF !TFLAG:100
+			RETURNF 1
+		ENDIF
+		IF TFLAG:102 == 2
+			RETURNF 1
+		ENDIF
+ENDSELECT

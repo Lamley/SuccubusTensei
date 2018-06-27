@@ -1,0 +1,1095 @@
+﻿;-------------------------------------------------
+;奴隷の絶頂時の口上
+;NOWEX:Ｃ絶頂～4 CVABM絶頂
+;NOWEX:二重絶頂 二重絶頂
+;NOWEX:三重絶頂 三重絶頂
+;NOWEX:四重絶頂 四重絶頂
+;NOWEX:五重絶頂 五重絶頂
+;NOWEX:噴乳 噴乳
+;NOWEX:射精 射精
+;NOWEX:放尿 放尿
+;適当に組み合わせて使ってください
+;-------------------------------------------------
+@M_KOJO_MESSAGE_PALAMCNG_B_K97
+CALL PALAM_MESSAGE_B
+;-------------------------------------------------
+;噴乳
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:噴乳
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;射精
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:射精
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;放尿
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && NOWEX:放尿
+	IF RAND:3 == 0
+		PRINTFORMW 「あ…ふぅ…」
+		RETURN 1
+	ELSEIF RAND:2 == 0
+		PRINTFORMW 「あー…屁ぇこいちまった」
+		RETURN 1
+	ELSE
+		PRINTFORMW 「…あ…悪いな…」
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;絶頂
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;五重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF NOWEX:五重絶頂
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;四重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF NOWEX:四重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:四重絶頂
+			;Ｃ＆Ｖ＆Ａ＆Ｂ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ａ＆Ｍ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ＆Ｍ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	;-------------------------------------------------
+	;三重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF NOWEX:三重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:三重絶頂
+			;Ｃ＆Ｖ＆Ａ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ａ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ａ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｍ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ｍ絶頂
+			CASE 6
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｖ＆Ｍ絶頂
+			CASE 7
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ｍ絶頂
+			CASE 8
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ＆Ｍ絶頂
+			CASE 9
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｍ絶頂
+			CASE 10
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	;-------------------------------------------------
+	;二重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF NOWEX:二重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:二重絶頂
+			;Ｃ＆Ｖ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｂ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ絶頂
+			CASE 6
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｍ絶頂
+			CASE 7
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｍ絶頂
+			CASE 8
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｍ絶頂
+			CASE 9
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｍ絶頂
+			CASE 10
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	IF NOWEX:Ｃ絶頂
+		;強絶頂Ｃ
+		IF NOWEX:Ｃ絶頂 >= 2
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あぅ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「くっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ENDIF
+		;絶頂Ｃ
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あっ…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん…そこは…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…ん…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｖ絶頂
+		;強絶頂Ｖ
+		IF NOWEX:Ｖ絶頂 >= 2
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あっ%UNICODE(0x2661) *1%んっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んはっ%UNICODE(0x2661) *1%くっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「ふあっ%UNICODE(0x2661) *1%んあっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ENDIF
+		;絶頂Ｖ
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「っ…！」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…イッてないからな…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…馬鹿…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	IF NOWEX:Ａ絶頂
+		;強絶頂Ａ
+		IF NOWEX:Ａ絶頂 >= 2
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あ…ふあっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん、くっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…んっ%UNICODE(0x2661) *1%」
+				RETURN 1
+			ENDIF
+		;絶頂Ａ
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「んあ…尻…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んはっ…悪くはないな」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…っ…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｂ絶頂
+		;強絶頂Ｂ
+		IF NOWEX:Ｂ絶頂 >= 2
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「ひぁ…%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあ…%UNICODE(0x2661) *1%」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…%UNICODE(0x2661) *1%」
+				RETURN 1
+			ENDIF
+		;絶頂Ｂ
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「ん…そこ…！」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あ…ん…！」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「ん…胸…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｍ絶頂
+		;強絶頂Ｍ
+		IF NOWEX:Ｍ絶頂 >= 2
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「ん…！？あ…」
+				PRINTFORMW 正邪は口腔の快感を甘んじて受け入れている。
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んん…」
+				PRINTFORMW 正邪は口腔の快感を甘んじて受け入れている。
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…んは…ん！？」
+				PRINTFORMW 正邪は口腔の快感を甘んじて受け入れている。
+				RETURN 1
+			ENDIF
+		;絶頂Ｍ
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪は絶頂した。
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 「あ…んぐ…」
+				PRINTFORMW 正邪は口腔の快感に戸惑っている。
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「！？」
+				PRINTFORMW 正邪は口腔の快感に戸惑っている。
+				RETURN 1
+			ELSE
+				PRINTFORMW 「あ…」
+				PRINTFORMW 正邪は口腔の快感に戸惑っている。
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;射精に関する口上の表示
+;一時的にTARGETを口上主に設定している
+;-------------------------------------------------
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_0(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;避孕套
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「うわ…気持ち悪いぐらい出したな…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…どんだけ溜めてんだよ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「出し過ぎだろ…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ゴム一杯だな…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「結構出したな…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…多いな」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_23(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;強制口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「ゲホッ…ゴホッ…」
+			PRINTFORMW 「喉孕ませる気か！？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ぐぇ…オェ…」
+			PRINTFORMW 「チンポ突っ込んでくんじゃねぇよ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ぐむ…げほっ…」
+			PRINTFORMW 「…出し過ぎなんだよ…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ゲホッ…ゴホッ…」
+			PRINTFORMW 「…勘弁してくれ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐぇ…」
+			PRINTFORMW 「この…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…オェ…」
+			PRINTFORMW 「いきなり…出すなって…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_22(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;六九式
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;同時射精
+	IF NOWEX:射精 && NOWEX:MASTER:11
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		IF TALENT:PLAYER & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	ELSE
+		;TARGETについてる
+		IF TALENT:2 & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+			ELSEIF TALENT:MASTER:濃厚精液
+				IF RAND:3 == 0
+					PRINTFORMW 「んぐ！？」
+					PRINTFORMW 「ぷはっ…出し過ぎだろ…」
+					RETURN 1
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「…んむ！？…ごく…」
+					PRINTFORMW 「相変わらず濃いな」
+					RETURN 1
+				ELSE
+					PRINTFORMW 「ぐむ！？…ん…ちゅ…」
+					PRINTFORMW 「…喉が焼けつくぐらいに濃いな…」
+					RETURN 1
+				ENDIF
+			ELSE
+				IF RAND:3 == 0
+					PRINTFORMW 「ん…じゅる…」
+					PRINTFORMW 「…もう出たのか…堪え性が無いな」
+					RETURN 1
+				ELSEIF RAND:2 == 0
+					PRINTFORMW 「ぐ…ん…」
+					PRINTFORMW 「結構多いな…ザーメン出し過ぎだ」
+					RETURN 1
+				ELSE
+					PRINTFORMW 「…うぇ…」
+					PRINTFORMW 「どんだけ出す気だ…」
+					RETURN 1
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_21(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳夾口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「これ…濃いな…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ぐ…んあ…」
+			PRINTFORMW 「…しょっぱい…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ぐむ…っ…」
+			PRINTFORMW 「…一杯…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん！？…ゴホッ…」
+			PRINTFORMW 「…一杯…出てる…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「全部…出してもらうぞ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「いきなり…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_20(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…んむ！？」
+			PRINTFORMW 「喉に絡む…これ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あ…じゅる…」
+			PRINTFORMW 「ん…御馳走様」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…げほっ…」
+			PRINTFORMW 「…濃いの出し過ぎなんだよ…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ゲホッ…ん…」
+			PRINTFORMW 「…全部絞りとってやるからな…！」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…一杯出てる…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…んぐっ！？」
+			PRINTFORMW 「出し過ぎだ…変態…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_9(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;肛門奉仕
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	IF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「アナルでイッたか…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「うぉ…！？」
+			PRINTFORMW 「すっごいドロドロしてるな」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…おや？」
+			PRINTFORMW 「…粘度高…見てるだけで孕みそうだね」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…こんなのでイクのか」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「…本当変態だな」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…気持ちよかったようだな…」
+			PRINTFORMW 「羨ましいことで…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_8(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;泡泡浴
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;同時射精
+	IF NOWEX:射精 && NOWEX:MASTER:11
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		IF TALENT:PLAYER & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	ELSE
+		;TARGETについてる
+		IF TALENT:2 & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「んー…」
+				PRINTFORMW 「…一杯出てるな…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あ、出た」
+				PRINTFORMW 「このまま全部出してもらうぞ」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…こういうの好きなんだ」
+				PRINTFORMW 「そんなに気持ちよかったのか…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_7(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;足交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の足に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「うっわぁ…足ベトベトだ…」
+			PRINTFORMW 「こんなのでイクのか、変態」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「はは、見てて気持ちいいぐらい出すな」
+			PRINTFORMW 「オラッ！金玉の中全部出せって！」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「こんなに出して…」
+			PRINTFORMW 「…足…気持ち悪いぐらい出したな、ってか濃いな」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うっわ、足に掛けてきやがった」
+			PRINTFORMW 「…こんなのでイッたか…変態」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「へぇ…こんなのが気持ちいいんだ」
+			PRINTFORMW 「…こういうの、好きなんだ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あーあ、出しちゃった」
+			PRINTFORMW 「変態だな」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_6(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;素股
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の秘部に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「これでも妊娠しそうなぐらい濃いな」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どれだけ濃いの出すんだか…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「これで孕みそうだな」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…こんなので出すのか…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「早漏」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「変態」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_5(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の胸に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…胸に…」
+			PRINTFORMW 「一杯溜まってんなぁ」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「それにしたって出し過ぎだろ…」
+			PRINTFORMW 「金玉の中、空っぽにしてやるよ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「胸気持ちよかったか？」
+			PRINTFORMW 「…まぁこんなに濃いの出してたら言わずもがなか…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「胸でイッたか…」
+			PRINTFORMW 「…全部出しちまえよ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「乳交で…ね…」
+			PRINTFORMW 「…こういうのが趣味か？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「胸で…ね…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_4(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の口腔に精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ごく…ん…」
+			PRINTFORMW 「喉孕みそうなぐらい濃いな…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…じゅる…ん…オェ…」
+			PRINTFORMW 「ゴホッ…どんだけ…溜めてんだよ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「あ…げほっ…」
+			PRINTFORMW 「…喉…孕みそうなぐらい濃いな…」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ゲホッ…ん…」
+			PRINTFORMW 正邪は咽ながら舌を出してザーメンを見せつけてきた。
+			PRINTFORMW 「こんなのでイクのか…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 正邪は舌を出してザーメンを見せつけてきた。
+			PRINTFORMW 「馬鹿みたいに出したな…変態」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 正邪は舌を出してザーメンを見せつけてきた。
+			PRINTFORMW 「…んべぇ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_3(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の手の中で射精した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「うっわぁ…」
+			PRINTFORMW 「お前どんだけ溜めてんだよ」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…あ？どれだけ出すんだか」
+			PRINTFORMW 「オナ禁してたのか？それもここまでだな」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「オラッザーメン出せ！」
+			PRINTFORMW 「こんなに濃いの溜めてるとか変態だな」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「あー手でイキやがった」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「うっわ、気持ち悪！」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…こんなのが気持ちいいのか」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_2(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;アナル
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪のアナルに精液を吐き出した。
+	ELSEIF TALENT:MASTER:濃厚精液
+		IF RAND:3 == 0
+			PRINTFORMW 「そんなに尻が気持ちよかったか？」
+			PRINTFORMW 「孕みそうなぐらい濃いの出してるな…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…尻にこんなに出すとか…」
+			PRINTFORMW 「具合は良かったのか？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「どれだけ濃いの出すんだよ」
+			PRINTFORMW 「尻穴がそんなに気持ちいいのか？」
+			RETURN 1
+		ENDIF
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「んお！？」
+			PRINTFORMW 「…尻孕ませるのかよ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「尻は妊娠しないぞ？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…尻に…あ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K97_1(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;膣内
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で%CALLNAME:MASTER%は正邪の膣内に精液を吐き出した。
+	ELSEIF CFLAG:1304 == 1 && TALENT:恋人
+		IF TALENT:MASTER:濃厚精液
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…凄い…」
+				PRINTFORMW 「こんなに出すのか…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…ん…」
+				PRINTFORMW 「孕みそうだな…これ…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「全部出してもらうぞ」
+				PRINTFORMW 「…一々処理するのも面倒だからな…」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「もう出したのか」
+				PRINTFORMW 「…相も変わらず早漏だな」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん…膣内に…染みこんでくる…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…」
+				PRINTFORMW 「本当、底なしだな、お前」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ELSEIF CFLAG:1306 == 1 && TALENT:恋人
+		IF TALENT:MASTER:濃厚精液
+			IF RAND:3 == 0
+				PRINTFORMW 「あ…」
+				PRINTFORMW 「一杯…出た…♪」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…んあ…」
+				PRINTFORMW 「兒童…出来そうだな」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「濃いの…たくさん…」
+				PRINTFORMW 「気持ちよかったか？」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…まだ出てる…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「凄いな…」
+				PRINTFORMW 「これだけ出したら…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…ん…」
+				PRINTFORMW 「一杯…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ELSEIF CFLAG:1307 == 1 && TALENT:恋慕
+		IF TALENT:MASTER:濃厚精液
+			IF RAND:3 == 0
+				PRINTFORMW 「…馬鹿…」
+				PRINTFORMW 「出し過ぎなんだよ！」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…あ…」
+				PRINTFORMW 「こんなの…どれだけ出す気だ…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「ん…あ…」
+				PRINTFORMW 「…兒童出来ちまう…」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…早漏」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「馬鹿…」
+				PRINTFORMW 「気持ち悪い…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…♪」
+				PRINTFORMW 「どれだけ…出す気だよ…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ELSE
+		IF TALENT:MASTER:濃厚精液
+			IF RAND:3 == 0
+				PRINTFORMW 「あ…」
+				PRINTFORMW 「もう…出し過ぎだな…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「…ん…」
+				PRINTFORMW 「妊娠しそうなぐらい…濃いな…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「こんなに…濃いの…」
+				PRINTFORMW 「…中で精子が一杯…」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…」
+				PRINTFORMW 「…早漏…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「必死に腰振っちゃって…」
+				PRINTFORMW 「そんなに気持ちよかったか？」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…」
+				PRINTFORMW 「イッちまったか…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 0
+
+
+@M_KOJO_MESSAGE_PALAMCNG_F_K97(ARG)
+CALL PALAM_MESSAGE_F
+;-------------------------------------------------
+;焦らし
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1

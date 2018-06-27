@@ -1,0 +1,232 @@
+﻿;-----------------------------------------------------------
+;LOCAL					FOR～NEXT用
+;LOCAL:1～LOCAL:7		予定日（DAY:3）
+;LOCAL:8				リセット用データ
+;LOCAL:11～LOCAL:17		予定日目（DAY）
+;LOCAL:101～LOCAL:107	月をまたいでいるか（0=またいでない,1=まいたでいる）
+;-----------------------------------------------------------
+@カレンダー
+;[SKIPSTART]
+VARSET LOCAL
+FOR COUNT, 1, 9
+	LOCAL:COUNT = DAY:3 + COUNT - 1
+	LOCAL:(COUNT + 10) = DAY + COUNT - 1
+	IF LOCAL:COUNT > 31
+		LOCAL:COUNT -= 31
+		LOCAL:(COUNT + 100) = 1
+	ENDIF
+NEXT
+PRINTL ┌──┬──────────────────────────────────────
+PRINTL │ Day│特殊事件／工作 ／宴会情報
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+SETCOLOR 0 , 255, 0
+PRINTBUTTON (LOCAL:1 > 9 ? TOSTR(LOCAL:1) # TOFULL(TOSTR(LOCAL:1))), (LOCAL:1 + 100)
+PRINT 日
+RESETCOLOR
+PRINT │
+;予定表を呼ぶと時間が進むので細心の注意を払う
+CALL 予定表(LOCAL:1, LOCAL:11, LOCAL:101, 1)
+PRINTL 
+;曜日も変わっている（初日はそのまま）
+PRINTFORM │(%GET_DAY()%)│
+;宴会も日付が変わった状態でチェック
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:2 > 9 ? TOSTR(LOCAL:2) # TOFULL(TOSTR(LOCAL:2))), (LOCAL:2 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:2, LOCAL:12, LOCAL:102, 2)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:3 > 9 ? TOSTR(LOCAL:3) # TOFULL(TOSTR(LOCAL:3))), (LOCAL:3 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:3, LOCAL:13, LOCAL:103, 3)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:4 > 9 ? TOSTR(LOCAL:4) # TOFULL(TOSTR(LOCAL:4))), (LOCAL:4 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:4, LOCAL:14, LOCAL:104, 4)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:5 > 9 ? TOSTR(LOCAL:5) # TOFULL(TOSTR(LOCAL:5))), (LOCAL:5 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:5, LOCAL:15, LOCAL:105, 5)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:6 > 9 ? TOSTR(LOCAL:6) # TOFULL(TOSTR(LOCAL:6))), (LOCAL:6 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:6, LOCAL:16, LOCAL:106, 6)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+
+PRINTL ├──┼──────────────────────────────────────
+PRINT │
+PRINTBUTTON (LOCAL:7 > 9 ? TOSTR(LOCAL:7) # TOFULL(TOSTR(LOCAL:7))), (LOCAL:7 + 100)
+PRINT 日│
+CALL 予定表(LOCAL:7, LOCAL:17, LOCAL:107, 7)
+PRINTL 
+PRINTFORM │(%GET_DAY()%)│
+CALL 宴会予定判定
+PRINTL 
+PRINTL └──┴──────────────────────────────────────
+PRINTL [0] - 返回
+
+;時間を戻すためにリセット用の予定表を呼ぶ
+CALL 予定表(LOCAL:8, LOCAL:18, LOCAL:108, 8)
+INPUT
+IF RESULT >= 1 && RESULT <= CHARANUM
+	PRINTFORML %CALLNAME:RESULT%
+	IF CFLAG:RESULT:自宅位置
+		PRINT 自宅位置：
+		IF CFLAG:RESULT:神社在住
+			PRINTFORML %NAME_FROM_PLACE(CFLAG:RESULT:神社在住)%
+		ELSE
+			PRINTFORML %NAME_FROM_PLACE((CFLAG:RESULT:自宅位置) / 10 + 6000)%
+		ENDIF
+	ENDIF
+	PRINT 工作情报：
+	SIF CSVCSTR(RESULT, 1,) == ""
+		PRINT ？？？
+	PRINTFORML %CSVCSTR(RESULT, 1,)%
+	PRINT 職場：
+	SIF CSVCSTR(RESULT, 2,) == ""
+		PRINT ？？？
+;	// GET_JOBPLACE("仕事",ARG)で職場の書き換え処理があるので変更
+;	再変更しました,1外出先に対応してない,2職場が複数あるキャラに対応できない,ため
+	PRINTFORML %CSVCSTR(RESULT, 2)%
+;	PRINTFORML %NAME_FROM_PLACE(CFLAG:RESULT:職場)%
+	RESTART
+ELSEIF RESULT >= 101 && RESULT <= 131
+	PRINTFORMW {RESULT - 100}日的预定　※未実装
+	RESTART
+ENDIF
+;[SKIPEND]
+RETURN
+
+;-----------------------------------------------------------
+;ARG	0=日にち,1=総日数,2=月をまたいでいるか,3=呼び出し回数
+;		現在=元々のDAY,今日=元々のDAY:2,今月=元々のDAY:3,来月=今月から見た来月
+;-----------------------------------------------------------
+@予定表(ARG, ARG:1, ARG:2, ARG:3)
+#DIM 現在
+#DIM 今日
+#DIM 今月
+#DIM 来月
+
+#DIM 元工作量
+#DIM 元仕事開始
+#DIM 元仕事終了
+#DIM 元職場
+#DIM 元職種
+#DIM 元給料
+#DIM 元お礼
+
+;TIMEをいじるので逆算
+IF ARG:2 && DAY:2 != 今月
+	IF DAY:2 == 1
+		今月 = 4
+	ELSE
+		今月 = DAY:2 - 1
+	ENDIF
+ELSE
+	今月 = DAY:2
+ENDIF
+IF DAY:2 == 4
+	来月 = 1
+ELSE
+	来月 = DAY:2 + 1
+ENDIF
+;TIMEをいじる
+SIF ARG:2 && DAY:2 == 今月
+	DAY:2 = 来月
+DAY = ARG:1
+DAY:3 = ARG
+;逆算
+現在 = DAY - ARG:3 + 1
+IF 今月 != DAY:2
+	今日 = DAY:3 - ARG:3 + 32
+ELSE
+	今日 = DAY:3 - ARG:3 + 1
+ENDIF
+;最後の呼び出しでリセット
+IF ARG:3 == 8
+	DAY = 現在
+	DAY:2 = 今月
+	DAY:3 = 今日
+	RETURN
+ENDIF
+;確認用（来月は１日ラグがあるが問題ない）
+;PRINTFORM 今日{今日}　今月{今月}　来月{来月} 現在{現在} DAY:3-{DAY:3} DAY:2-{DAY:2} DAY - {DAY} 
+;ここからは一時的に時間が進んだ状態で算出する（GET_DAY()や宴会予定も進んだ状態）
+IF FESTIVAL() != ""
+	SETCOLOR C_RED
+	PRINTFORM %FESTIVAL()%　
+	RESETCOLOR
+	;CALL PRINTCOLOR ("FESTIVAL()","RED")
+ENDIF
+FOR LOCAL, 1, CHARANUM
+	元工作量 = MAXBASE:LOCAL:工作量
+	元仕事開始 = TCVAR:LOCAL:仕事開始
+	元仕事終了 = TCVAR:LOCAL:仕事終了
+	元職場 = CFLAG:LOCAL:職場
+	元職種 = CFLAG:LOCAL:職種
+	元給料 = TCVAR:LOCAL:給料
+	元お礼 = TCVAR:LOCAL:お礼
+
+;住み込みキャラでも仕事に出かけるのでとりあえずコメントアウト
+;	SIF CFLAG:LOCAL:神社在住
+;		CONTINUE
+;	;仕事がランダムの場合はあること前提
+	;…にすると今日の仕事に影響が出るので予定もランダム（次に仕事するか否か）に
+;	SIF DAY:3 != 今日
+;		TCVAR:LOCAL:仕事の有無 = 2
+	CALL 仕事内容設定(LOCAL, 1)
+	IF !CHARA_HOLIDAY(LOCAL) && CFLAG:LOCAL:信頼度 >= 10
+;		便利過ぎる気がするので自重
+;		SIF CFLAG:LOCAL:行動 == 5
+;			SETCOLOR 255, 100, 0
+		PRINTBUTTON CALLNAME:LOCAL, LOCAL
+		RESETCOLOR
+		PRINT 　
+	ENDIF
+
+	MAXBASE:LOCAL:工作量 = 元工作量
+	TCVAR:LOCAL:仕事開始 = 元仕事開始
+	TCVAR:LOCAL:仕事終了 = 元仕事終了
+	CFLAG:LOCAL:職場 = 元職場
+	CFLAG:LOCAL:職種 = 元職種
+	TCVAR:LOCAL:給料 = 元給料
+	TCVAR:LOCAL:お礼 = 元お礼
+NEXT
+
+@宴会予定判定
+IF FLAG:開始日 - DAY == 0 && FLAG:宴会開催フラグ
+	SETCOLOR C_GREEN
+	CALL 宴会予定表示
+	RESETCOLOR
+ENDIF

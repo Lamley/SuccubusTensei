@@ -1,0 +1,96 @@
+﻿;-------------------------------------------------
+;使用万宝槌
+;-------------------------------------------------
+@COM428
+SIF FLAG:なりきり != 71
+	PRINTL 針妙丸「請合理使用哦」
+PRINTL 要许什么愿呢？
+	SIF !TALENT:71:100 == 0
+	PRINTL [2] - 神妙丸を普通の大きさに
+IF GETBIT(TALENT:MASTER:性別,1)
+	PRINTL [3] - 要驚人的大屌！
+	PRINTL [4] - 让我拥有与衆不同的小兄弟！
+ENDIF
+	SIF TALENT:MASTER:100 >= -4
+	PRINTL [5] - 変成小人！
+	SIF TALENT:MASTER:100 < -4 && CFLAG:MASTER:小槌 == 6
+	PRINTL [6] - 変回原来的大小……
+PRINTL 
+PRINTL [100] - 返回
+$LOOP
+INPUT
+IF RESULT == 2
+	PRINTFORMW 许完愿后一挥動万宝槌
+	PRINTFORMW 針妙丸の身体は普通の少女サイズになった。
+	CFLAG:MASTER:小槌 = 8
+	TALENT:71:体型 = 0
+ELSEIF RESULT ==  3
+	PRINTW 许完愿后一挥動万宝槌
+	PRINTW 就拥有了大的藏不住的雞雞
+	CFLAG:MASTER:小槌 = 4
+	CFLAG:MASTER:382 = TALENT:MASTER:形状
+	TALENT:MASTER:形状 = 10
+	CFLAG:MASTER:魔力回収 = 6
+ELSEIF RESULT == 4
+	PRINTW 许完愿后一挥動万宝槌
+	PRINTW 自己的小兄弟就真的多出一个了
+	CFLAG:MASTER:382 = TALENT:MASTER:形状
+	CFLAG:MASTER:小槌 = 5
+	TALENT:MASTER:183 = 1
+	CFLAG:MASTER:魔力回収 = 6
+ELSEIF RESULT == 5 && TALENT:MASTER:100 >= -4
+	PRINTFORMW 许完愿后一挥動万宝槌
+	PRINTFORMW %CALLNAME:MASTER%的身体眼看着就缩小了
+	CFLAG:MASTER:魔力回収 = 3
+	CFLAG:MASTER:小槌 = 6
+	FLAG:元の体格 = TALENT:MASTER:100
+	TALENT:MASTER:100 = -5
+ELSEIF RESULT == 6 && TALENT:MASTER:100 < -4 && CFLAG:MASTER:現在位置 == 54
+	PRINTFORMW 「可不能在这里这样做啊！」
+	RETURN -1
+ELSEIF RESULT == 6 && TALENT:MASTER:100 < -4
+	PRINTFORMW 许完愿后一挥動万宝槌
+	PRINTFORMW %CALLNAME:MASTER%的身体変回了原样
+	TALENT:MASTER:100 = FLAG:元の体格
+	CFLAG:MASTER:魔力回収 = 3
+	CFLAG:MASTER:小槌 = 7
+ELSEIF RESULT == 100
+SIF FLAG:なりきり != 71
+	PRINTL 針妙丸「真是明智的选択呢」
+	RETURN -1
+ELSE
+	GOTO LOOP
+ENDIF
+TIME += 5
+
+RETURN 1
+
+;使用万宝槌
+@COM_ABLE428
+;停止中は不可
+SIF FLAG:70 == 1
+	RETURN 0
+;移動実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(428)
+	RETURN RESULT
+;針妙丸が寝ていたらダメ
+SIF CFLAG:71:睡眠
+	RETURN 0
+;針妙丸の居る所。針妙丸が虫かごにいる時は居間か走廊にいればセーフ
+IF CFLAG:MASTER:現在位置 != CFLAG:71:現在位置 && FLAG:なりきり != 71
+	IF CFLAG:71:現在位置 == 54 && (CFLAG:MASTER:現在位置 == 9 || CFLAG:MASTER:現在位置 == 10) && AT_HOME(MASTER)
+	ELSE
+	RETURN 0
+	ENDIF
+ENDIF
+;SIF CFLAG:MASTER:現在位置 != CFLAG:71:現在位置
+;	RETURN 0
+SIF CFLAG:うふふ == 2
+	RETURN 0
+;魔力回収中は使用できない
+SIF CFLAG:MASTER:魔力回収 > 0
+	RETURN 0
+RETURN 1

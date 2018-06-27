@@ -1,0 +1,1820 @@
+﻿;-------------------------------------------------
+;奴隷の絶頂時の口上
+;-------------------------------------------------
+;奴隷の絶頂時の口上
+;NOWEX:０～４ CVABM絶頂
+;NOWEX:６ 二重絶頂
+;NOWEX:７ 三重絶頂
+;NOWEX:８ 四重絶頂
+;NOWEX:９ 五重絶頂
+;NOWEX:１０ 噴乳
+;NOWEX:１１ 射精
+;NOWEX:１２ 放尿
+;適当に組み合わせて使ってください
+;-------------------------------------------------
+@M_KOJO_MESSAGE_PALAMCNG_B_K49
+CALL PALAM_MESSAGE_B
+;-------------------------------------------------
+;噴乳
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:噴乳
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;射精
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && NOWEX:射精
+	IF !GETBIT(TALENT:MASTER:性別,0)
+		PRINTFORMDL 覚の男性器からこぼれる精液を、%CALLNAME:MASTER%はただ眺めている
+	ELSEIF FLAG:70 == 1
+		PRINTFORMDL だらしなく精液をこぼす覚に、時止めを解除した時を思い浮かべて、笑みが浮かんだ
+	ELSEIF CFLAG:睡眠
+		PRINTFORMDL 眠りながら精を吐き出した覚を、ただニヤニヤと見つめた
+	;MASTERの口に中だし
+	ELSEIF TCVAR:2 == 4 && GETBIT(TALENT:MASTER:性別,0)
+		PRINTFORMDW 覚は%CALLNAME:MASTER%の口内に射精した
+		;精飲
+		IF EXP_UP(15,0) == NOWEX:射精 * 3
+			IF NOWEX:射精 == 1
+				PRINTFORMDL %CALLNAME:MASTER%は唇で亀頭をしごいてすべての精液を口内に受け止めてから
+				PRINTFORMDW 口内の精液を喉を鳴らして飲み込んだ…
+			ELSE
+				PRINTFORMDW %CALLNAME:MASTER%は亀頭を咥えたまま口内に放たれる大量の精液を飲み込んでいった…
+			ENDIF
+		ELSE
+			IF TCVAR:精飲経験 < 20
+				PRINTFORMDL 射精が終わると%CALLNAME:MASTER%は口の中の精液を吐き出してしまった
+				PRINTFORMDW まだ精液の味に慣れないようだ…
+			ELSE
+				IF NOWEX:PLAYER:射精 == 1
+					PRINTFORMDL %CALLNAME:MASTER%は唇で亀頭をしごいてすべての精液を口内に受け止めてから
+					PRINTFORMDW 広げた手の上に精液を吐き出し覚に見せつけてきた…
+				ELSE
+					PRINTFORMDL %CALLNAME:MASTER%は舌を突き出しながら精液が吹き出す尿道口を刺激し、
+					PRINTFORMDW 開かれた口からは精液がダラダラとこぼれでている…
+				ENDIF
+			ENDIF
+		ENDIF
+		IF 陥落状態() >= 4
+			IF 陥落状態() == 5
+				PRINTFORML 「ぬしさま、だいすき、ぬしさまぁ……」
+				PRINTFORMDL 煮え切った様な体の覚が抱きつきながら唇を重ねてくる
+				PRINTFORML 「れろ、ぺろ、ん、おいひい、ぬひはまのだえきおいひい」
+				PRINTFORMDL 自身の精液はどうなんだろうかと、疑問に思いつつ、覚の口づけを堪能する
+				PRINTFORML 「……はぁ、自分のは好きじゃ無いですよ。でも、主様の味が混ざってると思うと我慢できません」
+				PRINTFORMDL 言うが早いか、もう一度唇を重ねてきた
+			ELSE
+				PRINTFORML 「はぁっはぁっ……、ん、主様ぁ……、素敵です……」
+				PRINTFORMDL トロンとした瞳で覚が顔を近づけてくる
+				PRINTFORML 「んっ、れろ、ちゅっ……っ」
+				PRINTFORMDL そうして、強引に唇を重ねてきた後、嬉しそうな表情を浮かべて身を離す覚
+				PRINTFORML 「『汚いだろう』？　私の放ったものなのに、受け止めて下さった主様への感謝ですよ」
+				PRINTFORMDL そう呟く覚の嬉しげな表情に、わざと溜め息を吐き内心の嬉しさを押し隠した
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「んぅっっ…………、はぁ、すてき、です」
+			PRINTFORMDL トロンとした表情で、覚がこちらを見つめてくる
+			PRINTFORML 「『\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? 不味い # 美味しい \@』？　ふふ、嬉しそうな顔で言\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? っても信じられない # われると嬉しい \@です」
+			PRINTFORMDL そう呟く覚に見せつけるように、口中の精液を\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? 吐き出した # 飲み下した \@
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「ふぅ……、ん、こんなことされて悦ぶなんて、変態ですね」
+			PRINTFORMDL 冷めた声音で呟きながら、瞳に焦りと喜悦を浮かべる覚
+			PRINTFORML 「『出すくらいに気持ち良かったくせに』……、そうさせたのはそちらでしょう」
+			PRINTFORMDL 悔しげな表情を浮かべる覚に、\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? 吐き出した精液を見せつける # 口の中の精液を見せてから飲み下した \@
+		ELSEIF 陥落状態() == 1
+			PRINTFORML 「ふふ、口に出される気分は良くないですか？」
+			PRINTFORMDL 当然だと答えつつ、\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? 不愉快さ # 愉悦 \@を顔に浮かべた
+		ELSE
+			PRINTFORML 「んっっ、……美味しいですか？」
+			PRINTFORMDL 覚の言葉に、\@ EXP_UP(15) != NOWEX:PLAYER:射精 * 3 ? 不味い # 美味しい \@と%CALLNAME:MASTER%は答えた
+		ENDIF
+	;MASTERのアナルに中だし
+	ELSEIF TCVAR:2 == 2 && GETBIT(TALENT:MASTER:性別,0)
+		IF 陥落状態() >= 4
+			IF 陥落状態() == 5
+				PRINTFORML 「主様のお尻の穴、きもちいーです、これあたまおかしくなります」
+				PRINTFORMDL はっはっと荒い息をつく覚の擬根が動く度、こちらの頭もおかしくなりそうになる
+				PRINTFORML 「うふふ、ぬしさまも、おしりでかんじてる。あふ、でも、わたし、もう、もうっ」
+				PRINTFORMDL 限界を訴えてくる覚に、尻穴をぎゅっと締めることで中だしを催促する%CALLNAME:MASTER%
+				PRINTFORML 「いい、ん、ですね。あふ、んくっ、ふぁあっっ！！」
+				PRINTFORMDL 直腸に精液が打ち込まれる感覚に、%CALLNAME:MASTER%は我知らず身もだえした
+			ELSE
+				PRINTFORML 「主様の、おしり、すてきです……、もっと、して良いですか？」
+				PRINTFORMDL 涎をこぼしながら、覚が的確に気持ちいい場所を擦るように動起腰身
+				PRINTFORML 「んっ、んっっ、んんっっっっ！　や、でます、もう、ガマンできません」
+				PRINTFORMDL いつでも良い、そう思うのと同時、覚の陽物が膨らむのを感じた
+				PRINTFORML 「主様、主様、主さまぁっっ！！　ひんっっっっっ！！！！」
+				PRINTFORMDL 甘ったるい声を漏らしながら、覚が精をはき出した
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「んくっ、お尻、良いですよ。『何時でも出して良い』？　ん、ふふ、では望み街道に」
+			PRINTFORMDL 内心を読んだ覚が、腰の動きを速くしていき、ソレに応えるようにアナルを締めた
+			PRINTFORML 「イキますよ、んっっくぅっっっっ！！」
+			PRINTFORMDL 嬉しそうな笑顔を浮かべながら、ザーメンを放つ覚に、自然と笑みがこぼれた
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「ふ、ふふ、お尻に出されるなんて、最低な気分でしょ、っ」
+			PRINTFORMDL 余裕の笑みを浮かべる覚に、アヌスを窄めてむしろ気分が良いと考えてやる
+			PRINTFORML 「っっ！　この変態っ！　こんなことっ！　くっ！　んぅっっっ！！」
+			PRINTFORMDL アヌスの中にザーメンを打ち込む覚が、悔しげな表情を浮かべている事に満足を覚えた
+		ELSEIF 陥落状態() == 1
+			PRINTFORML 「でま、すよ。こんなとこ、ろにっ！　んっっ！　ふぁああっっっ！！」
+			PRINTFORMDL びゅるんと精液を打ち出しながら、覚がぐりぐりと腰を押し付けてくる
+		ELSE
+			PRINTFORML 「くぅんっ！！　……は、っっ、はぁ……」
+			PRINTFORMDL %CALLNAME:MASTER%の肛腔に精液を放ちながら、覚が恥ずかしげに目を伏せた
+		ENDIF
+	;MASTERの膣に中だし
+	ELSEIF TCVAR:2 == 1
+		IF 陥落状態() >= 4
+			IF 陥落状態() == 5
+				PRINTFORML 「はっはっはっはっ、ぬしさま、の、おまん、こ、きもち、いい」
+				PRINTFORMDL 涎をこぼしながら覚の腰が動く度、えもいわれぬ悦楽がこみ上げてくる
+				PRINTFORML 「『中に』？　いいん、ですか、こども、でき」
+				PRINTFORMDL それ以上の言葉を遮るために唇を奪いながら、膣腔を強く締め付けた
+				PRINTFORML 「んぅっっ！！　ふっっ、っっっっっっ！！！」
+				PRINTFORMDL びゅるっと、精液が膣奥に叩きつけられる感触に、%CALLNAME:MASTER%は吐息を漏らした
+			ELSE
+				PRINTFORML 「ぬしさま、こども、ほしいです……、わたしの、こども、うんでください」
+				PRINTFORMDL 蕩けきった表情で、ごつごつと膣奥を叩いてくる覚
+				PRINTFORML 「『覚の子ならいい』……、うれしい、うれしいですっっ！　んんっっっっっ！！」
+				PRINTFORMDL こちらの腰を強くつかんで、一番奥でびゅるんっと熱いザーメンを打ち込んでくる
+				PRINTFORML 「ふぁあっっ！！　んきゅうっっ！！　おちんぽきもちいいです、ぬしさまぁ！！」
+				PRINTFORMDL 蕩けきった表情と声音に、悦楽と共に深い満足感を覚えた
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「ふふ、いいですよ。私も、もう、出そうです」
+			PRINTFORMDL 中に出して良い、そう思った瞬間、覚の腰の動きが激しくなる
+			PRINTFORML 「出します、だしますから、一番奥にっ、で、るっっっっ！！」
+			PRINTFORMDL 思い切り強く腰を押し付けながら、覚が精液を注ぎ込んできた
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「ふん、こうされたかったなんて、最低ですね」
+			PRINTFORMDL ぐちゅぬちゅと膣腔を抉りながら、囁く覚
+			PRINTFORML 「ほら、イキますよ、っっ、んぅぅぅっっっ！！」
+			PRINTFORMDL びゅくと、膣内に注ぎ込む覚を見ながら、%CALLNAME:MASTER%は喜悦の笑みを浮かべている
+		ELSEIF 陥落状態() == 1
+			PRINTFORML 「ん、はっ、これ、くせに、っっ！　出る、でますっっ！！」
+			PRINTFORMDL ぐちゅんっと、強い勢いで覚が腰を突き出してきて、最奥に精液を叩き付けられる
+		ELSE
+			PRINTFORML 「……っっっ！　……はぁ」
+			PRINTFORMDL %CALLNAME:MASTER%の奥に、ぐりぐりと鈴口を押し付けて、覚が射精した
+		ENDIF
+	ELSE
+		IF 陥落状態() >= 4
+			IF 陥落状態() == 5
+				PRINTFORML 「おちんちんいいです、きもちいいですぅ」
+				PRINTFORMDL 蕩けきった甘い声音で言葉を吐き出し、覚が自ら腰を揺らして悦楽を貪る
+				PRINTFORML 「ぬしさま、ぬしさま、ぬしさまぁっ、これ、これぇっ！！」
+				PRINTFORMDL ふるふると体を震わせる覚の、%TINKO(TARGET)%がびくんっと大きく揺れ、精液が撃ち出された
+				PRINTFORML 「あひっっ、んきゅぅっっっ！！」
+				PRINTFORMDL びゅるんびゅくんと撃ち出される精液に見入ってしまう%CALLNAME:MASTER%を、覚が嬉しげに見つめている
+			ELSE
+				PRINTFORML 「ふぁあああっっ！！　んくぅっっっ！！　いいですっ！　おちんぽ良いです！！」
+				PRINTFORMDL 開いた口から舌を突き出しながら唾液をこぼし、悦楽に染まった表情で叫ぶ覚
+				PRINTFORML 「見てて下さいっっ！　主様っ！　おちんぽミルク出すの、みててぇっ！！」
+				PRINTFORMDL 叫びながら、肩をふるわせ、覚が精液を撃ち放った
+				PRINTFORML 「ひぁぁぁああっっっ！！　……っっ！　……れろ、ちゅる……」
+				PRINTFORMDL %CALLNAME:MASTER%がその精液を受けた指を突き出すと、丁寧に舐め始めた
+			ENDIF
+		ELSEIF 陥落状態() == 3
+			PRINTFORML 「やっ！　おちんちん、だめ、だめですっ！　んきゅうっっ！！」
+			PRINTFORMDL 体中を痙攣させながら、びゅるんびゅくんっと白濁液を打ち上げる覚
+			PRINTFORML 「『気持ち良かったか？』　……はい、ただ、こう言うのはすこし、怖いです」
+			PRINTFORMDL 自身の白濁液を指でうけ、弄びながら覚がぼうっとした表情を浮かべる
+		ELSEIF 陥落状態() == 2
+			PRINTFORML 「……くぅっ……、っ……はっ、この、変態」
+			PRINTFORMDL びゅるっ、と精液を放ちながら、悔しげな表情で覚がこちらを睨んでくる
+			PRINTFORML 「『舐めて綺麗にしろ』？　……自分でやればどうですか、最低の変態」
+			PRINTFORMDL 目尻に涙を溜める覚に、つい口元が緩んでしまった
+		ELSEIF 陥落状態() == 1
+			PRINTFORML 「んぅっ！　『浅ましい』……って、つけさせたのは、%CALLNAME:MASTER%でしょう」
+			PRINTFORMDL 唇を尖らせながら、精液を放った自身の%TINKO(TARGET)%を、困ったように見つめている
+		ELSE
+			PRINTFORML 「んっ、あふ……、こんなのが良いなんて」
+			PRINTFORMDL ペニスから精を放ちつつ、覚が冷めた表情で見つめてくる
+		ENDIF
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+;-------------------------------------------------
+;放尿
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:放尿
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+;-------------------------------------------------
+;絶頂
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;五重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:五重絶頂
+		IF FLAG:70 == 1
+		ELSEIF CFLAG:睡眠
+		;MASTER押し倒され中
+		ELSEIF CFLAG:うふふ == 2
+		ELSE
+			IF 陥落状態() >= 4
+			ELSEIF 陥落状態() == 3
+			ELSEIF 陥落状態() == 2
+			ELSEIF 陥落状態() == 1
+			ELSE
+			ENDIF
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;四重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:四重絶頂
+		SELECTCASE NOWEX:四重絶頂
+			;Ｃ＆Ｖ＆Ａ＆Ｂ絶頂
+			CASE 1
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ａ＆Ｍ絶頂
+			CASE 2
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ＆Ｍ絶頂
+			CASE 3
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 4
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 5
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+	ENDIF
+	;-------------------------------------------------
+	;三重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:三重絶頂
+		SELECTCASE NOWEX:三重絶頂
+			;Ｃ＆Ｖ＆Ａ絶頂
+			CASE 1
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ａ絶頂
+			CASE 2
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ａ絶頂
+			CASE 3
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ絶頂
+			CASE 4
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｍ絶頂
+			CASE 5
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ｍ絶頂
+			CASE 6
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｖ＆Ｍ絶頂
+			CASE 7
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ｍ絶頂
+			CASE 8
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ＆Ｍ絶頂
+			CASE 9
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｍ絶頂
+			CASE 10
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+	ENDIF
+	;-------------------------------------------------
+	;二重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:二重絶頂
+		SELECTCASE NOWEX:二重絶頂
+			;Ｃ＆Ｖ絶頂
+			CASE 1
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ絶頂
+			CASE 2
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ絶頂
+			CASE 3
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ絶頂
+			CASE 4
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｂ絶頂
+			CASE 5
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ絶頂
+			CASE 6
+[SKIPSTART]
+				IF FLAG:70 == 1
+ふるふると乳房を痙攣させ、ぎゅっと尻穴を収縮させて、覚が上り詰めている
+時止めを終えた後の、羞恥・屈辱に震える様を思って脂下がってしまった
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+「や、いやです、ぬしさまぁっ」
+菊座と乳房から上り来る悦楽に、びくびくと体を震わせ覚が見つめてくる
+「ゆる、ゆるして、おしりはやなんです、っっ！！　んぅっ、ひぅっっっ！！」
+そう言いながらもつよく締め付けてくる覚が悪い
+「んっっ、んぅっっ、ん～～～～～！！」
+耳元で囁くと同時、覚が甘い渧泣を上げた
+					ELSEIF 陥落状態() == 3
+「ふぁんっっ！　だ、だめっ！　お尻だめっっおっぱいダメぇっっ！！」
+ぎゅっとアナルを締めながら、ふるんと乳房を震わせる覚
+「イクっっ！！　イキますっっっ！！」
+びくびくと震えながら、覚が上り詰めた
+					ELSEIF 陥落状態() == 2
+「くぅっっ！　この、変態っ！！　やめっ、なさいっ！！　お尻もおっぱいもなんて！」
+びくびくと尻たぶをゆらし、乳房を揺すりながら叫ぶ覚に、更に刺激を送り込む
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+[SKIPEND]
+			;Ａ＆Ｍ絶頂
+			CASE 7
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｍ絶頂
+			CASE 8
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｍ絶頂
+			CASE 9
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｍ絶頂
+			CASE 10
+				IF FLAG:70 == 1
+				ELSEIF CFLAG:睡眠
+				;MASTER押し倒され中
+				ELSEIF CFLAG:うふふ == 2
+				ELSE
+					IF 陥落状態() >= 4
+					ELSEIF 陥落状態() == 3
+					ELSEIF 陥落状態() == 2
+					ELSEIF 陥落状態() == 1
+					ELSE
+					ENDIF
+				ENDIF
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+	ENDIF
+	IF NOWEX:Ｃ絶頂
+[SKIPSTART]
+		;MASTER押し倒され中
+		IF CFLAG:うふふ == 2
+			IF 陥落状態() >= 4
+			ELSEIF 陥落状態() == 3
+			ELSEIF 陥落状態() == 2
+			ELSEIF 陥落状態() == 1
+			ELSE
+			ENDIF
+		;Futanariかつ非射精時
+		ELSE
+[SKIPEND]
+		IF GETBIT(TALENT:性別,1)
+			IF FLAG:70 == 1
+				PRINTFORMDL ペニスは確かに絶頂の痙攣を見せながら、それでも精液が吐き出されることは無い
+			ELSEIF CFLAG:睡眠
+				PRINTFORMDL 逸物を震わせ絶頂に達しながらも、覚の精ははき出されない
+			ELSEIF 陥落状態() >= 4
+				IF 陥落状態() == 5
+					PRINTFORML 「や、おちんちん、いじめちゃやですぅ」
+					PRINTFORMDL 涙目で懇願する覚を無視して、さらに擬根を苛める%CALLNAME:MASTER%
+					PRINTFORML 「あ、イク、イッちゃう、イッちゃいますっっ！！」
+					PRINTFORMDL ピクピクと全身を痙攣させ、びくんっと大きく擬根を揺らす覚
+					PRINTFORML 「はぁ…………はぁ……、せーえき、でないのに、おちんちんで」
+					PRINTFORMDL ぼーっとした覚の表情が、欲情を加速させる
+				ELSE
+					PRINTFORML 「主様、おねがいです、ゆるしてください……」
+					PRINTFORMDL びくんと陽物をゆらして、涙目で覚が見つめてくる
+					PRINTFORML 「でないんです、精液でないのに、おちんちんでイキそうなんです」
+					PRINTFORMDL その言葉ににやりと笑った瞬間、一瞬凍り付く覚
+					PRINTFORML 「ま、待ってっっ！　ひぅっっんきゅぅぅっっっっっ！！　……はぁ、はぁ」
+					PRINTFORMDL 恨めしげに見つめてくる覚の陽物からは、先走りがとろりとこぼれた
+				ENDIF
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「ま、まって、おねがい、でないの、でないのにおちんちんでイキそうだからっっ！！」
+				PRINTFORMDL そう叫びながらも、潤んだ瞳でもっとして欲しいとせがむ覚
+				PRINTFORML 「っっ！　や、だから、そのっっ、ん～～～～～～っっっっっっっ！！！！」
+				PRINTFORMDL 男根を激しく痙攣させながら、覚が絶頂した
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「くっ！　この変態っ！！　や、止めなさいっっ！！　っっ！　ひぅっっっ！！」
+				PRINTFORMDL 先走りで濡れた逸物を擦る度、悔しげな表情で覚が睨んでくる
+				PRINTFORML 「やめて、やめてっっ！　やっ！　イクっ！　でないのに、いくぅぅっっっ！！！」
+				PRINTFORMDL 逸物を震わせながら、射精できない苦しさに覚が目尻に涙を浮かべた
+			ELSEIF 陥落状態() == 1
+				PRINTFORML 「や、ま、まって！　おちんちん出ないのに！！　なんでこんなのっ！　んぅぅっっ！」
+				PRINTFORMDL びくびくと腰と男性器を揺らしながら、覚が上り詰めた
+			ELSE
+				PRINTFORML 「や、んっ、射精してない、のに、っっっっ！！」
+				PRINTFORMDL 唇を噛み締めながら、覚がペニスをぴくんと震わせる
+			ENDIF
+		;超強絶頂Ｃ
+		ELSEIF NOWEX:Ｃ絶頂 == 3
+			GOTO 超強絶頂系
+		;強絶頂Ｃ
+		ELSEIF NOWEX:Ｃ絶頂 == 2
+			IF FLAG:70 == 1
+				PRINTFORMDL ぴくぴくと細かくクリトリスに、時止めを終えた後の事を思って、口元がにやけてくる
+				PRINTFORMDL その後で一悶着あるとしても、その楽しさを止めることは出来なかった
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「あっあっひゃんっ！　ぬしさま、いきます、クリでイキます」
+						PRINTFORMDL 媚びるような表情で体を震わせる覚に、いつでも良いと答える
+						PRINTFORML 「ん、ぬしさま、もっと、もっとしてくださいっっ！　あ、それ、それっっ！！」
+						PRINTFORMDL 自らも腰を振りクリを押しつけてくる覚のいじらしさに、胸の奥が妙に熱くなる
+						PRINTFORML 「あひっ、んくっ、ぬしさまぬしさまぬしさまぁっっっっっ！！」
+						PRINTFORMDL びくんっと背をそらせながら覚が上り詰めた
+					ELSE
+						PRINTFORML 「あひっ！　んくぅっ！　『そんなに気持ちいいか』っっ！？　はい、はいぃっ」
+						PRINTFORMDL %CALLNAME:MASTER%の内心に、蕩けきった表情で頷く覚
+						PRINTFORML 「『イキたいか』！？　イキたいですっっ！　主様にイカせて欲しいですっっ！！」
+						PRINTFORMDL 涎を垂れ流しながら、甘い声を上げる覚
+						PRINTFORMDL その痴態に満足を覚えて、強烈な勢いで秘豆をぎゅっと押しつぶした
+						PRINTFORML 「あ、あ、あっ！　ふぁぁぁぁぁぁああああああああああっっっっ！！！！」
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「ふぁんっっ！　んきゅっ！　良いですっ！　もっと、もっとして下さいぃっっ！！」
+					PRINTFORMDL ビクンビクンと全身を震わせ、クリからの快楽に酔い痴れる覚
+					PRINTFORML 「ひぁっ！　んくっ！　イク、イキますっ！！　ーーーーーーーーーっっっっっっ！！」
+					PRINTFORMDL 強めに擦ってやると、嬉しそうな表情を浮かべて絶頂した
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「やめてっ！　やめなさいっっ！　くっ！　こんな、こんなことっっ！！」
+					PRINTFORMDL 目尻に涙を溜めて必死に悦楽をやり過ごそうとする覚
+					PRINTFORML 「こんな、こんなっ、っっっっ！　っっっっっっっっっっっっ！！！！」
+					PRINTFORMDL ぎゅっと強く秘豆を押しつぶして、覚を強引に絶頂させた
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「んっっ！　ふぁっっ！！　いいです、クリトリスっ！　っ！　～～～～～っっっ！！」
+					PRINTFORMDL びくびくと震えながら達する覚に、満足感を味わった
+				ELSE
+					PRINTFORML 「くぅっ、や、んくっ！　イクっっっっっっ！！！！」
+					PRINTFORMDL 仰け反りながら上り詰める覚に、%CALLNAME:MASTER%はにやけた笑みを浮かべた
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		;絶頂Ｃ
+		ELSE
+			IF FLAG:70 == 1
+				PRINTFORMDL クリトリスがぴくんっと震える様に、解放後の醜態を思って%CALLNAME:MASTER%は笑みを浮かべた
+			ELSEIF CFLAG:睡眠
+				PRINTFORMDL びくびくと体中を痙攣させ、絶頂した覚の口元から唾液がとろりとこぼれた
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「あひっ、んきゅぅっ……、や、ぬしさま、くりこすっちゃやですぅ」
+						PRINTFORMDL とびっきりに甘える声音で呟きながら、覚は自ら腰を揺らして押しつけてくる
+						PRINTFORML 「『もっとする』？　ふぁっ！　あんっ、あひっっ、ま、ちょ、ま、っっっ！！」
+						PRINTFORMDL こりっとしたクリを、さらに激しく弄る%CALLNAME:MASTER%
+						PRINTFORML 「あっあっあひんっっ！！　ふぁあああっっっ！！　…………はひ、んひゅぅ」
+						PRINTFORMDL 絶頂し身を強張らせた覚が、一拍おいてしなだれかかってきた
+					ELSE
+						PRINTFORML 「主様ぁ、あんっ！　もうすこし、やさしくぅ…………ひんっ！」
+						PRINTFORMDL 口ではそう言いながら、自ら腰を押し付けてもっと強くしてとおねだりする覚
+						PRINTFORML 「……『本当のことを言え』……っ、も、もっと」
+						PRINTFORMDL 羞恥にほほを染めながらも腰を揺らす覚
+						PRINTFORML 「もっと、強、くぅんっっっ！？　ひんっっっ！！　ふぁぁぁあああああっっっっ！！」
+						PRINTFORMDL びくっと肩を震わせて、覚が頂に登り詰めた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「そ、そこ敏感だから、もっとやさし、くぅんっ！」
+					PRINTFORMDL クリを擦られ、覚がびくびくと体を震わせる
+					PRINTFORML 「んっっ！　んぅっっ！　ひゃふっっ！！　ーーーーーーーーーっっっっっっ！！」
+					PRINTFORMDL きゅっと押しつぶした瞬間、甲高い渧泣を漏らして上り詰めた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「このっっ！　弄るのをやめっっ！！　んくっっ！！」
+					PRINTFORMDL 固しこった肉芽を弄る度、大きく震える覚
+					PRINTFORML 「ひぅっ！　この、このっ！　くっ、っっっっっっっっ！！」
+					PRINTFORMDL 悔しげな表情を浮かべながらも、覚が絶頂した
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「んくっ！　ひぁっっ！！　イキますっ、イッてしまいます！　～～～～～っっっ！！」
+					PRINTFORMDL ピンクの秘豆を擦られる感触に、覚が簡単に達した
+				ELSE
+					PRINTFORML 「んぅっ！　やめてっ！　そこは敏感っっ！　っっっっっっ！！！！」
+					PRINTFORMDL クリトリスからの快感に、覚は簡単に上り詰めた
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｖ絶頂
+		[SKIPSTART]
+		;MASTER押し倒され中
+		IF CFLAG:うふふ == 2
+			IF 陥落状態() >= 4
+			ELSEIF 陥落状態() == 3
+			ELSEIF 陥落状態() == 2
+			ELSEIF 陥落状態() == 1
+			ELSE
+;「んぅっっ！！　良いです。これ、これぇっっ！！　んくぅぅっっっっ！！」
+;びくびくと
+			ENDIF
+		;強絶頂Ｖ
+		ELSE
+		[SKIPEND]
+		;超強絶頂Ｖ
+		IF NOWEX:Ｖ絶頂 == 3
+			GOTO 超強絶頂系
+		ELSEIF NOWEX:Ｖ絶頂 == 2
+			IF FLAG:70 == 1
+				PRINTFORMDL びくびくと膣内を震えさせながらも、ぴくりとも体を動かさない覚
+				PRINTFORMDL 時止めを終えたときの反応を思って、%CALLNAME:MASTER%はほくそ笑んだ
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「おまんこいいです！　ぬしさまにされて、おまんこいっちゃいますっ！！」
+						PRINTFORMDL びくびくと全身を震わせ、膣腔を締め付けてくる覚
+						PRINTFORML 「ぬしさまぬしさま！　もっとおまんこじゅぽじゅぽしてっ！　ぬしさまもきもちよくなってっっ！！」
+						PRINTFORMDL 覚のおねだりに喜悦を覚え、%CALLNAME:MASTER%はさらに覚の膣腔を掻き回す
+						PRINTFORML 「あんっ、ひぁっ！　ーーーーーーーーーーーーーーーーっっっっっっ！！」
+						PRINTFORMDL 上り詰めた覚の体が自然と弛緩し、下半身がびくびくと痙攣している
+					ELSE
+						PRINTFORML 「主様ぁ、もっとぉ……もっとおまんこしてぇ……」
+						PRINTFORMDL 肉欲に爛れきった表情を浮かべる覚の、どろどろに濡れそぼった秘処を掻き回す
+						PRINTFORML 「ひぁあああっっっっ！！　んきゅううっっっっ！！　いいれしゅ、ぬひははぁっっ！！」
+						PRINTFORMDL 口から舌を突き出しながらだらだらと涎をこぼし、自ら腰を振り悦楽を貪る覚
+						PRINTFORML 「ひぅっっ！！　っっっ！！　ーーーーーーーーーーーーーーーーっっっっっっ！！」
+						PRINTFORMDL 思い切り仰け反りながら、覚が悦鳴を上げた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「はひっっ！　んきゅっっ！　や、バカになる、おまんこバカになってしまいますっ！！」
+					PRINTFORMDL 情欲に濡れた瞳で、媚びにまみれた声で、覚が情欲を露わにする
+					PRINTFORML 「あふっ！　これが良いですっ！　もっと、もっとぉ、ふぁぁぁあああああっっっっ！！」
+					PRINTFORMDL ぎゅぅっと、膣を締め付けながら、覚が渧泣を上げる
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「こんな、こんなことで、くぅっっ！！　ふぁっっっ！！」
+					PRINTFORMDL じゅぷぐぽと抜き差しする度、覚が激しく震えながらも悦楽をやり過ごそうとする
+					PRINTFORML 「『イキそう』？　だ、誰がっっ！　や、待ちっ！！　～～～～～っっっ！！」
+					PRINTFORMDL けれど、膣内のざらついた部分を擦ってやることで、覚を無理矢理絶頂させた
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「ま、待ってください！　イクから、イッてしまいますから、んぅっっっっっ！！！！」
+					PRINTFORMDL びくびくと痙攣しながら、覚が頂に登り詰めた
+				ELSE
+					PRINTFORML 「やめなさいっ！　こんなの、こんなっっ！　っっっっっっ！！！！」
+					PRINTFORMDL 膣腔からの快楽に、体中を震わせながら覚が達する
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		;絶頂Ｖ
+		ELSE
+			IF FLAG:70 == 1
+				PRINTFORMDL ぴくぴくと膣内が震える様に、%CALLNAME:MASTER%は口元に笑みを浮かべた
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「いいです、これいいですぅ、ぬしさま、もっとしてくださいぃ」
+						PRINTFORMDL とろとろに蕩けきった表情で、極上に甘い喜悦の声を上げる覚
+						PRINTFORML 「あっ！　や、イク、ぬしさま、わたしわたしぃ」
+						PRINTFORMDL 膣腔を締め付けながら囁く覚に、いつでも良いと答えて膣内を激しくこすり立てる
+						PRINTFORML 「あひっんくっっ、ふぁあああああああっっっっっっ！！！　…………かひゅぅ」
+						PRINTFORMDL 頂に達した覚が、体を震わせながら脱力している
+					ELSE
+						PRINTFORML 「……『おまんこきもちいいか』？　は、はい」
+						PRINTFORMDL 快楽と羞恥にほほを染めながら、%CALLNAME:MASTER%の内心の問い掛けに応える覚
+						PRINTFORML 「気持ちいいです、主様、だから、だからもっと、もっとぉ……」
+						PRINTFORMDL 自ら秘処を割り開くようにして懇願する覚に従って、思う存分に嬲り立てる
+						PRINTFORML 「ん、ふっ、ひぅっ、ーーーーーーーーーーーーーーーーっっっっっっ！！」
+						PRINTFORMDL ぎゅっと強く締め付けつつ、覚が悦鳴を上げた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「いいですっ！　膣内（なか）こすれて、気持ちいいです」
+					PRINTFORMDL 媚びるような啼き声を上げて、覚が潤んだ瞳で見つめてくる
+					PRINTFORML 「んっんっっんぅっっ！！　ひぁ、っっ、ふぁぁぁあああああああっっっっっっ！！」
+					PRINTFORMDL 痙攣し、渧泣を上げながらも、覚が嬉しそうな表情で見つめてきた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「くっ！　『きもち、いい』？　そんなことは、そんなことは……」
+					PRINTFORMDL 膣内を嬲られ、上り詰めるのを必死にガマンする覚に、にたりと笑みを向ける
+					PRINTFORML 「ひっ！　まっっ！　いまそこをされっっっ！　～～～～～っっっ！！」
+					PRINTFORMDL 膣内の一番感じる所を擦った瞬間、覚がとうとう絶頂した
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「イクッ、イキます！」
+					PRINTFORMDL びくびくと震えながら、覚が頂に登り詰める
+				ELSE
+					PRINTFORML 「くっ！　イクっっ！！」
+					PRINTFORMDL 膣腔を抉られる感触に、覚が達した
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+	IF NOWEX:Ａ絶頂
+		;MASTER押し倒され中
+		IF CFLAG:うふふ == 2
+			IF 陥落状態() >= 4
+				PRINTFORML 「やぁん、主様、ぬしさまぁ」
+				PRINTFORMDL 甘えるような声を上げて、覚が尻を揺らし催促してくる
+				PRINTFORML 「おしり、いいです、おひり、おひりぃ」
+				PRINTFORMDL 舌を突き出し涎を垂れ流しにして、覚がふりふりと腰を振る
+				PRINTFORML 「あ、ああっっ！　きましゅ、おひりで、おひりでっっっっっっっっっ！！」
+				PRINTFORMDL 全身を激しく痙攣させながら、覚がアナルで絶頂する
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「ふぁんっっ！！　んくぅっ！　お尻弄らされて、悦ぶなんてぇっ！」
+				PRINTFORMDL 主導権をとりながらも嫌悪を滲ませ、菊座からの悦楽にだらしない笑みを浮かべる覚
+				PRINTFORML 「『尻穴で悦ぶ、へんたい』っ！？　そう、させてるのは、そっち、んぅぅうっっ！！」
+				PRINTFORMDL 口では文句を言いながら、菊座をほじくられて、覚が絶頂する
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「あふんっ、ん、ふん、こんなところ、で、なんて、へんたいぃ」
+				PRINTFORMDL 悔しげな表情で睨み付けてくる覚だが、アヌスを締め付けて悦楽に耽っている
+				PRINTFORML 「『自分の、方が』っっ！　うるさい、うるさいっっ！　んきゅぅぅぅっっっっっ！！」
+				PRINTFORMDL 内心を読み取った覚が、悔しげな顔のまま上り詰めた
+			ELSEIF 陥落状態() == 1
+				PRINTFORML 「んぅっ！　お尻、だめ、なのにぃぃっっっ！！」
+				PRINTFORMDL 自分からさせておいて良く言う、そんな事を思いながら菊座の悦楽に耽る覚を眺めた
+			ELSE
+				PRINTFORML 「お尻いじらされて、んっ、悦ぶ、なんて、へんた、はぅんっっっっ！！」
+				PRINTFORMDL アナルを締め付けて絶頂する覚に、尻穴で悦ぶくせにと内心で呟いた
+			ENDIF
+		;超強絶頂Ａ
+		ELSEIF NOWEX:Ａ絶頂 == 3
+			GOTO 超強絶頂系
+		;強絶頂Ａ
+		ELSEIF NOWEX:Ａ絶頂 == 2
+			IF FLAG:70 == 1
+				PRINTFORMDL 尻穴が幾度も収縮し、強烈な快楽を味わっているのが見て取れる
+				PRINTFORMDL 時止めを終えたときのことを思って、%CALLNAME:MASTER%はやに下がった笑みを浮かべた
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「ぬししゃま、もっと、けつまんこ、もっとしれくらしゃい！」
+						PRINTFORMDL 尻穴を懸命に締め付け、ろれつの回らない覚がおねだりしてくる
+						PRINTFORML 「『けつあな、れ、かんじる、へんらい』？　そうしらの、ぬししゃまっ、ひんっっ！」
+						PRINTFORMDL その言葉に満足感を覚え、%CALLNAME:MASTER%は覚のアナルを思い切り掻き回す
+						PRINTFORML 「あんっ、あんっ、ふぁあんっ！　イク、イク、おひりれイッひゃうぅっっっっ！！！」
+						PRINTFORMDL 高々と悦鳴を上げながら、覚がアヌスで絶頂した
+					ELSE
+						PRINTFORML 「んぅっっ……、おしりっっ！　おひりっっっ！！」
+						PRINTFORMDL 自ら尻を突き出し、肛腔を捧げてくる覚
+						PRINTFORMDL 舌を突き出し、涎を垂れ流し、随喜の涙をこぼしながら、見つめてくる
+						PRINTFORML 「いきまひゅ、おひりで、おかひくなっへひまいまひゅ」
+						PRINTFORML 「みへへ、ぬひはは、っっ！！　ーーーーーーーーーーーーーーっっっっっっ！！！！」
+						PRINTFORMDL 呂律の回らない言葉を放つ覚が、肛腔からの悦楽に悲鳴を上げた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「ひうっ！　も、もうっっ！　そこは、許しっってっっっ！！」
+					PRINTFORMDL 肛虐にびくびくと震える覚が、目尻に媚びを浮かべて見つめてくる
+					PRINTFORML 「お尻、なのにっっ！　こんなの、こんな、ひぁあああああっっっっっっっっっ！！」
+					PRINTFORMDL 甘ったるい啼き声を上げながら、覚が体を痙攣させた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「くぅっ……、この、痴れ者ぉ……、もう、やめっっ！」
+					PRINTFORMDL ぐりっと、アナルを抉った瞬間、覚が唇を噛み締めて、睨み付けてきた
+					PRINTFORML 「くっ、や、やだ、もういや、っっ！！　～～～～～～～～～～～～～っっっっ！！」
+					PRINTFORMDL アナルからの悦楽に、涙と涎を垂れ流し、覚が絶頂した
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「イクッ！　お尻で、こんなところで、私、イッてしまいますっっっっ！！！！」
+					PRINTFORMDL びくびくと体中を震わせて、覚が達した
+				ELSE
+					PRINTFORML 「いや、いやいやいやっっ！！　ひっっ！　いやぁああああっっっっ！！」
+					PRINTFORMDL 羞恥を露わにしながらも、覚が尻穴からの悦楽に上り詰めた
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		;絶頂Ａ
+		ELSE
+			IF FLAG:70 == 1
+				PRINTFORMDL 尻穴が収縮する様に満足感を覚えて、%CALLNAME:MASTER%はにやついた
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「おしりやです、ぬしさま、おしりやですぅ」
+						PRINTFORMDL 媚びるように上目遣いでつぶやく覚
+						PRINTFORMDL 上の口からも下の口からもだらだらと涎を垂らしてる姿に、その言葉は説得力を持たなくて
+						PRINTFORML 「や、おしり、やぁ、おしりやぁの、やぁのに、いっちゃうぅっっ！」
+						PRINTFORML 「んっんっんっっ、ーーーーーーーーーーっっっっっっ！！」
+						PRINTFORMDL ぎゅぅっと、肛門を強く締め付けながら、覚が上り詰めた
+					ELSE
+						PRINTFORML 「へんたい、へんたいぃ……」
+						PRINTFORMDL 涙目で見つめてくる覚だが、それでも%CALLNAME:MASTER%の肛腔からの悦楽にほほを染める
+						PRINTFORML 「こんなの、いやですぅ……、おしりで、なんてぇっっっ」
+						PRINTFORMDL 口では文句を言いながらも、ぎゅっと肛腔を締め付ける覚
+						PRINTFORML 「ふぁっ！　んくっっ！！　ひぁあああああっっっっっっっっっ！！！」
+						PRINTFORMDL 一拍おいて、肛腔からの悦楽に甲高い悦鳴をあげた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「そ、そこはダメです。っっ！　お願いです、そこは、許してっ！」
+					PRINTFORMDL びくびくと体中を震わせながら、肛虐に耐える覚
+					PRINTFORML 「ひっっ！　イクっっ！　お尻でイキますぅっっっ！！」
+					PRINTFORMDL 覚が媚びを含ませた啼き声を上げた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「や、やめなさいっっ！　こんなところでなんてっ！！」
+					PRINTFORMDL アナルを弄られる感触に、涙を目に溜めて覚が睨んでくる
+					PRINTFORML 「やめ、や、やだぁっ！　こんなのいやぁああああっっっっっっ！！」
+					PRINTFORMDL 泣き叫びながら、覚がアナルで絶頂した
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「こ、こんなの、ヘンタイで、すっっ！　んきゅうぅうぅぅ……っ！！」
+					PRINTFORMDL 菊座から這い上る快感に、耐えきれずに覚が達した
+				ELSE
+					PRINTFORML 「不浄の穴でなんていやぁっ！！　っっっっ！！」
+					PRINTFORMDL 目尻に涙を浮かべながら尻穴をほじられ、覚が頂きへと上り詰めた
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｂ絶頂
+		;MASTER押し倒され中
+		IF CFLAG:うふふ == 2
+			IF 陥落状態() >= 4
+				PRINTFORML 「んくっ、ふふ、主様いいです」
+				PRINTFORMDL 甘えるように呟き、覚が潤んだ瞳で見つめてくる
+				PRINTFORML 「ふぁっ！　んっ！　もっと、してっ！！　んきゅっ！！」
+				PRINTFORMDL 可愛いおねだりに、主導権を握られた不満を置いて、更に胸を刺激してやる%CALLNAME:MASTER%
+				PRINTFORML 「あふんっ！　ふふ、んくぅっ！！　ひぁああっっっ！！」
+				PRINTFORMDL びくびくと震えて、覚が乳房からの快楽に上り詰めた
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「あふっっ、んくぅっっ！　いいです、もっと、もっとしなさい」
+				PRINTFORMDL 上から目線の言葉に、僅かな不快感を覚えつつ、それでも頂へと登らせていく
+				PRINTFORML 「ひぁっ、んっっ！　ふぁあっっ！！　っっ！　ひぁあああっっっっっっ！！！」
+				PRINTFORMDL 一拍おいて、びくびくと震えながら覚が上り詰めた
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「あふ、んっ、ふんっ、ほら、もっと、しなさい」
+				PRINTFORMDL えらそうな言い方に、苛立ちを覚える
+				PRINTFORML 「『してやってる』っ？　させて、もらってるのまちが、ん、あああっっっっ！！」
+				PRINTFORMDL 苛立ちを籠めて無理矢理絶頂させた
+			ELSEIF 陥落状態() == 1
+				PRINTFORML 「あふ、んくっ、ひぅんっっっっっ！！」
+				PRINTFORMDL 嬉しげな表情で達する覚に、させられている不満はとりあえず抑えた
+			ELSE
+				PRINTFORML 「くぅ、んくっっ、ひんっっ！！」
+				PRINTFORMDL 乳房を押し付けて催促する覚に、苛立ちと共に無理矢理絶頂させる
+			ENDIF
+		;超強絶頂Ｂ
+		ELSEIF NOWEX:Ｂ絶頂 == 3
+			GOTO 超強絶頂系
+		;強絶頂Ｂ
+		ELSEIF NOWEX:Ｂ絶頂 == 2
+			IF FLAG:70 == 1
+				PRINTFORMDL 先端を擦る度に、乳首がより早く細かく震えていく
+				PRINTFORMDL より強い快楽を与えられた事に%CALLNAME:MASTER%は満足した
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「はひゆ、かひゅっ、……やあ、ぬしさま、おっぱいおっぱいこわれちゃいますぅ」
+						PRINTFORMDL そういいながらも、自ら胸を突き出し乳房を弄って欲しいと言外に告げる覚
+						PRINTFORML 「あひ、んくっ、いきます、おっぱいでイッちゃいます」
+						PRINTFORMDL 固くしこった乳首が、ぴくんと震えた
+						PRINTFORML 「んっんっんっ、ふぁあああああああっっっっっっ！！！」
+						PRINTFORMDL だらだらと口の端から涎をこぼしながら、覚が絶頂した
+					ELSE
+						PRINTFORML 「ぬしさまぁ、も、だめ、ですぅ……、わたし、イッてしまい、ますぅ」
+						PRINTFORMDL びくびくと震えて、甘ったるい嬌声を上げる覚
+						PRINTFORML 「『いつでも、良い』？　あは、うれしい、です……、んっ、ふぁっっ！！」
+						PRINTFORMDL 自ら快楽を貪るように乳房を揺らした覚が、びくっと大きく肩を震わせた
+						PRINTFORML 「イキ、ます、みてて、ぬしさまぁっっ、イクーーーーーーーっっっっっ！！！！！！」
+						PRINTFORMDL 舌を突き出し涎をこぼしながら、乳房からの快感に蕩けきった表情で覚が上り詰めた
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「イク！　イキます！　みててください、んんっっ！！　ぅぁああああっっっ！！！」
+					PRINTFORMDL ビクンビクンと全身を震わせ、胸を突き出してもっと弄ってとおねだりしてくる覚
+					PRINTFORML 「！？　やっ、ま、っいま、イッてます、イッてますからっっ！！」
+					PRINTFORMDL 更に乳房をいらってやると、涎を垂らしながら潤んだ瞳で見つめてきた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「くっ！　こ、こんなのっっ！！」
+					PRINTFORMDL 悔しげな表情で、覚がこちらを睨んでくる
+					PRINTFORML 「さ、さわらないでくださ、いっ！　んぅーーーーーーっっっっっ！！」
+					PRINTFORMDL 胸をいじられて絶頂する覚の姿は、普段の傲慢さと反して扇情的に過ぎた
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「っ！　っっ！！　ぁああああっっっっっっ！！」
+					PRINTFORMDL 乳房を揺らし絶叫する覚が、ぎゅっとしがみついてきた
+				ELSE
+					PRINTFORML 「～～～～～～～っっっ！！！！」
+					PRINTFORMDL 大きく開いた口から舌を突き出し、目を見開いた覚が音にならない絶叫を上げた
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		;絶頂Ｂ
+		ELSE
+			IF FLAG:70 == 1
+				PRINTFORMDL 固くしこった乳首が小さく揺れる光景に、%CALLNAME:MASTER%は満足感を覚えた
+			ELSE
+				IF 陥落状態() >= 4
+					IF 陥落状態() == 5
+						PRINTFORML 「ぬしさま、おっぱい、おっぱいでイッちゃいます！」
+						PRINTFORMDL 乳房を嬲られる感触に、覚が蕩けきった表情で甘い渧き声を上げている
+						PRINTFORML 「『いつでもいい』？　はい、はいっ」
+						PRINTFORMDL %CALLNAME:MASTER%の臨むように、上体を揺らし乳房への刺激を強める覚
+						PRINTFORML 「んっんっんっっっ、ふぁあああああああっっっっっっ！！！」
+						PRINTFORMDL ぎゅっと身を強張らせながら、覚が上り詰めた
+					ELSE
+						PRINTFORML 「イク、イキます！　主様、見てて下さいっ！　覚はおっぱいでいっちゃいますっ！！」
+						PRINTFORMDL 口の端からだらしなく涎をこぼし、目に媚びをうかべて覚が声を上げる
+						PRINTFORML 「イクっっ、イッちゃいますっ、んん、ふぁぁあああああああああああああっっっっっっ！！」
+						PRINTFORMDL びくびくと全身を震わせながら、覚が頂きに上り詰めた
+						PRINTFORML 「はぁはぁ……ん、『エロい啼き声だ』？　……主様に言われると、嬉しいです」
+						PRINTFORMDL 息を整えながら、覚が嬉しそうに笑った
+					ENDIF
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あ、あ、あああああああっっっっっっ！！」
+					PRINTFORMDL びくびくと体を震わせながら、覚が甘い啼き声を上げた
+					PRINTFORML 「はっ……はっ、はぁ……、……おっぱい、……きもち、よかったぁ……」
+					PRINTFORMDL 独り言のように呟いて、覚が全身から力を抜いた
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「くっ、んんぅぅぅっっっっ！　……『イッたか』？　い、いいえ、この程度で」
+					PRINTFORMDL どう見ても達しているのに認めない覚に、ぎゅっと乳房を掴んだ
+					PRINTFORML 「ひぁあんっっ！　や、やめなさっっ！！　ひぃっっ！！」
+					PRINTFORMDL 敏感になっている乳房をいらわれて、覚が悲鳴を上げている
+				ELSEIF 陥落状態() == 1
+					PRINTFORML 「ひぁぁぁっっっっ！　……はぁ、はぁ……、気持ち、よかった、です」
+					PRINTFORMDL 欲情に瞳を潤ませ、覚が自分の乳房を見つめる
+				ELSE
+					PRINTFORML 「……っっ！　……はっ、ぁ……」
+					PRINTFORMDL 悔しげな表情で、胸からの快楽をやり過ごそうとしている
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+	IF NOWEX:Ｍ絶頂
+		;超強絶頂Ｍ
+		IF NOWEX:Ｍ絶頂 == 3
+		;強絶頂Ｍ
+		ELSEIF NOWEX:Ｍ絶頂 == 2
+			IF FLAG:70 == 1
+			ELSEIF CFLAG:睡眠
+			;MASTER押し倒され中
+			ELSEIF CFLAG:うふふ == 2
+			ELSE
+				IF 陥落状態() >= 4
+				ELSEIF 陥落状態() == 3
+				ELSEIF 陥落状態() == 2
+				ELSEIF 陥落状態() == 1
+				ELSE
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		;絶頂Ｍ
+		ELSE
+			IF FLAG:70 == 1
+			ELSEIF CFLAG:睡眠
+			;MASTER押し倒され中
+			ELSEIF CFLAG:うふふ == 2
+			ELSE
+				IF 陥落状態() >= 4
+				ELSEIF 陥落状態() == 3
+				ELSEIF 陥落状態() == 2
+				ELSEIF 陥落状態() == 1
+				ELSE
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+$超強絶頂系
+IF NOWEX:Ｃ絶頂
+	LOCALS = クリトリス
+	LOCALS:1 = おまめ
+ELSEIF NOWEX:Ｖ絶頂
+	LOCALS = 膣腔
+	LOCALS:1 = おまんこ
+ELSEIF NOWEX:Ａ絶頂
+	LOCALS = 肛腔
+	LOCALS:1 = しりあな
+ELSEIF NOWEX:Ｂ絶頂
+	LOCALS = 乳房
+LOCALS:1 = おっぱい
+ENDIF
+IF FLAG:70 == 1
+	PRINTFORMDL 覚が強烈に%LOCALS%を\@ NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂 ? 締め付け # 震わせ \@、上り詰めた
+	PRINTFORMDL \@ NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂 ? ギュッと締め付け # ビクビクと痙攣す \@る%LOCALS%
+	PRINTFORMDW 時止めを解除した時の甘い声を想像して、%CALLNAME:MASTER%は笑みを浮かべた
+ELSE
+	IF 陥落状態() >= 4
+		IF 陥落状態() == 5
+			PRINTFORMDL %LOCALS%からの悦楽に体中を震わせ、蕩けきった表情を浮かべる覚
+			PRINTFORML 「やぁ、ぬしさまやぁれす、%LOCALS:1%こわれりゅこわれまひゅっっ！！」
+			PRINTFORMDL ろれつの回っていない覚が、だらだらと上と下の口から涎を垂れ流し体を震わせている
+			PRINTFORML 「やぁ、やぁの、おかしく、おかひきゅっっっ！　ぬしさまぬしさまも、きもひよふ」
+			PRINTFORMDL 限界を超えた悦楽に、それでもこちらの事を思う覚に、%CALLNAME:MASTER%は愛おしさを覚えた
+			PRINTFORML 「ぬひはま、しゅき、らいしゅき……、っっ！　っっっ！　～～～～～～～～～～～～～～～～～！！」
+		ELSE
+			PRINTFORML 「かひゅ、はひゅ、これ、これらめれしゅ」
+			PRINTFORMDL ろれつの回らない覚が、上気した頬と目尻に溜めた涙を見せてくる
+			PRINTFORML 「もう、げんかい、%LOCALS:1%げんかいれしゅっ！！」
+			PRINTFORMDL ビクビクと細かく体を痙攣させる覚、その姿に満足感を覚えさらに激しく悦楽を与える
+			PRINTFORML 「んっんっんぅっっっっ！！　イクゥーーーーーッッッッッッッッッッッッッ！！」
+			PRINTFORMDL ひときわ大きく鳴き声を上げて、%LOCALS%を\@ NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂 ? ギュッと締め付け # ビクビクと痙攣さ \@せ覚が上り詰めた
+		ENDIF
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「はひゅ、かひゅ、や、やれす、やめ、やぁっ」
+		PRINTFORMDL %LOCALS%を激しく\@ NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂 ? 締め付け # 震わせ \@、覚が上り詰める
+		PRINTFORML 「や、やれす、みないれみにゃいれ、っ、っっ、～～～～～～～～～～～～～～～～～！！！」
+		PRINTFORMDL 強烈な絶頂に覚の体が意思とは無縁の痙攣を続けている
+	ELSEIF 陥落状態() == 2
+		PRINTFORML 「くっっ、っっっ！　ーーーーーーーーーーーーーーッッッッッッッッッッッッッ！！」
+		PRINTFORMDL 必死に声を堪えながらも、%LOCALS%を\@ NOWEX:Ｖ絶頂 || NOWEX:Ａ絶頂 ? ギュッと締め付け # ビクビクと痙攣さ \@せ絶頂する覚
+		PRINTFORML 「こ、の、っっ！　ひぁ、やめっっ！！　んきゅぅっっっっっっ！！」
+		PRINTFORMDL 悔しげな視線を向けてきた覚の体を軽く弄り、もう一度上り詰めさせた
+	ELSEIF 陥落状態() == 1
+		PRINTFORML 「っっっっっっ！！　っっっっっっ～～～～～～～～～～～～～～～～～！！！！！！！！！」
+		PRINTFORMDL ビクビクと体中を痙攣させ、%LOCALS%からの悦楽を享受して、覚が上り詰めた
+	ELSE
+		PRINTFORMDL 声を抑えようと、口を手で覆う覚だが、%LOCALS%の快感はそんな努力を一蹴する
+		PRINTFORML 「っっ、くっっ、ふぁっっ！！　ひぁあああああああっっっっ！！！」
+	ENDIF
+ENDIF
+RETURN 1
+;-------------------------------------------------
+;奴隷の睡眠絶頂時の口上
+;-------------------------------------------------
+@M_KOJO_MESSAGE_PALAMCNG_B2_KX
+CALL PALAM_MESSAGE_B
+;-------------------------------------------------
+;噴乳
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:噴乳
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;射精
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:射精
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;放尿
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && NOWEX:放尿
+	PRINTFORMW 
+ENDIF
+;-------------------------------------------------
+;絶頂
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;五重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:五重絶頂
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;四重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:四重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:四重絶頂
+			;Ｃ＆Ｖ＆Ａ＆Ｂ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ａ＆Ｍ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ＆Ｍ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ＆Ｂ＆Ｍ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	;-------------------------------------------------
+	;三重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:三重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:三重絶頂
+			;Ｃ＆Ｖ＆Ａ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ａ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ａ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｂ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｖ＆Ｍ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｖ＆Ｍ絶頂
+			CASE 6
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｖ＆Ｍ絶頂
+			CASE 7
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ＆Ｍ絶頂
+			CASE 8
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ＆Ｍ絶頂
+			CASE 9
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ＆Ｍ絶頂
+			CASE 10
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	;-------------------------------------------------
+	;二重絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF NOWEX:二重絶頂
+		;部位を指定せず簡易的に書く場合、[SKIPSTART]&[SKIPEND]のコメントアウトを外して、[SKIPSTART]とこのコメントの間に書いてください
+		;[SKIPSTART]
+		SELECTCASE NOWEX:二重絶頂
+			;Ｃ＆Ｖ絶頂
+			CASE 1
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ａ絶頂
+			CASE 2
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ａ絶頂
+			CASE 3
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｂ絶頂
+			CASE 4
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｂ絶頂
+			CASE 5
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｂ絶頂
+			CASE 6
+				PRINTFORMW 
+				RETURN 1
+			;Ａ＆Ｍ絶頂
+			CASE 7
+				PRINTFORMW 
+				RETURN 1
+			;Ｖ＆Ｍ絶頂
+			CASE 8
+				PRINTFORMW 
+				RETURN 1
+			;Ｃ＆Ｍ絶頂
+			CASE 9
+				PRINTFORMW 
+				RETURN 1
+			;Ｂ＆Ｍ絶頂
+			CASE 10
+				PRINTFORMW 
+				RETURN 1
+		ENDSELECT
+		;[SKIPEND]
+	ENDIF
+	IF NOWEX:Ｃ絶頂
+		;超強絶頂Ｃ
+		IF NOWEX:Ｃ絶頂 == 3
+		;強絶頂Ｃ
+		ELSEIF NOWEX:Ｃ絶頂 == 2
+			PRINTFORMDL びくびくと体をふるわせ、かくんかくんと腰を上下させる覚
+			PRINTFORMDL 寝言で%CALLNAME:MASTER%の名を呼びながら、自ら腰を突き出しさらなる快楽を求めている
+		;絶頂Ｃ
+		ELSE
+			PRINTFORMDL びくびくと体中を痙攣させ、絶頂した覚の口元から唾液がとろりとこぼれた
+		ENDIF
+		PRINTFORMW 
+	ENDIF
+	IF NOWEX:Ｖ絶頂
+		;超強絶頂Ｖ
+		IF NOWEX:Ｖ絶頂 == 3
+		;強絶頂Ｖ
+		ELSEIF NOWEX:Ｖ絶頂 == 2
+		;絶頂Ｖ
+		ELSE
+		ENDIF
+		PRINTFORMW 
+	ENDIF
+	IF NOWEX:Ａ絶頂
+		;超強絶頂Ａ
+		IF NOWEX:Ａ絶頂 == 3
+		;強絶頂Ａ
+		ELSEIF NOWEX:Ａ絶頂 == 2
+		;絶頂Ａ
+		ELSE
+		ENDIF
+		PRINTFORMW 
+	ENDIF
+	IF NOWEX:Ｂ絶頂
+		;強絶頂Ｂ
+		IF NOWEX:Ｂ絶頂 == 3
+		;強絶頂Ｂ
+		ELSEIF NOWEX:Ｂ絶頂 == 2
+			PRINTFORMDL ビクンと体を痙攣させ、さらなる悦楽を望むかのように乳房を突き出す覚
+			PRINTFORMDL 開いた口から涎をこぼし、舌を突き出しながら、背中を仰け反らせている
+		;絶頂Ｂ
+		ELSE
+			PRINTFORMDW 甘い寝息を漏らしながらぴくっと肩を震わせ、覚が無意識に胸を庇うように腕を動かした
+		ENDIF
+		PRINTFORMW 
+	ENDIF
+	IF NOWEX:Ｍ絶頂
+		;超強絶頂Ｍ
+		IF NOWEX:Ｍ絶頂 == 3
+			PRINTFORMW 
+		;強絶頂Ｍ
+		ELSEIF NOWEX:Ｍ絶頂 == 2
+			PRINTFORMW 
+		;絶頂Ｍ
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;射精に関する口上の表示
+;一時的にTARGETを口上主に設定している
+;-------------------------------------------------
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_0(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;避孕套
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_23(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;強制口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_22(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;六九式
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;同時射精
+	IF NOWEX:射精 && NOWEX:MASTER:射精
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		IF TALENT:PLAYER & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	ELSE
+		;TARGETについてる
+		IF TALENT:2 & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_21(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳夾口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_20(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_9(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;肛門奉仕
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_8(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;泡泡浴
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;同時射精
+	IF NOWEX:射精 && NOWEX:MASTER:射精
+		PRINTFORMW
+		RETURN 1
+	;TARGETだけ射精
+	ELSEIF NOWEX:射精
+		;PLAYERについてる
+		IF TALENT:PLAYER & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	;PLAYERだけ射精
+	ELSE
+		;TARGETについてる
+		IF TALENT:2 & 2
+			PRINTFORMW
+			RETURN 1
+		;付いてない
+		ELSE
+			PRINTFORMW
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_7(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;足交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_6(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;素股
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_5(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;乳交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_4(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;口交
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_3(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;手淫
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_2(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;アナル
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_A_K49_1(ARG)
+CALL PALAM_MESSAGE_A
+;-------------------------------------------------
+;膣内
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+@M_KOJO_MESSAGE_PALAMCNG_F_49(ARG)
+SIF 陥落状態() >= 4 && (陥落状態() == 3) && (陥落状態() == 1) && !陥落状態() == 2
+	CALL PALAM_MESSAGE_F
+;-------------------------------------------------
+;焦らし
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && !FLAG:70
+	IF 陥落状態() >= 4
+		PRINTFORML 「はふ、ん……、はやく、イカせてください、ぬしさまぁ」
+		PRINTFORMDL トロンとした表情で、情欲を露わにする覚
+		PRINTFORMW 「『ガマンしろ』？　ふぅ、ふぅ、ん、ひどい、です、ぬしさまいぢわるです」
+		PRINTFORMDL 唇をとがらせながら文句を言う覚だが、どことなく嬉しそうだ
+		PRINTFORML 「…………ぬしさまが、よろこんでくれるから、です」
+		PRINTFORMDW つんとすました表情を取り繕って、覚が視線をそらした、火照る体を揺らしながら
+	ELSEIF 陥落状態() == 3
+		PRINTFORML 「……はぁ、ん……、早く、触ってくれませんか？」
+		PRINTFORMDW もじもじと身をよじりながら呟く覚に、ただ笑みを向ける
+		PRINTFORML 「『そうして悶えてるのが良い』？　……ほんとうに、%CALLNAME:TARGET%は」
+		PRINTFORMDW 呆れたような呟きを漏らしつつ、触って欲しいと覚が目で訴えて来るのは無視した
+	ELSEIF 陥落状態() == 2
+		PRINTFORMD 覚は
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMDL 悔しげに唇を噛みしめ、上り詰められないいらだちを堪えている
+			CASE 1
+				PRINTFORMDL 怒気を目に充満させて、絶頂へ達せない不満を押し殺している
+			CASE 2
+				PRINTFORMDL 浅い呼吸を繰り返して、体に燻る快感の熾火を消そうと躍起になっている
+		ENDSELECT
+		PRINTL 
+		PRINTFORML 「こんな、程度で、懐柔できるとでも」
+		PRINTFORMDW そんな真っ赤な顔でやせ我慢して楽しいかと問い返す%CALLNAME:MASTER%
+		PRINTFORML 「……やせ我慢なんか、していません」
+		PRINTFORMDW 悔しそうにこちらを見つめる覚に、ただにやにやと笑みを向けた
+	ELSEIF 陥落状態() == 1
+		PRINTFORML 「はぁはぁ……、%CALLNAME:TARGET%は本当に、ひどいひと、です」
+		PRINTFORMDW トロンとした表情で、切なげに眦を下げる覚がこちらを見つめてくる
+	ENDIF
+	PRINTFORMW 
+	RETURN 1
+ENDIF
+RETURN 1
+
+;-------------------------------------------
+;調教後のテキスト
+;-------------------------------------------
+@M_KOJO_MESSAGE_PALAMCNG_C_KX
+CALL PALAM_MESSAGE_C
+;処女喪失
+IF TCVAR:破瓜
+	;正真正銘処女喪失
+	IF TCVAR:破瓜 == 1
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+;「っ…………はぁ、」
+		ENDIF
+	;再生処女喪失
+	ELSEIF TCVAR:破瓜 == 2
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+		ENDIF
+	;無自覚非処女喪失
+	ELSEIF TCVAR:破瓜 == -1
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+		ENDIF
+	ENDIF
+ENDIF
+
+;Ａ処女喪失
+IF TCVAR:Ａ破瓜
+	;正真正銘Ａ処女喪失
+	IF TCVAR:Ａ破瓜 == 1
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+		ENDIF
+	;無自覚Ａ処女喪失
+	ELSEIF TCVAR:Ａ破瓜 == -1
+		IF 陥落状態() >= 4
+		ELSEIF 陥落状態() == 3
+		ELSEIF 陥落状態() == 2
+		ELSEIF 陥落状態() == 1
+		ENDIF
+	ENDIF
+ENDIF
+
+;フェラで射精後のお掃除
+IF (TCVAR:MASTER:112 == 1 || TCVAR:MASTER:112 == 2) && SELECTCOM == 81
+	IF 陥落状態() >= 4
+	ELSEIF 陥落状態() == 3
+	ELSEIF 陥落状態() == 2
+	ELSEIF 陥落状態() == 1
+	ELSE
+	ENDIF
+	PRINTFORMW 
+ENDIF

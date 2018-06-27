@@ -1,0 +1,50 @@
+﻿@COM618
+PRINTL 所持道具
+CALL LIST_ITEM, "園芸用品"
+PRINTL 　
+PRINTL 　
+PRINTFORML 請选択要購买的道具 所持金:\\{MONEY}
+
+CALL SHOW_ITEM, "園芸用品"
+PRINT [100] - 返回
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	TIME += 10
+	RETURN -1
+ELSEIF ITEM_TYPES( RESULT, "園芸用品" )
+	IF RESULT == 150 && ITEM:園芸用品一式
+		PRINTW 已経有了
+	ELSE
+		CALL BUY_ABLE, RESULT
+	ENDIF
+	PRINTL 
+	RESTART
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+TIME += 10
+
+;-------------------------------------------------
+;実行可能判定
+;-------------------------------------------------
+;花屋
+@COM_ABLE618
+;一括管理
+SIF GLOBAL_COMABLE(618)
+	RETURN RESULT
+
+IF !AT_HOME(MASTER)
+	SIF CFLAG:MASTER:現在位置 != 商家町
+		RETURN 0
+ELSE
+	SIF CFLAG:MASTER:現在位置 != 215
+		RETURN 0
+ENDIF
+;睡眠中
+SIF CFLAG:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1

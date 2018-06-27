@@ -1,0 +1,434 @@
+﻿
+;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;地点関連性応答処理
+;CALL		USER
+;ARG		0:現在地点, 1:比較先地点
+;RETURN		1:移動可/見えない 2:移動不可/見える 3:移動可/見える
+;COMMENT	
+;-----------------------------------------------------------
+@CAN_MOVE_0(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;参道的正前方
+	;参道へのみ一方通行、EXキャラ待機用
+	;可変のため先頭に移動
+	CASE MAXROOM
+		SIF ARG:1 == 22
+			RETURNF 1
+	;鳥居
+	;2境内、22参道と直通
+	CASE 1
+		SIF ARG:1 == 2
+			RETURNF 3
+		SIF ARG:1 == 22
+			RETURNF 3
+		SIF ARG:1 == MAXROOM
+			RETURNF 2
+	;境内
+	;6庫房、16破旧小屋、20本殿裏に移動可能、1鳥居、3賽銭箱、5手水舎、21守矢神社分社と直通
+	CASE 2
+		SIF ARG:1 == 1
+			RETURNF 3
+		SIF ARG:1 == 3
+			RETURNF 3
+		SIF ARG:1 == 5
+			RETURNF 3
+		SIF ARG:1 == 6
+			RETURNF 1
+		SIF ARG:1 == 16
+			RETURNF 1
+		SIF ARG:1 == 20
+			RETURNF 1
+		SIF ARG:1 == 21
+			RETURNF 3
+	;賽銭箱
+	;4本堂に移動可能、2境内へ直通
+	CASE 3
+		SIF ARG:1 == 2
+			RETURNF 3
+		SIF ARG:1 == 4
+			RETURNF 1
+	;本堂
+	;3賽銭箱に移動可能
+	CASE 4
+		SIF ARG:1 == 3
+			RETURNF 1
+	;手水舎
+	;2境内に直通
+	CASE 5
+		SIF ARG:1 == 2
+			RETURNF 3
+	;庫房
+	;2境内に移動可能
+	CASE 6
+		SIF ARG:1 == 2
+			RETURNF 1
+		SIF ARG:1 == 20
+			RETURNF 1
+	;起居室
+	;8廚房、9居間、20本殿裏に移動可能
+	CASE 7
+		SIF ARG:1 == 8
+			RETURNF 1
+		SIF ARG:1 == 9
+			RETURNF 1
+		SIF ARG:1 == 20
+			RETURNF 1
+	;廚房
+	;7起居室、9居間、10走廊に移動可能
+	CASE 8
+		SIF ARG:1 == 7
+			RETURNF 1
+		SIF ARG:1 == 9
+			RETURNF 1
+		SIF ARG:1 == 10
+			RETURNF 1
+	;居間
+	;7起居室、8廚房、15霊夢私室、17小的儲藏室に移動可能、10走廊と直通、53倉庫、54小人的虫籠、55和室は改築前は移動できない
+	CASE 9
+		SIF ARG:1 == 7
+			RETURNF 1
+		SIF ARG:1 == 8
+			RETURNF 1
+		SIF ARG:1 == 10
+			RETURNF 3
+		SIF ARG:1 == 15
+			RETURNF 1
+		SIF ARG:1 == 17
+			RETURNF 1
+		SIF ARG:1 == 53 && !FLAG:倉庫施錠
+			RETURNF 1
+		SIF ARG:1 == 54
+			RETURNF 1
+		SIF ARG:1 == 55
+			RETURNF 1
+	;走廊
+	;8廚房、12脱衣所、14廁所、19大的儲藏室に移動可能、9居間、11庭へ直通、54小人的虫籠は改築前は移動できない
+	CASE 10
+		SIF ARG:1 == 8
+			RETURNF 1
+		SIF ARG:1 == 9
+			RETURNF 3
+		SIF ARG:1 == 11
+			RETURNF 3
+		SIF ARG:1 == 12
+			RETURNF 1
+		SIF ARG:1 == 14
+			RETURNF 1
+		SIF ARG:1 == 19
+			RETURNF 1
+		SIF ARG:1 == 54
+			RETURNF 1
+	;庭
+	;20本殿裏、52出口に移動可能、10走廊に直通
+	CASE 11
+		SIF ARG:1 == 10
+			RETURNF 3
+		SIF ARG:1 == 20
+			RETURNF 1
+		SIF ARG:1 == 52
+			RETURNF 1
+	;脱衣所
+	;10走廊、13浴室に移動可能
+	CASE 12
+		SIF ARG:1 == 10
+			RETURNF 1
+		SIF ARG:1 == 13
+			RETURNF 1
+	;浴室
+	;12脱衣所に移動可能
+	CASE 13
+		SIF ARG:1 == 12
+			RETURNF 1
+	;廁所
+	;10走廊に移動可能
+	CASE 14
+		SIF ARG:1 == 10
+			RETURNF 1
+	;霊夢私室
+	;9居間、18壁櫥間に移動可能
+	CASE 15
+		SIF ARG:1 == 9
+			RETURNF 1
+		SIF ARG:1 == 18
+			RETURNF 1
+	;破旧小屋
+	;2境内、20本殿内部に移動可能、1鳥居が見える
+	CASE 16
+		SIF ARG:1 == 1 && !FLAG:15
+			RETURNF 2
+		SIF ARG:1 == 2
+			RETURNF 1
+		SIF ARG:1 == 20
+			RETURNF 1
+	;小的儲藏室
+	;9居間へ移動可能
+	CASE 17
+		SIF ARG:1 == 9
+			RETURNF 1
+	;壁櫥間
+	;15霊夢私室に移動可能
+	CASE 18
+		SIF ARG:1 == 15
+			RETURNF 1
+	;大的儲藏室
+	;10走廊に移動可能
+	CASE 19
+		SIF ARG:1 == 10
+			RETURNF 1
+	;本殿裏
+	;6庫房、7起居室、11庭、16小屋に移動可能、2境内と直通、境内からは見えない
+	CASE 20
+		SIF ARG:1 == 2
+			RETURNF 3
+		SIF ARG:1 == 6
+			RETURNF 1
+		SIF ARG:1 == 7
+			RETURNF 1
+		SIF ARG:1 == 11
+			RETURNF 1
+		SIF ARG:1 == 16
+			RETURNF 1
+	;守矢神社分社
+	;2境内と直通
+	CASE 21
+		SIF ARG:1 == 2
+			RETURNF 3
+	;参道
+	;23温泉・脱衣所、25鎮守之森に移動可能、1鳥居、36遺跡前と直通、お出かけポイント
+	CASE 22
+		SIF ARG:1 == 1
+			RETURNF 3
+		SIF ARG:1 == 23
+			RETURNF 1
+		SIF ARG:1 == 25
+			RETURNF 1
+		SIF ARG:1 == 36
+			RETURNF 3
+		SIF ARG:1 == MAXROOM
+			RETURNF 2
+	;温泉・脱衣所
+	;22参道、24温泉、25鎮守之森に移動可能
+	CASE 23
+		SIF ARG:1 == 22
+			RETURNF 1
+		SIF ARG:1 == 24
+			RETURNF 1
+		SIF ARG:1 == 25
+			RETURNF 1
+	;温泉
+	;23脱衣所に移動可能
+	CASE 24
+		SIF ARG:1 == 23
+			RETURNF 1
+	;鎮守之森
+	;23脱衣所、26三妖精宅入口に移動可能、22参道と直通
+	CASE 25
+		SIF ARG:1 == 22
+			RETURNF 3
+		SIF ARG:1 == 23
+			RETURNF 1
+		SIF ARG:1 == 26
+			RETURNF 1
+	;三妖精宅入り口
+	;27大庁に移動可能、25森と直通
+	CASE 26
+		SIF ARG:1 == 25
+			RETURNF 3
+		SIF ARG:1 == 27
+			RETURNF 1
+	;大庁
+	;26入口、30浴室に移動可能、28樓梯、29廚房に直通
+	CASE 27
+		SIF ARG:1 == 26
+			RETURNF 1
+		SIF ARG:1 == 28
+			RETURNF 3
+		SIF ARG:1 == 29
+			RETURNF 3
+		SIF ARG:1 == 30
+			RETURNF 1
+	;樓梯
+	;27大庁、31二階廊下、35地下室と直通
+	CASE 28
+		SIF ARG:1 == 27
+			RETURNF 3
+		SIF ARG:1 == 31
+			RETURNF 3
+		SIF ARG:1 == 35
+			RETURNF 3
+	;三妖精廚房
+	;27大庁と直通
+	CASE 29
+		SIF ARG:1 == 27
+			RETURNF 3
+	;三妖精浴室
+	;27大庁に移動可能
+	CASE 30
+		SIF ARG:1 == 27
+			RETURNF 1
+	;二階廊下
+	;32桑尼部屋、33露娜部屋、34斯塔部屋に移動可能、28樓梯と直通
+	CASE 31
+		SIF ARG:1 == 28
+			RETURNF 3
+		SIF ARG:1 == 32
+			RETURNF 1
+		SIF ARG:1 == 33
+			RETURNF 1
+		SIF ARG:1 == 34
+			RETURNF 1
+	;桑尼部屋
+	;31二階廊下に移動可能、CASE34まで同じ
+	CASE 32
+		SIF ARG:1 == 31
+			RETURNF 1
+	;露娜部屋
+	CASE 33
+		SIF ARG:1 == 31
+			RETURNF 1
+	;斯塔部屋
+	CASE 34
+		SIF ARG:1 == 31
+			RETURNF 1
+	;地下室
+	;樓梯に移動可能
+	CASE 35
+		SIF ARG:1 == 28
+			RETURNF 1
+	;遺跡前
+	;22参道、37一階通路に移動可能
+	CASE 36
+		SIF ARG:1 == 22
+			RETURNF 1
+		SIF ARG:1 == 37
+			RETURNF 1
+	;一階通路
+	;調理室、浴室を除く一階各部屋（38、40、41、43、44）と36遺跡前に移動可能、45樓梯に直通
+	CASE 37
+		SIF ARG:1 == 36
+			RETURNF 1
+		SIF ARG:1 == 38
+			RETURNF 1
+		SIF ARG:1 == 40
+			RETURNF 1
+		SIF ARG:1 == 41
+			RETURNF 1
+		SIF ARG:1 == 43
+			RETURNF 1
+		SIF ARG:1 == 44
+			RETURNF 1
+		SIF ARG:1 == 45
+			RETURNF 3
+	;洗面所
+	;37一階通路、39浴室に移動可能
+	CASE 38
+		SIF ARG:1 == 37
+			RETURNF 1
+		SIF ARG:1 == 39
+			RETURNF 1
+	;浴室
+	;38洗面所に移動可能
+	CASE 39
+		SIF ARG:1 == 38
+			RETURNF 1
+	;廁所
+	;37一階通路に移動可能
+	CASE 40
+		SIF ARG:1 == 37
+			RETURNF 1
+	;食堂
+	;37一階通路、42調理室に移動可能
+	CASE 41
+		SIF ARG:1 == 37
+			RETURNF 1
+		SIF ARG:1 == 42
+			RETURNF 1
+	;調理室
+	;41食堂に移動可能
+	CASE 42
+		SIF ARG:1 == 41
+			RETURNF 1
+	;夢美私室
+	;37一階通路に移動可能
+	CASE 43
+		SIF ARG:1 == 37
+			RETURNF 1
+	;千百合私室
+	;37一階通路に移動可能
+	CASE 44
+		SIF ARG:1 == 37
+			RETURNF 1
+	;樓梯
+	;37一階通路、46二階通路に直通
+	CASE 45
+		SIF ARG:1 == 37
+			RETURNF 3
+		SIF ARG:1 == 46
+			RETURNF 3
+	;二階通路
+	;二階各部屋（47～51）に移動可能、45樓梯に直通
+	CASE 46
+		SIF ARG:1 == 45
+			RETURNF 3
+		SIF ARG:1 == 47
+			RETURNF 1
+		SIF ARG:1 == 48
+			RETURNF 1
+		SIF ARG:1 == 49
+			RETURNF 1
+		SIF ARG:1 == 50
+			RETURNF 1
+		SIF ARG:1 == 51
+			RETURNF 1
+	;操縦室
+	;46二階通路に移動可能、36遺跡前が見える
+	CASE 47
+		SIF ARG:1 == 36
+			RETURNF 2
+		SIF ARG:1 == 46
+			RETURNF 1
+	;第一資料室
+	;46二階通路に移動可能
+	CASE 48
+		SIF ARG:1 == 46
+			RETURNF 1
+	;研究室
+	;46二階通路に移動可能
+	CASE 49
+		SIF ARG:1 == 46
+			RETURNF 1
+	;第二資料室
+	;46二階通路に移動可能
+	CASE 50
+		SIF ARG:1 == 46
+			RETURNF 1
+	;倉庫
+	;46二階通路に移動可能
+	CASE 51
+		SIF ARG:1 == 46
+			RETURNF 1
+	;出口
+	;11庭に移動可能
+	CASE 52
+		SIF ARG:1 == 11
+			RETURNF 1
+	;倉庫
+	;9居間へ移動可能
+	CASE 53
+		SIF ARG:1 == 9 && !FLAG:倉庫施錠
+			RETURNF 1
+	;小人的虫籠
+	;9居間、10走廊へ移動可能
+	CASE 54
+		SIF ARG:1 == 9
+			RETURNF 1
+		SIF ARG:1 == 10
+			RETURNF 1
+	;和室
+	;9居間へ移動可能
+	CASE 55
+		SIF ARG:1 == 9
+			RETURNF 1
+ENDSELECT
+RETURNF 0

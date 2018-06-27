@@ -1,0 +1,221 @@
+﻿
+;地点関連性応答処理
+;-----------------------------------------------------------
+@CAN_MOVE_2(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;人里的門
+	;南大街と直通
+	CASE 201
+		SIF ARG:1 == 203
+			RETURNF 3
+	;中央広場
+	;南大街、東大街、北大街、西大街、龍神像と直通　花屋、食料品店、瞭望樓に移動可
+	CASE 202
+		SIF ARG:1 == 203
+			RETURNF 3
+		SIF ARG:1 == 204
+			RETURNF 3
+		SIF ARG:1 == 205
+			RETURNF 3
+		SIF ARG:1 == 206
+			RETURNF 3
+		SIF ARG:1 == 207
+			RETURNF 3
+		SIF ARG:1 == 215
+			RETURNF 1
+		SIF ARG:1 == 216
+			RETURNF 1
+		SIF ARG:1 == 220
+			RETURNF 1
+	;南大街
+	;人里的門、中央広場に直通　居酒屋、咖啡館、長屋街、食料品店、小料理屋、銭湯に移動可
+	CASE 203
+		SIF ARG:1 == 201
+			RETURNF 3
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 211
+			RETURNF 1
+		SIF ARG:1 == 212
+			RETURNF 1
+		SIF ARG:1 == 214
+			RETURNF 1
+		SIF ARG:1 == 216
+			RETURNF 1
+		SIF ARG:1 == 218
+			RETURNF 1
+		SIF ARG:1 == 223
+			RETURNF 1
+	;東大街
+	;中央広場に直通　小鈴庵、寺子屋、甜品店、集会所、銭湯に移動可
+	CASE 204
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 213
+			RETURNF 1
+		SIF ARG:1 == 217
+			RETURNF 1
+		SIF ARG:1 == 219
+			RETURNF 1
+		SIF ARG:1 == 222
+			RETURNF 1
+		SIF ARG:1 == 223
+			RETURNF 1
+		SIF ARG:1 == 224
+			RETURNF 1
+	;北大街
+	;中央広場、龍神像に直通　集会所、寺子屋、阿求的住宅に移動可
+	CASE 205
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 207
+			RETURNF 3
+		SIF ARG:1 == 219
+			RETURNF 1
+		SIF ARG:1 == 221
+			RETURNF 1
+		SIF ARG:1 == 222
+			RETURNF 1
+	;西大街
+	;中央広場に直通　長屋街、花屋、瞭望樓、阿求的住宅、情人用宿屋に移動可
+	CASE 206
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 214
+			RETURNF 1
+		SIF ARG:1 == 215
+			RETURNF 1
+		SIF ARG:1 == 220
+			RETURNF 1
+		SIF ARG:1 == 221
+			RETURNF 1
+		SIF ARG:1 == 225
+			RETURNF 1
+	;龍神像
+	;中央広場、北大街と直通
+	CASE 207
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 205
+			RETURNF 3
+	;居酒屋
+	;南大街に移動可
+	CASE 211
+		SIF ARG:1 == 203
+			RETURNF 1
+	;咖啡館
+	;南大街に移動可
+	CASE 212
+		SIF ARG:1 == 203
+			RETURNF 1
+	;小鈴庵
+	;東大街に移動可
+	CASE 213
+		SIF GROUPMATCH(ARG:1,204,223,226)
+			RETURNF 1
+	;長屋街
+	;西大街に移動可
+	CASE 214
+		SIF ARG:1 == 206
+			RETURNF 1
+		SIF GROUPMATCH(ARG:1,201,230,231,232,233,234,235,236,237)
+			RETURNF 1
+	;花屋
+	;中央広場、西大街に移動可
+	CASE 215
+		SIF ARG:1 == 202
+			RETURNF 1
+		SIF ARG:1 == 206
+			RETURNF 1
+	;食料品店
+	;中央広場、南大街に移動可
+	CASE 216
+		SIF ARG:1 == 202
+			RETURNF 1
+		SIF ARG:1 == 203
+			RETURNF 1
+	;甜品店
+	;東大街に移動可
+	CASE 217
+		SIF ARG:1 == 204
+			RETURNF 1
+	;小料理屋
+	;南大街に移動可
+	CASE 218
+		SIF ARG:1 == 203
+			RETURNF 1
+	;集会所
+	;東大街、北大街、寺子屋に移動可
+	CASE 219
+		SIF ARG:1 == 204
+			RETURNF 1
+		SIF ARG:1 == 205
+			RETURNF 1
+		SIF ARG:1 == 222
+			RETURNF 1
+	;瞭望樓
+	;中央広場、西大街と直通　人里的門、南大街、東大街、北大街、龍神像が見える
+	CASE 220
+		SIF ARG:1 == 201
+			RETURNF 2
+		SIF ARG:1 == 202
+			RETURNF 3
+		SIF ARG:1 == 203
+			RETURNF 2
+		SIF ARG:1 == 204
+			RETURNF 2
+		SIF ARG:1 == 205
+			RETURNF 2
+		SIF ARG:1 == 206
+			RETURNF 3
+		SIF ARG:1 == 207
+			RETURNF 2
+	;阿求的住宅
+	;北大街、西大街に移動可
+	CASE 221
+		SIF ARG:1 == 205
+			RETURNF 1
+		SIF ARG:1 == 206
+			RETURNF 1
+	;寺子屋、
+	;東大街、北大街、集会所,けーねハウスに移動可
+	CASE 222
+		SIF GROUPMATCH(ARG:1,204,205,224)
+			RETURNF 1
+	;銭湯
+	;南大街、東大街、小鈴庵に移動可
+	CASE 223
+		SIF ARG:1 == 203
+			RETURNF 1
+		SIF ARG:1 == 204
+			RETURNF 1
+		SIF ARG:1 == 213
+			RETURNF 1
+	;けーねハウス
+	;東大街、北大街、集会所,寺子屋に移動可
+	CASE 224
+		SIF GROUPMATCH(ARG:1,204,205,222)
+			RETURNF 1
+	;情人用宿屋
+	;西大街に移動可
+	CASE 225
+		SIF ARG:1 == 206
+			RETURNF 1
+	;小鈴ルーム
+	CASE 226
+		SIF ARG:1 == 213
+			RETURNF 1
+	;長屋の各部屋
+	CASE 230 TO 235
+		SIF GROUPMATCH(ARG:1,214,230,231,232,233,234,235,236,237)
+			RETURNF 1
+	;長屋の井戸廁所
+	CASE 236,237
+		SIF GROUPMATCH(ARG:1,214,230,231,232,233,234,235,236,237)
+			RETURNF 1
+	CASE MAXROOM
+		SIF ARG:1 == 201
+			RETURNF 1
+ENDSELECT
+RETURNF 0

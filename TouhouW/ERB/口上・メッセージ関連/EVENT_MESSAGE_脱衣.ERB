@@ -1,0 +1,218 @@
+﻿
+@MESSAGE_脱衣上
+;この地の文が表示される頃には脱衣コマンドで文胸は外れている点に注意、よって文胸の描写はここではやらない
+;実際に呼び出される状況が変化してるので、現状に合わせてみる
+;呼び出される状況が二種類あるなんて聞いてないある
+IF TEQUIP:3 == 0 && EQUIP:TARGET:上半身内袴１
+	IF SHOW_TOP(TARGET,1) != ""
+		PRINTFORM %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET,1)%里的肌肤\@ FLAG:70 ? 被展现出来了 # 展现出来了 \@同時、
+	ELSE
+		PRINTFORM %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET,2)%\@ FLAG:70 ? 被脱下来了 # 脱下来了 \@同時、
+	ENDIF
+ENDIF
+;SIF EQUIP:TARGET:緊身内衣 ||  EQUIP:TARGET:連体内衣
+;PRINTFORM %SHOW_上半身内袴(TARGET)%に包まれていう
+IF TALENT:TARGET:胸囲 == 2
+	PRINTFORM 其巨大的爆乳
+ELSEIF TALENT:TARGET:胸囲 == 1
+	PRINTFORM 巨大抖動的乳房
+ELSEIF TALENT:TARGET:胸囲 == 0
+	PRINTFORM 十分漂亮的膨胀
+ELSEIF TALENT:TARGET:胸囲 == -1
+	PRINTFORM 能一手把握的胸部
+ELSEIF TALENT:TARGET:胸囲 == -2
+	PRINTFORM 有待発育的飞机场
+ENDIF
+IF EQUIP:TARGET:上半身上衣１ == 0 && EQUIP:TARGET:上半身上衣２ == 0
+	IF SHOW_BOTTOM(TARGET) == ""
+		PRINTFORMW 和赤裸的秘部暴露了出来
+	ELSE
+		PRINTFORMW 和被%SHOW_BOTTOM(TARGET)%守護的秘部暴露了出来
+	ENDIF
+ELSEIF EQUIP:TARGET:上半身内袴１
+	PRINTFORMW 和%SHOW_上半身内袴(TARGET)%露出来了
+ELSEIF EQUIP:TARGET:下半身内袴２
+	PRINTFORMW 被从敞開的%SHOW_TOP(TARGET,1)%露出来了
+ENDIF
+IF PALAM:TARGET:欲情 >= PALAMLV:3
+	IF PALAM:TARGET:欲情 >= PALAMLV:6
+		PRINTFORM 那%NIPPLE_DESCRIPTION(TARGET)%、
+		IF EX:Ｂ絶頂 * 10000 + PALAM:快Ｂ + PALAM:欲情 >= 10000 && ABL:Ｂ感覚 <= 5
+			IF RAND:2 == 0
+				PRINT 好像怀着対乳房凌辱的期待而颤動着的样子
+			ELSE
+				PRINTFORM 仿佛在央求着%CALLNAME:PLAYER%的乳奸似的
+			ENDIF
+		ENDIF
+		IF RAND:4 == 0
+			PRINT 因為快感而開始膨胀
+		ELSEIF RAND:3 == 0
+			PRINT 開始変硬
+		ELSEIF RAND:2 == 0
+			PRINT 乳晕開始膨胀
+		ELSE
+			PRINT 乳晕開始変大
+		ENDIF
+		PRINTFORMW \@ EQUIP:TARGET:上半身内袴１ ? 在%SHOW_上半身内袴(TARGET)%的布料上凸顯出来 #  \@了……
+	ELSEIF PALAM:TARGET:欲情 >= PALAMLV:3
+		PRINTFORM 那%NIPPLE_DESCRIPTION(TARGET)%、
+		IF RAND:3 == 0
+			PRINT 往上挺起来
+		ELSEIF RAND:2 == 0
+			PRINT 完全硬起来
+		ELSE
+			PRINT 勃起
+		ENDIF
+		PRINTFORMW \@ EQUIP:TARGET:上半身内袴１ ? 、在%SHOW_上半身内袴(TARGET)%的布料上凸顯出来 #  \@了……
+	ENDIF
+ENDIF
+
+@MESSAGE_脱衣下
+IF PALAM:TARGET:潤滑 >= PALAMLV:4
+	PRINTFORM %CALLNAME:TARGET%的私処湿漉漉黏糊糊的、
+	IF EQUIP:TARGET:下半身内袴２
+		PRINTFORMW %PANTSNAME(EQUIP:TARGET:下半身内袴２)%吸收了大量愛液変得沈甸甸的…
+	ELSE
+		PRINTW 愛液滴滴答答地流到了大腿上…
+	ENDIF
+ELSEIF PALAM:TARGET:潤滑 >= PALAMLV:3
+	IF EQUIP:TARGET:下半身内袴２
+		PRINTFORMW %CALLNAME:TARGET%\@ !FLAG:70 ? 脱下了%PANTSNAME(EQUIP:TARGET:下半身内袴２)% # %PANTSNAME(EQUIP:TARGET:下半身内袴２)%被脱下了 \@、在秘所和%PANTSNAME(EQUIP:TARGET:下半身内袴２)%之間愛液拉出了一道淫絲…
+	ELSE
+		PRINTFORMW %CALLNAME:TARGET%的私処很明顯的湿透了…
+	ENDIF
+ELSEIF PALAM:TARGET:潤滑 >= PALAMLV:2
+	PRINTFORMW %CALLNAME:TARGET%的私処開始湿潤了…
+ENDIF
+SELECTCASE CFLAG:TARGET:妊娠経過日数
+	CASE IS >= 60
+		IF TALENT:TARGET:体型 == -2
+			PRINTFORMW 臨盆的腹部以与幼小身躯不相称的程度膨胀起来
+		ELSE
+			PRINTFORMW 臨盆的腹部大大地膨胀起来
+		ENDIF
+	CASE IS >= 40
+		PRINTFORMW %CALLNAME:TARGET%的体形与以前相比変得圆润、肚子很明显的鼓了起来
+	CASE IS >= 30
+		PRINTFORMW 一看到開始膨胀的%CALLNAME:TARGET%的腹部、便重新感受到了令%CALLNAME:TARGET%怀孕了的実感
+	CASE IS >= 20
+		PRINTFORMW %CALLNAME:TARGET%的肚子虽然还没有膨大起来、但一想到她的肚子里怀着自己的孩子便不由感慨万千
+ENDSELECT
+
+@MESSAGE_脱衣上衣
+IF SHOW_TOP(TARGET,1) != ""
+	PRINTFORM %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET,1)%里的肌肤\@ FLAG:70 ? 被展现出来了 # 展现出来了 \@同時、
+ELSE
+	PRINTFORM %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET,2)%\@ FLAG:70 ? 被脱下来了 # 脱下来了 \@同時、
+ENDIF
+PRINTFORML \@ FLAG:70 ? 継續讓 #  \@%CALLNAME:TARGET%\@ FLAG:70 ?  # 継續自己 \@脱掉%SHOW_上半身内袴(TARGET)%変成了半裸
+
+[SKIPSTART]
+IF EQUIP:TARGET:和服 || EQUIP:TARGET:上半身上衣２
+	PRINTFORML %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET,1)%里的肌肤\@ FLAG:70 ? 被展现出来了 # 展现出来了 \@同時、
+ELSE
+	PRINTFORML %CALLNAME:TARGET%\@ FLAG:70 ? 的 # 把 \@%SHOW_TOP(TARGET)%里的肌肤\@ FLAG:70 ? 被展现出来了 # 展现出来了 \@同時、
+ENDIF
+IF EQUIP:TARGET:緊身内衣 || EQUIP:TARGET:連体内衣
+	PRINTFORM 被%SHOW_上半身内袴(TARGET,2)%包住的
+ELSEIF EQUIP:TARGET:上半身内袴１
+	PRINTFORM 被%SHOW_上半身内袴(TARGET,2)%包住的
+ELSEIF EQUIP:TARGET:上半身内袴２
+	PRINTFORM 被%SHOW_上半身内袴(TARGET,1)%包住的
+ENDIF
+[SKIPEND]
+IF TALENT:TARGET:胸囲 == 2
+	PRINTFORM 其巨大的爆乳
+ELSEIF TALENT:TARGET:胸囲 == 1
+	PRINTFORM 巨大抖動的乳房
+ELSEIF TALENT:TARGET:胸囲 == 0
+	PRINTFORM 十分漂亮的膨胀
+ELSEIF TALENT:TARGET:胸囲 == -1
+	PRINTFORM 能一手把握的胸部
+ELSEIF TALENT:TARGET:胸囲 == -2
+	PRINTFORM 有待発育的飞机场
+ENDIF
+PRINTFORMW 暴露了出来
+
+IF PALAM:TARGET:欲情 >= PALAMLV:3
+	IF PALAM:TARGET:欲情 >= PALAMLV:6
+		PRINTFORM 那%NIPPLE_DESCRIPTION(TARGET)%、
+		IF EX:Ｂ絶頂 * 10000 + PALAM:快Ｂ + PALAM:欲情 >= 10000 && ABL:Ｂ感覚 <= 5
+			IF RAND:2 == 0
+				PRINT 好像怀着対乳房凌辱的期待而颤動着的样子
+			ELSE
+				PRINTFORM 仿佛在央求着%CALLNAME:PLAYER%的乳奸似的
+			ENDIF
+		ENDIF
+		IF RAND:4 == 0
+			PRINT 因為快感而開始膨胀
+		ELSEIF RAND:3 == 0
+			PRINT 開始変硬
+		ELSEIF RAND:2 == 0
+			PRINT 乳晕開始膨胀
+		ELSE
+			PRINT 乳晕開始変大
+		ENDIF
+		PRINTFORMW 隆起……
+	ELSEIF PALAM:TARGET:欲情 >= PALAMLV:3
+		PRINTFORM 那%NIPPLE_DESCRIPTION(TARGET)%、
+		IF RAND:3 == 0
+			PRINT 往上挺起来
+		ELSEIF RAND:2 == 0
+			PRINT 完全硬起来
+		ELSE
+			PRINT 勃起
+		ENDIF
+		PRINTFORMW 了，完全是身体的本能……
+	ENDIF
+ENDIF
+[SKIPSTART]
+IF (EQUIP:TARGET:上半身内袴１ != 0 || EQUIP:TARGET:上半身内袴２ != 0 || EQUIP:TARGET:下半身内袴１ != 0 || EQUIP:TARGET:下半身内袴２ != 0 || EQUIP:TARGET:緊身内衣 != 0 || EQUIP:TARGET:連体内衣 != 0)
+	IF EQUIP:TARGET:和服
+		PRINTFORM 就这样継续脱下%SHOW_TOP(TARGET,1)%、
+	ELSEIF EQUIP:TARGET:上半身上衣２
+		PRINTFORM 就这样継续脱下%SHOW_TOP(TARGET,1)%、
+	ELSE
+		PRINTFORM 就这样継续脱下%SHOW_TOP(TARGET)%、
+	ENDIF
+ELSE
+	PRINTFORM %CALLNAME:TARGET%
+ENDIF
+PRINTFORM %CALLNAME:TARGET%
+IF (EQUIP:TARGET:上半身内袴１ != 0 || EQUIP:TARGET:上半身内袴２ != 0 || EQUIP:TARGET:緊身内衣 != 0 || EQUIP:TARGET:連体内衣 != 0)
+	IF EQUIP:TARGET:上半身内袴１
+		IF EQUIP:TARGET:下半身内袴１ || EQUIP:TARGET:下半身内袴２
+			PRINTFORMW 変成只穿着%SHOW_上半身内袴(TARGET)%和%SHOW_下半身内袴(TARGET)%的样子
+		ELSE
+			PRINTFORMW 変成只穿着%SHOW_上半身内袴(TARGET)%的样子
+		ENDIF
+	ELSEIF EQUIP:TARGET:上半身内袴２
+		IF EQUIP:TARGET:下半身内袴１ || EQUIP:TARGET:下半身内袴２
+			PRINTFORMW 変成只穿着%SHOW_上半身内袴(TARGET)%和%SHOW_下半身内袴(TARGET)%的样子
+		ELSE
+			PRINTFORMW 変成只穿着%SHOW_上半身内袴(TARGET)%的样子
+		ENDIF
+	ELSEIF EQUIP:TARGET:下半身内袴２
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ELSEIF EQUIP:TARGET:下半身内袴１
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ELSE
+		PRINTFORMW 変成只穿着%SHOW_上半身内袴(TARGET)%的样子
+	ENDIF
+ELSEIF EQUIP:TARGET:下半身内袴２
+	IF !(EQUIP:TARGET:上半身内袴１ || EQUIP:TARGET:上半身内袴２)
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ELSE
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ENDIF
+ELSEIF EQUIP:TARGET:下半身内袴１
+	IF !(EQUIP:TARGET:上半身内袴１ || EQUIP:TARGET:上半身内袴２)
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ELSE
+		PRINTFORMW 変成只穿着%SHOW_下半身内袴(TARGET)%的样子
+	ENDIF
+ELSE
+	PRINTFORMW 変成全裸
+ENDIF
+[SKIPEND]
+

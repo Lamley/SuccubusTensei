@@ -1,0 +1,206 @@
+﻿@SYUGO
+#DIM 集合, キャラクタ数上限, 3 ;集合:X:Y
+                               ;Y=0：キャラ登録番号
+                               ;  1：設定、移動可否(1p0:移動不可,1p3:移動対象)
+                               ;  2：移動コスト
+#DIM 人数                      ;同一マップにいる人数、移動できないキャラも表示され、人数に加算されている
+#DIM 入力値                    ;RESULT取得用
+#DIM コスト算出人数            ;計算の省力のため、コスト算出を行なった人数を記録するようにする
+CALL SYUGOS_GETDATA(人数, 集合)
+;全員分のコスト計算を先に行う（たぶん全員集合の頻度が多いので）
+コスト算出人数 = 0
+FOR LOCAL, 0, 人数
+	SIF コスト算出人数 >= 人数
+		BREAK
+	CALL SYUGOS_COST(人数, 集合, コスト算出人数, LOCAL)
+NEXT
+
+PRINTL 要把人召集过来吗？
+DO
+	CALL SYUGOS_DISPDATA(人数, 集合)
+	PRINTBUTTON "[444:全員設定]", 444
+	PRINTBUTTON "[555:全員解除]", 555
+	PRINTBUTTON "[666:実行開始]", 666
+	PRINTFORML 
+	PRINTBUTTON "[999:中止]", 999
+	INPUT
+	入力値 = RESULT
+	SELECTCASE 入力値
+	;個人選択
+	CASE 0 TO 人数 - 1
+		SIF !GETBIT(集合:入力値:1, 0)
+			INVERTBIT 集合:入力値:1, 3
+	;全体設定
+	CASE 444
+		FOR LOCAL, 0, 人数
+			SIF GETBIT(集合:LOCAL:1, 0)
+				CONTINUE
+			SETBIT 集合:LOCAL:1, 3
+		NEXT
+	;全体解除
+	CASE 555
+		FOR LOCAL, 0, 人数
+			CLEARBIT 集合:LOCAL:1, 3
+		NEXT
+	;実行処理
+	CASE 666
+		IF TFLAG:運搬
+			PRINTFORMW %CALLNAME:MASTER%把%CALLNAME:(TFLAG:運搬)%放下了
+			TFLAG:運搬 = 0
+		ENDIF
+		FOR LOCAL, 0, 人数
+			SIF !GETBIT(集合:LOCAL:1, 3)
+				CONTINUE
+			
+			;往路消費
+			SIF TALENT:MASTER:体型 < -4
+				BASE:MASTER:TSP -= (15 * 集合:LOCAL:2)
+			BASE:MASTER:TSP -= (5 * 集合:LOCAL:2)
+			SIF BASE:MASTER:TSP <= 0
+				BREAK
+			;復路消費
+			SIF TALENT:MASTER:体型 < -4
+				BASE:MASTER:TSP -= (15 * 集合:LOCAL:2)
+			BASE:MASTER:TSP -= (5 * 集合:LOCAL:2)
+			BASE:MASTER:TSP -= (3 *集合:LOCAL:2)
+			CFLAG:(集合:LOCAL:0):現在位置 = CFLAG:MASTER:現在位置
+			PRINTFORMW 把%CALLNAME:(集合:LOCAL:0)%背到%NAME_FROM_PLACE(CFLAG:MASTER:現在位置)%并放下
+			SIF BASE:MASTER:TSP <= 0
+				BREAK
+		NEXT
+		RETURN
+	CASE 999
+		RETURN
+	ENDSELECT
+	CLEARLINE 人数 + 3
+LOOP 1
+
+
+
+@SYUGOS_GETDATA(人数, 集合)
+#DIM REF 集合, , 
+#DIM REF 人数
+VARSET 集合
+VARSET 人数
+FOR LOCAL, 1, CHARANUM
+	SIF AT_HOME(LOCAL) == 0
+		CONTINUE
+	SIF CFLAG:LOCAL:現在位置 == MAXROOM && CFLAG:LOCAL:睡眠
+		CONTINUE
+	集合:人数:0 = LOCAL
+	;選択否
+	IF CFLAG:(集合:人数:0):現在位置 == CFLAG:MASTER:現在位置
+		SETBIT 集合:人数:1, 0
+	ELSEIF CFLAG:(集合:人数:0):睡眠
+		SETBIT 集合:人数:1, 0
+	ELSEIF !MAP_CAN_MOVE(CFLAG:(集合:人数:0):現在位置)
+		SETBIT 集合:人数:1, 0
+	ELSEIF BATHCHECK(CFLAG:(集合:人数:0):現在位置) || IN_TOILET(CFLAG:(集合:人数:0):現在位置)
+		SETBIT 集合:人数:1, 0
+	ELSEIF CFLAG:(集合:人数:0):現在位置 == MAXROOM
+		SETBIT 集合:人数:1, 0
+	ENDIF
+	人数 ++
+NEXT
+
+
+
+@SYUGOS_DISPDATA(人数,集合)
+#DIM REF 集合,,
+#DIM 人数
+FOR LOCAL, 0, 人数
+	LOCALS = {LOCAL}
+	LOCALS = [%LOCALS,3,RIGHT%] - %CALLNAME:(集合:LOCAL:0),15,LEFT%
+	IF CFLAG:(集合:LOCAL:0):現在位置 == CFLAG:MASTER:初期位置
+		LOCALS = %LOCALS%%CALLNAME:MASTER%私室
+	ELSE
+		LOCALS = %LOCALS%%NAME_FROM_PLACE(CFLAG:(集合:LOCAL:0):現在位置)%
+	ENDIF
+	IF !MAP_CAN_MOVE(CFLAG:(集合:LOCAL:0):現在位置)
+		LOCALS = %LOCALS%%" "*(48-STRLENS(LOCALS))%侵入不可
+	ELSEIF CFLAG:(集合:LOCAL:0):睡眠
+		LOCALS = %LOCALS%%" "*(48-STRLENS(LOCALS))%就寝中
+	ELSEIF 集合:LOCAL:2 > 0
+		LOCALS = %LOCALS%%" "*(48-STRLENS(LOCALS))%移動距離{集合:LOCAL:2}
+	ENDIF
+	IF GETBIT(集合:LOCAL:1, 0)
+		SETCOLOR C_GRAY
+		PRINTPLAINFORM %LOCALS%
+	ELSEIF GETBIT(集合:LOCAL:1, 3)
+		SETCOLOR C_AQUA
+		PRINTFORM %LOCALS%
+	ELSE
+		PRINTFORM %LOCALS%
+	ENDIF
+	PRINTL
+	RESETCOLOR
+NEXT
+
+
+
+;下手なことをすると集合人数の二乗の計算が生じるが
+;RETURNやCONTINUEによるスキップ処理があるため
+;各地点分の計算だけで済むと思う
+;GETBIT(集合:対象:1, 0)による分岐が無いのは移動不能な場合にも人数に含まれているため
+@SYUGOS_COST(人数, 集合, コスト算出人数, 対象)
+#DIM REF 集合,,
+#DIM 人数
+#DIM REF コスト算出人数
+#DIM 対象
+#DIM 移動コスト
+#DIM 暫定目的地
+#DIM 最終目的地
+#DIM TEMP_現在位置
+
+SIF 集合:対象:2
+	RETURN
+;移動不能なら-1にして通過
+IF GETBIT(集合:対象:1, 0)
+	集合:対象:2 = -1
+	コスト算出人数 ++
+	RETURN
+ENDIF
+
+
+TEMP_現在位置 = CFLAG:MASTER:現在位置
+最終目的地 = CFLAG:(集合:対象:0):現在位置
+暫定目的地 = 最終目的地
+
+[IF_DEBUG]
+PRINTFORML 計算%CALLNAME:(集合:対象:0)%的移動消費
+[ENDIF]
+IF CAN_MOVE(TEMP_現在位置, 暫定目的地) & 1
+	移動コスト = 1
+ELSE
+	FOR 移動コスト,1,20
+		WHILE !(CAN_MOVE(TEMP_現在位置, 暫定目的地) & 1)
+			TRYCALLFORM SKIP_MOVE_{MAIN_MAP}(暫定目的地,TEMP_現在位置)
+			SIF !暫定目的地
+				THROW 暫定目的地が異常です
+			[IF_DEBUG]
+			PRINTFORML {TEMP_現在位置}から{暫定目的地}に直接行けないから{RESULT}を目指すよ	
+			[ENDIF]
+			暫定目的地 = RESULT
+		WEND
+		SIF CAN_MOVE(暫定目的地,最終目的地) & 1
+			BREAK
+		TEMP_現在位置 = 暫定目的地
+		暫定目的地 = 最終目的地
+	NEXT
+ENDIF
+
+集合:対象:2 = 移動コスト
+	[IF_DEBUG]
+	PRINTFORML %CALLNAME:(集合:対象:0)%的移動消費為{移動コスト}
+	[ENDIF]
+コスト算出人数 ++
+FOR LOCAL, 0, 人数
+	SIF コスト算出人数 >= 人数
+		BREAK
+	SIF 集合:LOCAL:2
+		CONTINUE
+	IF CFLAG:(集合:対象:0):現在位置 == CFLAG:(集合:LOCAL:0):現在位置
+		集合:LOCAL:2 = 移動コスト
+		コスト算出人数 ++
+	ENDIF
+NEXT

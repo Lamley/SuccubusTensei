@@ -1,0 +1,421 @@
+﻿;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;キャラ別_各種データ
+;01～10番までのキャラ
+;CALL		USER
+;ARG		0:呼出データNO, 1:移動傾向取得時的房間NO
+;RETURN		キャラ別呼出データ値
+;COMMENT	
+;-----------------------------------------------------------
+;霊夢
+@CHARAMOVE_DATA_1(ARG,ARG:2)
+LOCAL = 1
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;23時～6時、13時～14時は寝てる　仕事中は寝ない
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;主に境内,走廊に居る
+			CASE 2, 10
+				RETURN 5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2
+				RETURN 1
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,3,4, 21,22,23,27
+				RETURN 1
+		ENDSELECT
+ENDSELECT
+
+;留琴
+@CHARAMOVE_DATA_2(ARG,ARG:2)
+LOCAL = 2
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;0時～5時まで休止
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;とくになし
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4,6
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;喀娜
+@CHARAMOVE_DATA_3(ARG,ARG:2)
+LOCAL = 3
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;10時～17時は寝てる
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;壁櫥間にはあんまりいない
+			CASE 18
+				RETURN -10
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4,6
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;魅魔様
+@CHARAMOVE_DATA_4(ARG,ARG:2)
+LOCAL = 4
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;10時～16時は寝てる
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,3,4,6, 21,22,23, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;桑尼
+@CHARAMOVE_DATA_5(ARG,ARG:2)
+LOCAL = 5
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+		;連動処理（三人の内一番高いキャラにあわせる）
+		IF TALENT:7:恋慕 || (TALENT:7:思慕 && !TALENT:6:思慕 && !TALENT:5:思慕)
+			CFLAG:LOCAL:現在位置 = CFLAG:7:遭遇位置 ? CFLAG:7:遭遇位置 # SUKIMA()
+		ELSEIF TALENT:6:恋慕 || (TALENT:6:思慕 && (!TALENT:7:思慕 || !TALENT:5:思慕))
+			CFLAG:LOCAL:現在位置 = CFLAG:6:遭遇位置 ? CFLAG:6:遭遇位置 # SUKIMA()
+		ELSE
+			CFLAG:LOCAL:現在位置 = CFLAG:5:遭遇位置 ? CFLAG:5:遭遇位置 # SUKIMA()
+		ENDIF
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;24時～6時は寝てる
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		;特になし
+		SELECTCASE ARG:2
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4,5, 31,34, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;露娜チャ
+@CHARAMOVE_DATA_6(ARG,ARG:2)
+LOCAL = 6
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+		;連動処理（三人の内一番高いキャラにあわせる）
+		IF TALENT:7:恋慕 || (TALENT:7:思慕 && !TALENT:6:思慕 && !TALENT:5:思慕)
+			CFLAG:LOCAL:現在位置 = CFLAG:7:遭遇位置 ? CFLAG:7:遭遇位置 # SUKIMA()
+		ELSEIF TALENT:6:恋慕 || (TALENT:6:思慕 && (!TALENT:7:思慕 || !TALENT:5:思慕))
+			CFLAG:LOCAL:現在位置 = CFLAG:6:遭遇位置 ? CFLAG:6:遭遇位置 # SUKIMA()
+		ELSE
+			CFLAG:LOCAL:現在位置 = CFLAG:5:遭遇位置 ? CFLAG:5:遭遇位置 # SUKIMA()
+		ENDIF
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;2時～8時は寝てる
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;よく三妖精宅内に居る
+			CASE 26 TO 34
+				RETURN 5
+			CASEELSE
+				;22時以降はあまり出歩かない
+				IF BETWEENTIME(1320, CFLAG:LOCAL:就寝時間)
+					CFLAG:LOCAL:移動率補正 = -5
+				ELSE
+					CFLAG:LOCAL:移動率補正 = 0
+				ENDIF
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4,5, 31,34, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;斯塔
+@CHARAMOVE_DATA_7(ARG,ARG:2)
+LOCAL = 7
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+		;連動処理（三人の内一番高いキャラにあわせる）
+		IF TALENT:7:恋慕 || (TALENT:7:思慕 && !TALENT:6:思慕 && !TALENT:5:思慕)
+			CFLAG:LOCAL:現在位置 = CFLAG:7:遭遇位置 ? CFLAG:7:遭遇位置 # SUKIMA()
+		ELSEIF TALENT:6:恋慕 || (TALENT:6:思慕 && (!TALENT:7:思慕 || !TALENT:5:思慕))
+			CFLAG:LOCAL:現在位置 = CFLAG:6:遭遇位置 ? CFLAG:6:遭遇位置 # SUKIMA()
+		ELSE
+			CFLAG:LOCAL:現在位置 = CFLAG:5:遭遇位置 ? CFLAG:5:遭遇位置 # SUKIMA()
+		ENDIF
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;1時～6時
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4,5, 31,34, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;千百合
+@CHARAMOVE_DATA_8(ARG,ARG:2)
+LOCAL = 8
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;だいたい遺跡に居る
+			CASE 36 TO 50
+				RETURN 5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,6, 21,22,23,27
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;教授
+@CHARAMOVE_DATA_9(ARG,ARG:2)
+LOCAL = 9
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;だいたい遺跡に居る
+			CASE 36 TO 50
+				RETURN 5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,6, 21,22,23,27
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;萃香
+@CHARAMOVE_DATA_10(ARG,ARG:2)
+LOCAL = 10
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;3時～10時は寝てる
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;主に境内,走廊に居る
+			CASE 2, 10
+				RETURN 5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 7, 8
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 71,72,73, 81,82,83,84
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT

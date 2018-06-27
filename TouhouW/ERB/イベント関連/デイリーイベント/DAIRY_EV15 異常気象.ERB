@@ -1,0 +1,22 @@
+﻿@DAIRY_CONDITION_EV15
+SIF RAND:15 > 0 || FLAG:異常気象
+	RETURN -1
+CALL DAIRY_EV15
+RETURN 1
+
+@DAIRY_EV15
+FLAG:異常気象 = 6 + RAND:3
+
+TIME:5 = 0
+SELECTCASE FLAG:異常気象
+	CASE 6
+		LOCALS = 喜欢不穿内袴了
+	CASE 7
+		LOCALS = 内袴被风吹的到処跑
+	CASE 8
+		LOCALS = 桃色之風吹起来了
+ENDSELECT
+
+PRINTFORMW 地球温暖化，环境汚染，难民问题，总统选举，長时间労動，走路时玩手机…………等等等等
+PRINTFORMW 总之外面的世界的各种各样的问题也影响了幻想乡
+CALL COLORMESSAGE(@"根据外界的影响発生了异常的气象，%LOCALS%",C_PINK,,1)

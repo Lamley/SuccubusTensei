@@ -1,0 +1,2406 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;性交系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,正常位
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_60_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_60_1
+
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「ん…こういう形でお前を受け入れるのは初めてか」
+			PRINTFORMW 「まあいいぜ、お前とならな」
+			PRINTFORMW 「ってちゃんとお前ので支えてくれよ」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「馬鹿…あっ…まだ出し足りないってか…」
+				PRINTFORMW 「っ…んっ…妊娠しそうだな…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあっ…くっ…ひっ…！」
+				PRINTFORMW 「掻き混ぜるなって…あ…ん…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…お前…」
+				PRINTFORMW 「あ…もっと…出しちまえよ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あっ…ふぁ…！」
+				PRINTFORMW 「あ…まだ…ん…出したいのか…？」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…くっ…！」
+				PRINTFORMW 「案外…我慢強いんだな…お前…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…早く…出せよ…」
+				PRINTFORMW 「顔…近いな…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…ん…」
+			PRINTFORMW 「…くっ…ふぅ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…くっ…ん…！」
+			PRINTFORMW 「…孕ませてくれよ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…あっ…この…」
+			PRINTFORMW 「んあ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…あっ…ん…」
+			PRINTFORMW 「くっ…この…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…んあ…！」
+			PRINTFORMW 「…お前…さっさとイケよ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…んあ…」
+			PRINTFORMW 「あっ…ふぅ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「くあっ…ひん…！」
+			PRINTFORMW 「お前…くっ…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ふぇ…」
+			PRINTFORMW 「ん…ん…あ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…この…」
+			PRINTFORMW 「お前…さっさと…んあ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「こういうの、案外普通だな」
+			PRINTFORMW 「まぁ構わんがな…」
+			PRINTFORMW 「あまり激しくするなよ、潰れちまうからさ」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…お前…出し過ぎだって…ん…」
+				PRINTFORMW 「ふぁっ…んっ…激し…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあっ…くっ…ひっ…！」
+				PRINTFORMW 「お前…まだ出す気か…ん…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…この…お前…」
+				PRINTFORMW 「ん…そんなに…気持ち良いか…？」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あっ…ん…」
+				PRINTFORMW 「お前……んっくっ…」
+				PRINTFORMW 「ふぁっ…んはっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…くっ…ふぅ…」
+				PRINTFORMW 「んあ…ひっ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…んあ…」
+				PRINTFORMW 「深いの…来て…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…ん…」
+			PRINTFORMW 「…っ…ふあ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ん…！」
+			PRINTFORMW 「…んっ…くぁ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…あっ…この…」
+			PRINTFORMW 「んあ…ひんっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…んあ…」
+			PRINTFORMW 「くっ…お前…重…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…ひんっ…！」
+			PRINTFORMW 「…お…んあっ・・・！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…んあ…」
+			PRINTFORMW 「あっ…ふぅ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「くあっ…ふぁ…！」
+			PRINTFORMW 「…この…んあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「ん…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…ん…」
+			PRINTFORMW 「ふぁ…んあ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;61,後背位
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_61_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_61_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「ふん、お前に犯される…ってのか」
+			PRINTFORMW 「ほら、どうした？存分に腰振れよ」
+			PRINTFORMW 「猿みたいにさ」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…く…ん…」
+				PRINTFORMW 「ふぁっ…まだ出すのか…ああっ！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…くっ……！」
+				PRINTFORMW 「お前…足りないのか…ん…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…くっ…」
+				PRINTFORMW 「そんなに…気持ち良いか…？」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「この…ん…」
+				PRINTFORMW 「…んっくっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…まだ…」
+				PRINTFORMW 「んあ…っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…んあ…」
+				PRINTFORMW 「もっと…来て…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ん…」
+			PRINTFORMW 「…っ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ふぁ…！」
+			PRINTFORMW 「…んっ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…あっ…あっ…」
+			PRINTFORMW 「んあ…ひあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…お前…激し…んあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…んっ…！」
+			PRINTFORMW 「…お…んあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…ふあ…」
+			PRINTFORMW 「あっ…ぅ…ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ん…！」
+			PRINTFORMW 「…んあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ひっ…」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…んあ…」
+			PRINTFORMW 「くっ…ああっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「ふん、こういうの、好きなのか？」
+			PRINTFORMW 「まぁ好きにしなよ」
+			PRINTFORMW 「お前、ちゃんと気持ちよくしてくれよ」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ああ…ん…」
+				PRINTFORMW 「っ…そんなに出さなくたって…っ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…くあっ…！」
+				PRINTFORMW 「まだ…ん…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…っ…」
+				PRINTFORMW 「…気持ち良かったか…？」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ん…」
+				PRINTFORMW 「…まだ…っ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…んあ…」
+				PRINTFORMW 「ふわっ…っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…ひあっ…」
+				PRINTFORMW 「…して…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…あっ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ぁ…！」
+			PRINTFORMW 「…っ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…あっ…」
+			PRINTFORMW 「あ…ふあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…んあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふっ…んっ…！」
+			PRINTFORMW 「…んあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…ふあ…」
+			PRINTFORMW 「く…ぅ…ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ん…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…」
+			PRINTFORMW 「…ひあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…んあ…」
+			PRINTFORMW 「っ…ああっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;62,正常位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_62_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_62_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「っ…いきなり…挿れんなって！」
+			PRINTFORMW 正邪はそう言いながらもアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐ…あ…」
+				PRINTFORMW 「っ…そんなに尻の具合が良かったか…っ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…ぐあっ…！」
+				PRINTFORMW 「お前…ん…出し過ぎ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…ああ…出したんだろ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…んぐ…」
+				PRINTFORMW 「…まだ…ぐっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…ぐあ…」
+				PRINTFORMW 「がっ…っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…あっ…」
+				PRINTFORMW 「まだ…ぐっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「があ…ふぅ…」
+			PRINTFORMW 「…あっ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…ぁ…！」
+			PRINTFORMW 「…ぐっ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…っ…」
+			PRINTFORMW 「が…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…んっ…！」
+			PRINTFORMW 「…んあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「…ぅ…ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐっ…ん…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…」
+			PRINTFORMW 「…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…ぐっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…これ…」
+			PRINTFORMW 「っ…尻かよ！…お前…」
+			PRINTFORMW 正邪はそう言いながらもアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐ…」
+				PRINTFORMW 「っ…尻が…っ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…ぐあっ…！」
+				PRINTFORMW 「お前…どんだけ…出す気だ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…尻が…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…んぐ…」
+				PRINTFORMW 「…ぅ…ぐっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…ん…」
+				PRINTFORMW 「っ…がっ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…っ…」
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「があ…ふぅ…」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がぁ…！」
+			PRINTFORMW 「…っ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…っ…」
+			PRINTFORMW 「が…っ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…ぐっ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…んっ…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…があ…」
+			PRINTFORMW 「…ぅ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐっ…！」
+			PRINTFORMW 「…があっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;63,後背位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_63_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_63_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…壁に…」
+			PRINTFORMW 「って…尻か！…」
+			PRINTFORMW 正邪はそう言いながらもアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あぐ…」
+				PRINTFORMW 「っ…尻っ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…ぐあっ…！」
+				PRINTFORMW 「尻からザーメン出てきちまう…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…アナル…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…んぐ…」
+				PRINTFORMW 「…ぅ…ぐっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「があっ…ん…」
+				PRINTFORMW 「っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひぐ…っ…」
+				PRINTFORMW 「…あっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「が…ぅ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…がぁ…！」
+			PRINTFORMW 「…んっ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「んあ…っ…」
+			PRINTFORMW 「が…っ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「いっ…ぐっ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…んっ…！」
+			PRINTFORMW 「…ぐっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「…ぅ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「いっ…！」
+			PRINTFORMW 「…があっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…いっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…四つん這い…」
+			PRINTFORMW 「っ…尻か…変態…」
+			PRINTFORMW 正邪はそう言いながらもアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐ…」
+				PRINTFORMW 「っ…腸内で…っ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…っ…！」
+				PRINTFORMW 「…多いな…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…尻が…いっぱいに…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…」
+				PRINTFORMW 「…んぅ…ぐっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふあっ…ん…」
+				PRINTFORMW 「っ…がっ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…がっ…」
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ふぅ…」
+			PRINTFORMW 「…ぐあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…ぁ…！」
+			PRINTFORMW 「…がっ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…ぐっ…」
+			PRINTFORMW 「が…っ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ぐっ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がっ…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「…ぅ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐっ…！」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;64,逆強姦
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_64
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_64_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_64_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORMW 「お前…責任を取ってもらうぞ」
+			PRINTFORMW 「私を押し倒した責任だよ」
+			PRINTFORMW 「そら！」
+			PRINTFORMW そう言って正邪は%CALLNAME:MASTER%を犯し始めた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「ふん、こういうのもいいかな」
+			PRINTFORMW 「さっさとチンポ勃てろって」
+			PRINTFORMW 「挿れらんないだろ…ほら」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…く…」
+				PRINTFORMW 「まだへばってもらっちゃ困るんだよ！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…くっ…！」
+				PRINTFORMW 「さっさとチンポ勃てろよ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…くっ…」
+				PRINTFORMW 「妊娠するぐらい出してもらうぞ」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「この…ん…」
+				PRINTFORMW 「まだだ…全部搾り取ってやる」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…この…」
+				PRINTFORMW 「金玉の中空にしてやる…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…あっ…」
+				PRINTFORMW 「このまま…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	;どういう状況だこれ
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「オラッ！イケよ！オラッ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ふぁ…！」
+			PRINTFORMW 「…私より先にイッたらオナ禁だかんな」
+		ELSE
+			PRINTFORMW 「ん…あっ…あっ…」
+			PRINTFORMW 「イカせてやるよ…！」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ほらよっと…」
+			PRINTFORMW 「…オラッ！…イケっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「イカせてやる」
+			PRINTFORMW 「…お…んあっ…！」
+		ELSE
+			PRINTFORMW 「オラッ！イケよ！」
+			PRINTFORMW 「どうした？挿されるのには慣れてないか？」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ん…！」
+			PRINTFORMW 「…さっさと出せよ」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「いっぱい出してもらうかんな」
+			PRINTFORMW 「…枯れさせてやる」
+		ELSE
+			PRINTFORMW 「チンポ勃てろって、ほら」
+			PRINTFORMW 「全部絞りとってやる」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;65,騎乗位
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_65
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_65_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_65_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を跨がらせて犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「上に乗れってねぇ」
+			PRINTFORMW 「いいよ、責任とってもらうからな」
+			PRINTFORMW そう言って正邪は%CALLNAME:MASTER%の上にまたがり
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「構わんがねそれよりも」
+			PRINTFORMW 「さっさとチンポ勃てろって」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…く…」
+				PRINTFORMW 「ヤッてるからにはへばんなよ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…」
+				PRINTFORMW 「まだ、出してもらうぞ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…くっ…」
+				PRINTFORMW 「もっと出せよ…オラッ！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「この…ん…あっ…」
+				PRINTFORMW 「全部搾り取ってやるから…続けるぞ」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…この…」
+				PRINTFORMW 「金玉の中空にしてやる…諦めろ」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…あっ…くっ…」
+				PRINTFORMW 「まだ…激し…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を跨がらせて犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ほら…気持ち良いか…？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…ああっ…！」
+			PRINTFORMW 「…こういうの…んっ…」
+		ELSE
+			PRINTFORMW 「ん…あっ…くっ…」
+			PRINTFORMW 「激し…！」
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…んあ！…くっ！」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こういう体勢だとなかなか面白いな」
+		ELSE
+			PRINTFORMW 「ふん…イカせてやる…」
+			PRINTFORMW 「んっ…！っく…！」
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…んあ…！」
+			PRINTFORMW 「…お前…Mか？」
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「この…ん…」
+			PRINTFORMW 「…好きだな、この体勢」
+		ELSE
+			PRINTFORMW 「んあ…っく…」
+			PRINTFORMW 「もっと気持ちよくしろよ…」
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;66,騎乗位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_66
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_66_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_66_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…ふん…騎乗位はいいんだがね」
+			PRINTFORMW 「…尻か…やってやるが…」
+			PRINTFORMW 正邪はそう言いながらもアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐ…」
+				PRINTFORMW 「っ…まだ…出せるだろっ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…っ…！」
+				PRINTFORMW 「終わりじゃ無いぞ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…オラッ…尻妊娠させるぐらい出せよ！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…」
+				PRINTFORMW 「今度は…こっちの番だ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふあっ…ん…」
+				PRINTFORMW 「まだ…！」
+			ELSE
+				PRINTFORMW 「ひ…がっ…」
+				PRINTFORMW 「…これはキツイな…」
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ふぅ…」
+			PRINTFORMW 「…ぐっ…これ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がぁ…！」
+			PRINTFORMW 「…このまま…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…ぐっ…」
+			PRINTFORMW 「が…ちょっと…激しすぎね！？」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ぐっ…」
+			PRINTFORMW 「…っこの…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がっ…！」
+			PRINTFORMW 「…まだだ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「…このまま…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐっ…！」
+			PRINTFORMW 「…結構っ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…キツっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…激しっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;67,対面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_67
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_67_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_67_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「ほう、正面からか」
+			PRINTFORMW 「よっと…ん…」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「んあ…っく…」
+				PRINTFORMW 「っ…まだ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…んっ…！」
+				PRINTFORMW 「もっと出せ…ん…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…くあっ…」
+				PRINTFORMW 「…まだ出せるのか…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あっ…！」
+				PRINTFORMW 「…これ…好きか？」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…んくっ…！」
+				PRINTFORMW 「…お前…こういうの…んっ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…早く…ん…」
+				PRINTFORMW 「あんまりジロジロ…見んな…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を正面から犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…くっ…」
+			PRINTFORMW 「…ふぅ…ああっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…ん…！」
+			PRINTFORMW 「…正面…から…んっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ん…あっ…これ…」
+			PRINTFORMW 「ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…ん…」
+			PRINTFORMW 「っ…この…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…んあ…！」
+			PRINTFORMW 「…お前…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…くっ…」
+			PRINTFORMW 「っ…ぅ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…ひん…！」
+			PRINTFORMW 「ん…くっ…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…んあ…」
+			PRINTFORMW 「ん…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…この…」
+			PRINTFORMW 「…んあ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;68,背面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_68
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_68_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_68_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+		;処女
+		ELSEIF TALENT:処女 == 1
+			PRINTFORMW 「ん…よろしく…頼む…」
+			PRINTFORMW 「こういうの、好きじゃないけど」
+			PRINTFORMW 「お前となら…」
+			PRINTFORMW そう言って正邪は体を委ねてきた。
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ELSE
+			PRINTFORMW 「これ…」
+			PRINTFORMW 「ちゃんと気持ちよくしてくれよ…」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…あ…」
+				PRINTFORMW 「っ…どれだけ…っ！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…！」
+				PRINTFORMW 「ひっ…ん…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「あっ…んっ…」
+				PRINTFORMW 「…これ…？」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「この…ん…」
+				PRINTFORMW 「…んっくっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あっ…これ…」
+				PRINTFORMW 「あ…っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…んあ…」
+				PRINTFORMW 「…こういうの…ああっ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を後ろから犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の秘部に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…ひっ…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…ん…！」
+			PRINTFORMW 「…んっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「んっ…あっ…」
+			PRINTFORMW 「あ…ひあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…」
+			PRINTFORMW 「…激し…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…んっ…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「っ…ふあ…」
+			PRINTFORMW 「…ぅ…ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…ん…！」
+			PRINTFORMW 「…んっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あっ…あ…」
+			PRINTFORMW 「っ…ああっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;69,対面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_69
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_69_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_69_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…ふん…顔突き合わせながら尻掘るのか」
+			PRINTFORMW 「…結構なことだ…」
+			PRINTFORMW 正邪はそう言いながらアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐっ…」
+				PRINTFORMW 「っ…あ…！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…！」
+				PRINTFORMW 「くっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…ん…がっ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…」
+				PRINTFORMW 「…がぁっ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふっ…ん…」
+				PRINTFORMW 「ぐ…！」
+			ELSE
+				PRINTFORMW 「ひ…っ…」
+				PRINTFORMW 「…ん…」
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ぅ…」
+			PRINTFORMW 「…ぐっ…あ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…ぐぁ…！」
+			PRINTFORMW 「…あ…っ！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…がっ…」
+			PRINTFORMW 「ぐ…っ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…がっ…」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がっ…！」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あっ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐっ…！」
+			PRINTFORMW 「…うっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…激しっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;70,背面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_70
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_70_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_70_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+			PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+		;アナル処女
+		ELSEIF !EXP:Ａ性交経験
+			PRINTFORMW 「…んぐ…」
+			PRINTFORMW 「いやいやいや…ケツは駄目だって…ぐぉ！？」
+			PRINTFORMW 正邪はアナルに陰茎を挿入されると大人しくなった。
+		ELSE
+			PRINTFORMW 「…ふん…ちゃんと抱えてろよ」
+			PRINTFORMW 「…尻穴でチンポへし折ってやる…」
+			PRINTFORMW 正邪はそう言いながらアナルに陰茎を挿入されている。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+		;前回射精した
+		ELSEIF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐっ…」
+				PRINTFORMW 「っ…まだ…出すのか…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…！」
+				PRINTFORMW 「くっ…多いな…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…まだ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…」
+				PRINTFORMW 「…まだっ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふっ…ん…」
+				PRINTFORMW 「ぐ…今度は…」
+			ELSE
+				PRINTFORMW 「ひ…っ…」
+				PRINTFORMW 「…んあ…」
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐ…ぅ…」
+			PRINTFORMW 「…っ…あ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…がぁ…！」
+			PRINTFORMW 「…あ…っ！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ぐ…がっ…」
+			PRINTFORMW 「あぐ…っ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…っ…」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…あっ…！」
+			PRINTFORMW 「…ぐっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…っ…」
+			PRINTFORMW 「…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うっ…！」
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…このっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;71,二穴挿入
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_71
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_71_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_71_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;考えうる分岐が多すぎるので地の文の大まかな分岐だけ
+	;連続
+	IF PREVCOM == SELECTCOM
+		PRINTFORMW 
+		RETURN 0
+	;主人V挿入→助手A挿入
+	ELSEIF TCVAR:100 == MASTER
+		PRINTFORMW 
+		RETURN 0
+	;主人A挿入→助手V挿入
+	ELSEIF TCVAR:101 == MASTER
+		PRINTFORMW 
+		RETURN 0
+	;助手V挿入→主人A挿入
+	ELSEIF TCVAR:100 == ASSI
+		PRINTFORMW 
+		RETURN 0
+	;助手A挿入→主人V挿入
+	ELSEIF TCVAR:101 == ASSI
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;72,挿入Ｇ点玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_72
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_72_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_72_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「そこ…ダメだ…！」
+		PRINTFORMW 「んっ…くっ…ああっ…！」
+		PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「ん……ん…」
+				PRINTFORMW 「っ…どんだけ…ああっ！」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…！」
+				PRINTFORMW 「…馬鹿…ん…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…くっ…」
+				PRINTFORMW 「…ん…そこ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「この…あ…」
+				PRINTFORMW 「…んっ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っ…あっ…」
+				PRINTFORMW 「ん…っ…！」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「ひ…あ…」
+				PRINTFORMW 「…これ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪を深く犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の膣内に陰茎を出し入れしている。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んく…ん…」
+			PRINTFORMW 「…あっ！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…ふぁ…！」
+			PRINTFORMW 「…あっ…く…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「っ…あっ…」
+			PRINTFORMW 「んあ…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…そこ…んあっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…っ…！」
+			PRINTFORMW 「うあ…んあっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「っ…ふあ…」
+			PRINTFORMW 「…ぅ…ん…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「くっ…ん…！」
+			PRINTFORMW 「…あっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…んっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…んあ…」
+			PRINTFORMW 「くっ…あっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;73,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_73
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_73_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_73_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			PRINTFORMW 「ん…そんなに深く…」
+			PRINTFORMW その秘部に%CALLNAME:MASTER%の陰茎がゆっくりと挿入されていった…
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			PRINTFORM
+		ELSE
+			PRINTFORM
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORM
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORM
+	;それ以外
+	ELSE
+		PRINTFORM
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;74,玩弄Ｓ状結腸
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_74
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_74_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_74_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「…そこ…深…！」
+		PRINTFORMW 正邪はそう言いながらアナルに陰茎を挿入されている。
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐっ…」
+				PRINTFORMW 「っ…尻…孕ませるのか…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…！」
+				PRINTFORMW 「くっ…深い…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…まだ…深いとこに…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…」
+				PRINTFORMW 「…そこ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふっ…ん…」
+				PRINTFORMW 「ぐ…また…」
+			ELSE
+				PRINTFORMW 「ひ…ぐっ…」
+				PRINTFORMW 「…ん…そこ…」
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐ…うぅ…」
+			PRINTFORMW 「…っ…があ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…くぁ…！」
+			PRINTFORMW 「…あ…っ！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「ぐ…っ…」
+			PRINTFORMW 「あ…っ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…あっ…！」
+			PRINTFORMW 「…うっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…っ…」
+			PRINTFORMW 「…がっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うっ…そこ…！」
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…そこっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;75,隔着刺激陰道
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_75
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_75_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_75_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「…そこ…駄目…！」
+		PRINTFORMW 正邪はそう言いながらアナルに陰茎を挿入されている。
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			IF RAND:3 == 0
+				PRINTFORMW 「ん…ぐっ…」
+				PRINTFORMW 「っ…尻…出しすぎ…」
+				PRINTFORMW 正邪は行為に喘いでいる。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んっ…あっ…！」
+				PRINTFORMW 「くっ…キツ…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ELSE
+				PRINTFORMW 「…ぐっ…」
+				PRINTFORMW 「…まだ…深いとこに…」
+				PRINTFORMW 正邪は激しい行為に喘いでいる。
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「…ぐ…あ…」
+				PRINTFORMW 「…そこ…」
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふっ…ん…」
+				PRINTFORMW 「ぐ…また…いっぱい…」
+			ELSE
+				PRINTFORMW 「ひ…ぐっ…」
+				PRINTFORMW 「…あ…そこ…」
+			ENDIF
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で跨った正邪の尻を犯し始めた。
+		PRINTFORMW %CALLNAME:MASTER%はゆっくりと正邪の尻に陰茎を挿入し始めた。
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ぐ…うぅ…」
+			PRINTFORMW 「…っ…あ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…くぁ…！」
+			PRINTFORMW 「…ん…っ！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「が…っ…」
+			PRINTFORMW 「あ…っ…」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「っ…」
+			PRINTFORMW 「…くっ…！」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「っ…あっ…！」
+			PRINTFORMW 「…このっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「あ…っ…」
+			PRINTFORMW 「…っ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うっ…そこ…！」
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 正邪は行為に喘いでいる。
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ぐっ…」
+			PRINTFORMW 「…深いっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っ…くっ…！」
+			PRINTFORMW 正邪は激しい行為に喘いでいる。
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;77,小人飛機杯(針妙丸用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_77
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_77_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_77_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 0
+		ELSE
+			PRINTFORMW 
+			RETURN 0
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 0
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 0
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+ENDIF
+RETURN 1

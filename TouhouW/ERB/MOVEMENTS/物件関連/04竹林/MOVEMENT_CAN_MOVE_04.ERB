@@ -1,0 +1,405 @@
+﻿
+;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;地点関連性応答処理
+;CALL		USER
+;ARG		0:現在地点, 1:比較先地点
+;RETURN		1:移動可/見えない 2:移動不可/見える 3:移動可/見える
+;COMMENT	
+;-----------------------------------------------------------
+@CAN_MOVE_4(ARG, ARG:1)
+#FUNCTION
+#DIM 参照先
+参照先 = ARG:1 % 100
+SELECTCASE ARG % 100
+	CASE 1
+		SIF 参照先 == 2
+			RETURNF 3
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 35
+			RETURNF 1
+	CASE 2
+		SIF 参照先 == 1
+			RETURNF 3
+		SIF 参照先 == 3
+			RETURNF 1
+		SIF 参照先 == 6
+			RETURNF 1
+		SIF 参照先 == 7
+			RETURNF 1
+	CASE 3
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+	CASE 4
+		SIF 参照先 == 3
+			RETURNF 1
+		SIF 参照先 == 5
+			RETURNF 1
+	CASE 5
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 17
+			RETURNF 1
+		SIF 参照先 == 22
+			RETURNF 1
+	CASE 6
+		SIF 参照先 == 2
+			RETURNF 1
+	CASE 7
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 18
+			RETURNF 1
+		SIF 参照先 == 19
+			RETURNF 1
+		SIF 参照先 == 25
+			RETURNF 1
+		SIF 参照先 == 29
+			RETURNF 1
+	CASE 8
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 10
+			RETURNF 1
+		SIF 参照先 == 11
+			RETURNF 1
+		SIF 参照先 == 12
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 15
+			RETURNF 1
+		SIF 参照先 == 16
+			RETURNF 1
+	CASE 9
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 12
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 16
+			RETURNF 1
+		SIF 参照先 == 21
+			RETURNF 3
+		SIF 参照先 == 24
+			RETURNF 1
+	CASE 10
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 11
+			RETURNF 1
+	CASE 11
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 10
+			RETURNF 1
+	CASE 12
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+	CASE 13
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 12
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+	CASE 14
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+	CASE 15
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 16
+			RETURNF 1
+		SIF 参照先 == 17
+			RETURNF 1
+	CASE 16
+		SIF 参照先 == 8
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 15
+			RETURNF 1
+		SIF 参照先 == 17
+			RETURNF 1
+		SIF 参照先 == 23
+			RETURNF 1
+	CASE 17
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 15
+			RETURNF 1
+		SIF 参照先 == 16
+			RETURNF 1
+		SIF 参照先 == 22
+			RETURNF 1
+	CASE 18
+		SIF 参照先 == 7
+			RETURNF 1
+	CASE 19
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 20
+			RETURNF 1
+	CASE 20
+		SIF 参照先 == 19
+			RETURNF 1
+	CASE 21
+		SIF 参照先 == 9
+			RETURNF 3
+		SIF 参照先 == 22
+			RETURNF 1
+	CASE 22
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 17
+			RETURNF 1
+		SIF 参照先 == 21
+			RETURNF 1
+	CASE 23
+		SIF 参照先 == 16
+			RETURNF 1
+	CASE 24
+		SIF 参照先 == 9
+			RETURNF 1
+	CASE 25
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 26
+			RETURNF 1
+	CASE 26
+		SIF 参照先 == 25
+			RETURNF 1
+		SIF 参照先 == 27
+			RETURNF 1
+		SIF 参照先 == 28
+			RETURNF 1
+	CASE 27
+		SIF 参照先 == 26
+			RETURNF 1
+	CASE 28
+		SIF 参照先 == 26
+			RETURNF 1
+	CASE 29
+		SIF 参照先 == 7
+			RETURNF 1
+		SIF 参照先 == 30
+			RETURNF 1
+	CASE 30
+		SIF 参照先 == 29
+			RETURNF 1
+	CASE 31
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 33
+			RETURNF 1
+	CASE 32
+		SIF 参照先 == 33
+			RETURNF 1
+	CASE 33
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 32
+			RETURNF 1
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 42
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+	CASE 34
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 35
+			RETURNF 1
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 41
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+		SIF 参照先 == 47
+			RETURNF 1
+	CASE 35
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 36
+			RETURNF 1
+		SIF 参照先 == 38
+			RETURNF 1
+	CASE 36
+		SIF 参照先 == 35
+			RETURNF 1
+		SIF 参照先 == 37
+			RETURNF 1
+	CASE 37
+		SIF 参照先 == 36
+			RETURNF 1
+	CASE 38
+		SIF 参照先 == 35
+			RETURNF 1
+		SIF 参照先 == 50
+			RETURNF 1
+		SIF 参照先 == 66
+			RETURNF 3
+	CASE 40
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+		SIF 参照先 == 47
+			RETURNF 1
+	CASE 41
+		SIF 参照先 == 34
+			RETURNF 1
+	CASE 42
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+	CASE 43
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 42
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+	CASE 44
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 42
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+		SIF 参照先 == 47
+			RETURNF 1
+	CASE 45
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+		SIF 参照先 == 47
+			RETURNF 1
+	CASE 46
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+		SIF 参照先 == 47
+			RETURNF 3
+	CASE 47
+		SIF 参照先 == 34
+			RETURNF 1
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 3
+	CASE 50
+		SIF GROUPMATCH(参照先,38,51,52,65,66)
+			RETURNF 1
+	CASE 51
+		SIF 参照先 == 50
+			RETURNF 1
+	CASE 52
+		SIF 参照先 == 50
+			RETURNF 1
+	CASE 53
+		SIF 参照先 == 65
+			RETURNF 1
+	CASE 54
+		SIF 参照先 == 65
+			RETURNF 1
+	CASE 55
+		SIF 参照先 == 65
+			RETURNF 1
+	CASE 56
+		SIF 参照先 == 65
+			RETURNF 1
+	CASE 57
+		SIF 参照先 == 58
+			RETURNF 1
+	CASE 58
+		SIF GROUPMATCH(参照先,57,59,61,66)
+			RETURNF 1
+	CASE 59
+		SIF 参照先 == 58
+			RETURNF 1
+	CASE 60
+		SIF GROUPMATCH(参照先,62,65)
+			RETURNF 1
+	CASE 61
+		SIF GROUPMATCH(参照先,58,62,65)
+			RETURNF 1
+	CASE 62
+		SIF GROUPMATCH(参照先,60,61,66)
+			RETURNF 1
+	CASE 63
+		SIF GROUPMATCH(参照先,64,65)
+			RETURNF 1
+	CASE 64
+		SIF 参照先 == 63
+			RETURNF 1
+	CASE 65
+		SIF GROUPMATCH(参照先,50,53,54,55,56,60,61,63)
+			RETURNF 1
+	CASE 66
+		SIF GROUPMATCH(参照先,38,50,58,62,64,65)
+			RETURNF 1
+	;竹林之外
+	;竹林入口へのみ一方通行、EXキャラ待機用
+	CASE MAXROOM % 100
+		SIF 参照先 == 47
+			RETURNF 1
+ENDSELECT
+RETURNF 0

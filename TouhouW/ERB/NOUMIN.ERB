@@ -1,0 +1,1324 @@
+﻿[SKIPSTART]
+小作人用各種設定関数
+
+カネはくれるが拘束時間で割ればすこぶる薄給、つまりフレーバーです（でも貰えると嬉しいよね）
+標準の報酬係数を400として格差あり、東方くわしくないので違和感あったら変えてくらさい
+450は商売やってるようなひとびと
+
+思いつきをありったけ積んだ
+よくわかんなかった人々は実装してない
+追加・訂正求む
+
+ボツネタ
+・華扇の屋敷の裏山に果樹（栗、柿、梅など）
+なんとなくイメージでありそう
+いろいろ曖昧すぎるのでとりあえず保留
+・多来米さんが砂糖を生産
+とにかく蘇伊特なものをと思った
+サトウキビかテンサイだがなんだかシュールなので保留
+養蜂農家で蜂蜜を作る手もあるか
+後にテンサイは琪露諾の作物となった
+・妹紅or輝夜で竹林でタケノコ農家
+タケノコは採れそうだがこの２人が作物を徴収しに来るイメージがしない
+地主という形で他人と関わり合いになるだろうか？？？と思ってやめ
+・蓮子の蓮根畑、鈴湖の林檎園
+梅莉とせーらんの作物を思いつかなかった
+かたっぽだけ地主設定してると違和感
+・正邪でミラクルフルーツ畑
+苦味＆酸味を甘いと感じさせる＝ひっくり返す
+大量生産するようなもんでもないようなと思ってやめ
+・純狐さんの生姜畑
+すごい形相で叫びながら齧ったりするの？あまりにも一発ネタすぎるので却下
+・魅魔様の牧場
+でも（ｒｙ
+
+
+果樹では柿や蜜柑なんかがあると和風感が増すが任せられる人が思いつかなかった
+このほか繊維系で綿花、麻、染料系で茜などを挙げてみる
+
+[SKIPEND]
+@STR_NOUMIN(C_NAME, TYPE)
+#FUNCTIONS
+#LOCALSIZE 1
+#LOCALSSIZE 1
+#DIMS C_NAME
+#DIMS TYPE
+VARSET LOCALS
+SELECTCASE C_NAME
+CASE "霊夢"
+	;神社は土地持ってそう、神田
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 米農家
+	CASE "作物"
+	LOCALS = 大米
+	CASE "畑の種類"
+	LOCALS = 水田
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 22
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 5
+	ENDSELECT
+CASE "桑尼"
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 生菜農家
+	CASE "作物"
+	LOCALS = 生菜
+	CASE "畑の種類"
+	LOCALS = 生菜田
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 25
+	CASE "報酬"
+	LOCALS = 200
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "露娜"
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 栗子農家
+	CASE "作物"
+	LOCALS = 栗
+	CASE "畑の種類"
+	LOCALS = 栗林
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 25
+	CASE "報酬"
+	LOCALS = 200
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "斯塔"
+	;むりやりな斯塔フルーツからオクラ（星形断面）に変更
+	;オクラって英語だったのか・・・
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 秋葵農家
+	CASE "作物"
+	LOCALS = 秋葵
+	CASE "畑の種類"
+	LOCALS = 秋葵田
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 25
+	CASE "報酬"
+	LOCALS = 200
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "萃香"
+	;この娘の場合はそこら辺の林をえいやっと畑にしてくれたんだろな
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 西瓜農家
+	CASE "作物"
+	LOCALS = 西瓜
+	CASE "畑の種類"
+	LOCALS = 西瓜田
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 22
+	CASE "報酬"
+	LOCALS = 300
+	CASE "金利"
+	LOCALS = 4
+	ENDSELECT
+CASE "魔理沙"
+	;農家というかキノコスポットを教えてくれたのかな
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 菌菇農家
+	CASE "作物"
+	LOCALS = 菌菇
+	CASE "畑の種類"
+	LOCALS = 菌菇農園
+	CASE "畑のマップ"
+	LOCALS = 魔法之森
+	CASE "マップID"
+	LOCALS = 5
+	CASE "場所ID"
+	LOCALS = 510
+	CASE "報酬"
+	LOCALS = 450
+	CASE "金利"
+	LOCALS = 6
+	ENDSELECT
+CASE "琪露諾"
+	;最強とか天才とかそういう言葉が好きそう
+	;寒冷地の作物って感じがするしこの子に任せるっきゃない
+	;収穫したテンサイは紅魔館に出荷され砂糖に加工されるのであった
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 甜菜農家
+	CASE "作物"
+	LOCALS = 甜菜
+	CASE "畑の種類"
+	LOCALS = 甜菜田
+	CASE "畑のマップ"
+	LOCALS = 霧之湖
+	CASE "マップID"
+	LOCALS = 3
+	CASE "場所ID"
+	LOCALS = 343
+	CASE "報酬"
+	LOCALS = 250
+	CASE "金利"
+	LOCALS = 9
+	ENDSELECT
+CASE "蕾米莉亜"
+	;西洋っぽいので小麦の供給元に
+	;霧之湖近辺は冷害が怖い
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 小麦農家
+	CASE "作物"
+	LOCALS = 小麦
+	CASE "畑の種類"
+	LOCALS = 小麦田
+	CASE "畑のマップ"
+	LOCALS = 紅魔館
+	CASE "マップID"
+	LOCALS = 3
+	CASE "場所ID"
+	LOCALS = 301
+	CASE "報酬"
+	LOCALS = 600
+	CASE "金利"
+	LOCALS = 16
+	ENDSELECT
+CASE "藍"
+	;おあげ
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 大豆農家
+	CASE "作物"
+	LOCALS = 大豆
+	CASE "畑の種類"
+	LOCALS = 大豆畑
+	CASE "畑のマップ"
+	LOCALS = 人间之里
+	CASE "マップID"
+	LOCALS = 2
+	CASE "場所ID"
+	LOCALS = 205
+	CASE "報酬"
+	LOCALS = 600
+	CASE "金利"
+	LOCALS = 5
+	ENDSELECT
+CASE "莉格露"
+	;虫つながりで蚕
+	;本人は金もって無さそうだけど儲けがかなり大きいということで500
+	;本来ならもっと手間かかるだろうがこまけーこたーいいんだよっ！
+	;小屋は誰が建てたんだろうね
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 養蚕農家
+	CASE "作物"
+	LOCALS = 生糸
+	CASE "畑の種類"
+	LOCALS = 養蚕小屋
+	CASE "畑のマップ"
+	LOCALS = 魔法之森
+	CASE "マップID"
+	LOCALS = 5
+	CASE "場所ID"
+	LOCALS = 540
+	CASE "報酬"
+	LOCALS = 500
+	CASE "金利"
+	LOCALS = 4
+	ENDSELECT
+CASE "文"
+	;天狗も水田持ってそう
+	;山っぽさをだすならワサビなども可
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 米農家
+	CASE "作物"
+	LOCALS = 大米
+	CASE "畑の種類"
+	LOCALS = 水田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 720
+	CASE "報酬"
+	LOCALS = 450
+	CASE "金利"
+	LOCALS = 12
+	ENDSELECT
+CASE "映姫"
+	;白黒で思い浮かんだのがこれ
+	;報酬は多めにくれる
+	;立地が人里なのは三途之川をうろつくのはやめなさいという心遣い
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 胡麻農家
+	CASE "作物"
+	LOCALS = 胡麻
+	CASE "畑の種類"
+	LOCALS = 胡麻田
+	CASE "畑のマップ"
+	LOCALS = 人间之里
+	CASE "マップID"
+	LOCALS = 2
+	CASE "場所ID"
+	LOCALS = 204
+	CASE "報酬"
+	LOCALS = 450
+	CASE "金利"
+	LOCALS = 2
+	ENDSELECT
+CASE "早苗"
+	;神社は土地持ってそう、神田
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 米農家
+	CASE "作物"
+	LOCALS = 大米
+	CASE "畑の種類"
+	LOCALS = 水田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山頂
+	CASE "マップID"
+	LOCALS = 8
+	CASE "場所ID"
+	LOCALS = 830
+	CASE "報酬"
+	LOCALS = 500
+	CASE "金利"
+	LOCALS = 5
+	ENDSELECT
+CASE "神奈子"
+	;神奈子さま高付加価値農業とか好きそう
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 蜜瓜農家
+	CASE "作物"
+	LOCALS = 蜜瓜
+	CASE "畑の種類"
+	LOCALS = 温室
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山頂
+	CASE "マップID"
+	LOCALS = 8
+	CASE "場所ID"
+	LOCALS = 820
+	CASE "報酬"
+	LOCALS = 700
+	CASE "金利"
+	LOCALS = 18
+	ENDSELECT
+CASE "諏訪子"
+	;沼っぽい場所に生えるっぽいので
+	;ケロケロな諏訪子様に協力してもらおう
+	;財力もありそうだけどそもそもの単価が安いという脳内設定
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 菱農家
+	CASE "作物"
+	LOCALS = 菱角
+	CASE "畑の種類"
+	LOCALS = 蓄水池
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 730
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 12
+	ENDSELECT
+CASE "天子"
+	;もも
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 桃農家
+	CASE "作物"
+	LOCALS = 桃
+	CASE "畑の種類"
+	LOCALS = 桃農園
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山頂
+	CASE "マップID"
+	LOCALS = 8
+	CASE "場所ID"
+	LOCALS = 890
+	CASE "報酬"
+	LOCALS = 600
+	CASE "金利"
+	LOCALS = 7
+	ENDSELECT
+CASE "阿燐"
+	;キウイはマタタビの仲間でネコをメロメロにする
+	;果実にその効果はないみたいだが
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 奇異果農家
+	CASE "作物"
+	LOCALS = 奇異果
+	CASE "畑の種類"
+	LOCALS = 奇異果農園
+	CASE "畑のマップ"
+	LOCALS = 地底
+	CASE "マップID"
+	LOCALS = 9
+	CASE "場所ID"
+	LOCALS = 926
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 8
+	ENDSELECT
+CASE "阿空"
+	;アホの子キャラから「ウドの大木」という言葉を連想
+	;さらに地底在住という立地は白ウドの栽培に適している
+	;貶す意図はありませんし阿空ちゃんがキライなわけでもありません
+	;地獄跡へ続く穴に横穴でも掘って栽培？
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 土当帰農家
+	CASE "作物"
+	LOCALS = 白土当帰
+	CASE "畑の種類"
+	LOCALS = 土当帰田
+	CASE "畑のマップ"
+	LOCALS = 地底
+	CASE "マップID"
+	LOCALS = 9
+	CASE "場所ID"
+	LOCALS = 927
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "納茲琳"
+	;泣きついたら小言を言いながら何とかしてくれそう
+	;特に寺の連中が見てたら断りきれない
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 茄子農家
+	CASE "作物"
+	LOCALS = 茄子
+	CASE "畑の種類"
+	LOCALS = 茄子田
+	CASE "畑のマップ"
+	LOCALS = 命蓮寺
+	CASE "マップID"
+	LOCALS = 1
+	CASE "場所ID"
+	LOCALS = 106
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 8
+	ENDSELECT
+CASE "覚"
+	;農家というか庭師？？？
+	;出荷用ではなく覚さまの趣味の範疇ということで報酬はすくなめに
+	;きっと部屋に活けたり妹の飾った死体にデコレーションしてる
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 薔薇農家
+	CASE "作物"
+	LOCALS = 薔薇花
+	CASE "畑の種類"
+	LOCALS = 薔薇園
+	CASE "畑のマップ"
+	LOCALS = 地底
+	CASE "マップID"
+	LOCALS = 9
+	CASE "場所ID"
+	LOCALS = 925
+	CASE "報酬"
+	LOCALS = 350
+	CASE "金利"
+	LOCALS = 6
+	ENDSELECT
+CASE "荷取"
+	;薄給
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 黄瓜農家
+	CASE "作物"
+	LOCALS = 黄瓜
+	CASE "畑の種類"
+	LOCALS = 黄瓜田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 720
+	CASE "報酬"
+	LOCALS = 300
+	CASE "金利"
+	LOCALS = 4
+	ENDSELECT
+CASE "帝"
+	;金もってそう
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 胡蘿卜農家
+	CASE "作物"
+	LOCALS = 胡蘿卜
+	CASE "畑の種類"
+	LOCALS = 胡蘿卜田
+	CASE "畑のマップ"
+	LOCALS = 迷途竹林
+	CASE "マップID"
+	LOCALS = 4
+	CASE "場所ID"
+	LOCALS = 433
+	CASE "報酬"
+	LOCALS = 450
+	CASE "金利"
+	LOCALS = 15
+	ENDSELECT
+CASE "白蓮"
+	;精進料理用
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 大豆農家
+	CASE "作物"
+	LOCALS = 大豆
+	CASE "畑の種類"
+	LOCALS = 大豆畑
+	CASE "畑のマップ"
+	LOCALS = 命蓮寺
+	CASE "マップID"
+	LOCALS = 1
+	CASE "場所ID"
+	LOCALS = 106
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 2
+	ENDSELECT
+CASE "小悪魔"
+	;まさかの室内栽培
+	;主人をからかうのが目的だが気づかれていない様子
+	;ぜんぜん儲からない
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 豆芽農家
+	CASE "作物"
+	LOCALS = 豆芽
+	CASE "畑の種類"
+	LOCALS = 豆芽部屋
+	CASE "畑のマップ"
+	LOCALS = 紅魔館
+	CASE "マップID"
+	LOCALS = 3
+	CASE "場所ID"
+	LOCALS = 310
+	CASE "報酬"
+	LOCALS = 150
+	CASE "金利"
+	LOCALS = 10
+	ENDSELECT
+CASE "琶露西"
+	;はじかみ
+	;鮮やかな緑やら食べた時のヒリヒリ感もなんとなくイメージに合うかな
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 山椒農家
+	CASE "作物"
+	LOCALS = 山椒
+	CASE "畑の種類"
+	LOCALS = 山椒田
+	CASE "畑のマップ"
+	LOCALS = 地底
+	CASE "マップID"
+	LOCALS = 9
+	CASE "場所ID"
+	LOCALS = 945
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 8
+	ENDSELECT
+CASE "椛"
+	;山っぽい作物を
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 蕎麥農家
+	CASE "作物"
+	LOCALS = 蕎麥
+	CASE "畑の種類"
+	LOCALS = 蕎麥田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山頂
+	CASE "マップID"
+	LOCALS = 8
+	CASE "場所ID"
+	LOCALS = 820
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 7
+	ENDSELECT
+CASE "幽幽子"
+	;ザクロに設定したのは独断
+	;冥界（死）＆女性に縁のある果物としてチョイス
+	;最初は米農家にしたけど彼岸で米栽培してるのはとても違和感が
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 柘榴農家
+	CASE "作物"
+	LOCALS = 柘榴
+	CASE "畑の種類"
+	LOCALS = 柘榴農園
+	CASE "畑のマップ"
+	LOCALS = 冥界
+	CASE "マップID"
+	LOCALS = 6
+	CASE "場所ID"
+	LOCALS = 630
+	CASE "報酬"
+	LOCALS = 500
+	CASE "金利"
+	LOCALS = 13
+	ENDSELECT
+CASE "幽香"
+	;「かき」と読みます
+	;園芸用の草花のこと
+	;仕事の手伝いと被ってるがどうしよう
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 花卉農家
+	CASE "作物"
+	LOCALS = 花苗
+	CASE "畑の種類"
+	LOCALS = 花田
+	CASE "畑のマップ"
+	LOCALS = 迷途竹林
+	CASE "マップID"
+	LOCALS = 4
+	CASE "場所ID"
+	LOCALS = 438
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 15
+	ENDSELECT
+CASE "猯藏"
+	;地主に違和感がない
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 米農家
+	CASE "作物"
+	LOCALS = 大米
+	CASE "畑の種類"
+	LOCALS = 水田
+	CASE "畑のマップ"
+	LOCALS = 命蓮寺
+	CASE "マップID"
+	LOCALS = 1
+	CASE "場所ID"
+	LOCALS = 101
+	CASE "報酬"
+	LOCALS = 500
+	CASE "金利"
+	LOCALS = 20
+	ENDSELECT
+CASE "針妙丸"
+	;ころぽっくる
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 蜂斗葉農家
+	CASE "作物"
+	LOCALS = 蜂斗葉
+	CASE "畑の種類"
+	LOCALS = 蜂斗葉田
+	CASE "畑のマップ"
+	LOCALS = 博麗神社
+	CASE "マップID"
+	LOCALS = 0
+	CASE "場所ID"
+	LOCALS = 22
+	CASE "報酬"
+	LOCALS = 350
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "永琳"
+	;ホントに薬？
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 薬草農家
+	CASE "作物"
+	LOCALS = 薬草
+	CASE "畑の種類"
+	LOCALS = 薬草畑
+	CASE "畑のマップ"
+	LOCALS = 迷途竹林
+	CASE "マップID"
+	LOCALS = 4
+	CASE "場所ID"
+	LOCALS = 436
+	CASE "報酬"
+	LOCALS = 600
+	CASE "金利"
+	LOCALS = 14
+	ENDSELECT
+CASE "蛮奇"
+	;首が落ちる＋赤色
+	;あんま人付き合いなさそうだけど一応
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 山茶農家
+	CASE "作物"
+	LOCALS = 山茶油
+	CASE "畑の種類"
+	LOCALS = 山茶農園
+	CASE "畑のマップ"
+	LOCALS = 人间之里
+	CASE "マップID"
+	LOCALS = 2
+	CASE "場所ID"
+	LOCALS = 206
+	CASE "報酬"
+	LOCALS = 350
+	CASE "金利"
+	LOCALS = 6
+	ENDSELECT
+CASE "静葉"
+	;葡萄がついてるのは妹のほうだが
+	;葡萄ならオサレ感あるし紅葉もするし果実も色づくし
+	;変えるなら穣子を葡萄にして静葉は漆（非食用の有用植物、かつ紅葉する）とか？？？
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 山葡萄農家
+	CASE "作物"
+	LOCALS = 山葡萄
+	CASE "畑の種類"
+	LOCALS = 山葡萄田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 710
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 4
+	ENDSELECT
+CASE "穣子"
+	;米でもいいが天狗と被るのだよ
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 紅薯農家
+	CASE "作物"
+	LOCALS = 紅薯
+	CASE "畑の種類"
+	LOCALS = 紅薯田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 710
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 4
+	ENDSELECT
+CASE "雛"
+	;服の模様に似ている＆山で生えてそう
+	;あまり裕福なイメージはない
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 山菜農家
+	CASE "作物"
+	LOCALS = 山菜
+	CASE "畑の種類"
+	LOCALS = 山菜田
+	CASE "畑のマップ"
+	LOCALS = 妖怪之山・山麓
+	CASE "マップID"
+	LOCALS = 7
+	CASE "場所ID"
+	LOCALS = 710
+	CASE "報酬"
+	LOCALS = 350
+	CASE "金利"
+	LOCALS = 3
+	ENDSELECT
+CASE "阿求"
+	;人里のとっぷに君臨する
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 米農家
+	CASE "作物"
+	LOCALS = 大米
+	CASE "畑の種類"
+	LOCALS = 水田
+	CASE "畑のマップ"
+	LOCALS = 人间之里
+	CASE "マップID"
+	LOCALS = 2
+	CASE "場所ID"
+	LOCALS = 206
+	CASE "報酬"
+	LOCALS = 550
+	CASE "金利"
+	LOCALS = 9
+	ENDSELECT
+CASE "屠自古"
+	;豪族組で相談したら土地も用意できそうだけどそこまでしてくれるか？
+	SELECTCASE TYPE
+	CASE "説明"
+	LOCALS = 蘿卜農家
+	CASE "作物"
+	LOCALS = 蘿卜
+	CASE "畑の種類"
+	LOCALS = 蘿卜田
+	CASE "畑のマップ"
+	LOCALS = 人间之里
+	CASE "マップID"
+	LOCALS = 2
+	CASE "場所ID"
+	LOCALS = 205
+	CASE "報酬"
+	LOCALS = 400
+	CASE "金利"
+	LOCALS = 12
+	ENDSELECT
+ENDSELECT
+RETURNF LOCALS
+
+
+
+;農民初期設定関数
+@SET_NOUMIN
+#LOCALSIZE 1000
+#LOCALSSIZE 1
+#DIM LCOUNT
+#DIM CHARA_COUNT
+#DIM LIST_COUNT
+#DIM PAGE
+#DIMS NAME_地主
+PAGE = 0
+CHARA_COUNT = 0
+;地主一覧の取得
+FOR LCOUNT, 1, CHARANUM
+	SIF CALLNAME:LCOUNT == CALLNAME:MASTER
+		CONTINUE
+	IF STRLENS(STR_NOUMIN(CALLNAME:LCOUNT, "説明"))
+		LOCAL:CHARA_COUNT = LCOUNT
+		CHARA_COUNT ++
+	ENDIF
+NEXT
+
+FLAG:地主 = 0
+FLAG:畑仕事の成果 = 0
+FLAG:返済延滞回数 = 0
+FLAG:収穫納入回数 = 0
+FLAG:累積収穫評価 = 0
+FLAG:前回収穫評価 = 0
+
+PRINTFORML 你是農民嗎？
+PRINTFORML [1] - 是
+PRINTFORML [0] - 不是
+DO
+	INPUT
+	SELECTCASE RESULT
+	CASE 0
+		RETURN
+	CASE 1
+	CASEELSE
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDSELECT
+	BREAK
+LOOP 1
+
+DO
+	LIST_COUNT = 0
+	PRINTFORML 請選択一個雇傭你的地主
+	PRINTFORML 
+	FOR LCOUNT, (PAGE * 20), CHARA_COUNT
+		PRINTFORM [{LOCAL:LCOUNT ,3}] - 地主：%CALLNAME:(LOCAL:LCOUNT), 10%　　
+		PRINTFORM %STR_NOUMIN(CALLNAME:(LOCAL:LCOUNT), "説明"), 14%　　
+		PRINTFORML %STR_NOUMIN(CALLNAME:(LOCAL:LCOUNT), "畑の種類")%的位置在%STR_NOUMIN(CALLNAME:(LOCAL:LCOUNT), "畑のマップ")%的附近
+		LIST_COUNT ++
+		SIF LIST_COUNT > 19
+			BREAK
+	NEXT
+	PRINTFORML 
+	PRINTFORML [901] - 察看前一頁
+	PRINTFORML [902] - 察看下一頁
+	PRINTFORML [  0] - 還是算了
+	DO
+		INPUT
+		SELECTCASE RESULT
+		CASE 0
+			RETURN
+		CASE 901
+			SIF PAGE > 0
+				PAGE --
+		CASE 902
+			SIF (PAGE + 1) * 20 < CHARA_COUNT
+				PAGE ++
+		CASE 1 TO CHARANUM - 1
+			SIF !STRLENS(STR_NOUMIN(CALLNAME:RESULT, "説明"))
+				GOTO RETRY
+			FLAG:地主 = RESULT
+		CASEELSE
+			$RETRY
+			REUSELASTLINE 无效输入
+			CONTINUE
+		ENDSELECT
+		BREAK
+	LOOP 1
+LOOP !(FLAG:地主)
+
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+PRINTFORML 
+PRINTFORML 你成為了為%NAME_地主%種植%STR_NOUMIN(NAME_地主, "作物")%的佃戶
+PRINTFORML 你租借的%STR_NOUMIN(NAME_地主, "畑の種類")%是在%STR_NOUMIN(NAME_地主, "畑のマップ")%的附近
+PRINTFORMW 請每天都不要偸懶努力干活吧
+
+CALL MODE_NOUMIN
+CALL LOAN_NOUMIN
+
+[IF_DEBUG]
+;挙動、れいあうとの確認用
+;MONEY = 100000
+;DO
+;	SIF FLAG:農民難易度
+;		CALL COST_NOUMIN
+;	CALL REPAY_NOUMIN
+;	WAIT
+;LOOP 1
+[ENDIF]
+
+@MODE_NOUMIN
+#LOCALSIZE 1
+#LOCALSSIZE 1
+#DIMS NAME_地主
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+PRINTFORML 請設定農民生活的難易度
+PRINTFORML （根據選択的不同可能会導致角色形象的崩坏）
+PRINTFORML 
+PRINTFORML [1] - 普通農民　    　　　　%NAME_地主%はとても親切な地主です
+PRINTFORML [2] - 硬核農民　      　　　%NAME_地主%はふつうに強欲な地主です
+PRINTFORML [3] - 極限農民          　　%NAME_地主%は圧政を敷く横暴な地主です
+DO
+	INPUT
+	IF INRANGE(RESULT, 1, 3)
+		FLAG:農民難易度 = RESULT
+		BREAK
+	ELSE
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDIF
+LOOP 1
+SELECTCASE FLAG:農民難易度
+CASE 1
+	PRINTFORML 你的地主是個親切的好人
+	FLAG:畑拡張 = 1
+CASE 2
+	PRINTFORML 你成爲了被地主虐待的農民
+	FLAG:畑拡張 = 2
+CASE 3
+	PRINTFORML 你成爲了被地主完全剝削的農民
+	FLAG:畑拡張 = 3
+ENDSELECT
+PRINTFORMW （農民難易度可以在設置里変更）
+SETBIT FLAG:1000, 2
+
+
+
+;%TOSTR(LOCAL, "#,###")%
+;報酬400 * 1000 = 40万円（標準金額）
+@LOAN_NOUMIN
+#DIMS NAME_地主
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+LOCAL = TOINT(STR_NOUMIN(NAME_地主, "報酬")) * 1000
+PRINTFORML 開始農業的%CALLNAME:MASTER%收到了初期投資費用和\\{LOCAL}的借入金
+FLAG:地主貸付金 = LOCAL
+FLAG:年始貸付金 = LOCAL
+SELECTCASE FLAG:農民難易度
+CASE 1
+	PRINTFORML %NAME_地主%説道是無息借款所以耐心的還就好
+	IF !ITEM:園芸用品一式
+		PRINTFORML 而且%NAME_地主%提出了先去人間之里的花店買斉園芸用品的建議
+		PRINTFORML 農具的購入費用看来还负担不起
+	ENDIF
+CASE 2, 3
+	PRINTFORML 這份借款的利率是{TOINT(STR_NOUMIN(NAME_地主, "金利"))}
+	PRINTFORML 而且%NAME_地主%提出了借出農具
+	PRINTFORML ……好像没有拒絶的权利
+	;たぶんこの他に現地に無駄に色々な道具が山ほどある
+	SIF !ITEM:園芸用品一式
+		ITEM:園芸用品一式 ++
+ENDSELECT
+WAIT
+
+
+
+;農民情報表示関数
+@SHOW_NOUMIN
+#LOCALSIZE 1
+#LOCALSSIZE 1
+#DIMS NAME_地主
+#DIM HATAKE
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+HATAKE = TOINT(STR_NOUMIN(NAME_地主, "場所ID"))
+SIF GET_MAPID(HATAKE) != MAIN_MAP
+	HATAKE = 6000 + (GET_MAP_REPLACEMENT(HATAKE) / 10)
+
+PRINTFORML %NAME_地主%的佃戶（在%STR_NOUMIN(NAME_地主, "説明")%種植%STR_NOUMIN(NAME_地主, "作物")%）
+PRINTFORML %STR_NOUMIN(NAME_地主, "畑の種類")%在%STR_NOUMIN(NAME_地主, "畑のマップ")%的%NAME_FROM_PLACE(HATAKE)%附近
+;いいひとでも作物は全部もらいます
+SELECTCASE FLAG:農民難易度
+CASE 1
+	PRINTFORML 地主是個非常親切的人
+	SIF FLAG:地主貸付金
+		PRINTFORML \\{FLAG:地主貸付金}無息借款
+CASE 2
+	PRINTFORML 被地主虐待
+	SIF FLAG:地主貸付金
+		PRINTFORML \\{FLAG:地主貸付金}借款的利率是{TOINT(STR_NOUMIN(NAME_地主, "金利"))}％（年利）
+CASE 3
+	PRINTFORML 被地主徹底圧榨
+	SIF FLAG:地主貸付金
+		PRINTFORML \\{FLAG:地主貸付金}借款的利率是{TOINT(STR_NOUMIN(NAME_地主, "金利"))}％（月利）
+ENDSELECT
+PRINTFORML 
+
+
+;取り立て関数
+;本当は年貢でもなんでもないけどわかりやすさ優先
+;口上対応とかご褒美えっちとかは仕様がわからなくて実装できない
+@NENGU_NOUMIN
+#LOCALSIZE 1
+#LOCALSSIZE 1
+#DIM 年貢の評価
+PRINTFORML %CALLNAME:(FLAG:地主)%来徴収本月的成果
+PRINTFORMW （今月的収穫量：{FLAG:畑仕事の成果}）
+年貢の評価 = FLAG:畑仕事の成果 / 20
+LOCAL = (年貢の評価 - 3) * 5
+SIF LOCAL < 0
+	LOCAL = MIN(LOCAL, CFLAG:(FLAG:地主):信頼度)
+SELECTCASE 年貢の評価
+CASE IS <= 0
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量幾乎是零
+	PRINTFORML %CALLNAME:(FLAG:地主)%用可怕的表情瞪着這辺
+CASE 1
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量非常少
+	PRINTFORML %CALLNAME:(FLAG:地主)%因爲收穫量太少而明顯失望的樣子
+CASE 2
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量很少
+	PRINTFORML %CALLNAME:(FLAG:地主)%因爲收穫量少而不満意的樣子
+CASE 3
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量有点少
+	PRINTFORML %CALLNAME:(FLAG:地主)%対收穫量多多少少感到不満
+CASE 4
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量一般
+	PRINTFORML %CALLNAME:(FLAG:地主)%対收穫量感到満意
+CASE 5
+	PRINTFORML 本月份的の%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量有点多
+	PRINTFORML %CALLNAME:(FLAG:地主)%的多出的收穫量很高興的樣子
+CASE 6
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量非常多
+	PRINTFORML %CALLNAME:(FLAG:地主)%因爲預期以上的收穫量露出了微笑
+CASEELSE
+	PRINTFORML 本月份的%STR_NOUMIN(CALLNAME:(FLAG:地主), "作物")%的收穫量幾乎是無数！
+	PRINTFORML %CALLNAME:(FLAG:地主)%因爲超乎想象的收穫量折服了
+ENDSELECT
+WAIT
+
+IF LOCAL < 0
+	PRINTFORMW %CALLNAME:(FLAG:地主)%対你抱着不信任感
+	CFLAG:(FLAG:地主):信頼度 -= LOCAL
+	IF 年貢の評価 <= 0
+		PRINTFORMW ……好像把%CALLNAME:(FLAG:地主)%惹火了
+			CFLAG:(FLAG:地主):心情不快 = 1
+			CFLAG:(FLAG:地主):ブチギレ = 1
+			SIF MARK:(FLAG:地主):反発刻印 < 3
+				MARK:(FLAG:地主):反発刻印 ++
+	ENDIF
+ELSEIF LOCAL > 0
+	PRINTFORMW %CALLNAME:(FLAG:地主)%的信賴度上升了
+	CFLAG:(FLAG:地主):信頼度 += LOCAL
+	IF !MARK:(FLAG:地主):反発刻印
+		LOCAL = 年貢の評価 * TOINT(STR_NOUMIN(CALLNAME:(FLAG:地主), "報酬"))
+		PRINTFORMW %CALLNAME:(FLAG:地主)%給了我\\{LOCAL}零用錢
+		MONEY += LOCAL
+	ENDIF
+ENDIF
+FLAG:畑仕事の成果 = 0
+FLAG:年貢 = 0
+FLAG:収穫納入回数 ++
+FLAG:累積収穫評価 += 年貢の評価
+FLAG:前回収穫評価 = 年貢の評価
+SIF FLAG:野菜娘デイリー == 2
+	FLAG:野菜娘デイリー = 1
+CALL REPAY_NOUMIN
+SIF FLAG:農民難易度 > 1
+	CALL COST_NOUMIN
+
+
+
+@REPAY_NOUMIN
+#DIM HENSAI
+#DIM MIN_HENSAI
+#DIMS NAME_地主
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+SIF !FLAG:地主貸付金
+	GOTO KANRYOU
+SELECTCASE FLAG:農民難易度
+CASE 1
+	MIN_HENSAI = 100
+CASE 2
+	MIN_HENSAI = TOINT(STR_NOUMIN(NAME_地主, "報酬")) * 5
+CASE 3
+	MIN_HENSAI = TOINT(STR_NOUMIN(NAME_地主, "報酬")) * (10 + FLAG:返済延滞回数)
+ENDSELECT
+MIN_HENSAI = MIN(MIN_HENSAI, FLAG:地主貸付金)
+
+PRINTFORML %NAME_地主%要求償還借款
+PRINTFORML 要還多少錢？（手持資金在\\{MONEY}、最低金額\\{MIN_HENSAI}以下時延期還款）
+DO
+	INPUT
+	HENSAI = MIN(RESULT, FLAG:地主貸付金)
+	SELECTCASE HENSAI
+	CASE IS < MIN_HENSAI
+		PRINTFORML %CALLNAME:MASTER%対着%NAME_地主%懇求道請再給一点還款時間
+		IF FLAG:農民難易度 == 1
+			IF MONEY < MIN_HENSAI
+			;本気で金が無い時
+				PRINTDATAL
+					DATAFORM %NAME_地主%対這辺的生活情況真心的擔憂
+					DATAFORM %NAME_地主%対這辺的生活情況真心的擔憂
+					DATAFORM %NAME_地主%鼓勵着%CALLNAME:MASTER%鼓勵着
+					DATAFORM %NAME_地主%安慰着%CALLNAME:MASTER%安慰起来
+					DATAFORM %NAME_地主%不知道該説什麼的樣子
+					DATAFORM %NAME_地主%那憐憫的視線扎了過来
+					DATAFORM %NAME_地主%的表情陰沈
+					DATAFORM %NAME_地主%感到為難
+				ENDDATA
+			ELSE
+			;ちょっとまって！
+				PRINTDATAL
+					DATAFORM %NAME_地主%深深嘆了口気
+					DATAFORM %NAME_地主%揉着太陽穴
+					DATAFORM %NAME_地主%用蔑視的眼神盯着
+					DATAFORM %NAME_地主%抱着胳膊繃緊了臉
+					DATAFORM %NAME_地主%那憐憫的視線扎了過来
+					DATAFORM %NAME_地主%臉色僵硬
+					DATAFORM %NAME_地主%皺起了眉頭
+					DATAFORM %NAME_地主%的表情陰沈
+					DATAFORM %NAME_地主%感到為難
+				ENDDATA
+				PRINTFORML 
+				PRINTFORML ……看来總算是同意了
+			ENDIF
+			FLAG:返済延滞回数 ++
+		ELSEIF MONEY >= MIN_HENSAI
+			PRINTFORML %NAME_地主%打断了%CALLNAME:MASTER%的話從錢包中強行奪走了\\{MIN_HENSAI}
+			MONEY -= MIN_HENSAI
+		ELSE
+			PRINTFORML %NAME_地主%砸了砸嘴用冷漠的眼神瞪視這辺
+			FLAG:返済延滞回数 ++
+		ENDIF
+	CASE IS > MONEY
+		$RETRY
+		REUSELASTLINE 无效输入
+		CONTINUE
+	CASEELSE
+		PRINTFORML %CALLNAME:MASTER%償還了\\{HENSAI}的借款
+		MONEY -= HENSAI
+		FLAG:返済延滞回数 = 0
+		FLAG:地主貸付金 -= HENSAI
+		IF !FLAG:地主貸付金
+			IF FLAG:農民難易度 == 1
+				PRINTFORML %CALLNAME:MASTER%終於還清了債
+				PRINTFORML %NAME_地主%也一起感到高興
+			ELSE
+				PRINTFORML %CALLNAME:MASTER%還清了債
+				PRINTFORML ……雖然很快就被以其他的理由強行借了钱
+			ENDIF
+		ELSE
+			PRINTFORML 剩下的借款還有\\{FLAG:地主貸付金}……
+		ENDIF
+		$KANRYOU
+		PRINTFORML 
+		IF FLAG:農民難易度 == 1
+			PRINTDATAL
+				DATAFORM 在%NAME_地主%的関照下越説越投機
+				DATAFORM %NAME_地主%津津有味的聽着田地工作的報告
+				DATAFORM %NAME_地主%有些擔心是不是有感到困擾的事
+				DATAFORM 一辺吃着%NAME_地主%帯来的点心一辺暢談
+				DATAFORM %NAME_地主%認真傾聽着農田改造的請求
+				DATAFORM %NAME_地主%用温和的視線看着這辺
+				DATAFORM %NAME_地主%的笑容很耀眼
+			ENDDATA
+		ELSE
+			PRINTDATAL
+				DATAFORM %NAME_地主%只有找到空隙就向着%CALLNAME:MASTER%強行推銷
+				DATAFORM %NAME_地主%敷衍的聽着田地工作的報告
+				DATAFORM %NAME_地主%在尋找着有沒有為錢所困的人
+				DATAFORM %NAME_地主%以改善農田為名建議投資設備……沒有那些錢
+				DATAFORM %NAME_地主%的視線里可以察覚到不好的気息
+				DATAFORM %NAME_地主%的笑容裏好像藏着什麼
+				DATAFORM %NAME_地主%的笑容不知爲何看着心裏発慫
+			ENDDATA
+		ENDIF
+	ENDSELECT
+	BREAK
+LOOP 1
+
+IF FLAG:返済延滞回数
+	LOCAL = POWER(FLAG:返済延滞回数, FLAG:農民難易度 + 1)
+	LOCAL = MIN(LOCAL, CFLAG:(FLAG:地主):信頼度)
+	IF LOCAL
+		PRINTFORMW %CALLNAME:(FLAG:地主)%対你抱着不信任感
+		CFLAG:(FLAG:地主):信頼度 -= LOCAL
+	ENDIF
+ENDIF
+
+
+
+;なんだかんだ理由つけて差っ引かれる
+;標準レート400で金利・返済延滞によるペナルティを除くと
+;ハードコアで1万、エクストリームで3万の経費が毎月発生する
+@COST_NOUMIN
+#LOCALSIZE 9
+#LOCALSSIZE 9
+#DIMS NAME_地主
+#DIMS PREV_地主
+#DIM COST_RATE
+#DIM LCOUNT
+NAME_地主 = %CALLNAME:(FLAG:地主)%
+COST_RATE = TOINT(STR_NOUMIN(NAME_地主, "報酬"))
+LOCAL:0 = 0
+LOCAL:8 = 0
+PRINTFORML 根據本月份的如下各種経費追加了借款
+
+
+;金利計算
+;ハードコアなら年始借入金準拠で年利計算
+;エクストリームだと年始借入金・今月借入金のうち大きい方で月利計算
+IF FLAG:地主貸付金 < 10000000
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:1 = FLAG:年始貸付金 * TOINT(STR_NOUMIN(NAME_地主, "金利")) / 1200
+	CASE 3
+		LOCAL:1 = MAX(FLAG:地主貸付金, FLAG:年始貸付金) * TOINT(STR_NOUMIN(NAME_地主, "金利")) / 100
+	ENDSELECT
+ENDIF
+
+SELECTCASE FLAG:農民難易度
+CASE 2
+	LOCAL:2 = FLAG:返済延滞回数 * COST_RATE
+CASE 3
+	LOCAL:2 = FLAG:返済延滞回数 * COST_RATE * 10
+ENDSELECT
+
+;固定値が大半なんで毎回再計算する必要はあまりない
+;地主の切り替わり（と、再起動）のタイミングで判定するように
+IF NAME_地主 != PREV_地主
+	LOCALS:0 = 経費総額
+	LOCALS:1 = 利子
+	LOCALS:2 = 返済延滞費
+	LOCALS:3 = 農具利用費
+	LOCALS:8 = 借入金総額
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:3 = COST_RATE * 5
+	CASE 3
+		LOCAL:3 = COST_RATE * 10
+	ENDSELECT
+
+	LOCALS:4 = 肥料購入費
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:4 = COST_RATE * 5
+	CASE 3
+		LOCAL:4 = COST_RATE * 10
+	ENDSELECT
+
+	LOCALS:5 = 作物出荷費
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:5 = COST_RATE * 5
+	CASE 3
+		LOCAL:5 = COST_RATE * 15
+	ENDSELECT
+
+	LOCALS:6 = 水場利用費
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:6 = COST_RATE * 5
+	CASE 3
+		LOCAL:6 = COST_RATE * 20
+	ENDSELECT
+
+	IF STR_NOUMIN(NAME_地主, "作物") == "生糸"
+		LOCALS:7 = 次期卵費
+	ELSE
+		LOCALS:7 = 次期種籾費
+	ENDIF
+	
+	SELECTCASE FLAG:農民難易度
+	CASE 2
+		LOCAL:7 = COST_RATE * 5
+	CASE 3
+		LOCAL:7 = COST_RATE * 20
+	ENDSELECT
+	PREV_地主 = %NAME_地主%
+ENDIF
+
+LOCAL:0 = SUMARRAY(LOCAL)
+LOCAL:8 = LIMIT(FLAG:地主貸付金 + LOCAL:0,  0, 10000000)
+FLAG:地主貸付金 = LOCAL:8
+PRINTFORML ――――――――――――――――――――――――――――――――
+PRINTFORML 　諸経費
+PRINTFORML ――――――――――――――――――――――――――――――――
+FOR LCOUNT, 1, 8
+	SIF LOCAL:LCOUNT
+		PRINTFORML 　　%LOCALS:LCOUNT, 12%｜　　　\\%TOSTR(LOCAL:LCOUNT, "#,###"),20%
+NEXT
+PRINTFORML ――――――――｜―――――――――――――――――――――――
+PRINTFORML 　　%LOCALS:0, 12%｜　　　\\%TOSTR(LOCAL:0, "#,###"),20%
+PRINTFORML ――――――――｜―――――――――――――――――――――――
+PRINTFORM 　　%LOCALS:8, 12%｜　　　\\%TOSTR(LOCAL:8, "#,###"),20%
+IF FLAG:地主貸付金 == 10000000
+	PRINTFORML 　！　上限　！
+ELSE
+	PRINTFORML 
+ENDIF
+PRINTFORML ――――――――――――――――――――――――――――――――
+

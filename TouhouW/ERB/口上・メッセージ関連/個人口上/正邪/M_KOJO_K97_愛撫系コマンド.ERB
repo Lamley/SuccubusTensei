@@ -1,0 +1,1617 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;愛撫系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;0,愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_0
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_0_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_0_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の全身を愛撫した。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…あっ…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入中
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	;V挿入
+	IF LOCAL:1 && TEQUIP:50 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の全身を愛撫した。
+			RETURN 1
+		ENDIF
+		;射精した
+		IF NOWEX:PLAYER:11
+			IF RAND:3 == 0
+				PRINTFORMW 「あ…ん…」
+				PRINTFORMW 「…出すのか？」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ふぅ…んあ…」
+				PRINTFORMW 「…そんなに…興奮して…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…っく…」
+				PRINTFORMW 「んあ…激し…」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「あ…んあ…」
+				PRINTFORMW 「…くっ…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「ん…っ…」
+				PRINTFORMW 「…あ…っく…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…ん…」
+				PRINTFORMW 「ふあ…あ…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	;A挿入
+	ELSEIF LOCAL:1 && TEQUIP:51 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の全身を愛撫した。
+			RETURN 1
+		ENDIF
+		;射精した
+		IF NOWEX:PLAYER:11
+			IF RAND:3 == 0
+				PRINTFORMW 「あっ…ん…」
+				PRINTFORMW 「…くっ…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「んあ…くぅ…」
+				PRINTFORMW 「…ふぁ…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…っあ…」
+				PRINTFORMW 「ん…」
+				RETURN 1
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW 「っあ…」
+				PRINTFORMW 「…ん…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「っつ…」
+				PRINTFORMW 「…んあ…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…あ…」
+				PRINTFORMW 「…っ…」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;Futanari
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && (TALENT:2 & 3) == 3
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の全身を愛撫した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ふぁ…」
+			PRINTFORMW 「あ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あっ…」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「くっ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んく…あ…」
+			PRINTFORMW 「…あっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「っく…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…んあ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…くっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;1,舐陰
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_1_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の秘部を口で犯した。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「んあ…そこ…」
+			PRINTFORMW 「…変態…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;膣内射精直後
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の秘部を口で犯した。
+			RETURN 1
+		ENDIF
+		IF TCVAR:102
+			IF RAND:3 == 0
+				PRINTFORMW 「汚いだろ…そこ…」
+				PRINTFORMW 「…ん…」
+				RETURN 1
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 「あ…」
+				PRINTFORMW 「…お前それ…」
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…私はいいけどさ…」
+				PRINTFORMW 「って…んあ…！」
+				RETURN 1
+			ENDIF
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;絶頂した
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && NOWEX:Ｃ絶頂
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の秘部を口で犯した。
+			RETURN 1
+		ENDIF
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あっ…！」
+			PRINTFORMW 「くっ…ふぅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…んあ…」
+			PRINTFORMW 「くっ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の秘部を口で犯した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…くっ…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…くっ！」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…んあ…」
+			PRINTFORMW 「ふあっ…ん…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…」
+			PRINTFORMW 「…あ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「んくっ…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…あっ…っく…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ふあ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「んく…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;あとは適当な分岐を追加してください
+;==================================================
+;2,舐陰茎
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_2_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 0
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 0
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 0
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;3,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_3_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の秘部を指で犯した。
+			RETURN 1
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 「ひあっ！？」
+			PRINTFORMW 「…お、お前…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…指…」
+			PRINTFORMW 「…あ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ん…指…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の秘部を指で犯した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ふっ…」
+			PRINTFORMW 「…あ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「くっ…」
+			PRINTFORMW 「…んあ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ふぅ…」
+			PRINTFORMW 「く…ん…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…ふっ…ん…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…ん…くっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…ん…」
+			PRINTFORMW 「ふあ…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…くっ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふぅ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ふあ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;4,舐肛
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_4_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪のアナルを口で犯し始めた。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「んお！？」
+			PRINTFORMW 「…いや…私にそういう趣味は…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪のアナルを口で犯し始めた。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んはっ！？」
+			PRINTFORMW 「…この…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…！？」
+			PRINTFORMW 「…もう…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あひっ！？」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「うあ…ん…」
+			PRINTFORMW 「…これ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ふぁ…」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…これ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「…この…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「んあ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;5,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_5_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪のアナルを愛撫した。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん！？」
+			PRINTFORMW 「そこは…あんまり…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪のアナルを愛撫した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…ひんっ！？」
+			PRINTFORMW 「…あ…これ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…くっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「くっ…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「くっ…ん…」
+			PRINTFORMW 「…あっ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…」
+			PRINTFORMW 「…これ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…っく…」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「あっ…ふぅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…これ…いい…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「あっ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;6,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_6
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_6_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の胸を優しく愛撫した。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「んあ！？」
+			PRINTFORMW 「…こんなので…くっ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の胸を優しく愛撫した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「うあ…」
+			PRINTFORMW 「…あんまり面白いものでもないだろ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「こういうの、好きか…ん」
+			PRINTFORMW 「…優しくしてくれ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ、ん…」
+			PRINTFORMW 「結構…これ…ん…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あっ…」
+			PRINTFORMW 「…全く…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「うお！？」
+			PRINTFORMW 「…この…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あんっ…」
+			PRINTFORMW 「もう…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「…あんまり…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…これ…」
+			PRINTFORMW 「…全く…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…ん…」
+			PRINTFORMW 「全く…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;7,玩弄乳頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_7
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_7_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 凍てついた時の中で正邪の乳首を犯した。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん…これ…」
+			PRINTFORMW 「…結構…あっ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の乳首を犯した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…くっ…」
+			PRINTFORMW 「…ひっ…あっ…んあ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…くっ…ひっ…」
+			PRINTFORMW 「…そこ…駄目だって…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…これ…」
+			PRINTFORMW 「んひっ…！？」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…これ…いいっ…！？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「駄目…だって…ん…」
+			PRINTFORMW 「…それ…んはっ！？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…これ…あ…」
+			PRINTFORMW 「んあっ…これ…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うっ…ん…」
+			PRINTFORMW 「…これ…あっ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んお！？」
+			PRINTFORMW 「…これ…あっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あっ…」
+			PRINTFORMW 「んっ…はっ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;8,張開陰唇
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_8_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW
+				RETURN 1
+			ELSE
+				PRINTFORMW 「ん…どうした？」
+				PRINTFORMW 「…挿れたいんだろ？」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ほら、どうした？」
+			PRINTFORMW 「興奮するんだろ？こういうの」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「どうした？挿れないのか？」
+			PRINTFORMW 「あまり焦らすんじゃないよ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ん、こんな感じか？」
+			PRINTFORMW 「どうした？ザーメンぶちまけたいんだろ？」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ん？どうした？」
+			PRINTFORMW 「…早くチンポ挿入してくれよ」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ほら、中に出したいんだろ？」
+			PRINTFORMW 「…どうした？しないのか？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ？」
+			PRINTFORMW 「構わないけどさ」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「こういうのでいいのか？」
+			PRINTFORMW 「見てるだけじゃつまらないだろ、ほら、挿れな」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん？どうした？」
+			PRINTFORMW 「…挿れるんだろ？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ほら」
+			PRINTFORMW 「したいんだろう？」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;9,自慰
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_9_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「自慰しろって…」
+		PRINTFORMW 「…分かった…」
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…ふぅ…」
+			PRINTFORMW 「…う…あっ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…ん…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…くっ…」
+			PRINTFORMW 「ふぅ…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…あ…くんっ！？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「これ…ふぅ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ふぅ…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…くぅ…」
+			PRINTFORMW 「…あっ…あっ…ん…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…ん…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「ふぅ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPSTART]
+;別コマンド化
+;==================================================
+;10,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_10_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 0
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 0
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 0
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;11,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_11_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪の乳首を吸った。
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…いいけど」
+				PRINTFORMW 「噛むなよ」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の乳首を吸った。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:母乳体質
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「…いっぱい飲めよ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…これ…ん…」
+			PRINTFORMW 「…ほら、飲めばいいだろ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…んあ…ふぅ…」
+			PRINTFORMW 「赤ちゃんみてぇだな、お前」
+			RETURN 1
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…こういうの…ん…」
+			PRINTFORMW 「…舌頭霊活すぎだろ…ん…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…出ないって言ってるんだがね」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…全く…ん…」
+			PRINTFORMW 「お前はとんだ変態だな」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…こういうの、好きなのか？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…んっ…」
+			PRINTFORMW 「…強く吸い過ぎだ…馬鹿…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「そんなに吸っても出ないって…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あ…」
+			PRINTFORMW 「…変態」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ…ふぅ…」
+			PRINTFORMW 「…甘えん坊だな」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…ん…」
+			PRINTFORMW 「…出ねぇぞ」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;12,胸もみ
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_12
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_12_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_12_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪の胸を揉み始めた。
+				RETURN 1
+			ELSE
+				PRINTFORMW 「ん…揉むなって…」
+				PRINTFORMW 「…あんまり面白くもないだろう」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の胸を揉み始めた。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「これ、楽しいか？」
+			PRINTFORMW 「…ん…全く…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ん…これ…」
+			PRINTFORMW 「…あまり揉むなって…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…ん…」
+			PRINTFORMW 「これ…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「全く…ん…」
+			PRINTFORMW 「…ひんっ！？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「んあ！？」
+			PRINTFORMW 「…いきなり揉むなって…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…これ…ん…」
+			PRINTFORMW 「胸…ん…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「うん！？」
+			PRINTFORMW 「…あ…ん…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「これ…あ…」
+			PRINTFORMW 「…ん…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…全く…」
+			PRINTFORMW 「ん…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;13,張開肛門
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_13_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…ん」
+				PRINTFORMW 「どうした？気持ちよくなりたいんだろう？」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ほら、お前の好きなアナルだぞ」
+			PRINTFORMW 「…とっとと尻掘りなって」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「へぇ…アナル好きなんだ」
+			PRINTFORMW 「…どうした？挿れたいんだろ？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…こういうの好きか？」
+			PRINTFORMW 「変態だな、さっさと挿入すれば？」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「どうした？挿れないのか？」
+			PRINTFORMW 「…尻孕ませるぐらい出したいんだろ？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ふん…アナルねぇ」
+			PRINTFORMW 「…どうした？早く挿れれば？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「ほら、さっさと挿れればいいだろう？」
+			PRINTFORMW 「拡げてやってるんだから早く挿れろや」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「ほら、これで満足か？」
+			PRINTFORMW 「…気持ちよくなりたいんだろう？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ほれ、どうだ？」
+			PRINTFORMW 「…お前、こういうの好きだろ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「これでいいのか？」
+			PRINTFORMW 「…お前の趣味はよくわからん」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;ソフト系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;20,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_20
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_20_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_20_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 凍てついた時の中で正邪の唇を犯した。
+				RETURN 1
+			ELSE
+				PRINTFORMW 「…ん…ちゅ…」
+				PRINTFORMW 「あ…」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 凍てついた時の中で正邪の唇を犯した。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…ちゅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ちゅ…」
+			PRINTFORMW 「…あ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…んあ…」
+			PRINTFORMW 「ちゅ…」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…ふぅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…ちゅっ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「ちゅ…」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「あ…ん…」
+			PRINTFORMW 「…ちゅ…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ちゅ…」
+			PRINTFORMW 「…ん…これでいいのか？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…ん…」
+			PRINTFORMW 「…ちゅ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+
+;==================================================
+;21,什麼也不做
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_21
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_21_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_21_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+			;時姦中
+			IF FLAG:70
+				PRINTFORMW 
+				RETURN 1
+			ELSE
+				PRINTFORMW 「？」
+				PRINTFORMW 「…どうかしたのか？」
+				RETURN 1
+			ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「…どうしたんだ急に」
+			PRINTFORMW 「まぁいいが」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…疲れたのか？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 「小休止か？」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「飽きたのか？」
+			PRINTFORMW 「…割合中途半端だな」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…どうした？」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…あ…」
+			PRINTFORMW 「休憩か？」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「どうした？」
+			PRINTFORMW 「…EDか？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「…あんまり焦らすなよ…」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…おい…」
+			PRINTFORMW 「少しはさぁ…」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;22,承受誘惑
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_22
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_22_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_22_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「…ほう、責められたいと？」
+		PRINTFORMW 「いいよ、やってやる」
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「さぁて、何してやろうか」
+			PRINTFORMW 「…こういうの、好きなんだろう？」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「分かった」
+			PRINTFORMW 「…まぁ好きにさせてもらうよ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…そう誘惑されるとな」
+			PRINTFORMW 「私も、本気を出したくなってくるんだよ」
+			RETURN 1
+		ENDIF
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…分かった」
+			PRINTFORMW 「…大人しくしてろよ」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「へぇ…受けたいって？」
+			PRINTFORMW 「…覚悟しとけよ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…いいけどさ」
+			PRINTFORMW 「言われて責めるってのもねぇ」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「んー分かった」
+			PRINTFORMW 「…でもこういうの楽しくはないな」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「構わないけどさ」
+			PRINTFORMW 「…あんまり言われて動くってのもねぇ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…命令するなって」
+			PRINTFORMW 「してやるからさ」
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;23,枕辺話
+;==================================================
+@M_KOJO_MESSAGE_COM_K97_23
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K97_23_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K97_23_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「…ん…」
+		PRINTFORMW 「どうした？」
+		RETURN 1
+	ENDIF
+	;失敗
+	IF TFLAG:193
+		IF RAND:3 == 0
+			PRINTFORMW 「………」
+			PRINTFORMW 正邪は白けた顔をしている。
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「………はぁ…」
+			PRINTFORMW 正邪は白けた顔をしている。
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…そう…」
+			PRINTFORMW 正邪は白けた顔をしている。
+			RETURN 1
+		ENDIF
+	;恋慕
+	ELSEIF TALENT:恋慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ん…あまり変なこと言うなって…」
+			PRINTFORMW 「…照れるじゃないか」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「…面白いな、お前」
+			PRINTFORMW 「褒めても何も出ないぞ」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…分かった」
+			PRINTFORMW 「イカせてやるよ」
+			RETURN 1
+		ENDIF
+	;思慕
+	ELSEIF TALENT:思慕
+		IF RAND:3 == 0
+			PRINTFORMW 「ふーん」
+			PRINTFORMW 「…そう、か」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「いや、ねぇ…」
+			PRINTFORMW 「…話うまいな、お前」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…口達者なことで」
+			PRINTFORMW 「悪い気はしないけどな」
+			RETURN 1
+		ENDIF
+	;それ以外
+	ELSE
+		IF RAND:3 == 0
+			PRINTFORMW 「…」
+			PRINTFORMW 「そう…」
+			RETURN 1
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 「ん…」
+			PRINTFORMW 「…こういうの、いいな」
+			RETURN 1
+		ELSE
+			PRINTFORMW 「…」
+			PRINTFORMW 正邪は顔を赤らめている。
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+RETURN 1

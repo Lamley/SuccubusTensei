@@ -1,0 +1,74 @@
+﻿;-------------------------------------------------
+;買薬
+;-------------------------------------------------
+@COM424
+#DIM ボッタクリ
+DRAWLINE
+CALL LIST_ITEM("うさぎ薬品")
+DRAWLINE
+PRINTFORML 請选択要购买的道具 所持金:\\%TOSTR(MONEY,"#,###")%
+PRINTL
+VARSET LOCALS
+CALL EX_SHOPPING("瓶装润滑乳液","装有润滑乳液的大瓶子。大概能用5次的样子。",0,1000)
+CALL EX_SHOPPING("避孕套优惠包","内有50個。",1,1000)
+CALL EX_SHOPPING("口服避孕薬（内有5片）","明郎的家族計画",2,5000)
+CALL EX_SHOPPING("催情薬","更容易催生好感",250)
+CALL EX_SHOPPING("睡眠薬","悪用はダメですよ？",252)
+CALL EX_SHOPPING("栄養饮料","含有1000mg牛磺酸",501)
+CALL EX_SHOPPING("精力剤","肮脏的有钱人专用",502)
+CALL EX_SHOPPING("姜黄饮料","在飲酒前服用",510)
+CALL EX_SHOPPING("绷帯","在受伤或想隠藏的地方卷起来吧",520)
+SIF TARGET == 53 && !ITEM:130
+	CALL EX_SHOPPING("兎符「開運大紋」","会発生十分幸运的色情事件",130)
+DRAWLINE
+PRINTL [100] 中止
+INPUT
+SELECTCASE RESULT
+	CASE 0
+		CALL BUY_ABLE(40,1000,5)
+	CASE 1
+		CALL BUY_ABLE(45,1000,50)
+	CASE 2
+		CALL BUY_ABLE(49,5000,5)
+	CASE 130
+		SIF TARGET == 53 && !ITEM:130
+			CALL BOTTAKURI
+	;まとめ買い関数でお買い上げ
+	;これらの道具は特に割引はないので@BUY_ABLEを使用する必然性が無い
+	CASE 250, 252, 501, 502, 510, 520
+		SELECTCASE ITEMSTOCK(RESULT)
+		CASE 1, 4
+		CASE 2
+			PRINTW 卖完了
+		CASE 3
+			PRINTW 所持金不足
+		CASE 5
+			PRINTW 已経有足够的了
+		CASEELSE
+			CALL ITEM_MATOMEGAI(RESULT)
+		ENDSELECT
+	CASE 100
+		RETURN -1
+	CASEELSE
+ENDSELECT
+RESTART
+
+;買薬
+@COM_ABLE424
+;ひとまず停止
+RETURN 0
+;停止中は不可
+SIF FLAG:70 == 1
+	RETURN 0
+;移動実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(424)
+	RETURN RESULT
+SIF CFLAG:MASTER:現在位置 != CFLAG:52:現在位置 && CFLAG:MASTER:現在位置 != CFLAG:53:現在位置
+	RETURN 0
+SIF CFLAG:うふふ == 2
+	RETURN 0
+RETURN 1
+

@@ -1,0 +1,122 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	博麗神社MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_0(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS HAKUNAME,25 = "鳥居","境内","賽銭箱","本堂","手水舎","庫房","起居室","廚房","居間","走廊","庭","脱衣所","浴室","廁所","霊夢私室","破旧小屋","小的儲藏室","壁櫥間","大的儲藏室","本殿内部","守矢神社分社","参道","温泉・脱衣所","温泉","鎮守之森"
+#DIMS FAIRYNAME, 11 = "三妖精之家・入口","三妖精之家・一階通路","三妖精之家・樓梯","三妖精之家・廚房","三妖精之家・浴室","三妖精之家・二階廊下","桑尼私室","露娜私室","斯塔私室","三妖精之家・地下室"
+#DIMS MUGENNAME, 16 = "夢幻遺跡前","夢幻遺跡・一階通路","夢幻遺跡・洗面所","夢幻遺跡・浴室","夢幻遺跡・廁所","夢幻遺跡・食堂兼談話室","夢幻遺跡・調理室","夢美私室","千百合私室","夢幻遺跡・樓梯","夢幻遺跡・二階通路","夢幻遺跡・艦橋","夢幻遺跡・第一資料室","夢幻遺跡・研究室","夢幻遺跡・第二資料室","夢幻遺跡・倉庫"
+#DIMS NEWHAKU, 4 = "出口","倉庫","小人的虫籠","和室"
+SIF FLAG:15
+	HAKUNAME:15 = %CALLNAME:(FLAG:15)%的小屋
+SIF FLAG:16
+	NEWHAKU:3 = %CALLNAME:(FLAG:16)%私室
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 25
+			RETURNF HAKUNAME:(PLACEID - 1)
+		CASE 26 TO 35
+			RETURNF FAIRYNAME:(PLACEID - 26)
+		CASE 36 TO 51
+			RETURNF MUGENNAME:(PLACEID - 36)
+		CASE 52
+			RETURNF "出口"
+		CASE 53 TO 55
+			RETURNF NEWHAKU:(PLACEID - 52)
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "隙間空間"
+		CASEELSE
+			RETURNF "参道正前方"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_0(AA)
+#DIMS REF AA, 0
+IF !TFLAG:マップ切り替え
+	SELECTCASE CFLAG:MASTER:現在位置
+		CASE 26 TO 35
+			TFLAG:マップ切り替え = 3
+		CASE 36 TO 51
+			TFLAG:マップ切り替え = 2
+		CASE 22 TO 25
+			TFLAG:マップ切り替え = 4
+		CASEELSE
+			TFLAG:マップ切り替え = 1
+	ENDSELECT
+ENDIF
+CALL DRAW_INFORMATIONLINE(@"%MAPNAME:(TFLAG:マップ切り替え)%")
+PRINTFORML 
+TRYCALLFORM MAP_AA_HAKUREI_{TFLAG:マップ切り替え}(AA)
+
+@MAP_CAN_MOVE_0(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	CASE IS >= 53
+		;虫かご
+		IF ARG == 54
+			;小人じゃないと入れない
+			IF TALENT:(ARG:1):体型 > -5
+				TFLAG:移動不能メッセージ = 4
+				RETURNF 0
+			ENDIF
+		ENDIF
+	;三月精ハウス
+	CASE 26 TO 35
+		;妖精なら入れる
+		IF TALENT:(ARG:1):妖精
+			RETURNF 1
+		;主人公は恋慕か教養LV1以上で入れる
+		ELSEIF ARG:1 == MASTER
+			IF TALENT:5:恋慕 || TALENT:6:恋慕 || TALENT:7:恋慕 || ABL:(ARG:1):教養 >= 1
+				RETURNF 1
+			ELSEIF INRANGE(CFLAG:MASTER:初期位置,25,35)
+				RETURNF 1
+			ELSE
+				TFLAG:移動不能メッセージ = 2
+				RETURNF 0
+			ENDIF
+		;それ以外は入れない
+		ELSE
+			RETURNF 0
+		ENDIF
+	;無限遺跡・一階通路,ここだけ教養LV3が必要（主人公以外）
+	CASE 37
+		IF ABL:(ARG:1):教養 <= 2 && ARG:1 != MASTER
+			RETURNF 0
+		ELSE
+			RETURNF 1
+		ENDIF
+	CASEELSE
+		;施錠中は動けない
+		IF FLAG:倉庫施錠
+			TFLAG:移動不能メッセージ = 1
+			RETURNF 0
+		ENDIF
+		RETURNF 1
+ENDSELECT
+RETURNF 1
+
+@MAP_CANNOT_WORD_0(ARG)
+SELECTCASE TFLAG:移動不能メッセージ
+	CASE 4
+		PRINTFORMW %CALLNAME:MASTER%無論如何也進不去
+	CASE 3
+		PRINTW 還不能走
+	CASE 2
+		PRINTFORMW 未熟的%CALLNAME:MASTER%不能被発現…
+	CASE 1
+		PRINTFORMW 不用鑰匙的話打不開
+	CASEELSE
+		RETURN
+ENDSELECT
+CLEARLINE 2
+REUSELASTLINE 
+RETURN

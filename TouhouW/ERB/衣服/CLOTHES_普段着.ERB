@@ -1,0 +1,1095 @@
+﻿;------------------------------------
+;普段着SETTING
+;------------------------------------
+@CLOTHES_SETTING(ARG)
+;初期化
+FOR LOCAL,0,23
+	EQUIP:ARG:LOCAL = 0
+NEXT
+
+EQUIP:ARG:0 = 1
+SELECTCASE CFLAG:ARG:基本服装セット
+	;全裸
+	CASE 0
+	;男装
+	CASE 1
+		CALL 男装セット(ARG)
+	;女装
+	CASE 2
+		CALL 女装セット(ARG)
+	;執事
+	CASE 3
+		CALL 執事セット(ARG)
+	;女中
+	CASE 4
+		CALL 女中セット(ARG)
+	;神官白衣
+	CASE 5
+		CALL 神官セット(ARG)
+	CASE 6
+		CALL 作務衣セット(ARG)
+	CASE 7
+		CALL 着流しセット(ARG)
+	CASE 8
+		CALL 道着セット(ARG)
+	CASE 9
+		CALL 書生セット(ARG)
+	CASE 10
+		CALL 女学生セット(ARG)
+	;50以降はcosplay佈景
+	CASE 50
+		CALL 保健室の女教師セット(ARG)
+	CASE 51
+		CALL メイドさんセット(ARG)
+	CASE 52
+		CALL 比基尼セット(ARG)
+	CASE 53
+		CALL 微型比基尼セット(ARG)
+	CASE 54
+		CALL 兜襠布漢女セット(ARG)
+	CASE 55
+		CALL バニーガールセット(ARG)
+	CASE 56
+		CALL 白衣の天使セット(ARG)
+	CASE 57
+		CALL 聖誕服セット(ARG)
+	CASE 58
+		CALL テニスウェアセット(ARG)
+	CASE 59
+		CALL はだか襯衫セット(ARG)
+	CASE 60
+		CALL 鴨舌帽文セット(ARG)
+	CASE 61
+		CALL ニンジャセット(ARG)
+	CASE 62
+		CALL 烏冬面薬売りセット(ARG)
+	CASE 63
+		CALL 猯藏和装セット(ARG)
+	;霊夢
+	CASE 101
+		EQUIP:ARG:飾品 = 2
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 5
+	;留琴
+	CASE 102
+		EQUIP:ARG:帽子 = 4
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+	;喀娜
+	CASE 103
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+	;魅魔
+	CASE 104
+		EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;桑尼、露娜チャ、斯塔白黒百合、みすちー、琶秋莉
+	CASE 105,106,107,118,119,128,154
+		EQUIP:ARG:帽子 = 1
+		SIF ARG == 5
+			EQUIP:ARG:帽子 = 4
+		SIF ARG == 7
+			EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF ARG == 28
+			EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		SIF ARG == 5 || ARG == 6 || ARG == 7
+			EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:連衣裙 = 1
+	;千百合、莉格露、里香
+	CASE 108,127,147
+		EQUIP:ARG:外衣 = 2
+		SIF ARG == 8 || ARG == 47
+			EQUIP:ARG:外衣 = 0
+		SIF ARG == 8
+			EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:袴子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		SIF ARG == 8
+			EQUIP:ARG:上半身上衣２ = 0
+		SIF ARG == 8
+			EQUIP:ARG:上半身上衣１ = 2
+	;教授
+	CASE 109
+		;IF ARG == 145
+			;EQUIP:ARG:1 = 1
+			;EQUIP:ARG:上半身上衣１ = 1
+		;ENDIF
+		SIF DAY:2 == 1
+			EQUIP:ARG:外衣 = 1
+		SIF DAY:2 == 3
+			EQUIP:ARG:外衣 = 2
+		SIF DAY:2 == 4
+			EQUIP:ARG:外衣 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;萃香
+	CASE 110
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 2
+	;咲夜
+	CASE 115
+		EQUIP:ARG:帽子 = 4
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 4
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+		EQUIP:ARG:其他１ = 24
+	;藍
+	CASE 125
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 6
+	;紫
+	CASE 126
+		EQUIP:ARG:飾品 = 6
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 4
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 7
+		SIF DAY:2 == 1
+			EQUIP:ARG:連衣裙 = 6
+	;天子
+	CASE 134
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 29
+	;恋
+	CASE 138
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;魔理沙
+	CASE 111
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 4
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		SIF ARG == 12
+			EQUIP:ARG:上半身内袴１ = 4
+		SIF ARG == 33
+			EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;るみゃ
+	CASE 112
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		SIF ARG == 12
+			EQUIP:ARG:上半身内袴１ = 4
+		SIF ARG == 33
+			EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;諏訪子
+	CASE 133
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		SIF ARG == 12
+			EQUIP:ARG:上半身内袴１ = 4
+		SIF ARG == 33
+			EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;大ちゃん、阿燐
+	CASE 113,136
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		SIF ARG == 113
+			EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:連衣裙 = 1
+	;琪露諾、帝
+	CASE 114,153
+		EQUIP:ARG:帽子 = 3
+		SIF ARG == 53
+			EQUIP:ARG:帽子 = 0
+		SIF ARG == 53
+			EQUIP:ARG:飾品 = 3
+		EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:連衣裙 = 1
+	;蕾米莉亜
+	CASE 116
+		EQUIP:ARG:飾品 = 6
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;愛麗絲
+	CASE 117
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		;年越し
+		IF (DAY:2 == 1 && DAY:3 == 1) || (DAY:2 == 4 && DAY:3 == 31) 
+			EQUIP:ARG:和服 = 2
+			EQUIP:ARG:帽子 = 5
+			EQUIP:ARG:靴 = 3
+			EQUIP:ARG:襪子 = 2
+			SIF FLAG:2 > 0
+				EQUIP:ARG:襪子 = 3
+		;普段着
+		ELSE
+			EQUIP:ARG:外衣 = 1
+			EQUIP:ARG:帽子 = 5
+			;EQUIP:ARG:靴 = 1
+			EQUIP:ARG:靴 = 3
+			EQUIP:ARG:襪子 = 2
+			SIF FLAG:2 > 0
+				EQUIP:ARG:襪子 = 3
+			EQUIP:ARG:上半身内袴１ = 1
+			EQUIP:ARG:連衣裙 = 1
+		ENDIF
+	;莉莉喀、梅露蘭、露娜薩、映姫様
+	CASE 120,121,122,130
+		EQUIP:ARG:帽子 = 1
+		SIF ARG == 23
+			EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		SIF ARG == 20 || ARG == 23
+			EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:外衣 = 9
+	;妖夢
+	CASE 123
+		EQUIP:ARG:帽子 = 5
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:外衣 = 9
+	;橙
+	CASE 124
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:連衣裙 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;あやや、極
+	CASE 129,142
+		EQUIP:ARG:帽子 = 15
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 5
+	;早苗
+	CASE 131
+		EQUIP:ARG:飾品 = 2
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		;EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 4
+	;神奈子
+	CASE 132
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 3
+		EQUIP:ARG:其他１ = 13
+	;衣玖
+	CASE 135
+		EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;阿空
+	CASE 137
+		EQUIP:ARG:外衣 = 2
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;納茲琳
+	CASE 139
+		EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;小傘
+	CASE 140
+		EQUIP:ARG:飾品 = 6
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;鵺
+	CASE 141
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 1
+	;華扇
+	CASE 143
+		EQUIP:ARG:帽子 = 12
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:連衣裙 = 4
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 15
+		EQUIP:ARG:其他２ = 10
+	;艾倫
+	CASE 144
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+	;理香子
+	CASE 145
+		EQUIP:ARG:飾品 = 1
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣１ = 3
+		EQUIP:ARG:上半身上衣２ = 1
+	;明羅
+	CASE 146
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:和服 = 1
+		EQUIP:ARG:袴子 = 4
+	;露易茲
+	CASE 148
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣１ = 2
+	;覚様
+	CASE 149
+		EQUIP:ARG:帽子 = 5
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;フランちゃん
+	CASE 150
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;荷取
+	CASE 151
+		EQUIP:ARG:飾品 = 5
+		EQUIP:ARG:帽子 = 10
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:其他１ = 12
+		IF DAY:2 == 2
+			EQUIP:ARG:袴子 = 7
+			EQUIP:ARG:上半身上衣２ = 7
+		ELSE
+			EQUIP:ARG:裙子 = 1
+			EQUIP:ARG:上半身上衣２ = 1
+		ENDIF
+	;鈴仙
+	CASE 152
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		;夏は西装上衣を脱ぐ
+		SIF DAY:2 != 2
+			EQUIP:ARG:上半身上衣１ = 4
+		EQUIP:ARG:其他１ = 5
+	;ひじりん
+	CASE 155
+		EQUIP:ARG:外衣 = 2
+		EQUIP:ARG:靴 = 3
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 4
+		EQUIP:ARG:上半身内袴１ = 9
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:連衣裙 = 9
+	;神子様
+	CASE 156
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 2
+	;心
+	CASE 157
+		EQUIP:ARG:帽子 = 6
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;美鈴
+	CASE 158
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:袴子 = 1
+		EQUIP:ARG:連衣裙 = 4
+	;こあ
+	CASE 159
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 5
+	;琶露西
+	CASE 160
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 3
+	;妹紅
+	CASE 161
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:其他２ = 22
+		IF DAY:2 == 2
+			IF GETBIT (CFLAG:61:1610,3)
+				EQUIP:ARG:袴子 = 8
+				EQUIP:ARG:上半身上衣２ = 9
+				EQUIP:ARG:其他１ = 21
+			ELSE
+				EQUIP:ARG:袴子 = 4
+				EQUIP:ARG:上半身上衣２ = 9
+				EQUIP:ARG:其他１ = 21
+			ENDIF
+		ELSE
+			EQUIP:ARG:袴子 = 8
+			EQUIP:ARG:上半身上衣２ = 1
+			EQUIP:ARG:其他１ = 21
+		ENDIF
+	;姫様
+	CASE 162
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 3
+	;影狼
+	CASE 163
+		EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:連衣裙 = 1
+	;勇儀
+	CASE 164
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 10
+	;椛
+	CASE 165
+		EQUIP:ARG:帽子 = 15
+		EQUIP:ARG:飾品 = 2
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 1
+	;幽幽子
+	CASE 166
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:和服 = 1
+	;慧音
+	CASE 167
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		IF DAY:2 == 2
+			EQUIP:ARG:袴子 = 1
+			EQUIP:ARG:上半身上衣２ = 9
+			EQUIP:ARG:其他１ = 5
+			EQUIP:ARG:其他２ = 8
+		ELSE
+			EQUIP:ARG:帽子 = 1
+			EQUIP:ARG:上半身上衣２ = 1
+			EQUIP:ARG:連衣裙 = 1
+		ENDIF
+	;幽香
+	CASE 168
+		EQUIP:ARG:飾品 = 6
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		SIF FLAG:2 > 0
+			EQUIP:ARG:襪子 = 4
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:外衣 = 9
+		EQUIP:ARG:其他１ = 19
+	;猯藏(神霊廟モード、和服は冬限定なので、今はオミット
+	CASE 169
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:飾品 = 1
+	;小鈴
+	CASE 170
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:裙子 = 4
+		EQUIP:ARG:和服 = 1
+		EQUIP:ARG:連衣裙 = 1
+	;針妙丸
+	CASE 171
+		EQUIP:ARG:帽子 = 11
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:和服 = 1
+		EQUIP:ARG:其他１ = 7
+	;永琳
+	CASE 172
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		;ノーブラは仕様？
+		;EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 24
+	;蛮奇
+	CASE 173
+		EQUIP:ARG:外衣 = 3
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:其他１ = 6
+	;蕾蒂
+	CASE 174
+		EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:帽子 = 14
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 1
+		EQUIP:ARG:外衣 = 9
+		EQUIP:ARG:其他１ = 6
+	;梅蒂欣
+	CASE 175
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;小町
+	CASE 176
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 2
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:和服 = 1
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;静葉
+	CASE 177
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =3
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;穣子
+	CASE 178
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 3
+	;雛
+	CASE 179
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 1
+	;阿求
+	CASE 180
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 4
+		EQUIP:ARG:和服 = 1
+	;蓮子
+	CASE 181
+		EQUIP:ARG:帽子 = 1
+		SIF DAY:2 == 1
+			EQUIP:ARG:外衣 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;梅莉
+	CASE 182
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 1
+	;琪斯美
+	CASE 183
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:和服 = 1
+	;山女
+	CASE 184
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:上半身上衣１ = 3
+		EQUIP:ARG:裙子 = 6
+	;一輪
+	CASE 185
+		EQUIP:ARG:帽子 = 7
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 5
+	;村紗
+	CASE 186
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:袴子 = 2
+		EQUIP:ARG:上半身上衣１ = 2
+	;星
+	CASE 187
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:連衣裙 = 5
+		EQUIP:ARG:上半身内袴１ =2
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:其他１ = 14
+	;響子
+	CASE 188
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =3
+		EQUIP:ARG:連衣裙 = 1
+		EQUIP:ARG:裙子 = 1
+	;芳香
+	CASE 189
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:飾品 = 4
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 3
+	;青蛾
+	CASE 190
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 1
+		EQUIP:ARG:上半身上衣１ = 1
+		EQUIP:ARG:外衣 = 9
+		EQUIP:ARG:其他１ = 14
+	;屠自古
+	CASE 191
+		EQUIP:ARG:帽子 = 8
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:連衣裙 = 1
+	;布都
+	CASE 192
+		EQUIP:ARG:帽子 = 8
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =2
+		EQUIP:ARG:連衣裙 = 6
+	;若鷺姫
+	CASE 193
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:和服 = 1
+	;弁弁
+	CASE 194
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:連衣裙 = 1
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;八橋
+	CASE 195
+		EQUIP:ARG:帽子 = 5
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 3
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;雷鼓
+	CASE 196
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 3
+		EQUIP:ARG:上半身上衣２ = 1
+	;正邪
+	CASE 197
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:連衣裙 = 1
+	;依姫
+	CASE 198
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1 
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 8
+		EQUIP:ARG:上半身上衣２ = 9
+		EQUIP:ARG:其他１ = 16
+		EQUIP:ARG:其他２ = 17
+	;豊姫
+	CASE 199
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1 
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１= 1
+		EQUIP:ARG:裙子 = 8
+		EQUIP:ARG:上半身上衣２ = 10
+		EQUIP:ARG:其他１ = 17
+	;鈴仙二号
+	CASE 200
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+		EQUIP:ARG:上半身上衣１ = 4
+		EQUIP:ARG:其他１ = 5
+	;朱鷺子
+	CASE 201
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1 
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１= 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;神綺
+	CASE 202
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1 
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１= 1
+		EQUIP:ARG:連衣裙 = 7
+	;夢子
+	CASE 203
+		EQUIP:ARG:帽子 = 4
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+	;雪
+	CASE 204
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ =1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;舞
+	CASE 205
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:連衣裙 = 1
+	;菫子
+	CASE 206
+		EQUIP:ARG:飾品 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;清蘭
+	CASE 207
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 1
+	;鈴瑚
+	CASE 208
+		EQUIP:ARG:帽子 = 10
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:上半身上衣２ = 17
+		EQUIP:ARG:袴子 = 11
+	;多来米
+	CASE 209
+		EQUIP:ARG:帽子 = 13
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 1
+	;探女
+	CASE 210
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣１ = 3
+		EQUIP:ARG:上半身上衣２ = 1
+	;克労恩皮絲
+	CASE 211
+		EQUIP:ARG:帽子 = 26
+		EQUIP:ARG:襪子 = 8
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 4
+		EQUIP:ARG:連衣裙 = 1
+	;純狐
+	CASE 212
+		EQUIP:ARG:帽子 = 25
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 =1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:和服 = 1
+	;へカーティア
+	CASE 213
+		EQUIP:ARG:飾品 = 8
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 1
+		EQUIP:ARG:上半身上衣２ = 17
+		EQUIP:ARG:其他１ = 3
+		EQUIP:ARG:其他２ = 8
+		EQUIP:ARG:其他３ = 31
+	;胡桃
+	CASE 214
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+	;艾麗
+	CASE 215
+		EQUIP:ARG:帽子 = 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 1
+	;夢月
+	CASE 216
+		EQUIP:ARG:帽子 = 4
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 2
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:連衣裙 = 3
+	;幻月
+	CASE 217
+		EQUIP:ARG:帽子 = 3
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:裙子 = 2
+		EQUIP:ARG:上半身上衣２ = 1
+
+ENDSELECT
+
+;ノーパン
+IF GETBIT(CFLAG:ARG:8,0)
+	EQUIP:ARG:下半身内袴１ = 0
+	EQUIP:ARG:下半身内袴２ = 0
+ENDIF
+;ノーブラ
+IF GETBIT(CFLAG:ARG:8,1)
+	EQUIP:ARG:上半身内袴１ = 0
+	EQUIP:ARG:上半身内袴２ = 0
+ENDIF
+;ノーパンフラグon
+SIF EQUIP:ARG:下半身内袴１ == 0 && EQUIP:ARG:下半身内袴２ == 0
+	CFLAG:ARG:291 = 2
+
+;リセット用に記録する
+FOR LOCAL,0,23
+	CFLAG:ARG:(200 + LOCAL) = EQUIP:ARG:LOCAL
+NEXT

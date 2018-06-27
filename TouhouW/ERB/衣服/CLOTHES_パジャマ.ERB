@@ -1,0 +1,192 @@
+﻿;------------------------------------
+;パジャマSETTING
+;------------------------------------
+@CLOTHES_SETTING_NIGHT(ARG)
+;初期化
+FOR LOCAL, 0, 23
+	EQUIP:ARG:LOCAL = 0
+NEXT
+
+EQUIP:ARG:0 = 1
+SELECTCASE CFLAG:ARG:7
+	;全裸
+	CASE 0
+	;男装
+	CASE 1
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 1
+		;男装
+		SIF TALENT:MASTER:2 & 1
+			EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:袴子 = 1
+		;漢女は裹胸をつける
+		SIF TALENT:MASTER:2 & 1
+			EQUIP:ARG:上半身内袴１ = 2
+		EQUIP:ARG:上半身上衣１ = 3
+	;女装
+	CASE 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:裙子 = 1
+		;男の娘は文胸を付けない
+		SIF TALENT:MASTER:2 & 1
+			EQUIP:ARG:上半身内袴１ = 1
+		EQUIP:ARG:上半身上衣２ = 1
+	;執事
+	;CASE 3
+	;給仕
+	CASE 4
+		EQUIP:ARG:帽子 = 2
+		EQUIP:ARG:靴 = 1
+		EQUIP:ARG:襪子 = 1
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:和服 = 1
+		;男の娘は文胸を付けない
+		SIF TALENT:MASTER:2 & 1
+			EQUIP:ARG:上半身内袴１ = 1
+	;道着,書生,女学生,ニンジャ（襦袢と下半身内袴のみ）
+	CASE 8,9,10,61
+		EQUIP:ARG:靴 = 2	;木屐
+		EQUIP:ARG:和服 = 3	;襦袢
+		;内袴関係は男女で分岐
+		IF TALENT:MASTER:2 == 1
+			EQUIP:ARG:下半身内袴１ = 0	;削除（念のため）
+			EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+			EQUIP:ARG:上半身内袴１ = 0	;削除（寝る時くらい裹胸は要らんでしょう）
+			EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+		ELSE
+			EQUIP:ARG:下半身内袴１ = 1	;兜襠布
+			EQUIP:ARG:下半身内袴２ = 0	;削除（念のため）
+			EQUIP:ARG:上半身内袴１ = 0	;削除（念のため）
+			EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+		ENDIF
+		EQUIP:ARG:靴 = 0	;削除（念のため）
+		EQUIP:ARG:襪子 = 0	;削除（念のため）
+		EQUIP:ARG:帽子 = 0	;削除（念のため）
+		EQUIP:ARG:飾品 = 0	;削除（念のため）
+		EQUIP:ARG:腕部装束 = 0	;削除（念のため）
+		EQUIP:ARG:連衣裙 = 0	;削除（念のため）
+		EQUIP:ARG:外衣 = 0	;削除（念のため）
+		EQUIP:ARG:其他１ = 0	;削除（念のため）
+		EQUIP:ARG:其他２ = 0	;削除（念のため）
+		EQUIP:ARG:其他３ = 0	;削除（念のため）
+		EQUIP:ARG:上半身上衣１ = 0	;削除（念のため）
+		EQUIP:ARG:上半身上衣２ = 0	;削除（念のため）
+		EQUIP:ARG:袴子 = 0	;削除（念のため）
+		EQUIP:ARG:裙子 = 0	;削除（念のため）
+		EQUIP:ARG:緊身内衣 = 0	;削除（念のため）
+		EQUIP:ARG:連体内衣 = 0	;削除（念のため）
+	CASE 59
+		CALL はだか襯衫セット(ARG)
+	;萃香、霊夢、妖夢、映姫、神奈子、明羅、ひじりん、影狼
+	CASE 110,101,123,130,132,146,155,163
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:和服 = 3
+	;魔理沙、阿燐、鵺、覚、神子様、艾倫
+	CASE 111,136,141,144,149,156
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:連衣裙 = 8
+	;愛麗絲
+	CASE 117
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		IF (DAY:2 == 1 && DAY:3 == 1) || (DAY:2 == 4 && DAY:3 == 31)
+			;年越し
+			EQUIP:ARG:和服 = 3
+		ELSEIF (RAND:2 == 0) || CFLAG:ARG:初期位置 == CFLAG:MASTER:初期位置
+			;同居中なら情趣内衣固定
+			EQUIP:ARG:連衣裙 = 2
+		ELSE
+			EQUIP:ARG:袴子 = 3
+			EQUIP:ARG:上半身上衣２ = 3
+		ENDIF
+	;早苗
+	CASE 131
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:袴子 = 3
+		EQUIP:ARG:上半身上衣２ = 3
+	;諏訪子、阿空、納茲琳、フランちゃん、心
+	CASE 133,137,139,150,157
+		EQUIP:ARG:帽子 = 7
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:袴子 = 3
+		EQUIP:ARG:上半身上衣２ = 3
+	;恋
+	CASE 138
+		IF !RAND:2
+			IF RAND:1000 == 514
+				;恋てゃんはものすごくたまに無意識でゼンラーウーマンになっちゃうよ
+			ELSE
+				;恋ちゃんはたまに無意識でパンツ一丁で寝ちゃうよ！
+				EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+			ENDIF
+		ELSE
+			EQUIP:ARG:帽子 = 7
+			EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+			EQUIP:ARG:袴子 = 3
+			EQUIP:ARG:上半身上衣２ = 3
+		ENDIF
+	;小傘
+	CASE 140
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+	;間に合わせ用
+	CASEELSE
+		EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+		EQUIP:ARG:袴子 = 3
+		EQUIP:ARG:上半身上衣２ = 3
+ENDSELECT
+
+;ノーパン
+IF GETBIT(CFLAG:ARG:8,0)
+	EQUIP:ARG:下半身内袴１ = 0
+	EQUIP:ARG:下半身内袴２ = 0
+ENDIF
+;ノーブラ
+IF GETBIT(CFLAG:ARG:8,1)
+	EQUIP:ARG:上半身内袴１ = 0
+	EQUIP:ARG:上半身内袴２ = 0
+ENDIF
+
+;リセット用に記録する
+FOR LOCAL, 0, 23
+	CFLAG:ARG:(240 + LOCAL) = EQUIP:ARG:LOCAL
+NEXT
+
+@CLOTHES_RESET(ARGS,ARG:1)
+SELECTCASE ARGS
+	CASE "NORMAL"
+		IF CFLAG:(ARG:1):623 == 0
+			FOR LOCAL, 1, 23
+				EQUIP:(ARG:1):LOCAL = CFLAG:(ARG:1):(200 + LOCAL)
+				SIF EQUIP:(ARG:1):LOCAL
+					EQUIP:(ARG:1):0 = 1
+			NEXT
+		ELSE
+			FOR LOCAL, 1, 23
+				EQUIP:(ARG:1):LOCAL = CFLAG:(ARG:1):(600 + LOCAL)
+				SIF EQUIP:(ARG:1):LOCAL
+					EQUIP:(ARG:1):0 = 1
+			NEXT
+			IF ARG:1 != MASTER
+				EQUIP:(ARG:1):下半身内袴１ = 0
+				EQUIP:(ARG:1):下半身内袴２ = 今日のぱんつ(ARG:1)
+			ENDIF
+		ENDIF
+	CASE "NIGHT"
+		FOR LOCAL, 1, 23
+			EQUIP:(ARG:1):LOCAL = CFLAG:(ARG:1):(240 + LOCAL)
+			SIF EQUIP:(ARG:1):LOCAL
+				EQUIP:(ARG:1):0 = 1
+		NEXT
+ENDSELECT
+;パンツフラグ
+SIF CFLAG:(ARG:1):291 > 0
+	EQUIP:(ARG:1):6 = 0
+;和室なら靴を脱ぐ
+SIF INROOM(CFLAG:(ARG:1):現在位置) == 1
+	CALL DATUI_SHOES((ARG:1),0)
+
+
+
+

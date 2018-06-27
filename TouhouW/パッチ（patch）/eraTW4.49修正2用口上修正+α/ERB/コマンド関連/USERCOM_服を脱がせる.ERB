@@ -1,0 +1,253 @@
+﻿@脱衣処理(C_ID, TYPE, OP)
+#DIM  C_ID ;対象となる登録番号
+#DIMS TYPE ;処理内容
+#DIMS OP   ;実行オプション
+SELECTCASE TYPE
+CASE "全裸"
+	IF !(C_ID == MASTER) && !STRCOUNT(OP, "「表示なし」")
+		PRINTFORMW %CALLNAME:TARGET%を全裸にした
+		CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 0, 0)
+	ENDIF
+	CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_全裸")
+	CALL CLOTHES_SETTING_TRAIN(C_ID)
+	RETURN 0
+CASE "くすねる"
+	TSTR:3 = %CALLNAME:TARGET%{EQUIP:TARGET:下半身下着２}/
+	CALL MESSAGE_脱衣下
+	PRINTFORMW %CALLNAME:TARGET%のはいていた%PANTSNAME(EQUIP:TARGET:下半身下着２)%を脱がして懐に入れた
+	CALL PANTS_GET(TARGET)
+	RETURN 0
+CASE "下着姿にする"
+	IF !(C_ID == MASTER) && !STRCOUNT(OP, "「表示なし」")
+		CALL MESSAGE_脱衣上
+		CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 1, 0)
+	ENDIF
+	CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_下着姿")
+	CALL CLOTHES_SETTING_TRAIN(C_ID)
+	;"現在衣装の変更_下着姿"にはTEQUIPの直接操作がある、全容を把握してないがもとの構文だと
+	;呼び出し元で最終的に全キャラに対してCLOTHES_SETTING_TRAINを実行していたため
+	;挙動としては変わらないはず
+	;TEQUIP:TARGET:上半身はだけ状態 = 1
+	RETURN 0
+CASE "パンツ貰う"
+CASE "半脱ぎ"
+	IF !(C_ID == MASTER) && !STRCOUNT(OP, "「表示なし」")
+		CALL MESSAGE_脱衣上着
+		CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 2, 0)
+	ENDIF
+	CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_半脱ぎ")
+	CALL CLOTHES_SETTING_TRAIN(C_ID)
+	RETURN 0
+CASEELSE
+	THROW 不明なTYPE %TYPE%
+ENDSELECT
+
+
+
+@服を脱がせる
+SIF !TARGET
+	JUMP SIMATTYAUOJISAN
+
+IF CFLAG:TARGET:ノーパン == 0
+	TSTR:3 = %CALLNAME:TARGET%{EQUIP:TARGET:下半身下着２}/
+	IF (FLAG:70 || TCVAR:TARGET:泥酔) && EQUIP:下半身下着２
+	;IF (TIMESTOP() == 2|| TCVAR:TARGET:泥酔) && EQUIP:下半身下着２
+		PRINTFORML %CALLNAME:TARGET%は%PANTSNAME(EQUIP:TARGET:下半身下着２)%をはいているようだ
+		IF FLAG:パンツ泥棒 == 1
+			CALL 脱衣処理(TARGET, "くすねる")
+		ELSEIF FLAG:パンツ泥棒 == 2
+			GOTO PANTU_NUGASUDAKE
+		ELSE
+			PRINTFORML どうしますか？
+			PRINT [0] - くすねる 
+			PRINT [1] - 脱がすだけ 
+			DO
+				INPUT
+				IF RESULT == 0
+					CALL 脱衣処理(TARGET, "くすねる")
+				ELSEIF RESULT == 1
+					$PANTU_NUGASUDAKE
+					CALL MESSAGE_脱衣下
+					EQUIP:TARGET:下半身下着２ = 0
+				ELSE
+					CONTINUE
+				ENDIF
+				BREAK
+			LOOP 1
+		ENDIF
+	ELSEIF EQUIP:下半身下着２
+		PRINTFORML %CALLNAME:TARGET%のはいている%PANTSNAME(EQUIP:TARGET:下半身下着２)%をもらいますか？
+		PRINT [0] - 頼み込む 
+		PRINT [1] - やめておく
+		DO
+			INPUT
+			SIF !GROUPMATCH(RESULT, 0, 1)
+				CONTINUE
+			IF RESULT
+				CALL MESSAGE_脱衣下
+				EQUIP:TARGET:下半身下着２ = 0
+				PRINTL  
+				BREAK
+			ENDIF
+			
+			;こっからRESULT == 0
+			IF ABL:TARGET:従順 > 7 && ABL:TARGET:親密 > 7
+				IF ABL:TARGET:欲望 > 7 && !RAND:4
+					PRINTFORMW %CALLNAME:TARGET%は代わりに%CALLNAME:MASTER%の下着を欲しがっている…
+					IF EQUIP:MASTER:下半身下着２
+						CALL MESSAGE_脱衣下
+						PRINTFORMW %CALLNAME:MASTER%は自分の下着と引き換えに%CALLNAME:TARGET%の%PANTSNAME(EQUIP:TARGET:下半身下着２)%を手に入れた！
+						CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 3, 0)
+						TSTR:3 = %CALLNAME:TARGET%{EQUIP:TARGET:下半身下着２}/
+						CSTR:MASTER:12 += TSTR:3
+						CALL PANTS_GET(TARGET, "もらう")
+						CFLAG:MASTER:ノーパン = 2
+						CFLAG:TARGET:パンツ2 = 1
+						CFLAG:TARGET:あなたのパンツ = 1
+						EQUIP:MASTER:下半身下着２ = 0
+					ELSE
+						PRINTFORMW しかし%CALLNAME:MASTER%はノーパンだった
+						PRINTFORMW %CALLNAME:TARGET%はちょっと引いている…
+					ENDIF
+				ELSE
+					CALL MESSAGE_脱衣下
+					PRINTFORMW %CALLNAME:TARGET%は顔を真っ赤にして脱いだばかりの%PANTSNAME(EQUIP:TARGET:下半身下着２)%を%CALLNAME:MASTER%に手渡した
+					PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:TARGET%の%PANTSNAME(EQUIP:TARGET:下半身下着２)%を手に入れた！
+					CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 3, 1)
+					CALL PANTS_GET(TARGET, "もらう")
+				ENDIF
+			ELSEIF ABL:TARGET:従順 > 5 && ABL:TARGET:親密 > 5
+				CALL MESSAGE_脱衣下
+				PRINTFORMW %CALLNAME:TARGET%は渋々脱いだばかりの%PANTSNAME(EQUIP:TARGET:下半身下着２)%を差し出してきた
+				PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:TARGET%の%PANTSNAME(EQUIP:TARGET:下半身下着２)%を手に入れた！
+				CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 3, 2)
+				CALL PANTS_GET(TARGET, "もらう")
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%はちょっと引き気味に拒否した
+				PRINTFORMW 仕方なく脱がすだけにした…
+				CALL MESSAGE_脱衣下
+				CALL KOJO_MESSAGE_SEND("EVENT", 28, TARGET, 3, 3)
+				EQUIP:TARGET:下半身下着２ = 0
+			ENDIF
+			PRINTL  
+			BREAK
+		LOOP 1
+	ENDIF
+	
+	SELECTCASE FLAG:脱衣選択
+	CASE 0
+		PRINTL 半脱ぎにしますか？
+		PRINT [0] - 全部脱がす 
+		IF TEQUIP:TARGET:上着脱衣済み == 0 || EQUIP:TARGET:上半身下着１
+			SIF EQUIP:0 && TARGET && EQUIP:TARGET:上半身下着１ != 0 && (EQUIP:TARGET:着物 != 0 || EQUIP:TARGET:上半身上着２ != 0 || EQUIP:TARGET:ボディースーツ == 3)
+				PRINT [1] - 半脱ぎ着衣プレイ
+		ENDIF
+		IF TEQUIP:TARGET:上着脱衣済み == 0
+			SIF EQUIP:0 && TARGET && (EQUIP:TARGET:上半身下着１ != 0 || EQUIP:TARGET:上半身下着２ != 0 || EQUIP:TARGET:下半身下着１ != 0 || EQUIP:TARGET:下半身下着２ != 0 || EQUIP:TARGET:レオタード != 0 || EQUIP:TARGET:ボディースーツ != 0)
+				PRINT [2] - 下着だけにする
+		ENDIF
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 0
+				CALL 脱衣処理(TARGET, "全裸")
+				CALL 脱衣処理(MASTER, "全裸")
+			CASE 1
+				CALL 脱衣処理(TARGET, "半脱ぎ")
+				CALL 脱衣処理(MASTER, "半脱ぎ")
+			CASE 2
+				CALL 脱衣処理(TARGET, "下着姿にする")
+				CALL 脱衣処理(MASTER, "下着姿にする")
+			CASEELSE
+				CONTINUE
+			ENDSELECT
+			BREAK
+		LOOP 1
+	CASE 1
+		CALL 脱衣処理(TARGET, "全裸")
+		CALL 脱衣処理(MASTER, "全裸")
+	CASE 2
+		IF !TEQUIP:3
+			CALL 脱衣処理(TARGET, "半脱ぎ")
+			CALL 脱衣処理(MASTER, "半脱ぎ")
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%の服はすでに肌蹴られている
+			PRINTL 全部脱がせますか？
+			PRINT [0] - はい 
+			PRINT [1] - いいえ
+			INPUT
+			IF RESULT == 0
+				CALL 脱衣処理(TARGET, "全裸")
+				CALL 脱衣処理(MASTER, "全裸")
+			ELSE
+				RETURN 0
+			ENDIF
+		ENDIF
+	ENDSELECT
+ELSE
+	IF TEQUIP:TARGET:上着脱衣済み
+		CALL 脱衣処理(TARGET, "全裸")
+		CALL 脱衣処理(MASTER, "全裸")
+	ELSE
+		;着衣プレイの選択
+		PRINTFORML %CALLNAME:TARGET%はすでにはいていない
+		SELECTCASE FLAG:脱衣選択
+		CASE 0
+			PRINTL 半脱ぎにしますか？
+			PRINT [0] - 全部脱がす 
+			IF EQUIP:TARGET:上半身下着１
+				SIF EQUIP:0 && TARGET && EQUIP:TARGET:上半身下着１ && (EQUIP:TARGET:着物 != 0 || EQUIP:TARGET:上半身上着２ != 0 || EQUIP:TARGET:ボディースーツ == 3)
+					PRINT [1] - 半脱ぎ着衣プレイ
+			ENDIF
+			SIF EQUIP:0 && TARGET && (EQUIP:TARGET:上半身下着１ != 0 || EQUIP:TARGET:上半身下着２ != 0 || EQUIP:TARGET:下半身下着１ != 0 || EQUIP:TARGET:下半身下着２ != 0 || EQUIP:TARGET:レオタード != 0 || EQUIP:TARGET:ボディースーツ != 0)
+				PRINT [2] - 下着だけにする
+			DO
+				INPUT
+				SELECTCASE RESULT
+				CASE 0
+					CALL 脱衣処理(TARGET, "全裸")
+					CALL 脱衣処理(MASTER, "全裸")
+				CASE 1
+					CALL 脱衣処理(TARGET, "半脱ぎ")
+					CALL 脱衣処理(MASTER, "半脱ぎ")
+				CASE 2
+					CALL 脱衣処理(TARGET, "下着姿にする")
+					CALL 脱衣処理(MASTER, "下着姿にする")
+				CASEELSE
+					CONTINUE
+				ENDSELECT
+				BREAK
+			LOOP 1
+		CASE 1
+			CALL MESSAGE_脱衣上
+		CASE 2
+			IF !TEQUIP:TARGET:3
+				CALL 脱衣処理(TARGET, "半脱ぎ")
+				CALL 脱衣処理(MASTER, "半脱ぎ")
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%の服はすでに肌蹴られている
+				PRINTL 全部脱がせますか？
+				PRINT [0] - はい 
+				PRINT [1] - いいえ
+				INPUT
+				IF RESULT == 0
+					CALL 脱衣処理(TARGET, "全裸")
+					CALL 脱衣処理(MASTER, "全裸")
+				ELSE
+					RETURN 0
+				ENDIF
+			ENDIF
+		ENDSELECT
+	ENDIF
+ENDIF
+
+;着せ替えフラグOFF
+;EQUIP:TARGET:0 = 0
+;キャラ全員の服再セッティング
+;個々でやってるからこれいらんと思う
+[SKIPSTART]
+FOR LOCAL, 0, CHARANUM
+	CALL CLOTHES_SETTING_TRAIN(LOCAL)
+NEXT
+[SKIPEND]
+RETURN 1

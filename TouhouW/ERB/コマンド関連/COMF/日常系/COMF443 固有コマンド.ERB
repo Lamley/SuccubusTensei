@@ -1,0 +1,977 @@
+﻿@COM443
+TRYCALLFORM UNIQUE_COM_%NAME_UNIQUE_COM(TARGET)%
+SIF RESULT == -1
+	RETURN -1
+TIME += 3
+RETURN 1
+
+@COM_ABLE443
+;停止中は不可
+SIF FLAG:70 == 1
+	RETURN 0
+;実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(443)
+	RETURN RESULT
+SIF TARGET <= 0
+	RETURN 0
+SIF !SHIRAHU(TARGET)
+	RETURN 0
+SIF CFLAG:うふふ
+	RETURN 0
+SIF !ABLE_UNIQUE_COM(TARGET)
+	RETURN 0
+RETURN 1
+
+
+@NAME_UNIQUE_COM(CHARA)
+#FUNCTIONS
+#DIM CHARA
+RETURNF GET_STR(0, "キャラデータ", CHARA, "固有指令")
+
+@ABLE_UNIQUE_COM(CHARA)
+#FUNCTION
+#DIM CHARA
+RETURNF GET_INT(0, "キャラデータ", CHARA, "固有指令実行可能")
+
+
+;-------------------------------------------------
+;霊夢用
+;-------------------------------------------------
+@UNIQUE_COM_神簽契約
+#DIM 神簽代
+IF FLAG:神簽契約
+	PRINTFORML 「不是已経签约了么」
+	RETURN -1
+ENDIF
+IF !MAIN_MAP
+	神簽代 = 30
+ELSE
+	神簽代 = 50
+ENDIF
+PRINTFORML 「楽園的素敵之巫女每天都為你抽签」
+PRINTFORML 「一个月50籌碼，够便宜吧？」
+SIF !MAIN_MAP
+	PRINTFORML 「既然是住在神社里，那么只要30就好了」
+CALL ASK_M("拜托了",MONEY:2 >= 神簽代,"不用了",1)
+SIF RESULT
+	RETURN -1
+PRINTFORMW 「貌似还差一点点啊！搬家后就签约吧」
+MONEY:2 -= 神簽代
+FLAG:神簽契約 = 1
+
+
+
+;-------------------------------------------------
+;文用
+;-------------------------------------------------
+@UNIQUE_COM_新聞購読
+IF FLAG:新聞購読
+	PRINTFORML 「不是已経订閲了么」
+	RETURN -1
+ENDIF
+PRINTFORML 「\\3000就能了解这个月的幻想郷的时事！　文文新聞值得你订閲？」
+CALL ASK_M("不要",1,"订閲",MONEY >= 3000,"用籌碼来订閲",MONEY:2 >= 10)
+SELECTCASE RESULT
+	CASE 0
+		RETURN -1
+	CASE 1
+		MONEY -= 3000
+	CASE 2
+		MONEY:2 -= 10
+ENDSELECT
+PRINTFORMW 订閲了文文。新闻。
+PRINTFORMW 好像是每月初续费。
+FLAG:新聞購読 = 1
+
+
+
+
+;-------------------------------------------------
+;天子用
+;-------------------------------------------------
+@UNIQUE_COM_天候操作
+IF CFLAG:MASTER:現在位置 == 天界
+	PRINTFORML 「这里太勉强了」
+	RETURN -1
+ENDIF
+IF FLAG:異常気象
+	PRINTFORML 「这个天气无法改変」
+	RETURN -1
+ENDIF
+IF GETBIT(TFLAG:一日一回,6)
+	PRINTFORML 「今天已経結束了」
+	RETURN -1
+ENDIF
+PRINTFORML 「好像是因為很麻烦的样子，只是随便做了下」
+$LOOP
+CALL ASK_M("晴朗",1,"陰天",1,"雨",1, "雪", DAY:2 == 4, "内袴", 1)
+SELECTCASE RESULT
+	CASE 0
+		;雨なら低確率で虹
+		SIF INRANGE(TIME:5,4,7) && !RAND:7
+			TIME:7 = 1
+		;雪なら低確率でダイヤモンドダスト
+		SIF INRANGE(TIME:5,8,13) && !RAND:7
+			TIME:7 = 2
+		TIME:5 = RAND:2
+	CASE 1
+		TIME:5 = RAND:2 + 2
+	CASE 2
+		;晴天を変えようとすると虹
+		IF TIME:5 < 2 && !RAND:4
+			TIME:7 = 1
+		ELSE
+			TIME:5 = 4 + RAND:4
+		ENDIF
+	CASE 3
+		;晴天を変えようとするとダイヤモンドダスト
+		IF TIME:5 < 2 && !RAND:4
+			TIME:7 = 2
+		ELSE
+			TIME:5 = 8 + RAND:6
+		ENDIF
+	CASE 4
+		PRINTFORML 「你是笨蛋麼？」
+		RETURN -1
+ENDSELECT
+
+DOWNBASE:気力 = 300
+SETBIT TFLAG:一日一回,6
+
+
+
+;-------------------------------------------------
+;椛用
+;-------------------------------------------------
+@UNIQUE_COM_千里眼
+PRINTFORML 「要看哪里呢？」
+CALL BROAD_HITOSAGASI
+
+
+
+;-------------------------------------------------
+;琪露諾用
+;-------------------------------------------------
+;冰淇淋の値段は季節により変動する（夏が一番高い）
+@UNIQUE_COM_冰淇淋を買う
+#DIM 冰淇淋ねだん
+#DIM パックねだん
+冰淇淋ねだん = ICE_PRICE()
+パックねだん = ICE_PRICE() * 9
+PRINTL 「要冰淇淋麼？」
+PRINTFORML 
+PRINTFORML 所持金:\\%TOSTR(MONEY,"#,###")%
+PRINTFORML 
+CALL EX_SHOPPING("冰淇淋", "又甜又好吃的冰淇淋", 0, 冰淇淋ねだん)
+CALL EX_SHOPPING("混合装冰淇淋", "大家一起吃吧", 1, パックねだん)
+PRINTFORML 
+PRINTL [100] 中止
+INPUT
+SELECTCASE RESULT
+	CASE 0
+		CALL BUY_ABLE(213, 冰淇淋ねだん, 1)
+	CASE 1
+		CALL BUY_ABLE(213, パックねだん, 10)
+	CASE 100
+		RETURN -1
+	CASEELSE
+ENDSELECT
+RESTART
+
+@ICE_PRICE
+#FUNCTION
+SELECTCASE DAY:2
+CASE 1
+	RETURNF 400
+CASE 2
+	RETURNF 500
+CASE 3
+	RETURNF 300
+CASE 4
+	RETURNF 200
+ENDSELECT
+
+
+;-------------------------------------------------
+;咲夜用
+;-------------------------------------------------
+@UNIQUE_COM_紅魔館出張サービス
+PRINTFORML 「哎呀、有什麼困難麼？」
+PRINTFORML 
+CALL ASK_M("沒有請求", 1, "掃除代理", !TFLAG:出張お掃除, "澆水代理", ITEM:150)
+SELECTCASE RESULT
+CASE 0
+	RETURN -1
+CASE 1
+	PRINTFORML 是委托清扫%GET_MAPNAME(MAIN_MAP)%么？
+	CALL PAY_YEN_OR_CM(3000,10)
+	SIF !RESULT
+		RETURN -1
+	PRINTFORML 委托了上门清扫服务。
+	TFLAG:出張お掃除 = 1
+CASE 2
+	PRINTFORML 委托家庭菜園的浇水么（这一整个月）
+	CALL PAY_YEN_OR_CM(15000,70)
+	SIF !RESULT
+		RETURN -1
+	PRINTFORML 委托了浇水。
+	FLAG:澆水代行 = 1
+ENDSELECT
+RETURN 1
+
+
+
+;-------------------------------------------------
+;納茲琳用
+;-------------------------------------------------
+@UNIQUE_COM_ダウジング
+#DIM DYNAMIC CNT_TALK
+#DIM DYNAMIC CNT_DOWSING
+#DIM CAN_SLOT
+#DIM CHK_SLOT
+#DIM TMP_ID
+IF !CNT_TALK
+	PRINTFORML 「嗯。想找東西麼」
+	PRINTFORML 「這確実是我的專業領域」
+	PRINTFORMW 「那麼、請詳細的説明一下吧」
+	CNT_TALK ++
+	CAN_SLOT = CAN_DOWSING()
+	IF !CAN_SLOT
+		PRINTFORML 「喂喂、你説的真的是特別想找的東西麼探測術完全沒反応啊？」
+		PRINTFORMW 「不是来看笑話的吧？真是的…」
+		RETURN
+	ENDIF
+ELSE
+	PRINTFORMW 「還有什麼麼？」
+ENDIF
+
+FOR CHK_SLOT, 1, 6
+	SIF !GETBIT(CAN_SLOT, CHK_SLOT)
+		CONTINUE
+	PRINTFORML [{CHK_SLOT}] - 依頼{CHK_SLOT}　＜%STR_DATA_IRAI(IRAI_SLOT:CHK_SLOT, "依頼名", IRAI_SLOT_TO_CLIENT(CHK_SLOT))%＞
+NEXT
+PRINTFORML 
+PRINTFORML [0] - 中止
+DO
+	INPUT
+	CHK_SLOT = RESULT
+	SELECTCASE CHK_SLOT
+	CASE 1 TO 5
+		SIF !GETBIT(CAN_SLOT, CHK_SLOT)
+			CONTINUE
+		PRINTFORML 「原来如此」
+		PRINTFORML 「要使用探測術的話多少需要供奉一些、沒問題吧？」
+		CALL ASK_M("還是算了", 1, "施捨\\1000", MONEY >= 1000, "施捨5CM", MONEY:2 >= 5)
+		SELECTCASE RESULT
+		CASE 0
+			PRINTFORMW 「哦呀、那太遺憾了」
+			BREAK
+		CASE 1
+			MONEY -= 1000
+		CASE 2
+			MONEY:2 -= 5
+		ENDSELECT
+		CNT_DOWSING ++
+		SELECTCASE IRAI_SLOT_TO_TASKNAME(CHK_SLOT)
+		CASE "捜索（人物）"
+			CNT_DOWSING ++
+			TMP_ID = IRAI_SLOT_TO_PERSON(CHK_SLOT)
+			IF CALLNAME:TMP_ID == "納茲琳"
+			;ナズ口上は人物に対する反応分岐が多いがつくれない
+			;流石に自分が相手ならこんな感じになるだろう
+				PRINTFORML 「從剛才開始反応就一直搖擺不定」
+				PRINTFORML 「這個委託難道是和我有関連的東西麼？」
+				PRINTFORMW 「不由得有這種感覚」
+				BREAK
+			ENDIF
+			CALL DOWSING_TSUBUYAKI
+			PRINTFORML 「得到結果了」
+			PRINTFORML 「%CALLNAME:TMP_ID%是関鍵人物」
+			PRINTFORML 「要順便算出所在地麼？」
+			CALL ASK_M("還是算了", 1, "施捨\\500", MONEY >= 500, "施捨3CM", MONEY:2 >= 3)
+			SELECTCASE RESULT
+			CASE 0
+				PRINTFORMW 「哦呀、那太遺憾了」
+				BREAK
+			CASE 1
+				MONEY -= 500
+			CASE 2
+				MONEY:2 -= 3
+			ENDSELECT
+			IF CFLAG:TMP_ID:現在位置 == SUKIMA()
+				PRINTFORML 「嗯ー、反応不穩定啊」
+				PRINTFORMW 「現在很難馬上見面啊」
+			ELSE
+				PRINTFORMW 「她現在在“%STR:(5000 + GET_MAPID(CFLAG:TMP_ID:現在位置))%”的附近」
+			ENDIF
+		CASE "捜索（場所）"
+			CNT_DOWSING ++
+			TMP_ID = IRAI_SLOT_TO_PLACE(CHK_SLOT)
+			CALL DOWSING_TSUBUYAKI
+			PRINTFORML 「得到結果了」
+			PRINTFORML 「你的目標場所是“%STR:(5000 + GET_MAPID(TMP_ID))%”」
+			PRINTFORML 「需要更加詳細的情報麼？」
+			
+			CALL ASK_M("還是算了", 1, "施捨\\2000", MONEY >= 2000, "施捨10CM", MONEY:2 >= 10)
+			SELECTCASE RESULT
+			CASE 0
+				PRINTFORMW 「哦呀、那太遺憾了」
+				BREAK
+			CASE 1
+				MONEY -= 2000
+			CASE 2
+				MONEY:2 -= 10
+			ENDSELECT
+			PRINTFORMW 「%STR:(5000 + GET_MAPID(TMP_ID))%附近、特別是“%GET_PLACENAME(TMP_ID)%”的反応非常強」
+		CASEELSE
+			PRINTFORMW 「啊嘞？……嗯ー、読取出了問題」
+			PRINTFORML 
+			PRINTFORML 　エラー発生中（ログの提供をお願いします）
+			PRINTFORML 　クリックでエラーログ生成
+			PRINTFORMW ◆ここから
+			PRINTFORML IRAI_SLOT:CHK_SLOT　{IRAI_SLOT:CHK_SLOT}
+			PRINTFORML IRAI_DATA:CHK_SLOT　{IRAI_DATA:CHK_SLOT}
+			CALL SHOW_IRAI_DATA(IRAI_SLOT:CHK_SLOT, CHK_SLOT)
+			PRINTFORML 
+			PRINTFORML ◆ここまで
+			PRINTFORMW 　コピペ待ち
+		ENDSELECT
+		
+	CASE 0
+		IF CNT_DOWSING
+			PRINTDATAL
+				DATA 「好像沒派上用場？」
+				DATA 「祈禱自己幸運吧」
+				DATA 「已経可以了麼？」
+			ENDDATA
+			PRINTFORMW 「嘛、請耐心尋找」
+		ELSE
+			PRINTFORMW 「請不要再愚弄我了」
+		ENDIF
+		RETURN
+	CASEELSE
+		$RETRY
+		PRINTFORMW 「嗯、什麼？」
+		CONTINUE
+	ENDSELECT
+	BREAK
+LOOP 1
+RESTART
+
+;受託済み依頼のダウジング可否判定
+;戻り値はBITで各依頼のダウジング可否
+@CAN_DOWSING()
+#FUNCTION
+#DIM CHK_SLOT
+#DIM DYNAMIC CAN_SLOT
+FOR CHK_SLOT, 1, 6
+	SIF !IRAI_SLOT_CAN_DOWSING(CHK_SLOT)
+		CONTINUE
+	SETBIT CAN_SLOT, CHK_SLOT
+NEXT
+RETURNF CAN_SLOT
+
+;個々の依頼スロットのダウジング可否判定
+@IRAI_SLOT_CAN_DOWSING(CHK_SLOT)
+#FUNCTION
+#DIM CHK_SLOT
+SIF IRAI_SLOT_TO_PROGRESS(CHK_SLOT) != "依頼中"
+	RETURNF 0
+SIF !GROUPMATCH(IRAI_SLOT_TO_TASKNAME(CHK_SLOT), "捜索（人物）", "捜索（場所）")
+	RETURNF 0
+RETURNF CHK_SLOT
+
+;ダウジング中の独り言
+@DOWSING_TSUBUYAKI
+#DIMS COMMENT, 3
+COMMENT:0 '= "「這……這是」"
+STRDATA COMMENT:1
+	DATA 「……だいぶ絞り込めてきたぞ」
+	DATA 「む、これでは辻褄があわないな」
+	DATA 「おや、そうなるのか」
+	DATA 「では、こうすれば…………」
+ENDDATA
+STRDATA COMMENT:2
+	DATA 「……そういうことか」
+	DATA 「なんだ、簡単なことじゃないか」
+	DATA 「よし、これだ」
+	DATA 「こんなところかな」
+ENDDATA
+CALL PRINT_GROUP(COMMENT, 3)
+
+
+
+
+
+;-------------------------------------------------
+;斯塔用
+;-------------------------------------------------
+@UNIQUE_COM_気配を探る
+PRINTFORML 「嗯ー、在找人麼？」
+PRINTFORML 「這樣啊……要給我零花錢？」
+CALL ASK_M("還是算了", 1, "給\\500", MONEY >= 500, "給3CM", MONEY:2 >= 3)
+SELECTCASE RESULT
+CASE 0
+	PRINTDATAW
+		DATAFORM 「嗚ー、%CALLNAME:MASTER%真小気」
+		DATAFORM 「……哈啊」
+		DATAFORM 斯塔 萨菲雅默默地盯着這辺
+	ENDDATA
+	RETURN
+CASE 1
+	MONEY -= 500
+CASE 2
+	MONEY:2 -= 3
+ENDSELECT
+PRINTDATAW
+	DATAFORM 「哇啊ー」
+	DATAFORM 「太好了ー」
+	DATAFORM 「是零花錢ー」
+	DATAFORM 「我喜歡通情達理的人」
+	DATAFORM 斯塔 萨菲雅非常開心
+ENDDATA
+PRINTFORML 「那麼開始吧♪」
+PRINTFORMW 「嗯……」
+PRINTFORML 
+CALL HITOSAGASI
+PRINTFORMW 
+
+;-------------------------------------------------
+;魔理沙用
+;交友関係広そうだし、耳は早かろう
+;-------------------------------------------------
+@UNIQUE_COM_人助け
+#DIM PREV_DAY
+#DIM IRAI_ABLE
+#DIM CLIENT_ID
+IF PREV_DAY == DAY
+	PRINTFORMW 「今天已経指導過了吧？」
+	RETURN
+ENDIF
+PREV_DAY = DAY
+PRINTFORMW 「誒？“想知道正在困擾的女孩子”？」
+
+CALL CAN_IRAI_START
+IRAI_ABLE = RESULT
+IF IRAI_ABLE && IRAI_CHARA_TO_PROGRESS(TARGET) == "依頼未受託"
+	PRINTFORML 「有啊、就在你面前！」
+	CALL IRAI_START(TARGET)
+	SIF IRAI_CHARA_TO_PROGRESS(TARGET) != "依頼中"
+		PRINTFORMW 「什麼啊、一般来説這個劇情走向是拒絶的麼？」
+	RETURN
+ENDIF
+
+CLIENT_ID = SEARCH_UNIQUE_COM_人助け()
+SELECTCASE CLIENT_ID
+CASE 0
+	PRINTFORML 「嗯ー」
+	PRINTFORMW 「據我所知好像沒有啊」
+CASEELSE
+	PRINTDATAL
+		DATAFORM 「嗯ー」
+		DATAFORM 「那個ー」
+		DATAFORM 「確実……」
+	ENDDATA
+	PRINTDATAW
+		DATAFORM 「%CALLNAME:CLIENT_ID%好像那麼説過」
+		DATAFORM 「%CALLNAME:CLIENT_ID%好像説過些什麼」
+		DATAFORM 「聽説了%CALLNAME:CLIENT_ID%有些困擾的傳聞」
+		DATAFORM 「去%CALLNAME:CLIENT_ID%的所在地看看怎麼樣？」
+		DATAFORM 「我覚得去見見%CALLNAME:CLIENT_ID%比較好」
+	ENDDATA
+ENDSELECT
+
+
+
+@SEARCH_UNIQUE_COM_人助け
+#FUNCTION
+#DIM DYNAMIC CLIENT_ID, キャラクタ数上限
+#DIM DYNAMIC CLIENT_CNT
+FOR LOCAL:0, 1, CHARANUM
+	SIF IRAI_CHARA_TO_PROGRESS(LOCAL:0) != "依頼未受託"
+		CONTINUE
+	CLIENT_ID:CLIENT_CNT = LOCAL:0
+	CLIENT_CNT ++
+NEXT
+SIF !CLIENT_CNT
+	RETURNF 0
+RETURNF CLIENT_ID:(RAND:CLIENT_CNT)
+
+
+
+;-------------------------------------------------
+;荷取用
+;-------------------------------------------------
+@UNIQUE_COM_購買道具
+TFLAG:194 = 1
+CALL ITEM_SALES
+DRAWLINE
+CALL LIST_ITEM("河童道具")
+DRAWLINE
+PRINTL 「今天的话有优惠哦」
+PRINTFORML 請选択要购买的道具 所持金:\\%TOSTR(MONEY,"#,###")%
+CALL SHOW_ITEM, "河童道具", 3
+PRINTL
+DRAWLINE
+PRINT [100] - 返回　　　　　[101] - 道具的改造　[102] - 道具的開発
+INPUT
+LOCAL = RESULT
+SELECTCASE LOCAL
+CASE 100
+	RETURN -1
+CASE 101
+	CALL TOOL_CUSTOM
+	SIF RESULT
+		RETURN RESULT
+CASE 102
+	PRINTL 「要開発的话必须得有git」
+	PRINTW git到底是啥…
+	RETURN -1
+CASEELSE
+	SELECTCASE ITEMSTOCK(LOCAL)
+	CASE 1, 4
+		RETURN -1
+	CASE 2
+		PRINTW 卖完了
+		RETURN -1
+	CASE 3
+		PRINTW 所持金不足
+		RETURN -1
+	CASE 5
+		PRINTW 已経有足够的了
+		RETURN -1
+	CASEELSE
+		SIF !INRANGE(LOCAL, 0, 100)
+			RETURN -1
+	ENDSELECT
+	PRINTFORML 要购买%ITEMNAME:LOCAL%吗？
+	PRINTL [0] - 是  [1] - 否
+	INPUT
+	SIF RESULT
+		RETURN -1
+	ITEM:LOCAL ++
+	MONEY -= ITEMPRICE:LOCAL / 3
+	SIF INRANGE(LOCAL, 0, 39)
+		SETBIT FLAG:道具購入済み, LOCAL
+ENDSELECT
+RESTART
+
+
+
+;道具改造関数
+;現状ではプールだけだが
+;改造道具が増えるとさらに肥大化するのが目に見えるので独立
+;購入でRETURN -1、購入しない時はRETURN 0
+;何もせずに末尾に到達すると購入した扱いになります
+@TOOL_CUSTOM
+#DIM 番号_簡易泳池
+GETNUM ITEM, "簡易泳池"
+番号_簡易泳池 = RESULT
+
+PRINTFORML 請选択要改造的道具 所持金:\\%TOSTR(MONEY,"#,###")%
+IF ITEM:簡易泳池
+	LOCALS = [{番号_簡易泳池}] 簡易泳池
+	PRINTBUTTONLC LOCALS, 番号_簡易泳池
+ENDIF
+PRINT [100] - 果然还是算了
+INPUT
+SELECTCASE RESULT
+CASE 100
+	RETURN
+CASE 番号_簡易泳池
+	SIF !ITEM:簡易泳池
+		RETURN
+	PRINTL 「要怎么改造？」
+	PRINT 現在的状態：
+	SIF GETBIT (FLAG:プール, 0)
+		PRINT [自走馬达]
+	SIF GETBIT (FLAG:プール, 1)
+		PRINT [温水機能]
+	SIF GETBIT (FLAG:プール, 2)
+		PRINT [喷淋装置]
+	SIF GETBIT (FLAG:プール, 3)
+		PRINT [不思議的泡]
+	PRINTL
+	
+	IF !GETBIT (FLAG:プール, 0)
+		PRINTL [1] - 馬达（\5000）：消除移動的負担
+	ELSE
+		SETCOLOR 150,150,150
+		PRINTL [済] - 馬达：消除移動的負担
+		RESETCOLOR
+	ENDIF
+	IF !GETBIT (FLAG:プール, 1)
+		PRINTL [2] - 温水機能（\5000）：能在更多的地方放松
+	ELSE
+		SETCOLOR 150,150,150
+		PRINTL [済] - 温水機能：能在更多的地方放松・可以进行浴室PLAY
+		RESETCOLOR
+	ENDIF
+	IF !GETBIT (FLAG:プール, 2)
+		PRINTL [3] - 喷淋装置（\5000）：可以淋浴・可以灌水
+	ELSE
+		SETCOLOR 150,150,150
+		PRINTL [済] - 喷淋装置：可以淋浴・可以灌水
+		RESETCOLOR
+	ENDIF
+	SIF FLAG:プール < 7
+		PRINTFORML [4] - ３项全改造（每１项\\5000）
+	IF FLAG:プール < 7
+		PRINTL [?] - ？？？？？
+	ELSEIF !GETBIT (FLAG:プール, 3) && FLAG:プール < 8
+		PRINTL [5] - 不思議的泡（\5000）：能让若鹭姫可以自由移動
+	ELSE
+		SETCOLOR 150,150,150
+		PRINTL [済] - 不思議的泡：能让若鹭姫可以自由移動
+		RESETCOLOR
+		PRINTL 无法做更进一步的改造了
+	ENDIF
+	
+	PRINTL [100]果然还是算了
+	INPUT
+	SELECTCASE RESULT
+	CASE 100
+		RETURN
+	CASE 1
+		IF !GETBIT (FLAG:プール, 0)
+			PRINTL 移動的負担消失了！
+			SETBIT FLAG:プール, 0
+			MONEY -= 5000
+		ELSE
+			RETURN
+		ENDIF
+	CASE 2
+		IF !GETBIT (FLAG:プール, 1)
+			PRINTL 可以在更多的地方放松了！
+			PRINTL 可以进行浴室PLAY了！
+			SETBIT FLAG:プール, 1
+			MONEY -= 5000
+		ELSE
+			RETURN
+		ENDIF
+	CASE 3
+		IF !GETBIT (FLAG:プール, 2)
+			PRINTL 可以使用淋浴了！
+			PRINTL 灌水也変得軽松愉快了！
+			SETBIT FLAG:プール, 2
+			MONEY -= 5000
+		ELSE
+			RETURN
+		ENDIF
+	CASE 4
+		IF FLAG:プール < 7
+			PRINTL 追加了各种各样的功能！
+			MONEY -= 5000 * (!GETBIT (FLAG:プール, 0) + !GETBIT (FLAG:プール, 1) + !GETBIT (FLAG:プール, 2))
+			FLAG:プール = 7
+		ELSE
+			RETURN
+		ENDIF
+	CASE 5
+		IF !GETBIT (FLAG:プール, 3) && FLAG:プール < 8
+			PRINTL 為若鹭姫购买了不思議的泡！
+			FLAG:プール = 15
+			MONEY -= 5000
+		ELSE
+			RETURN
+		ENDIF
+	ENDSELECT
+CASEELSE
+	RETURN
+ENDSELECT
+RETURN -1
+
+
+
+
+
+;-------------------------------------------------
+;鈴仙と帝用
+;-------------------------------------------------
+@UNIQUE_COM_買薬
+DRAWLINE
+CALL LIST_ITEM("うさぎ薬品")
+DRAWLINE
+PRINTFORML 請选択要购买的道具 所持金:\\%TOSTR(MONEY,"#,###")%
+PRINTL
+VARSET LOCALS
+CALL EX_SHOPPING("瓶装润滑乳液", "装有润滑乳液的大瓶子。大概能用5次的样子。",0,1000)
+CALL EX_SHOPPING("避孕套优惠包", "内有50個。",1,1000)
+CALL EX_SHOPPING("口服避孕薬（内有5片）", "明郎的家族計画",2,5000)
+CALL EX_SHOPPING("催情薬", "更容易催生好感",250)
+CALL EX_SHOPPING("睡眠薬", "悪用はダメですよ？",252)
+CALL EX_SHOPPING("栄養饮料", "含有1000mg牛磺酸",501)
+CALL EX_SHOPPING("精力剤", "肮脏的有钱人专用",502)
+CALL EX_SHOPPING("姜黄饮料", "在飲酒前服用",510)
+CALL EX_SHOPPING("绷帯", "在受伤或想隠藏的地方卷起来吧",520)
+SIF TARGET == 53 && !ITEM:130
+	CALL EX_SHOPPING("兎符「開運大紋」","会発生十分幸运的色情事件",130)
+DRAWLINE
+PRINTL [100] 中止
+INPUT
+SELECTCASE RESULT
+	CASE 0
+		CALL BUY_ABLE(40,1000,5)
+	CASE 1
+		CALL BUY_ABLE(45,1000,50)
+	CASE 2
+		CALL BUY_ABLE(49,5000,5)
+	CASE 130
+		SIF TARGET == 53 && !ITEM:130
+			CALL BOTTAKURI
+	;まとめ買い関数でお買い上げ
+	;これらの道具は特に割引はないので@BUY_ABLEを使用する必然性が無い
+	CASE 250, 252, 501, 502, 510, 520
+		SELECTCASE ITEMSTOCK(RESULT)
+		CASE 1, 4
+		CASE 2
+			PRINTW 卖完了
+		CASE 3
+			PRINTW 所持金不足
+		CASE 5
+			PRINTW 已経有足够的了
+		CASEELSE
+			CALL ITEM_MATOMEGAI(RESULT)
+		ENDSELECT
+	CASE 100
+		RETURN -1
+	CASEELSE
+ENDSELECT
+RESTART
+
+@BOTTAKURI
+SELECTCASE FLAG:開運大紋購入回数
+CASE 0
+	LOCAL = 1000
+CASE 1 TO 3
+	LOCAL = 10000
+CASE 3 TO 10
+	LOCAL = 20000
+CASE 11 TO 20
+	LOCAL = 30000
+CASEELSE
+	LOCAL = 50000
+ENDSELECT
+SIF TALENT:TARGET:恋慕 && LOCAL >= 20000
+	LOCAL /= 2
+
+SIF !FLAG:開運大紋購入回数
+	PRINTFORML 「想要試試的話現在只需要\\{LOCAL}！就可以買走！」
+IF LOCAL <= 10000
+ELSE
+	IF TALENT:TARGET:恋慕
+		PRINTFORML 「是%CALLNAME:MASTER%只需要\\{LOCAL}就行」
+	ELSE
+		PRINTFORML 「如果這樣的話需要\\{LOCAL}」
+	ENDIF
+	CALL ASK_M("別開玩笑了",1, "買下", MONEY >= LOCAL, "你有那麼説的立場麼？", CFLAG:TARGET:弱み握られ && !CFLAG:TARGET:弱み握り)
+	SELECTCASE RESULT
+		CASE 0
+			RETURN
+		CASE 1
+		CASE 2
+			PRINTFORMW 利用把柄免费交换到了
+			ITEM:130 ++
+			CFLAG:TARGET:弱み握られ = 0
+			RETURN
+	ENDSELECT
+ENDIF
+
+IF MONEY >= LOCAL
+	ITEM:130 ++
+	MONEY -= LOCAL
+	FLAG:開運大紋購入回数 ++
+	PRINTFORMW 支付\\{LOCAL}購買了兎符「開運大紋」
+ENDIF
+
+;-------------------------------------------------
+;みすちー用
+;-------------------------------------------------
+@UNIQUE_COM_屋台で吃飯
+#DIM 同行人数カウント
+#DIM 飲酒可能人数
+#DIM ATSUKAN
+#DIM OOMORI
+#DIM KAIKEI
+#DIM KAKAKU,2
+
+同行人数カウント = 1
+飲酒可能人数 = 0
+ATSUKAN = 0
+KAIKEI = 0
+OOMORI = 0
+VARSET KAKAKU
+SIF CAN_DRINK(MASTER)
+	飲酒可能人数 = 1
+FOR LOCAL,1,CHARANUM
+	SIF !CFLAG:LOCAL:同行
+		CONTINUE
+	 SIF !TIME_PROGRESS(TCVAR:LOCAL:空腹時刻)
+	 	CONTINUE
+	同行人数カウント ++
+	SIF CAN_DRINK(LOCAL)
+		飲酒可能人数 ++
+NEXT
+PRINTFORML 「歡迎光臨、{同行人数カウント}位客人」
+KAKAKU:0 = 3 * 同行人数カウント
+KAKAKU:1 = 5 * 同行人数カウント
+CALL ASK_M("烤串拼盤　每人3CM",MONEY:2 >= KAKAKU:0 && TIME_PROGRESS(TCVAR:MASTER:空腹時刻),"烤串拼盤（大）　每人5CM", MONEY:2 >= KAKAKU:1 && TIME_PROGRESS(TCVAR:MASTER:空腹時刻),"打包　5CM",MONEY:2 >= 5 && !ITEM:八目鰻烤串,"取消",1)
+IF RESULT == 3
+	PRINTFORML 「歡迎下次再来」
+	RETURN -1
+ENDIF
+IF RESULT == 2
+	ITEM:八目鰻烤串 ++
+	MONEY:2 -= 5
+	PRINTFORML 「趁着還沒冷的時候吃吧」
+	SOURCE:歓楽 += 200
+	TFLAG:98 = 1
+	TIME += 5
+	RETURN 1
+ENDIF
+MONEY:2 -= KAKAKU:RESULT
+KAIKEI = KAKAKU:RESULT
+
+SIF RESULT == 1
+	OOMORI = 1
+
+IF MONEY:2 >= 2 * 飲酒可能人数
+	PRINTFORML 「要每人花2籌碼燙酒麼？」（酒気・気力回復量上升）
+	CALL ASK_YN
+	IF !RESULT
+		ATSUKAN = 1
+		KAIKEI += 2 * 飲酒可能人数
+		MONEY:2 -= 2 * 飲酒可能人数
+	ENDIF
+ENDIF
+;信頼
+TFLAG:98 += 3
+;同行中全員で回す
+
+FOR LOCAL,0,CHARANUM
+	SIF !CFLAG:LOCAL:同行 && LOCAL
+		CONTINUE
+	 SIF !TIME_PROGRESS(TCVAR:LOCAL:空腹時刻)
+	 	CONTINUE
+	CALL EAT_YATSUME(LOCAL,OOMORI,ATSUKAN)
+NEXT
+
+SOURCE:歓楽 += KAIKEI * 100
+PRINTFORML 「總共{KAIKEI}籌碼」
+PRINTFORML 「歡迎下次再来」
+TIME += 30
+
+@EAT_YATSUME(対象,ARG,ARG:1)
+#DIM 回復前体力
+#DIM 回復前気力
+#DIM 回復前精力
+#DIM 回復後体力
+#DIM 回復後気力
+#DIM 回復後精力
+#DIM 対象
+
+回復前体力 = BASE:対象:体力
+回復前気力 = BASE:対象:気力
+回復前精力 = BASE:対象:精力
+
+;大盛りの場合
+IF ARG == 1
+	CALL 満腹度上昇(対象,"主食")
+	CALL RECOVER_PERMIL(対象,100,"体力")
+	CALL RECOVER_PERMIL(対象,200,"気力")
+	CALL RECOVER_PERMIL(対象,100,"精力")
+ELSE
+	CALL 満腹度上昇(対象,"軽食")
+	CALL RECOVER_PERMIL(対象,50,"体力")
+	CALL RECOVER_PERMIL(対象,100,"気力")
+	CALL RECOVER_PERMIL(対象,50,"精力")
+ENDIF
+IF 対象
+;固定で獲得するソース
+SOURCE:対象:歓楽 = 1000
+SOURCE:対象:情愛 = 300
+
+;ABL:欲望をみる
+IF ABL:対象:欲望 <= 1
+	SOURCE:対象:歓楽 += (ABL:対象:欲望 * 60)
+ELSEIF ABL:対象:欲望 <= 3
+	SOURCE:対象:歓楽 += 400 + (ABL:対象:欲望 * 60)
+ELSEIF ABL:対象:欲望 <= 5
+	SOURCE:対象:歓楽 += 800 + (ABL:対象:欲望 * 60)
+ELSEIF ABL:対象:欲望 <= 8
+	SOURCE:対象:歓楽 += 1000 + (ABL:対象:欲望 * 75)
+ELSEIF ABL:対象:欲望 <= 11
+	SOURCE:対象:歓楽 += 1700 + (ABL:対象:欲望 * 75)
+ELSE
+	SOURCE:対象:歓楽 += 2500 + (ABL:対象:欲望 * 35)
+ENDIF
+
+;ABL:対象:奉仕精神をみる
+IF ABL:対象:奉仕精神 <= 1
+	SOURCE:対象:情愛 += (ABL:対象:奉仕精神 * 30)
+ELSEIF ABL:対象:奉仕精神 <= 3
+	SOURCE:対象:情愛 += 200 + (ABL:対象:奉仕精神 * 30)
+ELSEIF ABL:対象:奉仕精神 <= 5
+	SOURCE:対象:情愛 += 500 + (ABL:対象:奉仕精神 * 30)
+ELSEIF ABL:対象:奉仕精神 <= 8
+	SOURCE:対象:情愛 += 700 + (ABL:対象:奉仕精神 * 45)
+ELSEIF ABL:対象:奉仕精神 <= 11
+	SOURCE:対象:情愛 += 1200 + (ABL:対象:奉仕精神 * 45)
+ELSE
+	SOURCE:対象:情愛 += 1800 + (ABL:対象:奉仕精神 * 20)
+ENDIF
+
+;好感度をみる
+IF CFLAG:対象:2 <= 500
+	SOURCE:対象:歓楽 += CFLAG:対象:2
+ELSEIF CFLAG:対象:2 <= 5000
+	SOURCE:対象:歓楽 += 750 + (CFLAG:対象:2 - 500) / 3
+ELSE
+	SOURCE:対象:歓楽 += 2000 + (CFLAG:対象:2 - 5000) / 4
+ENDIF
+SIF SOURCE:対象:歓楽 < 0
+	SOURCE:対象:歓楽 = 0
+SOURCE:対象:受動 = 200 + 110 * ABL:対象:従順
+SOURCE:対象:征服 = 200 + 110 * ABL:対象:施虐属性
+
+SIF TALENT:食量大
+	TIMES SOURCE:対象:歓楽 , 1.50
+ENDIF
+;熱燗頼んだ場合
+IF ARG:1 && CAN_DRINK(対象)
+	TIMES SOURCE:対象:歓楽 , 1.10
+	CALL RECOVER_PERMIL(対象,50,"気力")
+	SIF 対象 != MASTER
+		CALL KIGEN_CHANGE(対象,50,1)
+	CALL DRUNKEN(対象,52)
+ENDIF
+
+回復後体力 = BASE:対象:体力
+回復後気力 = BASE:対象:気力
+回復後精力 = BASE:対象:精力
+
+PRINTFORML 体力+{ABS(回復後体力 - 回復前体力)}（%CALLNAME:対象%）
+PRINTFORML 気力+{ABS(回復後気力 - 回復前気力)}（%CALLNAME:対象%）
+SIF ABS(回復後精力 - 回復前精力) > 0
+	PRINTFORML 精力+{ABS(回復後精力 - 回復前精力)}（%CALLNAME:対象%）
+PRINTFORMW 
+TIME += 20
+SIF ARG == 1
+	TIME += 10
+
+;-------------------------------------------------
+;小傘用
+;-------------------------------------------------
+@UNIQUE_COM_傘の修理
+PRINTFORML 小傘修理好了折畳傘
+PRINTFORMW 「用小心使用啊」
+
+DOWNBASE:気力 = 100
+
+SOURCE:歓楽 += 1000 + ABL:親密 * 50
+TFLAG:好感度ボー茄子 = FLAG:傘耐久度 / 10
+TFLAG:98 = FLAG:傘耐久度 / 1000
+FLAG:傘耐久度 = 0
+TIME += 30

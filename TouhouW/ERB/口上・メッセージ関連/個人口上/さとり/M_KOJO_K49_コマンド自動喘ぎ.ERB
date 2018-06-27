@@ -1,0 +1,2734 @@
+﻿;-------------------------------------------
+;オート喘ぎ
+;-------------------------------------------
+@渧泣()
+#DIMS DYNAMIC コマンド部位,2
+#DIMS DYNAMIC 使用部位
+#DIMS DYNAMIC マークタイプ
+#DIMS DYNAMIC キャラ呼称
+#DIM DYNAMIC ループカッター
+#DIM DYNAMIC ループスペースカット
+#DIM DYNAMIC ループカウンター,3
+#DIM DYNAMIC ループＭＡＸ
+#DIM DYNAMIC マークタイプカウンター
+#DIM DYNAMIC 複数回非表示
+IF TALENT:恋人
+	キャラ呼称 = 主様
+ELSEIF NAME:MASTER != "主人公"
+	キャラ呼称 = %NAME:MASTER%
+ELSEIF CALLNAME:MASTER != "主人公"
+	キャラ呼称 = %CALLNAME:MASTER%
+ELSE
+	キャラ呼称 = 
+ENDIF
+FOR LOCAL,11,18
+	IF TEQUIP:TARGET:LOCAL
+		SELECTCASE LOCAL
+			CASE 11
+				使用部位 += "Ｃ"
+			CASE 12
+				使用部位 += "Ｐ"
+			CASE 13
+				使用部位 += "Ｖ"
+			CASE 14
+				使用部位 += "Ａ"
+			CASE 16
+				使用部位 += "Ｂ"
+		ENDSELECT
+	ENDIF
+	IF TEQUIP:TARGET:(LOCAL + 90)
+		SELECTCASE LOCAL + 90
+			CASE 101
+				SIF !STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(使用部位,"Ｃ") 
+					使用部位 += "Ｐ"
+			CASE 102
+				SIF !STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(使用部位,"Ｃ") 
+					使用部位 += "Ｃ"
+			CASE 104
+				SIF !STRCOUNT(使用部位,"Ｍ")
+					使用部位 += "Ｍ"
+			CASE 105
+				SIF !STRCOUNT(使用部位,"Ｂ")
+					使用部位 += "Ｂ"
+			CASE 106
+				SIF !STRCOUNT(使用部位,"Ｖ")
+					使用部位 += "Ｖ"
+			CASE 107
+				SIF !STRCOUNT(使用部位,"Ａ")
+					使用部位 += "Ａ"
+		ENDSELECT
+	ENDIF
+NEXT
+IF !STRCOUNT(使用部位,"Ｍ")
+	;恋慕or恋人
+	IF 陥落状態() >= 3
+		IF STRLENSU(使用部位) == 4
+			コマンド部位:0 = ぜんぶ
+		ELSEIF STRLENSU(使用部位) == 3
+			コマンド部位:0 = みっつとも
+		ELSEIF STRLENSU(使用部位) == 2
+			FOR LOCAL,0,STRLENSU(使用部位)
+				IF STRCOUNT(使用部位,"Ｃ") && !STRCOUNT(コマンド部位:0,"おまめ")
+					コマンド部位:0 += "おまめ"
+				ELSEIF STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(コマンド部位:0,"おちんちん")
+					コマンド部位:0 += "おちんちん"
+				ELSEIF STRCOUNT(使用部位,"Ｖ") && !STRCOUNT(コマンド部位:0,"おまんこ")
+					コマンド部位:0 += "おまんこ"
+				ELSEIF STRCOUNT(使用部位,"Ａ") && !STRCOUNT(コマンド部位:0,"しりあな")
+					コマンド部位:0 += "しりあな"
+				ELSEIF STRCOUNT(使用部位,"Ｂ") && !STRCOUNT(コマンド部位:0,"おっぱい")
+					コマンド部位:0 += "おっぱい"
+				ENDIF
+				IF CFLAG:睡眠
+					コマンド部位:0 += "とかぁ"
+					BREAK
+				ENDIF
+				SIF !LOCAL
+					コマンド部位:0 += "と"
+			NEXT
+		ELSE
+			IF STRCOUNT(使用部位,"Ｃ") && !STRCOUNT(コマンド部位:0,"おまめ")
+				コマンド部位:0 += "おまめ"
+			ELSEIF STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(コマンド部位:0,"おちんちん")
+				コマンド部位:0 += "おちんちん"
+			ELSEIF STRCOUNT(使用部位,"Ｖ") && !STRCOUNT(コマンド部位:0,"おまんこ")
+				コマンド部位:0 += "おまんこ"
+			ELSEIF STRCOUNT(使用部位,"Ａ") && !STRCOUNT(コマンド部位:0,"しりあな")
+				コマンド部位:0 += "しりあな"
+			ELSEIF STRCOUNT(使用部位,"Ｂ") && !STRCOUNT(コマンド部位:0,"おっぱい")
+				コマンド部位:0 += "おっぱい"
+			ENDIF
+		ENDIF
+	;思慕以上
+	ELSEIF 陥落状態() >= 2
+		IF STRLENSU(使用部位) == 4
+			コマンド部位:0 = 全部同時
+		ELSEIF STRLENSU(使用部位) == 3
+			コマンド部位:0 = 三箇所同時
+		ELSEIF STRLENSU(使用部位) == 2
+			FOR LOCAL,0,STRLENSU(使用部位)
+				IF STRCOUNT(使用部位,"Ｃ") && !STRCOUNT(コマンド部位:0,"クリ")
+					コマンド部位:0 += "クリ"
+				ELSEIF STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(コマンド部位:0,"それ")
+					コマンド部位:0 += "それ"
+				ELSEIF STRCOUNT(使用部位,"Ｖ") && !STRCOUNT(コマンド部位:0,"そこ")
+					コマンド部位:0 += "そこ"
+				ELSEIF STRCOUNT(使用部位,"Ａ") && !STRCOUNT(コマンド部位:0,"おしり")
+					コマンド部位:0 += "おしり"
+				ELSEIF STRCOUNT(使用部位,"Ｂ") && !STRCOUNT(コマンド部位:0,"むね")
+					コマンド部位:0 += "むね"
+				ENDIF
+				IF CFLAG:睡眠
+					コマンド部位:0 += "とか"
+					BREAK
+				ENDIF
+				SIF !LOCAL
+					コマンド部位:0 += "と"
+			NEXT
+		ELSE
+			IF STRCOUNT(使用部位,"Ｃ") && !STRCOUNT(コマンド部位:0,"クリ")
+				コマンド部位:0 += "クリ"
+			ELSEIF STRCOUNT(使用部位,"Ｐ") && !STRCOUNT(コマンド部位:0,"それ")
+				コマンド部位:0 += "それ"
+			ELSEIF STRCOUNT(使用部位,"Ｖ") && !STRCOUNT(コマンド部位:0,"そこ")
+				コマンド部位:0 += "そこ"
+			ELSEIF STRCOUNT(使用部位,"Ａ") && !STRCOUNT(コマンド部位:0,"おしり")
+				コマンド部位:0 += "おしり"
+			ELSEIF STRCOUNT(使用部位,"Ｂ") && !STRCOUNT(コマンド部位:0,"むね")
+				コマンド部位:0 += "むね"
+			ENDIF
+		ENDIF
+	;合意
+	ELSE
+		コマンド部位:0 = そこ
+	ENDIF
+ENDIF
+;責められている部位を地の文で使う際の設定
+IF STRLENSU(使用部位) == 4
+	コマンド部位:1 = 四箇所
+ELSEIF STRLENSU(使用部位) == 3
+	コマンド部位:1 = 三箇所
+ELSEIF STRLENSU(使用部位) == 2
+	FOR LOCAL,0,STRLENSU(使用部位)
+		IF STRCOUNT(使用部位,"Ｃ") && (!STRCOUNT(コマンド部位:1,"クリトリス") && !STRCOUNT(コマンド部位:1,"秘豆"))
+			IF !RAND:2
+				コマンド部位:1 += "クリトリス"
+			ELSE
+				コマンド部位:1 += "秘豆"
+			ENDIF
+		ELSEIF STRCOUNT(使用部位,"Ｐ") && (!STRCOUNT(コマンド部位:1,"擬根") && !STRCOUNT(コマンド部位:1,"ペニス"))
+			IF !RAND:2
+				コマンド部位:1 += "擬根"
+			ELSE
+				コマンド部位:1 += "ペニス"
+			ENDIF
+		ELSEIF STRCOUNT(使用部位,"Ｖ") && (!STRCOUNT(コマンド部位:1,"秘処") && !STRCOUNT(コマンド部位:1,"膣腔"))
+			IF !RAND:2
+				コマンド部位:1 += "秘処"
+			ELSE
+				コマンド部位:1 += "膣腔"
+			ENDIF
+		ELSEIF STRCOUNT(使用部位,"Ａ") && (!STRCOUNT(コマンド部位:1,"菊座") && !STRCOUNT(コマンド部位:1,"アナル"))
+			IF !RAND:2
+				コマンド部位:1 += "菊座"
+			ELSE
+				コマンド部位:1 += "アナル"
+			ENDIF
+		ELSEIF STRCOUNT(使用部位,"Ｂ") && (!STRCOUNT(コマンド部位:1,"胸") && !STRCOUNT(コマンド部位:1,"乳房"))
+			IF !RAND:2
+				コマンド部位:1 += "胸"
+			ELSE
+				コマンド部位:1 += "乳房"
+			ENDIF
+		ENDIF
+		SIF !LOCAL
+			コマンド部位:1 += "と"
+	NEXT
+ELSE
+	IF STRCOUNT(使用部位,"Ｃ") && (!STRCOUNT(コマンド部位:1,"クリトリス") && !STRCOUNT(コマンド部位:1,"秘豆"))
+		IF !RAND:2
+			コマンド部位:1 += "クリトリス"
+		ELSE
+			コマンド部位:1 += "秘豆"
+		ENDIF
+	ELSEIF STRCOUNT(使用部位,"Ｐ") && (!STRCOUNT(コマンド部位:1,"擬根") && !STRCOUNT(コマンド部位:1,"ペニス"))
+		IF !RAND:2
+			コマンド部位:1 += "擬根"
+		ELSE
+			コマンド部位:1 += "ペニス"
+		ENDIF
+	ELSEIF STRCOUNT(使用部位,"Ｖ") && (!STRCOUNT(コマンド部位:1,"秘処") && !STRCOUNT(コマンド部位:1,"膣腔"))
+		IF !RAND:2
+			コマンド部位:1 += "秘処"
+		ELSE
+			コマンド部位:1 += "膣腔"
+		ENDIF
+	ELSEIF STRCOUNT(使用部位,"Ａ") && (!STRCOUNT(コマンド部位:1,"菊座") && !STRCOUNT(コマンド部位:1,"アナル"))
+		IF !RAND:2
+			コマンド部位:1 += "菊座"
+		ELSE
+			コマンド部位:1 += "アナル"
+		ENDIF
+	ELSEIF STRCOUNT(使用部位,"Ｂ") && (!STRCOUNT(コマンド部位:1,"胸") && !STRCOUNT(コマンド部位:1,"乳房"))
+		IF !RAND:2
+			コマンド部位:1 += "胸"
+		ELSE
+			コマンド部位:1 += "乳房"
+		ENDIF
+	ENDIF
+ENDIF
+;
+IF 陥落状態() >= 4
+	ループＭＡＸ = 3
+ELSEIF 陥落状態() >= 2
+	ループＭＡＸ = 2
+ELSE
+	ループＭＡＸ = 1
+ENDIF
+FOR ループカウンター:0,0,ループＭＡＸ
+	ループカッター = 0
+	PRINTFORM 「
+	;睡眠
+	IF CFLAG:睡眠
+		;恋人
+		IF 陥落状態() >= 4
+			FOR ループカウンター:2,0,22				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				ループスペースカット = 1
+				SIF ループカッター >= 1
+					ループスペースカット = 0
+				マークタイプ = 
+				IF !RAND:3
+					マークタイプ = %UNICODE(0x2665)%
+					マークタイプカウンター = 1
+				ELSEIF !RAND:2
+					マークタイプ = ♪
+					マークタイプカウンター = 2
+				ELSE
+					マークタイプカウンター = 3
+				ENDIF
+				SELECTCASE RAND:22
+					CASE 21
+						IF !GETBIT(複数回非表示,21)
+							PRINTFORM ふぁ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,21
+						ENDIF
+					CASE 20
+						IF !GETBIT(複数回非表示,20)
+							PRINTFORM んく……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,20
+						ENDIF
+					CASE 19
+						IF !GETBIT(複数回非表示,19)
+							PRINTFORM もっとぉ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,19
+						ENDIF
+					CASE 18
+						IF !GETBIT(複数回非表示,18)
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) >= 3 ? ぅ #  \@……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,18
+						ENDIF
+					CASE 17
+						IF !GETBIT(複数回非表示,17)
+							PRINTFORM ……ふみゅ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,17
+						ENDIF
+					CASE 16
+						IF !GETBIT(複数回非表示,16)
+							PRINTFORM んにゅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,16
+						ENDIF
+					CASE 15
+						IF !GETBIT(複数回非表示,15)
+							PRINTFORM ふー、ふー
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,15
+						ENDIF
+					CASE 14
+						IF !GETBIT(複数回非表示,14)
+							PRINTFORM ……んぅ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM これぇ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12)
+							PRINTFORM %キャラ呼称%……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM だいしゅき……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10)
+							PRINTFORM さわ……やぁ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 2
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM やぁ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8)
+							PRINTFORM かひゅっ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM はふ、んく……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6)
+							PRINTFORM あちゅい……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM きもちー……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4)
+							PRINTFORM すきぃ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM して……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2)
+							PRINTFORM ……はふ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM いいよぉ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0)
+							PRINTFORM はぁ、んっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF FLAG:口上色
+					CALLFORM M_KOJO_COLOR_K49
+				SIF !ループカッター || ループスペースカット
+					CONTINUE
+				SIF ループカッター <= 3
+					PRINTFORM 　
+				SIF ループカッター == 4
+					BREAK
+			NEXT
+		;陥落手前
+		;家族に時姦されてても、恋慕等と反応一緒（寝てるときは気が緩むんです
+		ELSEIF 陥落状態() >= 2
+			FOR ループカウンター:2,0,21				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				ループスペースカット = 1
+				SIF ループカッター >= 1
+					ループスペースカット = 0
+				マークタイプ = 
+				マークタイプ = %UNICODE(0x2665)%
+				マークタイプカウンター = 1
+				SELECTCASE RAND:21
+					CASE 20
+						IF !GETBIT(複数回非表示,20)
+							PRINTFORM ……んっんっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,20
+						ENDIF
+					CASE 19
+						IF !GETBIT(複数回非表示,19)
+							PRINTFORM ……っ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,19
+						ENDIF
+					CASE 18
+						IF !GETBIT(複数回非表示,18)
+							PRINTFORM はーはー……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,18
+						ENDIF
+					CASE 17
+						IF !GETBIT(複数回非表示,17)
+							PRINTFORM やぁ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,17
+						ENDIF
+					CASE 16
+						IF !GETBIT(複数回非表示,16)
+							PRINTFORM %コマンド部位:0%やぁ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,16
+						ENDIF
+					CASE 15
+						IF !GETBIT(複数回非表示,15)
+							PRINTFORM あつい……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,15
+						ENDIF
+					CASE 14
+						IF !GETBIT(複数回非表示,14)
+							PRINTFORM あつ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM ふーふー……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12)
+							PRINTFORM はふ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM んぅ？　……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10)
+							PRINTFORM すー……すー……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM あふん……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8)
+							PRINTFORM もぅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM はぁ……んっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6)
+							PRINTFORM すぅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM んっっ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4)
+							PRINTFORM ふっ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM すぅすぅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2)
+							PRINTFORM はふ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM んくぅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0)
+							PRINTFORM ぁん……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF FLAG:口上色
+					CALLFORM M_KOJO_COLOR_K49
+				SIF !ループカッター || ループスペースカット
+					CONTINUE
+				SIF ループカッター <= 3
+					PRINTFORM 　
+				SIF ループカッター == 4
+					BREAK
+			NEXT
+		;非陥落
+		ELSE
+			FOR ループカウンター:2,0,22				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				ループスペースカット = 1
+				SIF ループカッター >= 1
+					ループスペースカット = 0
+				SELECTCASE RAND:22
+					CASE 21
+						IF !GETBIT(複数回非表示,21)
+							PRINTFORM ……ん？
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,21
+						ENDIF
+					CASE 20
+						IF !GETBIT(複数回非表示,20)
+							PRINTFORM すー……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,20
+						ENDIF
+					CASE 19
+						IF !GETBIT(複数回非表示,19)
+							PRINTFORM ……はふ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,19
+						ENDIF
+					CASE 18
+						IF !GETBIT(複数回非表示,18)
+							PRINTFORM んく……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,18
+						ENDIF
+					CASE 17
+						IF !GETBIT(複数回非表示,17)
+							PRINTFORM ……ふみゅ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,17
+						ENDIF
+					CASE 16
+						IF !GETBIT(複数回非表示,16)
+							PRINTFORM ん……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,16
+						ENDIF
+					CASE 15
+						IF !GETBIT(複数回非表示,15)
+							PRINTFORM ……やぁ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,15
+						ENDIF
+					CASE 14
+						IF !GETBIT(複数回非表示,14)
+							PRINTFORM さわ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM ん……？
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12)
+							PRINTFORM はふ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM もぅ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10)
+							PRINTFORM Ｈぃ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM くーすー……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8)
+							PRINTFORM ひん……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM ……ぁに
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6)
+							PRINTFORM ぁ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM あん……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4)
+							PRINTFORM あぅん……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM ……んぅ？
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2)
+							PRINTFORM だめ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM ……んぁ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0)
+							PRINTFORM はふ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF !ループカッター || ループスペースカット
+					CONTINUE
+				SIF ループカッター <= 3
+					PRINTFORM 　
+				SIF ループカッター == 4
+					BREAK
+			NEXT
+		ENDIF
+	;お口使用中（キスもフェラも一緒（てか書き分けめんどくさい
+	ELSEIF STRCOUNT(使用部位,"Ｍ")
+		;完全陥落中
+		IF 陥落状態() >= 4
+			FOR ループカウンター:2,0,20
+				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				マークタイプ = 
+				IF !RAND:3
+					マークタイプ = %UNICODE(0x2665)%
+					マークタイプカウンター = 1
+				ELSEIF !RAND:2
+					マークタイプ = ♪
+					マークタイプカウンター = 2
+				ELSE
+					マークタイプ = 
+					マークタイプカウンター = 3
+				ENDIF
+				SELECTCASE RAND:20
+					CASE 19
+						IF !GETBIT(複数回非表示,19)
+							PRINTFORM 美味ひーれふ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,19
+						ENDIF
+					CASE 18
+						IF !GETBIT(複数回非表示,18)
+							PRINTFORM れろちゅぱれろん
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,18
+						ENDIF
+					CASE 17
+						IF !GETBIT(複数回非表示,17)
+							PRINTFORM もっろ、じゅぽ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,17
+						ENDIF
+					CASE 16
+						IF !GETBIT(複数回非表示,16)
+							PRINTFORM んっんっんう゛っ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,16
+						ENDIF
+					CASE 15
+						IF !GETBIT(複数回非表示,15)
+							PRINTFORM ……れろじゅる
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,15
+						ENDIF
+					CASE 14
+						IF !GETBIT(複数回非表示,14)
+							PRINTFORM こほっくふっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM らいふひ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12)
+							PRINTFORM じゅるるる
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM ちゅぽぴちゅ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10)
+							PRINTFORM こふ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM くるひ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8)
+							PRINTFORM ちゅぱれろ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM こう、れすか
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6)
+							PRINTFORM ぬひはは、れろ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM じゅるれろ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4)
+							PRINTFORM んぶっ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM ……っ゛
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2)
+							PRINTFORM んぅ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM んっんっ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0)
+							PRINTFORM ～～～っっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							SIF マークタイプカウンター == 3
+								ループスペースカット = 1							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF FLAG:口上色
+					CALLFORM M_KOJO_COLOR_K49
+				SIF !ループカッター
+					CONTINUE
+				SIF ループカッター <= 3 && !ループスペースカット
+					PRINTFORM 　
+				SIF ループカッター == 4
+					BREAK
+			NEXT
+		;恋慕系or家族時姦後(家族に時姦してる場合は、無理矢理ぎみ
+		ELSEIF 陥落状態() >= 2
+			FOR ループカウンター:2,0,18
+				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				マークタイプ = 
+				SIF 陥落状態() == 3
+					マークタイプ = %UNICODE(0x2665)%
+				マークタイプカウンター = 1
+				SELECTCASE RAND:18
+					CASE 17
+						IF !GETBIT(複数回非表示,17)
+							PRINTFORM じゅるちゅぽれろぴちゃ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,17
+						ENDIF
+					CASE 16
+						IF !GETBIT(複数回非表示,16) && 陥落状態() == 2
+							PRINTFORM このへんたい、れろ、んっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,16
+						ENDIF
+					CASE 15
+						IF !GETBIT(複数回非表示,15)
+							PRINTFORM はぁ、ん、れろちゅぱ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,15
+						ENDIF
+					CASE 14
+						IF !GETBIT(複数回非表示,14) && 陥落状態() == 2
+							PRINTFORM う゛ぶっげほ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM じゅるちゅぽ、んぅっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12) && 陥落状態() == 2
+							PRINTFORM おぶ、やめ、ごほ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM じゅるれろ、じゅぽ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10) && 陥落状態() == 2
+							PRINTFORM おごっ、う゛ぶっっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM れろじゅるちゅぽ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8) && 陥落状態() == 2
+							PRINTFORM ごふ、げほ、んっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM じゅるじゅぷじゅぽ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6) && 陥落状態() == 2
+							PRINTFORM やめ、ごぼ、う゛ぐっ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM じゅぷ、じゅぽ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4) && 陥落状態() == 2
+							PRINTFORM いいかげ、ごほ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM れろ、けほ……
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2) && 陥落状態() == 2
+							PRINTFORM おぶ……、えぐ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM ……んぅ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0) && 陥落状態() == 2
+							PRINTFORM ……っう゛ぶ
+							SIF マークタイプカウンター == 1 && FLAG:口上色
+								SETCOLOR 0xFF0000
+							PRINTFORM %マークタイプ%
+							RESETCOLOR
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF FLAG:口上色
+					CALLFORM M_KOJO_COLOR_K49
+				SIF !ループカッター
+					CONTINUE
+				SIF ループカッター <= 2 && !ループスペースカット
+					PRINTFORM 　
+				SIF ループカッター == 3
+					BREAK
+			NEXT
+		;非陥落
+		ELSE
+			FOR ループカウンター:2,0,15				IF !FLAG:口上色
+					GETDEFCOLOR
+					SETCOLOR RESULT
+				ENDIF				ループスペースカット = 1
+				SELECTCASE RAND:15
+					CASE 14
+						IF !GETBIT(複数回非表示,14)
+							PRINTFORM れろ、じゅぷ、ちゅぽっ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,14
+						ENDIF
+					CASE 13
+						IF !GETBIT(複数回非表示,13)
+							PRINTFORM こほっ、ちゅる、けほっ
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,13
+						ENDIF
+					CASE 12
+						IF !GETBIT(複数回非表示,12)
+							PRINTFORM けほっえほっ……じゅる……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,12
+						ENDIF
+					CASE 11
+						IF !GETBIT(複数回非表示,11)
+							PRINTFORM えほ……ちゅるれろ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,11
+						ENDIF
+					CASE 10
+						IF !GETBIT(複数回非表示,10)
+							PRINTFORM れろじゅる……こほ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,10
+						ENDIF
+					CASE 9
+						IF !GETBIT(複数回非表示,9)
+							PRINTFORM こほ……けふ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,9
+						ENDIF
+					CASE 8
+						IF !GETBIT(複数回非表示,8)
+							PRINTFORM ん……んく……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,8
+						ENDIF
+					CASE 7
+						IF !GETBIT(複数回非表示,7)
+							PRINTFORM はっ……ふ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,7
+						ENDIF
+					CASE 6
+						IF !GETBIT(複数回非表示,6)
+							PRINTFORM ぅ……えぅ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,6
+						ENDIF
+					CASE 5
+						IF !GETBIT(複数回非表示,5)
+							PRINTFORM んく……こふ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,5
+						ENDIF
+					CASE 4
+						IF !GETBIT(複数回非表示,4)
+							PRINTFORM くぅ……れろ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,4
+						ENDIF
+					CASE 3
+						IF !GETBIT(複数回非表示,3)
+							PRINTFORM ちゅ……ちゅっ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,3
+						ENDIF
+					CASE 2
+						IF !GETBIT(複数回非表示,2)
+							PRINTFORM はふ……ちゅぱ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,2
+						ENDIF
+					CASE 1
+						IF !GETBIT(複数回非表示,1)
+							PRINTFORM れろ……ちゅぱ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,1
+						ENDIF
+					CASE 0
+						IF !GETBIT(複数回非表示,0)
+							PRINTFORM ちゅる……ぴちゃ……
+							ループスペースカット = 0							ループカッター += 1
+							SETBIT 複数回非表示,0
+						ENDIF
+				ENDSELECT
+				SIF FLAG:口上色
+					CALLFORM M_KOJO_COLOR_K49
+				SIF !ループカッター
+					CONTINUE
+				SIF ループカッター <= 2 && !ループスペースカット
+					PRINTFORM 　
+				SIF ループカッター == 3
+					BREAK
+			NEXT
+		ENDIF
+	;恋人
+	ELSEIF 陥落状態() >= 4
+		FOR ループカウンター:2,0,20			IF !FLAG:口上色
+				GETDEFCOLOR
+				SETCOLOR RESULT
+			ENDIF			ループスペースカット = 1
+			マークタイプ = 
+			IF !RAND:3
+				マークタイプ = %UNICODE(0x2665)%
+				マークタイプカウンター = 1
+			ELSEIF !RAND:2
+				マークタイプ = ♪
+				マークタイプカウンター = 2
+			ELSE
+				マークタイプカウンター = 3
+			ENDIF
+			SELECTCASE RAND:20
+				CASE 19
+					IF !GETBIT(複数回非表示,19)
+						IF 陥落状態() == 5
+							PRINTFORM %コマンド部位:0%しあわせですぅ
+						ELSE
+							PRINTFORM %コマンド部位:0%気持ちいいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,19
+					ENDIF
+				CASE 18
+					IF !GETBIT(複数回非表示,18)
+						IF 陥落状態() == 5
+							PRINTFORM もっと、%キャラ呼称%もっとぉ
+						ELSE
+							PRINTFORM %キャラ呼称%もっとしてくださいっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,18
+					ENDIF
+				CASE 17
+					IF !GETBIT(複数回非表示,17)
+						IF 陥落状態() == 5
+							PRINTFORM すきだいすきです%キャラ呼称%ぁ
+						ELSE
+							PRINTFORM 好きです%キャラ呼称%っ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,17
+					ENDIF
+				CASE 16
+					IF !GETBIT(複数回非表示,16)
+						IF 陥落状態() == 5
+							PRINTFORM ふみゅ、んきゅ、いいですぅ
+						ELSE
+							PRINTFORM あふ、んく、良いですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,16
+					ENDIF
+				CASE 15
+					IF !GETBIT(複数回非表示,15)
+						IF 陥落状態() == 5
+							PRINTFORM あん、あん、ひぁん……
+						ELSE
+							PRINTFORM あっ、あっ、ふぁあっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,15
+					ENDIF
+				CASE 14
+					IF !GETBIT(複数回非表示,14) && STRLENSU(使用部位) <= 2
+						IF 陥落状態() == 5
+							PRINTFORM %コマンド部位:0%ばかになりますぅ
+						ELSE
+							PRINTFORM %コマンド部位:0%こわれそうです
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,14
+					ENDIF
+				CASE 13
+					IF !GETBIT(複数回非表示,13)
+						IF 陥落状態() == 5
+							PRINTFORM こわしてください、%キャラ呼称%ぁ
+						ELSE
+							PRINTFORM %キャラ呼称%、これ、こわいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,13
+					ENDIF
+				CASE 12
+					IF !GETBIT(複数回非表示,12)
+						IF 陥落状態() == 5
+							PRINTFORM もっとしてくださいぃ
+						ELSE
+							PRINTFORM もっと、してほしいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,12
+					ENDIF
+				CASE 11
+					IF !GETBIT(複数回非表示,11)
+						IF 陥落状態() == 5
+							PRINTFORM いいです、これ、これぇ
+						ELSE
+							PRINTFORM はぁ、はぁ、これいいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,11
+					ENDIF
+				CASE 10
+					IF !GETBIT(複数回非表示,10)
+						IF 陥落状態() == 5
+							PRINTFORM %キャラ呼称%ぁ
+						ELSE
+							PRINTFORM %キャラ呼称%っ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,10
+					ENDIF
+				CASE 9
+					IF !GETBIT(複数回非表示,9)
+						IF 陥落状態() == 5
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) > 2 ? に # そんな \@いじっちゃぁ
+						ELSE
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) > 2 ?  # そんな \@にいじらないでっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,9
+					ENDIF
+				CASE 8
+					IF !GETBIT(複数回非表示,8) && STRLENSU(使用部位) < 2
+						IF 陥落状態() == 5
+							PRINTFORM %キャラ呼称%ぁ%コマンド部位:0%もっとぉ
+						ELSE
+							PRINTFORM %キャラ呼称%%コマンド部位:0%いいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,8
+					ENDIF
+				CASE 7
+					IF !GETBIT(複数回非表示,7) && STRLENSU(使用部位) < 2
+						IF 陥落状態() == 5
+							PRINTFORM はひ、かひゅ……%コマンド部位:0%こわれりゅ
+						ELSE
+							PRINTFORM はふっ……%コマンド部位:0%こわれますっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,7
+					ENDIF
+				CASE 6
+					IF !GETBIT(複数回非表示,6)
+						IF 陥落状態() == 5
+							PRINTFORM いい、%コマンド部位:0%\@ STRLENSU(使用部位) > 2 ? に #  \@きもちいぃですぅ
+						ELSE
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) > 2 ? に #  \@気持ちいいですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,6
+					ENDIF
+				CASE 5
+					IF !GETBIT(複数回非表示,5)
+						IF 陥落状態() == 5
+							PRINTFORM ゆるして%キャラ呼称%、おかしくなりますぅ
+						ELSE
+							PRINTFORM %キャラ呼称%ゆるしてくださいっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,5
+					ENDIF
+				CASE 4
+					IF !GETBIT(複数回非表示,4)
+						IF 陥落状態() == 5
+							PRINTFORM おかしくなっちゃいますぅ
+						ELSE
+							PRINTFORM おかしくなりそうですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,4
+					ENDIF
+				CASE 3
+					IF !GETBIT(複数回非表示,3)
+						IF 陥落状態() == 5
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) > 2 ? に #  \@バカになっちゃいますぅ
+						ELSE
+							PRINTFORM %コマンド部位:0%\@ STRLENSU(使用部位) > 2 ? に #  \@ばかになりそうですっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,3
+					ENDIF
+				CASE 2
+					IF !GETBIT(複数回非表示,2)
+						IF 陥落状態() == 5
+							PRINTFORM %キャラ呼称%、%キャラ呼称%ぁ
+						ELSE
+							PRINTFORM %キャラ呼称%、%キャラ呼称%っ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,2
+					ENDIF
+				CASE 1
+					IF !GETBIT(複数回非表示,1)
+						IF 陥落状態() == 5
+							PRINTFORM ふゃん、んきゅぅ、あふぅ
+						ELSE
+							PRINTFORM あん、んくっ、ふぁんっっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,1
+					ENDIF
+				CASE 0
+					IF !GETBIT(複数回非表示,0)
+						IF 陥落状態() == 5
+							PRINTFORM んぅひんっんくぅ
+						ELSE
+							PRINTFORM んっんっっんぅっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,0
+					ENDIF
+			ENDSELECT
+			SIF FLAG:口上色
+				CALLFORM M_KOJO_COLOR_K49
+			SIF !ループカッター || ループスペースカット
+				CONTINUE
+			SIF ループカッター <= 2
+				PRINTFORM 　
+			SIF ループカッター == 3
+				BREAK
+		NEXT
+	;恋慕系or家族時姦後
+	ELSEIF 陥落状態() >= 2
+		FOR ループカウンター:2,0,20			IF !FLAG:口上色
+				GETDEFCOLOR
+				SETCOLOR RESULT
+			ENDIF			ループスペースカット = 1
+			マークタイプ = 
+			マークタイプカウンター = 0
+			IF !RAND:2
+				マークタイプ = %UNICODE(0x2665)%
+				マークタイプカウンター = 1
+			ELSE
+				マークタイプ = ♪
+			ENDIF
+			SIF 陥落状態() == 2
+				マークタイプ = ！
+			SELECTCASE RAND:20
+				CASE 19
+					IF !GETBIT(複数回非表示,19)
+						IF 陥落状態() == 2
+							PRINTFORM %コマンド部位:0%触らないでっ
+						ELSE
+							PRINTFORM や、です、%コマンド部位:0%やれすぅ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,19
+					ENDIF
+				CASE 18
+					IF !GETBIT(複数回非表示,18)
+						IF 陥落状態() == 2
+							PRINTFORM %コマンド部位:0%あ、くぅっ
+						ELSE
+							PRINTFORM %コマンド部位:0%、%コマンド部位:0%熱いぃ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,18
+					ENDIF
+				CASE 17
+					IF !GETBIT(複数回非表示,17)
+						IF 陥落状態() == 2
+							PRINTFORM さわらないで、ヘンタイッ
+						ELSE
+							PRINTFORM これ、これ、これぇっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,17
+					ENDIF
+				CASE 16
+					IF !GETBIT(複数回非表示,16)
+						IF 陥落状態() == 2
+							PRINTFORM %キャラ呼称%止めなさいっ
+						ELSE
+							PRINTFORM %キャラ呼称%やめてくださいぃ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,16
+					ENDIF
+				CASE 15
+					IF !GETBIT(複数回非表示,15)
+						IF 陥落状態() == 2
+							PRINTFORM あっ、ひっ、いやっ
+						ELSE
+							PRINTFORM あん、あんっ、やぁん
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,15
+					ENDIF
+				CASE 14
+					IF !GETBIT(複数回非表示,14)
+						IF 陥落状態() == 2
+							PRINTFORM きもちぃっ、わるいだけですっ
+						ELSE
+							PRINTFORM きもちいっ、ちが、あんっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,14
+					ENDIF
+				CASE 13
+					IF !GETBIT(複数回非表示,13)
+						IF 陥落状態() == 2
+							PRINTFORM だめ、もうさわらないでっ
+						ELSE
+							PRINTFORM だめ、%キャラ呼称%だめですぅ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,13
+					ENDIF
+				CASE 12
+					IF !GETBIT(複数回非表示,12)
+						IF 陥落状態() == 2
+							PRINTFORM いやです、いやですっ
+						ELSE
+							PRINTFORM やぁです、これやぁですぅ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,12
+					ENDIF
+				CASE 11
+					IF !GETBIT(複数回非表示,11)
+						IF 陥落状態() == 2
+							PRINTFORM ふ、く、この、このぉっ
+						ELSE
+							PRINTFORM ふにゅ、んきゅ、これだめですぅ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,11
+					ENDIF
+				CASE 10
+					IF !GETBIT(複数回非表示,10)
+						IF 陥落状態() == 2
+							PRINTFORM もう止めなさいっ
+						ELSE
+							PRINTFORM %キャラ呼称%やめてぇ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,10
+					ENDIF
+				CASE 9
+					IF !GETBIT(複数回非表示,9)
+						IF 陥落状態() == 2
+							PRINTFORM だから触らないでと、言ってっ
+						ELSE
+							PRINTFORM %キャラ呼称%触らないでくださいぃ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,9
+					ENDIF
+				CASE 8
+					IF !GETBIT(複数回非表示,8)
+						IF 陥落状態() == 2
+							PRINTFORM もう、やめなさい、やめてっ
+						ELSE
+							PRINTFORM はひ、んく……、%キャラ呼称%止めてくださいっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,8
+					ENDIF
+				CASE 7
+					IF !GETBIT(複数回非表示,7)
+						IF 陥落状態() == 2
+							PRINTFORM こんなのきもちよくなんて、あひんっ
+						ELSE
+							PRINTFORM んく、きもち、よくないです……
+						ENDIF
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,7
+					ENDIF
+				CASE 6
+					IF !GETBIT(複数回非表示,6)
+						IF 陥落状態() == 2
+							PRINTFORM %コマンド部位:0%良、いわけないっ
+						ELSE
+							PRINTFORM %コマンド部位:0%良い……、ちが
+						ENDIF
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,6
+					ENDIF
+				CASE 5
+					IF !GETBIT(複数回非表示,5)
+						IF 陥落状態() == 2
+							PRINTFORM このヘンタイ、さっさとやめなさいっ
+						ELSE
+							PRINTFORM くぅ、んぅっ、やめて、ください
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,5
+					ENDIF
+				CASE 4
+					IF !GETBIT(複数回非表示,4)
+						IF 陥落状態() == 2
+							PRINTFORM 気持ちよくなんてないっ
+						ELSE
+							PRINTFORM 『気持ちいい』、なんて、ふぁんっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,4
+					ENDIF
+				CASE 3
+					IF !GETBIT(複数回非表示,3)
+						IF 陥落状態() == 2
+							PRINTFORM くっ、つぅっ、はふっ、んっ
+						ELSE
+							PRINTFORM あんっ、ひぁっっ、んきゅぅ……
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,3
+					ENDIF
+				CASE 2
+					IF !GETBIT(複数回非表示,2)
+						IF 陥落状態() == 2
+							PRINTFORM %キャラ呼称%\@ キャラ呼称 != ""  ? の # この \@ヘンタイ、色情魔っ
+						ELSE
+							PRINTFORM %キャラ呼称%\@ キャラ呼称 != "" ? の # もう \@Ｈ\@ キャラ呼称 != "" ? ぃ # すぎですぅ \@
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,2
+					ENDIF
+				CASE 1
+					IF !GETBIT(複数回非表示,1)
+						IF 陥落状態() == 2
+							PRINTFORM くっ、はふ、っんぅっ
+						ELSE
+							PRINTFORM ひあん、んくぅっ
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,1
+					ENDIF
+				CASE 0
+					IF !GETBIT(複数回非表示,0)
+						IF 陥落状態() == 2
+							PRINTFORM っっ、つっ、ふっ
+						ELSE
+							PRINTFORM はふ、ふぁっ、やぁん
+						ENDIF
+						SIF マークタイプカウンター == 1 && FLAG:口上色
+							SETCOLOR 0xFF0000
+						PRINTFORM %マークタイプ%
+						RESETCOLOR
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,0
+					ENDIF
+			ENDSELECT
+			SIF FLAG:口上色
+				CALLFORM M_KOJO_COLOR_K49
+			SIF !ループカッター || ループスペースカット
+				CONTINUE
+			SIF ループカッター <= 3
+				PRINTFORM 　
+			SIF ループカッター == 4
+				BREAK
+		NEXT
+	;非陥落
+	ELSE
+		FOR ループカウンター:2,0,20			IF !FLAG:口上色
+				GETDEFCOLOR
+				SETCOLOR RESULT
+			ENDIF			ループスペースカット = 1
+			SELECTCASE RAND:20
+				CASE 19
+					IF !GETBIT(複数回非表示,19)
+						PRINTFORM ふっ、くっ、あふ……
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,19
+					ENDIF
+				CASE 18
+					IF !GETBIT(複数回非表示,18)
+						PRINTFORM ふぁんっ、んっ、ち、いまのは違い
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,18
+					ENDIF
+				CASE 17
+					IF !GETBIT(複数回非表示,17)
+						PRINTFORM いや、あんっ、いやです、んくっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,17
+					ENDIF
+				CASE 16
+					IF !GETBIT(複数回非表示,16)
+						PRINTFORM ひぅっ、や、き、気持ち良くないのに
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,16
+					ENDIF
+				CASE 15
+					IF !GETBIT(複数回非表示,15)
+						PRINTFORM やぁ、こんなの嫌です
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,15
+					ENDIF
+				CASE 14
+					IF !GETBIT(複数回非表示,14)
+						PRINTFORM やめて、%キャラ呼称%おねがいですからぁ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,14
+					ENDIF
+				CASE 13
+					IF !GETBIT(複数回非表示,13)
+						PRINTFORM ふぁんっ……、く……
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,13
+					ENDIF
+				CASE 12
+					IF !GETBIT(複数回非表示,12)
+						PRINTFORM %コマンド部位:0%はだめですっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,12
+					ENDIF
+				CASE 11
+					IF !GETBIT(複数回非表示,11)
+						PRINTFORM %キャラ呼称%\@ キャラ呼称 != "" ? の # もぅ、 \@ばかぁっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,11
+					ENDIF
+				CASE 10
+					IF !GETBIT(複数回非表示,10)
+						PRINTFORM %キャラ呼称%\@ キャラ呼称 != "" ? なんて # 主人公は \@きらいですっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,10
+					ENDIF
+				CASE 9
+					IF !GETBIT(複数回非表示,9)
+						PRINTFORM %キャラ呼称%%コマンド部位:0%触らないでください……
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,9
+					ENDIF
+				CASE 8
+					IF !GETBIT(複数回非表示,8)
+						PRINTFORM はひ、んく……、%キャラ呼称%止めてくださいっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,8
+					ENDIF
+				CASE 7
+					IF !GETBIT(複数回非表示,7)
+						PRINTFORM んく、きもち、よくないです……
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,7
+					ENDIF
+				CASE 6
+					IF !GETBIT(複数回非表示,6)
+						PRINTFORM %コマンド部位:0%良い……、違っ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,6
+					ENDIF
+				CASE 5
+					IF !GETBIT(複数回非表示,5)
+						PRINTFORM くぅ、んぅっ、やめて、ください
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,5
+					ENDIF
+				CASE 4
+					IF !GETBIT(複数回非表示,4)
+						PRINTFORM 気持ちよく、なんて、ふぁんっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,4
+					ENDIF
+				CASE 3
+					IF !GETBIT(複数回非表示,3)
+						PRINTFORM あんっ、ひぁっっ、んきゅぅ……
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,3
+					ENDIF
+				CASE 2
+					IF !GETBIT(複数回非表示,2)
+						PRINTFORM %キャラ呼称%
+						PRINTFORM のＨっ！
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,2
+					ENDIF
+				CASE 1
+					IF !GETBIT(複数回非表示,1)
+						PRINTFORM ひあん、んくぅっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,1
+					ENDIF
+				CASE 0
+					IF !GETBIT(複数回非表示,0)
+						PRINTFORM はふ、ふぁっ
+						ループスペースカット = 0						ループカッター += 1
+						SETBIT 複数回非表示,0
+					ENDIF
+			ENDSELECT
+			SIF FLAG:口上色
+				CALLFORM M_KOJO_COLOR_K49
+			SIF !ループカッター || ループスペースカット
+				CONTINUE
+			IF ループカッター <= 3
+				IF !RAND:2
+					PRINTFORM 。　
+				ELSE
+					PRINTFORM ！　
+				ENDIF
+			ENDIF
+			SIF ループカッター == 4
+				BREAK
+		NEXT
+	ENDIF
+	IF !FLAG:口上色
+		GETDEFCOLOR
+		SETCOLOR RESULT
+	ENDIF	PRINTFORML 」
+	SELECTCASE ループＭＡＸ
+		;恋人専用
+		CASE 3
+			SELECTCASE ループカウンター:0
+				;地の文一行目
+				CASE 0
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 蕩けきった表情で覚が%CALLNAME:MASTER%を見つめてくる
+						CASE 1
+							PRINTFORMDL 嬉しそうに頬を緩ませ%CALLNAME:MASTER%の与える快楽に酔いしれる覚
+						CASE 2
+							PRINTFORMDL 覚の気持ち良さそうな表情に、%CALLNAME:MASTER%も笑みを浮かべる
+					ENDSELECT
+				;地の文二行目
+				CASE 1
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 甘ったるい覚の渧き声に、%CALLNAME:MASTER%はさらに激しく%コマンド部位:1%を弄り出した
+						CASE 1
+							PRINTFORMDL 涎をこぼして甘えてくる覚に、笑みを深めた%CALLNAME:MASTER%はより強く快感を与えていく
+						CASE 2
+							PRINTFORMD %CALLNAME:MASTER%は覚の
+							IF TEQUIP:50 == MASTER
+								PRINTFORMDL 膣腔にペニスを突き込んでいく
+							ELSEIF TEQUIP:MASTER:50 == MASTER
+								PRINTFORMDL アナルにペニスを突き込んでいく
+							ELSE
+								PRINTFORMDL %コマンド部位:1%を激しくいらっている
+							ENDIF
+					ENDSELECT
+				;地の文三行目
+				CASE 2
+					SELECTCASE RAND:3
+						CASE 0
+							PRINTFORMDL 快楽に体中を震えさせ悦鳴を揚げる覚に、愉悦を感じる%CALLNAME:MASTER%だった
+						CASE 1
+							PRINTFORMDL 快感を享受する覚が、%CALLNAME:MASTER%にしがみついてきた
+						CASE 2
+							PRINTFORMDL 覚の悦楽にふける姿に、悦楽を覚える%CALLNAME:MASTER%だった
+					ENDSELECT
+			ENDSELECT
+		;恋慕系or家族時姦後
+		CASE 2
+			SELECTCASE ループカウンター:0
+				;地の文一行目
+				CASE 0
+					IF 陥落状態() == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL 随喜の涙をこぼしながらも、覚が悔しげに睨んでくる
+							CASE 1
+								PRINTFORMDL 悦楽に頬を染める覚だが、その表情は憤怒にゆがんでいる
+							CASE 2
+								PRINTFORMDL 快感に息を荒くしながらも、不快げに眉をひそめる覚
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL いやがるような言葉を口にしつつ、自ら悦楽を貪る覚
+							CASE 1
+								PRINTFORMDL 快感に身をゆだねつつ、覚は口ではいやがるそぶりを見せる
+							CASE 2
+								PRINTFORMDL あらがうような事を言いながらも、覚の表情は嬉しげだ
+						ENDSELECT
+					ENDIF
+				;地の文二行目
+				CASE 1
+					IF 陥落状態() == 2
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL %CALLNAME:MASTER%の気持ちいいくせにという内心の言葉に、覚はそっぽを向いた
+							CASE 1
+								PRINTFORMDL 口では抵抗しつつ、快楽を受け入れている覚に笑みが浮かんだ
+							CASE 2
+								PRINTFORMDL 時折甘い声が漏れるのを、必死で堪える覚に%CALLNAME:MASTER%は愉悦を覚えた
+						ENDSELECT
+					ELSE
+						SELECTCASE RAND:3
+							CASE 0
+								PRINTFORMDL きもちいいだろうと%CALLNAME:MASTER%が内心で問いかけると、覚は無意識にうなずいている
+							CASE 1
+								PRINTFORMDL もっとしてやろうと言う%CALLNAME:MASTER%に、覚の頬が赤みを増した
+							CASE 2
+								PRINTFORMDL 言葉とは裏腹に身をすり寄せて無声のおねだりをする覚に、やに下がる%CALLNAME:MASTER%だった
+						ENDSELECT
+					ENDIF
+			ENDSELECT
+		;其他
+		CASE 1
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 何かを堪えるような覚に、すこしだけ%CALLNAME:MASTER%は不満を覚えた
+				CASE 1
+					PRINTFORMDL %CALLNAME:MASTER%が与える悦楽を、覚はやり過ごそうとする
+				CASE 2
+					PRINTFORMDL 快感に身を震わせつつ、覚はあらがうように首を振っている
+			ENDSELECT
+	ENDSELECT
+NEXT
+RETURN 1
+
+;-------------------------------------------
+;時止め中（日常
+;-------------------------------------------
+@STOP49
+PRINTFORMDL %CALLNAME:MASTER%は、時を止めたまま%STR:0%\@ STR:0 == "胸愛撫" || STR:0 == "肛門愛撫" || STR:0 == "陰蒂愛撫" || STR:0 == "手指挿入" ? を行う #  \@事に、愉悦を覚えた
+PRINTFORMDL 解除した際の覚の反応が今から楽しみでならない
+
+;-------------------------------------------
+;睡眠中（日常
+;-------------------------------------------
+@SLEEP49
+IF TALENT:恋人
+	PRINTFORML 「ん……ぬし……さまぁ…………やぁ……です…………」
+ELSE
+	PRINTFORML 「やぁ……なに…………しか……たない……ひと…………」
+ENDIF
+PRINTFORMDW 夢現のまどろみの中、覚が笑みを浮かべて寝言を呟いた
+
+;-------------------------------------------
+;押し倒され&セクハラコマンド後カウンター
+;ARG,0なら押し倒され中、1ならセクハラコマンド後カウンター
+;-------------------------------------------
+@UFUFUTO49(ARG)
+IF !ARG
+	IF TALENT:恋人
+		PRINTFORMDW 覚は嬉しそうに笑いながら、%CALLNAME:MASTER%の反撃におねだりをしてきた
+	ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+		PRINTFORMDW クスクスと楽しげに笑う覚が、%CALLNAME:MASTER%の反撃を軽くいなしている
+	ELSEIF GETBIT (CFLAG:1490,0) || GETBIT (CFLAG:1490,1)
+		PRINTFORMDW 不愉快そうに唇をゆがめた覚が、自分の好きにさせろと睨んでくる
+	ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+		PRINTFORMDW 恥ずかしそうに頬を染めて、覚が自分が気持ちよくなる様に動いている
+	ENDIF
+ELSE
+	;指入れ
+	IF SELECTCOM == 316
+		IF PALAM:1 == 9999
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「ん、んっっ、んぅ……、だめ、なのに、わたしがしたいのに」
+				CASE 1
+					PRINTFORML 「はふ、んくぅ、『おまんこいいだろ』？　はい、でも、わたしのばんなのに」
+				CASE 0
+					PRINTFORML 「んく、ひんっ！　や、もう、わたしにもさせて、んくぅ」
+			ENDSELECT
+		ELSEIF PALAM:1 >= 5000
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「……ほんとうに、んく、ヒドい人です、だから仕返し、ふぁっ！」
+				CASE 1
+					PRINTFORML 「ん、くぅ、もう、こんなところで、指を挿入れるなんて」
+				CASE 0
+					PRINTFORML 「はふ、んっっ、だめ、膣内こすらないで、ください」
+			ENDSELECT
+		ELSEIF TALENT:恋人
+			PRINTFORML 「んくっ……、主様のＨ、こんなところで、指なんて……」
+			PRINTFORML 「『嬉しそうだ』？　ん……、それは、その……」
+			PRINTFORML 「だからこうしているんです」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「『おまんこ気持ちいいだろう』？　憤怒ますよ？」
+			PRINTFORML 「『そっちからはしてるのに』？　……ただの、きまぐれです」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「『もっと膣内をこすってほしいのか』？　ただ、私がしたいだけ、です」
+		ENDIF
+	;クリor秘所愛撫
+	ELSEIF SELECTCOM == 315
+		IF PALAM:0 == 9999
+			IF GETBIT(TALENT:性別,1)
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「んっ、わたしがするんです、おちんちんいじらないでっ、ふぁんっ！」
+					CASE 1
+						PRINTFORML 「はぁはぁ……、おちんちんあついです……、でも、わたしがするんです」
+					CASE 0
+						PRINTFORML 「やぁ、おちんちんこすらないで、ください、わたしがしてるのにぃ」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「ふぁっ……、っ、こんなところで、そここすらないでっ、くださいっっ」
+					CASE 1
+						PRINTFORML 「やっ、だめ、だめだめ、そここすられたら、ダメになりますから」
+					CASE 0
+						PRINTFORML 「んくぅ、や、そこ、だめ、くりこすっちゃだめ、です」
+				ENDSELECT
+			ENDIF
+		ELSEIF PALAM:0 >= 5000
+			IF GETBIT(TALENT:性別,1)
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「はぁ、はぁ……、んっ、おちんちん触らないでください、私がするんですから」
+					CASE 1
+						PRINTFORML 「いまは、私の番、なんですからぁ、おちんちんから手を離してください」
+					CASE 0
+						PRINTFORML 「もう、Ｈなんですからぁ、んっおちんちん駄目です」
+				ENDSELECT
+			ELSE
+				SELECTCASE RAND:3
+					CASE 2
+						PRINTFORML 「だか、だから、そこはだめです。んっ、私の番なのに……」
+					CASE 1
+						PRINTFORML 「お、憤怒ますよ、んっ私がしてるんですからぁ」
+					CASE 0
+						PRINTFORML 「っ、わたしだって、したいんですから、クリいじめないでください」
+				ENDSELECT
+			ENDIF
+		ELSEIF TALENT:恋人
+			PRINTFORML 「はふ……、本当に主様は仕方ないひとです」
+			PRINTFORML 「『嬉しいくせに』？　……ええ、ですから、こうしているんです」
+			PRINTFORML 「主様だって嬉しいんでしょう？　そんな笑顔をしていたら読まなくてもわかりますよ」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「んっっ……まったく、%CALLNAME:MASTER%はヒドい人ですね」
+			PRINTFORML 「私がしてる間くらいは、っ、そこをこすらないで欲しいです」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「『気持ちいいか』？　ええ、ですから、こうして私からもお返ししてるんです」
+		ENDIF
+	;肛門愛撫
+	ELSEIF SELECTCOM == 314
+		IF PALAM:2 == 9999
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「はひ、やぁ、おしりでなんていやです。わたしがしてるんだからぬいてくださいぃ」
+				CASE 1
+					PRINTFORML 「やぁ、おしりやぁ、いじわるなんですからぁ、おかえししてるのにぃ」
+				CASE 0
+					PRINTFORML 「おしり、やです、いじわるしないでください、わたしがするんですからぁ」
+			ENDSELECT
+		ELSEIF PALAM:2 >= 5000
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「んっっ！　やめて、くださいっ！　私が、する番なんですからぁ」
+				CASE 1
+					PRINTFORML 「お尻、弄らないで、ください。そんなに、私にされるのいやなんですか？」
+				CASE 0
+					PRINTFORML 「そこはいやです、んっ、もう、私のしたいように、させてください」
+			ENDSELECT
+		ELSEIF TALENT:恋人
+			PRINTFORML 「主様の、バカ……、はふっ、お尻弄らないでください」
+			PRINTFORM 「『気持ちいいだろう』？　
+			IF ABL:Ａ感覚 <= 1
+				PRINTFORM ……良くないです
+			ELSEIF ABL:Ａ感覚 <= 3
+				PRINTFORM ……その気持ち、悪くはないです
+			ELSE
+				PRINTFORM ……気持ちいいから駄目なんです
+			ENDIF
+			PRINTFORML 」
+			PRINTFORML 「でも、今は私がして、っ、だから、指動かさないでください」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORM 「『尻穴で感じるヘンタイ』？　
+			IF ABL:Ａ感覚 <= 1
+				PRINTFORM 気持ち悪いだけですね
+			ELSEIF ABL:Ａ感覚 <= 3
+				PRINTFORM 気持ちよくないですよ
+			ELSE
+				PRINTFORM きもちよく、なんて、ひんっ！
+			ENDIF
+			PRINTFORML 」
+			PRINTFORML 「…………今は、私がしてるんです、指動かさないで、んっ」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			IF ABL:Ａ感覚 <= 1
+				PRINTFORML 「『尻の谷間がこすりやすい』？　……はぁ、私がしてるのに、ヒドい人です」
+			ELSEIF ABL:Ａ感覚 <= 3
+				PRINTFORML 「『しっかりほぐさないとつらい』？　……ヘンタイ。今は私の番なのですが」
+			ELSE
+				PRINTFORML 「『尻穴、ほぐれ、てる』？　はっ、ふっ、そんなこと、より私がしてるのにぃ」
+			ENDIF
+		ENDIF
+	;胸愛撫
+	ELSEIF SELECTCOM == 313
+		IF PALAM:3 == 9999
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「はぁはぁ、んっ、おっぱい、あつい……、でも、わたしだって、したいんですからぁ」
+				CASE 1
+					PRINTFORML 「はふ、んくっ、や、むねじんじんする……、はふっ、でもでも、わたしのばんなんです」
+				CASE 0
+					PRINTFORML 「や、ちくびこりこりだめです、わたしがしてるんだからおとなしく、んぅっ」
+			ENDSELECT
+		ELSEIF PALAM:3 >= 5000
+			SELECTCASE RAND:3
+				CASE 2
+					PRINTFORML 「本当に、すけべですね。ふぁっ！　私が、してるん、ですからね」
+				CASE 1
+					PRINTFORML 「私がしてるのに、なんで手を動か、きゅんっ……、『可愛い声』？　うるさいですよ」
+				CASE 0
+					PRINTFORML 「はふ……、だから、私がしてるのに、なんで、んくっ」
+			ENDSELECT
+		ELSEIF TALENT:恋人
+			PRINTFORML 「ぬしさまぁ？　そんなにわたしのおっぱい触りたいんですか？」
+			PRINTFORML 「『触るのが気持ちいい』？　……はぁ、私だって主様を弄り回したいのですが？」
+			PRINTFORML 「『好きにしろ』？　じゃあ好きにしますね」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「はふ……、んっ、そんなにおっぱい好きなんですか？　『大好きに決まってる』？」
+			PRINTFORML 「……はぁ、じゃあ勝手にしてください。私も勝手にしますから」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「『おっぱい最高』？　ふふ、そう言われて悪い気はしませんが、私がする番ですので」
+		ENDIF
+	;キス
+	ELSEIF SELECTCOM == 312
+		PRINTFORM 覚は、
+		IF TCVAR:20 > 0 && TCVAR:20 < 10
+			PRINTFORML すこし身を離したあと、改めて唇を寄せてきた
+		ELSEIF TCVAR:20 > 10 && TCVAR:20 < 20
+			PRINTFORML 遠慮がちに、少し出口て、それでもこらえきれないように顔を寄せてきた
+		ELSEIF TCVAR:20 > 19 && TCVAR:20 < 30
+			PRINTFORML ぎゅっとこちらの首に腕をからめ、懸命に口吸いを続けている
+		ENDIF
+		PRINTL
+		SIF FLAG:口上色
+			CALLFORM M_KOJO_COLOR_K49
+		IF TALENT:恋人
+			PRINTFORML 「ちゅっ、れろ、じゅる……主様、もっと、れろちゅぱ……」
+			PRINTFORML 「『そんなにキスが好きか』？　ええ大好きですよ、ちゅっちゅっちゅぅっ」
+			PRINTFORML 「れも、それいらいもしゅき、れろちゅぱ、ちゅ、じゅる」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「ちゅ、ちゅっ……、キスもっと、ちゅっ、れろ、んっ」
+			PRINTFORML 「ふふ、%CALLNAME:MASTER%の唇美味しい、ちゅっちゅっ」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「あ、にげちゃ、だめです、れろちゅぱちゅる、ちゅっ」
+		ENDIF
+	;尻撫で
+	ELSEIF SELECTCOM == 310
+		SELECTCASE TFLAG:193
+			CASE 2,3
+				PRINTFORML 「はぁ、その手を動かすのをやめてください。やめないなら私にも考えがありますから」
+			CASE 4
+				IF TALENT:恋人
+					PRINTFORML 「あふ、んっ……、お尻なでまわされるの、気持ちいいです」
+					PRINTFORML 「『ならもっと』？　ふふ……、でも、私だって、したいですから」
+					PRINTFORML 「主様、私にされると思うだけで、感じてるんですね？　嬉しい」
+				ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+					PRINTFORML 「あふん……、もう、私からしたいのに、なんでまだもんでるんですか？」
+					PRINTFORML 「『覚のやらしい声が聞きたい』？　もう、仕方の無い人です」
+				ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+					PRINTFORML 「あふ、んっ、私がしてるんですから、おとなしくしてください、んっ」
+				ENDIF
+		ENDSELECT
+	;掀裙子
+	ELSEIF SELECTCOM == 330
+		IF TALENT:恋人
+			PRINTFORML 「はぁ、主様も同じように恥ずかしい目に遭えば良いんです」
+			PRINTFORML 「『覚からされるのは褒美にしかならない』？　……へんたい」
+			PRINTFORML 「でも、そんな主様を嫌いになれない自分に困ります」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「『見られて嬉しいだろう』？　そんなことはありません」
+			PRINTFORML 「今は私がしてるんですから、黙っていてください」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「全く、こんなことをしておいて、自分はされたくないなんて通用しませんから」
+		ENDIF
+	;抱きつき
+	ELSE
+		IF TALENT:恋人
+			PRINTFORML 「もう、しかたの無い人ですね主様は」
+			PRINTFORML 「『覚の抱き心地が良いのが悪い』？　でも、私だって主様に色々したいんですから」
+			PRINTFORML 「だから今は、おとなしく私のされるままになってください」
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORML 「こうして抱きしめられるのは嬉しいですが、私からはいろいろやりにくいですね」
+			PRINTFORML 「『おとなしく抱きしめられろ』？　いやですよ、私だって%CALLNAME:MASTER%を悦ばせたいんです」
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕)
+			PRINTFORML 「はぁ、私の方がしているんですから、少しは腕を緩めてください」
+		ENDIF
+	ENDIF
+ENDIF
+
+
+;-------------------------------------------
+;ペットが同じ部屋にいる際の一行地の文追加
+;ARG,0なら通常、1ならセクハラ
+;-------------------------------------------
+@PET49(ARG)
+DRAWLINE
+IF FLAG:70
+	PRINTFORMD %ANIMALNAME()%は
+	IF GROUPMATCH(TIME:2,1,6,7)
+		PRINTFORMD 眠りに落ちたまま
+	ELSE
+		PRINTFORMD 身体を動かしかけて
+	ENDIF
+	PRINTFORMDL 、凍った時間に閉じ込められている
+ELSEIF ARG == 1
+	IF GROUPMATCH(TIME:2,1,6,7)
+		PRINTFORMD 眠っている%ANIMALNAME()%を見た覚が、
+		IF TALENT:恋人
+			PRINTFORMDL うっとりした様子で見つめてきた
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORMDL 楽しげな笑みを浮かべている
+		ELSEIF GETBIT (CFLAG:1490,0)
+			PRINTFORMDL 憤怒を込めてねめつけてきた
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			PRINTFORMDL 困ったように笑っている
+		ELSE
+			PRINTFORMDL いらだちを浮かべて睨んできた
+		ENDIF
+	ELSE
+		IF TALENT:恋人
+			PRINTFORMDL 蕩けた笑みを浮かべる覚に、%ANIMALNAME()%が不満そうに息を漏らしている
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			PRINTFORMDL うっとりとした覚に、%ANIMALNAME()%が不思議そうに見つめてくる
+		ELSEIF GETBIT (CFLAG:1490,0)
+			PRINTFORMDL いらだちを浮かべる覚に、%ANIMALNAME()%が歯をむいて威嚇してくる
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			PRINTFORMDL どことなく嬉しげな覚に、%ANIMALNAME()%が戸惑うようにうろついている
+		ELSE
+			PRINTFORMDL 不快感をあらわにする覚に、%ANIMALNAME()%がうなり声を上げている
+		ENDIF
+	ENDIF
+ELSE
+	IF GROUPMATCH(TIME:2,1,6,7)
+		IF TALENT:恋人
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 覚は、%ANIMALNAME()%の寝姿を優しい目で見てから、うっとりとした表情でこちらを見つめてきた
+				CASE 1
+					PRINTFORMDL 眠っている%ANIMALNAME()%に軽く触れてから、覚がこちらに熱情に潤んだ瞳を向けてきた
+			ENDSELECT
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 覚は眠っている%ANIMALNAME()%を見つめて、こちらに笑みを向けてきた
+				CASE 1
+					PRINTFORMDL %ANIMALNAME()%の寝姿に笑みを浮かべて、そのままこちらにも同じ笑顔を向けてきた
+			ENDSELECT
+		ELSEIF GETBIT (CFLAG:1490,0)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL %ANIMALNAME()%の寝顔を優しい表情で見ている覚が、こちらに気づいて眉をひそめた
+				CASE 1
+					PRINTFORMDL 横になっている%ANIMALNAME()%に微笑んだ覚が、こちらを見て顔を蹙めた
+			ENDSELECT
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 眠る%ANIMALNAME()%に笑みを向けた覚が、柔らかい表情を向けてきた
+				CASE 1
+					PRINTFORMDL 寝そべっている%ANIMALNAME()%を軽く撫でながら、覚が笑みを向けてくる
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+				CASE 0
+					PRINTFORMDL 身を横たえる%ANIMALNAME()%にほほえんだ後、覚が冷めた表情をこちらに向けてきた
+				CASE 1
+					PRINTFORMDL 眠っている%ANIMALNAME()%を優しい瞳で見つめる覚に、%CALLNAME:MASTER%はしばし見とれた
+			ENDSELECT
+		ENDIF
+	ELSE
+		IF TALENT:恋人
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL %ANIMALNAME()%のおねだりをいなしながら、覚がこちらに笑いかけてくる
+				CASE 1
+					PRINTFORMDL 覚の熱情を察しているのか、%ANIMALNAME()%は不満げにうなっている
+				CASE 2
+					PRINTFORMDL こちらに笑顔を向ける覚に、%ANIMALNAME()%がすねているようだ
+			ENDSELECT
+		ELSEIF TALENT:恋慕 || TALENT:184 || TALENT:185
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 覚がこちらに笑みを向けながら、%ANIMALNAME()%の相手をしている
+				CASE 1
+					PRINTFORMDL %ANIMALNAME()%の催促に、苦笑を浮かべて構いながら、覚がこちらに視線を向けている
+				CASE 2
+					PRINTFORMDL うっとりとした表情でこちらを見つめながら、覚は%ANIMALNAME()%の身体を撫でている
+			ENDSELECT
+		ELSEIF GETBIT (CFLAG:1490,0)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 覚は顔にいらだちを浮かべつつ、%ANIMALNAME()%を安心させるように優しく撫でている
+				CASE 1
+					PRINTFORMDL 冷たい目でこちらを睨んでくる覚を、%ANIMALNAME()%が不思議そうに見ている
+				CASE 2
+					PRINTFORMDL %ANIMALNAME()%をかばうように、覚が立ちはだかっている
+			ENDSELECT
+		ELSEIF (GETBIT (CFLAG:1 ,0) || TALENT:思慕) && !GETBIT (CFLAG:1490,1)
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL 覚は、楽しそうに%ANIMALNAME()%の相手をしつつ、こちらを窺っている
+				CASE 1
+					PRINTFORMDL 穏やかな笑みをこちらに向けて、覚は%ANIMALNAME()%に構っている
+				CASE 2
+					PRINTFORMDL %ANIMALNAME()%を優しく撫でつつ、覚が柔らかい表情を向けてくる
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORMDL %ANIMALNAME()%の相手を優先する覚に、%CALLNAME:MASTER%はなおざりにされてしまった
+				CASE 1
+					PRINTFORMDL %ANIMALNAME()%を撫でる覚が、胡乱げな表情をこちらに向けてくる
+				CASE 2
+					PRINTFORMDL すり寄ってきた%ANIMALNAME()%の相手をしながら、覚が冷めた瞳を向けてくる
+			ENDSELECT
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------
+;怨霊が同じ場所にいる際の一行地の文追加
+;-------------------------------------------
+@ONRYO49()
+DRAWLINE
+PRINTFORMD 怨霊は覚に気づいて
+SELECTCASE RAND:5
+	CASE 4
+		PRINTFORMDL 、慌てて散っていった
+	CASE 3
+		PRINTFORMDL いないのか、ふよふよとうかんでいる
+	CASE 2
+		PRINTFORMDL 、動きを止めている
+	CASE 1
+		PRINTFORMDL いないのだろう、ぷかぷかと近づいてくる
+	CASE 0
+		PRINTFORMDL いるのか、こちらには全く近寄ってこない
+ENDSELECT
+
+;-------------------------------------------
+;陥落状態の指定
+;ARGを入力しなければ、TARGET入力
+;-------------------------------------------
+@陥落状態(ARG)
+#FUNCTION
+SIF !ARG
+	ARG = TARGET
+IF TALENT:ARG:恋人
+	IF CFLAG:清い交際 && ((GETBIT (CFLAG:ARG:1490,6) && ARG == 49) || ARG != 49)
+		RETURNF 5
+	ELSE
+		RETURNF 4
+	ENDIF
+ELSEIF TALENT:ARG:恋慕 || TALENT:ARG:184 || TALENT:ARG:185
+	RETURNF 3
+ELSEIF (ARG == 49 && GETBIT (CFLAG:ARG:1490,0)) || ((GETBIT (CFLAG:ARG:1 ,0) && ARG == 61))
+	RETURNF 2
+ELSEIF ((GETBIT (CFLAG:ARG:1 ,0) && ARG != 61) || TALENT:ARG:思慕) && ((!GETBIT (CFLAG:ARG:1490,1) && ARG == 49) || ARG != 49)
+	RETURNF 1
+ENDIF

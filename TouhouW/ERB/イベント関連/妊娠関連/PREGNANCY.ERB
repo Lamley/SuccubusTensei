@@ -1,0 +1,278 @@
+﻿;一日の終わりに呼び出される関数
+@GET_CHILD(ARG)
+#DIM 妊娠必要値
+#DIM 中毒補正
+#DIM 妊娠精液判定
+
+SELECTCASE ABL:ARG:膣射中毒
+	CASE 0 TO 2
+		中毒補正 = 5
+	CASE 3 TO 5
+		中毒補正 = 4
+	CASEELSE
+		中毒補正 = 2
+ENDSELECT
+
+EX:ARG:子宮内精液 += EX:ARG:膣内精液 / 中毒補正
+
+SIF TALENT:ARG:幼稚 && !TALENT:ARG:初潮
+	EX:ARG:子宮内精液 = 0
+
+妊娠必要値 = 2000
+
+妊娠必要値 = 妊娠必要値 * 200 / (200 + MIN(50,CFLAG:ARG:子宝補正))
+SIF TALENT:ARG:人間
+	妊娠必要値 /= 2
+SIF TALENT:ARG:妖精 && !TALENT:MASTER:讓妖精懷孕 && FLAG:抱負 != 6
+	妊娠必要値 *= 2
+IF TALENT:ARG:吸血鬼 && !TALENT:MASTER:讓妖怪懷孕
+	妊娠必要値 *= 5
+	SIF FLAG:抱負 == 6
+		妊娠必要値 /= 2
+	SIF CFLAG:ARG:子宝補正 >= 10
+		妊娠必要値 /= (MIN(50,CFLAG:ARG:子宝補正) / 5)
+ENDIF
+IF TALENT:ARG:神霊 && !TALENT:MASTER:讓神霊懷孕
+	妊娠必要値 *= 10
+	SIF FLAG:抱負 == 6
+		妊娠必要値 /= 4
+	SIF CFLAG:ARG:子宝補正 >= 10
+		妊娠必要値 /= (MIN(50,CFLAG:ARG:子宝補正) / 5)
+ENDIF
+IF !TALENT:MASTER:讓人懷孕的能手 && (TALENT:ARG:非生物 || TALENT:ARG:蓬莱人)
+	妊娠必要値 *= 100
+	SIF FLAG:抱負 == 6
+		妊娠必要値 /= 2
+	SIF CFLAG:ARG:子宝補正 >= 10
+		妊娠必要値 /= (MIN(100,CFLAG:ARG:子宝補正) / 2)
+ENDIF
+SIF TALENT:MASTER:濃厚精液
+	妊娠必要値 /= 3
+IF 充填率(ARG,4) > 50
+	SETCOLOR C_CREAM
+	PRINTFORML %CALLNAME:ARG%的子宮内完全被你的精液填満了…
+	IF !FLAG:画像表示
+		SETFONT "ＭＳ Ｐゴシック"
+		PRINTL 　　　　　　　　　　　}　}　　　　　　　　　　　　 　 　 （
+		PRINTL ヽ.__　　　　　　　　　',　',　_　　　　　　　　　　　　　　）　　　　　　　　　　　　　　 　 　 　 　 　 , --､
+		PRINTL 　(　｀ヽ　　　　　　　 ヽ ﾉ　 ヽ　　　　　　　　　　　　0　　　　　　　　　　　　　　　　　　＿__ ノノ⌒＼
+		PRINTL 　　ー '　　　　　　　　　乂 ＿}　　　　　　　　　　 　 ...........　　　　　　 /⌒´　　/ ￣ ｀ヾ⌒ ´
+		PRINTL 　　　　　　　｀⌒ヽ.. ＿　　　　　 　 ⌒).　　　　　,..::::::::::::::::.:..　　 (__メ　　　　　乂＿__ノ
+		PRINTL 　　　　　　　　　　 乂＿） 　 　　　　　ー(__)　　.j::::'´　 ｀ ::::〔
+		PRINTL 　　　　　⌒ー（⌒）　　　　　　　　　　　　- ､ 　 〕::::.　　 ..:::::{　　　　　　　　　 -― - ､
+		PRINTL 　　　　　　　　　　　---　､ 　 　　　　　乂_ノ　　ﾍ::::.::::::.::::::ﾒ　　　　　　　 （　　　　　　｀￣ ｀ヽ
+		PRINTL 　　　　　　　　　 /　　　 　 ＼ 　　ー ´　-､_○　　｀~~~~~´　, -- ､　　　　　　ー　⌒´￣￣）　}
+		PRINTL 　　＿　　　　　 人　　　　　　 ',　　　　/　　　　　　　　　　　乂__ノ⌒ヽ　　　　　　　　　　 （　（
+		PRINTL ´　　　　 ＼　　{　 }　　　　　　 }　　　　　　　　　　 0　　　　　　　　　　 ー　　 ＿　　　　　　 ー―
+		PRINTL 　　 -- ､　　｀￣ ´ ヽ　　＿ ..ノ　　　　　　　　　　 (　　　　　　　　　　　　　 （　　　｀ヽ
+		PRINTL ／　　　 ＼ _＿　イ｀¨¨´　--､　　　--､　　　　　　′　　　　　　　　　　　　　＼　＿ メ
+		PRINTL 　 　　（⌒）　　　　　　__/ 　　　ー乂__ノ　 _　　　　　　(⌒ ）　　---　､　　　　　　　　　 ＼
+		PRINTL ー'⌒´　　　　　　　　　　　　　　　　　　　（__）　　　　　 ⌒ヽ /　　　　　＼　　　　　　　　　 ー ⌒
+		PRINTL 　　　　　　　　　　　　　　　　＿　　　　　 ノ　　　-､　　　　　.′　　　　　　＼
+		PRINTL 　　　　　　　　　　　　　 ／　　　 ヽ　　.〃　　 （__ノ　　　　　　　　　　　　　　 ､
+		PRINTL 　　　　　　　　　　　　 /　　　　　　}　　{{　　　（　　　　　　　i
+		PRINTL 　　　　　　　　　　　　.{　　　　　　ﾉ　　 j　　　　）　　　--､　{　　　　　　　　　　 ',
+		PRINTL 　　　-――　､　　　ノ 乂 　　 ／　　 /　　　　　　　 {　　 }　',　　　　　　　 　 　 }
+		PRINTL ／　　――　､ ｀￣　 ）-- ⌒´　　　　　　　　　　　　 乂__ !.　ヽ　　　　　　　　　 ,
+		PRINTL 　 ／　　　　　 ｀￣￣　　　　　　　　　　　　　　　　　　　　}}　　 ＼　　　　　　　/
+		PRINTW ／　　　　　　　　　　　　　　　　　　　　　　　　 　 　 　 　 {{　　　　　ー―　､　 {
+	ELSE
+		CALL PRINT_IMAGE_ANIMATION("受精",0,7,FLAG:アニメーション,1)
+		CALL PRINT_IMAGE_ANIMATION("受精",0,3,1,0)
+		CALL PRINT_IMAGE("受精2")
+		WAIT
+	ENDIF
+ENDIF
+SETFONT
+IF MIN(充填率(ARG,4),100) * ESTRUS_CYCLE(ARG) / 100 > RAND:妊娠必要値
+	CFLAG:ARG:妊娠経過日数 = 1
+	SIF FLAG:抱負 == 6
+		FLAG:抱負 = 0
+	SETCOLOR C_CREAM
+	PRINTFORML 你的種子若無其事的游到了%CALLNAME:ARG%的子宮内、紛紛衝向了毫無防備的卵子…
+	IF !FLAG:画像表示
+		SETFONT "ＭＳ Ｐゴシック"
+		PRINTL 　　　　　　　　　　　　　　　　..__＿....-------....＿..
+		PRINTL 　　　　　　　　　　　　 .._..-‐'"⌒　　　　　　　　 ｀"'''ゝ､_..
+		PRINTL 　　　　　　　　　　_..‐''´　　　　　　　　　　　　　　　　　"ｰ 、..
+		PRINTL 　　　　　　　　 .:ノ'´　　. .　. 　 .　 . . .. .: . .　.　 ..　　　 　 　 `＼:.
+		PRINTL 　　　　　　　.:ノ′ 　 .　 . .: .:.: .:. .: . .: .: .:. . : .: .:.. : . .　. 　 　 　 ﾞゝ:.　　こ二ﾆ==-‐'´￣｀ヽ、_,
+		PRINTL 　　　　　 .:_／ 　 . ..:..:.:.::;:;;';:;';';.:　'"´　　　　'　　;.:.. : .　.　　　　 　 ＼:.
+		PRINTL 　　　　　.:/′ 　 .. ..:.:.:;:;';;';'.''´　　　　　 　 　 　 　 　 ;.:. . .　　 　 　 ヽ、:.
+		PRINTL 　　　　.:丿　.　.　. ..:.::;';':''　　　　　　　　　 　 　 　 　 　 :.:. : .　　　 　 ヽ::
+		PRINTL 　　　 .:丿　　　..　. ..::;'′　　　　　　　 　 　 　 　 　 　 　 ,:.:.. . .　 　 　 '、::
+		PRINTL 　　　 ::「　　　　.. . .:.;'　　　　　　　　　　　　　　　　　 　 　 :.:.　 . 　 　 .　i、::　　　こ二ﾆ==-‐'⌒丶、＿ノ
+		PRINTL 　　　::||　　　　. . ..:.;　　　　　　　　 　 　 　 　 　 　 　 　 　 ;.: . . .　　 ,::　!::
+		PRINTL 　　　::〕 　 　 　 . ..:;　　　　　　　　　　　　　　　　　　　　 　 :.:. . .　:';';にﾆ==-‐'´￣｀ヽ、_,
+		PRINTL 　　　::|!　　　　　..:.:;　　　　　　　　　　　　　　　　　　　　 　 ;.: :.　　 　｀: .!'::　　　　　　　　"
+		PRINTL 　　　::卜　　　　.. .:.:,　　　　　　　　　　　　　　　　　　　　　.:.:. . .. . 　 　 |::′　[][]/7
+		PRINTL 　　　 ::'、　　　 　 . .::,　　　　　　　　　　　　 　 　 　 　 　 ,:.: . .　　　　 │:: 　 　 //lニ◎
+		PRINTL 　　　 ::弋 　 　 　 .. . :.,　　　　　　　　　　　　　　　　 　 ,.:.: : .　　　 　 丿::　　　　　　// ﾟﾟ〃
+		PRINTL 　　　　 ::ヽ　　 　 　 . . .:...　　　 　 　 　 　 　 　 　 　 ,..: .: . ..　 　 　 _j′　　　　　　　　　´　ﾟ　｡
+		PRINTL 　　　　　':ヽ、　　　　　.　.: :': . ..　　 　 　 　 　 　 ,. .:.: . :　.. 　 　 　 /′　　　　　　　　　 　 　 　 °
+		PRINTL 　　　　　　':ヽ、　　 　 　 ..　. : .: ' : . ...,. .,... . : ' :. : .　.　　　 　 　 _／:'
+		PRINTL 　　　　　　　 ':ヾ 、　　　　　　 ..　:　. .: . . : .　:　.　　　　　　　 _／:'　　　　こ二ﾆ==-‐'⌒丶、＿ノ
+		PRINTL 　　　　　　　　　':ﾞゝ､　　　　　　　　　 .　 .　　　　　　　　　_ノ'´:'
+		PRINTL 　　　　　　　　　　　':ﾞﾞ'ゝ､_ 　　　　　　　　　　　　　　_..-‐'´:'
+		PRINTL 　　　　　　　　　　　　　　':ﾞﾞ'''ｰ-....＿＿____＿....-一"´:'
+		PRINTW 　　　　　　　　　　　　　　　　　　　　 ''￣｀''
+		SETFONT
+	ELSE
+		CALL PRINT_IMAGE_ANIMATION("受精",0,12,FLAG:アニメーション,0)
+		CALL PRINT_IMAGE("受精11")
+		WAIT
+	ENDIF
+		IF TALENT:ARG:恋慕
+			PRINTFORMW %CALLNAME:ARG%的身体開心的接受了深愛着的你的遺傳因子…
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%的身体非本意的接受了毫無関係的你的遺傳因子…
+		ENDIF
+	IF TCVAR:(ARG):自覚
+		CFLAG:ARG:自覚射精 = 1
+		;PRINTFORML Succeed2
+	ELSE
+		CFLAG:ARG:無自覚妊娠 = 1
+	ENDIF
+	SIF TALENT:ARG:人間 == 3
+		TALENT:MASTER:讓巫女懷孕 = 1
+	SIF TALENT:ARG:妖精
+		TALENT:MASTER:讓妖精懷孕 = 1
+	SIF TALENT:ARG:神霊
+		TALENT:MASTER:讓神霊懷孕 = 1
+	SIF !TALENT:ARG:人間 && !TALENT:ARG:妖精 && !TALENT:ARG:神霊
+		TALENT:MASTER:讓妖怪懷孕 = 1
+ENDIF
+RESETCOLOR
+;妊娠に伴うあれこれ
+@CHANGE_N_STATUS(ARG)
+
+CFLAG:ARG:回復速度ダウン = TALENT:ARG:回復速度 + 2
+IF TALENT:ARG:回復速度 > -1
+	PRINTFORMW %CALLNAME:ARG%変得容易疲労了
+	TALENT:ARG:回復速度 = -1
+ENDIF
+
+;無自覚への処理
+@PERCIEVE(ARG)
+IF CFLAG:ARG:妊娠経過日数 == 71
+	PRINTFORMW %CALLNAME:ARG%即将临産了。
+	PRINTFORMW 最好請避免激烈的行為…
+	IF GROUPMATCH(ARG,2,5,6,7,8,9,12,13,14,15,16,17,29,32,33,41,50,54,59,62,80,81,82)
+		PRINTFORMW 因為母体有危険的可能性、%CALLNAME:ARG%决定休養到出産…
+		CFLAG:ARG:産休 = 1
+	ENDIF
+ELSEIF CFLAG:ARG:妊娠経過日数 == 60
+	IF TALENT:ARG:胸囲 < 2
+		TALENT:ARG:胸囲 += 1
+		PRINTFORMW %CALLNAME:ARG%的胸部変大了
+		CFLAG:ARG:乳ランクアップ = 1
+	ENDIF
+	IF !TALENT:ARG:母乳体質
+		PRINTFORMW %CALLNAME:ARG%好像能分泌母乳了
+		TALENT:ARG:母乳体質 = 1
+	ENDIF
+
+	PRINTFORML %CALLNAME:ARG%已怀孕的情况已経即使从远処望去都很明显了…
+	IF !CFLAG:ARG:無自覚妊娠 && GROUPMATCH(ARG,1,11,23,25,26,34,37,43,44,52,55,60,67,68,79,85,87,97)
+		PRINTFORML %CALLNAME:ARG%為防万一、决定去休養一段时间…
+		CFLAG:ARG:産休 = 1
+	ELSEIF CFLAG:ARG:無自覚妊娠
+		PRINTFORML %CALLNAME:ARG%因為莫名其妙的身孕而変得极其憔悴…
+		IF GROUPMATCH(ARG,4,10,11,14,17,20,21,22,28,31,35,36,40,43,44,52,56,57,58,65,70,72,75,76,87,91,96)
+			PRINTFORMW %CALLNAME:ARG%接受了自己懷孕的事実、決定開始保養…
+			CFLAG:ARG:産休 = 1
+		ENDIF
+		;自分を騙せずに妊娠していることを自覚する時期とする
+		CFLAG:ARG:妊娠自覚状態 = 1
+	ENDIF
+		
+	BASE:ARG:体力 -= 200
+	MAXBASE:ARG:体力 -= 200
+	BASE:ARG:気力 -= 200
+	MAXBASE:ARG:気力 -= 200	
+
+
+ELSEIF CFLAG:ARG:妊娠経過日数 == 40
+	PRINTFORML %CALLNAME:ARG%腹部的隆起変得很明显了…
+	IF !CFLAG:ARG:無自覚妊娠 && GROUPMATCH(ARG,14,17,20,21,22,28,31,35,40,44,52,57,70,72,76,91,96)
+		PRINTFORM %CALLNAME:ARG%為了减軽身体的負担、決定暫時
+		IF GROUPMATCH(ARG,96,91,35)
+			PRINTFORM 在天界呆着
+		ELSEIF GROUPMATCH(ARG,76,57,31,22,21,20)
+			PRINTFORM 停止%GET_JOBNAME(ARG)%\@ ARG == 76 || ARG == 31 ? 的工作 # \@
+ 		ELSEIF ARG == 17
+			PRINTFORM 停止人偶劇
+		ELSE
+			PRINTFORM 停止生意
+		ENDIF
+		PRINTFORML 進行休息…
+		CFLAG:ARG:産休 = 1
+	ELSEIF CFLAG:ARG:無自覚妊娠
+		PRINTFORML %CALLNAME:ARG%好像还不能接受自己身体変化的样子
+	ENDIF
+	BASE:ARG:体力 -= 200
+	MAXBASE:ARG:体力 -= 200
+	BASE:ARG:気力 -= 200
+	MAXBASE:ARG:気力 -= 200
+
+
+ELSEIF CFLAG:ARG:妊娠経過日数 == 30
+	PRINTFORML %CALLNAME:ARG%腹部的隆起还不是很明显…
+	PRINTFORMW %CALLNAME:ARG%的身体好象进入了安定期…
+	IF !CFLAG:ARG:無自覚妊娠 && GROUPMATCH(ARG,4,10,11,36,43,56,58,65,75,87)
+		PRINTFORM %CALLNAME:ARG%為了减軽身体的負担、決定暫時
+		IF ARG == 10 || ARG == 11
+			PRINTFORM 停止训练
+		ELSEIF ARG == 87
+			PRINTFORM 停止勤行
+		ELSE
+			PRINTFORM  %GET_JOBNAME(ARG)%
+		ENDIF
+		PRINTFORML 進行休息…
+		CFLAG:ARG:産休 = 1
+	ELSEIF CFLAG:ARG:無自覚妊娠
+		PRINTFORML %CALLNAME:ARG%虽然多少有些違和感、但还是没発覚自己妊娠了的样子
+	ENDIF
+	BASE:ARG:体力 -= 100
+	MAXBASE:ARG:体力 -= 100
+	BASE:ARG:気力 -= 100
+	MAXBASE:ARG:気力 -= 100
+ELSEIF CFLAG:ARG:妊娠経過日数 == 20
+	PRINTFORMW %CALLNAME:ARG%的様子看起来很奇怪…
+	PRINTFORML %CALLNAME:ARG%怀上了孩子的样子
+	PRINTFORMW %CALLNAME:ARG%[妊娠]了。
+	TALENT:ARG:妊娠 = 1
+	CALL CHANGE_N_STATUS(ARG)
+
+	;自覚で分岐
+	IF CFLAG:ARG:自覚射精 == 1 && !CFLAG:ARG:無自覚妊娠
+		PRINTFORML %CALLNAME:ARG%的身体変得不安定。
+		PRINTFORML 在安定期到来之前最好避免無理的行為…
+		IF TALENT:ARG:恋慕
+			PRINTFORMW %CALLNAME:ARG%羞不可抑地诉説自己怀上了%CALLNAME:MASTER%的孩子
+			CALL KOJO_MESSAGE_SEND("EVENT",24,ARG,1,0)
+		ELSEIF TALENT:ARG:思慕
+			PRINTFORMW %CALLNAME:ARG%怯生生地诉説自己怀上了%CALLNAME:MASTER%的孩子
+			CALL KOJO_MESSAGE_SEND("EVENT",24,ARG,2,0)
+			;CFLAG:ARG:妊娠経過日数 = 2
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%不知所措地诉説自己怀上了%CALLNAME:MASTER%的孩子
+			CALL KOJO_MESSAGE_SEND("EVENT",24,ARG,3,0)
+			;CFLAG:ARG:妊娠経過日数 = 1
+		ENDIF
+		SIF ARG == 10 || ARG == 36
+			PRINTFORMW 妊娠中的%CALLNAME:ARG%、决定不飲酒直至出産…
+			;自覚射精があるので妊娠していることはすぐに自覚する
+		CFLAG:ARG:妊娠自覚状態 = 1
+	ELSE
+		PRINTFORMW 但是%CALLNAME:ARG%似乎还没搞明白自己的身上発生了什么事情的样子…
+		CALL KOJO_MESSAGE_SEND("EVENT",24,ARG,4,0)
+	ENDIF
+ENDIF
+;---------------------------------------------------------
+;妊娠時の素質変化(壊れたときのコピペ)
+;---------------------------------------------------------
+
+;以下の素質消滅
+;叛逆、堅強、自尊心高、自制心、難以越過的底線、不在乎貞操、圧抑、抵抗、害羞、
+;献身的、接受快感、魅惑、謎之魅力、魅力、鼓舞

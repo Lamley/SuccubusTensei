@@ -1,0 +1,115 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	命蓮寺MAP用関数
+;--------------------------------------------------
+@MAP_PLACENAME_7(ARG)
+#FUNCTIONS
+
+IF GET_MAPID(ARG) == MAIN_MAP
+	SELECTCASE ARG
+		CASE 1 TO (MAXROOM - 1)
+			RETURNF STR:(ARG + 8000)
+		CASE 798
+			RETURNF OMANEKI_PLACE()
+		CASE 799
+			RETURNF "スキマ空間"
+		CASE MAXROOM
+			RETURNF "道の向こう"
+		CASEELSE
+			RETURNF "不明"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_7
+SELECTCASE CFLAG:MASTER:現在位置
+	CASE 720 TO 722,729,730
+		IF FLAG:移動先表示 == 3
+			CALL KASEN_1_TO_3
+		ELSE
+			CALL KASEN_1_TO_2
+		ENDIF
+	CASE 723 TO 725
+		IF FLAG:移動先表示 == 3
+			CALL KASEN_1_TO_3
+		ELSEIF GROUPMATCH(FLAG:移動先表示, 1, 4, 6)
+			CALL KASEN_2_TO_3
+		ELSE
+			CALL KASEN_1_TO_2
+		ENDIF
+	CASE 726 TO 728
+		IF FLAG:移動先表示 == 5
+			CALL KASEN_1_TO_3
+		ELSE
+			CALL KASEN_2_TO_3
+		ENDIF
+	CASE 715 TO 719
+		CALL AKI_HOUSE
+	CASEELSE
+		CALL MAP_YOUKAINOYAMAHUMOTO
+ENDSELECT
+RETURN 1
+
+@MAP_CAN_MOVE_7(ARG, ARG:1)
+#FUNCTION
+SELECTCASE ARG
+	;華扇ハウス
+	CASE 720 TO 730
+		;本人は除外
+		SIF ARG:1 == 43
+			RETURNF 1
+		IF !INRANGE(CFLAG:(ARG:1):現在位置,720,730)
+			;教養が足りないとたどり着けない
+			IF ABL:(ARG:1):教養 < 3
+				TFLAG:移動不能メッセージ = 1
+				;CFLAG:(ARG:1):現在位置 = 731
+				TIME += 30
+				RETURNF 0
+			;あなたは恋慕があれば入れてもらえる
+			ELSEIF TALENT:43:恋慕 && ARG:1 == MASTER
+				RETURNF 1
+			ELSE
+				;それ以外は戦闘力5以上必要
+				IF ABL:(ARG:1):戦闘能力 < 4 && !FLAG:70
+					TFLAG:移動不能メッセージ = 2
+					;CFLAG:(ARG:1):現在位置 = 731
+					TIME += 15
+					RETURNF 0
+				ELSE
+					RETURNF 1
+				ENDIF
+			ENDIF
+		;中からは動ける
+		ELSE
+			RETURNF 1
+		ENDIF
+	;正邪ハウス
+	CASE 733
+		;あなたは恋慕があれば入れてもらえる
+		IF TALENT:97:恋慕 && ARG:1 == MASTER
+			RETURNF 1
+		;本人は入れる
+		ELSEIF ARG:1 == 97
+			RETURNF 1
+		ELSE
+			TFLAG:移動不能メッセージ = ARG
+			RETURNF 0
+		ENDIF
+	CASEELSE
+		RETURNF 1
+ENDSELECT
+
+@MAP_CANNOT_WORD_7(ARG)
+SELECTCASE TFLAG:移動不能メッセージ
+	CASE 1
+		PRINTFORMW さっきから屋敷との距離が一向に縮まらない……
+		PRINTFORMW 同じところをぐるぐる回っているかのようだ
+		;CALL TARGETSET_CHACK
+	CASE 2
+		PRINTFORMW 庭にうずくまっていた剣呑な虎が、%CALLNAME:MASTER%の姿を認めて唸り声を上げた
+		PRINTFORMW 近づかない方がよさそうだ
+		;CALL TARGETSET_CHACK
+	CASE 733
+		PRINTFORMW どこにあるかわからない…
+ENDSELECT

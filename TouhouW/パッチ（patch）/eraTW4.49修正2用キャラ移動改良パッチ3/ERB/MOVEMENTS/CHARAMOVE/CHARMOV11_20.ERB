@@ -1,0 +1,516 @@
+﻿;FileName_MOVEMENT.ERB ----------------------------- Rev1.00
+;キャラ別_各種データ
+;11～20番までのキャラ
+;CALL		USER
+;ARG		0:呼出データNO, 1:移動傾向取得時の部屋NO
+;RETURN		キャラ別呼出データ値
+;COMMENT	
+;-----------------------------------------------------------
+;魔理沙
+@CHARAMOVE_DATA_11(ARG,ARG:2)
+LOCAL = 11
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;博麗神社・縁側
+			CASE 10
+				RETURN 5
+			;香霖堂,キノコ群生地
+			CASE 502, 507
+				RETURN 5
+			;霧雨魔法店,15～19時は行きやすい
+			CASE 510
+				IF BETWEENTIME(900,1140)
+					RETURN 5
+				ELSE
+					RETURN -5
+				ENDIF
+			;魔理沙寝室,寝起きと寝る前以外は避ける
+			CASE 512
+				IF CFLAG:LOCAL:就寝時間 - TIME > 60 && CFLAG:LOCAL:起床時間 - TIME > 60
+					RETURN -10
+				ELSE
+					RETURN 0
+				ENDIF
+			;魔理沙研究室,19～22時は行きやすい
+			CASE 513
+				IF BETWEENTIME(1140,1320)
+					RETURN 10
+				ELSE
+					RETURN -5
+				ENDIF
+			;神綺の部屋,夢子の部屋,アリス家の風呂,アリスの倉庫,空き部屋,エレン家,妖怪の棲み処
+			CASE 522, 523, 526, 528, 531, 535, 536, 537, 541, 542, 543
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2, 3, 4, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 21,22,23,27, 31 TO 38, 41,42,43,45,46,47, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;るみゃ
+@CHARAMOVE_DATA_12(ARG,ARG:2)
+LOCAL = 12
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;各私室,風呂
+			CASE 512, 514, 521, 522, 523, 526, 531, 535, 537
+				RETURN -100
+			;居間,リビング,二階
+			CASE 511, 525, 530
+				RETURN -5
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 1, 5, 6
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 11,12,15, 51,53,56,57, 61,62
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;大ちゃん
+@CHARAMOVE_DATA_13(ARG,ARG:2)
+LOCAL = 13
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;大ちゃんはいい子なのでひとんちの風呂とかトイレにはいかない
+			CASE 6, 12, 13, 14, 17, 18, 19, 30, 35, 39, 40, 51, 52, 53
+				RETURN -100
+			;三妖精宅内に行きやすい
+			CASE 26 TO 34
+				RETURN 5
+			;湖畔、チルノ、大ちゃん、霧の湖に行きやすい
+			CASE 343, 345, 346, 347
+				RETURN 5
+			;納屋と屋敷の三階と地下、及び各私室には入らない
+			CASE 303, 304, 305, 311, 312, 318, 320, 321, 323, 325, 340, 341, 342, 348
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,5, 31,32,34, 51,53,56
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;チルノ
+@CHARAMOVE_DATA_14(ARG,ARG:2)
+LOCAL = 14
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;三妖精宅内に行きやすい
+			CASE 26 TO 34
+				RETURN 5
+			;湖畔、レティ、チルノ、大ちゃん、霧の湖に行きやすい
+			CASE 343, 344, 345, 346, 347
+				RETURN 5
+			;納屋と屋敷の三階と地下、及び各私室には入らない
+			CASE 303, 304, 305, 311, 312, 318, 320, 321, 323, 325, 340, 341, 342, 348
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3, 5, 7
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,5, 31,32,34, 51 TO 57, 71,72,73
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;咲夜さん
+@CHARAMOVE_DATA_15(ARG,ARG:2)
+LOCAL = 15
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			CASE 17, 19, 53
+				SIF FLAG:15 != LOCAL
+					RETURN -100
+			;咲夜さんは瀟洒なのでひとんちの風呂とかトイレにはいかない
+			CASE 12, 13, 14, 18, 30, 35, 39, 40, 51
+				RETURN -100
+			;納屋と屋敷外には出ない
+			CASE 305, 334 TO 348
+				RETURN -100
+			CASEELSE
+				;基本的にうろついているけど咲夜さんはきれい好きなのでついつい掃除しちゃう
+				SIF !RAND:4
+					RETURN YOGORE:(ARG:2) / 300
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 21,22,23,27, 31,34 TO 38, 51,52,54,55
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;レミリア
+@CHARAMOVE_DATA_16(ARG,ARG:2)
+LOCAL = 16
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		;6時～18時は寝てる、最近のお嬢様はサマータイム制などと申して起床・就寝時間をずらしております。
+		IF DAY:2 == 2
+			CFLAG:16:就寝時間 = 300
+			CFLAG:16:起床時間 = 1140
+		ELSEIF DAY:2 == 4
+			CFLAG:16:就寝時間 = 420
+			CFLAG:16:起床時間 = 1020
+		ELSE
+			CFLAG:16:就寝時間 = 360
+			CFLAG:16:起床時間 = 1080
+		ENDIF
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;お嬢様なので一応ひとんちの風呂とかトイレにはいかない
+			CASE 12, 13, 14, 18, 30, 35, 39, 40, 51
+				RETURN -100
+			;納屋と屋敷外には出ないし、空き部屋にも行かない
+			CASE 304, 305, 321, 329, 330, 334 TO 348
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 3
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 34 TO 38
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;アリス
+@CHARAMOVE_DATA_17(ARG,ARG:2)
+LOCAL = 17
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;ひとんちの風呂とかトイレにはいかない
+			CASE 12, 13, 14, 18, 30, 35, 39, 40, 51
+				RETURN -100
+			;魔理沙寝室,神綺の部屋,夢子の部屋
+			CASE 512, 522, 523
+				RETURN -10
+			;自室
+			CASE 521
+				;10～24時は避ける,寝起きと寝る前は行きやすく
+				IF BETWEENTIME(600,1440)
+					RETURN -10
+				ELSE
+					RETURN 10
+				ENDIF
+			;研究室に行きやすい
+			CASE 524
+				RETURN 5
+			;リビング
+			CASE 525
+				;10～17時外は行きやすい
+				IF BETWEENTIME(600,1020)
+					RETURN 0
+				ELSE
+					RETURN 5
+				ENDIF
+			;空き部屋と倉庫
+			CASE 528, 531
+				RETURN -5
+			;魔理沙家の風呂,魔理沙の倉庫,エレン家,妖怪の棲み処
+			CASE 514, 515, 535, 536, 537, 541, 542, 543
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 0, 2, 3, 5
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 1,2,4, 21,22,23, 35,36,37, 51 TO 57
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;白百合
+@CHARAMOVE_DATA_18(ARG,ARG:2)
+LOCAL = 18
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+		RETURN 0
+	;移動確率
+	CASE 2
+		;悪天候時、外なら移動しやすく
+		SIF OUTROOF(CFLAG:(NO:18):現在位置) && ((TIME:5 & 4) || (TIME:5 & 8))
+			RETURN 10
+		RETURN 80
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;三妖精宅内に行きやすい
+			CASE 26 TO 34
+				RETURN 5
+			;アジト,厄家,秋家,華扇家,隠れ家,小屋
+			CASE 704, 706, 715 TO 719, 720 TO 730, 733, 734
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2
+				SIF DAY:2 == 1
+					RETURN 1
+				RETURN 0
+			CASE 3, 5, 7
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23, 31,32,33,34, 51 TO 55, 71,72,73
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;黒百合
+@CHARAMOVE_DATA_19(ARG,ARG:2)
+LOCAL = 19
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;三妖精宅内に行きやすい
+			CASE 26 TO 34
+				RETURN 5
+			;アジト,厄家,秋家,華扇家,隠れ家,小屋
+			CASE 704, 706, 715 TO 719, 720 TO 730, 733, 734
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2
+				SIF DAY:2 == 1
+					RETURN 1
+				RETURN 0
+			CASE 5, 6, 7
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23, 56,57, 61,62, 71,72,73
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT
+
+;リリカ
+@CHARAMOVE_DATA_20(ARG,ARG:2)
+LOCAL = 20
+SELECTCASE ARG
+	;移動対象メンバーチェック
+	CASE 1
+		;連動処理（三人の内一番高いキャラにあわせる）
+		IF TALENT:22:恋慕 || (TALENT:22:思慕 && !TALENT:21:思慕 && !TALENT:20:思慕)
+			CFLAG:LOCAL:現在位置 = CFLAG:22:遭遇位置 ? CFLAG:22:遭遇位置 # SUKIMA()
+		ELSEIF TALENT:21:恋慕 || (TALENT:21:思慕 && (!TALENT:22:思慕 || !TALENT:20:思慕))
+			CFLAG:LOCAL:現在位置 = CFLAG:21:遭遇位置 ? CFLAG:21:遭遇位置 # SUKIMA()
+		ELSE
+			CFLAG:LOCAL:現在位置 = CFLAG:20:遭遇位置 ? CFLAG:20:遭遇位置 # SUKIMA()
+		ENDIF
+	;移動確率
+	CASE 2
+	;起床時間帯
+	CASE 3
+		RETURN 睡眠時間(LOCAL)
+	;移動傾向
+	CASE 4
+		SELECTCASE ARG:2
+			;私室には入らない
+			CASE 15, 17, 19, 53, 55
+				RETURN -100
+			CASE 18, 43, 44, 51, 52
+				RETURN -100
+			;納屋と屋敷の三階と地下、及び各私室
+			CASE 303, 304, 305, 311, 312, 318, 320, 321, 323, 325, 344, 345, 346, 348
+				RETURN -100
+		ENDSELECT
+	;仕事時間帯
+	CASE 5
+	;行く地域(0=博1=寺2=里3=湖4=竹5=森6=冥7=山8=守9=地10=月）
+	CASE 6
+		SELECTCASE ARG:2
+			CASE 2, 3, 6
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+	;出現場所
+	CASE 7
+		SELECTCASE ARG:2
+			CASE 21,22,23, 31,32,33,34, 61,62,68,69
+				RETURN 1
+			CASEELSE
+				RETURN 0
+		ENDSELECT
+ENDSELECT

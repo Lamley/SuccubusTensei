@@ -1,0 +1,60 @@
+﻿;-------------------------------------------------
+;外出
+;-------------------------------------------------
+@COM405
+VARSET LOCAL
+FOR LOCAL,1,CHARANUM
+	IF CFLAG:(LOCAL):同行
+		LOCAL:1 ++
+		SIF CFLAG:LOCAL:衰弱 || BASE:LOCAL:気力 == 0
+			LOCAL:2 ++
+		SIF !CHARA_HOLIDAY(LOCAL) && BASE:LOCAL:工作量
+			LOCAL:3 ++
+	ENDIF
+NEXT
+
+IF NEMUKE() >= 720
+;	PRINTL 門限を超えているため外出ことは出来ません
+	PRINTL 在睡意来袭时还是别外出比较好吧
+	RETURN -1
+ELSEIF LOCAL:1 > 1
+	PRINTL 不能帯二人以上外出
+	RETURN -1
+ELSEIF LOCAL:2 || BASE:MASTER:気力 == 0
+	PRINTFORML 因為身体不适所以无法外出\@ BASE:MASTER:気力 == 0 ? （気力為零） # （同行者身体不适）\@
+	RETURN -1
+ELSEIF LOCAL:3 && FESTIVAL() == ""
+	PRINTL 因為同行者処于工作日所以无法外出
+	RETURN -1
+ELSEIF TIME:5 == 9 || TIME:5 == 5
+	PRINTL 因為天气悪劣所以无法外出
+	RETURN -1
+ELSEIF TALENT:MASTER:100 < -4 
+	PRINTL 用这样的身体外出是很危険的
+	RETURN -1
+ENDIF
+LOCAL:3 = 0
+DRAWLINE
+CALL OTHERREGIONS
+LOCAL:2 = RESULT
+LOCAL = 0
+IF LOCAL:2 == MAIN_MAP || LOCAL:2 == 100
+	RETURN -1
+ENDIF
+RETURN 1
+
+@COM_ABLE405
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(405)
+	RETURN RESULT
+;停止中は不可
+SIF FLAG:70 == 1
+	RETURN 0
+SIF CFLAG:うふふ == 2
+	RETURN 0
+;参道設定
+SIF !CHK_ENTRANCE(CFLAG:MASTER:現在位置, MAIN_MAP)
+	RETURN 0
+RETURN 1

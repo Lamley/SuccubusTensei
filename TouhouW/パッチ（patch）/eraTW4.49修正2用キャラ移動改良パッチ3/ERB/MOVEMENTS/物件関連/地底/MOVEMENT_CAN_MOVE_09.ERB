@@ -1,0 +1,295 @@
+﻿
+;地点関連性応答処理
+;CALL		USER
+;ARG		0:現在地点, 1:比較先地点
+;RETURN		1:移動可/見えない 2:移動不可/見える 3:移動可/見える
+;-----------------------------------------------------------
+@CAN_MOVE_9(ARG, ARG:1)
+#FUNCTION
+#DIM 参照先
+参照先 = ARG:1 % 100
+SELECTCASE ARG % 100
+	;地霊殿前
+	;2エントランス,31大通りに移動可能
+	CASE 1
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 2
+			RETURNF 1
+	;エントランス
+	;1地霊殿前,3応接間,4大広間,5一階廊下に移動可能
+	CASE 2
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 3
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 5
+			RETURNF 1
+	;応接間
+	;2エントランスに移動可能
+	CASE 3
+		SIF 参照先 == 2
+			RETURNF 1
+	;大広間
+	;2エントランス,5一階廊下に移動可能
+	CASE 4
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 5
+			RETURNF 1
+	;一階廊下
+	;2エントランス,4大広間,6一階トイレ,9厨房,11お空私室,12お燐私室,13食堂,14二階廊下,23裏庭,26中庭に移動可能
+	CASE 5
+		SIF 参照先 == 2
+			RETURNF 1
+		SIF 参照先 == 4
+			RETURNF 1
+		SIF 参照先 == 6
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 11
+			RETURNF 1
+		SIF 参照先 == 12
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 23
+			RETURNF 1
+		SIF 参照先 == 26
+			RETURNF 1
+	;一階トイレ
+	;一階廊下に移動可能
+	CASE 6
+		SIF 参照先 == 5
+			RETURNF 1
+;	CASE 7
+;		SIF GROUPMATCH(参照先,5,14,15)
+;			RETURNF 1
+;	CASE 8
+;		SIF GROUPMATCH(参照先,5,14,15)
+;			RETURNF 1
+	;厨房
+	;5一階廊下,10食料庫,13食堂,23裏庭,25バラ園に移動可能
+	CASE 9
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 10
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 23
+			RETURNF 1
+		SIF 参照先 == 25
+			RETURNF 1
+	;食料庫
+	;9厨房に移動可能
+	CASE 10
+		SIF 参照先 == 9
+			RETURNF 1
+	;お空私室
+	;5一階廊下に移動可能
+	CASE 11
+		SIF 参照先 == 5
+			RETURNF 1
+	;お燐私室
+	;5一階廊下に移動可能
+	CASE 12
+		SIF 参照先 == 5
+			RETURNF 1
+	;食堂
+	;5一階廊下,9厨房,23裏庭,26中庭に移動可能
+	CASE 13
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 23
+			RETURNF 1
+		SIF 参照先 == 26
+			RETURNF 1
+	;二階廊下
+	;5一階廊下,15バルコニー,16物置,17二階トイレ,18こいし私室,19さとり私室,20書斎,22脱衣所に移動可能
+	CASE 14
+		SIF GROUPMATCH(参照先,5,15,16,17,18,19,20,22)
+			RETURNF 1
+	;バルコニー,16物置,17二階トイレ,18こいし私室
+	;14二階廊下に移動可能
+	CASE 15,16,17,18
+		SIF 参照先 == 14
+			RETURNF 1
+	;さとり私室
+	;14二階廊下,20書斎に移動可能
+	CASE 19
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 20
+			RETURNF 1
+	;書斎
+	;14二階廊下,19さとり私室に移動可能
+	CASE 20
+		SIF GROUPMATCH(参照先,14,19)
+			RETURNF 1
+	;風呂
+	;22脱衣所に移動可能
+	CASE 21
+		SIF 参照先 == 22
+			RETURNF 1
+	;脱衣所
+	;14二階廊下,21風呂に移動可能
+	CASE 22
+		SIF 参照先 == 14
+			RETURNF 1
+		SIF 参照先 == 21
+			RETURNF 1
+	;裏庭
+	;5一階廊下,9厨房,13食堂,25バラ園に移動可能
+	CASE 23
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 9
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 25
+			RETURNF 1
+	;バラ園
+	;裏庭に移動可能
+	CASE 25
+		SIF 参照先 == 23
+			RETURNF 1
+	;中庭
+	;5一階廊下,13食堂,27灼熱地獄跡入口に移動可能
+	CASE 26
+		SIF 参照先 == 5
+			RETURNF 1
+		SIF 参照先 == 13
+			RETURNF 1
+		SIF 参照先 == 27
+			RETURNF 1
+	;灼熱地獄跡入口
+	;26中庭,28灼熱地獄跡に移動可能
+	CASE 27
+		SIF 参照先 == 26
+			RETURNF 1
+		SIF 参照先 == 28
+			RETURNF 1
+	;灼熱地獄跡
+	;27灼熱地獄跡入口,29地底都市最深部に移動可能
+	CASE 28
+		SIF 参照先 == 27
+			RETURNF 1
+		SIF 参照先 == 29
+			RETURNF 1
+	;地底都市最深部
+	;28灼熱地獄跡に移動可能,30地獄の人工太陽と直通
+	CASE 29
+		SIF 参照先 == 30
+			RETURNF 3
+		SIF 参照先 == 28
+			RETURNF 1
+	;地獄の人工太陽
+	;29地底都市最深部と直通
+	CASE 30
+		SIF 参照先 == 29
+			RETURNF 1
+	;大通り
+	;1地霊殿前,32裏通り,33酒場,37空き屋,44通りに移動可能
+	CASE 31
+		SIF 参照先 == 1
+			RETURNF 1
+		SIF 参照先 == 32
+			RETURNF 1
+		SIF 参照先 == 33
+			RETURNF 1
+		SIF 参照先 == 37
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+	;裏通り
+	;31大通り,33酒場,34温泉,35宿,36勇儀の家,38鬼の溜まり場,39路地裏に移動可能,1地霊殿前へ一方通行
+	CASE 32
+		SIF GROUPMATCH(参照先,1,31,33,34,35,36,38,39)
+			RETURNF 1
+	;酒場
+	;31大通り,32裏通りに移動可能
+	CASE 33
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 32
+			RETURNF 1
+	;温泉,宿,勇儀の家,鬼の溜まり場,路地裏
+	;32裏通りに移動可能
+	CASE 34,35,36,38,39
+		SIF 参照先 == 32
+			RETURNF 1
+	;空き屋
+	;31大通りに移動可能
+	CASE 37
+		SIF 参照先 == 31
+			RETURNF 1
+	;パルスィ,ヤマメ,キスメの家
+	;45川岸に移動可能
+	CASE 40,41,42
+		SIF 参照先 == 45
+			RETURNF 1
+	;あばら屋
+	;44通りに移動可能
+	CASE 43
+		SIF 参照先 == 44
+			RETURNF 1
+	;通り
+	;31大通り,43あばら屋,45川岸に移動可能,46橋と直通
+	CASE 44
+		SIF 参照先 == 46
+			RETURNF 3
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 43
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+	;川岸
+	;40パルスィの家,41ヤマメの家,42キスメの家,44通り,46橋に移動可能
+	CASE 45
+		SIF 参照先 == 40
+			RETURNF 1
+		SIF 参照先 == 41
+			RETURNF 1
+		SIF 参照先 == 42
+			RETURNF 1
+		SIF 参照先 == 44
+			RETURNF 1
+		SIF 参照先 == 46
+			RETURNF 1
+	;橋
+	;31大通りに一方通行,45川岸に移動可能,44通り,48縦穴の底と直通
+	CASE 46
+		SIF 参照先 == 44
+			RETURNF 3
+		SIF 参照先 == 48
+			RETURNF 3
+		SIF 参照先 == 31
+			RETURNF 1
+		SIF 参照先 == 45
+			RETURNF 1
+	;縦穴の底
+	;46橋と直通,49地上が見える
+	CASE 48
+		SIF 参照先 == 46
+			RETURNF 3
+		SIF 参照先 == 49
+			RETURNF 2
+		;SIF 参照先 == 47
+		;	RETURNF 1
+	;地上
+	;一方通行、EXキャラ待機用
+	CASE 49
+		SIF 参照先 == 48
+			RETURNF 1
+ENDSELECT
+RETURNF 0

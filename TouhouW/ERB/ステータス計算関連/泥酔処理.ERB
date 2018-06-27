@@ -1,0 +1,83 @@
+﻿;泥酔になる処理と泥酔から復活する処理
+@CHARA_ACTION_DRUNK(ARG)
+IF !TCVAR:ARG:泥酔 && BASE:ARG:酒気 > (MAXBASE:ARG:酒気 / 10) * 8
+	TCVAR:ARG:泥酔 = 1
+
+	;仕事内容が宴会参加の場合
+	IF CFLAG:ARG:職種 == 49
+		;仕事内容を酔いつぶれるに変更
+		CFLAG:ARG:職種 = 51
+		CFLAG:ARG:職場 = FLAG:32
+		CFLAG:ARG:行動 = 5
+	ELSE
+		IF TALENT:ARG:酒耐性 == -2
+			CFLAG:ARG:不会喝酒飲み -= 3
+		ENDIF
+	ENDIF
+
+	IF CFLAG:MASTER:現在位置 == CFLAG:ARG:現在位置
+		IF CFLAG:ARG:職種 == 51
+			PRINT 　
+		ENDIF
+		PRINTFORML %CALLNAME:ARG%喝得酩酊大酔的样子
+	ENDIF
+ENDIF
+
+;泥酔姦中は別の復帰処理を使用
+IF TCVAR:ARG:泥酔 && BASE:ARG:酒気 < (MAXBASE:ARG:酒気 / 10) * 4 && !(CFLAG:ARG:うふふ && ARG == TARGET)
+	IF CFLAG:MASTER:現在位置 == CFLAG:ARG:現在位置
+		IF CFLAG:ARG:職種 == 51 && CFLAG:ARG:現在位置 == FLAG:宴会会場
+			PRINT 　
+		ENDIF
+		PRINTFORML 烂酔的%CALLNAME:ARG%酒醒了的样子
+	ENDIF
+	CALL 泥酔復活共通(ARG)
+ENDIF
+
+;睡姦中に泥酔から復活するときの前処理 主にソースの追加
+@DRUNK_RECOVER_BEFORE(ARG)
+IF TCVAR:ARG:泥酔 && BASE:ARG:酒気 < (MAXBASE:ARG:酒気 / 10) * 4 && CFLAG:ARG:うふふ && ARG == TARGET
+	IF TALENT:ARG:恋慕
+		SOURCE:ARG:反感 += 3000
+	ELSE
+		SOURCE:ARG:反感 += 20000
+	ENDIF
+	TFLAG:好感度管理 -= MIN(30 - ABL:ARG:親密, 0) * 3
+	TFLAG:信頼度管理 -= MIN(30 - ABL:ARG:親密, 0) * 3
+	TCVAR:ARG:泥酔姦バレ = 1
+ENDIF
+
+;睡姦中に泥酔から復活する処理
+@DRUNK_RECOVER(ARG)
+IF TCVAR:ARG:泥酔姦バレ
+	PRINTL 
+	PRINTFORMW 烂酔的%CALLNAME:ARG%睜開了眼睛！
+	CALL 泥酔復活共通(ARG)
+
+	CFLAG:ARG:泥酔姦 = 2
+	CALL ENDUFUFU(ARG)
+	CALL SET_PRANK(0,ARG,1)
+
+	IF TALENT:ARG:恋慕
+		;MARK:ARG:反発刻印 = 1
+		;TFLAG:反発刻印取得 = 1
+		PRINTFORML %CALLNAME:ARG%察覚衣服凌乱后用尖鋭的目光睨视着%CALLNAME:MASTER%
+		PRINTFORMW 在整理服装的同时%CALLNAME:ARG%向%CALLNAME:MASTER%送去了冰冷的視線…
+	ELSE
+		;MARK:ARG:反発刻印 = 3
+		;TFLAG:反発刻印取得 = 3
+		PRINTFORML %CALLNAME:ARG%察覚衣服凌乱后用难以置信的表情看着%CALLNAME:MASTER%
+		PRINTFORMW %CALLNAME:ARG%的脸上充満了愤怒……
+	ENDIF
+ENDIF
+
+@泥酔復活共通(ARG)
+;宴会で酔いつぶれていた場合
+IF CFLAG:ARG:職種 == 51
+	CFLAG:ARG:職種 = 0
+	TALENT:ARG:心情 = 0
+	CFLAG:ARG:宴会参加 = 3
+ENDIF
+
+TCVAR:ARG:泥酔 = 0
+CFLAG:ARG:行動 = 0

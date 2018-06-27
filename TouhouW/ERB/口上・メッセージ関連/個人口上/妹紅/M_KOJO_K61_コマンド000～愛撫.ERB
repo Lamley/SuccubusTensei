@@ -1,0 +1,1035 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;愛撫系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;0,愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_0
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_0_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_0_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && (FIRSTTIME(SELECTCOM) || GETBIT (CFLAG:1611,0))
+		IF FLAG:70
+			SETBIT CFLAG:1611,0
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「%MASTERNAME:61%、やっと触ってくれるんだ、嬉しい」
+				IF GETBIT (CFLAG:1611,0) && EXP:無自覚Ｃ経験 && EXP:無自覚Ｂ経験
+					PRINTFORML 「時止めなしで触ってもらえて、すごく嬉しいんだよ」
+				ELSE
+					PRINTFORML 「私に初めて触れる人が、%MASTERNAME:61%でよかった」
+				ENDIF
+				PRINTFORMW 「それじゃお願いします」
+				PRINTFORML 「んっ、あふ……、おっぱいも、くぅん、おまん、こも、きもち、いい」
+				PRINTFORML 「ふぁっ！　んきゅっ！　ま、ちょ、っ！　や、きもち、よすぎぃ……」
+				PRINTFORMW 「これ、すてきぃ、あふん」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「ごめんね、こんな、貧相な体で、んっ」
+				PRINTFORML 「……嬉しい？　こんななのに、ふぁっ、んくっ、あふ」
+				PRINTFORMW 「わたしも、んっ、うれしい、あんっ！」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「ふふ、いいよ、もっとさわって、あふっ」
+				PRINTFORMW 「ふぁっ！　んっ、あんっ！　ふふ、これ、いいね。ひぁっ！」
+			ENDIF
+			CLEARBIT CFLAG:1611,0
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;挿入中
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	;V挿入
+	IF LOCAL:1 && TEQUIP:50 == PLAYER
+		;射精した
+		IF NOWEX:PLAYER:11
+			IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+				IF 陥落状態() >= 4
+					PRINTFORML 「ひぁっ！　やっ！　おまんこだめ！　おっぱいだめ！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@、だめぇっ！」
+					PRINTFORML 「や、膣内がきゅんきゅんしちゃうからっっ！　んぅっっひぅっっ」
+					PRINTFORML 「んっんっんぅっっ！　なかにぃ、出てっ、あふんっ！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「や、おまんこの中でてるのに、ふぁっ！　おっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんてぇ」
+					PRINTFORML 「ふぁあっっ！！　や、中来てるぅっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！　だめぇ、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@いじりながら、中になんてぇ、ふぁんっっ！」
+				ENDIF
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「んくぅ、奥突かれるの、気持ちいーのに、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もいぢめるなんてぇ」
+					PRINTFORML 「や、勝手におまんこ締まっちゃうから、ふぁっ、あひゅっ……」
+					PRINTFORML 「ふぁん、んきゅぅ……、あ、あ、ああっっ！　中、中に出てるぅ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あひっ、んきゅぅ……や、おまんこズンズンしながら、おっぱいむにむに\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しこしこなんてぇ」
+					PRINTFORML 「ひんっ！　ふぁっ！　やぁ、気持ちよすぎるってばぁ、あっああっっ！？　中、出てぇ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ふぁんっ！　や、おまんこ突きながら、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@いじらないで、ふぁ！　中出てる」
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+				IF 陥落状態() >= 4
+					PRINTFORML 「やぁ！　おまんこもおっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もきもちいいよっ！！」
+					PRINTFORML 「あふっ、んくっ、ひんっっ！！」
+					PRINTFORML 「や、だめだめだめだめぇっ！！　なんか来るきちゃぅっっ！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んくぅっっ！！　おまんこじゅぽじゅぽしながら、おっぱいもんで\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しごかないでぇっっ！！」
+					PRINTFORML 「んきゅぅっ、あたま、おかしくなるぅっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「はっんっ！　そんな三ヶ所もどうじなんて、おかしくなる、おかしくなりゅぅっ」
+				ENDIF
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「ふぁぁ……、おまんこだけでも気持ちいいの、だからゆるしてぇ」
+					PRINTFORML 「んくぅっっ、おっぱいもみもみしないで、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しこしこしないでぇ」
+					PRINTFORML 「あふっ、んくっ、ふぁぁっ……んん、きもちいいよぉ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んく、あふっ、いいよ、おまんこ気持ちいいよぉ」
+					PRINTFORML 「ふぁっ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もおっぱいもきもちいいよぉ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「あひっ、んくっっ！　おまんこ突きながらなんてぇ……あふ、んく」
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;A挿入
+	ELSEIF LOCAL:1 && TEQUIP:51 == PLAYER
+		;射精した
+		IF NOWEX:PLAYER:11
+			;絶頂
+			IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+				IF 陥落状態() >= 4
+					PRINTFORML 「ひぁっ！　やっ！　しりあなだめ！　おっぱいだめ！　\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@、だめぇっ！」
+					PRINTFORML 「や、しりあなあついよぉっ！　んぅっっひぅっっ」
+					PRINTFORML 「んっんっんぅっっ！　なかにぃ、出てっ、あふんっ！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「や、おしりの中でてるのに、ふぁっ！　おっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もなんてぇ」
+					PRINTFORML 「ふぁあっっ！！　や、中来てるぅっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「んくぅっっ！　だめぇ、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@いじりながら、おしりになんてぇ、ふぁんっっ！」
+				ENDIF
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「んくぅ、入り口こすられる気持ちいーのに、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もいぢめるなんてぇ」
+					PRINTFORML 「や、勝手にしりあな締まっちゃうから、ふぁっ、あひゅっ……」
+					PRINTFORML 「ふぁん、んきゅぅ……、あ、あ、ああっっ！　中、中に出てるぅ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「あひっ、んきゅぅ……や、おまんこズンズンしながら、おっぱいむにむに\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しこしこなんてぇ」
+					PRINTFORML 「ひんっ！　ふぁっ！　やぁ、気持ちよすぎるってばぁ、あっああっっ！？　中、出てぇ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「ふぁんっ！　や、おまんこ突きながら、おっぱいと\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@いじらないで、ふぁ！　中出てる」
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+				IF 陥落状態() >= 4
+					PRINTFORML 「やぁ！　しりあなもおっぱいも\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もきもちいいよっ！！」
+					PRINTFORML 「あふっ、んくっ、ひんっっ！！」
+					PRINTFORML 「や、だめだめだめだめぇっ！！　なんか来るきちゃぅっっ！！」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んくぅっっ！！　しりあなぬぷぬぷしながら、おっぱいもんだり\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しごかないでぇっっ！！」
+					PRINTFORML 「んきゅぅっ、あたま、おかしくなるぅっっ！！」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「はっんっ！　そんな三ヶ所もどうじなんて、おかしくなる、おかしくなりゅぅっ」
+				ENDIF
+			ELSE
+				IF 陥落状態() >= 4
+					PRINTFORML 「ふぁぁ……、しりあなだけでも気持ちいいの、だからゆるしてぇ」
+					PRINTFORML 「んくぅっっ、おっぱいもみもみしないで、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@しこしこしないでぇ」
+					PRINTFORML 「あふっ、んくっ、ふぁぁっ……んん、きもちいいよぉ……」
+				ELSEIF 陥落状態() == 3
+					PRINTFORML 「んく、あふっ、いいよ、おしり気持ちいいよぉ」
+					PRINTFORML 「ふぁっ、\@ !GETBIT (TALENT:2 ,1) ? クリ # おちんちん \@もおっぱいもきもちいいよぉ」
+				ELSEIF 陥落状態() == 2
+					PRINTFORML 「あひっ、んくっっ！　おしり挿れながらなんてぇ……あふ、んく」
+				ENDIF
+			ENDIF
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;Futanari
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && GETBIT (TALENT:2 ,1)
+		IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+			IF 陥落状態() >= 4
+				PRINTFORML 「んっ、んっ、んぅ……、おっぱいもみもみしながらおちんちんしごかないでぇ」
+				PRINTFORML 「ひぁっ、んくぅっっ、あつい、からだじゅうあちゅいよぉっっ！！」
+				PRINTFORML 「や、やぁ！　くる！　あついのきちゃうぅっっっ！！」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「んくっ、や、おちんちんいじらないでっ！　おっぱいもまないでっ！」
+				PRINTFORML 「おかしくなる、こんなのおかしくなるからぁっ！！」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「はぁはぁっ、おちんちん熱いの、おっぱい熱いのぉっ！　だめになるこんなのだめにぃ！」
+			ENDIF
+		ELSE
+			IF 陥落状態() >= 4
+				PRINTFORML 「んくっ、はぁ……、んっ、おっぱいもみながら、おちんちんこすらないでってばぁ」
+				PRINTFORML 「あんっ！　ひぁっ！！　気持ちよくないんじゃ、あひっっ！　じゃなくて、んきゅぅ！」
+				PRINTFORML 「きもちよすぎて、おかしくなりそ、あふっ、んくっ、ひぁっ……」
+			ELSEIF 陥落状態() == 3
+				PRINTFORML 「はぁはぁ、んくっ、これだめだってばぁ……、上も下も同時にいじるなんてさぁ」
+				PRINTFORML 「んくっ、はぁ、おちんちんおっぱい、両方気持ちいいからっ、くぅんっ！」
+			ELSEIF 陥落状態() == 2
+				PRINTFORML 「あんっひんっ、んきゅぅっ、や、もう、おっぱいとおちんちん、同時なんて、んくっ！」
+			ENDIF
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+
+	;基本セット
+	IF FLAG:70
+		PRINTFORML …………
+	;恋人
+	ELSEIF 陥落状態() >= 4
+		IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+			PRINTFORML 「はぁはぁっ、だめぇ、おっぱいあちゅいよぉ、クリもだめなのぉ」
+			PRINTFORML 「あひっっ！　んきゅぅっっ！！　いいよ、これ、きもちいーのぉっ！！」
+			PRINTFORML 「ひぁんっ！！　や、なんか、なんか来るなんかきちゃうぅっっっ！！」
+		ELSE
+			PRINTFORML 「はふ、んくっ、いいよ。おっぱいもクリもいじくられるのいいのぉ」
+			PRINTFORML 「ふぁん、ひぅんっ、あひっ、あたま、おかしくなりそう」
+			PRINTFORML 「ふぁああっっ。んくぅっっ……はふ、んっ、もっとしてぇ」
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+			PRINTFORML 「はぁ、んっ！！　や、だめ、おっぱいもみもみもクリこしゅこしゅもまってぇ」
+			PRINTFORML 「あついの来るからぁ、あたま真っ白になっちゃうから、おねがいぃっっ！！」
+		ELSE
+			PRINTFORML 「んっんっんっ、はぁはぁ、クリもおっぱいもされると、気持ちいい」
+			PRINTFORML 「あひっ、んくっ、はぁはぁっ、もっともっとしてぇ」
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		IF NOWEX:0 || NOWEX:1 || NOWEX:2 || NOWEX:3
+			PRINTFORML 「っっっ！！　や、おっぱいもクリもなんてダメなの、ダメダメダメェッッ！！」
+		ELSE
+			PRINTFORML 「んくっ、ふぁっ！　おっぱい良いよ、クリも良いよぉ……、はぁはぁ、あんっっっ！！」
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;1,舐陰
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_1_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;膣内射精直後
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF TCVAR:102
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;絶頂した
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && NOWEX:0
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;あとは適当な分岐を追加してください
+;==================================================
+;2,舐陰茎
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_2_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;3,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_3_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;4,舐肛
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_4_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;5,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_5_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;6,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_6
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_6_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;7,玩弄乳頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_7
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_7_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;8,張開陰唇
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_8_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;9,自慰
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_9_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPSTART]
+;別コマンド化
+;==================================================
+;10,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_10_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;11,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_11_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;12,胸もみ
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_12
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_12_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_12_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;13,張開肛門
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_13_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;ソフト系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;20,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_20
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_20_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_20_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+
+;==================================================
+;21,什麼也不做
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_21
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_21_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_21_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;22,承受誘惑
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_22
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_22_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_22_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;23,枕辺話
+;==================================================
+@M_KOJO_MESSAGE_COM_K61_23
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K61_23_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K61_23_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;失敗
+	IF TFLAG:193
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF 陥落状態() == 3
+		PRINTFORMW 
+		RETURN 1
+	;思慕
+	ELSEIF 陥落状態() == 1
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

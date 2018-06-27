@@ -1,0 +1,1311 @@
+﻿;-------------------------------------------------
+;換装
+;-------------------------------------------------
+@COM429
+#DIM C_ID
+#DIM ID_換装対象, キャラクタ数上限
+#DIM 換装可能人数
+#DIM L_ID ;使用リストのID
+CALL MAKE_CHARA_LIST("換装可能キャラリスト", L_ID, ID_換装対象, 換装可能人数)
+IF 換装可能人数 <= 1
+	PRINTFORMW %CALLNAME:(MASTER)%换了衣服
+	CALL 服装換装(MASTER)
+	CALL CLOTHES_SETTING_TRAIN(MASTER)
+	RETURN -1
+ENDIF
+
+;着替え対象の選択
+;リスト作成時に可否判定やってるのでここでは必要ないです
+PRINTFORML 可以换衣服了
+PRINTFORML 要给谁换衣服呢?
+PRINTFORML 
+CALL SIMPLE_CHARA_LIST(ID_換装対象, 換装可能人数)
+;キャンセルした
+SIF RESULT == 999
+	RETURN -1
+
+;RESULTはすぐ腐るので
+C_ID = ID_換装対象:(RESULT)
+SIF FLAG:時間停止 == 1 && !(C_ID == MASTER)
+	CFLAG:C_ID:時間停止換装 = 1
+CALL 服装換装(C_ID)
+CALL CLOTHES_SETTING_TRAIN(C_ID)
+RETURN 0
+
+
+
+
+;CLOTHES_SETTING_TRAINに靴脱ぎ処理を移動させたので
+;ここでCLOTHES_SETTING_TRAINすると靴を脱いでしまい、靴設定の保存ができません
+;呼び出し元でCLOTHES_SETTING_TRAINすること
+@服装換装(C_ID)
+#DIM C_ID
+CALL SHOW_CLOTHES(C_ID, "現在の衣装")
+PRINTFORML %CALLNAME:C_ID%换衣服中
+PRINTFORML 
+PRINTFORML [6] - 衣装確認
+PRINTFORML [5] - 指定喜愛的衣装
+PRINTFORML [4] - 睡衣的変更
+PRINTFORML [3] - 便装的変更
+PRINTFORML [2] - 今天穿的衣服的変更
+PRINTFORML [1] - 胖次
+PRINTFORML 
+PRINTFORML [0] - 返回
+DO
+	INPUT
+	SELECTCASE RESULT
+	CASE 6
+		CALL SHOW_CHARA_CLOTHES(C_ID, 0)
+	CASE 5
+		CALL SHOW_CLOTHES(C_ID, "おきにいり衣装")
+		PRINTFORML 设定%CALLNAME:C_ID%的喜愛套装中
+		PRINTFORML 
+		PRINTFORML [4] - 指定现在的服装為套装
+		PRINTFORML [3] - 穿设定好的套装
+		PRINTFORML [2] - 穿和特定角色同款的衣服
+		PRINTFORML [1] - 指定的复位
+		PRINTFORML 
+		PRINTFORML [0] - 中止
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 4
+				CALL DECIDE_CLOTHES(C_ID, "おきにいり衣装", "現在の衣装")
+			CASE 3
+				CALL COSPLAY_SET(C_ID, "おきにいり衣装")
+			CASE 2
+				CALL COSPLAY_CHARA(C_ID, "おきにいり衣装")
+			CASE 1
+				PRINTFORML 真的复位吗？
+				PRINTFORML 
+				PRINTFORML [1] - 复位
+				PRINTFORML [0] - 中止
+				DO
+					INPUT
+					SELECTCASE RESULT
+					CASE 1
+						CALL CTRL_CLOTHES_SET(C_ID, "おきにいり衣装のリセット")
+					CASE 0
+					CASEELSE
+						REUSELASTLINE 无效输入
+						CONTINUE
+					ENDSELECT
+					RESTART
+				LOOP 1
+			CASE 0
+				RESTART
+			CASEELSE
+			ENDSELECT
+			RESTART
+		LOOP 1
+	CASE 4
+		SIF C_ID == MASTER
+			RESTART
+		CALL SHOW_CLOTHES(C_ID, "今日のパジャマ")
+		PRINTFORML 设定%CALLNAME:C_ID%的睡衣中
+		PRINTFORML 
+		PRINTFORML [5] - 随你喜欢
+		PRINTFORML [4] - 睡覚的服装
+		PRINTFORML [3] - 指定睡衣
+		PRINTFORML [2] - 裸睡
+		PRINTFORML [1] - 只穿内袴就睡覚
+		PRINTFORML 
+		PRINTFORML [0] - 中止
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 5
+				CFLAG:C_ID:パジャマ指定 = 0
+			CASE 4
+				SIF CFLAG:C_ID:おきにいり衣装
+					CALL CTRL_CLOTHES_SET(C_ID, "パジャマの指定_おきにいり衣装")
+			CASE 3
+				CALL COSPLAY_SELECT(C_ID, "パジャマ", "パジャマセット")
+			CASE 2
+				CALL CTRL_CLOTHES_SET(C_ID, "パジャマの指定_全裸")
+			CASE 1
+				CALL CTRL_CLOTHES_SET(C_ID, "パジャマの指定_パンイチ")
+			CASE 0
+			CASEELSE
+				REUSELASTLINE 无效输入
+				CONTINUE
+			ENDSELECT
+			RESTART
+		LOOP 1
+	CASE 3
+		CALL SHOW_CLOTHES(C_ID, "今日の衣装")
+		PRINTFORML 设定%CALLNAME:C_ID%的便装中
+		PRINTFORML 
+		PRINTFORML [4] - 指定现在的服装（為発生而需要而被重写）
+		PRINTFORML [3] - 穿设定好的套装
+		PRINTFORML [2] - 穿和特定角色同款的衣服
+		PRINTFORML [1] - 由本人决定
+		PRINTFORML 
+		PRINTFORML [0] - 中止
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 4
+				CALL DECIDE_CLOTHES(C_ID, "普段着", "現在の衣装")
+			CASE 3
+				CALL COSPLAY_SET(C_ID, "普段着")
+			CASE 2
+				CALL COSPLAY_CHARA(C_ID, "普段着")
+			CASE 1
+				PRINTFORMW 便服的设定交给本人了
+				CFLAG:C_ID:基本服装セット = 0
+			CASE 0
+			ENDSELECT
+			RESTART
+		LOOP 1
+	CASE 2
+		CALL SHOW_CLOTHES(C_ID, "現在の衣装")
+		PRINTFORML %CALLNAME:C_ID%的现在穿的衣服设定中
+		PRINTFORML 
+		PRINTFORML [4] - 把衣服换成服装
+		PRINTFORML [3] - 穿设定好的套装
+		PRINTFORML [2] - 穿和特定角色同款的衣服
+		PRINTFORML [1] - 回到今天的默认
+		PRINTFORML 
+		PRINTFORML [0] - 中止
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 4
+				SIF !CFLAG:C_ID:おきにいり衣装
+					RESTART
+				CALL DECIDE_CLOTHES(C_ID, "現在の衣装", "おきにいり衣装")
+			CASE 3
+				CALL COSPLAY_SET(C_ID, "現在の衣装")
+			CASE 2
+				CALL COSPLAY_CHARA(C_ID, "現在の衣装")
+			CASE 1
+				PRINTFORMW 把今天的服装改了
+				CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_普段着")
+			CASE 0
+			ENDSELECT
+			RESTART
+		LOOP 1
+	CASE 1
+		PRINTFORML 斟酌%CALLNAME:C_ID%的胖次中
+		PRINTFORML   現在穿着的胖次：%GET_STR(C_ID, "下半身内袴_ずらし可能", EQUIP:C_ID:下半身内袴２, "名前")%
+		SELECTCASE CFLAG:C_ID:指定パンツ
+		CASE 0
+			PRINTFORML 　現在的胖次設定：无指定
+		CASE 100
+			PRINTFORML 　現在的胖次設定：指定不穿
+		CASEELSE
+			PRINTFORML 　現在的胖次設定：%GET_STR(C_ID, "下半身内袴_ずらし可能", CFLAG:C_ID:指定パンツ, "名前")%
+		ENDSELECT
+		PRINTFORML 
+		PRINTFORML 
+		PRINTFORML [2] - 现在的内袴设定為喜欢的胖次
+		PRINTFORML [1] - 解除喜欢的胖次
+		PRINTFORML 
+		PRINTFORML [0] - 中止
+		DO
+			INPUT
+			SELECTCASE RESULT
+			CASE 2
+				PRINTFORMW 指定喜欢的胖次
+				CFLAG:C_ID:指定パンツ = EQUIP:C_ID:下半身内袴２
+				SIF !CFLAG:C_ID:指定パンツ
+					CFLAG:C_ID:指定パンツ = 100
+			CASE 1
+				PRINTFORMW 解除喜欢的胖次了
+				CFLAG:C_ID:指定パンツ = 0
+			CASE 0
+			ENDSELECT
+			RESTART
+		LOOP 1
+	CASE 0
+		RETURN
+	CASEELSE
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDSELECT
+	RESTART
+LOOP 1
+
+
+
+;模倣させる対象キャラの選択
+@COSPLAY_CHARA(C_ID, TYPE)
+#DIM  C_ID
+#DIMS TYPE
+#DIM  COS_CHARA
+PRINTFORML %CALLNAME:C_ID%的%TYPE%设定中
+PRINTFORML 和谁同款呢？
+CALL SHOW_CHARA_LIST("普段着模倣可能キャラリスト", "体力気力")
+COS_CHARA = RESULT
+IF GROUPMATCH(COS_CHARA, 0, 999)
+	PRINTFORMW 服装的设定中断了
+	RETURN
+ELSEIF COS_CHARA == C_ID
+	SELECTCASE TYPE
+	CASE "おきにいり衣装"
+		PRINTFORMW 服装的设定中断了
+	CASE "普段着"
+		PRINTFORMW 便服的设定交给本人了
+		CFLAG:C_ID:基本服装セット = 0
+	CASE "現在の衣装"
+		PRINTFORMW 把今天的服装改了
+		CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_普段着")
+	ENDSELECT
+	RETURN
+ENDIF
+CALL DECIDE_CLOTHES(C_ID, TYPE, "キャラ普段着", COS_CHARA)
+SIF RESULT
+	RESTART
+
+
+;衣装セットのカテゴリ選択
+@COSPLAY_SET(C_ID, TYPE)
+#DIM  C_ID
+#DIM  SET_ID
+#DIMS TYPE
+#DIMS CATEGORY
+CALL SHOW_CLOTHES(C_ID, TYPE)
+PRINTFORML %CALLNAME:C_ID%的%TYPE%设定中
+PRINTFORML 服装的种类选択
+PRINTFORML 
+PRINTFORML [3] - 基本套装
+PRINTFORML [2] - cosplay服装
+PRINTFORML [1] - 角色特殊服装集
+PRINTFORML 
+PRINTFORML [0] - 中止
+DO
+	INPUT
+	SELECTCASE RESULT
+	CASE 3
+		CATEGORY '= "基本衣装セット"
+	CASE 2
+		CATEGORY '= "コスプレ衣装セット"
+	CASE 1
+		CATEGORY '= "キャラ特殊衣装セット"
+	CASE 0
+		RETURN
+	CASEELSE
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDSELECT
+	BREAK
+LOOP 1 
+CALL COSPLAY_SELECT(C_ID, TYPE, CATEGORY)
+
+
+
+;個々の衣装セットの選択
+@COSPLAY_SELECT(C_ID, TYPE, CATEGORY)
+#DIM  C_ID
+#DIM  SET_ID
+#DIMS TYPE
+#DIMS CATEGORY
+PRINTFORML %CALLNAME:C_ID%的%TYPE%设定中（%CATEGORY%）
+PRINTFORML 选択使用的服装套装
+PRINTFORML 
+CALL CLASS_LIST("衣装セット", CATEGORY)
+PRINTFORML 
+PRINTFORML [0] - 中止
+DO
+	INPUT
+	SET_ID = RESULT
+	SELECTCASE SET_ID
+	CASE 0
+		RETURN
+	CASEELSE
+		SIF GET_INT(0, "衣装セット" , SET_ID, CATEGORY)
+			BREAK
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDSELECT
+LOOP 1 
+CALL DECIDE_CLOTHES(C_ID, TYPE, "衣装セット", SET_ID)
+SIF RESULT
+	RESTART
+
+
+
+;衣装決定の最終確認
+@DECIDE_CLOTHES(C_ID, COS_SAVE, COS_LOAD, SET_ID)
+#DIM  C_ID     ;設定するキャラ
+#DIMS COS_SAVE ;衣装の保存先
+#DIMS COS_LOAD ;衣装の参照元
+#DIM  SET_ID   ;参照衣装等のID
+PRINTFORMW 最終確認
+CALL SHOW_CLOTHES(C_ID, COS_LOAD, SET_ID)
+PRINTFORML 
+PRINTFORML 这套服装可以麼？
+PRINTFORML 
+PRINTFORML [1] - 決定
+PRINTFORML [0] - 再考虑考虑
+PRINTFORML 
+PRINTFORML [9] - 放棄
+DO
+	INPUT
+	SELECTCASE RESULT
+	CASE 1
+		BREAK
+	CASE 0
+		RETURN 1
+	CASE 9
+		RETURN
+	CASEELSE
+		REUSELASTLINE 无效输入
+		CONTINUE
+	ENDSELECT
+LOOP 1
+
+
+SELECTCASE COS_LOAD
+CASE "現在の衣装"
+	SELECTCASE COS_SAVE
+	CASE "普段着"
+		PRINTFORMW 现在穿的服装以后每天都会穿了
+		CFLAG:C_ID:基本服装セット = 100
+		CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の保存_おきにいり")
+	CASE "おきにいり衣装"
+		PRINTFORMW 现在穿的衣服放进指定了
+		CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の保存_おきにいり")
+	ENDSELECT
+	
+CASE "衣装セット"
+	PRINTFORMW %CALLNAME:C_ID%的%COS_SAVE%指定為%GET_STR(C_ID, "衣装セット", SET_ID, "名前")%
+	SELECTCASE COS_SAVE
+	CASE "現在の衣装"
+		CALL CTRL_CLOTHES_SET(C_ID, "現在衣装の変更_衣装セット", SET_ID)
+	CASE "普段着"
+		CALL CTRL_CLOTHES_SET(C_ID, "普段着の指定_衣装セット", SET_ID)
+	CASE "おきにいり衣装"
+		CALL CTRL_CLOTHES_SET(C_ID, "おきにいり衣装の指定_衣装セット", SET_ID)
+	CASE "パジャマ"
+		CALL CTRL_CLOTHES_SET(C_ID, "パジャマの指定_衣装セット", SET_ID)
+	ENDSELECT
+
+CASE "キャラ普段着"
+	PRINTFORMW %CALLNAME:C_ID%穿上和%CALLNAME:SET_ID%同样的衣服了
+	SELECTCASE COS_SAVE
+	CASE "現在の衣装"
+		CALL CTRL_CLOTHES_SET(C_ID, "現在衣装換装_キャラ衣装", SET_ID, "普段着")
+	CASE "普段着"
+		CALL CTRL_CLOTHES_SET(C_ID, "普段着の指定_キャラ衣装", SET_ID, "普段着")
+	CASE "おきにいり衣装"
+		CALL CTRL_CLOTHES_SET(C_ID, "おきにいり衣装の指定_キャラ衣装", SET_ID, "普段着")
+	ENDSELECT
+
+ENDSELECT
+
+
+
+[SKIPSTART]
+@服装換装(ARG)
+#DIM 装備部位
+$INPUT_LOOP
+CALL PRINT_STATE_CLOTH(ARG)
+PRINTL [0] - 頭
+PRINTL [1] - 装飾
+PRINTL [2] - 腕
+PRINTL [3] - 内袴(上)
+PRINTL [4] - 内袴(下) 
+PRINTL [5] - 全身内袴
+PRINTL [6] - 上衣
+PRINTL [7] - 下衣
+PRINTL [8] - 全身服
+PRINTL [9] - 和服
+PRINTL [10] - 外衣
+PRINTL [11] - 袜子
+PRINTL [12] - 靴
+PRINTL [13] - 付属
+PRINTL [14] - 付属
+PRINTL [15] - 付属
+PRINT [16] - 预设
+IF ARG == MASTER
+	PRINTFORML （便服変更了）
+ELSE
+	PRINTFORML 　
+ENDIF
+PRINT [17] - Cosplay
+IF ARG == MASTER
+	PRINTFORML （便服変更了）
+ELSE
+	PRINTFORML 　
+ENDIF
+PRINTL [18] - 全部脱掉
+PRINTL [100] - 换装完毕
+PRINTL [999] - 放棄
+INPUT
+IF RESULT == 0
+	$INPUT_LOOP_頭
+	PRINTL [0] - 脱掉
+	PRINTL [1] - 帽子
+	PRINTL [2] - 髪飾り
+	PRINTL [3] - 蝴蝶結
+	PRINTL [4] - 白色女僕髮箍
+	PRINTL [5] - 髮箍
+	PRINTL [6] - 面
+	PRINTL [7] - 頭巾
+	PRINTL [8] - 烏帽子
+	PRINTL [9] - 兎耳髮箍
+	PRINTL [10] - 鴨舌帽
+	PRINTL [11] - 小碗
+	PRINTL [12] - 束髪簪
+	PRINTL [13] - 睡帽
+	PRINTL [14] - 头巾帽
+	PRINTL [15] - 兜巾
+	PRINTL [16] - 頭套
+	PRINTL [17] - 三角巾
+	PRINTL [18] - 頭戴式受话器・耳麦
+	PRINTL [19] - 頭戴式耳机
+	PRINTL [20] - 護士帽
+	PRINTL [21] - 聖誕帽
+	PRINTL [22] - 遮陽帽
+	PRINTL [23] - 麦藁帽子
+	PRINTL [24] - 学帽
+	PRINTL [999] - 返回
+	INPUT
+	SELECTCASE RESULT
+		CASE 0 TO 24
+			EQUIP:ARG:帽子 = RESULT
+			GOTO INPUT_LOOP_頭
+		CASE 999
+			GOTO INPUT_LOOP
+		CASEELSE
+			GOTO INPUT_LOOP_頭
+	ENDSELECT
+ELSEIF RESULT == 1
+	$INPUT_LOOP_装飾
+	PRINTL [0] - 取下
+	PRINTL [1] - 眼鏡
+	PRINTL [2] - 袖
+	PRINTL [3] - 首飾り
+	PRINTL [4] - 御札
+	PRINTL [5] - 風鏡
+	PRINTL [6] - 傘
+	PRINTL [7] - 墨鏡
+	PRINTL [999] - 返回
+	INPUT
+	SELECTCASE RESULT
+		CASE 0 TO 7
+			EQUIP:ARG:飾品 = RESULT
+			GOTO INPUT_LOOP_装飾
+		CASE 999
+			GOTO INPUT_LOOP
+		CASEELSE
+			GOTO INPUT_LOOP_装飾
+	ENDSELECT
+ELSEIF RESULT == 2
+		$INPUT_LOOP_腕
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 手甲
+		PRINTL [2] - 皮手套
+		PRINTL [3] - 作業用手袋
+		PRINTL [4] - 露指手套
+		PRINTL [5] - 絲綢手套
+		PRINTL [6] - 金属護手
+		PRINTL [7] - 袖套
+		PRINTL [8] - 拇指托
+		PRINTL [999] - 返回
+		INPUT
+	SELECTCASE RESULT
+		CASE 0 TO 8
+			EQUIP:ARG:腕部装束 = RESULT
+			GOTO INPUT_LOOP_腕
+		CASE 999
+			GOTO INPUT_LOOP
+		CASEELSE
+			GOTO INPUT_LOOP_腕
+	ENDSELECT
+ELSEIF RESULT == 3
+		$INPUT_LOOP_内袴上
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 文胸
+		PRINTL [2] - 裹胸
+		PRINTL [3] - 運動文胸
+		PRINTL [4] - 吊帯衫
+		PRINTL [5] - 創口貼
+		PRINTL [6] - 乳貼(星型)
+		PRINTL [7] - 乳貼(心型)
+		PRINTL [8] - 乳环
+		PRINTL [9] - 吊帯式文胸
+		PRINTL [10] - 比基尼文胸
+		PRINTL [11] - 微型文胸
+		PRINTL [12] - 有色襯衫
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 9
+				EQUIP:ARG:上半身内袴１ = RESULT
+				EQUIP:ARG:上半身内袴２ = 0
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				SIF RESULT
+					EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_内袴上
+			CASE 10, 11,12
+				EQUIP:ARG:上半身内袴１ = 0
+				EQUIP:ARG:上半身内袴２ = RESULT - 9
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_内袴上
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_内袴上
+		ENDSELECT
+	ELSEIF RESULT == 4
+		$INPUT_LOOP_内袴下
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 兜襠布
+		PRINTL [2] - Ｃ字袴
+		PRINTL [3] - 創口貼
+		PRINTL [4] - 安全袴
+		PRINTL [5] - 貞操帯
+		PRINTL [6] - 陰唇環
+		PRINTL [7] - 陰蒂環
+		PRINTL [8] - 四角袴
+		PRINTL [9] - 比基尼内袴
+		PRINTL [10] - 微型内袴
+		PRINTL [11] - 内袴
+		PRINTL [999] - 返回
+		INPUT
+
+		SELECTCASE RESULT
+			CASE 0 TO 7
+				EQUIP:ARG:下半身内袴１ = RESULT
+				EQUIP:ARG:下半身内袴２ = 0
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				GOTO INPUT_LOOP_内袴下
+			CASE 8
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = RESULT - 7
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				GOTO INPUT_LOOP_内袴下
+			CASE 9
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = 20
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_内袴下
+			CASE 10
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = 21
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_内袴下
+			CASE 11
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_内袴下
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_内袴下
+		ENDSELECT
+
+	ELSEIF RESULT == 5
+		$INPUT_LOOP_全身内袴
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 緊身内衣
+		PRINTL [2] - 高開叉連体泳衣(黒)
+		PRINTL [3] - 高開叉連体泳衣(赤)
+		PRINTL [4] - 兔女郎服(黒)
+		PRINTL [5] - 兔女郎服(赤)
+		PRINTL [6] - 死库水泳衣
+		PRINTL [7] - 競泳水着
+		PRINTL [8] - 連体泳装
+		PRINTL [9] - Y字型内衣
+		PRINTL [10] - 保暖内衣
+		PRINTL [11] - 鎖帷子
+		PRINTL [12] - 連体内衣
+		PRINTL [13] - 膠衣
+		PRINTL [14] - 機車夾克
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 11
+				EQUIP:ARG:緊身内衣 = RESULT
+				EQUIP:ARG:連体内衣 = 0
+				EQUIP:ARG:上半身内袴１ = 0
+				EQUIP:ARG:上半身内袴２ = 0
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = 0
+				GOTO INPUT_LOOP_全身内袴
+			CASE 12 TO 14
+				EQUIP:ARG:緊身内衣 = 0
+				EQUIP:ARG:連体内衣 = RESULT - 11
+				EQUIP:ARG:上半身内袴１ = 0
+				EQUIP:ARG:上半身内袴２ = 0
+				EQUIP:ARG:下半身内袴１ = 0
+				EQUIP:ARG:下半身内袴２ = 0
+				GOTO INPUT_LOOP_全身内袴
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_全身内袴
+		ENDSELECT
+
+	ELSEIF RESULT == 6
+		$INPUT_LOOP_上衣
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 无袖上衣
+		PRINTL [2] - 水手服
+		PRINTL [3] - 上衣
+		PRINTL [4] - 西装上衣
+		PRINTL [5] - 巫女服(博麗)
+		PRINTL [6] - T恤
+		PRINTL [7] - 女式襯衫
+		PRINTL [8] - 无袖襯衫
+		PRINTL [9] - 上身睡衣
+		PRINTL [10] - 巫女服(守矢)
+		PRINTL [11] - 開胸高领毛衣
+		PRINTL [12] - 抹胸
+		PRINTL [13] - 吊帯背心
+		PRINTL [14] - 吊帯衫
+		PRINTL [15] - 短袖襯衫
+		PRINTL [16] - 褶辺襯衫
+		PRINTL [17] - 体操服
+		PRINTL [18] - 運動夾克衫
+		PRINTL [19] - 襯衫
+		PRINTL [20] - 道着
+		PRINTL [21] - 小紋
+		PRINTL [22] - 長着
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0
+				EQUIP:ARG:上半身上衣１ = 0
+				EQUIP:ARG:上半身上衣２ = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				GOTO INPUT_LOOP_上衣
+			CASE 1 TO 6
+				EQUIP:ARG:上半身上衣１ = RESULT
+				EQUIP:ARG:上半身上衣２ = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_上衣
+			CASE 7 TO 22
+				EQUIP:ARG:上半身上衣１ = 0
+				EQUIP:ARG:上半身上衣２ = RESULT - 6
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_上衣
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_上衣
+		ENDSELECT
+	ELSEIF RESULT == 7
+		$INPUT_LOOP_下衣
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 袴子
+		PRINTL [2] - 短袴
+		PRINTL [3] - 睡袴
+		PRINTL [4] - 热袴
+		PRINTL [5] - 連体工作服
+		PRINTL [6] - 袴
+		PRINTL [7] - 作業袴
+		PRINTL [8] - 指貫袴
+		PRINTL [9] - 运動短袴
+		PRINTL [10] - 五分袴
+		PRINTL [11] - 南瓜袴
+		PRINTL [12] - 百褶裙
+		PRINTL [13] - 裙子
+		PRINTL [14] - 長裙
+		PRINTL [15] - 睡袴
+		PRINTL [16] - 行灯袴
+		PRINTL [17] - 吊帯裙
+		PRINTL [18] - 无袖連衣裙
+		PRINTL [19] - 迷你裙
+		PRINTL [20] - 連体裙
+		PRINTL [21] - 西袴
+		PRINTL [999] - 返回
+		INPUT
+
+		SELECTCASE RESULT
+			CASE 0
+				EQUIP:ARG:袴子 = 0
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				GOTO INPUT_LOOP_下衣
+			CASE 1 TO 11
+				EQUIP:ARG:袴子 = RESULT
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_下衣
+			CASE 21
+				EQUIP:ARG:袴子 = RESULT
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_下衣
+			CASE 12
+				EQUIP:ARG:袴子 = 0
+				EQUIP:ARG:下半身上衣 = RESULT
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_下衣
+			CASE 13 TO 20
+				EQUIP:ARG:袴子 = 0
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = RESULT - 12
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_下衣
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_下衣
+		ENDSELECT
+
+	ELSEIF RESULT == 8
+		$INPUT_LOOP_全身服
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 連衣裙
+		PRINTL [2] - 情趣内衣
+		PRINTL [3] - 囲裙洋装
+		PRINTL [4] - 旗袍
+		PRINTL [5] - 法衣
+		PRINTL [6] - 道士服
+		PRINTL [7] - 晚禮服
+		PRINTL [8] - 睡衣
+		PRINTL [9] - 哥特蘿莉服
+		PRINTL [10] - 護士服		
+		PRINTL [11] - 罩衫
+		PRINTL [12] - 布偶装
+		PRINTL [13] - 浴衣
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 13
+				EQUIP:ARG:連衣裙 = RESULT
+				EQUIP:ARG:上半身上衣１ = 0
+				EQUIP:ARG:上半身上衣２ = 0
+				EQUIP:ARG:和服 = 0
+				EQUIP:ARG:袴子 = 0
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_全身服
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_全身服
+		ENDSELECT
+	ELSEIF RESULT == 9
+		$INPUT_LOOP_和服
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 和服
+		PRINTL [2] - 千早
+		PRINTL [3] - 襦袢
+		PRINTL [4] - 浴衣
+		PRINTL [5] - 道着
+		PRINTL [6] - 白装束
+		PRINTL [7] - 忍装束
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 7
+				EQUIP:ARG:和服 = RESULT
+				EQUIP:ARG:上半身上衣１ = 0
+				EQUIP:ARG:上半身上衣２ = 0
+				EQUIP:ARG:連衣裙 = 0
+				EQUIP:ARG:袴子 = 0
+				EQUIP:ARG:下半身上衣 = 0
+				EQUIP:ARG:裙子 = 0
+				EQUIP:ARG:0 = 1
+				GOTO INPUT_LOOP_和服
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_和服
+		ENDSELECT
+
+	ELSEIF RESULT == 10
+		$INPUT_LOOP_外衣
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 披肩
+		PRINTL [2] - 斗篷
+		PRINTL [3] - 披肩斗篷
+		PRINTL [4] - 主妇服
+		PRINTL [5] - 褞袍
+		PRINTL [6] - 陣羽織
+		PRINTL [7] - 白衣
+		PRINTL [8] - 防風衣
+		PRINTL [9] - 背心
+		PRINTL [10] - 作業服
+		PRINTL [11] - 連帽風衣
+		PRINTL [12] - 学生服
+		PRINTL [13] - 夹克衫
+		PRINTL [14] - 西装夹克
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 14
+				EQUIP:ARG:外衣 = RESULT
+				GOTO INPUT_LOOP_外衣
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_外衣
+		ENDSELECT
+
+	ELSEIF RESULT == 11
+		$INPUT_LOOP_襪子
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 襪子
+		PRINTL [2] - 長筒襪
+		PRINTL [3] - 半透明連袴襪
+		PRINTL [4] - 吊帯襪
+		PRINTL [5] - 高筒襪
+		PRINTL [6] - 網襪
+		PRINTL [7] - 短布襪
+		PRINTL [8] - 袴襪
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 8
+				EQUIP:ARG:襪子 = RESULT
+				GOTO INPUT_LOOP_襪子
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_襪子
+		ENDSELECT
+
+	ELSEIF RESULT == 12
+		$INPUT_LOOP_靴
+		PRINTL [0] - 脱掉
+		PRINTL [1] - 靴
+		PRINTL [2] - 木屐
+		PRINTL [3] - 長靴
+		PRINTL [4] - 高筒靴
+		PRINTL [5] - 雪駄
+		PRINTL [6] - 高跟鞋
+		PRINTL [7] - 護士凉鞋
+		PRINTL [8] - 草履
+		PRINTL [9] - 長筒皮靴
+		PRINTL [10] - 運動鞋
+		PRINTL [11] - バンプス
+		PRINTL [12] - 革靴
+		PRINTL [13] - 地下短布襪
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 13
+				EQUIP:ARG:靴 = RESULT
+				GOTO INPUT_LOOP_靴
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_靴
+		ENDSELECT
+	ELSEIF RESULT == 13
+		$INPUT_LOOP_付属１
+		PRINTL [0] - 付属品を外す
+		PRINTL [1] - 眼帯
+		PRINTL [2] - 耳环
+		PRINTL [3] - 项圈
+		PRINTL [4] - 項鏈
+		PRINTL [5] - 领帯
+		PRINTL [6] - 囲巾
+		PRINTL [7] - 帯
+		PRINTL [8] - 吊帯
+		PRINTL [9] - 荒縄
+		PRINTL [10] - 拘束具
+		PRINTL [11] - 双背帯书包
+		PRINTL [12] - 帆布背包
+		PRINTL [13] - 注連縄
+		PRINTL [14] - 羽衣
+		PRINTL [15] - 绷帯
+		PRINTL [16] - 手镯
+		PRINTL [17] - 网格吊帯
+		PRINTL [18] - 丝帯项鏈
+		PRINTL [19] - 領巾
+		PRINTL [20] - 乳紐
+		PRINTL [21] - 背帯
+		PRINTL [22] - 護符
+		PRINTL [23] - 丝帯領巾
+		PRINTL [24] - 蝴蝶結
+		PRINTL [25] - 胶帯
+		PRINTL [26] - 触须
+		PRINTL [27] - 飯粒
+		PRINTL [28] - 吐司
+		PRINTL [29] - 桃
+		PRINTL [30] - 生理用品
+		PRINTL [31] - 単肩包
+		PRINTL [32] - 小型挎包
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 30
+				EQUIP:ARG:其他１ = RESULT
+				GOTO INPUT_LOOP_付属１
+			CASE 31 TO 32
+				EQUIP:ARG:其他１ = RESULT + 1
+				GOTO INPUT_LOOP_付属１
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_付属１
+		ENDSELECT
+	ELSEIF RESULT == 14
+		$INPUT_LOOP_付属２
+		PRINTL [0] - 付属品を外す
+		PRINTL [1] - 眼帯
+		PRINTL [2] - 耳环
+		PRINTL [3] - 项圈
+		PRINTL [4] - 項鏈
+		PRINTL [5] - 领帯
+		PRINTL [6] - 囲巾
+		PRINTL [7] - 帯
+		PRINTL [8] - 吊帯
+		PRINTL [9] - 荒縄
+		PRINTL [10] - 拘束具
+		PRINTL [11] - 双背帯书包
+		PRINTL [12] - 帆布背包
+		PRINTL [13] - 注連縄
+		PRINTL [14] - 羽衣
+		PRINTL [15] - 绷帯
+		PRINTL [16] - 手镯
+		PRINTL [17] - 网格吊帯
+		PRINTL [18] - 丝帯项鏈
+		PRINTL [19] - 領巾
+		PRINTL [20] - 乳紐
+		PRINTL [21] - 背帯
+		PRINTL [22] - 護符
+		PRINTL [23] - 丝帯領巾
+		PRINTL [24] - 蝴蝶結
+		PRINTL [25] - 胶帯
+		PRINTL [26] - 触须
+		PRINTL [27] - 飯粒
+		PRINTL [28] - 吐司
+		PRINTL [29] - 桃
+		PRINTL [30] - 生理用品
+		PRINTL [31] - 単肩包
+		PRINTL [32] - 小型挎包
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 30
+				EQUIP:ARG:其他２ = RESULT
+				GOTO INPUT_LOOP_付属２
+			CASE 31 TO 32
+				EQUIP:ARG:其他１ = RESULT + 1
+				GOTO INPUT_LOOP_付属２
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_付属２
+		ENDSELECT
+	ELSEIF RESULT == 15
+		$INPUT_LOOP_付属３
+		PRINTL [0] - 付属品を外す
+		PRINTL [1] - 眼帯
+		PRINTL [2] - 耳环
+		PRINTL [3] - 项圈
+		PRINTL [4] - 項鏈
+		PRINTL [5] - 领帯
+		PRINTL [6] - 囲巾
+		PRINTL [7] - 帯
+		PRINTL [8] - 吊帯
+		PRINTL [9] - 荒縄
+		PRINTL [10] - 拘束具
+		PRINTL [11] - 双背帯书包
+		PRINTL [12] - 帆布背包
+		PRINTL [13] - 注連縄
+		PRINTL [14] - 羽衣
+		PRINTL [15] - 绷帯
+		PRINTL [16] - 手镯
+		PRINTL [17] - 网格吊帯
+		PRINTL [18] - 丝帯项鏈
+		PRINTL [19] - 領巾
+		PRINTL [20] - 乳紐
+		PRINTL [21] - 背帯
+		PRINTL [22] - 護符
+		PRINTL [23] - 丝帯領巾
+		PRINTL [24] - 蝴蝶結
+		PRINTL [25] - 胶帯
+		PRINTL [26] - 触须
+		PRINTL [27] - 飯粒
+		PRINTL [28] - 吐司
+		PRINTL [29] - 桃
+		PRINTL [30] - 生理用品
+		PRINTL [31] - 単肩包
+		PRINTL [32] - 小型挎包
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 30
+				EQUIP:ARG:其他３ = RESULT
+				GOTO INPUT_LOOP_付属３
+			CASE 31 TO 32
+				EQUIP:ARG:其他１ = RESULT + 1
+				GOTO INPUT_LOOP_付属３
+			CASE 999
+				GOTO INPUT_LOOP
+			CASEELSE
+				GOTO INPUT_LOOP_付属３
+		ENDSELECT
+	ELSEIF RESULT == 16
+		$INPUT_LOOP_プリセット
+		PRINTL [0] - 预设男装
+		PRINTL [1] - 预设女装
+		PRINTL [2] - 執事套
+		PRINTL [3] - 女僕套
+		PRINTL [4] - 神官白衣装
+		PRINTL [5] - 作務衣套
+		PRINTL [6] - 道士套
+		PRINTL [7] - 学生套
+		PRINTL [8] - 女学生套
+		SIF ARG != MASTER
+			PRINTL [99] - 便装
+		PRINTL [999] - 返回
+		INPUT
+		SELECTCASE RESULT
+			CASE 0 TO 4, 99
+			FOR 装備部位,1,23
+				EQUIP:ARG:装備部位 = 0
+			NEXT
+			EQUIP:ARG:0 = 1
+			SIF ARG == MASTER && RESULT != 99
+				CFLAG:ARG:基本服装セット = RESULT + 1
+			CASE 6 TO 8
+			FOR 装備部位,1,23
+				EQUIP:ARG:装備部位 = 0
+			NEXT
+			EQUIP:ARG:0 = 1
+			SIF ARG == MASTER && RESULT != 99
+				CFLAG:ARG:基本服装セット = RESULT + 2
+		ENDSELECT
+		IF RESULT == 0
+			CALL 男装セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 1
+			CALL 女装セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 3
+			CALL 女中セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 2
+			CALL 執事セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 4
+			CALL 神官セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 5
+			CALL 作務衣セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 6
+			CALL 道着セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 7
+			CALL 書生セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 8
+			CALL 女学生セット(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 99 && ARG != MASTER
+			CALL CLOTHES_SETTING(ARG)
+			GOTO INPUT_LOOP_プリセット
+		ELSEIF RESULT == 999
+			GOTO INPUT_LOOP
+		ELSE
+			GOTO INPUT_LOOP_プリセット
+		ENDIF
+	ELSEIF RESULT == 17
+		$INPUT_LOOP_コスプレ
+		PRINTL [0] - 保健室女教師
+		PRINTL [1] - 女仆
+		PRINTL [2] - 比基尼
+		PRINTL [3] - 迷你比基尼
+		PRINTL [4] - 兜裆布漢女
+		PRINTL [5] - 兔女郎
+		PRINTL [6] - 白衣天使
+		PRINTL [7] - 圣诞服
+		PRINTL [8] - 网球服
+		PRINTL [9] - 裸体衬衫
+		PRINTL [10] - 鸭舌帽文
+		PRINTL [11] - 忍者
+		PRINTL [999] - 返回
+		INPUT
+		IF RESULT >= 0 && RESULT <= 11
+			FOR 装備部位,1,23
+				EQUIP:ARG:装備部位 = 0
+			NEXT
+			EQUIP:ARG:0 = 1
+			SIF ARG == MASTER
+				CFLAG:ARG:基本服装セット = RESULT + 50
+		ENDIF
+		IF RESULT == 0
+			CALL 保健室の女教師セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 1
+			CALL メイドさんセット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 2
+			CALL 比基尼セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 3
+			CALL 微型比基尼セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 4
+			CALL 兜襠布漢女セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 5
+			CALL バニーガールセット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 6
+			CALL 白衣の天使セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 7
+			CALL 聖誕服セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 8
+			CALL テニスウェアセット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 9
+			CALL はだか襯衫セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 10
+			CALL 鴨舌帽文セット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 11
+			CALL ニンジャセット(ARG)
+			GOTO INPUT_LOOP_コスプレ
+		ELSEIF RESULT == 999
+			GOTO INPUT_LOOP
+		ELSE
+			GOTO INPUT_LOOP_コスプレ
+		ENDIF
+	ELSEIF RESULT == 18
+		FOR 装備部位,0,23
+			EQUIP:ARG:装備部位 = 0
+		NEXT
+		PRINTFORMW %CALLNAME:ARG%変成全裸了
+		GOTO INPUT_LOOP
+	ELSEIF RESULT == 100
+		IF EQUIP:MASTER:0 == 0
+			PRINTFORM %CALLNAME:MASTER%大人、虽然非常难以启齿、
+			IF (TALENT:MASTER:2 & 2)
+				PRINT 小雞雞
+			ELSE
+				PRINT 某些重要部位
+			ENDIF
+			PRINTFORMW 露出来真的好吗？
+			PRINTL [0] 説的也是ー、还是算了吧
+			PRINTL [1] 不明白你什么意思呢、那样不是也挺好的吗
+			PRINTL [2] 能幇我系上领帯吗
+			INPUT
+			IF RESULT == 1
+				PRINTFORMW 那真是失礼了。原来如此、这就是您的行事风格吗
+				PRINTFORMW 那么就請尽情享受全裸的生活吧
+				SOURCE:MASTER:露出 += 300
+				EXP:MASTER:露出快楽経験 ++
+				GOTO 換装終了処理
+			ELSEIF RESULT == 2
+				PRINTFORMW %CALLNAME:MASTER%大人、整理着装的事还請您自己做。
+				PRINTFORMW …那么
+				PRINTFORMW 首先請低头…将衬底朝内…
+				PRINTFORML 
+				PRINTFORML （摸来摸去）
+				PRINTFORMW （摸来摸去）
+				PRINTFORMW 您在做什么呢。
+				PRINTFORML 
+				PRINTFORMW 把细的那头往粗的那头…从上方囲上一圈…
+				PRINTFORML 
+				PRINTFORML （摸来摸去）
+				PRINTFORMW （摸来摸去）
+				PRINTFORMW 請不要摸我的头。
+				PRINTFORML 
+				PRINTFORMW 穿过里面…从上面塞进去…
+				PRINTFORMW 啊。
+				PRINTFORML 
+				PRINTFORMW 一次…二次…穿过里面…
+				PRINTFORMW 从上面塞进去…拉紧…
+				PRINTFORMW 好。系好了哦%CALLNAME:MASTER%大人。
+				PRINTFORML 
+				PRINTFORML （摸来摸去）
+				PRINTFORMW （摸来摸去）
+				PRINTFORMW 所以呢、能請您不要再摸头了吗。
+				PRINTFORML 
+				PRINTFORMW 生疏的手法与系的不整斉的两侧领帯令%CALLNAME:MASTER%忍不住微笑起来
+				PRINTFORMW %CALLNAME:MASTER%被系上了领帯！
+				PRINTFORML 
+				EQUIP:MASTER:其他１ = 5
+				SOURCE:MASTER:露出 += 299
+				EXP:MASTER:露出快楽経験 ++
+				GOTO 換装終了処理
+			ELSE
+				GOTO INPUT_LOOP
+			ENDIF
+		ELSE
+			CALL CLOTHES_SETTING_SAVE(ARG)
+			CALL CLOTHES_SETTING_LOAD(ARG); 全裸判定を反映するために、保存した装備を現在の装備に反映しています。
+			CFLAG:ARG:623 = 1
+			GOTO 換装終了処理
+		ENDIF
+	ELSEIF RESULT == 999
+		SIF FLAG:時間停止 == 1
+			CFLAG:TARGET:時間停止換装 = 0
+		;初期化
+		FOR 装備部位,0,23
+			EQUIP:ARG:装備部位 = 0
+		NEXT
+		CFLAG:ARG:623 = 0
+		EQUIP:ARG:0 = 1
+		CALL CLOTHES_SETTING(ARG)
+		RETURN -1
+	ELSE
+		GOTO INPUT_LOOP
+	ENDIF
+	$換装終了処理
+	;リセット用に記録する
+	FOR 装備部位,0,23
+		CFLAG:ARG:(200 + 装備部位) = EQUIP:ARG:装備部位
+		;念のため
+		;SIF EQUIP:ARG:0 == 0
+			;EQUIP:ARG:0 = 0
+	NEXT
+	SIF INROOM(CFLAG:ARG:現在位置)
+		CALL DATUI_SHOES(ARG,0)
+	CALL CLOTHES_SETTING_TRAIN(ARG)
+RETURN -1
+[SKIPEND]
+
+;換装
+@COM_ABLE429
+;移動実行判定
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(429)
+	RETURN RESULT
+;私室設定
+SIF (CFLAG:MASTER:現在位置 != CFLAG:MASTER:311) && (CFLAG:現在位置 != CFLAG:311)
+	RETURN 0
+SIF !GETBIT(CFLAG:TARGET:既成事実, 1) && TARGET
+	RETURN 0
+SIF CFLAG:うふふ
+	RETURN 0
+RETURN 1

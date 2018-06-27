@@ -1,0 +1,872 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;愛撫系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;0,愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_0
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_0_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_0_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;挿入中
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	;V挿入
+	IF LOCAL:1 && TEQUIP:50 == PLAYER && !FLAG:時間停止
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「んっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% それずるいよぉっ%UNICODE(0x2764)%」
+			PRINTFORMW 「はわぁっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「んっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% %CALLNAME:MASTER%っ、だっこ%UNICODE(0x2764)%」
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% %CALLNAME:MASTER%っ%UNICODE(0x2764)% しゅきぃ～っ%UNICODE(0x2764)%」
+		CASE 2
+			PRINTFORMW 「んっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% そんなっ%UNICODE(0x2764)% いっぺんにきちゃうぅ～%UNICODE(0x2764)%」
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)% しゅごぃいい～っ%UNICODE(0x2764)%」
+		ENDSELECT
+		RETURN 1
+		;射精した
+		IF NOWEX:PLAYER:11
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	;A挿入
+	ELSEIF LOCAL:1 && TEQUIP:51 == PLAYER
+		;射精した
+		IF NOWEX:PLAYER:11
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;Futanari
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && (TALENT:2 & 3) == 3
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;共通
+	IF FLAG:時間停止
+		RETURN 1
+	ELSE
+		SELECTCASE RAND:6
+		CASE 0
+			PRINTFORMW 「はわっ……！」
+			PRINTFORMW 「%CALLNAME:MASTER%の手つき……ヤラシイよ……%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「あっ…あんっ%UNICODE(0x2764)%」
+			PRINTFORMW 「こっ……、声がっ%UNICODE(0x2764)% あっ…でちゃう……%UNICODE(0x2764)%」
+		CASE 2
+			PRINTFORMW 「あっ！ ふわぁっ……あっ…あああっ……%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%……%UNICODE(0x2764)% もっと……%UNICODE(0x2764)%」
+		CASE 3
+			PRINTFORMW 「ああんっ……%UNICODE(0x2764)% きもちいよぉ……%UNICODE(0x2764)%」
+		CASE 4
+			PRINTFORMW 「あっ%UNICODE(0x2764)% おっぱい%UNICODE(0x2764)% そんなっ%UNICODE(0x2764)%」
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% ああっ%UNICODE(0x2764) * 2%」
+		CASE 5
+			PRINTFORMW 「あっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% やんっ%UNICODE(0x2764)%」
+			PRINTFORMW 「ちょっと%UNICODE(0x2764)% はげしっ%UNICODE(0x2764)% いっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+		ENDSELECT
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;1,舐陰
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_1
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_1_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_1_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「ふぇぇ……そこは汚いよう……」
+		PRINTFORMW 「あっ！！ あっ、あっ%UNICODE(0x2764)% だめっ……%UNICODE(0x2764) * 2%」
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;膣内射精直後
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		IF TCVAR:102
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;絶頂した
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && NOWEX:0
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:時間停止
+		RETURN 1
+	;継続舐陰
+	ELSEIF PREVCOM == SELECTCOM
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「はわわぁっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% あああっ%UNICODE(0x2764) * 2%」
+			PRINTFORMW 「もっと%UNICODE(0x2764)% もっと%UNICODE(0x2764)% きもちい～～っ%UNICODE(0x2764) * 2%」
+		CASE 1
+			PRINTFORMW 「あっ%UNICODE(0x2764)% もっと%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+			PRINTFORMW 「はげしくぅっ%UNICODE(0x2764)% ぺろぺろしてっ%UNICODE(0x2764) * 2%」
+		CASE 2
+			PRINTFORMW 「%CALLNAME:MASTER%っ%UNICODE(0x2764)% どーお？ お、おいしい？\/\/\/」
+			PRINTFORMW 「あたいのおまんこおいしーい？\/\/\/」
+		ENDSELECT
+	;それ以外
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「また舐めるの……？」
+			PRINTFORMW 「い、いいよ……はい…な、なめてぇっ%UNICODE(0x2764) * 2%」
+		CASE 1
+			PRINTFORMW 「舐めたいの？ じゃあ、はいっ！」
+			PRINTFORMW 「あたいのおまんこぺろぺろしてっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;あとは適当な分岐を追加してください
+;==================================================
+;2,舐陰茎
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_2
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_2_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_2_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;3,指挿入れ
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_3
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_3_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_3_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+		RETURN 1
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「にゃっ%UNICODE(0x2764)% んっ%UNICODE(0x2764)% そこっ%UNICODE(0x2764)% きもちっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「ふぁっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)% しゅごいっ%UNICODE(0x2764)% これっ%UNICODE(0x2764)% あっ%UNICODE(0x2764)%」
+		ENDSELECT
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;4,舐肛
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_4
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_4_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_4_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;5,肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_5
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_5_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_5_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「ひっ！ そ、そこはオシリの穴だよぉ……、汚いよぉ……あっ\/\/\/」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+		RETURN 1
+	ELSE
+		PRINTFORMW 「あんっ\/\/\/ そこはだめっ\/\/\/ あっあっ\/\/\/」
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;6,胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_6
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_6_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_6_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「ふぇっ%UNICODE(0x2764)% きもちいっ%UNICODE(0x2764) * 2%」
+			PRINTFORMW 「あっ%UNICODE(0x2764)% あんっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「やぁっ%UNICODE(0x2764)% えっちぃっ%UNICODE(0x2764) * 2%」
+			PRINTFORMW 「んっ%UNICODE(0x2764)% やっ%UNICODE(0x2764)% やさしくしてようっ%UNICODE(0x2764)%」
+		ENDSELECT
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;7,玩弄乳頭
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_7
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_7_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_7_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「ふゎぁぁ～～っ%UNICODE(0x2764) * 2%」
+			PRINTFORMW 「ちくびばっかりコリコリしないでぇ～～っっ%UNICODE(0x2764) * 2%」
+		CASE 1
+			PRINTFORMW 「ああっ、あっ%UNICODE(0x2764)% なんでちくびばっかり%UNICODE(0x2764)% やぁっ%UNICODE(0x2764)%」
+			PRINTFORMW 「もっとやさしくっ%UNICODE(0x2764)% あっ、あんっ%UNICODE(0x2764)%」
+		ENDSELECT
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;8,張開陰唇
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_8
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_8_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_8_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;9,自慰
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_9
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_9_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_9_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 「え？ あたいのオナニーみたいの？ 別にいいけど……」
+		PRINTFORMW 「んっ…%CALLNAME:MASTER%に見られてするなんて……\/\/\/」
+		PRINTFORMW 「なんだかやりづらいよお……\/\/\/」
+		RETURN 1
+	ENDIF
+	SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMW 「んっ\/\/\/ んっ…\/\/\/ %CALLNAME:MASTER%、見てないで触ってよぉ……\/\/\/」
+	CASE 1
+		PRINTFORMW 「ふっ\/\/\/ ふぅ……\/\/\/ あっ\/\/\/ %CALLNAME:MASTER%はこれ楽しいの……？」
+	CASE 2
+		PRINTFORMW 「んっ\/\/\/ あっ\/\/\/ はっ\/\/\/ いつもするときは%CALLNAME:MASTER%の事考えながらしゅりゅのっ……\/\/\/」
+	ENDSELECT
+ENDIF
+RETURN 1
+[SKIPSTART]
+;別コマンド化
+;==================================================
+;10,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_10
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_10_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_10_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+[SKIPEND]
+;==================================================
+;11,乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_11
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_11_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_11_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「やぁ～！ 吸わないでぇよぉ\/\/\/」
+			PRINTFORMW 「ああっ、くりゅくりゅらめぇ～っ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「あんっ%UNICODE(0x2764)% %CALLNAME:MASTER%赤ちゃんみたい♪」
+			PRINTFORMW 「なでなでしてあげるね♪ なでなで♪ なでなで♪」
+		ENDSELECT
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;12,胸もみ
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_12
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_12_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_12_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;13,張開肛門
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_13
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_13_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_13_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;ソフト系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;20,接吻
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_20
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_20_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_20_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:時間停止
+	ELSEIF FIRSTTIME("キス")
+		PRINTFORMW 「はわっ……！」
+		PRINTFORMW 「こ、これがキスかぁ……%UNICODE(0x2764)%」
+		PRINTFORMW 「ん……キスってこんなに甘いのね%UNICODE(0x2764)%」
+	ELSE
+		SELECTCASE RAND:5
+		CASE 0
+			PRINTFORMW 「んっ……%UNICODE(0x2764)%」
+			PRINTFORMW 「なんか……頭がぼうっとしてくる……。」
+		CASE 1
+			PRINTFORMW 「ちゅうー……%UNICODE(0x2764)%」
+		CASE 2
+			PRINTFORMW 「ちゅっ…あむ……れろ……」
+			PRINTFORMW 「%CALLNAME:MASTER%……もっとぉ……%UNICODE(0x2764)%」
+		CASE 3
+			PRINTFORMW 「あたいからさせて！」
+			PRINTFORMW 「んー……ちゅっ%UNICODE(0x2764)%」
+			PRINTFORMW 「ふぁ…どぉ……、%CALLNAME:MASTER%…きもちいい……？」
+		CASE 4
+			PRINTFORMW 「ちゅっ%UNICODE(0x2764)%」
+			PRINTFORMW 「あまーい……%UNICODE(0x2764)%」
+			PRINTFORMW 「ちゅっちゅ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+
+
+;==================================================
+;21,什麼也不做
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_21
+;CALL TRAIN_MESSAGE
+DRAWLINE
+CALL M_KOJO_MESSAGE_COM_K111_21_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_21_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:時間停止
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「……？」
+			PRINTFORMW 「どしたの%CALLNAME:MASTER%？ なんで固まっちゃってるの？」
+		CASE 1
+			PRINTFORMW 「あれっ！？ %CALLNAME:MASTER%、なんで動かないの？」
+			PRINTFORMW 「ひょっとしてあたい以外の時間が止まちゃってる……？」
+			PRINTFORMW 「じゃあちょっとだけ……\/\/\/」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;22,承受誘惑
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_22
+;CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_22_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_22_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;23,枕辺話
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_23
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_23_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_23_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;失敗
+	IF TFLAG:193
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;思慕
+	ELSEIF TALENT:思慕
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

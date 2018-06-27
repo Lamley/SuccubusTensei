@@ -1,0 +1,85 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	命蓮寺MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_2(ARG)
+#FUNCTIONS
+#DIM PLACEID
+
+IF GET_MAPID(ARG) == MAIN_MAP
+	SELECTCASE ARG
+		CASE 201 TO (MAXROOM - 1)
+			RETURNF STR:(ARG + 8000)
+		CASE 298
+			RETURNF OMANEKI_PLACE()
+		CASE 299
+			RETURNF "隙間空間"
+		CASE MAXROOM
+			RETURNF "道路正前方"
+		CASEELSE
+			RETURNF "不明"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+
+@MAP_VIEWING_2(AA)
+#DIMS REF AA, 0
+IF !TFLAG:マップ切り替え
+	SELECTCASE CFLAG:MASTER:現在位置
+		CASE 214, 230 TO 237
+			TFLAG:マップ切り替え = 2
+		CASE 213,226
+			TFLAG:マップ切り替え = 3
+		CASEELSE
+			TFLAG:マップ切り替え = 1
+	ENDSELECT
+ENDIF
+CALL DRAW_INFORMATIONLINE(@"%MAPNAME:(TFLAG:マップ切り替え)%")
+PRINTFORML 
+TRYCALLFORM MAP_SATO_{TFLAG:マップ切り替え}(AA)
+
+
+@MAP_CAN_MOVE_2(ARG, ARG:1)
+#FUNCTION
+#DIM 在宅
+SELECTCASE ARG
+	;小鈴的房間
+	CASE 226
+		IF ARG:1 == MASTER
+			IF FLAG:70
+				RETURNF 1
+			ELSEIF CFLAG:70:同行 || CFLAG:80:同行
+				RETURNF 1
+			ELSEIF TALENT:70:恋慕
+				RETURNF 1
+			ELSEIF TALENT:70:思慕 && CFLAG:70:現在位置 == ARG
+				RETURNF 1
+			ELSE
+				TFLAG:移動不能メッセージ = ARG
+				RETURNF 0
+			ENDIF
+		;本人は入れる,阿求も入れる
+		ELSEIF ARG:1 == 70 || ARG:1 == 80
+			RETURNF 1
+		ELSE
+			RETURNF 0
+		ENDIF
+	;櫓と情人用宿屋,主人公以外は入らない
+	CASE 220, 225
+		SIF ARG:1 != MASTER
+			RETURNF 0
+	CASEELSE
+		RETURNF 1
+ENDSELECT
+RETURNF 1
+
+
+@MAP_CANNOT_WORD_2(ARG)
+SELECTCASE TFLAG:移動不能メッセージ
+	CASE 224,231 TO 235
+		PRINTFORMW 是鎖着的
+	CASE 226
+		PRINTFORMW 隨便進去不太好
+ENDSELECT

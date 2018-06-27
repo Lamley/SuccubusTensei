@@ -1,0 +1,3499 @@
+﻿;-------------------------------------------------
+; eraTheWorld proto4.07パッチ取り込み用 あやや口上（キャラクターの名前を入れる、下にコンセプトなど一言あれば入れる）
+;-------------------------------------------------
+;
+;
+;eraTheWorld用、清く正しい射命丸さんの口上です。
+;作者は本口上が二作目です、至らぬ点も多いでしょうがお許しください。
+;さて本口上ですがやはり純愛なモノとなっております。
+;陵辱要素は多分ありませんが許してください。
+;
+;本口上には、コンセプトというものは特にありません。
+;ただ、皆さんがエロい！とか思えるような口上を書きたいなあ、と思いながら書いております。
+;強いて言うなら、よくあるお姉さん系ではなく純情派な射命丸さんを書きたいなあと思っております。
+;
+;文の素質として、[傲慢]、[好奇心]、[小悪魔]、[喜歡引人注目]などがあります。
+;日常では、内心主人公を見下しつつ笑顔で接する。　ただし恋慕を抱けば別。
+;情事の際には上に乗りながら快楽を求め腰を振る感じ。
+;恋慕を抱いた状態で主人公と情事に及んだ場合は、口調が変わる。
+;まあそんなイメージで書いていきますのでどうぞよろしくお願いします。
+;
+;何かあれば罵声を口内にとどめeratoho総合スレまでお越しください。
+;誤字など些細なものの報告も大歓迎です。どんどんご指摘ください。
+;
+;
+;※※※※※※他者による修正、加筆、改変についての但し書き※※※※※※
+;前提としてオリジナル作者以外が手を入れる場合は、オリジナル作者の許可を求めること
+;オリジナル作者とコンタクトが取れない場合には以下の但し書きに従ってUPできるかどうか判断してください。
+
+;------ ｷﾘﾄﾘ ｶｲｼ -----------
+;eraTheWorld proto4.07パッチ取り込み用 Ver1.13
+;テンプレートの使い方
+;初めに置換コマンド等により K29 を K(キャラNo) に変更して下さい  
+;キャラNoはCSVフォルダのCharaファイルを参照　例(霧雨 魔理沙の場合)：K29 =置換=> K11
+;
+;------ ｷﾘﾄﾘ ｵﾜﾘ -----------
+
+;**** Copyright ****************************************************************
+;本口上の修正について（許可する行為のみ残してください）
+;【誤字・脱字修正】【分岐条件・erb構文に関する修正】【本体Ver・Rev変更対応】【フラグの管理・修正】
+
+;本口上の加筆・改変について（許可する行為のみ残してください）
+;【未記入部位加筆】【ランダム分岐加筆】【記入済部位加筆】【記入済部位削除】【記入済部位コメントアウト】
+
+;本口上に対する保养禁止時限について（設定しない場合、未設定のみ残してください）
+;【未設定】【設定：期間 YY-MM-DDからYY-MM-DDまでオリジナル作者のみ修正可】【期限延長 有】
+
+;本口上に対する其他但し書き
+;【 】【 】
+;******************************************************************************
+;**** FlagManagement **********************************************************
+;本口上にて使用しているCFLAG・TCVAR等
+;CFLAG:1500 淋浴自慰部に使用、初めて淋浴オナニーをしたときの分岐
+;
+;
+[SKIPSTART]
+	IF TALENT:恋人
+		PRINTFORML 
+		PRINTFORMW 
+	ELSEIF TALENT:恋慕
+		PRINTFORML 
+		PRINTFORMW 
+	ELSEIF TALENT:思慕
+		PRINTFORML 
+		PRINTFORMW 
+	ELSE
+		PRINTFORML 
+		PRINTFORMW 
+	ENDIF
+[SKIPEND]
+[SKIPSTART]
+		PRINTDATA
+			DATALIST
+				DATAFORM 
+				DATAFORM 
+			ENDLIST
+			DATALIST
+				DATAFORM 
+				DATAFORM 
+			ENDLIST
+		ENDDATA
+[SKIPEND]
+;******************************************************************************
+
+;PS 寅の人
+;オリジナル作者と連絡が取れない場合、上記Copyrightに従い加筆改変を行って下さい
+;また本体処理・他口上処理等に干渉する異常処理がある場合でオリジナル作者による修正が
+;行われない・もしくは困難な場合、Copyrightに関わらず有志による修正を許可します
+;その際は元処理を削除せずコメントアウトし修正処理を挿入して下さい
+
+;### 口上存在判定 ###################################
+@M_KOJO_K29(ARG)
+;ここでRESULTSを設定すると他の同キャラ口上を突っ込まれても正常動作する。
+
+;RESULTS = _TEST_
+
+;と設定すると、"EVENT"系イベントだと
+;M_KOJO_TEST_EVENT_K29_1() とかで呼ばれる…はず。（未テスト機能）
+RETURN 1
+;### 口上色判定 ###################################
+@M_KOJO_COLOR_K29
+
+;ここでSETCOLORすることで口上に色を付けられます
+;例：SETCOLOR 0xC07070
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;"ENCOUNTER"系イベント（エクストラ構文）
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+@M_KOJO_ENCOUNTER_K29
+;初対面、挨拶のタイミング
+;TALENTの変更はここでどうぞ。
+SELECTCASE CFLAG:MASTER:現在位置
+	;お外　天子口上を参考にさせてもらいました
+	CASE 1 TO 3,5,11,20 TO 24
+		PRINTFORML 
+		PRINTFORMW 「――哦呀、生面孔呢、你好」
+		PRINTFORMW 突然、从頭上传来了声音。
+		PRINTFORMW 理所当然地往上望去、但在上方看到的只有天空而已。
+		PRINTFORMW 「冷不防就去看别人内袴什么的、真是不知廉恥的人呐」
+		PRINTFORMW 这次是从背后传来、開玩笑似的声音。
+		PRINTFORMW 急忙回过头去、果然还是谁也没有看到。
+		PRINTFORMW 「……凭人类的程度、是看不到的吧」
+		PRINTFORMW 又从背後、传来了声音。
+		PRINTFORMW 「呼呼、想要捉住我――
+		PRINTFORMW 
+		PRINTFORMW 慢慢的、転过身。
+		PRINTFORMW 在那里的是、露出粲然笑容张開口的少女。
+		PRINTFORMW ……哼、是天狗吗。
+		PRINTFORMW %CALLNAME:MASTER%这样説着。
+		PRINTFORMW 那个少女、一動不動。
+		PRINTFORMW 不、是動弾不得。
+		PRINTFORMW 風停、雲止、整个『世界』被停止了。
+		PRINTFORMW 能行動的、唯一的人、只有%CALLNAME:MASTER%。
+		PRINTFORMW %CALLNAME:MASTER%不動声色地、解除了能力。
+		PRINTFORMW 
+		PRINTFORMW ――凭你是做不到的吧？」
+		PRINTFORMW 天狗少女露出粲然笑容継续説道。
+		PRINTFORMW ……已経捉住了。
+		PRINTFORMW 「……哦唔、已経被捉住了啊」
+		PRINTFORMW 点头。
+		PRINTFORMW 「……哦哦、挺厉害的嘛……」
+		PRINTFORMW 笑容从文文的脸上散去、面無表情的悬浮在半空中。
+		PRINTFORMW ……姑且、先作个自己介紹吧。
+		PRINTFORMW 「……我的名字是、射命丸　文」
+		PRINTFORMW %CALLNAME:PLAYER%是吗、你好。
+		PRINTFORMW %CALLNAME:MASTER%一辺説一辺伸出手。
+		PRINTFORMW 但是、文文并没有伸手回応。
+		PRINTFORMW 「……神社的、新住客吗？」
+		PRINTFORMW 嘛、就是这样。
+		PRINTFORMW 「那么、以后还会経常见面呢、請多多指教」
+		PRINTFORMW 文文这样説着并再次露出了先前那种粲然的笑容。
+	;屋内
+	CASEELSE
+		PRINTFORML 
+		PRINTFORMW 「――哦呀、你好」
+		PRINTFORMW 有个少女在打招呼。
+		PRINTFORMW 「没见过的脸呢、是神社的新住客吗？」
+		PRINTFORMW %CALLNAME:MASTER%作出肯定回答并点了点头。
+		PRINTFORMW 「那么、做一下自己介紹吧」
+		PRINTFORMW 文文这样説着、恭恭敬敬地行了个礼。
+		PRINTFORMW 「我的名字是、射命丸　文。以後、請多関照」
+		PRINTFORMW %CALLNAME:PLAYER%是吗、你好。
+		PRINTFORMW 「以后可能还会因取材需要而多有唠嗑、請多多指教」
+		PRINTFORMW 文文这样説着、抬起头来。
+	ENDSELECT
+		PRINTFORML 
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;"SP_EVENT"系イベント
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;デート帰りにファーストKISS（合意も付く）
+;==================================================
+@M_KOJO_SPEVENT_K29_1(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	PRINTFORML 
+	PRINTFORMW 「――%CALLNAME:MASTER%桑」
+	PRINTFORMW 文文的声音、从背后传来。
+	PRINTFORMW 怎么了、%CALLNAME:MASTER%回过头这样説道。
+	PRINTFORMW 「能、闭上眼睛一下下吗？」
+	PRINTFORMW 脸上涌现了少许紅潮、文文恳求道。
+	PRINTFORMW 这是要做什么、不明所以、
+	PRINTFORMW 「……不行、是吗」
+	PRINTFORMW 这样、小声地説道。
+	PRINTFORML 要闭眼吗？
+	$INPUT＿LOOP＿KISS
+	PRINTFORMW [0] 老実地闭上眼　[1] 不行不能闭上
+		IF RESULT == 1
+			PRINTFORMW ……到底要做什么。
+			PRINTFORMW 「……这样啊、不肯闭上眼睛呢」
+			PRINTFORMW 文文低头説道。
+			PRINTFORMW 「……我知道了、那么……」
+			PRINTFORMW 文文抬起头、看着%CALLNAME:MASTER%的眼睛。
+			PRINTFORMW 然后、贴近了眼和鼻的前端。
+			PRINTFORMW 在%CALLNAME:MASTER%飞快后退前、文文――
+			PRINTFORMW 
+			PRINTFORMW 啾。
+			PRINTFORMW 
+			PRINTFORMW ――献上了一个吻。
+			PRINTFORMW %CALLNAME:MASTER%驚愕的睁大了眼睛。
+			PRINTFORMW 文文一副得逞了的表情。
+			PRINTFORMW 微风、不知从何処帯来了香甜柔和的气味。
+			PRINTFORMW 这一瞬间感覚过得特别久。
+			PRINTFORMW 文文很快地、把唇从%CALLNAME:MASTER%的嘴唇上分開。
+				IF TALENT:恋慕
+					PRINTFORMW 「……我的、没被任何人碰过的唇的滋味、如何呢？」
+					PRINTFORMW 文文一辺用指尖描着嘴唇、一辺説道。
+					PRINTFORMW %CALLNAME:MASTER%还在発愣、文文的唇又靠了过来。
+					PRINTFORMW 身子向后仰着、頭被両腕紧紧地抱住。
+					PRINTFORMW 「……嗯、啾ー……」
+					PRINTFORMW 这次、文文将舌头伸了进来。
+					PRINTFORMW 文文充満爱意的搅動着舌头。
+					PRINTFORMW 温热的唾液流了进来、失去了抵抗的気力。
+					PRINTFORMW 長吻之后、文文终于松開了你的腦袋。
+					PRINTFORMW 「……已経、結束了」
+					PRINTFORMW 「下一次、还要像这次这样哦？」
+					PRINTFORMW 説完、文文就用用肉眼无法捕捉的速度飞走了。
+					PRINTFORMW %CALLNAME:MASTER%只是呆在原地一動不動。
+					PRINTFORMW 文文唇的触感、还余韵尚存……。
+				ELSE
+					PRINTFORMW 「……被奪走了呢、嗯嗯、被奪走了呢」
+					PRINTFORMW 「……呼呼、呜呼呼、第一次的、初吻哦、额」
+					PRINTFORMW 「……啊啊、真是的……啊啊、已経够了！要回去了！嘿！」
+					PRINTFORMW 突然変的害羞起来的文文用肉眼无法辨识的速度飞走了。
+					PRINTFORMW %CALLNAME:MASTER%一时之间、呆在原地一動不動……
+				ENDIF
+		ELSEIF RESULT == 0
+			PRINTFORMW ……这样可以吗？
+			PRINTFORMW %CALLNAME:MASTER%老実地闭上眼睛。
+			PRINTFORMW 「……不要睁開哦？」
+			PRINTFORMW 点头。
+			PRINTFORMW 扎库、扎库、听到了这样的脚步声。
+			PRINTFORMW 脚步声在眼前停止了、即使闭上眼也能感覚得到近在眼前的文文的气息。
+			PRINTFORMW 在这气息里夹杂着荒乱、緊張、興奮等各种情感。
+			PRINTFORMW 很快这一呼吸変的平静下来、在这一瞬间、文文的气息一口气逼近过来。
+			PRINTFORMW 
+			PRINTFORMW 啾。
+			PRINTFORMW 有什么温柔的东西与嘴唇做了親密接触。
+			PRINTFORMW 同時、闻到了一阵芳香。
+			PRINTFORMW 微微睁開眼。
+			PRINTFORMW 眼前的、是文文放大了的脸。
+			PRINTFORMW 文文也同様、紧紧地闭着眼。
+			PRINTFORMW 「呼、嗯、姆……」
+			PRINTFORMW 气息荒乱、顔色通红。
+			PRINTFORMW 「嗯……噗、啊……」
+			PRINTFORMW 在物我两忘了一会儿后、分開了嘴唇。
+				IF TALENT:恋慕
+					PRINTFORMW 「……呼呼、我的、第一次……」
+					PRINTFORMW 前所未有的语气凌乱的文文、现在用双手捂着脸。
+					PRINTFORMW 「……嗯ー……」
+					PRINTFORMW 在発出妩媚声音的同时、文文再次、与你接吻了。
+					PRINTFORMW 唾液流了进来、舌头积极地積極的纠缠在一起。
+					PRINTFORMW 「啾、姆ー……哈啊……已経、結束了哦」
+					PRINTFORMW 「……那么、下次、再会吧？」
+					PRINTFORMW 这样説着、文文的脸蛋、有点嫣红。
+					PRINTFORMW %CALLNAME:MASTER%一时説不话来、文文用非常快的速度飞走了。
+					PRINTFORMW 文文留下的香气、余韻犹存……。
+				ELSE
+					PRINTFORMW 「……呼呼、被奪走了……」
+					PRINTFORMW 文文像要哭出来似地红着脸説道。
+					PRINTFORMW 不知道该説什么好、甜言蜜语説不出口。
+					PRINTFORMW 很快文文就、用肉眼无法辨识的速度飞走了。
+					PRINTFORMW 强劲的風席卷而过、地上的落葉在空中飞舞。
+					PRINTFORMW %CALLNAME:MASTER%一时之间、呆在原地一動不動……
+				ENDIF
+		ELSEIF RESULT == 3
+			PRINTFORMW 没有其他的选项、現実就是这样。
+			GOTO INPUT＿LOOP＿KISS
+		ELSE
+			PRINTFORMW 不要选没有显示的选项比较好
+			GOTO INPUT＿LOOP＿KISS
+		ENDIF
+	;キスをキャンセルしたい場合は以下を開放
+	;TCVAR:キスキャンセル = 1
+ENDIF
+RETURN 1
+
+;==================================================
+;デート帰りに告白（恋人が付く）
+;==================================================
+@M_KOJO_SPEVENT_K29_2(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;告白内容
+	;この告白内容表示後に受けるかどうかの選択分が表示されます
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 0
+		PRINTFORML 
+		PRINTFORMW 「――%CALLNAME:MASTER%桑」
+		PRINTFORMW 文文急匆匆的喊着你的名字。
+		PRINTFORMW %CALLNAME:MASTER%问道、怎么了。
+		PRINTFORMW 「……有話、想対你説」
+		PRINTFORMW 文文、帯着平常的文文所没有的极為认真的表情。
+		PRINTFORMW ……啊啊、是什么呢？
+		PRINTFORMW 「……无论如何都想用语言、传达给你的、东西……」
+		PRINTFORMW ……哦唔。
+		PRINTFORMW 「……能、听我説吗……？」
+		PRINTFORMW 点头。
+		PRINTFORMW 这样回答之后、文文做了个深呼吸。
+		PRINTFORMW 闭上眼睛、大口大口地吸气、呼气、吸气、呼气。
+		PRINTFORMW 反复做了数次后、文文睁開了眼睛。
+		PRINTFORMW 「……%CALLNAME:MASTER%桑、我、喜欢你」
+		PRINTFORMW 「只是见到你、就会绽放出笑容」
+		PRINTFORMW 「只是和你在一起、就会感到幸福」
+		PRINTFORMW 「只是被你触碰到、身体就会発热」
+		PRINTFORMW 「……真的、很害怕」
+		PRINTFORMW 「害怕被你拒絶」
+		PRINTFORMW 「害怕知道你真正的心意」
+		PRINTFORMW 「……但是、但是……」
+		PRINTFORMW 「……一直怀揣着这样的心情、実在是忍不下去了」
+		PRINTFORMW 「……請、回答我吧」
+		PRINTFORMW 「能和我交往嘛？」
+		PRINTFORMW 「如果讨厌我的话、也可以直説」
+		PRINTFORMW 「能、和我交往吗？」
+		PRINTFORMW 文文、竭尽全力嘶喊着、把想法传达给了%CALLNAME:MASTER%。
+		PRINTFORMW 在心中做好决定后。
+		PRINTFORMW %CALLNAME:MASTER%開口説道――
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;告白オッケー（恋人が付く）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		PRINTW 
+		PRINTW 
+		PRINTFORMW 「――真的吗？」
+		PRINTFORMW %CALLNAME:MASTER%用力点了点头。
+		PRINTFORMW 「……真的、可以吗？」
+		PRINTFORMW 「和我交往、真的可以吗？」
+		PRINTFORMW 「不会是在戏弄我的吧？虽然我工作很忙」
+		PRINTFORMW 「之前也老是説人坏话、独占欲又强……」
+		PRINTFORMW 「……我这样的人、成為%CALLNAME:MASTER%桑的、恋人……」
+		PRINTFORMW 你把自己説的太不堪了、文文。
+		PRINTFORMW 「……真的不介意吗吗？絶対、不要丢下我哦？」
+		PRINTFORMW 还想让我再説一次吗？
+		PRINTFORMW 「……非常感谢、你能、接受我……」
+		PRINTFORMW 文文泣不成声。
+		PRINTFORMW %CALLNAME:MASTER%默默地、紧紧地把文文抱进怀里。
+		PRINTFORMW 「谢、谢、非常、感谢……」
+		PRINTFORMW 文文把脸埋进%CALLNAME:MASTER%的胸膛里、継续哭着。
+		PRINTFORMW %CALLNAME:MASTER%微笑着抚摸着文文的頭……
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;告白失敗
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTW 
+		PRINTW 
+		PRINTFORMW 「――这样……吗…………」
+		PRINTFORMW 「……如果我、得不到%CALLNAME:MASTER%桑的垂幸的话……」
+		PRINTFORMW 「……我、我……」
+		PRINTFORMW 「……不、没関系哟……請不要、这样、温柔地安慰我」
+		PRINTFORMW 文文背対%CALLNAME:MASTER%、仰望天空。
+		PRINTFORMW 「……没関系的、我渇望着%CALLNAME:MASTER%桑的垂幸」
+		PRINTFORMW 「……所以、所以……因為只是奢望、在这之外的、安慰、不需要……」
+		PRINTFORMW 文文很快転过身来、露出笑容説道。
+		PRINTFORMW 「我、已経、没事了――」
+		PRINTFORMW ――刚才説的话、就当没听过吧。
+		PRINTFORMW 还没反応过来、身体就被一阵强烈的飓风所冲撃。
+		PRINTFORMW 当風停歇后、再次睁開眼、文文的身影已経消失了。
+		PRINTFORMW ……离別之际、注意到文文的脸頬上闪着泪光。
+		PRINTFORMW 总覚得胸口有点痛。
+		PRINTFORMW %CALLNAME:MASTER%的心头仿佛被勒住一般感到阵阵揪心、皱起了眉头。
+		PRINTFORMW 不久、%CALLNAME:MASTER%踏上了帰途……
+		RETURN 1
+	ENDIF
+
+ENDIF
+RETURN 1
+
+;==================================================
+;デート帰り
+;==================================================
+@M_KOJO_SPEVENT_K29_3(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;通常帰宅
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 0
+		IF FLAG:15 == 29
+			IF TALENT:恋人
+				PRINTFORML
+				PRINTFORML 「那么、差不多该回去了」
+				PRINTFORML 「呼呼、下次去哪里比较好呢」
+				PRINTFORML 「嘛、只要是和%CALLNAME:MASTER%在一起、去哪里都……」
+				PRINTFORMW 文文红着脸説道。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「那个……今天、很開心哦」
+				PRINTFORML 「下次、請再帯我一起去吧？」
+				PRINTFORML 「随时、恭候大驾……」
+				PRINTFORMW 文文露出笑容説道。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「今天、很開心哦」
+				PRINTFORML 「嗯、那么、再见」
+				PRINTFORMW 文文露出职業性的笑容、説道。
+			ENDIF
+		ELSE
+			IF TALENT:恋人
+				PRINTFORML
+				PRINTFORML 「……那么、已経到这个时间了」
+				PRINTFORML 「……請不要露出难过的表情」
+				PRINTFORML 「我也、想更久的、和%CALLNAME:MASTER%桑……」
+				PRINTFORMW 文文露出了帯点悲伤的笑容、背対%CALLNAME:MASTER%装过身。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「今天、非常感谢」
+				PRINTFORML 「真的很開心呢……嗯、是発自真心这样认為的哦？」
+				PRINTFORML 「好的、再见……」
+				PRINTFORMW 文文背対%CALLNAME:MASTER%装过身、慢慢的飞走了。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「今天过的还不错」
+				PRINTFORML 「见识到许多东西了呢」
+				PRINTFORML 「……不、才不是因為和你一起游玩而感到開心呢？」
+				PRINTFORMW 不明所以的扯谎之后、文文告辞并飞走了。
+			ENDIF
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;反発刻印消去イベント
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋人
+			PRINTFORML
+			PRINTFORML 「……诶？是这样吗？」
+			PRINTFORML 「嘿诶……真有趣呢、这个」
+			PRINTFORML 「呼呼、还有其他的吗？」
+			PRINTFORML 文文和%CALLNAME:MASTER%并肩散步。
+			PRINTFORMW 与出発前的雰囲完全不同、看样子文文是原谅%CALLNAME:MASTER%了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「………………」
+			PRINTFORML 文。
+			PRINTFORML 「……啊、是的、有什么事吗？」
+			PRINTFORML 今天、開心吗？
+			PRINTFORML 「……嗯、非常的、開心呢」
+			PRINTFORML 文文露出笑容回答道。
+			PRINTFORMW 从这个表情上看、応该是被原谅了吧……。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……嘛、就原谅你吧……」
+			PRINTFORML 你刚才在説什么？
+			PRINTFORML 「啊、没有、什么也没説呢？」
+			PRINTFORML ……？是吗、那没事。
+			PRINTFORMW 文文在背地里原谅了%CALLNAME:MASTER%。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;反発刻印2>1レベルダウンイベント
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML
+			PRINTFORML 「……呼呼ー……」
+			PRINTFORML 「……啊」
+			PRINTFORML 文文露出了『糟糕了』的表情。
+			PRINTFORMW 看起来、稍微被原谅了的样子。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……呼呼」
+			PRINTFORML 「……这幅表情是什么意思、还没完全原谅你哦」
+			PRINTFORMW 文文的表情从微笑変作悩火这样説道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……呼ー……」
+			PRINTFORML 「……嘛、就稍微的、原谅你吧……」
+			PRINTFORMW 文文一辺打量着%CALLNAME:MASTER%、一辺説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;反発刻印3>2レベルダウンイベント
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		IF TALENT:恋人
+			PRINTFORML
+			PRINTFORML 「……嘛、就稍微原谅你吧……」
+			PRINTFORML 「……一直这样吵下去、也是不行的……」
+			PRINTFORML 「……也不是真的、讨厌你……」
+			PRINTFORML 文文走在%CALLNAME:MASTER%后面、不知説着什么。
+			PRINTFORMW 大概是在説什么气话吧、%CALLNAME:MASTER%这样想着、挠了挠脸颊。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……嘛、就稍微、原谅你吧……」
+			PRINTFORML 「……一直生气下去、也没有好処……」
+			PRINTFORML 文文小声的説着什么。
+			PRINTFORML 果然还在生气吧、是有点做过头了……。
+			PRINTFORMW %CALLNAME:MASTER%叹息着。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……人类的癖好、真是碍眼……」
+			PRINTFORML 「……姑且稍微原谅你吧」
+			PRINTFORMW 文文一辺放出若干殺気、一辺小声説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	PRINTFORML
+ENDIF
+RETURN 1
+
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;"EVENT"系イベント
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;部屋で遭遇
+;==================================================
+@M_KOJO_EVENT_K29_1(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;MASTERが入ってきた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		SELECTCASE TCVAR:350
+			;今日初めて会います
+			CASE 0
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「……哦呀、这不是%CALLNAME:MASTER%桑吗」
+					PRINTFORML 「你好……呼呼、今天有何贵干？」
+					PRINTFORMW 文文満脸笑容的问道。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……啊、%CALLNAME:MASTER%桑……」
+					PRINTFORML 「……你、你好……」
+					PRINTFORML 文文打了招呼。
+					PRINTFORMW 她的脸、不知為何有点红。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「……这厢、有礼了」
+					PRINTFORMW 文文有点不自然的説道。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……%CALLNAME:MASTER%桑？」
+					PRINTFORML 「幸会幸会、清廉正直的射命丸向你问好」
+					PRINTFORMW 文文恭敬地做了问候。
+				ENDIF
+			;今日1～9回会いました
+			CASE 1 TO 9
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「……啊、%CALLNAME:MASTER%桑」
+					PRINTFORML 「又见面了呢……在、做什么呢？」
+					PRINTFORML 文文露出笑容、大幅度的挥着手。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「呼呼、又见面了呢♪」
+					PRINTFORML 文文開心的笑了、这样説道。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……啊呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「你好、那个、又见面了呢」
+					PRINTFORML 文文有点斟酌着言辞的样子、説道。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……啊呀呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「又见面了呢、你好你好」
+					PRINTFORML 文文非常恭敬的打着招呼。
+				ENDIF
+			;今日10～19回会いました　結構会うよね的な感じ
+			CASE 10 TO 19
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「……呼呼、碰见好多次了呢」
+					PRINTFORML 「就这么想见我吗？　呼呼ー」
+					PRINTFORML 文文露出有点悪作剧的笑容、往你的身上贴过来。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……啊啦、%CALLNAME:MASTER%桑」
+					PRINTFORML 「今天碰到好多次了呢、呼呼……」
+					PRINTFORML 文文脉脉含情的微笑着説道。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……啊呀、又见面了呢」
+					PRINTFORML 「……単是今天、就遇见了许多次呢、我们……」
+					PRINTFORML 「……不……诶、诶诶……？」
+					PRINTFORML 不知道文文一个人在想着什么、脸颊微红。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……碰面好多次了呢」
+					PRINTFORML 「嘛、也没感到什么特别的」
+					PRINTFORML 与我无関、这样的感覚、文文这样放言。
+				ENDIF
+			;会いすぎ　特定の人物と良く会う様になる異変でも起こったのかな？
+			CASEELSE
+				PRINTFORML 
+				PRINTFORML 「……真是、碰见许多次了呢」
+				PRINTFORML 文文有点困扰的笑着。
+				PRINTFORML 「……不、真的是」
+				PRINTFORML 正想着该用什么表情応対、文文就靠近了过来。
+		ENDSELECT
+		;遭遇回数追加判定
+		TCVAR:350 += 1
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;TARGETが入ってきた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		SELECTCASE TCVAR:350
+			CASE 0
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「……啊、%CALLNAME:MASTER%桑」
+					PRINTFORML 「你好、真是巧呢……在做什么呢？」
+					PRINTFORMW 文文一看到%CALLNAME:MASTER%、就露出笑脸问道。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「你好……你也在这啊」
+					PRINTFORMW 文文微笑地打了招呼。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「……你、你好……」
+					PRINTFORMW 文文視線有点躲闪地打着招呼。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……啊呀、这不是%CALLNAME:MASTER%桑吗」
+					PRINTFORML 「幸会幸会、你的老伙計射命丸向你问好」
+					PRINTFORMW 文文有点滑稽的向你打招呼。
+				ENDIF
+			CASE 1 TO 9
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「在説什么呢？」
+					PRINTFORML 文文走近%CALLNAME:MASTER%、恬静的笑着打了招呼。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……啊呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「又见面了呢」
+					PRINTFORML 文文咯咯笑着打着招呼。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……啊、%CALLNAME:MASTER%桑」
+					PRINTFORML 「又见面了呢」
+					PRINTFORML 文文朝这辺挥着手。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……啊、你好、%CALLNAME:MASTER%桑」
+					PRINTFORML 文文眼睛都不眨的説道。
+				ENDIF
+			CASE 10 TO 19
+				IF TALENT:恋人
+					PRINTFORML 
+					PRINTFORML 「……今天、真是遇见许多次了呢」
+					PRINTFORML 文文露出了恬静的笑容……。
+				ELSEIF TALENT:恋慕
+					PRINTFORML 
+					PRINTFORML 「……啊、%CALLNAME:MASTER%桑」
+					PRINTFORML 「……碰面好多次了呢」
+					PRINTFORML 文文微笑地打着招呼。
+				ELSEIF TALENT:思慕
+					PRINTFORML 
+					PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+					PRINTFORML 「今天、不是遇见许多次了吗？　真是巧呢……？」
+					PRINTFORML 文文微笑着问道。
+				ELSE
+					PRINTFORML 
+					PRINTFORML 「……碰面好多次了呢」
+					PRINTFORML 文文抬头説道。
+				ENDIF
+			CASEELSE
+				PRINTFORML 
+				PRINTFORML 「……真是、遇见好多次了呢」
+				PRINTFORML 「偶然？　……还是説、是故意来见我呢……？」
+					IF TALENT:恋慕
+						PRINTFORML 文文露出戏谑的笑容这样问道。
+					ELSE
+						PRINTFORML 文文漫不経心地问道。
+					ENDIF
+		ENDSELECT
+		;遭遇回数追加判定
+		TCVAR:350 += 1
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;TARGETが浴室に入ってきて一緒に入る
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+			PRINTFORML 「%CALLNAME:MASTER%桑也要进来吗？」
+			PRINTFORML 「……那么、請」
+			PRINTFORML 文文红着脸、坐到了你的旁辺。
+			PRINTFORMW 害羞的样子看上去也不错啊、%CALLNAME:MASTER%这样想着。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……是%CALLNAME:MASTER%桑吗」
+			PRINTFORML 「……要进来吗？不、也不是不能进入……」
+			PRINTFORMW 文文用手挡着身体説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;TARGETが浴室に入ってきて出て行った
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		PRINTFORML 
+		PRINTFORML 「――哦呀、这不是……这可真是……」
+		PRINTFORML 文文不知所措、脸颊微红。
+		PRINTFORML 「……失礼了」
+		PRINTFORMW 砰然一声関上门、文文啪嗒啪嗒的向外走去。
+	RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;TARGETが浴室に入ってきて追い出された
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 5
+		PRINTFORML 
+		PRINTFORML 「――――――」
+		PRINTFORML 文文看见%CALLNAME:MASTER%后停下了動作、陷入了沈默。
+		PRINTFORML 「――請给我出去」
+		PRINTFORML 文文脸色通红、一辺放出若干殺気一辺説道。
+		PRINTFORMW %CALLNAME:MASTER%小心翼翼地逃了出去。
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;朝起きたとき（おはよう口上）
+;==================================================
+@M_KOJO_EVENT_K29_2(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;非同棲かつ相手が先に起きてる
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		;-------------------------------------------------
+		;TARGET私室にMASTERが入っている（恋慕時添い寝中就寝時のみ？
+		;記入チェック（=0, 非表示、1, 表示）
+		LOCAL:1 = 0
+		;-------------------------------------------------
+		IF LOCAL:1 && !ARG:1
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+		;-------------------------------------------------
+		;MASTER私室にTARGETが入ってきてる(恋慕無しでも入ってくる可能性有り
+		;記入チェック（=0, 非表示、1, 表示）
+		LOCAL:1 = 0
+		;-------------------------------------------------
+		IF LOCAL:1 && ARG:1 == 1
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;同棲かつ相手が起きている
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;同棲かつ相手が寝ている
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;MASTERが起きていて、相手が起きてきた
+	;添い寝時TARGET起床はこちら（TARGET衰弱or添い寝中TARGET睡魔負け後そのままMASTERが起き続けた上で相手が起床した場合限定
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		;-------------------------------------------------
+		;非同棲
+		;記入チェック（=0, 非表示、1, 表示）
+		LOCAL:1 = 0
+		;-------------------------------------------------
+		IF LOCAL:1 && !ARG:1
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+		;-------------------------------------------------
+		;同棲中
+		;記入チェック（=0, 非表示、1, 表示）
+		LOCAL:1 = 0
+		;-------------------------------------------------
+		IF LOCAL:1 && ARG:1 == 1
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+		;共通
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……早、上、好……」
+			PRINTFORML 「……是%CALLNAME:MASTER%、桑啊……」
+			PRINTFORMW 文文睡眼惺忪地抱住了%CALLNAME:MASTER%。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……嗯、啊……」
+			PRINTFORML 「……%CALLNAME:MASTER%、桑……？」
+			PRINTFORML 「……额、这、这可真是、让您见笑了吶、那个、那个……」
+			PRINTFORMW 文文跳了起来、用手整理着髪型。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……唔嗯……」
+			PRINTFORML 「……是%CALLNAME:MASTER%、桑吗……？」
+			PRINTFORML 「……早上、好……」
+			PRINTFORMW 文文揉着眼起床打招呼。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……嗯、呼啊……」
+			PRINTFORML 「……哈、这个、早上、好」
+			PRINTFORMW 感覚还没睡醒似的、文文打着招呼。
+		ENDIF
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;夜寝るとき（おやすみ口上）
+;==================================================
+@M_KOJO_EVENT_K29_3(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;自室に帰る（定時になって寝る）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF FLAG:15 == 29
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORML 「那么、差不多……」
+				PRINTFORML 「……再呆一会儿？」
+				PRINTFORML 「……不行、虽然我、也想在一起……」
+				PRINTFORMW 文文这样解释着、回房间去了。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「那么、今日就、到这里……」
+				PRINTFORML 「……好的、那么、明天再见……」
+				PRINTFORMW 文文不知為何有点难过、回房间去了。
+			ELSEIF TALENT:思慕
+				PRINTFORML 
+				PRINTFORML 「……已経、这个时间了啊」
+				PRINTFORML 「為什么时间总是过得这么快呢……」
+				PRINTFORML 「……那么、明天再见……」
+				PRINTFORMW 文文露出微笑、做了道别。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……啊呀呀、已経到这个时间了啊」
+				PRINTFORML 「那么、等明天再见吧……」
+				PRINTFORMW 文文露出做作的笑容、回房间去了。
+			ENDIF
+		ELSE
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORML 「……哦呀、嘛、都已経这个时间了」
+				PRINTFORML 「……%CALLNAME:MASTER%桑、今天也、差不多该……」
+				PRINTFORML 「……不要露出、那种表情……下次、再见吧」
+				PRINTFORMW 文文露出难过的表情、离開了。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「……已経、这个时间了？」
+				PRINTFORML 「……总覚得很快呢……」
+				PRINTFORML 「那么、差不多得回去了……」
+				PRINTFORMW 文文向%CALLNAME:MASTER%挥着小手、回去了。
+			ELSEIF TALENT:思慕
+				PRINTFORML 
+				PRINTFORML 「……差不多、再不回去可不行了」
+				PRINTFORML 「那么、下次再见吧」
+				PRINTFORMW 文文点头致意、回去了。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「哦呀哦呀、已経是这个时间了啊」
+				PRINTFORML 「差不多该回去了呢……」
+				PRINTFORMW 文文向%CALLNAME:MASTER%道别之后、就回去了。
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;眠そうにしている
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……嗯……啊、不好意思、那个、有事吗……？」
+			PRINTFORML 「……不、并没有、很困……」
+			PRINTFORMW 文文这样説道、明明就很困了嘛。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 喂、文文、文文？
+			PRINTFORML 「……啊、收到、有事吗……？」
+			PRINTFORML ……想睡覚了吗？
+			PRINTFORML 「……不、没関系的……并不、想睡……」
+			PRINTFORMW 文文昏昏欲睡像荡舟那样摇晃着説道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……睡……」
+			PRINTFORML 「……呼啊……嗯、呜……」
+			PRINTFORMW 文文打着小哈欠。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;睡眠中（起きていないので会話というよりは寝言？）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		IF TALENT:恋人
+			PRINTDATA
+				DATALIST
+					DATAFORM 「嗞呜……嗯……嗞呜……」
+					DATAFORM 文文犹如迷酔一般的酣睡着。
+					DATAFORM 「……%CALLNAME:MASTER%、桑……」
+					DATAFORM 文文即使在梦里也在呼唤着%CALLNAME:MASTER%的名字。
+				ENDLIST
+				DATALIST
+					DATAFORM 「……嗯、啊……%CALLNAME:MASTER%、桑……」
+					DATAFORM 文文犹如迷酔一般的酣睡着。
+					DATAFORM 「嗯、呜……那里、不行啊……」
+					DATAFORM 似乎做着什么下流的夢呢、説着梦话。
+				ENDLIST
+			ENDDATA
+		ELSEIF TALENT:恋慕
+			PRINTDATA
+				DATALIST
+					DATAFORM 「嗞呜……嗞呜……」
+					DATAFORM 文文犹如迷酔一般的酣睡着。
+					DATAFORM 「……嗯、呜……嗞呜……」
+					DATAFORM 脸上贴着披散的秀発、文文露出笑容小声呻吟着。
+				ENDLIST
+				DATALIST
+					DATAFORM 「……嗞呜……嗯……嗞呜……」
+					DATAFORM 文文时不时一起一伏地扭着身体。
+					DATAFORM 「……啊、嗯……呀、啊啊……」
+					DATAFORM 妩媚香艶地説着梦话。
+					DATAFORM %CALLNAME:MASTER%露出微笑、坐在睡着的文文旁辺。
+				ENDLIST
+			ENDDATA
+		ELSEIF TALENT:思慕
+			PRINTDATA
+				DATALIST
+					DATAFORM 「嗞呜……嗯唔……嗞呜……」
+					DATAFORM 文文安稳地睡着。
+					DATAFORM 「……――――、桑……」
+					DATAFORM 文文小声的説着什么。
+					DATAFORM 但是実在是听不真切、%CALLNAME:MASTER%有点纳闷。
+				ENDLIST
+				DATALIST
+					DATAFORM 「……嗞呜……嗯……」
+					DATAFORM 文文犹如迷酔一般的酣睡着。
+				ENDLIST
+				DATALIST
+					DATAFORM 「……嗯……嗞呜……嗞呜……」
+					DATAFORM 文文恬静的睡着。
+				ENDLIST
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATALIST
+					DATAFORM 「……嗯、呜……」
+					DATAFORM 「……嗞呜……嗞呜……」
+					DATAFORM 文文安静的睡着。
+				ENDLIST
+				DATALIST
+					DATAFORM 「……嗞呜……嗯、呜……」
+					DATAFORM 文文断断续续的発出鼾声。
+					DATAFORM 看起来睡得很浅。
+				ENDLIST
+			ENDDATA
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;イタズラ中
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		IF TALENT:恋慕
+			PRINTDATA
+				DATALIST
+					DATAFORM 「嗯……啊、嗯唔ー……」
+				ENDLIST
+				DATALIST
+					DATAFORM 「……呀啊ー、不、要ー……」
+				ENDLIST
+				DATALIST
+					DATAFORM 「啊、嗯ー……不要、啊呜……」
+				ENDLIST
+			ENDDATA
+		ELSE
+			PRINTDATA
+				DATALIST
+					DATAFORM 「……嗯、姆呜……」
+				ENDLIST
+				DATALIST
+					DATAFORM 「……呜、嗯……嗞呜……」
+				ENDLIST
+				DATALIST
+					DATAFORM 「嗯、啊…………嗞呜……」
+				ENDLIST
+			ENDDATA
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;衰弱中
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 5
+		IF TALENT:恋人
+			PRINTFORMW 「呜啊……実、実在是、太累、了……」
+		ELSEIF TALENT:恋慕
+			PRINTFORMW 「……已経、没法動弾了啊……」
+		ELSEIF TALENT:思慕
+			PRINTFORMW 「……好、累呢……」
+		ELSE
+			PRINTFORMW 「……已経、不行了……」
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;MASTERがダウン（部屋まで運ばれる）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 6
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、你没事吧？」
+			PRINTFORML 文文対倒在地板上的%CALLNAME:MASTER%説道。
+			PRINTFORML ……没事、才怪。
+			PRINTFORML 「……真拿你没办法呢……嘿、咻」
+			PRINTFORMW 文文軽軽地抬起%CALLNAME:MASTER%、往房间送去。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……额、你没事吧！？」
+			PRINTFORML 文文看见气息荒乱、倒在地板上的%CALLNAME:MASTER%后呼喊着。
+			PRINTFORML ……麻烦你了。
+			PRINTFORML 「那个、那个……总之、先把你送到房间去吧？还是説、那个……」
+			PRINTFORML 文文十分慌张的様子、手忙脚乱。
+			PRINTFORML 送到房间、拜托了。
+			PRINTFORMW 听到这话、文文軽軽地抬起%CALLNAME:MASTER%的身体。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;移動時すれちがい
+;==================================================
+@M_KOJO_EVENT_K29_4(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;立ち止まった
+	;この後遭遇口上に接続
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		PRINTFORM 文文看着%CALLNAME:MASTER%、
+			IF TALENT:恋人
+				PRINTFORM 温柔地笑着
+			ELSEIF TALENT:恋慕
+				PRINTFORM 面泛桃花
+			ELSEIF GETBIT(CFLAG:1,0)
+				PRINTFORM 目不転睛并微笑着
+			ENDIF
+				PRINTFORMW 見ている。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;軽く会釈して街道過ぎた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+			PRINTFORML 「要去哪里呢？」
+			PRINTFORML 「……是这样吗……不、没事哦」
+			PRINTFORMW 文文莞然一笑离開了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀、%CALLNAME:MASTER%桑」
+			PRINTFORMW %CALLNAME:MASTER%点了点头、文文微笑着点头回礼。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……你好」
+			PRINTFORMW 文文这样説道、微微点头致意。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「………………」
+			PRINTFORML 文文点头致意、匆忙的快步离開了。
+			PRINTFORMW 唔、%CALLNAME:MASTER%小声的碎碎念道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;無視して街道過ぎた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORM 文文看着%CALLNAME:MASTER%、
+			IF TALENT:恋人
+				PRINTFORM 温柔地笑着
+			ELSEIF TALENT:恋慕
+				PRINTFORM 面泛桃花
+			ELSEIF GETBIT(CFLAG:1,0)
+				PRINTFORM 微笑着
+			ENDIF
+				PRINTFORMW 見ている。
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;他者介入で情緒変化
+;==================================================
+@M_KOJO_EVENT_K29_5(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;霊夢が入ってきた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:1:恋人 && TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 『啊啦、这不是文文吗……还在取材吗？』
+			PRINTFORML 「不是……不、也可以算是在取材呢」
+			PRINTFORML 『什么啊……这里有什么特别的捏他吗？』
+			PRINTFORMW 「【博丽巫女与其男友的恋愛実情！】怎么样？」
+			PRINTFORML 『真的这么写的话就把你退治了哦』
+			PRINTFORML 「知道了啦……唉……」
+			PRINTFORMW 文文落寞的叹了口气。
+		ELSEIF TALENT:恋人 && TALENT:1:恋慕
+			PRINTFORML 
+			PRINTFORML 『……啊啦、这不是文文吗』
+			PRINTFORML 「你好……诶、%CALLNAME:MASTER%桑……」
+			PRINTFORML 『……还在难分难舍的呢…………不能去其他地方吗……』
+			PRINTFORMW 文文和%CALLNAME:MASTER%还在厮摩着。
+		ELSEIF TALENT:恋慕 && TALENT:1:恋慕
+			PRINTFORML 
+			PRINTFORML 「啊呀呀、这不是霊梦小姐吗」
+			PRINTFORML 『这不是文文吗、有何贵干？　还有%CALLNAME:MASTER%也是？』
+			PRINTFORML 「……话説霊梦小姐你也是、有何贵干呢」
+			PRINTFORML 『……嘛、怎样都好啦、那种事情……是吧？　%CALLNAME:MASTER%』
+			PRINTFORMW 总覚得文文和霊梦之間火花四溅、大概是错覚吧。
+		ELSEIF TALENT:1:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、霊梦小姐」
+			PRINTFORML 『啊啦、这不是文文吗……在做什么呢？』
+			PRINTFORML 「不、也没做什么特别的……」
+			PRINTFORML 『哦……那么、%CALLNAME:MASTER%……』
+			PRINTFORMW 文文苦笑着看着霊梦拉近了和%CALLNAME:MASTER%的距離。
+		ELSEIF TALENT:1:恋慕
+			PRINTFORML 
+			PRINTFORML 『……啊啦、这不是文文吗』
+			PRINTFORML 「哦呀、这不是霊梦小姐吗、你好」
+			PRINTFORML 『……那么、有何贵干？』
+			PRINTFORMW 霊梦一辺凑到%CALLNAME:MASTER%身辺一辺説道。
+		ELSEIF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、是霊梦小姐吗」
+			PRINTFORML 『是呢……这不是文文吗、还和%CALLNAME:MASTER%在一块啊？』
+			PRINTFORML 「嗯、不行吗？」
+			PRINTFORML 『虽然也不是説不行……』
+			PRINTFORMW 文文一辺把那柔软的物事贴在%CALLNAME:MASTER%的手腕上一辺与霊梦交谈着。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀、霊梦小姐？」
+			PRINTFORML 『啊啦、这不是文文吗……真是稀客』
+			PRINTFORML 「才没有那样呢……是吧？　%CALLNAME:MASTER%桑」
+			PRINTFORML 『……嗯嗯、是这么回事啊』
+			PRINTFORMW 霊梦一副若有所思的样子、%CALLNAME:MASTER%有点纳闷。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……啊呀呀、这厢有礼了、霊梦小姐」
+			PRINTFORML 『……嗯？　哦、是文文啊……』
+			PRINTFORMW 霊梦対文文微微点头。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;留琴が入ってきた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORML
+		RETURN 1
+	ENDIF
+	;其他
+		IF CFLAG:うふふ
+			PRINTFORML 
+			PRINTFORML 「……诶、啊……有谁、来过了……」
+			PRINTFORMW 文文和%CALLNAME:MASTER%纠缠在一起的时候、感覚有誰来訪过。
+		ELSEIF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……有誰、来过了呢……」
+			PRINTFORMW 文文靠着%CALLNAME:MASTER%説道。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀？　……有誰来过了吗？」
+			PRINTFORMW 文文稍微坐正、望向传出气息的方向。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「啊呀、有誰来过了呢……」
+			PRINTFORMW 文文这样説着、端正的坐好。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「啊呀呀？　有谁来过了呢」
+			PRINTFORMW 文文饶有兴味地説道。
+		ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;情事を目撃した
+;==================================================
+@M_KOJO_EVENT_K29_6(ARG,ARG:1)
+;口上主はTARGET
+;ARGに情事相手
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;情事を目撃した（馴れ合い度:低）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 1
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……看起来很愉快嘛」
+			PRINTFORML 文文用不冷不热的視線突刺着%CALLNAME:MASTER%和%CALLNAME:ARG%。
+			PRINTFORML 「……嘛、也好……」
+			PRINTFORMW 文文微笑着、静静地离開了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……為什么在这种地方……」
+			PRINTFORML 文文红着脸説道。
+			PRINTFORML 「……能不能到、更人迹罕至一点的地方去做呢」
+			PRINTFORMW 説完、文文啪嗒啪嗒地往来的方向走去。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……哦呀、这不是%CALLNAME:MASTER%桑……和、%CALLNAME:ARG%小姐吗」
+			PRINTFORML 文文露出了不怀好意的笑容。
+			PRINTFORML 「……这可真是、呼呼、不错呢、呼呼呼ー……」
+			PRINTFORMW 文文露出一副奸険的表情、往来的方向走去。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;負けじと参加（馴れ合い度:高）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀、嘛、如果是%CALLNAME:MASTER%桑的话……还真是精力旺盛呢」
+			PRINTFORML 文文露出不冷不热的笑容説道。
+			PRINTFORML 「……我也、可以参加吗」
+			PRINTFORMW 文文这样説着、靠近并缠上了%CALLNAME:MASTER%。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……啊啦、啊啦啊啦、%CALLNAME:MASTER%桑……」
+			PRINTFORML 文文的脸頬上染上了少许嫣红。
+			PRINTFORML 「……在这种地方做这种事、真下流呢……我也可以参加吗」
+			PRINTFORMW 文文一辺呜呼呼地笑着一辺敞開了胸口。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;気まずそうに立ち去る
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 3
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……哦呀……%CALLNAME:MASTER%、桑……？」
+			PRINTFORML 「……还有、%CALLNAME:ARG%小姐」
+			PRINTFORML 「……請不要在意、慢慢来吧」
+			PRINTFORMW 文文露出不冷不热的笑容离開了。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……哦呀哦呀ー、这不是%CALLNAME:MASTER%桑和%CALLNAME:ARG%小姐吗ー」
+			PRINTFORML 「你们怎么了？这样子裸着纠缠在一起……呼呼ー」
+			PRINTFORML 「……那么、看见好东西了呢、我去也」
+			PRINTFORMW 文文露出嘲讽的笑容离開了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;MASTERに誘われて参加
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 4
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%、桑……？」
+			PRINTFORML 文文、过来这辺。
+			PRINTFORML 「……啊、請不要介意……诶？」
+			PRINTFORML 「……要一起、吗？」
+			PRINTFORML 「……呼呼、%CALLNAME:MASTER%桑ー……」
+			PRINTFORMW 文文在做出回答之前、就飞向了%CALLNAME:MASTER%怀里。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……啊呀、%CALLNAME:MASTER%、桑……」
+			PRINTFORML 文文、过来这辺。
+			PRINTFORML 「……失礼了……诶？」
+			PRINTFORML 「……一起、吗……呼呼、嗯、好啊」
+			PRINTFORMW 文文微笑着向你靠了过来。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……啊呀呀呀呀……这可真是、失礼了……」
+			PRINTFORML 文文的表情有点尴尬。
+			PRINTFORML %CALLNAME:MASTER%微微招了招手、
+			PRINTFORML 「……诶、诶？　不、是要一起……？」
+			PRINTFORMW 这样、文文虽然有些困惑、但还是怯生生地向你靠了过来。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;情事を見られた
+;==================================================
+@M_KOJO_EVENT_K29_7(ARG,ARG:1)
+;口上主はTARGET
+;ARGに目撃者
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;情事を見られた（目撃者の馴れ合い度:低）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 1
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……啊啦、%CALLNAME:ARG%、小姐、你在做什么、呢？」
+			PRINTFORML 文文气息粗重地询问着%CALLNAME:ARG%。
+			PRINTFORML %CALLNAME:ARG%因為自己淫靡的姿态而面色绯红、啪嗒啪嗒的逃走了。
+			PRINTFORML 「……那么、再継续吧、%CALLNAME:MASTER%桑……呼呼ー……」
+			PRINTFORMW 文文露出妖艶的笑容、向你紧逼过来。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……啊啦……%CALLNAME:ARG%小姐、这可真是、太不体面了呢」
+			PRINTFORML 文文红着脸説道。
+			PRINTFORML 终究是手足无措、%CALLNAME:ARG%匆匆忙忙尴尬地离去了。
+			PRINTFORML 「……那么、要継续吗？　%CALLNAME:MASTER%桑……」
+			PRINTFORMW 文文面泛春光、把身体往你身上圧了过来。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀……%CALLNAME:ARG%、小姐……？」
+			PRINTFORML 「啊呀呀、这可真是太不体面了呢……」
+			PRINTFORML %CALLNAME:ARG%一言不発的逃走了。
+			PRINTFORML 「哦呀哦呀、逃掉了呢……那么、接下来该做什么呢？%CALLNAME:MASTER%桑……」
+			PRINTFORMW 文文一辺用手指描着%CALLNAME:MASTER%的胸膛、一辺讯问道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……啊呀、这不是、%CALLNAME:ARG%小姐吗」
+			PRINTFORML 「现在在穿衣服呐……诶？　那、那个……」
+			PRINTFORML %CALLNAME:ARG%红着脸跑掉了。
+			PRINTFORML 「……走掉了呢…………那么、要不要、再継续呢？」
+			PRINTFORMW 文文面无表情的问道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;目撃者が負けじと参加（目撃者の馴れ合い度:高）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……啊啦、不小心被看见了呢？呼呼……」
+			PRINTFORML 文文妖媚的笑着、同时%CALLNAME:ARG%尴尬地看着你。
+			PRINTFORML ……呼ー、%CALLNAME:ARG%……到这里来。
+			PRINTFORML 「……嗯？　不、等等、诶诶……？　……%CALLNAME:MASTER%桑、多P的话也太……」
+			PRINTFORMW 在文文稍微有点困惑的时候、%CALLNAME:ARG%已経喜笑颜開地靠了过来。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀、%CALLNAME:ARG%小姐……」
+			PRINTFORML %CALLNAME:ARG%苦笑着看着%CALLNAME:MASTER%和文文。
+			PRINTFORML ……%CALLNAME:ARG%也、一起来吗？
+			PRINTFORML 「……哈？　诶、诶诶？　……乱、乱交、吗……」
+			PRINTFORMW 在文文稍微有点困惑的时候、%CALLNAME:ARG%就靠在了%CALLNAME:MASTER%身旁。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀？　是%CALLNAME:ARG%小姐、吗……」
+			PRINTFORML %CALLNAME:ARG%和文文面面相觑十分尴尬。
+			PRINTFORML ……%CALLNAME:ARG%、到这来吧。
+			PRINTFORML 「……哈……哈？　……诶？　…………唔？」
+			PRINTFORMW 在文文混乱的时候、%CALLNAME:ARG%已経靠到了身辺。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……啊呀呀？　这不是、%CALLNAME:ARG%小姐吗……真是奇遇呢」
+			PRINTFORML 因為文文的行為而失措的%CALLNAME:ARG%行礼告辞。
+			PRINTFORML ……%CALLNAME:ARG%、要一起做吗？
+			PRINTFORML 「……哈啊？　……嘛、随便你了……不管有谁在我都不会動容的」
+			PRINTFORMW 文文用有点軽蔑的眼神看着%CALLNAME:MASTER%。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;目撃者が立ち去る
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 3
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……啊啦、走掉了呢」
+			PRINTFORML 「……嘛、我还是更喜欢単独相処呢」
+			PRINTFORMW 因為能最大限度的感受你的爱嘛、文文这样説着、紧紧地抱住了你。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀、走掉了呢……」
+			PRINTFORML 「……再継续吧」
+			PRINTFORMW 文文圧着你、闭上了眼睛。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……啊啦、%CALLNAME:ARG%小姐、走掉了呢……」
+			PRINTFORML 「嘛、这也是理所当然的呢」
+			PRINTFORML 「……不継续吗？」
+			PRINTFORMW 文文凝视着你説道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……哦呀哦呀、逃走了呢……」
+			PRINTFORML 「……那么？　是継续呢？　还是不継续？」
+			PRINTFORMW 文文气势汹汹的问道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;MASTERに誘われて目撃者も参加
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 4
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……嘿诶？　诶？　一起……吗？」
+			PRINTFORML 「……呼呼、那么請拿出同等程度来爱我哦？」
+			PRINTFORMW 文文満脸笑容的抱住了%CALLNAME:MASTER%。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……哈啊、多P吗……」
+			PRINTFORML 「……嘛、也不是非常讨厌这样啦……」
+			PRINTFORML 「……不能対%CALLNAME:ARG%偏心哦、知道吗？」
+			PRINTFORMW 文文抛了个媚眼撒娇道。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……一起做、是吗……？」
+			PRINTFORML %CALLNAME:ARG%嗯哼地露出笑容。
+			PRINTFORML 「……嘛、好吧……」
+			PRINTFORMW 文文不満的説道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……多P、吗……嘛、我是不介意啦」
+			PRINTFORMW 文文用有点冰冷的目光看着你説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;目撃した情事を問い詰める
+;==================================================
+@M_KOJO_EVENT_K29_8(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;MASTERだけ問い詰め
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 1
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……所以、為什么要在那种地方、做那种事情呢？」
+			PRINTFORML 「……不不、做那种事本身并没有错哦？」
+			PRINTFORML 「因為我是信任着%CALLNAME:MASTER%的……」
+			PRINTFORMW %CALLNAME:MASTER%歪着腦袋。
+			PRINTFORML 「……所以外遇什么的……」
+			PRINTFORMW 文文用力摇了摇头做出否认。
+			PRINTFORML 「……対了、那么从今以后、請不要在那种地方做那种事哦――」
+			PRINTFORMW %CALLNAME:MASTER%正坐着接受文文的説教。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「首先、在那种地方做那种事実在是脱离常识」
+			PRINTFORML 「其次、做那种事之前請先确认一下周囲没有其他人的踪迹」
+			PRINTFORML 「……嘛、不管你和其他女人做还是不做也与我毫无関系吧？」
+			IF TALENT:恋慕 || TALENT:思慕
+				PRINTFORML 文文有些不満的説道。
+			ELSE
+				PRINTFORML 文文的目光充満了寒气、这样説道。
+			ENDIF
+			PRINTFORML 「……总之、从今以后……不用説你也懂的吧？」
+			PRINTFORMW 在文文的威圧之下、%CALLNAME:MASTER%応声点着头。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;二人とも説教
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……那个啊、嘛、从哪里説起比较好呢……」
+			PRINTFORML 「……做的时候、要慎选場所」
+			PRINTFORML 「請务必确认周囲没有其他人的气息」
+			PRINTFORML 「……我并没有発火、但是从此以后、請一定要考虑到周囲的环境哦？」
+			PRINTFORMW 二人被説教了、%CALLNAME:MASTER%点头表示已牢记。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……我説这个啊……」
+			PRINTFORML 「……一言以蔽之、請好好考虑場所的问题」
+			PRINTFORML 「要是被人撞見的话就会変的像这次一样情绪尴尬、一点都不好」
+			PRINTFORML 「明白了吗？　……説実话我也没怎么生气啦」
+			PRINTFORMW 文文仔细的対二人説教着。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;弱みを握った
+;==================================================
+@M_KOJO_EVENT_K29_9(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;同じ場所に居てパンツを回収された
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 1
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「……%CALLNAME:MASTER%桑？」
+			PRINTFORML %CALLNAME:MASTER%很突兀地停下動作。
+			PRINTFORMW 「………………」
+			PRINTFORML 文文凝視着你。
+			PRINTFORMW 「……有点奇怪、呢」
+			PRINTFORML 文文这样説着、用怪异的眼神看着你的眼睛。
+			PRINTFORML 被这一目光打败了、%CALLNAME:MASTER%不是很情愿的从怀里取出内衣。
+			PRINTFORMW 「……果然有问题、但是……把这些交给我、真的可以吗？　%CALLNAME:MASTER%桑」
+			PRINTFORMW 文文把%CALLNAME:MASTER%收集来的貴重内衣放进怀里。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「……%CALLNAME:MASTER%、桑？」
+			PRINTFORML %CALLNAME:MASTER%很突兀地停下動作。
+			PRINTFORMW 「……動作有点古怪呢」
+			PRINTFORML 默念南無三、但是已経晚了。
+			PRINTFORML 覚察到时文文已経摸索过了%CALLNAME:MASTER%的身体、取出了内衣。
+			PRINTFORML 「……哼、你真是可以的……我就收下了哦、%CALLNAME:MASTER%桑？」
+			PRINTFORMW 在超出想象的威圧之下、%CALLNAME:MASTER%唯有点头称是。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;遠距離移動中にパンツを回収された
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 2
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「――請等一下、%CALLNAME:MASTER%桑」
+			PRINTFORML %CALLNAME:MASTER%很突兀地停下脚步。
+			PRINTFORML ……為什么正好在这个时候被叫住呢。
+			PRINTFORMW 「……為什么你的動作这么生硬呢？」
+			PRINTFORML %CALLNAME:MASTER%什么话也説不来、文文無言地開始分析。
+			PRINTFORMW 「……好可疑、真的好可疑……让我做一下身体検査」
+			PRINTFORML 嗚嗚、惨了。　藏在怀里的内衣被凄惨地夺走了、
+			PRINTFORMW 「……哼……干的还不错嘛」
+			PRINTFORMW %CALLNAME:MASTER%伤心的离開了。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「――請稍微等一下」
+			PRINTFORML 文文叫住了%CALLNAME:MASTER%。
+			PRINTFORML 一滴冷汗流在了脸上。
+			PRINTFORMW 「……你在隠瞒着什么吗……妄想欺骗我的眼睛可真是大错特错呢？」
+			PRINTFORMW 嗚嗚、没辙了。
+			PRINTFORML 根本没法逃过文文的慧眼、终究还是接受了身体検査。
+			PRINTFORMW 「……哦ー……？　……不错的兴趣嘛」
+			PRINTFORMW 文文这样讽刺道、把内衣收进了怀里。
+		ENDIF
+		RETURN 1
+	ENDIF
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;押し倒した
+;==================================================
+@M_KOJO_EVENT_K29_10(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;MASTERを押し倒した（開始時）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 「――%CALLNAME:MASTER%桑」
+			PRINTFORML 文文面泛红潮説道。
+			PRINTFORMW 「现在、我想推倒你、可以吗？」
+			PRINTFORML 看样子文文、一副欲情満満的样子呢。
+			PRINTFORML ……反正説了也不会听的吧？
+			PRINTFORMW 「……呼呼ー……不説话的话就是默认了哦♪」
+			PRINTFORML 文文非常開心的把你推倒了。
+			PRINTFORMW 「……虽然这样很下流、但还是不管了」
+			PRINTFORMW 这样説着、文文用力地摩擦着身体。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「――%CALLNAME:MASTER%桑」
+			PRINTFORML 脸蛋红红的文文、抓住你的手説道。
+			PRINTFORML 她的眼睛湿润、像是在倾述和服欲。
+			PRINTFORMW 「……你懂的、吧……？」
+			PRINTFORML %CALLNAME:MASTER%无言的点了点头。
+			PRINTFORMW 「那么……可以、是吧……？」
+			PRINTFORML %CALLNAME:MASTER%在回答之前、就被文文推倒了。
+			PRINTFORML 「……%CALLNAME:MASTER%、%CALLNAME:MASTER%……」
+			PRINTFORMW 文文一辺小声的不断呼唤着%CALLNAME:MASTER%的名字、一辺一件件的把衣服剥掉了。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「……那个、%CALLNAME:MASTER%、桑……」
+			PRINTFORML 文文扭扭捏捏的説道。
+			PRINTFORML 是想去上厕所吗、你这样想着、果然不要搭话比较好。
+			PRINTFORMW 「……呜呜、让人家这么煎熬……」
+			PRINTFORML 脸颊泛上了红光、眼睛変得湿润起来。
+			PRINTFORMW 「……已経、忍不住了……%CALLNAME:MASTER%桑……」
+			PRINTFORML 文文终于、像骑馬那样的把你推倒了。
+			PRINTFORMW 「……%CALLNAME:MASTER%桑真坏呢……」
+			PRINTFORMW 脸蛋羞得通红、即使这样也克制不了欲情、文文把%CALLNAME:MASTER%的衣服剥掉了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;なだめられた（終了時）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF PALAM:欲情 >= PALAMLV:10
+			PRINTFORML 
+			PRINTFORMW 「嗯哈、哈、哈ー……已経、結束了吗？」
+			PRINTFORML 文文一辺喘着粗气、一辺问道。
+			PRINTFORML 回答説已経結束了。
+			PRINTFORMW 「哈啊ー、哈啊ー、嗯……好的、已経、満足了」
+			PRINTFORMW 这样説着、文文偎依在了你的身上。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「……已経、結束了吗……？」
+			PRINTFORML 文文有点不満足的説道。
+			PRINTFORML 是的、已経結束了、完了。
+			PRINTFORMW 「真是的……知道啦……」
+			PRINTFORMW 文文感覚很不満意的样子、勉强同意了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;浴場で遭遇
+;==================================================
+@M_KOJO_EVENT_K29_11(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;追い出された
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……嗯……」
+			PRINTFORML 文文的脸転眼之间就从里到外都红透了。
+			PRINTFORML 「……出、出去、請出去……如果不想死的话、就快点给我出去ー！」
+			PRINTFORMW 看来是认真的、%CALLNAME:MASTER%全速全力地逃走了。
+		ELSE
+			PRINTFORML 「………………」
+			PRINTFORML 文文目不転睛地凝視着石更的你。
+			PRINTFORML 「……能不能請你出去呢？」
+			PRINTFORMW 感到了莫大的威圧感、%CALLNAME:MASTER%慌慌张张地逃走了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;目が合った（追い出されない）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%桑……」
+			PRINTFORML 「……要一起、进来吗……？」
+			PRINTFORML 文文往旁辺让了让、留出了能让%CALLNAME:MASTER%泡进来的空间。
+			PRINTFORMW 直率地坐在了那里、文文就抱了过来、那柔软的物事抵在了你的手臂上。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……啊……%CALLNAME:MASTER%、桑……」
+			PRINTFORML 文文认出了你、脸変的有点红。
+			PRINTFORML 「……那个……要一起、进来吗……？」
+			PRINTFORML %CALLNAME:MASTER%点了点头、文文往旁辺让了让。
+			PRINTFORML 这样坐在旁辺可以吗。
+			PRINTFORMW 怯生生的坐到了旁辺、文文噗的一声和你紧紧贴在了一起。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……啊、要进来、吗？」
+			PRINTFORML 文文有点困惑地问道。
+			PRINTFORML 不行吗、这样説着、
+			PRINTFORML 「……不、不是……也、也不是不可以……」
+			PRINTFORMW 这样、用微不可闻的声音同意了。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……要进来吗？」
+			PRINTFORML 文文目不転睛的盯着你。
+			PRINTFORML 「……嘛、也不是不行……」
+			PRINTFORML 要是敢做出什么奇怪的事的话、殺无赦。
+			PRINTFORMW 在这样的氛囲下、文文同意了共浴。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;寝床に忍び込み
+;==================================================
+@M_KOJO_EVENT_K29_12(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;寝床に侵入
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 1
+		PRINTFORML
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;寝床に侵入（相手が恋慕）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%、桑？」
+			PRINTFORML 「……好困、呢……対、不起……」
+			PRINTFORMW %CALLNAME:MASTER%默默地坐在了文文身辺。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……是%CALLNAME:MASTER%桑、吗……？」
+			PRINTFORML 「……现在……非常地、想睡呢……」
+			PRINTFORML 文文因為実在太困了、敬語都用错了。
+			PRINTFORMW %CALLNAME:MASTER%静静地坐在了文文身辺。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%、桑……？」
+			PRINTFORML 「……有什么、事吗……？」
+			PRINTFORML 文文即使在睡覚时也没放松警惕。
+			PRINTFORMW %CALLNAME:MASTER%一辺笑着、一辺坐在了文文身辺。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;寝床に侵入（相手が恋慕・衰弱）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 3
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%、桑……？」
+			PRINTFORML 「…………早……上……嚎呜……」
+			PRINTFORMW 文文虽然认出了%CALLNAME:MASTER%、但很快又把脸埋进枕头里去了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……嗯唔……是%CALLNAME:MASTER%桑、吗……？」
+			PRINTFORML 文文揉着睡眼看着你。
+			PRINTFORML 「……晚、安……」
+			PRINTFORMW 话音刚落、文文又沈入了梦乡。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;追い出される
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 4
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORMW 
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;追い出される（衰弱）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG:1 == 5
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORMW 
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;お仕事中
+;==================================================
+@M_KOJO_EVENT_K29_13(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;仕事開始（職場へ移動する）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「――差不多、该出発了呢」
+			PRINTFORML 是去工作吗？　文文。
+			PRINTFORML 「嗯……果然不走不行了呢、那么……」
+			PRINTFORMW 文文依依惜别的飞走了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「――哦呀、都已経是这个时间了」
+			PRINTFORML 「……那么、我也差不多……」
+			PRINTFORML 要走了吗？
+			PRINTFORML 「嗯……是的、要去工作了……那么」
+			PRINTFORMW 帯着点难过的表情、文文飞走了。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……啊呀？　都已経到这个时间了啊？」
+			PRINTFORML 「……唔、那么、我先失礼了」
+			PRINTFORML 这样啊……工作、要加油哦。
+			PRINTFORMW 「嗯、不用你説也会加油的」
+			PRINTFORML 
+			PRINTFORML 「……感覚时间微妙的过的很快啊……是错覚、吗？」
+			PRINTFORMW 文文一辺在天上飞着一辺自言自语。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「啊呀呀呀呀、不是已経都这个时间了吗」
+			PRINTFORML 「那么、我先在此失礼了」
+			PRINTFORMW 咻、一阵強風吹过、文文的身影就消失了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;業務中
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……嗯嗯、那么该怎么写呢――」
+			PRINTFORML 「――哦呀、%CALLNAME:MASTER%桑」
+			PRINTFORML 「因為现在正在取材中、所以非常抱歉……請稍候片刻」
+			PRINTFORMW 这样説着、文文加快了在笔记本上的书写速度。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……嗯嗯、还有其他的吗――」
+			PRINTFORML 「――啊呀ー、是%CALLNAME:MASTER%桑吗」
+			PRINTFORML 「……额、那个……請、請稍微等我一下」
+			PRINTFORMW 文文慌慌张张地加快了在笔记本上的书写速度。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……是这样吗、那么、接下来――」
+			PRINTFORML 「――啊、%CALLNAME:MASTER%桑……是什么风把你吹来了啊？」
+			PRINTFORMW 文文向你打了招呼。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……唔、那么再来一条――」
+			PRINTFORML 「――……不対、那么有事請開口」
+			PRINTFORMW 文文略微瞥了你一眼。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;仕事終了
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「――好、那么辛苦了……」
+			PRINTFORML 「……%CALLNAME:MASTER%桑ー！」
+			PRINTFORMW 文文開心的抱住了你。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「――嗯嗯、辛苦了……好、完成了」
+			PRINTFORML 「……%CALLNAME:MASTER%、桑」
+			PRINTFORMW 文文霞生双頬、来到了你的身辺。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「――好、辛苦了……」
+			PRINTFORML 「……那么、有什么事吗？　让你久等了、%CALLNAME:MASTER%桑」
+			PRINTFORMW 文文一本正経的问道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「――嗯、好的、好的、辛苦了～」
+			PRINTFORML 「……哦呀、你在这吗？　%CALLNAME:MASTER%桑」
+			PRINTFORMW 文文用眼角的余光看着你説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;吃飯系
+;==================================================
+@M_KOJO_EVENT_K29_14(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;持っていた食物を食べられた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == -1
+	;%STR:(3000 + FLAG:20)% 食べ物をメモメモ
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%桑？」
+			PRINTFORML 文文一辺抽動着鼻子嗅着什么一辺和你搭讪。
+			PRINTFORML 「……有什么、好闻的味道呢」
+			PRINTFORML 果然不愧是名為天狗的乌鸦、鼻子実在是好使呢。
+			PRINTFORMW 「……你是不是、藏着什么东西呢？」
+			PRINTFORML 呼呼～、文文露出灿烂的笑容、站起身来。
+			PRINTFORML 「想要骗过我的眼睛什么的……你还早了一千年呢～！」
+			PRINTFORML 一瞬间身体就被搜查了、回过神时文文已経把%STR:(3000 + FLAG:20)%拿在了眼前。
+			PRINTFORMW 「啊啦、看起来很美味的样子呢……呼呼、我開動了～」
+			PRINTFORML %STR:(3000 + FLAG:20)%以肉眼可见的速度减少着、一転眼的工夫就被文文全部消灭了。
+			PRINTFORML 「多谢款待、非常美味哦%UNICODE(0x2665)%」
+			PRINTFORMW 面対着満脸笑容的文文、%CALLNAME:MASTER%只好説了声招待不周还請见谅。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……請稍等一下、%CALLNAME:MASTER%桑」
+			PRINTFORML 被文文叫住了。
+			PRINTFORML 「……有什么好闻的味道呢？　%CALLNAME:MASTER%桑」
+			PRINTFORML 文文一辺抽動着鼻子、一辺嬉皮笑脸地看着你。
+			PRINTFORMW 「那么、到底為什么会発出这么好闻的味道呢……？」
+			PRINTFORML 终于被这目光打败了、%CALLNAME:MASTER%不得不把%STR:(3000 + FLAG:20)%交了出来。
+			PRINTFORML 「哦呀、这是……我開動了」
+			PRINTFORML 吃东西时最好别説话么、文文開始吃起了%STR:(3000 + FLAG:20)%。
+			PRINTFORML 「哈姆……嗯、十分……不错嘛」
+			PRINTFORML 心疼地看着%STR:(3000 + FLAG:20)%不断减少、终于被文文全部摆平了。
+			PRINTFORMW 「多谢款待、%CALLNAME:MASTER%桑♪」
+			PRINTFORML ……招待不周还請见谅。
+			PRINTFORMW 文文看上去満脸笑容、责备这个样子的文文什么的、%CALLNAME:MASTER%実在做不到。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀？　哦呀哦呀～？」
+			PRINTFORML 文文用撒娇的语气説道。
+			PRINTFORML 「……有什么、好闻的味道呢？　%CALLNAME:MASTER%桑」
+			PRINTFORML 文文目不転睛的看着你説道。
+			PRINTFORMW 「……想瞒过我、可是行不通的～」
+			PRINTFORML 一瞬间文文的身影消失了、回过神时文文已経把%STR:(3000 + FLAG:20)%拿在了手上。
+			PRINTFORML 「呼呼～、是%STR:(3000 + FLAG:20)%啊……我開動了」
+			PRINTFORML 心疼地看着%STR:(3000 + FLAG:20)%不断消失、%CALLNAME:MASTER%什么话也説不出来。
+			PRINTFORMW 「……唔唔、嘛、真美味呢……嗯、很好吃哦」
+			PRINTFORML 文文有点害羞的述説着品尝感想。
+			PRINTFORMW 看着小声打嗝的文文、%CALLNAME:MASTER%苦笑着説了声招待不周还請见谅。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……請等一下、%CALLNAME:MASTER%桑」
+			PRINTFORML 很罕见的被文文叫住了。
+			PRINTFORML 怎么了、突然没事叫住我、
+			PRINTFORMW 「……你、是不是藏着什么东西啊？」
+			PRINTFORML 文文摆出乌鴉那样鋭利的眼神説道。
+			PRINTFORML 算了実在不想被强行搜查身体、%CALLNAME:MASTER%老実地把%STR:(3000 + FLAG:20)%交了出来。
+			PRINTFORML 「……呼～、是%STR:(3000 + FLAG:20)%啊……那我就收下咯」
+			PRINTFORML 文文得意地説着、接过了%STR:(3000 + FLAG:20)%。
+			PRINTFORML 嘛、收下礼物也不表示点什么这样好吗。
+			PRINTFORMW 「……唔……唔、唔嗯……嘛、説的也是」
+			PRINTFORML 随便説点什么吧、%CALLNAME:MASTER%直率地准备接受致谢。
+			PRINTFORML 「……多谢款待」
+			PRINTFORMW 简短的説完、文文扭过了脸。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;MASTERが押し倒した
+;==================================================
+@M_KOJO_EVENT_K29_15(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;未実装（押し倒しコマンドに統合？
+	;MASTERが押し倒した（ウフフ開始時）
+	;記入チェック（=0, 非表示、1, 表示）
+	;LOCAL:1 = 0
+	;-------------------------------------------------
+	;IF LOCAL:1 && ARG == 1
+		;PRINTFORML
+		;RETURN 1
+	;ENDIF
+	;-------------------------------------------------
+	;逢瀬終了（ウフフ終了時）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF FLAG:時間停止
+			PRINTFORML 
+			PRINTFORML %CALLNAME:MASTER%整理了下服装、从文文身辺离開。
+			PRINTFORML 即使是像対人偶一样的侵犯着、也十分快楽呢。
+			PRINTFORML 只是也看不到可愛的反応罢了。
+			PRINTFORMW %CALLNAME:MASTER%的嘴角翘了起来。
+		ELSEIF BASE:体力 <= 500
+			IF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「……已経、不行了……腰、直不起来……」
+				PRINTFORML 文文筋疲力尽的脱力了、躺在地板上。
+				PRINTFORMW 「……都変成这样了还想做、%CALLNAME:MASTER%桑真是很过分的人呢……」
+				PRINTFORML 文文慢慢的、扶着腰站起来。
+				PRINTFORML 「……那个……不过、很舒服呢……」
+				PRINTFORMW 文文春意盎然的説道。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……実在是、太激烈了……」
+				PRINTFORML 「……腰都、直不起来了……用力过头了、很过分哦？」
+				PRINTFORMW 文文盯着你説道。
+			ENDIF
+		ELSEIF BASE:体力 <= 1000
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORML 「哈、哈～、哈啊～、嗯、哈啊～、哈啊～……」
+				PRINTFORML 文文荒乱地呼吸着。
+				PRINTFORML 「……好、好厉害……」
+				PRINTFORMW 这样説着、文文精疲力尽的倒在了地板上。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「哈啊～……哈啊～……」
+				PRINTFORML 文文还在荒乱地呼吸着。
+				PRINTFORML 「下次、稍微、适可而止一点吧……？
+				PRINTFORMW 文文扶着腰微笑着説道。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……哈啊～……嗯……哈啊～……」
+				PRINTFORML 文文断断续续的喘着气。
+				PRINTFORML 「……不知道、适可而止吗……」
+				PRINTFORMW 文文瞪着你説道。
+			ENDIF
+		ELSEIF PALAM:欲情 >= PALAMLV:15
+			IF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「……已、已経、結束了、吗？」
+				PRINTFORML 文文眼睛湿润、看着你。
+				PRINTFORML 是的、有哪里不舒服吗？
+				PRINTFORMW 「……請不要、逗我……身体还、像火烧一样的、躁動不安……」
+				PRINTFORML 文文抱着自己的身体、向你靠了过来。
+				PRINTFORML 不行、結束吧。
+				PRINTFORML 「……怎么这样……你不知道、我已経忍耐不住了吗」
+				PRINTFORMW 一瞬间、文文露出像看见猟物的眼神、扭过了脸。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……不做、了吗？」
+				PRINTFORML 文文一副没事人似的表情、问道。
+				PRINTFORML 她的脸色泛红、充満了欲情。
+				PRINTFORMW 「……故意中止的话、我会很不好受的啊……？」
+				PRINTFORML 文文歪着小腦袋、発出可愛的声音。
+				PRINTFORML %CALLNAME:MASTER%随便応了下開始整理衣服。
+				PRINTFORMW 文文恨恨地看着%CALLNAME:MASTER%……
+			ENDIF
+		ELSEIF PALAM:欲情 >= PALAMLV:10
+			IF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「……那个？　已経、要停止了吗……？」
+				PRINTFORML 文文一辺吐着热气一辺问道。
+				PRINTFORML 回答説已経結束了。
+				PRINTFORML 「……额、嘛、虽説也不是不可以……」
+				PRINTFORMW 文文一辺扭扭捏捏的摩擦着大腿、一辺説道。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……已経、結束了吗……？」
+				PRINTFORML 「……不、不是、我还不是很満足呢……」
+				PRINTFORMW 这样説着、文文的脸変得更红了。
+			ENDIF
+		ELSE
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORML 「哦呀、没想到这么干脆的就中止了啊」
+				PRINTFORML 「……嘛、%CALLNAME:MASTER%桑不想再做的话我也没意见」
+				PRINTFORMW 文文整理着衣服説道。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORML 「……？　已経要結束了吗？」
+				PRINTFORML 「虽然还想在缠绵一会儿……啊、不、没有责怪你的意思呢？」
+				PRINTFORMW 文文整理着衣服説道。
+			ELSEIF TALENT:思慕
+				PRINTFORML 
+				PRINTFORML 「……嘿诶？　已経要結束了吗？」
+				PRINTFORML 「不、不是、只是感到有点意外罢了」
+				PRINTFORMW 摆着一副有些诧异的表情、文文整理着衣服。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「……要中止了吗？」
+				PRINTFORML 「虽然不会累挺好的……你満足了吗？」
+				PRINTFORML 「这样啊、不、没什么」
+				PRINTFORMW 文文一辺从下面開始扣衣服一辺平静的説道。
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+
+;==================================================
+;陪睡
+;==================================================
+@M_KOJO_EVENT_K29_16(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;添い寝を始めた（開始時）(存在せず
+	;記入チェック
+	;LOCAL:1 = 0
+	;-------------------------------------------------
+	;IF LOCAL:1 && ARG == 1
+		;PRINTFORML
+		;RETURN 1
+	;ENDIF
+	;-------------------------------------------------
+	;添い寝を終了した（終了時）
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF CFLAG:TARGET:睡眠
+			PRINTFORML 
+			PRINTFORML 「嗞呜……嗞呜……」
+			PRINTFORML 文文安静的熟睡着。
+			PRINTFORML %CALLNAME:MASTER%抚摸着文文的秀発。
+			IF TALENT:恋慕
+				PRINTFORMW 文文的表情稍微缓和了点、就这样継续発出有规律的呼吸声。
+			ELSE
+				PRINTFORMW 文文軽声的嘟嚷着。
+			ENDIF
+		ELSEIF TALENT:恋人
+			PRINTFORML 
+			PRINTFORML 「……差不多、该起床了」
+			PRINTFORML 「呼呼、%CALLNAME:MASTER%桑……請起床吧」
+			PRINTFORML 「嗯……呀啊～！　……真是的、%CALLNAME:MASTER%桑你啊……」
+			PRINTFORMW 被%CALLNAME:MASTER%抱着、文文愉快的做叹息状。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……差不多、该請你起床了」
+			PRINTFORML 「不起来的话……真是的、不要抱着我嘛」
+			PRINTFORML 「……起来的话、能做各种各样的事情哦……？」
+			PRINTFORMW 文文魅惑的笑着、引导着%CALLNAME:MASTER%的手。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「%CALLNAME:MASTER%桑……請起床吧」
+			PRINTFORML 「喂、起来吧……不起来可不行呢」
+			PRINTFORML 「……怎么乘乱摸人家的胸啊、快起来」
+			PRINTFORMW 文文像説教似的摇晃着你的身体。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+;==================================================
+;時止め終了時
+;==================================================
+@M_KOJO_EVENT_K29_17(ARG,ARG:1)
+;口上主はTARGET
+;排他と明記されていないモノは状況によっては連続で表示されるので注意
+;ARGに射精状況
+;ARG:1に射精状態
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;ARG=1～3は排他
+	;謎の快感
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「――――嗯！？」
+			PRINTFORMW 文文因為突然的快感身体跳了起来。
+			PRINTFORML 「哈～、哈～、什、什么啊、刚才的……」
+			PRINTFORML 「…………啊、诶、那个、没、没事～！　什么也没有！」
+			PRINTFORMW 文文红透了脸、佯装若无其事。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「――――嗯！？」
+			PRINTFORMW 文文因為突然的快感身体跳了起来。
+			PRINTFORML 「哈～、哈～、什、什么啊、刚才的……」
+			PRINTFORML 「……你在目不転睛的看什么哪」
+			PRINTFORMW 注意到%CALLNAME:MASTER%盯着看的視線的文文、為撇開这视线而説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;絶頂
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「――――――啊～！　」
+			PRINTFORMW 文文因為突然的絶顶而身体后仰、発出小声的悲鳴。
+			PRINTFORML 「――嗯、咕呜～……哈啊～、哈啊～、哈、什么、啊……」
+			PRINTFORML 「……什、什么事也没有哦、真的没什么……没事的、没事的、嗯」
+			PRINTFORMW %CALLNAME:MASTER%笑着看着羞得満脸通红的文文。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「――――――啊～！」
+			PRINTFORML 「嗯、哈～、哈啊～、哈啊～……什么啊、这是……」
+			PRINTFORMW 文文一辺研磨着大腿一辺説道。
+			PRINTFORML 「……额、你在看什么呢、%CALLNAME:MASTER%桑」
+			PRINTFORMW 面対着怒视过来的文文、%CALLNAME:MASTER%做出佯装不知的表情。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;パンツ紛失
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORML 
+		PRINTFORML 「……啊、嘞……？」
+		PRINTFORML 由于下半身突然袭来的冰凉感、文文感到了疑惑。
+		PRINTFORMW 「…………嗯！」
+		PRINTFORML 大概是理解状況了吧、文文突然按住了裙子。
+		PRINTFORML 「……怎么会、突然地……」
+		PRINTFORML 脸色通红按着裙子的样子、真是令人蠢蠢欲動。
+		PRINTFORMW %CALLNAME:MASTER%做出佯装不知的表情、确认着怀里的内衣的触感。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚口内射精】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		;精液中毒低精飲
+		IF ARG:1 == 1
+			IF EXP:精液経験 == 0
+				PRINTFORML 
+				PRINTFORML 「…………？」
+				PRINTFORML 文文因為口中突然出现的灼热感触而感到疑惑。
+				PRINTFORMW 「……唔、诶～……咳咳、咳咳～……嗯、嗯嗯～……」
+				PRINTFORML 流入喉咙深処的精液无法吐出来、文文苦着脸把未知的液体给呑了下去。
+				PRINTFORML 「嗯、咳库……咳咳～、咳咳、咳咳～……什么啊、刚才的……」
+				PRINTFORMW 文文因為贯通咽喉的微热粘稠感而皱着眉头。
+				PRINTFORML 「……好苦……呜呜、真悪心、到底是什么啊、那个……」
+				PRINTFORMW %CALLNAME:MASTER%在内心窃笑着、看着这一光景。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「…………！？」
+				PRINTFORML 文文睁大了眼睛、因為口中突然出现的灼热感触而感到惊愕。
+				PRINTFORMW 「……唔……唔诶～……咳咳、咳咳～……嗯嗯、嗯嗯～……！」
+				PRINTFORML 流入喉咙深処的精液无法吐出来、文文苦着脸。
+				PRINTFORML 最终放弃了、文文慢慢的開始把精液呑下去。
+				PRINTFORMW 「嗯、嗯～……咕、呜～……咳咳～、咳咳～、咳咳～……」
+				PRINTFORML 文文因為贯通咽喉的微热粘稠感而感到悪心。
+				PRINTFORML 「……怎么会、精液、突然地……」
+				PRINTFORMW %CALLNAME:MASTER%在内心窃笑着、看着这幅模样。
+			ENDIF
+		;精液中毒低吐き出し
+		ELSEIF ARG:1 == 2
+			PRINTFORML 
+			PRINTFORML 「…………！？」
+			PRINTFORML 「咳咳～、咳咳～、唔诶……唔诶～、咳咳、咳咳」
+			PRINTFORML 文文皱着眉头、捂着嘴巴。
+			PRINTFORML 不久后文文転向一辺、開始剧烈的咳嗽起来。
+			PRINTFORMW %CALLNAME:MASTER%目不転睛的盯着她看……
+		;精液中毒低手で覆う
+		ELSEIF ARG:1 == 3
+			PRINTFORML 
+			PRINTFORML 「…………嗯！？」
+			PRINTFORML 「唔、咳咳～、唔诶～……嗯、唔～」
+			PRINTFORML 文文因為口内精液的触感而咳嗽起来、捂着嘴巴。
+			PRINTFORML 含泪看着你的文文、実在太可爱了。
+			PRINTFORMW %CALLNAME:MASTER%微笑着看着她。
+		;精液中毒高精飲
+		ELSEIF ARG:1 == 4
+			PRINTFORML 
+			PRINTFORML 「…………？」
+			PRINTFORML 文文因為口中突然出现的感触而感到疑惑。
+			PRINTFORMW 然后、很快文文就咕噜、咕噜地、開始把精液呑下去了。
+			PRINTFORML 「……嗯、咕噜、咕噜……」
+			PRINTFORML 「……怎么精液、突然地……？」
+			PRINTFORMW 全部飲下之后、文文晕生双颊、自言自语道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚顔面射精】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 5
+		;精液経験ありぬぐい取り
+		IF ARG:1 == 1
+			PRINTFORML 
+			PRINTFORML 「…………嗯！？」
+			PRINTFORML 文文因為脸上突然出现的被精液紧贴的触感而皱起了眉头。
+			PRINTFORML 「……嗯、為什么、精液、突然地……」
+			PRINTFORML 文文拼命地把附在脸上的精液擦掉。
+			PRINTFORMW %CALLNAME:MASTER%目不転睛的盯着她看。
+		;精液経験なしぬぐい取り
+		ELSEIF ARG:1 == 2
+			PRINTFORML 
+			PRINTFORML 「…………？」
+			PRINTFORML 文文因為脸上未知的触感而感到疑惑。
+			PRINTFORML 「……什么啊、这个……」
+			PRINTFORML 「……唔诶～、好臭……湿答答……黏糊糊的……」
+			PRINTFORMW %CALLNAME:MASTER%目不転睛的盯着摆弄着精液的文文。
+		;顔射精液舐めとり
+		ELSEIF ARG:1 == 3
+			PRINTFORML 
+			PRINTFORML 「…………？」
+			PRINTFORML 「……怎么、又突然的……」
+			PRINTFORML 文文很冷静、就像什么事也没発生似的。
+			PRINTFORMW 稍微転向一辺、文文開始発出哧噜噜的水声。
+			PRINTFORML 「咕噜、啾、咕噜……」
+			PRINTFORML 一次次的用手擦着脸、用嘴吸吮着手掌。
+			PRINTFORMW 回过头时、文文的脸又変的很干浄了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚手淫射精】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 6
+		;ぬぐい取り
+		IF ARG:1 == 1
+			IF EXP:精液経験 == 0
+				PRINTFORML 
+				PRINTFORML 「…………？　什么啊、这是……」
+				PRINTFORML 「……白白的……唔诶、好臭～……」
+				PRINTFORMW 文文很不高兴的把手上的精液擦掉、但气味还是挥之不去。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「…………嗯！？　為什么、精液会……」
+				PRINTFORML 「……呜哇、全部沾満了……真糟糕」
+				PRINTFORMW 文文擦拭着手上的精液、愁眉不展。
+			ENDIF
+		;舐めとり
+		ELSEIF ARG:1 == 2
+			PRINTFORML 
+			PRINTFORML 「…………？」
+			PRINTFORML 文文因為突然出现的精液触感而感到疑惑、但馬上表情平复如常。
+			PRINTFORML 「……啾噜、啾……嗯、啾……」
+			PRINTFORML 文文一次次的舔舐着积攒在手心的精液。
+			PRINTFORML 「……真美味……但是為什么、精液会……」
+			PRINTFORMW 文文一辺盯着手心看、一辺説道。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚アナル射精】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 7
+		;Ａ感覚0
+		IF ARG:1 == 1
+			IF EXP:精液経験 == 0
+				PRINTFORML 
+				PRINTFORML 「…………嗯！？　疼～、嘶～……」
+				PRINTFORML 文文軽軽地按住并揉着屁股。
+				PRINTFORML 「……為什么、这样的……突然……没道理啊……」
+				PRINTFORMW 文文含泪説道。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「…………唏啊～！　什、什么……」
+				PRINTFORML 文文按着屁股、軽軽地揉着。
+				PRINTFORML 「……為什么精液会……好悪心……」
+				PRINTFORMW 面対着発出可愛声音的文文、%CALLNAME:MASTER%做出佯装不知的表情看着她。
+			ENDIF
+		;ソレ以外
+		ELSEIF ARG:1 == 2
+			IF EXP:精液経験 == 0
+				PRINTFORML 
+				PRINTFORML 「…………唏唔～！？」
+				PRINTFORML 「什、什么、有什么……什么、这是……」
+				PRINTFORML 文文軽軽地按着屁股、因為未知的触感而感到了强烈的動揺。
+				PRINTFORMW %CALLNAME:MASTER%做出佯装不知的表情看着她。
+			ELSE
+				PRINTFORML 
+				PRINTFORML 「…………哈、唔～！？」
+				PRINTFORML 「……為什么、為什么、精液会……」
+				PRINTFORML 文文軽軽地按着屁股、剧烈的動摇着。
+				PRINTFORMW %CALLNAME:MASTER%做出佯装不知的表情看着她。
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚処女喪失】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 8
+		;この鬼畜！と言われてもしょうがないね
+		PRINTFORML 
+		PRINTFORML 「…………嗯……！？　……嗯……」
+		PRINTFORML 文文眉头紧锁、忍受着鈍痛。
+		PRINTFORML 「……什么啊……这种、疼痛感……」
+		PRINTFORMW 看着忍受着正体不明鈍痛的文文、%CALLNAME:MASTER%在内心窃笑不已。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;【無自覚膣内射精】
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 9
+		;非処女膣内射精口服避孕薬なし
+		IF ARG:1 == 1
+			PRINTFORML 
+			PRINTFORML 「……哈、呜呜～……！？」
+			PRINTFORML 「為、為什么、陰道里……糟糕、口服避孕薬呢……」
+			PRINTFORML 文文変的顔面蒼白坐立不安的样子。
+			PRINTFORML 你怎么了、这样问道、
+				IF TALENT:恋慕
+					PRINTFORML 「……啊、没事、什么事也没有、没问题的、%CALLNAME:MASTER%桑」
+					PRINTFORMW 文文用有点紧张的声音回答道。
+				ELSE
+					PRINTFORML 「……什么事也没有、請不要在意」
+					PRINTFORML 文文虽然心神不宁还是平静地回答道。
+					PRINTFORMW 她的脸上、冒着冷汗……
+				ENDIF
+		;非処女膣内射精口服避孕薬あり
+		ELSEIF ARG:1 == 2
+			PRINTFORML 
+			PRINTFORML 「…………嗯……！？」
+			PRINTFORML 「……诶、為什么、為什么……精液会……？」
+			PRINTFORML 「……还、还好…………喝过了、嗯、因為喝过了……所以没事的」
+			PRINTFORMW 文文小声的長吁了一口气。
+		;処女膣内射精
+		ELSEIF ARG:1 == 3
+			PRINTFORML 
+			PRINTFORML 「…………咦、唔～……！？」
+			PRINTFORML 「……什么啊、这个感覚……」
+			PRINTFORMW 文文陷入了混乱。
+			PRINTFORML 「……真是的、為什么啊……这个……总覚得、好悪心……」
+			PRINTFORMW 文文露出不快的表情、%CALLNAME:MASTER%盯着她看。
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;ナマでやらせろ時
+;==================================================
+@M_KOJO_EVENT_K29_18(ARG,ARG:1)
+;口上主はTARGET
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;避妊要求台詞
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……那个、%CALLNAME:MASTER%桑……」
+			PRINTFORML 怎么了。
+			PRINTFORMW 「……想要……做点、避孕措施……」
+			PRINTFORML 文文不知為何有点抱歉的説道。
+			PRINTFORML 「那个……求你了」
+			PRINTFORMW 那么、该怎么办呢。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%桑」
+			PRINTFORML 怎么了。
+			PRINTFORMW 「……今天、請做一下避孕措施」
+			PRINTFORML 「没什么、只是还没想过要怀上%CALLNAME:MASTER%桑的孩子」
+			PRINTFORML 「……我求你了？」
+			PRINTFORMW 那么、该怎么办呢。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;断った
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……不、不……不行」
+			PRINTFORML 「果然、避孕还是……求你也不行吗？」
+			PRINTFORML 文文哀怨地看着你恳求道。
+			PRINTFORMW ……该怎么办呢。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……不、不能让步」
+			PRINTFORML 「再认真考虑一下吧……拜托做避孕措施吧？」
+			PRINTFORML 「我现在要是怀孕了、対彼此都只会造成困扰啊」
+			PRINTFORML 文文冷淡地説道。
+			PRINTFORMW ……该怎么办呢。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;断ったのに粘られて切れた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……%CALLNAME:MASTER%桑」
+			PRINTFORML 不知什么时候、文文的眼神変的陰郁起来。
+			PRINTFORMW 「……我要生气了哦？　已経晚了」
+			PRINTFORML 看起来、文文真的発火了。
+			PRINTFORML 南無三、纠缠过头了……但是已経迟了。
+			PRINTFORMW %CALLNAME:MASTER%该怎么办呢。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……説什么蠢话呢」
+			PRINTFORML 「刚才都説得那么明白了、还是这么想让我怀孕吗？」
+			PRINTFORMW 「区区人类、就想和我？　哈哈、拜托你别開玩笑了」
+			PRINTFORML 「……适可而止吧」
+			PRINTFORML 文文発出令人毛骨悚然的寒意冰冷地説道。
+			PRINTFORMW 看起来、真的発火了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;危険日以外許可
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……真是的、我明白了……」
+			PRINTFORML 「不管怎么説、也听不进去吗……？」
+			PRINTFORML 文文自暴自弃地説道、不过隠约有点開心的样子。
+			PRINTFORML 「……但是、危険日还是不行哦？」
+			PRINTFORMW 面対着紧紧盯住你的文文、%CALLNAME:MASTER%点了点头。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……唉……嗯、我了解了」
+			PRINTFORML 「是的、危険日以外都可以、我允许了」
+			PRINTFORML 文文半放弃地説道。
+			PRINTFORML 「……如果在危険日那啥的话、会有什么后果、你知道的吧……？」
+			PRINTFORMW 面対着笑嘻嘻的文文、%CALLNAME:MASTER%露出了苦笑。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;危険日許可
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 5
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……好的……我知道了……」
+			PRINTFORMW 文文有点心不在焉的説道。
+			PRINTFORML 「……%CALLNAME:MASTER%桑的、孩子……生孩子……」
+			PRINTFORML 文文発自内心幸福地笑了。
+			PRINTFORMW 「…………那么、請多多関照、%CALLNAME:MASTER%桑%UNICODE(0x2665)%」
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……不是説过了吗、都没听进去吗？」
+			PRINTFORML 「唉……我知道了、好吧、就允许一次吧」
+			PRINTFORMW 文文放弃似的叹了口气。
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;神社暮らしを承認して貰う
+;==================================================
+@M_KOJO_EVENT_K29_19(ARG,ARG:1)
+;口上主はARG
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;認められる
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		PRINTFORML
+		PRINTFORML 「……想不到、申請入住竟然会这么順利呢」
+		PRINTFORML 「老実説、本以為像我这样的家伙一定会被拒之门外呢」
+		PRINTFORML 这样不是挺好的嘛、省的使用武力手段了。
+		PRINTFORMW 「呼呼、開什么玩笑呢……？」
+		PRINTFORML 撒、或许是玩笑吧？
+		PRINTFORML 「……呜呼呼、能不能戦胜那个巫女、即使是我也不知道呢」
+		PRINTFORML ……嘛、从今以后、請多関照。
+		PRINTFORML 「……嗯、請多関照、%CALLNAME:MASTER%桑」
+		PRINTFORMW 文文莞然一笑説道。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;認められない
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORML
+		PRINTFORML 「……果然、不行吗……」
+		PRINTFORML 无可奈何呢、霊梦不答応的话就没办法了。
+		PRINTFORML 「……真遗憾呢」
+		PRINTFORML 也许以后再請求会好点吧。
+		PRINTFORMW 文文低头垂肩、看上去一副失魂落魄的样子。
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;帰宅時
+;==================================================
+@M_KOJO_EVENT_K29_20(ARG,ARG:1)
+;口上主はLOCALS or RESULT
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;通常帰宅
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋慕
+			PRINTFORML
+			PRINTFORML 「……那么、我要往这辺走了」
+			PRINTFORML 「……唔嗯、要是能住在一起就最好了」
+			PRINTFORML 现在去和霊梦交涉试试？
+			PRINTFORML 「……不……还是、下次吧」
+			PRINTFORML 是嘛。
+			PRINTFORML 「那么、再见、%CALLNAME:MASTER%桑……」
+			PRINTFORMW 文文微笑着、向远方飛去。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「那么、我差不多也要回去了呢」
+			PRINTFORML 「那么……下次再见吧、%CALLNAME:MASTER%桑」
+			IF TFLAG:反発刻印取得 == 3
+				PRINTFORML 文文看也不看你、无比冰冷的説道。
+				PRINTFORMW 不管怎么想都是副完全没考虑再次见面的样子。
+			ELSEIF TALENT:思慕
+				PRINTFORMW 文文微笑地道别了。
+			ELSE
+				PRINTFORMW 这样説着、文文向远方飛去。
+			ENDIF
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;デート中帰宅
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋人
+			PRINTFORML
+			PRINTFORML 「……哦呀、都已経这个时间了」
+			PRINTFORML 「今天很開心哦」
+			PRINTFORML 「……真想更多的、和你在一起呢」
+			PRINTFORMW 文文露出有点难过的笑容、飛走了。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……已経、这个时间了吗？」
+			PRINTFORML 「那个……今天、很開心哦、非常感谢你」
+			PRINTFORML 「……呼呼、下次再、一起去吧♪」
+			PRINTFORMW 文文露出像孩子般天真无邪的笑容、飛走了。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「……哦呀、都已経这个时间了啊」
+			PRINTFORML 「差不多该回去了呢……為什么这样的看着我啊、即使摆出这样的眼神我也得回去了呢」
+			PRINTFORML 是嘛、真遗憾呢。
+			PRINTFORML 「……下次再、一起去吧」
+			PRINTFORMW 文文红着脸説道、然后飛走了。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……啊呀呀、已経到夕阳西下的时候了」
+			PRINTFORML 「今天很開心呢、非常感谢、那么再见了！」
+			PRINTFORML 文文莞然一笑、用令人赞叹的速度飞走了。
+			PRINTFORMW ……那个估計是装出来的笑容吧。
+		ENDIF
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;陥落素質取得時
+;==================================================
+@M_KOJO_EVENT_K29_21(ARG,ARG:1)
+;口上主はARG
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;恋慕取得
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		PRINTFORML
+		PRINTFORMW 「――唉」
+		PRINTFORMW 文文独自一人地叹息着。
+		PRINTFORMW 「……和那个人在一起的话、时间就过得好快……」
+		PRINTFORMW 「……為什么会这样呢」
+		PRINTFORMW 「和人类在一起、就会感到快楽什么的……」
+		PRINTFORMW 「……明明一次都没有过呢……从没有呢……」
+		PRINTFORMW 「……活了这么久、还是头一次有这样的体験」
+		PRINTFORMW 「只要和某人在一起、情不自禁地就会露出笑容」
+		PRINTFORMW 「只是想着某人的事情、脸颊就会発红」
+		PRINTFORMW 「只是坐在某人旁辺、心脏就会无缘无故地狂跳……」
+		PRINTFORMW 「……啊啊真是的、难道还不明白吗？　我……」
+		PRINTFORMW 「……恋爱了、呢」
+		PRINTFORMW 「这种事情、简直就像梦幻的故事一般呢……呼呼」
+		PRINTFORMW 「和我在一起的话……终帰、终帰、是没有結果的」
+		PRINTFORMW 「啊啊、但是……啊啊、不行呢、放弃什么的、做不到」
+		PRINTFORMW 「虽然终帰、是要走在我前头的……」
+		PRINTFORMW 「……从来没考虑过那个人的寿命呢」
+		PRINTFORMW 「恋爱、这种东西……在漫長的生命里、也是未知的事物啊」
+		PRINTFORMW 「………………」
+		PRINTFORMW 「……%CALLNAME:MASTER%、桑」
+		PRINTFORMW 「%CALLNAME:MASTER%桑、%CALLNAME:MASTER%桑……」
+		PRINTFORMW 「……我、想着你」
+		PRINTFORMW 「……我、想更多地知道関于你的事」
+		PRINTFORMW 「……想把种种関于你的零碎小事、都深深地铭记在我的身体里」
+		PRINTFORMW 「……%CALLNAME:MASTER%桑、我喜欢你」
+		PRINTFORMW 文文、不為人知的、小声地説着。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;思慕取得
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORML
+		PRINTFORMW 「――唉、今天也很累呢」
+		PRINTFORMW 「不过、还是挺快楽的……」
+		PRINTFORMW 「……嗯？　……嗯嗯？」
+		PRINTFORMW 「快、楽……？」
+		PRINTFORMW 「……唔唔唔、快楽、快楽、这是……」
+		PRINTFORMW 「最近表情神経出毛病了吗、笑容也出现的太频繁了吧？」
+		PRINTFORMW 「……為什么？」
+		PRINTFORMW 「硬要説的话、是从与那个人见面之后才開始的……」
+		PRINTFORMW 「……哈哈、和%CALLNAME:MASTER%桑在一起、就会快楽？」
+		PRINTFORMW 「呼呼、真可笑……扑哧、库呼呼～」
+		PRINTFORMW 文文因為自己説出的话而情不自禁地笑出声来。
+		PRINTFORMW 但是、文文也注意到、某种想法在自己的心中不断生根発芽。
+		PRINTFORMW 这种想法、在不知不覚中无形暗燃着――
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;愛欲取得
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORML
+		PRINTFORMW 「呼～、今天也、很累呢……」
+		PRINTFORMW 「还是稍微、悠着点比较好……」
+		PRINTFORMW 「……嘛、只要会舒服的话、不也不错嘛」
+		PRINTFORMW 「……额、我到底在説什么啊、不、诶诶、刚才、怎么会……？」
+		PRINTFORMW 「……舒服、就好……？」
+		PRINTFORMW 「……呼呼、呼呼呼、啊啊、我……」
+		PRINTFORMW 「……好像、掉进无底洞了呢」
+		PRINTFORMW 
+		PRINTFORMW 回过神来时、文文、已経把手伸向了私処。
+		PRINTFORMW 并且看不到一点犹豫的、哧噗地、把手指插进了里面。
+		PRINTFORMW 已経湿的一塌糊涂的私処、很軽易地就把手指呑了进去。
+		PRINTFORMW 另一只手伸向胸部、玩弄着硬邦邦的乳头。
+		PRINTFORMW 咕啾、噼洽、咕啾咕啾。
+		PRINTFORMW 房间里回响着淫靡的水声。
+		PRINTFORMW 渐渐地、文文加快了手指的抽送速度。
+		PRINTFORMW 很快文文就、大幅度的向后仰着身体达到了高潮。
+		PRINTFORMW 但是、尽管达到了高潮文文还是継续自慰着。
+		PRINTFORMW 二、三次的高潮之後、文文、才磨磨蹭蹭地钻进了被窝。
+		PRINTFORMW 但是、身体的躁動还是无法平息下来。
+		PRINTFORMW 文文忍耐着、勉强入睡了。
+		PRINTFORMW 
+		PRINTFORMW 文文、渐渐地対%CALLNAME:MASTER%给予的快楽産生了依赖。
+		PRINTFORMW 好像、深深地陷入了泥泞的无底沼泽之中难以自抜的样子。
+		PRINTFORMW 不管怎么抵抗、也无法脱身。
+		PRINTFORMW 不知不覚中、文文放弃了抵抗、開始享受起了这种快楽……
+		EXP:自慰経験 += 2
+		EXP:Ｃ経験 += 2
+		EXP:Ｂ経験 += 2
+		EXP:Ｃ絶頂経験 += 2
+		EXP:Ｂ絶頂経験 += 2
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;愛人取得
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		IF TALENT:炮友
+			PRINTFORML 
+			PRINTFORMW 「……怎么回事、这种感覚」
+			PRINTFORMW 「……胸好难受……」
+			PRINTFORMW 「……為什么会这样呢」
+			PRINTFORMW 「……不、我、我……」
+			PRINTFORMW 「……是这么回事吗、真是的……」
+			PRINTFORMW 「……想被、%CALLNAME:MASTER%桑、爱着……」
+			PRINTFORMW 文文苦闷的説着、钻进了被窝里。
+		ELSE
+			PRINTFORML
+			PRINTFORMW 「……身体、好热」
+			PRINTFORMW 「……我、到底是怎么了」
+			PRINTFORMW 「……果然、沈迷了呢……」
+			PRINTFORMW 「……无法抗拒、吗」
+			PRINTFORMW 「……唉、睡覚吧……」
+			PRINTFORMW 文文叹息着、钻进了被窝里。
+			PRINTFORMW 总之、想见见%CALLNAME:MASTER%。
+			PRINTFORMW 文文直到沈入梦乡之前、一直在这样想着。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;炮友取得
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 5
+		PRINTFORML
+		PRINTFORMW 「……身体、好热」
+		PRINTFORMW 「……我、到底是怎么了」
+		PRINTFORMW 「……果然、沈迷了呢……」
+		PRINTFORMW 「……无法抗拒、吗」
+		PRINTFORMW 「……唉、睡覚吧……」
+		PRINTFORMW 文文叹息着、钻进了被窝里。
+		PRINTFORMW 总之、想见见%CALLNAME:MASTER%。
+		PRINTFORMW 文文直到沈入梦乡之前、一直在这样想着。
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;調教終了時に自慰
+;==================================================
+@M_KOJO_EVENT_K29_22(ARG,ARG:1)
+;口上主はARG
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	IF ABL:TARGET:自慰中毒 > 3
+		IF TALENT:恋慕
+			SELECTCASE RAND:5
+			CASE 4
+				PRINTFORML 
+				PRINTFORML 「嗚、啊、啊～、啊……嗯」
+				PRINTFORML 文微張着小口、凝視着空中用玩具撫慰着自己的身体。
+				PRINTFORML 「哈啊……嗯、啊、嗚、啊～……！」
+				PRINTFORML 腿猛地伸直、文的身体因為高潮不断顫抖
+				PRINTFORML 「……嗚、啊……%CALLNAME:MASTER%……」
+				PRINTFORML 在脱力的状態下、文軽声念出了思念的人的名字。
+			CASE 3
+				PRINTFORML 
+				PRINTFORML 「哈～、哈啊～、嗯、啊啊～！」
+				PRINTFORML 文文一辺高吭地呻吟着、一辺用性玩具玩弄着私処。
+				PRINTFORML 在微微的振動下、无论如何也圧抑不住呻吟声了。
+				PRINTFORML 「……太凉……了～、这样根本、満足～……不了～！」
+				PRINTFORML 但是、文文体内的骚動完全没有平息的迹象。
+				PRINTFORML 為了消减无法満足的欲望、文文持续玩弄着私処……。
+			CASE 2
+				PRINTFORML 
+				PRINTFORML 「哈啊～、哈啊～、嗯、啊呜～」
+				PRINTFORML 文文、沈溺在性玩具自慰行為之中。
+				PRINTFORML 她的神情恍惚、弥漫着春意。
+				PRINTFORML 「哈啊～、%CALLNAME:MASTER%、%CALLNAME:MASTER%～……%UNICODE(0x2665)%」
+				PRINTFORML 文文呼唤着%CALLNAME:MASTER%的名字、身体在性玩具的振動下震颤着。
+			CASE 1
+				PRINTFORML 
+				PRINTFORML 「……嗯～……咕、唔～……啊～……」
+				PRINTFORML 文文一辺克制着呻吟、一辺用性玩具玩弄着私処。
+				PRINTFORML 「……哈、嗯啊～、%CALLNAME:MASTER%、啊啊～……」
+				PRINTFORML 时不时按耐不住発出呻吟、呼唤着%CALLNAME:MASTER%的名字。
+				PRINTFORML 「……还要、还要……嗯～、哈……」
+				PRINTFORML 但是、不管是什么样的玩具、都没法达到%CALLNAME:MASTER%的手那样抜群的效果。
+				PRINTFORML 文文為了填満无法満足的饥渇、持续玩弄着私処……。
+			CASE 0
+				PRINTFORML 
+				PRINTFORML 「%CALLNAME:MASTER%、%CALLNAME:MASTER%～、哈啊～、%CALLNAME:MASTER%～……」
+				PRINTFORML 文文一辺呼唤着%CALLNAME:MASTER%的名字、一辺喘息着。
+				PRINTFORML 手上、也紧握着細長的振動玩具。
+				PRINTFORML 「哈啊～、嗯、啊啊～……喜欢、好喜欢～、啊～、啊啊%UNICODE(0x2665)%」
+				PRINTFORML 沈溺于快楽中的文文、無意識地説道。
+				PRINTFORML 「……啊……诶……？　……嗯」
+				PRINTFORML 文文犹豫了一瞬间、红着脸継续開始玩弄着私処……。
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+			CASE 1
+				PRINTFORML 
+				PRINTFORML 「呼、啊啊～……嗯、咕唔～、啊、啊～……」
+				PRINTFORML 文文帯着因快楽而荡漾的表情、喘息着。
+				PRINTFORML 「哈、嗯、嗯嗯～……啊啊――――――！　嗯、嗯……」
+				PRINTFORML 很快文文就仰着身体、达到了高潮。
+				PRINTFORML 「哈ー啊、哈ー啊、嗯、哈ー啊……」
+				PRINTFORML 文文一辺喘着粗气、一辺沈浸在絶顶的余韻之中。
+				PRINTFORML 另外、已経変的不会因為自慰行為而感到羞恥了……。
+			CASE 0
+				PRINTFORML 
+				PRINTFORML 「哈啊ー、哈啊ー、呼、嗯嗯ー！」
+				PRINTFORML 文文一辺含糊不清的発出喘息声、一辺用性玩具玩弄着私処。
+				PRINTFORML 快感游走全身、文文情不自禁的睁開了眼睛。
+				PRINTFORML 「啊、啊啊ー、不、不行了ー……要、去――――――了！　嗯、啊～……」
+				PRINTFORML 很快文文达到了絶顶、脱力了。
+				PRINTFORML 帯着因快楽而荡漾的表情、文文粗重的、吐着甜蜜的气息……。
+			ENDSELECT
+		ENDIF
+	ELSE
+		IF TALENT:恋慕
+			SELECTCASE RAND:4
+			CASE 3
+				PRINTFORML 
+				PRINTFORML 「%CALLNAME:MASTER%～、%CALLNAME:MASTER%～、呜啊～……」
+				PRINTFORML 文文一辺念叨着%CALLNAME:MASTER%的名字、一辺来回揉弄着私処。
+				PRINTFORML 「哈啊～、哈啊～、还不、够……」
+				PRINTFORML 无论多么剧烈的揉弄、都无法得到像%CALLNAME:MASTER%做的那样的満足。
+				PRINTFORML 文文為了平息身体的躁動、一个劲的自慰着……
+			CASE 2
+				PRINTFORML 
+				PRINTFORML 「哈啊～……哈啊～……」
+				PRINTFORML 文文慢慢地、揉弄着胸部和私処。
+				PRINTFORML 「……还不够呢……%CALLNAME:MASTER%……」
+				PRINTFORML 文文一次次地仰着身体、达到高潮。
+				PRINTFORML 但是、她的欲望始终得不到満足。
+				PRINTFORML 文文抱持欲求不満的身体、勉强入睡了。
+			CASE 1
+				PRINTFORML 
+				PRINTFORML 「……不要、不要啊……太、下流、了啊……」
+				PRINTFORML 文文満脸通红地沈溺在自慰行為之中。
+				PRINTFORML 「手、手、完全、停不下来啊～……%CALLNAME:MASTER%～……」
+				PRINTFORML 但是、无论停下几次、身体始终在追求着快楽。
+				PRINTFORML 文文一辺颤抖着身体、一辺自慰着……
+			CASE 0
+				PRINTFORML 
+				PRINTFORML 「啊～、啊啊～、呀、嗯唔～……」
+				PRINTFORML 文文激烈地欺负着自己的身体。
+				PRINTFORML 「哈、不行、不行了～……%CALLNAME:MASTER%、%CALLNAME:MASTER%～……！」
+				PRINTFORML 很快文文就、一辺念着%CALLNAME:MASTER%的名字、一辺大幅度向后弯腰达到了高潮。
+				PRINTFORML 面红耳赤呼吸荒乱的文文、钻进了被窝里。
+			ENDSELECT
+		ELSE
+			SELECTCASE RAND:2
+			CASE 1
+				PRINTFORML 
+				PRINTFORML 「……哈啊～、哈啊～……已経、不行了……」
+				PRINTFORML 文文按耐不住欲情、终于開始玩弄私処。
+				PRINTFORML 「哈、嗯、唔～、咕、这么的、焦躁、难耐……嗯、库唔～」
+				PRINTFORML 然后激烈地、開始搅動膣液和愛液。
+				PRINTFORML 文文在达到若干次高潮之前、她的手始终停不下来。
+			CASE 0
+				PRINTFORML 
+				PRINTFORML 「这种、事情……実在是、太、下流了……」
+				PRINTFORML 文文揉弄着胸部和私処。
+				PRINTFORML 「那个人、絶対是故意的……嗯、咕唔～……！」
+				PRINTFORML 很快文文就、剧烈颤抖着身体达到了高潮。
+				PRINTFORML 「……我、為什么会変成这个样子……」
+				PRINTFORML 文文陷入了自我嫌悪之中、钻进被窝里睡着了。
+			ENDSELECT
+		ENDIF
+	ENDIF
+WAIT
+ENDIF
+RETURN 1
+;==================================================
+;浴場連れだし
+;==================================================
+@M_KOJO_EVENT_K29_23(ARG,ARG:1)
+;口上主はLOCAL
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;断られた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:思慕
+			PRINTFORML 
+			PRINTFORML 「――诶？　洗、洗澡……？」
+			PRINTFORML 文文有点心慌意乱的反问道。
+			PRINTFORML 这样啊、不行吗。
+			PRINTFORML 「……不行、做奇怪的事的话很令人困扰的」
+			PRINTFORML 文文想也不想就拒絶了。
+			PRINTFORMW 哦、这样回答着、%CALLNAME:MASTER%老実地作罢了。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「――哈？」
+			PRINTFORML 文文莞然一笑、问道。
+			PRINTFORML 不、不能一起去洗澡吗、这样説道。
+			PRINTFORML 「……你是认真的吗？」
+			PRINTFORML 不行吗。
+			PRINTFORML 「当然不行啊！？　你怎么会有这种想法……」
+			PRINTFORMW 文文拒絶了、%CALLNAME:MASTER%无可奈何地作罢了。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;一緒に入ってくれた
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		IF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORML 「……洗澡、吗。　好吧、可以哦？」
+			PRINTFORML 文文令人意外的軽易地答応了、開始脱起了衣服。
+			PRINTFORML 扑哧、扑哧、咻噜、啪嚓、咻噜。
+			PRINTFORML 転眼之间文文就把衣服脱掉了、変成全裸状态。
+			PRINTFORML 那白皙的肢体像艺术品那样的美丽、吸引着眼球。
+			PRINTFORML 昂然挺立的乳头、外形良好的乳房、整斉的陰毛、光滑的腋下、靓丽的黑発。
+			PRINTFORML 漂亮的屁股，苗条的腹部，细長的腰，纤细的脚……。
+			PRINTFORML 该凸的凸，该凹的凹。
+			PRINTFORML 下半身渐渐開始充血了――
+			PRINTFORML 「――怎么老盯着人家看呢、真H」
+			PRINTFORMW 被文文察覚到直勾勾的视线之后、%CALLNAME:MASTER%慌忙脱掉了衣服。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……洗澡、是吗？　不、也不是不行……」
+			PRINTFORML 「……請稍微、転到那个方向、一会儿」
+			PRINTFORML 老実地向后転身、就听到文文的方向传来了布料滑動摩擦的声音。
+			PRINTFORML 听起来微妙的香艶、脸有点红了。
+			PRINTFORML 「……好了、可以了」
+			PRINTFORML 転了过来、眼前的文文毫不吝惜地展示着美丽的肢体。
+			PRINTFORML 「……再这样盯着看的话、我就愤怒了哦」
+			PRINTFORMW 这样説完、%CALLNAME:MASTER%忙背过脸去脱掉了衣服。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1
+;==================================================
+;懐妊
+;==================================================
+@M_KOJO_EVENT_K29_24(ARG,ARG:1)
+;口上主はLOCAL
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;恋慕
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		IF TALENT:恋人
+			PRINTFORML 「%CALLNAME:MASTER%桑」
+			PRINTFORML 突然、聽到了文的声音。
+			PRINTFORML 「有一件、要報告的事情……」
+			PRINTFORMW 声音很認真、但是帯着笑容、文継續説了下去。
+			PRINTFORML 「……因為%CALLNAME:MASTER%射出的満満的那個……」
+			PRINTFORML 「……呵呵、我懷孕了」
+			PRINTFORMW 一辺撫摸着腹部、文静静的説道。
+			PRINTFORML 「……是男孩子、還是女孩子呢……？　呵呵、要取什麼名字呢……」
+			PRINTFORML 一個人嘟囔着的同時、文把身体靠了過来。
+			PRINTFORML 「……我愛你、%CALLNAME:MASTER%桑」
+			PRINTFORMW 用温柔的声音、文這麼説道。
+			PRINTFORMW 
+			PRINTFORML 「……要多一個人的話、是不是有点太急性子了？」
+			PRINTFORML 稍微有点想要濃厚的身体接触、文開玩笑的説道。
+		ELSE
+			PRINTFORML 
+			PRINTFORML 「……那个、%CALLNAME:MASTER%桑……」
+			PRINTFORML 文臉色泛紅、叫住了%CALLNAME:MASTER%。
+			PRINTFORML 「……那個、有一件、需要報告的事情……要告訴你……」
+			PRINTFORMW 文有些口齒不清的継續説着。
+			PRINTFORML 怎麼了？
+			PRINTFORML 「対了……就是……就是那個啊　最近……不是做了很多麼……？」
+			PRINTFORML 「……然後、就、那個……好像是、妊娠了……」
+			PRINTFORML 満臉通紅低下了頭的文這麼説着。
+			PRINTFORML %CALLNAME:MASTER%、不知道該説什麼才好沈默了一段時間。
+			PRINTFORMW 就這麼過了一会、文默默的坐到了身旁。
+			PRINTFORML 「……%CALLNAME:MASTER%桑……我、我……」
+			PRINTFORML 「……想生下来、%CALLNAME:MASTER%桑的、孩子……」
+			PRINTFORML 抱住胳膊的時候、文這麼説道。
+			PRINTFORMW %CALLNAME:MASTER%、慢慢地点了点頭。
+			PRINTFORML 「……呼呼ー……」
+			PRINTFORML 文改変了姿勢抱了過来。
+			PRINTFORML 撫摸着文的頭、讓文非常開心。
+			PRINTFORML 在些許時間内、文和%CALLNAME:MASTER%就這樣靠在一起。
+		ENDIF
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;思慕
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORML 
+		PRINTFORML 「……没想到、真的有了」
+		PRINTFORML 用手抚摸着腹部、文一个人嘟囔着。
+		PRINTFORML 「……但是、是%CALLNAME:MASTER%的孩子……」
+		PRINTFORML 稍微联想到了其他地方、文継续説道。
+		PRINTFORML 「……会出现各种各样的麻烦吧……」
+		PRINTFORML 因為困扰、文大叹了一口气。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;陥落素質無し
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORML 
+		PRINTFORML 「……没想到、真的有了」
+		PRINTFORML 手放在腹部、文一个人嘟囔着。
+		PRINTFORML 「……%CALLNAME:MASTER%的孩子……」
+		PRINTFORML 一辺抚摸着小腹、文継续説道。
+		PRINTFORML 「……会出现各种各样的麻烦吧……」
+		PRINTFORML 因為困扰、文大叹了一口气。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;無自覚
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		PRINTFORML 
+		PRINTFORML 
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+WAIT
+ENDIF
+RETURN 1
+;==================================================
+;出産
+;==================================================
+@M_KOJO_EVENT_K29_25(ARG,ARG:1)
+;口上主はLOCAL
+;--------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;恋慕
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 1
+		PRINTFORML 
+		PRINTFORML 「哈啊～、哈啊～、哈啊……、哈啊啊……」
+		PRINTFORML 文不断重复着深呼吸、但还是露出了微笑、喂给婴儿母乳。
+		PRINTFORML 「……真的是、太累了……呵呵……呐、%CALLNAME:MASTER%、很可爱吧、你看……」
+		PRINTFORML 泪水在眼中打転的文、朝着这辺打了招呼。
+		PRINTFORML 「……如果能健康成長的话、那就好了……」
+		PRINTFORML 文帯着平静充満了母性的表情、低语道……。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;思慕
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 2
+		PRINTFORML 
+		PRINTFORML 「哈啊、哈啊～、哈啊……嗯……」
+		PRINTFORML 文抱着刚出生的婴儿、正喂着母乳。
+		PRINTFORML 「……真的是、太累了……呵呵、很健康啊……」
+		PRINTFORML 露出了充満了母性的表情、文温柔的抚摸着吸着乳母的婴儿的腦袋。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;陥落素質無し
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 3
+		PRINTFORML 
+		PRINTFORML 「哈啊～、哈啊、哈啊啊……哈啊～……嗯……」
+		PRINTFORML 「……很有精神……太好了……」
+		PRINTFORML 文温柔的微笑着、喂给婴儿母乳。
+		PRINTFORML 「……呵呵、要健康的成長啊……」
+		PRINTFORML 听到了文用充満了母性的声音、低声説着话。
+		RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;無自覚
+	;記入チェック（=0, 非表示、1, 表示）
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && ARG == 4
+		PRINTFORML 
+		PRINTFORML 
+		RETURN 1
+	ENDIF
+	;其他
+	PRINTFORML  
+ENDIF
+RETURN 1

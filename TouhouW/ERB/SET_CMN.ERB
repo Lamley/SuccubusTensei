@@ -1,0 +1,254 @@
+﻿;----------------------------------
+;隠密中フラグセット CFLAG:330SET
+;呼び出し時の整合性を判定し引数として渡された値をフラグにセットする
+;ARG=SET値 ARG:1=セット対象 ARG:2=MASTER連動
+;----------------------------------
+@SET_SNEAK(ARG,ARG:1,ARG:2)
+SELECTCASE ARG
+	;FLAG_OFF
+	CASE 0
+		;整合性チェック
+		CFLAG:(ARG:1):隠密中 = 0
+		IF ARG:2 == 1
+			CFLAG:MASTER:隠密中 = 0
+		ELSEIF ARG:2 == 2
+			SIF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置
+				CFLAG:MASTER:隠密中 = 0
+		ENDIF
+	;FLAG_ON
+	CASE 1
+		;整合性チェック
+		;TARGETとMASTERが同室かつ睡眠中でないとセットは出来ない
+		IF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置 && CFLAG:(ARG:1):睡眠
+			CFLAG:(ARG:1):隠密中 = 1
+			SIF ARG:2 == 1
+				CFLAG:MASTER:隠密中 = 1
+		ELSE
+		ENDIF
+ENDSELECT
+
+;----------------------------------
+;イタズラフラグセット CFLAG:331SET
+;呼び出し時の整合性を判定し引数として渡された値をフラグにセットする
+;ARG=SET値 ARG:1=セット対象 ARG:2=MASTER連動ON
+;----------------------------------
+@SET_PRANK(ARG,ARG:1,ARG:2)
+SELECTCASE ARG
+	;FLAG_OFF
+	CASE 0
+		;整合性チェック
+		CFLAG:(ARG:1):イタズラ = 0
+		IF ARG:2 == 1
+			CFLAG:MASTER:イタズラ = 0
+		ELSEIF ARG:2 == 2
+			SIF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置
+				CFLAG:MASTER:イタズラ = 0
+		ENDIF
+	;FLAG_ON
+	CASE 1
+		;整合性チェック
+		;TARGETとMASTERが同室・隠密中・睡眠中でないとセットは出来ない
+		IF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置 && CFLAG:(ARG:1):隠密中 == CFLAG:MASTER:隠密中 && CFLAG:(ARG:1):睡眠
+			CFLAG:(ARG:1):イタズラ = 1
+			SIF ARG:2 == 1
+				CFLAG:MASTER:イタズラ = 1
+		ELSE
+
+		ENDIF
+	;過激なイタズラFLAG_ON
+	CASE 2
+		;整合性チェック
+		;TARGETとMASTERが同室・隠密中・睡眠中・既にイタズラFLAG_ONでないとセットは出来ない
+		IF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置 && CFLAG:(ARG:1):隠密中 == CFLAG:MASTER:隠密中 && CFLAG:(ARG:1):イタズラ > 0 && CFLAG:(ARG:1):睡眠
+			CFLAG:(ARG:1):イタズラ = 2
+			SIF ARG:2 == 1
+				CFLAG:MASTER:イタズラ = 2
+		ELSE
+
+		ENDIF
+ENDSELECT
+
+;----------------------------------
+;添い寝フラグセット CFLAG:334SET
+;呼び出し時の整合性を判定し引数として渡された値をフラグにセットする
+;ARG=SET値 ARG:1=セット対象 ARG:2=MASTER連動ON (1=無条件に起きる 2=同室なら起きる)
+;----------------------------------
+@SET_TOGETHER(ARG,ARG:1,ARG:2)
+SELECTCASE ARG
+	;FLAG_OFF
+	CASE 0
+		;整合性チェック
+		CFLAG:(ARG:1):添い寝中 = 0
+		IF ARG:2 == 1
+			CFLAG:MASTER:添い寝中 = 0
+		ELSEIF ARG:2 == 2
+			SIF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置
+				CFLAG:MASTER:添い寝中 = 0
+		ENDIF
+	;FLAG_ON
+	CASE 1
+		;整合性チェック
+		;TARGETとMASTERが同室・睡眠中でないとセットは出来ない
+		IF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置 && CFLAG:(ARG:1):睡眠
+			CFLAG:(ARG:1):添い寝中 = 1
+			SIF ARG:2 == 1
+				CFLAG:MASTER:添い寝中 = 1
+		ELSE
+		ENDIF
+ENDSELECT
+
+;----------------------------------
+;睡眠中フラグセット CFLAG:313SET
+;呼び出し時の整合性を判定し引数として渡された値をフラグにセットする
+;ARG=SET値 ARG:1=セット対象 ARG:2=MASTER連動ON
+;----------------------------------
+@SET_SLEEP(ARG,ARG:1,ARG:2)
+SELECTCASE ARG
+	;FLAG_OFF
+	CASE 0
+		;整合性チェック
+		CFLAG:(ARG:1):睡眠 = 0
+		;睡眠フラグでMASTER連動は使わないだろうけど… とか言ってたら添い寝で使うことに…
+		IF ARG:2 == 1
+			CFLAG:MASTER:睡眠 = 0
+		ELSEIF ARG:2 == 2
+			SIF CFLAG:(ARG:1):現在位置 == CFLAG:MASTER:現在位置
+				CFLAG:MASTER:睡眠 = 0
+		ENDIF
+		SETBIT CFLAG:(ARG:1):着替え実行, 0
+		CLEARBIT CFLAG:(ARG:1):着替え実行, 1
+	;FLAG_ON
+	CASE 1
+		;整合性チェック
+		;ディレイ中はセット出来ない
+		IF !CFLAG:(ARG:1):ディレイ || ARG:1 == MASTER
+			CFLAG:(ARG:1):睡眠 = 1
+			CFLAG:(ARG:1):デート中 = MAIN_MAP
+			;MASTER連動は使わなn（ry
+			SIF ARG:2 == 1
+				CFLAG:MASTER:睡眠 = 1
+		;衰弱時はディレイ中も寝る
+		ELSEIF CFLAG:(ARG:1):衰弱
+			CFLAG:(ARG:1):睡眠 = 1
+			CFLAG:(ARG:1):デート中 = MAIN_MAP
+			;MASTER連動は使わなn（ry
+			SIF ARG:2 == 1
+				CFLAG:MASTER:睡眠 = 1
+		ENDIF
+		SETBIT CFLAG:(ARG:1):着替え実行, 1
+		CLEARBIT CFLAG:(ARG:1):着替え実行, 0
+		IF CFLAG:(ARG:1):ディレイ || !睡眠時間(ARG:1) || (CFLAG:(ARG:1):衰弱 && CFLAG:(ARG:1):現在位置 != CFLAG:(ARG:1):初期位置)
+			SETBIT CFLAG:(ARG:1):着替え実行, 0
+			CLEARBIT CFLAG:(ARG:1):着替え実行, 1
+		ENDIF
+		SIF ARG:1 == MASTER
+			CALL BUFF_RESET
+ENDSELECT
+
+;----------------------------------
+;デートフラグセット CFLAG:12SET
+;呼び出し時の整合性を判定し渡された場所へのデートフラグをセットする
+;ARG=デート先 ARG:1=セット対象
+;デートでの行き先定義はちょっと特殊
+;XXYZ	XX=デート先NO Y=デート先派生場所 Z=移動所要時間（X*10min)
+;----------------------------------
+@SET_DATE(ARG,ARG:1)
+;FLAG_OFF
+IF ARG == 99 || ARG == 9999
+;デート終了
+;神社は派生場所が6までなので大丈夫なはず。これでだめならARG == 10000にする
+	;整合性チェック
+	IF CHK_DATENOW(CFLAG:(ARG:1):デート中)
+		CFLAG:(ARG:1):デート中 = MAIN_MAP
+		CFLAG:MASTER:デート中 = MAIN_MAP
+		FLAG:デート相手 = 0
+		TFLAG:デート前好感度 = 0
+		SIF !AT_HOME(ARG:1)
+			CFLAG:(ARG:1):現在位置 = GET_ENTRANCE(MAIN_MAP)
+		SIF !AT_HOME(MASTER)
+			CFLAG:MASTER:現在位置 = GET_ENTRANCE(MAIN_MAP)
+		IF ARG == 9999
+			CFLAG:MASTER:現在位置 = 廚房
+			CFLAG:(ARG:1):現在位置 = 廚房
+		ENDIF
+	ENDIF
+;FLAG_ON
+ELSE
+	;整合性チェック
+	;衰弱中、既にデート中なら処理を行わない
+	IF !CHK_DATENOW(CFLAG:(ARG:1):デート中) || !CFLAG:(ARG:1):衰弱
+		;気力が無いとデートは行けない
+		IF BASE:MASTER:気力 > 0 && BASE:(ARG:1):気力 > 0
+			CFLAG:(ARG:1):デート中 = ARG
+			CFLAG:MASTER:デート中 = ARG
+			FLAG:デート相手 = (ARG:1)
+			IF ARG:1 == 0
+				CFLAG:MASTER:現在位置 = GET_ENTRANCE(ARG)
+			ELSE
+				IF ARG == 2
+					CALL EX_COSTUME((ARG:1), "人里デート")
+					SIF RESULT
+						PRINTFORMW %CALLNAME:(ARG:1)%換上了適合人間之里的衣服
+				ENDIF
+				CFLAG:(ARG:1):現在位置 = (ARG * 100) + (TIME_REQUIRED(CFLAG:MASTER:現在位置 / 100, ARG) / 10)
+				CFLAG:MASTER:現在位置 = (ARG * 100) + (TIME_REQUIRED(CFLAG:MASTER:現在位置 / 100, ARG) / 10)
+				IF !ARG
+					CFLAG:(ARG:1):現在位置 += 1100
+					CFLAG:MASTER:現在位置 += 1100
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+;----------------------------------
+;行動抑止時間セット CFLAG:313SET
+;現在の場所ににセットする
+;ARG=呼び出し種類 ARG:1=セット対象
+;----------------------------------
+@SET_DERAY(ARG,ARG:1)
+IF !CFLAG:(ARG:1):ディレイ
+	;呼び出し形式により処理変更 1=場所によるディレイ 2以降=イベントによるディレイ
+	SELECTCASE ARG
+		;特定の場所に入ったらディレイ
+		CASE 1
+			SELECTCASE CFLAG:(ARG:1):現在位置
+				;廚房は料理するのでディレイ発生
+				CASE 11
+					IF ABL:(ARG:1):料理技能 >= 3
+						CFLAG:(ARG:1):ディレイ = 30
+					ELSEIF ABL:(ARG:1):料理技能 > 1 && ABL:(ARG:1):料理技能 < 3
+						CFLAG:(ARG:1):ディレイ = 60
+					ELSE
+						CFLAG:(ARG:1):ディレイ = 120
+					ENDIF
+				;お浴室に入るとディレイ発生
+				CASE 12
+					CFLAG:(ARG:1):ディレイ = 60
+			ENDSELECT
+		;朝起きたらディレイ（朝は気分がまとまらないしネ）
+		CASE 2
+			CFLAG:(ARG:1):ディレイ = 60
+		;仕事終了後はディレイ
+		CASE 3
+			CFLAG:(ARG:1):ディレイ = 20
+		;添い寝やったら頑張って起きてくれる（衰弱時以外）
+		CASE 4
+			SIF !CFLAG:(ARG:1):衰弱
+				CFLAG:(ARG:1):ディレイ = 60
+		;押し倒されなだめたらディレイ
+		CASE 5
+			CFLAG:(ARG:1):ディレイ = 40
+		;膝枕時はディレイ
+		CASE 6
+			CFLAG:(ARG:1):ディレイ = 10
+		CASE 99
+			;Deray Clear to Do nothing
+	ENDSELECT
+ELSE
+	SELECTCASE ARG
+		;ディレイをクリア
+		CASE 99
+			CFLAG:(ARG:1):ディレイ = 0
+	ENDSELECT
+ENDIF

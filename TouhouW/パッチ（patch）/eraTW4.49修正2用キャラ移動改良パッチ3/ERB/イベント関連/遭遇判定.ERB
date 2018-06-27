@@ -1,0 +1,139 @@
+﻿@遭遇判定
+#DIM 基本遭遇率
+#DIM 遭遇率
+
+遭遇率 = 0
+FOR LOCAL, 1, CHARANUM
+	;自宅在住キャラなら遭遇しない
+	SIF CFLAG:LOCAL:神社在住 > 0
+		CONTINUE
+;訪問者それぞれの遭遇フラグ初期化
+	CFLAG:LOCAL:遭遇位置 = 0
+NEXT
+LOCAL:2 = CHARANUM
+
+;よく考えたらこの計算何度もしなくていい事に気づいた
+;キャラ数増えるたびに調整するのもなんだし、％で設定した方がいいといい気がしたので変更
+;％と遭遇確率のバランス調整は投げ捨てるもの（作者様にお任せします）
+SELECTCASE (FLAG:出禁人数 * 100 / CHARANUM)
+	CASE IS >= 60
+		基本遭遇率 = 15
+	CASE IS >= 45
+		基本遭遇率 = 17
+	CASE IS >= 30
+		基本遭遇率 = 20
+	CASE IS >= 15
+		基本遭遇率 = 24
+	CASE IS >= 10
+		基本遭遇率 = 27
+	CASEELSE
+		基本遭遇率 = 30
+ENDSELECT
+
+FOR LOCAL, 1, CHARANUM
+	;商と余りで触るフラグ番号(LOCAL:5)とビット(LOCAL:6)を計算：これで人数が増えても対処できるように
+	LOCAL:5 = (LOCAL) / 64
+	LOCAL:6 = (LOCAL) % 64
+	;自宅在住キャラなら遭遇しない
+	SIF CFLAG:LOCAL:神社在住 > 0
+		CONTINUE
+	IF !(GETBIT (FLAG:(50 + LOCAL:5), LOCAL:6) && CFLAG:LOCAL:宴会参加)
+		;12以下になればデフォルト設定だと確定で遭遇フラグが立つだけなので（0以下でなければ）問題なし
+		遭遇率 = 基本遭遇率 - (TALENT:LOCAL:思慕 * 2 + TALENT:LOCAL:恋慕 * 4)
+		SIF CFLAG:LOCAL:依頼状況
+			遭遇率 -= 3
+		SELECTCASE LOCAL
+			;キャラ別に遭遇率を変える場合はCASEを加える・デフォルトは12/(基本遭遇率)
+			CASEELSE
+				SIF RAND:遭遇率 + 1 <= 12
+					CALL 遭遇フラグ決定(LOCAL)
+		ENDSELECT
+	ENDIF
+	SIF CFLAG:LOCAL:現在位置 == SUKIMA() && CFLAG:LOCAL:神社在住
+		CFLAG:LOCAL:現在位置 = CFLAG:LOCAL:神社在住
+NEXT
+
+@遭遇フラグ決定(ARG)
+;CFLAG:ARG:遭遇位置 = ARGの遭遇地点
+;LOCAL = 算出された仮地点（遭遇地点/10）
+;LOCAL:1 = ランダムに決められた地域
+
+;25%で自宅に出現。自宅が未解禁の場合はスキップ
+;この後自宅になる可能性もあるので実際はもっと高い
+IF !RAND:4 && INRANGE(CFLAG:ARG:自宅位置 , 100 , 1100)
+	CFLAG:ARG:遭遇位置 = CFLAG:ARG:自宅位置
+;33%(自宅がある場合約25%)でよく行く地域。よく行く地域が未設定の場合はスキップ
+;この後よく行く地域になる可能性もあるので実際はもっと高い
+ELSEIF !RAND:2 && CFLAG:ARG:よく行く地域 >= 0 && CFLAG:ARG:よく行く地域 != MAIN_MAP
+	CALL FISHER_YATES_SHAFFLE(10)
+	;1～10の数字をシャッフルして順番に引いてチェック、最大10回の判定で終わるはず。
+	FOR LOCAL:10 , 0 , 10
+		LOCAL = CFLAG:ARG:よく行く地域 * 10 + SHAFFLE_ARRAY:(LOCAL:10) + 1
+		;出現場所かチェック
+		CALLFORM CHARAMOVE_DATA_{ARG}(7,LOCAL)
+		;出現場所じゃなければ再抽選（出現場所が設定されていないと遭遇位置が変更されないので注意）
+		SIF !RESULT
+			CONTINUE
+		;出現場所に設定
+		BREAK
+	NEXT
+	;場所を設定
+	;万が一よく行く地域内に出現場所が設定されていなかった場合、最後に引いた場所が入るように
+	CFLAG:ARG:遭遇位置 = LOCAL * 10
+;よく行く地域がある場合66%・自宅もある場合約50%・自宅だけある場合75%・何もない場合100%
+;自宅・よく行く地域も含んで選出
+ELSE
+	CALL FISHER_YATES_SHAFFLE(10)
+	FOR LOCAL:10 , 0 , 10
+		;ランダムに地域選択
+		LOCAL:1 = SHAFFLE_ARRAY:(LOCAL:10)
+		;拠点マップなら再抽選
+		SIF LOCAL:1 == MAIN_MAP
+			CONTINUE
+		;CHARAMOVEを参照して行かない地域だったら再抽選
+		RESULT = 0
+		CALLFORM CHARAMOVE_DATA_{ARG}(6,LOCAL:1)
+		SIF !RESULT
+			CONTINUE
+		BREAK
+	NEXT
+	;行く地域が設定されていなかった場合、最後に引いた地域に行く
+	
+	CALL FISHER_YATES_SHAFFLE(9)
+	FOR LOCAL:10 , 0 , 9
+		;ランダムに場所を選択
+		LOCAL = LOCAL:1 * 10 + SHAFFLE_ARRAY:(LOCAL:10) + 1
+		;CHARAMOVEを参照して行かない地域だったら再抽選
+		RESULT = 0
+		CALLFORM CHARAMOVE_DATA_{ARG}(7,LOCAL)
+		SIF !RESULT
+			CONTINUE
+		SIF STR:(6000 + LOCAL) == ""
+			CONTINUE
+		BREAK
+	NEXT
+	;出現場所に設定
+	;万が一出現場所が設定されていなかった場合、最後に引いた場所が入るように
+	CFLAG:ARG:遭遇位置 = LOCAL * 10
+ENDIF
+
+@出現状態(ARG)
+;=1拠点には来ない =2来る =3 住んでる
+#FUNCTION
+IF CFLAG:ARG:出禁
+	RETURNF 0
+ELSEIF CFLAG:ARG:神社在住
+	RETURNF 3
+ELSEIF 来訪フラグ確認(ARG)
+	RETURNF 2
+ELSEIF CFLAG:ARG:宴会参加
+	RETURNF 2
+ELSEIF !CHARA_HOLIDAY(ARG)
+	RETURNF 1
+ELSEIF CFLAG:ARG:お招き
+	RETURNF 1
+ELSEIF CFLAG:ARG:遭遇位置
+	RETURNF 1
+ELSE
+	RETURNF 0
+ENDIF

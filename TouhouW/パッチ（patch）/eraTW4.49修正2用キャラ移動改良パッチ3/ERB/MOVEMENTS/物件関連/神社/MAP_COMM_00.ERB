@@ -1,0 +1,148 @@
+﻿;--------------------------------------------------
+;	マップ内移動処理拡張パッチ付属
+;	博麗神社MAP用関数
+;--------------------------------------------------
+
+@MAP_PLACENAME_0(ARG)
+#FUNCTIONS
+#DIM PLACEID
+#DIMS HAKUNAME,25 = "鳥居","境内","賽銭箱","本堂","手水舎","物置","土間","台所","居間","縁側","庭","脱衣所","風呂","トイレ","霊夢私室","ボロ小屋","小さい納戸","押入れ","大きい納戸","本殿の裏","守矢神社分社","参道","温泉・脱衣所","温泉","鎮守の森"
+#DIMS FAIRYNAME, 11 = "三妖精の家・入口","三妖精の家・一階通路","三妖精の家・階段","三妖精の家・台所","三妖精の家・風呂","三妖精の家・二階廊下","サニー私室","ルナ私室","スター私室","三妖精の家・地下室"
+#DIMS MUGENNAME, 16 = "夢幻遺跡前","夢幻遺跡・一階通路","夢幻遺跡・洗面所","夢幻遺跡・浴室","夢幻遺跡・トイレ","夢幻遺跡・食堂兼談話室","夢幻遺跡・調理室","夢美私室","ちゆり私室","夢幻遺跡・階段","夢幻遺跡・二階通路","夢幻遺跡・艦橋","夢幻遺跡・第一資料室","夢幻遺跡・研究室","夢幻遺跡・第二資料室","夢幻遺跡・倉庫"
+#DIMS NEWHAKU, 4 = "離れ","納戸","小人の虫かご","和室"
+SIF FLAG:15
+	HAKUNAME:15 = %CALLNAME:(FLAG:15)%の小屋
+SIF FLAG:16
+	NEWHAKU:3 = %CALLNAME:(FLAG:16)%私室
+IF GET_MAPID(ARG) == MAIN_MAP
+	PLACEID = ARG % 100
+	SELECTCASE PLACEID
+		CASE 1 TO 25
+			RETURNF HAKUNAME:(PLACEID - 1)
+		CASE 26 TO 35
+			RETURNF FAIRYNAME:(PLACEID - 26)
+		CASE 36 TO 51
+			RETURNF MUGENNAME:(PLACEID - 36)
+		CASE 52
+			RETURNF "離れ"
+		CASE 53 TO 55
+			SIF FLAG:改築
+				RETURNF NEWHAKU:(PLACEID - 52)
+			RETURNF "参道の向こう"
+		CASE 98
+			RETURNF OMANEKI_PLACE()
+		CASE 99
+			RETURNF "スキマ空間"
+		CASEELSE
+			RETURNF "参道の向こう"
+	ENDSELECT
+ELSE
+	RETURNF "不明"
+ENDIF
+@MAP_VIEWING_0
+IF CHK_ENTRANCE(CFLAG:MASTER:現在位置) || CHK_PLACE(MASTER,"ADDRESS",25,0)
+	SIF FLAG:改築
+	CALL MAP_NEW_HAKUREI
+	SIF !FLAG:改築
+	CALL MAP_HAKUREI
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+ELSEIF CHK_PLACE(MASTER,"ADDRESS",26,0)|| CHK_PLACE(MASTER,"ADDRESS",27,0)|| CHK_PLACE(MASTER,"ADDRESS",28,0)|| CHK_PLACE(MASTER,"ADDRESS",29,0)|| CHK_PLACE(MASTER,"ADDRESS",30,0)|| CHK_PLACE(MASTER,"ADDRESS",31,0)|| CHK_PLACE(MASTER,"ADDRESS",32,0)|| CHK_PLACE(MASTER,"ADDRESS",33,0)|| CHK_PLACE(MASTER,"ADDRESS",34,0)|| CHK_PLACE(MASTER,"ADDRESS",35,0)
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+	CALL MAP_3FAIRY
+ELSEIF CHK_PLACE(MASTER,"ADDRESS",36,0)|| CHK_PLACE(MASTER,"ADDRESS",37,0)|| CHK_PLACE(MASTER,"ADDRESS",38,0)|| CHK_PLACE(MASTER,"ADDRESS",39,0)|| CHK_PLACE(MASTER,"ADDRESS",40,0)|| CHK_PLACE(MASTER,"ADDRESS",41,0)|| CHK_PLACE(MASTER,"ADDRESS",42,0)|| CHK_PLACE(MASTER,"ADDRESS",43,0)|| CHK_PLACE(MASTER,"ADDRESS",44,0)
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+	CALL MAP_MUGENISEKI12
+ELSEIF CHK_PLACE(MASTER,"ADDRESS",45,0)
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+	CALL MAP_MUGENISEKI21
+ELSEIF CHK_PLACE(MASTER,"ADDRESS",46,0)|| CHK_PLACE(MASTER,"ADDRESS",47,0)|| CHK_PLACE(MASTER,"ADDRESS",48,0)|| CHK_PLACE(MASTER,"ADDRESS",49,0)|| CHK_PLACE(MASTER,"ADDRESS",50,0)|| CHK_PLACE(MASTER,"ADDRESS",51,0)
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+	CALL MAP_MUGENISEKI21
+ELSE
+	SIF FLAG:改築
+	CALL MAP_NEW_HAKUREI
+	SIF !FLAG:改築
+	CALL MAP_HAKUREI
+	SIF FLAG:移動先表示 != 4 && FLAG:移動先表示 != 5
+	CALL MAP_H_ALL
+ENDIF
+RETURN 1
+
+@MAP_CAN_MOVE_0(ARG, ARG:1)
+#FUNCTION
+;参道の向こうには行けない
+;IF ARG == MAXROOM
+;	PRINTW 参道の向こうには行けない
+;	CLEARLINE 2
+;	REUSELASTLINE 
+;	RETURNF 0
+SELECTCASE ARG
+	;改築前は行けない場所
+	CASE IS >= 53
+		IF !FLAG:改築
+			TFLAG:移動不能メッセージ = 3
+			RETURNF 0
+		ENDIF
+		;虫かご
+		IF ARG == 54
+			;小人じゃないと入れない
+			IF TALENT:(ARG:1):体型 > -5
+				TFLAG:移動不能メッセージ = 4
+				RETURNF 0
+			ENDIF
+		ENDIF
+	;三月精ハウス
+	CASE 26 TO 35
+		;妖精なら入れる
+		IF TALENT:(ARG:1):妖精
+			RETURNF 1
+		;あなたは恋慕か教養LV1以上で入れる
+		ELSEIF ARG:1 == MASTER
+			IF TALENT:5:恋慕 || TALENT:6:恋慕 || TALENT:7:恋慕 || ABL:(ARG:1):教養 >= 1
+				RETURNF 1
+			ELSE
+				TFLAG:移動不能メッセージ = 2
+				RETURNF 0
+			ENDIF
+		;それ以外は入れない
+		ELSE
+			RETURNF 0
+		ENDIF
+	;無限遺跡・一階通路,ここだけ教養LV3が必要（あなた以外）
+	CASE 37
+		IF ABL:(ARG:1):教養 <= 2 && ARG:1 != MASTER
+			RETURNF 0
+		ELSE
+			RETURNF 1
+		ENDIF
+	CASEELSE
+		;施錠中は動けない
+		IF FLAG:納戸施錠
+			TFLAG:移動不能メッセージ = 1
+			RETURNF 0
+		ENDIF
+		RETURNF 1
+ENDSELECT
+RETURNF 1
+
+@MAP_CANNOT_WORD_0(ARG)
+SELECTCASE TFLAG:移動不能メッセージ
+	CASE 4
+		PRINTFORMW とても%CALLNAME:MASTER%には入れない
+	CASE 3
+		PRINTW まだ行けない
+	CASE 2
+		PRINTFORMW 未熟な%CALLNAME:MASTER%には見つけることができない…
+	CASE 1
+		PRINTFORMW 鍵を開けないと
+	CASEELSE
+		RETURN
+ENDSELECT
+CLEARLINE 2
+REUSELASTLINE 
+RETURN

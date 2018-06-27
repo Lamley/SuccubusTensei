@@ -1,0 +1,427 @@
+﻿;------------------------------------
+;プリセット
+;------------------------------------
+@男装セット(ARG)
+EQUIP:ARG:靴 = 1
+EQUIP:ARG:襪子 = 1
+EQUIP:ARG:下半身内袴２ = 1
+;男装
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:袴子 = 1
+;漢女は裹胸をつける
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 2
+EQUIP:ARG:上半身上衣１ = 3
+
+@女装セット(ARG)
+EQUIP:ARG:靴 = 1
+EQUIP:ARG:襪子 = 1
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:裙子 = 1
+;男の娘は文胸を付けない
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 1
+EQUIP:ARG:上半身上衣２ = 1
+
+@女中セット(ARG)
+EQUIP:ARG:帽子 = 2
+EQUIP:ARG:靴 = 1
+EQUIP:ARG:襪子 = 1
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:和服 = 1
+;男の娘は文胸を付けない
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 1
+EQUIP:ARG:外衣 = 4
+
+@執事セット(ARG)
+;男の娘は文胸を付けない
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 1
+EQUIP:ARG:靴 = 1
+EQUIP:ARG:襪子 = 1
+EQUIP:ARG:上半身上衣１ = 6
+EQUIP:ARG:下半身内袴２ = 1
+EQUIP:ARG:外衣 = 13
+EQUIP:ARG:其他１ = 5
+EQUIP:ARG:其他２ = 32
+EQUIP:ARG:袴子 = 21
+EQUIP:ARG:腕部装束 = 5
+
+@神官セット(ARG)
+EQUIP:ARG:靴 = 5
+EQUIP:ARG:襪子 = 7
+EQUIP:ARG:下半身内袴２ = 1
+;男装
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:袴子 = 6
+;漢女は裹胸をつける
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 2
+EQUIP:ARG:上半身上衣１ = 7
+
+@作務衣セット(ARG)
+EQUIP:ARG:靴 = 5
+EQUIP:ARG:襪子 = 7
+EQUIP:ARG:下半身内袴２ = 1
+;男装
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;漢女は裹胸をつける
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 2
+EQUIP:ARG:上半身上衣１ = 8
+EQUIP:ARG:帽子 = 27
+EQUIP:ARG:袴子 = 22
+
+@着流しセット(ARG)
+EQUIP:ARG:靴 = 5
+EQUIP:ARG:襪子 = 7
+EQUIP:ARG:下半身内袴２ = 1
+;男装
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;漢女は裹胸をつける
+SIF TALENT:MASTER:2 & 1
+	EQUIP:ARG:上半身内袴１ = 2
+EQUIP:ARG:和服 = 1
+EQUIP:ARG:其他１ = 7
+SIF DAY:2 == 3 || DAY:2 == 4
+	EQUIP:ARG:外衣 = 6
+
+@道着セット(ARG)
+EQUIP:ARG:靴 = 8	;草履
+EQUIP:ARG:襪子 = 7	;短布襪
+;内袴関係は男女で分岐
+IF TALENT:MASTER:2 == 1
+	EQUIP:ARG:下半身内袴１ = 0	;削除（念のため）
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+	EQUIP:ARG:上半身内袴１ = 2	;裹胸
+	EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+ELSE
+	EQUIP:ARG:下半身内袴１ = 1	;兜襠布
+	EQUIP:ARG:下半身内袴２ = 0	;削除（念のため）
+	EQUIP:ARG:上半身内袴１ = 0	;削除（念のため）
+	EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+ENDIF
+EQUIP:ARG:上半身上衣２ = 14	;道着
+EQUIP:ARG:袴子 = 6	;袴
+EQUIP:ARG:帽子 = 0	;削除（念のため）
+EQUIP:ARG:飾品 = 0	;削除（念のため）
+EQUIP:ARG:腕部装束 = 0	;削除（念のため）
+EQUIP:ARG:和服 = 0	;削除（念のため）
+EQUIP:ARG:連衣裙 = 0	;削除（念のため）
+EQUIP:ARG:外衣 = 0	;削除（念のため）
+EQUIP:ARG:其他１ = 0	;削除（念のため）
+EQUIP:ARG:其他２ = 0	;削除（念のため）
+EQUIP:ARG:其他３ = 0	;削除（念のため）
+EQUIP:ARG:上半身上衣１ = 0	;削除（念のため）
+EQUIP:ARG:裙子 = 0	;削除（念のため）
+EQUIP:ARG:緊身内衣 = 0	;削除（念のため）
+EQUIP:ARG:連体内衣 = 0	;削除（念のため）
+
+@書生セット(ARG)
+EQUIP:ARG:靴 = 9	;長筒皮靴
+EQUIP:ARG:襪子 = 1	;襪子
+EQUIP:ARG:上半身内袴１ = 0	;削除（念のため）
+EQUIP:ARG:上半身内袴２ = 3	;有色襯衫（男女共通）
+EQUIP:ARG:下半身内袴１ = 0	;削除（念のため）
+;下半身内袴は男女で分岐
+IF TALENT:MASTER:2 == 2
+	EQUIP:ARG:下半身内袴２ = 1	;四角袴
+ELSE
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+ENDIF
+EQUIP:ARG:上半身上衣２ = 16	;長着
+EQUIP:ARG:袴子 = 6	;袴
+EQUIP:ARG:外衣 = 3	;披肩斗篷
+EQUIP:ARG:帽子 = 0	;削除（念のため）
+EQUIP:ARG:飾品 = 0	;削除（念のため）
+EQUIP:ARG:腕部装束 = 0	;削除（念のため）
+EQUIP:ARG:和服 = 0	;削除（念のため）
+EQUIP:ARG:連衣裙 = 0	;削除（念のため）
+EQUIP:ARG:其他１ = 0	;削除（念のため）
+EQUIP:ARG:其他２ = 0	;削除（念のため）
+EQUIP:ARG:其他３ = 0	;削除（念のため）
+EQUIP:ARG:上半身上衣１ = 0	;削除（念のため）
+EQUIP:ARG:裙子 = 0	;削除（念のため）
+EQUIP:ARG:緊身内衣 = 0	;削除（念のため）
+EQUIP:ARG:連体内衣 = 0	;削除（念のため）
+
+@女学生セット(ARG)
+EQUIP:ARG:靴 = 9	;長筒皮靴
+EQUIP:ARG:襪子 = 1	;襪子
+;内袴関係は男女で分岐……するべきなのだろうか……
+IF TALENT:MASTER:2 == 1
+	EQUIP:ARG:下半身内袴１ = 0	;削除（念のため）
+	EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+	EQUIP:ARG:上半身内袴１ = 1	;文胸
+	EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+ELSE
+	EQUIP:ARG:下半身内袴１ = 1	;兜襠布
+	EQUIP:ARG:下半身内袴２ = 0	;削除（念のため）
+	EQUIP:ARG:上半身内袴１ = 0	;削除（念のため）
+	EQUIP:ARG:上半身内袴２ = 0	;削除（念のため）
+ENDIF
+EQUIP:ARG:上半身上衣２ = 15	;小紋
+EQUIP:ARG:裙子 = 4	;行灯袴
+EQUIP:ARG:帽子 = 3	;蝴蝶結
+EQUIP:ARG:飾品 = 0	;削除（念のため）
+EQUIP:ARG:腕部装束 = 0	;削除（念のため）
+EQUIP:ARG:和服 = 0	;削除（念のため）
+EQUIP:ARG:連衣裙 = 0	;削除（念のため）
+EQUIP:ARG:其他１ = 0	;削除（念のため）
+EQUIP:ARG:其他２ = 0	;削除（念のため）
+EQUIP:ARG:其他３ = 0	;削除（念のため）
+EQUIP:ARG:外衣 = 0	;削除（念のため）
+EQUIP:ARG:上半身上衣１ = 0	;削除（念のため）
+EQUIP:ARG:袴子 = 0	;削除（念のため）
+EQUIP:ARG:緊身内衣 = 0	;削除（念のため）
+EQUIP:ARG:連体内衣 = 0	;削除（念のため）
+
+;------------------------------------
+;コスプレ衣装
+;------------------------------------
+@保健室の女教師セット(ARG)
+;眼鏡
+EQUIP:ARG:飾品 = 1
+;靴
+EQUIP:ARG:靴 = 1
+;吊帯襪
+EQUIP:ARG:襪子 = 4
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;文胸
+EQUIP:ARG:上半身内袴１ = 1
+;開胸高领毛衣
+EQUIP:ARG:上半身上衣２ = 5
+;裙子
+EQUIP:ARG:裙子 = 1
+;白衣
+EQUIP:ARG:外衣 = 7
+;吊帯
+EQUIP:ARG:其他１ = 8
+
+@メイドさんセット(ARG)
+;白色女僕髮箍
+EQUIP:ARG:帽子 = 4
+;靴
+EQUIP:ARG:靴 = 1
+;吊帯襪
+EQUIP:ARG:襪子 = 4
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;文胸
+EQUIP:ARG:上半身内袴１ = 1
+;囲裙洋装
+EQUIP:ARG:連衣裙 = 3
+
+@比基尼セット(ARG)
+;比基尼文胸
+EQUIP:ARG:上半身内袴２ = 1
+;比基尼内袴
+EQUIP:ARG:下半身内袴２ = 20
+
+@微型比基尼セット(ARG)
+;微型文胸
+EQUIP:ARG:上半身内袴２ = 2
+;微型内袴
+EQUIP:ARG:下半身内袴２ = 21
+
+@兜襠布漢女セット(ARG)
+;裹胸
+EQUIP:ARG:上半身内袴１ = 2
+;兜襠布
+EQUIP:ARG:下半身内袴１ = 1
+
+@バニーガールセット(ARG)
+;兎耳髮箍
+EQUIP:ARG:帽子 = 9
+;袖套
+EQUIP:ARG:腕部装束 = 7
+;兔女郎服(黒)
+EQUIP:ARG:緊身内衣 = 4
+;網襪
+EQUIP:ARG:襪子 = 6
+;高跟鞋
+EQUIP:ARG:靴 = 6
+;领帯
+EQUIP:ARG:其他１ = 5
+
+@白衣の天使セット(ARG)
+;護士帽
+EQUIP:ARG:帽子 = 20
+;護士服
+EQUIP:ARG:連衣裙 = 10
+;半透明連袴襪
+EQUIP:ARG:襪子 = 3
+;護士凉鞋
+EQUIP:ARG:靴 = 7
+
+@聖誕服セット(ARG)
+;聖誕帽
+EQUIP:ARG:帽子 = 21
+;触须
+EQUIP:ARG:其他１ = 26
+;披肩
+EQUIP:ARG:外衣 = 1
+;上半身上衣
+EQUIP:ARG:上半身上衣１ = 3
+;迷你裙
+EQUIP:ARG:裙子 = 7
+;文胸
+EQUIP:ARG:上半身内袴１ = 1
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;襪子
+EQUIP:ARG:襪子 = 1
+;長靴
+EQUIP:ARG:靴 = 3
+
+@テニスウェアセット(ARG)
+;遮陽帽
+EQUIP:ARG:帽子 = 22
+;短袖襯衫
+EQUIP:ARG:上半身上衣２ = 14
+;迷你裙
+EQUIP:ARG:裙子 = 7
+;運動文胸
+EQUIP:ARG:上半身内袴１ = 3
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+;襪子
+EQUIP:ARG:襪子 = 1
+;靴
+EQUIP:ARG:靴 = 1
+
+@鴨舌帽文セット(ARG)
+EQUIP:ARG:帽子 = 10	;鴨舌帽
+EQUIP:ARG:靴 = 11	;パンプス
+EQUIP:ARG:襪子 = 1	;襪子
+EQUIP:ARG:上半身上衣２ = 13	;襯衫
+EQUIP:ARG:袴子 = 10	;五分袴
+EQUIP:ARG:下半身内袴１ = 4	;安全袴
+EQUIP:ARG:下半身内袴２ = 0
+EQUIP:ARG:上半身内袴１ = 1	;文胸
+SIF TALENT:MASTER:2 == 2
+	EQUIP:ARG:上半身内袴１ = 1	;男はブラをしない
+EQUIP:ARG:上半身内袴２ = 0
+EQUIP:ARG:其他１ = 5	;领帯
+EQUIP:ARG:其他２ = 32	;単肩包
+EQUIP:ARG:外衣 = 14	;西装夹克
+EQUIP:ARG:飾品 = 0
+EQUIP:ARG:腕部装束 = 0
+EQUIP:ARG:和服 = 0
+EQUIP:ARG:連衣裙 = 0
+EQUIP:ARG:其他３ = 0
+EQUIP:ARG:上半身上衣１ = 0
+EQUIP:ARG:裙子 = 0
+EQUIP:ARG:緊身内衣 = 0
+EQUIP:ARG:連体内衣 = 0
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+
+@ニンジャセット(ARG)
+EQUIP:ARG:靴 = 13	;地下短布襪
+EQUIP:ARG:和服 = 7	;忍装束
+EQUIP:ARG:緊身内衣 = 10	;鎖帷子
+EQUIP:ARG:腕部装束 = 1	;手甲
+EQUIP:ARG:帽子 = 6	;面
+EQUIP:ARG:襪子 = 0
+EQUIP:ARG:下半身内袴１ = 0
+EQUIP:ARG:下半身内袴２ = 0
+EQUIP:ARG:上半身内袴１ = 0
+EQUIP:ARG:上半身内袴２ = 0
+EQUIP:ARG:飾品 = 0
+EQUIP:ARG:連衣裙 = 0
+EQUIP:ARG:其他１ = 0
+EQUIP:ARG:其他２ = 0
+EQUIP:ARG:其他３ = 0
+EQUIP:ARG:外衣 = 0
+EQUIP:ARG:上半身上衣１ = 0
+EQUIP:ARG:上半身上衣２ = 0
+EQUIP:ARG:裙子 = 0
+EQUIP:ARG:袴子 = 0
+EQUIP:ARG:連体内衣 = 0
+
+@はだか襯衫セット(ARG)
+EQUIP:ARG:上半身上衣２ = 13	;襯衫（唯一の服装。他は全解除）
+EQUIP:ARG:靴 = 0
+EQUIP:ARG:襪子 = 0
+EQUIP:ARG:下半身内袴１ = 0
+EQUIP:ARG:下半身内袴２ = 0
+EQUIP:ARG:上半身内袴１ = 0
+EQUIP:ARG:上半身内袴２ = 0
+EQUIP:ARG:帽子 = 0
+EQUIP:ARG:飾品 = 0
+EQUIP:ARG:腕部装束 = 0
+EQUIP:ARG:和服 = 0
+EQUIP:ARG:連衣裙 = 0
+EQUIP:ARG:其他１ = 0
+EQUIP:ARG:其他２ = 0
+EQUIP:ARG:其他３ = 0
+EQUIP:ARG:外衣 = 0
+EQUIP:ARG:上半身上衣１ = 0
+EQUIP:ARG:裙子 = 0
+EQUIP:ARG:袴子 = 0
+EQUIP:ARG:緊身内衣 = 0
+EQUIP:ARG:連体内衣 = 0
+
+@烏冬面薬売りセット(ARG)
+EQUIP:ARG:帽子 = 28	;笠
+EQUIP:ARG:靴 = 5	;雪駄
+EQUIP:ARG:襪子 = 7	;短布襪
+
+EQUIP:ARG:袴子 = 0
+
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:上半身内袴１ = 1	;文胸
+EQUIP:ARG:其他１ = 34	;葛籠
+EQUIP:ARG:其他２ = 0
+EQUIP:ARG:外衣 = 0
+EQUIP:ARG:飾品 = 0	
+EQUIP:ARG:腕部装束 = 0
+EQUIP:ARG:和服 = 1
+EQUIP:ARG:連衣裙 = 0
+EQUIP:ARG:其他３ = 0
+EQUIP:ARG:上半身上衣１ = 0
+EQUIP:ARG:上半身上衣２ = 0
+EQUIP:ARG:裙子 = 0
+EQUIP:ARG:緊身内衣 = 0
+EQUIP:ARG:連体内衣 = 0
+
+@猯藏和装セット(ARG)
+EQUIP:ARG:帽子 = 2;髪飾り
+EQUIP:ARG:靴 = 2	;木屐
+EQUIP:ARG:襪子 = 7	;短布襪
+
+EQUIP:ARG:袴子 = 0
+
+;今日のぱんつ
+EQUIP:ARG:下半身内袴２ = 今日のぱんつ(ARG)
+EQUIP:ARG:上半身内袴１ = 1	;文胸
+IF DAY:2 == 4
+	EQUIP:ARG:其他１ = 6	;囲巾
+ELSE
+	EQUIP:ARG:其他１ = 0
+ENDIF
+
+EQUIP:ARG:其他３ = 34
+EQUIP:ARG:外衣 = 0
+EQUIP:ARG:飾品 = 1	;眼鏡	
+EQUIP:ARG:腕部装束 = 0
+EQUIP:ARG:和服 = 0
+EQUIP:ARG:連衣裙 = 0
+EQUIP:ARG:其他３ = 0
+IF DAY:2 == 4 || DAY:2 == 3
+	EQUIP:ARG:上半身上衣１ = 6;羽織
+ELSE
+	EQUIP:ARG:上半身上衣１ = 0
+ENDIF
+EQUIP:ARG:上半身上衣２ = 16;長着
+EQUIP:ARG:裙子 = 1
+EQUIP:ARG:緊身内衣 = 0
+EQUIP:ARG:連体内衣 = 0

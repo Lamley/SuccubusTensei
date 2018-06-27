@@ -1,0 +1,347 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;奉仕系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;80,手淫
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_80
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_80_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_80_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「手でしごけばいいの？」
+		PRINTFORMW 「こ、こう？」
+		PRINTFORMW 「どうかな？ きもちいい？」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSEIF NOWEX:MASTER:11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「きゃはっ♪ びくびくしてるー%UNICODE(0x2764)%」
+			PRINTFORMW 「出そうなんでしょ%UNICODE(0x2764)% ほらっ%UNICODE(0x2764)% イっちゃえ%UNICODE(0x2764)% イっちゃえ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「あらー？ もしかして手でイっちゃうのー？」
+			PRINTFORMW 「ふふっ%UNICODE(0x2764)% ほらっ%UNICODE(0x2764)% イっていいよっ%UNICODE(0x2764)% イって%UNICODE(0x2764)% イって%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「どう？きもちいい？」
+			PRINTFORMW 「いいよ%UNICODE(0x2764)% いっぱいきもちよくなって%UNICODE(0x2764)% ほらっ%UNICODE(0x2764)% ほらほらっ%UNICODE(0x2764)%」
+		CASE 1
+				PRINTFORMW 「きもちいいんでしょ%UNICODE(0x2764)%」
+				PRINTFORMW 「我慢しないのー%UNICODE(0x2764)% えいっ%UNICODE(0x2764)% えいっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+	RETURN 1
+ENDIF
+RETURN 1
+
+;==================================================
+;81,口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_81
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_81_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_81_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「く、口ですればいいのね？」
+		PRINTFORMW 「うん、わかった……、はむ…………」
+		PRINTFORMW 「んっ、あっ、舐めたり動かしたりするのね」
+		PRINTFORMW 「んっ…んっ……ぺろっ…ぺろぺろ……%UNICODE(0x2764)%」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSEIF NOWEX:MASTER:11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「んっ%UNICODE(0x2764)% んっ%UNICODE(0x2764)% ぷぁっ……イキそうなのね」
+			PRINTFORMW 「いいわよ、おくちに出して%UNICODE(0x2764)% んっんっ%UNICODE(0x2764) * 2% ん～～～っっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「んっ%UNICODE(0x2764)% んっ%UNICODE(0x2764)% あっ、汁がいっぱい出てきた……%UNICODE(0x2764)%」
+			PRINTFORMW 「そろそろイきそう？ じゃあこのまま……んぐっ、ぐっ、じゅっ、ん～～っっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「先っちょ、きもちいい？%UNICODE(0x2764)% ぺろぺろ%UNICODE(0x2764)%」
+			PRINTFORMW 「あむっ…れろれろ……じゅるっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「あーん%UNICODE(0x2764)%」
+			PRINTFORMW 「れろれろ……じゅぽっじゅぽっ%UNICODE(0x2764)% ひもひいい？ れろれろれろ……%UNICODE(0x2764)%」
+		CASE 2
+			PRINTFORMW 「んむっ、ちゅ…じゅるる……%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%のおちんちん、おいひいよ…%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+	RETURN 1
+ENDIF
+RETURN 1
+
+;==================================================
+;82,乳交
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_82
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_82_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_82_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+;貧乳前提
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「えっ？ ぱいずり……？」
+		PRINTFORMW 「あたいそんなおムネないよ……無理だよう」
+		PRINTFORMW 「……うーん、きもちよくないと思うけどなぁ」
+		PRINTFORMW 「まぁ%CALLNAME:MASTER%がしてほしいならしてあげるよ」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSEIF NOWEX:MASTER:11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「えっ、イキそうなの？」
+			PRINTFORMW 「うん、じゃあがんばるから、このままイっていいよ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「あっ、あっ、大きくなってきたぁ%UNICODE(0x2764)%」
+			PRINTFORMW 「よーし、このまま一気にいくよぉ～%UNICODE(0x2764)% えいえいっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「ふっ%UNICODE(0x2764)% ふっ%UNICODE(0x2764)% むずかしい……」
+			PRINTFORMW 「これ、本当にきもちいいの？」
+		CASE 1
+			PRINTFORMW 「ごめんね%CALLNAME:MASTER%、あたいのおムネちっちゃくて……」
+		ENDSELECT
+	ENDIF
+	RETURN 1
+ENDIF
+RETURN 1
+
+;==================================================
+;83,素股
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_83
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_83_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_83_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「んっ、あたいが動いていいの？」
+		PRINTFORMW 「ふぁぁっ……%UNICODE(0x2764)% これっきもちいいっ%UNICODE(0x2764)%」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSEIF NOWEX:MASTER:11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「はあはあ……。%CALLNAME:MASTER%、イきそう？」
+			PRINTFORMW 「じゃあイかせてあげるねっ%UNICODE(0x2764)% んっ%UNICODE(0x2764)% んっ%UNICODE(0x2764)% はっ%UNICODE(0x2764)% んんっっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「%CALLNAME:MASTER%、イくの？ イっちゃうの？」
+			PRINTFORMW 「くちゅくちゅのねろねろのぬるぬるでイっちゃうのぉ～～っ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 「あっ%UNICODE(0x2764)% ああっ%UNICODE(0x2764)% %CALLNAME:MASTER%っ%UNICODE(0x2764)% とまらないよう%UNICODE(0x2764) * 2%」
+		CASE 1
+			PRINTFORMW 「%CALLNAME:MASTER%、きもちいい？」
+			PRINTFORMW 「一緒にきもちよくなろう%UNICODE(0x2764)%」
+		CASE 2
+			PRINTFORMW 「ふぁぁっ……%UNICODE(0x2764)% ぬるぬるしてきもちいい%UNICODE(0x2764)%」
+			PRINTFORMW 「ああんっ%UNICODE(0x2764)% %CALLNAME:MASTER%っ%UNICODE(0x2764)% %CALLNAME:MASTER%～～っ%UNICODE(0x2764)%」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;84,泡泡浴
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_84
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_84_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_84_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;85,足扱き
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_85
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_85_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_85_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:時間停止
+		PRINTFORMW 「足でしてほしいの？」
+		PRINTFORMW 「ふーん、そっかー、そういうのが好きなんだ～♪」
+		RETURN 1
+	ENDIF
+	IF FLAG:時間停止
+	ELSEIF NOWEX:MASTER:11
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「うわぁ～、我慢汁がいっぱい%UNICODE(0x2764)%」
+			PRINTFORMW 「イけ！ イけ！ イっちゃえ！ ほらっ%UNICODE(0x2764)% ほらっ%UNICODE(0x2764)%」
+		CASE 1
+			PRINTFORMW 「足でシコシコされるのきもちいいんだぁ～%UNICODE(0x2764)%」
+			PRINTFORMW 「なんならこのままイっちゃえばぁ～♪ えいえいっ%UNICODE(0x2764)% やぁっ%UNICODE(0x2764)%」
+		ENDSELECT
+	ELSE
+		SELECTCASE RAND:2
+		CASE 0
+			PRINTFORMW 「どーお？ これで満足？」
+			PRINTFORMW 「あたいの足に弄ばれてちんちんおっきくして、%CALLNAME:MASTER%ってばヘンタ～イ♪」
+		CASE 1
+			PRINTFORMW 「これ楽しい～♪ えいっ%UNICODE(0x2764)% えいっ%UNICODE(0x2764)%」
+			PRINTFORMW 「%CALLNAME:MASTER%の%ONEDARI_MASTER_TINKO()%、おもちゃみた～い♪」
+		ENDSELECT
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;88,真空口交
+;==================================================
+@M_KOJO_MESSAGE_COM_K111_88
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K111_88_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K111_88_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

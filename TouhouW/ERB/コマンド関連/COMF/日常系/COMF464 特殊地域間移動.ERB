@@ -1,0 +1,116 @@
+﻿;-------------------------------------------------
+;向守矢神社移動
+;-------------------------------------------------
+@COM464
+VARSET LOCAL
+FOR LOCAL,1,CHARANUM
+	IF CFLAG:(LOCAL):同行
+		LOCAL:1 ++
+		SIF CFLAG:LOCAL:衰弱 || BASE:LOCAL:気力 == 0
+			LOCAL:2 ++
+		SIF !CHARA_HOLIDAY(LOCAL) && BASE:LOCAL:工作量
+			LOCAL:3 ++
+	ENDIF
+NEXT
+IF NEMUKE() >= 720
+	PRINTL 在睡意来袭时还是别外出比较好吧
+	RETURN -1
+ELSEIF LOCAL:1 > 1
+	PRINTL 不能帯二人以上外出
+	RETURN -1
+ELSEIF LOCAL:2 || BASE:MASTER:気力 == 0
+	PRINTFORML 因為身体不适所以无法外出\@ BASE:MASTER:気力 == 0 ? （気力為零） # （同行者身体不适）\@
+	RETURN -1
+ELSEIF LOCAL:3 && FESTIVAL() == ""
+	PRINTL 因為同行者処于工作日所以无法外出
+	RETURN -1
+ELSEIF TIME:5 == 9 || TIME:5 == 5
+	PRINTL 因為天气悪劣所以无法外出
+	RETURN -1
+ELSEIF TALENT:MASTER:100 < -4 
+	PRINTL 用这样的身体外出是很危険的
+	RETURN -1
+ENDIF
+LOCAL:2 = 0
+LOCALS = %STR:(6000 + SPECIAL_AREAMOVE() / 10)%
+FOR LOCAL,1,CHARANUM
+	IF CFLAG:(LOCAL):同行
+		CFLAG:LOCAL:デート中 = SPECIAL_AREAMOVE() / 100
+		CFLAG:LOCAL:現在位置 = SPECIAL_AREAMOVE()
+		LOCAL:2 = LOCAL
+		FLAG:デート相手 = LOCAL
+	ENDIF
+NEXT
+CFLAG:MASTER:デート中 = SPECIAL_AREAMOVE() / 100
+CFLAG:MASTER:現在位置 = SPECIAL_AREAMOVE()
+PRINTFORML 出门去%LOCALS%
+TIME += SPECIAL_AREAMOVE_TIME()
+
+
+;-------------------------------------------------
+;実行判定
+;-------------------------------------------------
+@COM_ABLE464
+;停止中は不可
+SIF FLAG:70
+	RETURN 0
+SIF !TFLAG:100
+	RETURN 0
+;一括管理
+SIF GLOBAL_COMABLE(464)
+	RETURN RESULT
+;睡眠中
+SIF CFLAG:睡眠
+	RETURN 0
+;添い寝中
+SIF CFLAG:添い寝中
+	RETURN 0
+SIF !SPECIAL_AREAMOVE()
+	RETURN 0
+RETURN 1
+
+;-------------------------------------------------
+@SPECIAL_AREAMOVE()
+#FUNCTION
+SELECTCASE CFLAG:MASTER:現在位置
+;博麗神社守矢分社
+	CASE 21
+	;守矢キャラと同行中
+		SIF CFLAG:31:同行 || !CFLAG:32:同行 || !CFLAG:33:同行
+			RETURNF 840
+;無縁塚
+	CASE 506
+		RETURNF 610
+;間欠泉地下中樞
+	CASE 712
+		RETURNF 970
+;通向山頂的路
+	CASE 732
+		RETURNF 810
+;灼熱地獄跡
+	CASE 928
+		RETURNF 760
+ENDSELECT
+RETURNF 0
+;-------------------------------------------------
+@SPECIAL_AREAMOVE_TIME()
+#FUNCTION
+SELECTCASE CFLAG:MASTER:現在位置
+;博麗神社守矢分社
+	CASE 21
+		RETURNF 1
+;無縁塚
+	CASE 506
+		SIF SHORTCUT(3)
+			RETURNF 3
+		RETURNF 5
+;間欠泉地下中樞
+	CASE 712
+		RETURNF 10
+;通向山頂的路
+	CASE 732
+		RETURNF 5
+;灼熱地獄跡
+	CASE 928
+		RETURNF 5
+ENDSELECT

@@ -1,0 +1,1590 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※
+;性交系コマンド
+;※※※※※※※※※※※※※※※※※※※※※※※※※
+;==================================================
+;60,正常位
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_60
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_60_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_60_1
+
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:70
+		;処女分岐
+		IF TALENT:処女 == 1
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORMW 「あ、やっと散らしてくれるんだね……」
+				PRINTFORML 鈴仙はじっと、紅の瞳で%CALLNAME:MASTER%の目を見つめる。
+				PRINTFORML 狂気の瞳、その力により%CALLNAME:MASTER%は鈴仙から逃げられなくなった。
+				PRINTFORML 元から逃跑つもりはない、それは鈴仙もしっていたが、これは誓いのようなものだろう。
+				PRINTFORML 自分のすべてを恋人である%CALLNAME:MASTER%にささげる、鈴仙の誓い。
+				PRINTFORMW %CALLNAME:MASTER%はそれを受け止めた上で、肉棒で鈴仙の身体を貫いた。
+				PRINTFORMW 
+				PRINTFORMW 
+				PRINTFORMW 「ッ！　いっいた！」
+				PRINTFORML 鈴仙が痛みのあまり声を上げ、%CALLNAME:MASTER%は腰を引こうとする。
+				PRINTFORML だが身体は言うことを聞かない。鈴仙の術がそれを許さなかった。
+				PRINTFORML 肉棒はズルズルと鈴仙の小さな穴に入り、根元にまでたどり着いてしまう。
+				PRINTFORMW 「っ！　あっは、あああっ！　繋がってる……私たち、奥の奥にまで繋がって……%CALLNAME:MASTER%……%CALLNAME:MASTER%！」
+				PRINTFORML 目からは涙、膣からは血を流れる。それでも少女は幸せそうな笑顔で%CALLNAME:MASTER%の名を連呼する。
+				PRINTFORML %CALLNAME:MASTER%は鈴仙に強く抱きつき、腰を激しく動かし始めた。
+				PRINTFORML 鈴仙も坦率に快楽を受け入れ、声を漏らす。
+				PRINTFORMW 「んっ！　あっは、もっと！　もっと犯してぇ%UNICODE(0x2665)%！」
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORMW 「あっ……うん、いいよ……」
+				PRINTFORML 鈴仙は両手を%CALLNAME:MASTER%背中に回し、抱きついてきた。そして、顔は見られないようにと遠ざける。
+				PRINTFORML どうしたのだろうかと%CALLNAME:MASTER%は聞くと、鈴仙は語り始める。
+				PRINTFORMW 「きっと入れられたら、パニックで能力を発動しちゃうかも……」
+				PRINTFORMW 「だから、%CALLNAME:MASTER%のためにもって……ひゃっ！」
+				PRINTFORML %CALLNAME:MASTER%は鈴仙の腕を解き、じっと彼女の顔を見てやった。
+				PRINTFORML もう、そんな遠慮は要らない。と、真剣な顔で伝えると、鈴仙の目をじっと見ながら、肉棒を鈴仙の秘所に狙い付ける。
+				PRINTFORMW 「……うん、そうだね……来て」
+				PRINTFORML 顔を合わせ、鈴仙の中に、容赦なく肉棒を突き入れた。
+				PRINTFORML 
+				PRINTFORMW 「んっっー！！　んっ　あ、はぁあ！」
+				PRINTFORMW 「%CALLNAME:MASTER%!!　大好き、大好きぃ%UNICODE(0x2665)%！」
+				PRINTFORML %CALLNAME:MASTER%への愛を連呼しながら、抱きついてきた。
+				PRINTFORML %CALLNAME:MASTER%はきつく締め付ける処女穴を味わいながら腰を動かし始める。
+				PRINTFORML 痛みに耐えながら、鈴仙はとにかく%CALLNAME:MASTER%を喜ばせることだけを考え続けた。
+			ELSEIF TALENT:思慕
+				PRINTFORML 
+				PRINTFORMW 「ほんとにいいの？」
+				PRINTFORML 鈴仙は怖気づいたのか、弱音を吐いてしまう。
+				PRINTFORMW 「その、私……%CALLNAME:MASTER%が怖いって理由で避けたりしたし、だから私、また……あっ！」
+				PRINTFORML %CALLNAME:MASTER%は鈴仙を推倒と、自分のイチモツを鈴仙の秘所にあてがう。
+				PRINTFORML 鈴仙の身体の震えはしっかりと伝わってきたが、今更引き下がるつもりはない。
+				PRINTFORMW 「……お願い……」
+				PRINTFORMW 「胆怯な私を、治して？」
+				PRINTFORML 震える鈴仙を抱きしめ、彼女の秘所の中に固い肉棒を突き入れた。
+				PRINTFORMW 
+				PRINTFORMW 「ッーー！　いっ痛い！！」
+				PRINTFORML 鈴仙は目を閉じながら強い痛みに耐え、%CALLNAME:MASTER%の身体にすがりつく。
+				PRINTFORML 驚いた%CALLNAME:MASTER%はすぐ鈴仙から出口ようとするも、抱きつかれ、止められる。
+				PRINTFORMW 「大丈夫……%CALLNAME:MASTER%の為なら、大丈夫だから……でも、ゆっくり動いて……」
+				PRINTFORML %CALLNAME:MASTER%は言われたとおり身体をゆっくり動かし、きつく締め付けてくる鈴仙の穴をたっぷりと感応した。
+				PALAM:TARGET:反感 -= 500
+			ELSE
+				PRINTFORML 
+				PRINTFORMW 「……初めてって痛いんですよね？」
+				PRINTFORMW 「私、あまり痛いのは嫌で……あっ！」
+				PRINTFORML %CALLNAME:MASTER%は顔をあわせようとしない鈴仙の手を取り、彼女の顔と自分の顔を合わせる。
+				PRINTFORML 掴んだ鈴仙の腕から、鼓動が伝わる。彼女の恐怖が直接伝わってくるが、もう遅い。
+				PRINTFORMW 「……リードしてください、私、一人では何もできないんです」
+				PRINTFORMW 「だから流させてください、このまま……」
+				PRINTFORML 鈴仙は抵抗をあきらめ、全身の力を抜く。ただ、顔だけは合わせようとしなかった。
+				PRINTFORML 
+				PRINTFORMW 「ッあっああああああ！　痛い、イタイ！」
+				PRINTFORML 鈴仙は痛みのあまり、暴れだしてしまう。
+				PRINTFORML 彼女は必死になって%CALLNAME:MASTER%を引き剥がそうとするが、%CALLNAME:MASTER%はそんな彼女に抱きつく。
+				PRINTFORMW 「ああああ……痛い……痛いよ……」
+				PRINTFORML 抱きつかれた鈴仙は落ち着きを見せ、%CALLNAME:MASTER%に抱きつきながら涙を流す。
+				PALAM:TARGET:反感 -= 500
+			ENDIF
+			RETURN 1
+		ELSE
+		;ちからつきまみた……てかデフォ非処女なのに手抜き
+			IF TALENT:恋人
+				PRINTFORML 
+				PRINTFORMW 「う、うん……ついにやるんだね！」
+				PRINTFORML 鈴仙は胸の鼓動を隠しながら不安そうな笑顔を浮かべる。
+				PRINTFORMW %CALLNAME:MASTER%が彼女の手を握ると、「ふぇっ!?」とかわいらしい声をあげる。
+				PRINTFORMW 「……うん、今更、怖がってもしかたないよね？」
+				PRINTFORML 鈴仙はそう言うと、仰向けになって股を開く。
+				PRINTFORMW 「来て……%CALLNAME:MASTER%」
+				PRINTFORML 誘惑してくる鈴仙に、彼女の求めていたものを与えた。
+			ELSEIF TALENT:恋慕
+				PRINTFORML 
+				PRINTFORMW 「あ、うん！　やってくれるんだね……」
+				PRINTFORML 鈴仙は幸せそうな顔で%CALLNAME:MASTER%の顔を見つめ、股を開く。
+				PRINTFORMW 「……私を、女にして、たくさん、愛して……%UNICODE(0x2665)%」
+				PRINTFORML 鈴仙がそう言うと、目が少しだけ赤く光る。
+				PRINTFORML すると、%CALLNAME:MASTER%の身体が燃え上がるように熱くなり、思わず鈴仙に襲い掛かった。
+				PRINTFORMW 「私の身体を、好きなだけ犯してぇ！」
+				PRINTFORML 軽い狂気に触れられた%CALLNAME:MASTER%は容赦なく鈴仙の膣内へと己の欲望を突き入れた。
+			ELSEIF TALENT:思慕
+				PRINTFORML 
+				PRINTFORMW 「うん、い、いいよ！　私の身体で、好きなだけ気持ちよくなってね……」
+				PRINTFORML 鈴仙は淫らな台詞を口にし身体を%CALLNAME:MASTER%に許す。
+				PRINTFORML だが、%CALLNAME:MASTER%が近づくと、鈴仙は驚いたような表情を見せ、思わず出口てしまう。
+				PRINTFORMW 「あ、そのっ、ごめん」
+				PRINTFORML 口では肯定しつつも、体のほうはまだ準備ができていなかったようだ。
+				PRINTFORML だが、ここを逃しても鈴仙のためにはならない。
+				PRINTFORML %CALLNAME:MASTER%はまるで小動物を相手するように、ゆっくりと近づき怖がらせないようにやさしく、彼女の秘所に肉棒を突き入れる。
+				PRINTFORMW 「あ、あ……んっ……お願い、まだ怖いの、やさしく……してね？」
+			ELSE
+				PRINTFORML 
+				PRINTFORMW 鈴仙は涙目のまま%CALLNAME:MASTER%の視線を避けようとしていた。それどころかひどく震えている。
+				PRINTFORMW 「男の人とは……初めてで、すいません私……」
+				PRINTFORML %CALLNAME:MASTER%は優しく鈴仙の顔を撫でると、彼女は硬く目を閉じ、涙を流す。
+				PRINTFORMW 「まだ少し怖い……です、だからやさしくして……」
+				PRINTFORML 鈴仙に言われたとおり、%CALLNAME:MASTER%はやさしく肉棒を彼女の秘所に入れた。
+				PRINTFORML 手で口を覆い、鈴仙は少しずつ入れられてくるペニスの感触を味わう。
+				PRINTFORMW 「んっく！　ううっ！　あ、ああん！」
+				PRINTFORML 奥深くまでペニスを入れると、鈴仙は可愛らしいあえぎ声を漏らした。
+			ENDIF
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER && !FLAG:70
+		;前回射精した
+		;取り合えず2、3行の長文は分岐に任せる
+		IF TCVAR:102
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 
+					PRINTFORMW 「あ、んっ%UNICODE(0x2665)%！　あっ、溢れちゃうぅ！」
+				CASE 1
+					PRINTFORML 
+					PRINTFORMW 「んっあ！　まだ、かたぁい……%UNICODE(0x2665)%」
+				CASE 2
+					PRINTFORML 
+					PRINTFORMW 「あっ……赤ちゃんでき……ひあっ、あっ%UNICODE(0x2665)%！」
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 
+					PRINTFORMW 「んっ！　あっひあ！　もっもっと、早くぅ……%UNICODE(0x2665)%」
+				CASE 1
+					PRINTFORML 
+					PRINTFORMW 「あっ、ねっとりと動くの……いいっ……」
+				CASE 2
+					PRINTFORML 
+					PRINTFORMW 「んー……んあっ！　んぐぅ……ひあぁ！」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;立位
+	;記入チェック（=0, 非表示、1, 表示）
+	;-------------------------------------------------
+	LOCAL = 1
+	;-------------------------------------------------
+	IF LOCAL && TFLAG:193
+		;基本セット
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+			RETURN 1
+		;恋慕
+		ELSEIF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 「%CALLNAME:MASTER%の気が済むまで、犯していいよ」
+			PRINTFORMW ベッドの上で仰向けになり%CALLNAME:MASTER%を受け入れるために股と腕を広げる。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「来て来て……私ので、気持ちよくなって……」
+			PRINTFORMW 鈴仙はベッドの上で股を広げ、%CALLNAME:MASTER%が種入してくれるのをおとなしく等待。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORMW 「うん、また、シたくなったんだね？」
+			PRINTFORMW 「いいよ、来て……%UNICODE(0x2665)%」
+			PRINTFORMW 鈴仙は惚けた顔で股を開き、ベッドの上で%CALLNAME:MASTER%のものを入れられることを期待した。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「いいですよ……来て、ください%UNICODE(0x2665)%」
+			PRINTFORMW 一度行為を受け入れた鈴仙は、ベッドの上で仰向けになり、
+			PRINTFORMW 目に欲情を浮かべながら股を開いてくれた。
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;正常位
+	;ベッドを布団に変えただけ
+	;記入チェック（=0, 非表示、1, 表示）
+	;-------------------------------------------------
+	LOCAL = 1
+	;-------------------------------------------------
+	IF LOCAL
+		;基本セット
+		;時姦中
+		IF FLAG:70
+			PRINTFORMW 
+			RETURN 1
+		;恋慕
+		ELSEIF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 「乱れさせて……%CALLNAME:MASTER%の手で私を……」
+			PRINTFORMW 布団の上で仰向けになり%CALLNAME:MASTER%を受け入れるために股と腕を広げる。
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「来て来てぇ、私ので、気持ちよくなって……」
+			PRINTFORMW 布団はベッドの上で股を広げ、%CALLNAME:MASTER%が種入してくれるのをおとなしく等待。
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORMW 「また、シたくなったんだね？」
+			PRINTFORMW 「いいよ、早く来て……%UNICODE(0x2665)%」
+			PRINTFORMW 鈴仙は惚けた顔で股を開き、布団の上で%CALLNAME:MASTER%のものを入れられることを期待した。
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「いいですよ……来て、ください%UNICODE(0x2665)%」
+			PRINTFORMW 一度行為を受け入れた鈴仙は、布団の上で仰向けになり、
+			PRINTFORMW 目に欲情を浮かべながら股を開いてくれた。
+		ENDIF
+	ENDIF
+	RETURN 1
+ENDIF
+;==================================================
+;61,後背位
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_61
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_61_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_61_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:70
+		;処女分岐
+		;IF TALENT:処女 == 1
+			;IF TALENT:恋人
+				;PRINTFORML 
+			;ELSEIF TALENT:恋慕
+				;PRINTFORML 
+			;ELSEIF TALENT:思慕
+				;PRINTFORML 
+			;ELSE
+				;PRINTFORML 
+			;ENDIF
+			;RETURN 1
+		;ELSE
+	IF TALENT:恋人
+		PRINTFORML 
+		PRINTFORMW 「後ろから？　%CALLNAME:MASTER%って結構マニアックだよね」
+		PRINTFORML 鈴仙は赤面しながら子馬鹿にするように笑うも、すぐ四つん這いになった。
+		PRINTFORMW 「来て来て……。獣みたいに犯してぇ……%UNICODE(0x2665)%」
+		PRINTFORML まんざらでもない。鈴仙は淫らな台詞と共に、愛液をたらす秘所を晒す。
+		PRINTFORML 本当に、坦率な子になったものだ。
+		PRINTFORML 相手の了承も得た%CALLNAME:MASTER%は鈴仙の腰に手を置き、狙いを定め、
+		PRINTFORML 男根を鈴仙の中へと突き入れた。
+			IF TALENT:処女 == 1
+			;最初っからこう分岐すりゃよかった
+				PRINTFORMW 
+				PRINTFORMW 「っ！　あっは、あああっ！　繋がってる……私たち、奥の奥にまで繋がって……%CALLNAME:MASTER%……%CALLNAME:MASTER%！」
+				PRINTFORML 目からは涙、膣からは血を流れる。それでも少女は幸せそうな笑顔で%CALLNAME:MASTER%の名を連呼する。
+				PRINTFORML %CALLNAME:MASTER%は鈴仙に強く抱きつき、腰を激しく動かし始めた。
+				PRINTFORML 鈴仙も坦率に快楽を受け入れ、獣のようなあえぎ声を発する。
+				PRINTFORMW 「んっ！　あっは、もっと！　もっと犯してぇ%UNICODE(0x2665)%！」
+			ELSE
+				PRINTFORMW 「あっ！　ふと、いっ！」
+				PRINTFORMW そのまま腰を動かし始めると、鈴仙は獣のようなあえぎ声を上げ始める。
+			ENDIF
+	ELSEIF TALENT:恋慕
+		PRINTFORML 
+		PRINTFORMW 「こ、この格好、恥ずかしいんだけど……」
+		PRINTFORML そう言いながらも、易々と言われたとおりに四つん這いになってしまう鈴仙に愛しささえ覚えた。
+		PRINTFORML 後ろから彼女の腰に手をやると、体を小さく震えているのを感じる。まだ、怖いのだろうか
+		PRINTFORMW 「あ……だ、大丈夫。遠慮しないで」
+		PRINTFORML 「%CALLNAME:MASTER%の為なら、私なんだって、してあげたいから……」
+		PRINTFORML 鈴仙は恍惚とした顔で恥ずかしげもなくそう言うと、自分の秘所を広げ……。
+		PRINTFORMW 「だから、早く来て……」
+		PRINTFORML %CALLNAME:MASTER%は鈴仙の腰に手を置き、
+		PRINTFORML 男根を鈴仙の中へと突き入れた。
+			IF TALENT:処女 == 1
+				PRINTFORML 
+				PRINTFORMW 「んっっー！！　んっ　あ、はぁあ！」
+				PRINTFORMW 「%CALLNAME:MASTER%!!　大好き、大好きぃ%UNICODE(0x2665)%！」
+				PRINTFORML %CALLNAME:MASTER%への愛を連呼する。
+				PRINTFORML %CALLNAME:MASTER%はきつく締め付ける処女穴を味わいながら腰を動かし始める。
+				PRINTFORML 痛みに耐えながら、鈴仙はとにかく%CALLNAME:MASTER%を喜ばせることだけを考え続けた。
+			ELSE
+				PRINTFORMW 「ひあっ！　この、姿勢……す、好きかもぉ！　ひあっ！」
+				PRINTFORMW 鈴仙は獣のように犯されていることに言葉にできぬ興奮を味わっていた。
+			ENDIF
+	ELSEIF TALENT:思慕
+		PRINTFORML 
+		PRINTFORMW 「ねっ、ねぇ、やっぱり普通にしよう？　この格好すごく恥ずかしいんだけど？」
+		PRINTFORML 四つん這いになった鈴仙は不安そうな目で%CALLNAME:MASTER%を見つめる。
+		PRINTFORMW 「獣扱いされるの嫌だし、見えないところから入れられるのは怖いし……それに、この姿勢じゃ%CALLNAME:MASTER%の顔も……」
+		PRINTFORML 鈴仙は顔を赤くし聞き取れない声で最後を呟いた。耳も萎れていることからどうやら本当に嫌であるようだ。
+		PRINTFORML だが、今さら止めるわけには行かない。両手で鈴仙の腰を掴む。
+		PRINTFORMW 「ひゃっ！　ちょ、ちょっと……もう、仕方ないわね……押しが強い」
+		PRINTFORMW 「せ、せめて、手を握ってて？　そしたら、落ち着くから」
+		PRINTFORML 鈴仙の言うとおり、彼女の手を握ってやると、気休め程度だが、耳から萎れが抜けた。
+		PRINTFORML %CALLNAME:MASTER%は鈴仙の腰に手を置き、
+		PRINTFORML 男根を鈴仙の中へゆっくりと入れてやった。
+			IF TALENT:処女 == 1
+				PRINTFORMW 
+				PRINTFORMW 「ッーー！　いっ痛い！！」
+				PRINTFORML 鈴仙は目を閉じながら強い痛みに耐え、%CALLNAME:MASTER%の身体にすがりつく。
+				PRINTFORML 驚いた%CALLNAME:MASTER%はすぐ鈴仙から出口ようとするも、鈴仙は強く手を握る。
+				PRINTFORMW 「大丈夫……%CALLNAME:MASTER%の為なら、大丈夫だから……でも、ゆっくり動いて……」
+				PRINTFORMW %CALLNAME:MASTER%は言われたとおり身体をゆっくりと動かし、締め付けてくる鈴仙のナカを感応した。
+				PALAM:TARGET:反感 -= 500
+			ELSE
+				PRINTFORMW 「んっ、ひっあ！　はいって、るう……」
+				PRINTFORMW 鈴仙を怖がらせないように、%CALLNAME:MASTER%はゆっくりと腰を動かし、新しい姿勢に鈴仙を慣らしてやった。
+			ENDIF
+	ELSE
+		PRINTFORML 
+		PRINTFORMW 「こんなポーズ……屈辱です」
+		PRINTFORML 四つん這いになった鈴仙はギロリと%CALLNAME:MASTER%を睨みつける。
+		PRINTFORMW 「私を獣扱いするなんて、少なくとも私は%CALLNAME:MASTER%さんのことは友達だと思ってたのに……」
+		PRINTFORML 鈴仙は四つん這いのまま、涙目になりながら%CALLNAME:MASTER%に憤怒をぶつける。
+		PRINTFORML 彼女の本気で泣きそうな顔を見ると、どうしようもなく気が滅する。
+		PRINTFORMW 「……本当に、仕方ない人です」
+		PRINTFORMW 「い、痛く、しないでくださいね？　」
+		PRINTFORML 鈴仙はそう言うと、四つん這いになって%CALLNAME:MASTER%を誘った。彼女の顔はりんごのように赤かった。
+		PRINTFORMW 誘われた%CALLNAME:MASTER%は鈴仙の腰に手を置き、痛くしないよう、ゆっくりと入れた。
+			IF TALENT:処女 == 1
+				PRINTFORML 
+				PRINTFORMW 「ッあっ！　痛い、イタイ！」
+				PRINTFORML 鈴仙が痛みを口にすると、%CALLNAME:MASTER%は一度腰を止める。
+				PRINTFORML 彼女の秘所から、赤い鮮血がツーと流れた。
+				PRINTFORMW 「あっ……約束、守ってくれるんですね……大丈夫です、これくらい……平気ですから」
+				PRINTFORML 鈴仙の同意を得て、ゆっくりと鈴仙の穴の征服を始める。
+				PRINTFORMW 「んっ！　あっ……くっうう、ひあ!?」
+				PRINTFORML 苦痛は少しずつ快楽へと変わって行き、奥深く入れた瞬間、鈴仙はあえぎ声を漏らしてくれた。
+				PALAM:TARGET:反感 -= 500	
+			ELSE
+				PRINTFORMW 「んんっあ……あっ、あぁ、はぃっりました……」
+				PRINTFORMW 動いても大丈夫か？　と聞くと、鈴仙は小さく頷く。
+				PRINTFORMW %CALLNAME:MASTER%は少しずつペースを速めながら、鈴仙の穴を楽しんだ。
+			ENDIF
+	ENDIF
+			RETURN 1
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER && !FLAG:70
+		;前回射精した
+		;取り合えず2、3行の長文は分岐に任せる
+		IF TCVAR:102
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 
+					PRINTFORMW 「あ、んっ%UNICODE(0x2665)%！　あっ、溢れちゃうぅ！」
+				CASE 1
+					PRINTFORML 
+					PRINTFORMW 「んっあ！　おなかの中で、動いてる……%UNICODE(0x2665)%」
+				CASE 2
+					PRINTFORML 
+					PRINTFORMW 「あっ……赤ちゃんでき……ひあっ、あっ%UNICODE(0x2665)%！」
+			ENDSELECT
+			RETURN 1
+		ELSE
+			SELECTCASE RAND:3
+				CASE 0
+					PRINTFORML 
+					PRINTFORMW 「んっ！　あっひあ！　もっもっと、早くぅ……%UNICODE(0x2665)%」
+				CASE 1
+					PRINTFORML 
+					PRINTFORMW 「あっ、ねっとりと動くの……いいっ……」
+				CASE 2
+					PRINTFORML 
+					PRINTFORMW 「んー……んあっ！　犬、みたい……あひ！」
+			ENDSELECT
+			RETURN 1
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 鈴仙をベッドの上で四つん這いにすると、後ろから彼女の雌穴に襲い掛かった。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋人
+		PRINTFORML 
+		PRINTFORMW 「%CALLNAME:MASTER%も好きだよねー」
+		PRINTFORMW 鈴仙はけらけらと笑いながらも、ベッドの上でうつぶせたまま、尻だけを上げる。
+		PRINTFORMW 「……私も好きだから、今回もたくさん犯してね？」
+	ELSEIF TALENT:恋慕
+		PRINTFORML 
+		PRINTFORMW 「後ろからだと、%CALLNAME:MASTER%の顔は見えないけど、すっごく興奮するんだ……」
+		PRINTFORMW 鈴仙はドキドキと心臓を鳴らしながら、四つん這いのままワレメを開く。
+		PRINTFORMW ヒクヒクと肉壁を轟かせる彼女の膣内は、%CALLNAME:MASTER%の肉棒を待ち望んでいた。
+	ELSEIF TALENT:思慕
+		PRINTFORML 
+		PRINTFORMW 「また後ろから？　もう、%CALLNAME:MASTER%もほんとに好きだよね……」
+		PRINTFORMW 鈴仙はあきれたかのようにベッドの上で四つん這いになり、%CALLNAME:MASTER%を誘った。
+	ELSE
+		PRINTFORML 
+		PRINTFORMW 「この姿勢、あまり好きじゃないって言ってるじゃないですか！」
+		PRINTFORMW 「もう……まったく」
+		PRINTFORMW 文句を言いながらも、鈴仙はベッドの上で四つん這いになる。
+	ENDIF
+RETURN 1
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 鈴仙を布団の上で四つん這いにすると、後ろから彼女の雌穴に襲い掛かった。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋人
+		PRINTFORML 
+		PRINTFORMW 「%CALLNAME:MASTER%も好きだよねー」
+		PRINTFORMW 鈴仙はけらけらと笑いながらも、布団の上でうつぶせたまま、尻だけを上げる。
+		PRINTFORMW 「……私も好きだから、今回もたくさん犯してね？」
+	ELSEIF TALENT:恋慕
+		PRINTFORML 
+		PRINTFORMW 「後ろからだと、%CALLNAME:MASTER%の顔は見えないけど、すっごく興奮するんだ……」
+		PRINTFORMW 鈴仙はドキドキと心臓を鳴らしながら、四つん這いのままワレメを開く。
+		PRINTFORMW ヒクヒクと肉壁を轟かせる彼女の膣内は、%CALLNAME:MASTER%の肉棒を待ち望んでいた。
+	ELSEIF TALENT:思慕
+		PRINTFORML 
+		PRINTFORMW 「また後ろから？　もう、%CALLNAME:MASTER%もほんとに好きだよね……」
+		PRINTFORMW 鈴仙はあきれたかのように布団の上で四つん這いになり、%CALLNAME:MASTER%を誘った。
+	ELSE
+		PRINTFORML 
+		PRINTFORMW 「この姿勢、あまり好きじゃないって言ってるじゃないですか！」
+		PRINTFORMW 「もう……まったく」
+		PRINTFORMW 文句を言いながらも、鈴仙は布団の上で四つん這いになる。
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;62,正常位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_62
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_62_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_62_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;正常位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;63,後背位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_63
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_63_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_63_1
+;-------------------------------------------------
+;立位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL && TFLAG:193
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;後背位
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;64,逆強姦
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_64
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_64_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_64_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;調教者が処女
+		IF TALENT:PLAYER:処女 == 1
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:PLAYER:100 == TARGET
+		;前回射精した
+		IF TCVAR:PLAYER:102
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;65,騎乗位
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_65
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_65_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_65_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 1
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 1
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM) && !FLAG:70
+		;処女
+		IF TALENT:恋人
+			PRINTFORML 
+			PRINTFORMW 「うふふ、いいの？　ほんとうに暴れちゃうよ？」
+			PRINTFORMW 鈴仙は目にハートを浮かべ、%CALLNAME:MASTER%に寄り添う。
+			PRINTFORMW 彼女にとって騎乗位とはすべての主導権を受け渡すという意味らしい。
+			PRINTFORMW 彼女は%CALLNAME:MASTER%を推倒と、%CALLNAME:MASTER%のそそり立つソレに手を当てる。
+			PRINTFORMW 「あったかぁい……あ、かたぁい。攻められるのも変わっていていいでしょ？」
+			PRINTFORMW 鈴仙はゆっくりとペニスを秘部に当てると、愛液が垂れ、ペニスをぬらす。
+			PRINTFORMW 「もう我慢できないみたい……それじゃあ、始めるね？」
+			PRINTFORMW 
+				IF TALENT:処女 == 1
+					PRINTFORMW しっかりと濡れた鈴仙の男の知らない生娘のような膣、それは鈴仙自身によってしっかりと女に変えられた。
+					PRINTFORMW 「ああああっ！　ひああああん！」
+					PRINTFORML 処女膜が貫通され、愛液の混じった血が流れ出す。
+					PRINTFORMW だが、心だけはすっかり女にされている鈴仙にとって、この痛みは快楽へのス餡餅スでしかなかった。
+					PRINTFORML 「私の膣内、どうぉ？　気持ちいいでしょ？　ねぇ、ねぇ！」
+					PRINTFORMW 鈴仙少し天象があがったのか、ヒートアップしながら腰を激しく動かす。
+				ELSE
+					PRINTFORMW 「あっはあぁぁ……入れただけなのに、いっちゃいそお……%CALLNAME:MASTER%はどう？　気持ちいい？」
+					PRINTFORMW 鈴仙の柔らかいヒダ肉に包まれたペニスは少し動かしただけでも射精しそうであった。
+					PRINTFORMW 「あはっ、そっか……じゃあうごくね？」
+				ENDIF
+		ELSEIF TALENT:恋慕
+			PRINTFORML 
+			PRINTFORMW 「%CALLNAME:MASTER%は楽になっていいよ？　全部私がやってあげるから」
+			PRINTFORMW 鈴仙は主導権を握った瞬間ノリノリでリードを始めた。
+			PRINTFORMW %CALLNAME:MASTER%を仰向けにさせ、これから自ら入れることになるペニスを見つめる。
+			PRINTFORMW 「これから、これを入れるんだよね？」
+			PRINTFORMW 鈴仙は微笑みながらペニスを触れ、それを己の秘部に当て、腰を下ろした。
+			PRINTFORMW 
+				IF TALENT:処女 == 1
+					PRINTFORMW 「ふっ！　あ、は！　入ったよぉ%CALLNAME:MASTER%？」
+					PRINTFORMW しっかりと根元まで入れた鈴仙は、ぐりぐりと腰を動かし、自分の奥を刺激する。
+					PRINTFORML 股からは血は流れているというのに鈴仙は平気そうに見えた。	
+					PRINTFORML 恐らく痛みによる苦痛よりも愛する人と繋がることができた嬉しさの方が勝ったようだ。
+					PRINTFORMW 「ふふ、動いてあげるね」
+					PRINTFORMW 鈴仙はいったん落ち着くと、%CALLNAME:MASTER%の名を連呼しながら腰を動かし始めた。
+					PRINTFORMW 「%CALLNAME:MASTER%！　%CALLNAME:MASTER%！！」
+				ELSE
+					PRINTFORMW 「んっ、しょっ！」
+					PRINTFORMW 鈴仙はためらいもなく、自分の腰を一気に落とし、%CALLNAME:MASTER%の男根をしっかりと味わった。
+					PRINTFORMW ハートを目に浮かべ、激しく動かし始める。
+				ENDIF
+		ELSEIF TALENT:思慕
+			PRINTFORML 
+			PRINTFORMW 「わ、私がリードするの？　あ、うん！　がんばってみるね」
+			PRINTFORMW 鈴仙は%CALLNAME:MASTER%を仰向けにすると、ゆっくりと自分の秘部にペニスをあてがう。
+			PRINTFORMW 「……ちゃんと、期待にこたえてあげるからね？」
+			PRINTFORML 鈴仙は%CALLNAME:MASTER%の手をぎゅっと握り、ゆっくりと腰を落とす。
+			PRINTFORMW 
+				IF TALENT:処女 == 1
+					PRINTFORMW 「くっう……はぁ！」
+					PRINTFORMW 鈴仙の秘部から、血が流れはじめる。痛みのあまり、鈴仙は腰を止めてしまう。
+					PRINTFORML 一度休憩したからのほうがいいのではないか？　と%CALLNAME:MASTER%は提案するも、鈴仙は首を横に振る。
+					PRINTFORMW 「%CALLNAME:MASTER%のためなら、友達のためなら何でもやってあげたいから……だから、任せて？」
+					PRINTFORML 鈴仙は少し休むと、再び腰を下ろし始め、数秒後にはペニスが彼女の奥の奥にまで届いていた。
+					PRINTFORMW 「う、動くね？」
+					PRINTFORML 鈴仙は震えながら腰を動かし、ピストンを始める。
+					PRINTFORML 彼女の中はキツキツで少し苦しかった。鈴仙も最初は痛みしか感じていなかったが、少しずつ、それは快楽に変わる。
+					PRINTFORMW 気付けば、最初は無理に動かしていた腰が快楽を得るために動かされていた。
+					PALAM:TARGET:反感 -= 500
+				ELSE
+					PRINTFORMW 「んっ！　いっ、入れただけで、いっちゃいそぉ」
+					PRINTFORMW 「あ、ごめん、ごめん……動かすね？」
+					PRINTFORMW 鈴仙はいやらしい音を出しながら、膣を使ったご奉仕を始めた。
+				ENDIF
+		ELSE
+			PRINTFORML 
+			PRINTFORMW 「%CALLNAME:MASTER%さんには任せられません！」
+			PRINTFORMW と、言った感じで鈴仙は%CALLNAME:MASTER%を仰向けにし、馬乗りする。
+			PRINTFORMW この状態から少し顔を上げると、鈴仙の全身が見えた。押し倒したはいいが次どうするか分かっていない鈴仙の姿も。
+			PRINTFORMW 「と、取りあえず私がしてあげますから！　勝手なことはしちゃ駄目ですよ？」
+			PRINTFORMW 鈴仙は胸をドキドキと鳴らしながら、ゆっくりと%CALLNAME:MASTER%のそそり立つモノに腰を落とす。
+			PRINTFORMW 
+				IF TALENT:処女 == 1
+					PRINTFORML 鈴仙の秘所に%CALLNAME:MASTER%のペニスが入った瞬間、赤い血がペニスを伝って流れ始める。
+					PRINTFORMW 「あっ痛……い……」
+					PRINTFORML 鈴仙は膣から直接来る痛みに耐えながら、必死に腰を下ろす。
+					PRINTFORML 本当に大丈夫なのだろうかと、%CALLNAME:MASTER%は聞くと鈴仙は目に涙を浮かべながら顔を横に振る。
+					PRINTFORMW 「痛くて、苦しいです……」
+					PRINTFORMW 「でも、私から、%CALLNAME:MASTER%さんのために私からできたことなんです、それが少しうれしいんです」
+					PRINTFORML 鈴仙の痛みに耐えながら見せてくれた笑顔には、達成感がみえた。
+					PRINTFORML 根元にまで、鈴仙は%CALLNAME:MASTER%のペニスを埋め込むと「っはぁ……」と暖かそうな息を一つ吐く
+					PRINTFORMW 「は、入りました……あとは、お願いします」
+					PRINTFORML 鈴仙はここまでが限界であるようだ。%CALLNAME:MASTER%は鈴仙を抱き、腰を動かし始めた。
+					PALAM:TARGET:反感 -= 500
+				ELSE
+					PRINTFORMW これはフリだろと勝手に解釈した%CALLNAME:MASTER%は容赦なく腰を突き上げた。
+					PRINTFORMW 「いっ!?」
+					PRINTFORMW 予想せぬ一撃に、鈴仙は思わず声を漏らしてしまう。そして勝手に激しいピストンを仰向けの状態から行い始める。
+					PRINTFORMW 「う、うごかないれって言っひゃ！　じゃないですかぁ！　あっひぃ！」
+				ENDIF
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 時間の止まった鈴仙に膝を付かせ、ペニスを彼女の股の間に固定し、%CALLNAME:MASTER%は下から激しく鈴仙の秘部を突いた。
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋人
+		PRINTFORML 
+		PRINTFORMW 「んんっ！　いっ、ちゃう……！　あっ、ひあぁ！」
+		PRINTFORMW 鈴仙はあえぎながらも腰を激しく動かし、膣全体を使って%CALLNAME:MASTER%のペニスを悦ばせようとしていた。
+		PRINTFORMW 「だして、だしてぇ！　%CALLNAME:MASTER%のせーえき！　たくさん出して！」
+	ELSEIF TALENT:恋慕
+		PRINTFORML 
+		PRINTFORMW 「ひっい！　すごいぃ！　奥まで、%CALLNAME:MASTER%のが、とどいてるぅ……」
+		PRINTFORMW 鈴仙は膣すべてで%CALLNAME:MASTER%のものを飲み込み、腰を左右に動かして射精を煽る。
+		PRINTFORMW このときの鈴仙は完全に獣のようであり、少し恐ろしく見えた。
+		PRINTFORMW 「%CALLNAME:MASTER%が出すまで離してあげないからね？」
+	ELSEIF TALENT:思慕
+		PRINTFORML 
+		PRINTFORMW 「あ、ひっ！　イッ！　ふっ……ど、どう!?　うまくできてる？」
+		PRINTFORMW 鈴仙は自分よりも%CALLNAME:MASTER%が気持ちよくなっているかが心配であるようだ。このまま任せてもいいが……。
+		PRINTFORMW 「あっ動いちゃッ！　わたひっはいいから、あっ！　動いちゃ、うごいちゃだめぇぇぇ……」
+	ELSE
+		PRINTFORML 
+		PRINTFORMW 「んっあ……はぁ、ふっ！　ふ、ふふ、%CALLNAME:MASTER%さんすごい顔、してますよっ」
+		PRINTFORMW そういう、鈴仙もとろけ切った顔をしている。お互い様というべきか。
+		PRINTFORMW 「あっ、んっひ！　わたっひでっ！　たくさん気持ちよくなっへくださいぃぃ……」
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;66,騎乗位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_66
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_66_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_66_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;時姦中
+	IF FLAG:70
+		PRINTFORMW 
+		RETURN 1
+	;恋慕
+	ELSEIF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;67,対面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_67
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_67_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_67_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;68,背面座位
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_68
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_68_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_68_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;処女
+		IF TALENT:処女 == 1
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:100 == PLAYER
+		;前回射精した
+		IF TCVAR:102
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;69,対面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_69
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_69_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_69_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;70,背面座位肛交
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_70
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_70_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_70_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+		;アナル処女
+		IF !EXP:Ａ性交経験
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;71,二穴挿入
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_71
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_71_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_71_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;考えうる分岐が多すぎるので地の文の大まかな分岐だけ
+	;連続
+	IF PREVCOM == SELECTCOM
+		PRINTFORMW 
+		RETURN 1
+	;主人V挿入→助手A挿入
+	ELSEIF TCVAR:100 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;主人A挿入→助手V挿入
+	ELSEIF TCVAR:101 == MASTER
+		PRINTFORMW 
+		RETURN 1
+	;助手V挿入→主人A挿入
+	ELSEIF TCVAR:100 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	;助手A挿入→主人V挿入
+	ELSEIF TCVAR:101 == ASSI
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;72,挿入Ｇ点玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_72
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_72_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_72_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+
+;==================================================
+;73,挿入子宮口玩弄
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_73
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_73_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_73_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;74,玩弄Ｓ状結腸
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_74
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_74_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_74_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;75,隔着刺激陰道
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_75
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_75_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_75_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1
+;==================================================
+;77,小人飛機杯(針妙丸用？
+;==================================================
+@M_KOJO_MESSAGE_COM_K52_77
+CALL TRAIN_MESSAGE
+CALL M_KOJO_MESSAGE_COM_K52_77_1
+RETURN RESULT
+
+@M_KOJO_MESSAGE_COM_K52_77_1
+;-------------------------------------------------
+;記入チェック（=0, 非表示、1, 表示）
+LOCAL = 0
+;-------------------------------------------------
+IF LOCAL
+	;-------------------------------------------------
+	;小分岐
+	;-------------------------------------------------
+	;初めて
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && FIRSTTIME(SELECTCOM)
+	ENDIF
+	;-------------------------------------------------
+	;挿入継続
+	;記入チェック
+	LOCAL:1 = 0
+	;-------------------------------------------------
+	IF LOCAL:1 && TCVAR:101 == PLAYER
+		;前回射精した
+		IF TCVAR:104
+			PRINTFORMW 
+			RETURN 1
+		ELSE
+			PRINTFORMW 
+			RETURN 1
+		ENDIF
+	ENDIF
+	;基本セット
+	;恋慕
+	IF TALENT:恋慕
+		PRINTFORMW 
+		RETURN 1
+	;屈服3
+	ELSEIF MARK:不埒刻印 == 3
+		PRINTFORMW 
+		RETURN 1
+	;それ以外
+	ELSE
+		PRINTFORMW 
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 1

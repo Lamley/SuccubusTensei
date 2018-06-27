@@ -1,0 +1,737 @@
+﻿;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;"COUNTER"系口上
+;※※※※※※※※※※※※※※※※※※※※※※※※※※
+;-------------------------------------------------
+;コミュニケーション
+;-------------------------------------------------
+;==================================================
+;距離が近い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_1
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_1_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_1_1
+PRINTDATA
+	DATALIST
+		DATAFORM 「――どうしました？」
+		DATAFORM 無意識なのだろうか、
+		DATAFORM 妖夢は%CALLNAME:MASTER%の側に自然な振る舞いで佇んでいる。
+	ENDLIST
+	DATALIST
+		DATAFORM 「――どうしました？」
+		DATAFORM 妖夢は気付いていないようだが、　
+		DATAFORM 先程から半霊が%CALLNAME:MASTER%に擦り寄って来ている。
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;チラ見
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_2
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_2_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_2_1
+	PRINTFORML 「――っ、な、何でもありません！」
+	PRINTFORMW 妖夢からの視線を感じるものの、%CALLNAME:MASTER%が目を向けると視線をそらしてしまう。
+
+RETURN 1
+
+;==================================================
+;おはなし
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_3
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_3_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_3_1
+PRINTDATA
+	DATALIST
+		DATAFORM 「最近、こんなことが――」
+	ENDLIST
+	DATALIST
+		DATAFORM 「聞いてくださいっ！　幽幽子様が――」
+	ENDLIST
+	DATALIST
+		DATAFORM 「笑わないでくださいね、実は――」
+	ENDLIST
+	DATALIST
+		DATAFORM 「あ、あの――！」
+	ENDLIST
+	DATALIST
+		DATAFORM 「妖怪が鍛えたこの楼観剣に、斬れぬものなどあんまり無いです！」
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;いい匂い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_4
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_4_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_4_1
+	PRINTFORML 「あ…あの、何を…んっ」
+	PRINTFORMW %CALLNAME:MASTER%は、つい隣りにいる妖夢の首筋に顔を近づけて匂いを嗅いでしまった。
+
+RETURN 1
+
+;-------------------------------------------------
+;ベリーソフト
+;-------------------------------------------------
+;==================================================
+;近寄ってくる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_11
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_11_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_11_1
+PRINTDATA
+	DATALIST
+		DATAFORM 肩が触れるか触れないかというほど側に妖夢が佇んでいる。
+		DATAFORM 「――っ！　ど、どうかしましたか？」
+		DATAFORM 意識しているのか顔も少し紅潮しているようだ。
+	ENDLIST
+	DATALIST
+		DATAFORM 妖夢の半霊が擦り寄ってくる。
+		DATAFORM 本人は気付いていないようだが、優しくなでてあげると
+		DATAFORM 「――みょんっ！」
+		DATAFORM 妖夢は驚いたように小さく飛び上がった。
+	ENDLIST
+ENDDATA
+PRINTFORMW
+RETURN 1
+
+;==================================================
+;笑顔を浮かべる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_12
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_12_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_12_1
+	PRINTFORML 妖夢は可憐な笑顔を浮かべている。
+	PRINTFORMW いつもの生真面目な表情を、今は欠片も感じない。
+RETURN 1
+
+;==================================================
+;構って欲しがる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_13
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_13_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_13_1
+PRINTDATA
+	DATALIST
+		DATAFORM 妖夢の半霊が擦り寄ってくる。
+		DATAFORM そちらを振り返ると、必死に半霊を取り押さえようとしている、顔を真赤にした妖夢と目があった。
+		DATAFORM 「あ、あの！　うちの半霊がご迷惑を――！」
+	ENDLIST
+	DATALIST
+		DATAFORM 妖夢が%CALLNAME:MASTER%の袖口を控えめに引っ張っている。
+		DATAFORM 「…あ、あの…」　
+		DATAFORM 妖夢はか細い声で、必死に注意を引こうとしていた。
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;身をすり寄せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_14
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_14_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_14_1
+PRINTDATA
+	DATALIST
+		DATAFORM 「――っ」
+		DATAFORM 妖夢はさり気なく%CALLNAME:MASTER%の腕に寄り添うようにしている。
+		DATAFORM ささやかな胸の膨らみを押し付けてくるが、顔を真赤にして決して視線を合わせようとしない。
+	ENDLIST
+	DATALIST
+		DATAFORM 妖夢の半霊が%CALLNAME:MASTER%の腕に巻き付いてくる。
+		DATAFORM 「あっ……んっ」
+		DATAFORM 優しく撫でてあげると、妖夢は身体を縮こまらせながらもされるがままにさせていた。
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;見つめてくる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_15
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_15_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_15_1
+PRINTDATA
+	DATALIST
+		DATAFORM %CALLNAME:MASTER%が見つめ返すと、
+		DATAFORM 妖夢は顔を赤らめながらも、決して視線をそらすことはない。
+	ENDLIST
+	DATALIST
+		DATAFORM %CALLNAME:MASTER%が視線を感じて振り向くと、
+		DATAFORM 妖夢は半霊に隠れるようにして、こちらを見つめていた。　
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;肩にあご乗せ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_16
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_16_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_16_1
+PRINTDATA
+	DATALIST
+		DATAFORM 「あ、あのっ！　ご迷惑でしょうか……？」
+		DATAFORM 妖夢は掻き消えそうな声音でそう言いながら、%CALLNAME:MASTER%に体重を預けてきた。
+	ENDLIST
+	DATALIST
+		DATAFORM 「――っ！」
+		DATAFORM 顔を真赤にして目をそらしながらも、妖夢は決して出口ようとはしない。　
+	ENDLIST
+	DATALIST
+		DATAFORM 「しばらくこうさせて下さい…」
+		DATAFORM %CALLNAME:MASTER%にだけ聞こえるような声で、妖夢は主人公の首筋に顔をうずめた。　
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;-------------------------------------------------
+;ソフト
+;-------------------------------------------------
+;==================================================
+;色っぽい仕草
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_20
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_20_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_20_1
+	PRINTFORML 「あの…%CALLNAME:MASTER%……さん…」
+	PRINTFORML 妖夢は主人公の名前をつぶやきながら身体を押し付け、
+	PRINTFORMW 紅潮した頬に瞳を潤ませながら上目遣いで見つめている。
+RETURN 1
+
+;==================================================
+;見つめる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_21
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_21_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_21_1
+	PRINTFORML 「――はぅ……んっ…」
+	PRINTFORMW 妖夢は堪えきれずに熱い吐息をこぼしている。
+RETURN 1
+
+;==================================================
+;体を摺り寄せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_22
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_22_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_22_1
+PRINTDATA
+	DATALIST
+		DATAFORM 「こうしていると、安心…するんです」
+		DATAFORM 妖夢は%CALLNAME:MASTER%の胸元で心音に耳を傾けている。
+	ENDLIST
+	DATALIST
+		DATAFORM 「抱きしめても、いいんですよ…？」
+		DATAFORM 妖夢は%CALLNAME:MASTER%の胸元に頬をすり寄せている。　
+	ENDLIST
+	DATALIST
+		DATAFORM 「このまま――　駄目ですか？」
+		DATAFORM 妖夢は%CALLNAME:MASTER%の胸元にその身を預けている。　
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;==================================================
+;掀裙子
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_23
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_23_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_23_1
+RETURN 1
+
+;==================================================
+;息を吹きかける
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_24
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_24_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_24_1
+RETURN 1
+
+;==================================================
+;摸屁股
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_25
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_25_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_25_1
+RETURN 1
+
+;==================================================
+;腕抱き付き
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_26
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_26_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_26_1
+RETURN 1
+;==================================================
+;谷間を見せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_27
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_27_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_27_1
+PRINTDATA
+	DATALIST
+		DATAFORM 妖夢は頬を紅潮させながらも、いつもより胸元を開けてアピールをしている。
+		DATAFORM 「……いいんです…よ？」
+	ENDLIST
+	DATALIST
+		DATAFORM 妖夢は頬を紅潮させながら、上目遣いで胸元を強調させている。
+		DATAFORM 「あ、あの……どう、ですか…？」
+	ENDLIST
+ENDDATA
+PRINTFORMW 
+RETURN 1
+
+;-------------------------------------------------
+;セクハラ
+;-------------------------------------------------
+;==================================================
+;キス
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_30
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_30_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_30_1
+RETURN 1
+
+;==================================================
+;後ろから抱きつく
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_31
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_31_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_31_1
+RETURN 1
+
+;==================================================
+;前ろから抱きつく
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_32
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_32_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_32_1
+RETURN 1
+
+;==================================================
+;胸を揉ませる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_33
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_33_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_33_1
+RETURN 1
+
+;==================================================
+;股間をまさぐる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_34
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_34_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_34_1
+RETURN 1
+
+;==================================================
+;裙子の中を見せる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_35
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_35_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_35_1
+RETURN 1
+
+;==================================================
+;後ろから胸もみもみ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_36
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_36_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_36_1
+RETURN 1
+
+;==================================================
+;糖強奪
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_39
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_39_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_39_1
+RETURN 1
+
+;-------------------------------------------------
+;おねだり
+;-------------------------------------------------
+;==================================================
+;正常位Ｖおねだり
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_41
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_41_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_41_1
+RETURN 1
+
+;==================================================
+;正常位Ｖおねだり２
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_43
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_43_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_43_1
+RETURN 1
+
+;==================================================
+;後背位Ａおねだり
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_44
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_44_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_44_1
+RETURN 1
+
+;-------------------------------------------------
+;愛撫
+;-------------------------------------------------
+;==================================================
+;手淫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_50
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_50_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_50_1
+RETURN 1
+
+;==================================================
+;口淫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_51
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_51_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_51_1
+RETURN 1
+
+;==================================================
+;素股
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_52
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_52_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_52_1
+RETURN 1
+
+;==================================================
+;乳交
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_53
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_53_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_53_1
+RETURN 1
+
+;==================================================
+;足交
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_54
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_54_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_54_1
+RETURN 1
+
+;==================================================
+;肛門愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_55
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_55_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_55_1
+RETURN 1
+
+;==================================================
+;舐肛
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_56
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_56_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_56_1
+RETURN 1
+
+;==================================================
+;指挿入
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_57
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_57_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_57_1
+RETURN 1
+
+;==================================================
+;胸愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_58
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_58_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_58_1
+RETURN 1
+
+;==================================================
+;乳首吸い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_59
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_59_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_59_1
+RETURN 1
+
+;==================================================
+;ディープキス
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_60
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_60_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_60_1
+RETURN 1
+
+
+;-------------------------------------------------
+;奉仕
+;-------------------------------------------------
+;==================================================
+;強制舐陰
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_70
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_70_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_70_1
+RETURN 1
+
+;==================================================
+;口交強制
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_71
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_71_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_71_1
+RETURN 1
+
+;==================================================
+;肛門奉仕
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_72
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_72_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_72_1
+RETURN 1
+
+;==================================================
+;ぱふぱふ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_73
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_73_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_73_1
+RETURN 1
+
+;==================================================
+;乳合わせ
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_74
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_74_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_74_1
+RETURN 1
+
+;==================================================
+;タワシ洗い
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_75
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_75_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_75_1
+RETURN 1
+
+;==================================================
+;強制アソコ愛撫
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_76
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_76_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_76_1
+RETURN 1
+
+;==================================================
+;乳を吸わせる
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_77
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_77_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_77_1
+RETURN 1
+
+;-------------------------------------------------
+;性交
+;-------------------------------------------------
+;==================================================
+;挿入される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_80
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_80_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_80_1
+RETURN 1
+
+;==================================================
+;Ｖ挿入する（TARGET受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_85
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_85_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_85_1
+RETURN 1
+
+;==================================================
+;だいしゅきホールド
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_86
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_86_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_86_1
+RETURN 1
+
+;==================================================
+;Ａ挿入する（TARGET受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_87
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_87_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_87_1
+RETURN 1
+
+;==================================================
+;Ｖ腰振り（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_88
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_88_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_88_1
+RETURN 1
+
+;==================================================
+;Ａ腰振り（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_89
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_89_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_89_1
+RETURN 1
+
+;==================================================
+;Ａ挿入される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_90
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_90_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_90_1
+RETURN 1
+
+;==================================================
+;強制口交される（MASTER受け）
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_91
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_91_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_91_1
+RETURN 1
+
+;==================================================
+;アナル開発許可を求める
+;==================================================
+@M_KOJO_MESSAGE_COUNTER_K23_92
+CALL EVENT_COUNTER_MESSAGE
+CALL M_KOJO_MESSAGE_COUNTER_K23_92_1
+RETURN RESULT
+@M_KOJO_MESSAGE_COUNTER_K23_92_1
+RETURN 1
+
+;-------------------------------------------------
+;うふふカウンター
+;-------------------------------------------------
+;まだ

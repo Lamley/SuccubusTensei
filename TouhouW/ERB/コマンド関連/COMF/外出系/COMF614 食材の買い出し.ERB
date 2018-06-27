@@ -1,0 +1,177 @@
+﻿;採購食材
+@COM614
+#DIM 購入品目
+#DIM 価格
+#DIM 購入上限
+SIF !FLAG:日替わりイベント % 10
+	PRINTL 今天好像是特売日（表記価格から50％引きされます）
+
+CALL EX_SHOPPING("雜糧","稗和粟之类的。穷人的主食",48)
+CALL EX_SHOPPING("陳米","庶民的食物",50)
+CALL EX_SHOPPING("白米","財主的食物",47)
+PRINTL [99] - 中止
+INPUT
+SIF RESULT == 99
+	RETURN -1
+購入品目 = RESULT
+価格 = ITEMPRICE:購入品目
+SIF !FLAG:日替わりイベント % 10
+	価格 /= 2
+
+PRINTFORM 要買多少？ 1個　￥{価格}
+IF CHK_DATENOW(CFLAG:TARGET:デート中) && TARGET > 0
+	購入上限 = ITEMSALES:購入品目 > 0 ? MIN( ITEMSALES:購入品目, 10 ) # 10
+ELSE
+	購入上限 = ITEMSALES:購入品目 > 0 ? MIN( ITEMSALES:購入品目, 5 ) # 5
+ENDIF
+PRINTFORML （{購入上限}個為止）
+PRINTL [0] - 中止
+SIF 購入上限
+	PRINT [1] - 1個　
+SIF 購入上限 >= 5
+	PRINT [5] - 5個　
+SIF 購入上限 >= 10
+	PRINT [10] - 10　
+SIF NOSAMES( 購入上限, 0, 1, 5, 10 ) 
+	PRINTFORM [{購入上限}] - {購入上限}個　
+$LOOP_INPUT
+INPUT
+IF RESULT < 1
+	RETURN -1
+ELSEIF RESULT > 5 && !(CHK_DATENOW(CFLAG:TARGET:デート中) && TARGET > 0)
+	PRINTL 一个人拿不了那么多
+	GOTO LOOP_INPUT
+ELSEIF RESULT > 10
+	PRINTL 拿不了更多的了
+	GOTO LOOP_INPUT
+ELSEIF MONEY < 価格 * RESULT
+	PRINTL 金钱不足
+	GOTO LOOP_INPUT
+ELSEIF RESULT > 購入上限
+	PRINTL 賣完了
+	GOTO LOOP_INPUT
+ELSE
+	MONEY -= 価格 * RESULT
+	ITEM:購入品目 += RESULT
+	ITEMSALES:購入品目 -= RESULT
+	SIF ITEMSALES:購入品目 == 0
+		ITEMSALES:購入品目 = -1	; 在庫切れ
+	SETBIT TFLAG:一日一回,2
+	PRINTFORML 買了{RESULT}個%ITEMNAME:購入品目%
+ENDIF
+
+IF CHK_DATENOW(CFLAG:TARGET:デート中) && TARGET > 0
+	LOCAL = RAND:100
+	LOCAL:1 = 90 + GET_SUCCESS_RATE() / 5
+	SIF LOCAL:1 > 99
+		LOCAL:1 = 99
+	IF LOCAL <= 9
+		;10％で大成功
+		EXP:MASTER:会話経験 ++
+		EXP:MASTER:約会経験 ++
+		EXP:TARGET:約会経験 ++
+		TFLAG:193 = 1
+	ELSEIF RESULT == 0
+		;買わないと失敗
+		TFLAG:193 = -1
+	ELSE
+		;残りは成功
+		TFLAG:193 = 0
+	ENDIF
+
+	DOWNBASE:MASTER:気力 += 50
+	DOWNBASE:MASTER:体力 += 30
+	DOWNBASE:気力 += 30
+	DOWNBASE:体力 += 20
+
+	;固定で獲得するソース
+	SOURCE:歓楽 = 500
+	SOURCE:情愛 = 200
+
+	;ABL:従順をみる
+	IF ABL:従順 <= 1
+		SOURCE:歓楽 += (ABL:従順 * 60)
+		SOURCE:情愛 += (ABL:親密 * 30)
+	ELSEIF ABL:従順 <= 3
+		SOURCE:歓楽 += 200 + (ABL:従順 * 60)
+		SOURCE:情愛 += 150 + (ABL:親密 * 30)
+	ELSEIF ABL:従順 <= 5
+		SOURCE:歓楽 += 400 + (ABL:従順 * 60)
+		SOURCE:情愛 += 300 + (ABL:親密 * 30)
+	ELSEIF ABL:従順 <= 8
+		SOURCE:歓楽 += 550 + (ABL:従順 * 75)
+		SOURCE:情愛 += 450 + (ABL:親密 * 45)
+	ELSEIF ABL:従順 <= 11
+		SOURCE:歓楽 += 800 + (ABL:従順 * 75)
+		SOURCE:情愛 += 600 + (ABL:親密 * 50)
+	ELSE
+		SOURCE:歓楽 += 1500 + (ABL:従順 * 30)
+		SOURCE:情愛 += 1200 + (ABL:親密 * 20)
+	ENDIF
+
+	;好感度をみる
+	IF CFLAG:2 <= 500
+		SOURCE:歓楽 += CFLAG:2
+		SOURCE:情愛 += CFLAG:2
+	ELSEIF CFLAG:2 <= 5000
+		SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
+		SOURCE:情愛 += 300 + (CFLAG:2 - 300) / 3
+	ELSE
+		SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
+		SOURCE:情愛 += 1000 + (CFLAG:2 - 1000) / 5
+	ENDIF
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
+	SIF SOURCE:情愛 < 0
+		SOURCE:情愛 = 0
+
+
+	SOURCE:受動 = 200 + 100 * ABL:従順
+	SOURCE:征服 = 200 + 100 * ABL:施虐属性
+
+	IF TFLAG:193 == -1
+		TIMES SOURCE:歓楽 , 0.10
+		TIMES SOURCE:征服 , 0.50
+		TIMES SOURCE:受動 , 0.50
+	ELSEIF TFLAG:193 == 0
+		TIMES SOURCE:歓楽 , 1.00
+		TIMES SOURCE:征服 , 1.00
+		TIMES SOURCE:受動 , 1.00
+	ELSE
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:征服 , 2.00
+		TIMES SOURCE:受動 , 2.00
+	ENDIF
+
+	EXP:MASTER:約会経験 ++
+	EXP:TARGET:約会経験 ++
+ENDIF
+
+TIME += 30
+RETURN 1
+
+;-------------------------------------------------
+;実行可能判定
+;-------------------------------------------------
+;採購食材
+@COM_ABLE614
+;一括管理
+SIF GLOBAL_COMABLE(614)
+	RETURN RESULT
+IF !AT_HOME(MASTER)
+	SIF CFLAG:MASTER:現在位置 != 商家町
+		RETURN 0
+ELSE
+	SIF CFLAG:MASTER:現在位置 != 216
+		RETURN 0
+ENDIF
+;もう買ってるか
+SIF GETBIT(TFLAG:一日一回,2)
+	RETURN 0
+;睡眠中
+SIF CFLAG:MASTER:睡眠
+	RETURN 0
+;時間停止中
+SIF FLAG:70
+	RETURN 0
+RETURN 1
